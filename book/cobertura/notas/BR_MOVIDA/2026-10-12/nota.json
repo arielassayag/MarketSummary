@@ -1,0 +1,223 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_MOVIDA",
+  "data": "2026-10-12",
+  "tipo": "iniciacao",
+  "titulo": "Movida — ocupação, valor residual e caixa após frota",
+  "resumo": "A hipótese é que ocupação e preço remunerem a frota ao longo do ciclo. A condição decisiva é gerar caixa depois de renovação, giro e juros, sem confundir lucro ou margem de aluguel com recursos distribuíveis. Depreciação, preço de venda e financiamento precisam confirmar o retorno do investimento. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_MOVIDA.rating_codigo}}, com retorno esperado {{fact:val.BR_MOVIDA.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Locadora de automóveis com aluguel diário, gestão de frotas e venda de seminovos. Diárias, ocupação, preço e prazo contratual sustentam serviços; compra, depreciação e venda dos carros determinam capital e valor residual. As operações brasileiras e estrangeiras conservam bases próprias.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que ocupação e preço remunerem a frota ao longo do ciclo. A condição decisiva é gerar caixa depois de renovação, giro e juros, sem confundir lucro ou margem de aluguel com recursos distribuíveis. Depreciação, preço de venda e financiamento precisam confirmar o retorno do investimento.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_MOVIDA.preco}} e alvo {{fact:val.BR_MOVIDA.preco_alvo}}, com potencial {{fact:val.BR_MOVIDA.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_MOVIDA.ke}} e retorno esperado {{fact:val.BR_MOVIDA.etr}}.",
+      "evidencias": [
+        "val.BR_MOVIDA.preco",
+        "val.BR_MOVIDA.preco_alvo",
+        "val.BR_MOVIDA.upside",
+        "val.BR_MOVIDA.ke",
+        "val.BR_MOVIDA.etr"
+      ]
+    },
+    {
+      "titulo": "Contrato, depreciação e desmobilização",
+      "texto": "A condição econômica deve ser acompanhada por segmento e safra de aquisição: preço e ocupação do aluguel, custo do carro, depreciação e valor de revenda precisam remunerar o financiamento. A renovação contínua e os canais de seminovos descritos pelo emissor são capacidades operacionais, não prova de valor residual protegido. Na gestão de frotas, duração contratual e reajuste devem ser confrontados com compra e reposição; no aluguel diário, utilização e preço têm outra dinâmica.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Diárias, preço, ocupação, yield e renovação por segmento; volume e preço realizado de seminovos. Conciliar depreciação, fornecedores, confirming, cessões e caixa após frota e juros. Verificar proventos, capitalização e bases das novas projeções.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_MOVIDA.ke}} e a dispersão entre métodos {{fact:val.BR_MOVIDA.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_MOVIDA.ke",
+        "val.BR_MOVIDA.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Próximos resultados: testar caixa depois da frota, juros e valor residual.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "descricao": "Comprovação do pagamento e da capitalização dos proventos programados.",
+      "data": null,
+      "tipo": "dividendos",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Valor residual, custos de frota, competição e juros podem absorver margem. Estoque e renovação consomem caixa. Aportes e refinanciamento não provam retorno recorrente; hipóteses de depreciação podem diferir da venda realizada.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_MOVIDA.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_MOVIDA.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Ocupação e preço sustentam retorno depois da renovação e dos juros, com venda de usados e giro disciplinados. O cenário otimista calculado pelo código é {{fact:val.BR_MOVIDA.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_MOVIDA.preco_alvo}}, com retorno esperado {{fact:val.BR_MOVIDA.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Frota e juros absorvem margem; preços residuais e utilização enfraquecem, elevando a necessidade de financiamento e capital. O cenário pessimista calculado pelo código é {{fact:val.BR_MOVIDA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "A avaliação deve ligar aluguel e desmobilização ao caixa depois da reposição da frota e do financiamento. EBITDA sem depreciação econômica é insuficiente; projeções de valor residual exigem confirmação na venda. Comparações entre locadoras precisam preservar idade da frota, segmento, tratamento de compras e juros, sem reclassificar o fluxo original. Preço de referência {{fact:val.BR_MOVIDA.preco}} e alvo do modelo aberto {{fact:val.BR_MOVIDA.preco_alvo}}, com potencial {{fact:val.BR_MOVIDA.upside}}. Retorno total esperado {{fact:val.BR_MOVIDA.etr}} e custo do capital próprio {{fact:val.BR_MOVIDA.ke}}. A dispersão entre métodos é {{fact:val.BR_MOVIDA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_MOVIDA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_MOVIDA.consenso_alvo}}; a diferença {{fact:val.BR_MOVIDA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "Serviços, EBITDA e lucro cresceram; vendas de seminovos caíram com menor volume. O fluxo gerencial registra consumo de caixa antes de juros, e o fluxo original inclui compra de frota e juros operacionais. Dívida bruta e custo financeiro aumentaram, com aporte de capital recebido. O emissor apresentou nova projeção para período distinto, sem direção comparável classificada. Pagamento e capitalização de proventos programados não foram comprovados como concluídos.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "O PDF visual foi conferido na pesquisa anterior diante de resíduos de texto antigos na extração; esses resíduos não foram tratados como resultado histórico vigente. Dívida reconciliada, anualização gerencial e valor residual projetado preservam suas definições. Aporte, refinanciamento e provento possuem estados próprios.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Rede, relacionamento com montadoras e contratos podem apoiar atendimento e utilização. Fidelidade e yield contratado não garantem margem após o custo completo. Concorrência, novos veículos e canais de seminovos precisam ser testados pelo preço residual realizado, sem inferir proteção permanente.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Locação, EBITDA e lucro cresceram; venda de seminovos diminuiu com menor volume. Depreciação e valor residual têm hipóteses próprias. Caixa livre antes de juros ficou negativo com maior investimento e pagamentos de carros. O texto extraído contém resíduos antigos; a leitura visual anterior e o fluxo original sustentam a base preservada.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Dívida bruta e despesas financeiras aumentaram. Aporte de capital foi recebido, mas não é geração operacional. Compra de carros e juros entram no fluxo operacional original; dívida, confirming e cessões têm reconciliação própria. Proventos com capitalização e pagamento programado não representam transferência integral em dinheiro comprovada.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "Lucro e EBITDA maiores podem coexistir com consumo de caixa antes dos juros. Se compra e renovação exigirem financiamento contínuo ou o preço residual cair, a margem de aluguel não provará retorno ao acionista.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Diárias, preço, ocupação, yield e renovação por segmento; volume e preço realizado de seminovos. Conciliar depreciação, fornecedores, confirming, cessões e caixa após frota e juros. Verificar proventos, capitalização e bases das novas projeções.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_MOVIDA.etr}}, custo do capital {{fact:val.BR_MOVIDA.ke}} e dispersão entre métodos {{fact:val.BR_MOVIDA.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_MOVIDA.etr",
+        "val.BR_MOVIDA.ke",
+        "val.BR_MOVIDA.cv_metodos"
+      ]
+    },
+    {
+      "titulo": "Safra de frota e caixa econômico",
+      "texto": "Comparar aquisição, depreciação e preço realizado de desmobilização por segmento, preservando o perímetro brasileiro e estrangeiro. Rever a tese se ocupação e diária melhorarem enquanto a renovação e os juros mantiverem consumo de caixa, ou se a margem dos usados decorrer de premissas de depreciação não confirmadas na venda. Confirming e cessões precisam permanecer na ponte de financiamento.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Preço residual realizado não confirma a depreciação e o custo de reposição da frota.",
+    "Ocupação e diárias melhoram sem caixa após renovação, giro e juros.",
+    "Confirming, cessões ou novos aportes mudam a ponte de financiamento e retorno por ação.",
+    "Reajustes e duração de contratos de gestão de frotas deixam de remunerar aquisição e reposição."
+  ],
+  "lacunas_de_dados": [
+    "A extração textual contém resíduos antigos; a leitura depende das páginas visuais atuais.",
+    "A ponte integral de confirming, cessões e caixa atribuível permanece pendente.",
+    "Valor residual e retorno por safra de frota exigem teste específico.",
+    "Pagamento e capitalização posteriores de proventos não foram comprovados.",
+    "A nova projeção tem horizonte diferente, sem direção comparável comprovada.",
+    "O PDF contábil não foi recebido na nova consulta. O release manteve resíduos antigos na extração textual; a conferência visual anterior não foi repetida com êxito agora."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Movida",
+      "titulo": "Negócio e materiais públicos do emissor",
+      "url": "https://ri.movida.com.br/a-companhia/quem-somos/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Movida",
+      "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/437bf607-6e35-4ac9-973f-608b2497e42d/85be8c5e-da9a-b10c-83d9-04e555b8de8a?origin=2",
+      "publicado_em": "2026-08-10",
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Movida",
+      "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/437bf607-6e35-4ac9-973f-608b2497e42d/675fc566-78c6-a0f9-fae2-bd8ba08d5fd8?origin=2",
+      "publicado_em": "2026-08-10",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

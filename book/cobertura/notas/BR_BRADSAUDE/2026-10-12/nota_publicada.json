@@ -1,0 +1,452 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "4588bcaae065f3b35b849ba31b980aa29f01a320b966d56ad3ff822325562a6e",
+    "factbook": "10061d7b4c9d4a834391fbd84ea040767d428dab3fa00cda5520995735e2bed0",
+    "nota_json": "5b4644e75f1987fc3c40c7643dae15e1c9394f9772282bc80a4f607c4f73ad67"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_BRADSAUDE",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-21",
+  "published_at": "2026-10-12T14:06:44.971831+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Reorganização, controle e base de ações mudam a atribuição de resultado. Patrimônio e reservas médicas, investimentos, participações e caixa têm destinações próprias. Hospitais operantes e capacidade futura não são equivalentes. Juros sobre capital aprovados têm pagamento futuro e não foram tratados como recebidos; exceção transitória de dispersão acionária não garante liquidez futura.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-21",
+        "descricao": "Divulgação programada de resultados; rever custo médico, perímetro e lucro atribuível na nova estrutura.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": "2026-11-30",
+        "descricao": "Pagamento programado de juros sobre capital conforme o release; conferir elegibilidade e efetivo crédito.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "dividendos"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 18,12, com retorno esperado +26,39%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Reajustes e retenção sustentam margem após custo médico, com integração e investimentos confirmando retorno atribuível por ação. O cenário otimista calculado pelo código é R$ 20,59.",
+      "pessimista": "Utilização e despesas absorvem receita, o rendimento financeiro deixa de compensar e capital ou integração exigem recursos adicionais. O cenário pessimista calculado pelo código é R$ 16,00."
+    },
+    "comentario_valuation": "Preço de referência R$ 15,65 e alvo do modelo aberto R$ 18,12, com potencial +15,78%. Retorno total esperado +26,39% e custo do capital próprio 11,29%. A dispersão entre métodos é 30,33%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 17,98; a diferença +0,81% não constitui evidência de percepção do mercado. A avaliação deve separar subscrição, resultado das reservas e participações, preservando capital regulatório e caixa por entidade. Comparação por ação exige reconciliação da reorganização, dos históricos gerenciais recompostos e do reconhecimento contábil efetivo. O alvo recebido fica sujeito a essa lacuna; crescimento consolidado não justifica por si só retorno maior ao titular.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se escala aumenta sem retorno após sinistros, despesas e capital. Resultado financeiro pode compensar maior utilização, enquanto a nova base e os investimentos impedem melhora atribuível por ação. Sinergia projetada não substitui comprovação operacional.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.BR_BRADSAUDE.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 15,65"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 18,12"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+15,78%"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 20,59"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 16,00"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,29%"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+26,39%"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+17,74%"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "9,4x"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,4x"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 17,98"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+0,81%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Bradsaúde",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e estrutura do negócio",
+        "url": "https://www.saud3.com.br/sobre-a-odontoprev/historico-e-perfil-bradsaude/"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Bradsaúde",
+        "publicado_em": "2026-08-03",
+        "tipo": "Relações com investidores",
+        "titulo": "Release após reorganização, bases gerenciais e demonstrações",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/c504a4a5-75e7-4404-8af7-524b50cd7e11/5f967584-b370-d17f-328a-9991fafea1c8?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Bradsaúde",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário público de eventos futuros utilizado pelo portal de RI",
+        "url": "https://api.mziq.com/mzevents/events/future/c504a4a5-75e7-4404-8af7-524b50cd7e11/pt-br"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Reajustes e retenção não compensam custo médico e utilização por contrato.",
+      "Margem depende de rendimento das reservas enquanto a subscrição perde rentabilidade.",
+      "Base acionária e lucro atribuível permanecem incompatíveis com o histórico recomposto."
+    ],
+    "governanca": "Controle do Bradesco, relacionadas, participações e direitos na nova base exigem conciliação. A exceção transitória de dispersão acionária tem prazo, sem pressupor seu desfecho. O universo identifica a ação ordinária da nova listagem, mas os insumos quantitativos recebidos não foram promovidos a base por ação reconciliada após a reorganização.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Monitorar reajuste, preço, retenção, utilização e sinistralidade por contrato e segmento. Separar resultado financeiro, médico e odontológico, despesas e participações. Conciliar base acionária, lucro atribuível, perímetro gerencial e estatutário. Acompanhar capital regulatório, hospitais em operação, cronograma de investimento e pagamento dos proventos.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BRADSAUDE.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+26,39%"
+          },
+          {
+            "fato": "val.BR_BRADSAUDE.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,29%"
+          },
+          {
+            "fato": "val.BR_BRADSAUDE.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "30,33%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +26,39%, custo do capital 11,29% e dispersão entre métodos 30,33% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Reajustes e retenção não compensam custo médico e utilização por contrato. Margem depende de rendimento das reservas enquanto a subscrição perde rentabilidade. Base acionária e lucro atribuível permanecem incompatíveis com o histórico recomposto.",
+        "titulo": "Evidência que muda a visão"
+      }
+    ],
+    "issuer_id": "BR_BRADSAUDE",
+    "lacunas_de_dados": [
+      "Base acionária, lucro atribuível e modelo quantitativo não foram reconciliados após a reorganização.",
+      "Histórico gerencial recomposto e reconhecimento estatutário têm perímetros diferentes, sem ajuste manual.",
+      "Demonstrações completas, reservas e capital por entidade exigem conciliação detalhada.",
+      "Retorno dos hospitais, participações e integração não foi comprovado independentemente.",
+      "Pagamento futuro de proventos e desfecho da exceção de dispersão não foram antecipados.",
+      "Guidance, tom agregado da gestão, vantagem relativa e percepção do mercado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Holding de saúde controlada pelo Bradesco, com seguros médicos, odontologia, serviços, participações hospitalares e tecnologia. Reúne Bradesco Saúde, Odontoprev e outros negócios após reorganização concluída. A rede aberta convive com investimentos em prestadores; participação em Fleury não é consolidação integral, e a Orizon de saúde não é a emissora ambiental homônima sob cobertura.",
+    "nome": "Bradesco Saúde",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALLOS",
+        "nome": "Allos"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AMBEV",
+        "nome": "Ambev"
+      },
+      {
+        "issuer_id": "BR_ASSAI",
+        "nome": "Assaí Atacadista"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que relacionamento, dados e escala ampliem atendimento rentável com retorno recorrente por ação depois de custo médico e capital. A condição decisiva é economia dos contratos e transmissão do lucro atribuível na nova estrutura. Crescimento de beneficiários e investimento em hospitais não comprovam sinergia realizada nem tornam toda capacidade anunciada operacional.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BRADSAUDE.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 15,65"
+          },
+          {
+            "fato": "val.BR_BRADSAUDE.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 18,12"
+          },
+          {
+            "fato": "val.BR_BRADSAUDE.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+15,78%"
+          },
+          {
+            "fato": "val.BR_BRADSAUDE.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,29%"
+          },
+          {
+            "fato": "val.BR_BRADSAUDE.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+26,39%"
+          }
+        ],
+        "texto": "Preço de referência R$ 15,65 e alvo R$ 18,12, com potencial +15,78%. A hipótese de investimento deve ser confrontada com o custo do capital 11,29% e retorno esperado +26,39%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A expansão da margem recebida teve contribuição financeira e de despesas enquanto a sinistralidade médica trimestral piorou. A tese precisa demonstrar subscrição rentável e retorno atribuível por ação na estrutura reorganizada. Escala de beneficiários, capacidade hospitalar anunciada e participações não são sinergias realizadas. A nova base societária continua sendo condição decisiva para interpretar o alvo quantitativo.",
+        "titulo": "Subscrição e retorno por ação na nova estrutura"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Rede aberta e serviços podem ampliar acesso e relacionamento com empresas e beneficiários. Vantagem exige retenção, reajuste, utilização e custo médico compatíveis; quantidade de vidas não é margem. A integração de odontologia, seguros e prestadores precisa demonstrar retorno sem dupla contagem de clientes, resultados ou capacidade.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T14:06:44.971831+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O lucro gerencial cresce apesar da maior sinistralidade médica trimestral; resultado financeiro e resultado dos negócios precisam ser separados. Na odontologia, beneficiários avançam com menor preço médio e lucro anual menor. A recomposição gerencial histórica da nova estrutura é diferente do resultado estatutário reconhecido após a aquisição, impedindo comparação direta por ação sem conciliação.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que relacionamento, dados e escala ampliem atendimento rentável com retorno recorrente por ação depois de custo médico e capital. A condição decisiva é economia dos contratos e transmissão do lucro atribuível na nova estrutura. Crescimento de beneficiários e investimento em hospitais não comprovam sinergia realizada nem tornam toda capacidade anunciada operacional. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +26,39%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Custo médico, reajustes insuficientes e perda de contratos podem absorver receita. Reorganização, concentração de controle e bases por ação exigem conciliação. Capacidade futura e resultado de participações não são caixa integralmente disponível."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BRADSAUDE.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+0,81%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +0,81%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Saúde",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Bradsaúde — economia da saúde após reorganização, sinistros e capital",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A reorganização foi concluída e o novo código de negociação já está em uso. A base gerencial recast inclui estrutura atual em períodos anteriores, enquanto a contábil reconhece negócios incorporados apenas depois da conclusão. Sinistralidade trimestral, semestral e acumulada têm direções próprias. Fluxo de caixa recebe efeitos de consolidação e reservas, sem comprovar caixa livre ao acionista.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar reajuste, preço, retenção, utilização e sinistralidade por contrato e segmento. Separar resultado financeiro, médico e odontológico, despesas e participações. Conciliar base acionária, lucro atribuível, perímetro gerencial e estatutário. Acompanhar capital regulatório, hospitais em operação, cronograma de investimento e pagamento dos proventos.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_BRADSAUDE.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,29%"
+          },
+          {
+            "fato": "val.BR_BRADSAUDE.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "30,33%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,29% e a dispersão entre métodos 30,33%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,470 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "2f993b6ab69ed2b0f22209002d155b631e55a5b413cef6af303daa5a6f859b95",
+    "factbook": "916d85d1cc9eda4c6df225feabcf05f574701578de1ce9e8a5b591125cbcc204",
+    "nota_json": "9fb18a5c22bd78636de8e3600746695fd4ca109f72dfacf2cb18e8a546247fb3"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_IGUATEMI",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T14:05:44.901626+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Aquisições, alienações, parceiros e projetos alteram participação e capital. A captação de CRI ampliou liquidez e dívida, enquanto dividendos e compras consumiram recursos. O release informa pré-pagamento posterior de debênture, sem equivalência a lucro operacional. Alavancagem com e sem ganhos de capital tem bases distintas. Expansões e obras têm cronogramas estimados; o início da torre após o trimestre não prova entrega. Estimativa de valor justo superior ao valor de mercado não estabelece realização nem recurso distribuível.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Resultados posteriores: conciliar participação, bases recorrente e pro forma, varejo e fluxo após juros e investimentos.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Confirmação do cronograma das expansões e do desenvolvimento imobiliário, com capital, parceiros e locação atribuíveis.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "capital"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 20,16, com retorno esperado -34,61%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Portfólio e contratos sustentam receita comparável e caixa após financiamento; expansões e participações remuneram capital com execução controlada. O cenário otimista calculado pelo código é R$ 22,68.",
+      "pessimista": "Lojistas, obras ou varejo exigem capital adicional, receitas atribuíveis não acompanham ajustes e financiamento restringe retorno e distribuição. O cenário pessimista calculado pelo código é R$ 17,84."
+    },
+    "comentario_valuation": "Preço de referência R$ 32,38 e alvo do modelo aberto R$ 20,16, com potencial -37,73%. Retorno total esperado -34,61% e custo do capital próprio 10,53%. A dispersão entre métodos é 14,34%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 33,48; a diferença -39,77% não constitui evidência de percepção do mercado. Valor por ativo deve ligar renda líquida, participação econômica, investimento e custo de financiamento. FFO e EBITDA recorrentes precisam de ponte ao caixa após juros; pro forma e recorrente retiram efeitos diferentes. Dinheiro, cotas recebidas em reciclagem e obrigações de aquisição não são intercambiáveis. O valuation patrimonial não demonstra preço líquido realizável.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese enfraquece se qualificação de mix e bases ajustadas escondem menor caixa atribuível ou preço elevado nas aquisições. O varejo pode crescer com capital e risco superiores ao retorno. Ganhos de venda reduzem leitura da alavancagem sem eliminar obrigações. Expansões podem atrasar ou absorver recursos antes de gerar aluguel. Bases pro forma e recorrentes são úteis, mas precisam de ponte ao resultado e fluxo efetivos; a avaliação patrimonial não comprova o preço líquido de venda dos ativos.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.BR_IGUATEMI.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 32,38"
+      },
+      {
+        "fato": "val.BR_IGUATEMI.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 20,16"
+      },
+      {
+        "fato": "val.BR_IGUATEMI.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-37,73%"
+      },
+      {
+        "fato": "val.BR_IGUATEMI.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_IGUATEMI.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_IGUATEMI.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 22,68"
+      },
+      {
+        "fato": "val.BR_IGUATEMI.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_IGUATEMI.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 17,84"
+      },
+      {
+        "fato": "val.BR_IGUATEMI.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_IGUATEMI.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,53%"
+      },
+      {
+        "fato": "val.BR_IGUATEMI.wacc",
+        "rotulo": "WACC",
+        "valor": "9,38%"
+      },
+      {
+        "fato": "val.BR_IGUATEMI.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_IGUATEMI.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-34,61%"
+      },
+      {
+        "fato": "val.BR_IGUATEMI.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-32,04%"
+      },
+      {
+        "fato": "val.BR_IGUATEMI.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "15,5x"
+      },
+      {
+        "fato": "val.BR_IGUATEMI.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,6x"
+      },
+      {
+        "fato": "val.BR_IGUATEMI.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 33,48"
+      },
+      {
+        "fato": "val.BR_IGUATEMI.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-39,77%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Iguatemi",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Histórico, participações e estrutura do grupo",
+        "url": "https://ri.iguatemi.com.br/historico-e-perfil-corporativo"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Iguatemi",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado: shoppings, varejo, pro forma, dívida e fluxo",
+        "url": "https://ri.iguatemi.com.br/Download.aspx?Arquivo=MPRVxUrpOYqlzDwGUD8BQQ=="
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Iguatemi",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: direitos, dívida, fluxo e revisão",
+        "url": "https://ri.iguatemi.com.br/Download.aspx?Arquivo=1PzLzg/UqBc4xsrWhni87w=="
+      }
+    ],
+    "gatilhos_revisao": [
+      "Ocupação e aluguel deixam de remunerar manutenção e expansão na participação própria.",
+      "Reclassificações e ganhos de alienação escondem menor caixa após juros.",
+      "Varejo, aquisições ou obras consomem capital sem retorno econômico atribuível."
+    ],
+    "governanca": "A revisão intermediária tem alcance inferior à auditoria anual. Resultado integral, participação própria, ações e units exigem conciliação de direitos. A tabela de caixa ajustado declara mudanças de classificação de juros e aplicações, sem eliminar desembolsos. A cópia nativa foi recebida com verificação TLS válida por método público padrão. A página de comunicados consultada mostrou arquivo histórico; isso não foi convertido em ausência de eventos recentes nem em confirmação de guidance atual.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Acompanhar aluguel, ocupação, descontos, custo do lojista e NOI em base comparável. Conciliar participações, recorrente, pro forma e fluxo após juros e investimentos. Separar varejo, ganhos de venda, dívida e refinanciamento. Verificar expansão, parceiros, classes societárias e caixa distribuível.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_IGUATEMI.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-34,61%"
+          },
+          {
+            "fato": "val.BR_IGUATEMI.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,53%"
+          },
+          {
+            "fato": "val.BR_IGUATEMI.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "14,34%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -34,61%, custo do capital 10,53% e dispersão entre métodos 14,34% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Ocupação e aluguel deixam de remunerar manutenção e expansão na participação própria. Reclassificações e ganhos de alienação escondem menor caixa após juros. Varejo, aquisições ou obras consomem capital sem retorno econômico atribuível.",
+        "titulo": "Evidência que muda a visão"
+      }
+    ],
+    "issuer_id": "BR_IGUATEMI",
+    "lacunas_de_dados": [
+      "Bases recorrente, pro forma e contábil não foram integralmente reconciliadas por ativo.",
+      "Fluxo ajustado e contábil exigem ponte completa de juros, aplicações e investimentos.",
+      "Cronograma estimado não comprova entregas e operação posteriores.",
+      "Capital, direitos e retorno das participações com fundos e parceiros permanecem a examinar em detalhe.",
+      "Classes societárias, units e acordo vigente não foram integralmente reconciliados.",
+      "Comunicados atuais e guidance não foram confirmados pela página histórica consultada.",
+      "Tom, comparação independente e percepção do mercado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo de shopping centers, outlets e imóveis comerciais, com administração, estacionamento e atividades de varejo próprio e digital voltadas ao público dos empreendimentos. A estratégia combina aquisição de participações, reciclagem e expansão de uso misto. Operação integral do shopping, parcela econômica e receita consolidada não são iguais. Reorganização societária, ações e units têm direitos próprios. Vendas dos lojistas, participação em fundos e resultado do varejo exigem bases separadas antes de avaliar retorno por ativo e acionista.",
+    "nome": "Iguatemi",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ALLOS",
+        "nome": "Allos"
+      },
+      {
+        "issuer_id": "BR_MULTIPLAN",
+        "nome": "Multiplan"
+      },
+      {
+        "issuer_id": "CL_CENCOMALLS",
+        "nome": "Cencosud Shopping"
+      },
+      {
+        "issuer_id": "CL_MALLPLAZA",
+        "nome": "Plaza SA (Mallplaza)"
+      },
+      {
+        "issuer_id": "CL_PARAUCO",
+        "nome": "Parque Arauco"
+      },
+      {
+        "issuer_id": "MX_FIBRAPL",
+        "nome": "Fibra Prologis"
+      },
+      {
+        "issuer_id": "MX_VESTA",
+        "nome": "Corporación Inmobiliaria Vesta"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que localização, mix e qualificação do portfólio sustentem aluguel e serviços depois de manutenção, expansão e financiamento. A condição decisiva é demonstrar caixa atribuível em base comparável, preservando direitos e preço pago pelas participações. Reciclagem pode melhorar capital, mas modifica a base de aluguel e não prova crescimento orgânico. O varejo próprio tem risco operacional distinto da locação. Expansões e terrenos oferecem possibilidades condicionadas a execução, demanda e participação; valor justo não foi tratado como caixa realizado.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_IGUATEMI.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 32,38"
+          },
+          {
+            "fato": "val.BR_IGUATEMI.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 20,16"
+          },
+          {
+            "fato": "val.BR_IGUATEMI.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-37,73%"
+          },
+          {
+            "fato": "val.BR_IGUATEMI.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,53%"
+          },
+          {
+            "fato": "val.BR_IGUATEMI.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-34,61%"
+          }
+        ],
+        "texto": "Preço de referência R$ 32,38 e alvo R$ 20,16, com potencial -37,73%. A hipótese de investimento deve ser confrontada com o custo do capital 10,53% e retorno esperado -34,61%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Localização e mix têm valor se ocupação e vendas remunerarem aluguel, manutenção e expansão. Reciclagem modifica participação e contribuição; varejo próprio tem outro capital e risco. A tese precisa comparar bases recorrentes e pro forma com o resultado efetivo, sem promover valor justo a dinheiro disponível. Cronograma estimado passado não comprova entrega de obras.",
+        "titulo": "Renda atribuível em bases comparáveis"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Ativos, marcas, curadoria de lojas e público podem apoiar renovação e receitas complementares. O teste exige ocupação, desconto, custo do lojista e crescimento comparável, com controle de participação. Ganho de mix após alienações não demonstra sozinho poder de preço. O varejo próprio pode reforçar o posicionamento, mas mantém risco de estoque, importação e operação. Administração de ativos vendidos preserva receitas de serviços com direitos diferentes do aluguel. Alegações de superioridade de alocação permanecem distintas de avaliação independente.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T14:05:44.901626+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita e indicadores financeiros trimestrais reportados recuam anualmente, com comparação afetada por ganhos de venda e participação temporária de parceiros no período anterior. As bases recorrente e pro forma retiram efeitos diferentes e mostram direções próprias. Varejo melhora em base própria, sem equivalência à locação. A demonstração dos fluxos ajustada muda classificação de juros e aplicações; caixa operacional ajustado não representa caixa livre. A dívida cresce com captação, apesar da melhora esperada no custo de financiamento.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que localização, mix e qualificação do portfólio sustentem aluguel e serviços depois de manutenção, expansão e financiamento. A condição decisiva é demonstrar caixa atribuível em base comparável, preservando direitos e preço pago pelas participações. Reciclagem pode melhorar capital, mas modifica a base de aluguel e não prova crescimento orgânico. O varejo próprio tem risco operacional distinto da locação. Expansões e terrenos oferecem possibilidades condicionadas a execução, demanda e participação; valor justo não foi tratado como caixa realizado. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado -34,61%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Consumo, lojistas, juros, obras e capital de varejo podem limitar retorno. Mudanças de participação afetam comparabilidade. Ajustes de caixa e ganhos de venda podem encobrir necessidade de financiamento; valor justo não garante liquidez."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_IGUATEMI.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-39,77%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -39,77%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Imobiliário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Iguatemi — qualidade de portfólio, bases comparáveis e capital por ativo",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O release preserva lucro, FFO e EBITDA reportados menores no trimestre e crescimento em bases ajustadas específicas. A comparação do período anterior inclui participação de investidores parceiros e ganhos com alienações; pro forma e recorrente não são intercambiáveis. O fluxo ajustado retira juros do operacional e muda aplicações entre classes, mantendo necessidade de avaliar custo econômico. O cronograma das obras tem datas estimadas passadas e futuras; realização posterior não foi presumida nem incorporada retrospectivamente ao modelo.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar aluguel, ocupação, descontos, custo do lojista e NOI em base comparável. Conciliar participações, recorrente, pro forma e fluxo após juros e investimentos. Separar varejo, ganhos de venda, dívida e refinanciamento. Verificar expansão, parceiros, classes societárias e caixa distribuível.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_IGUATEMI.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,53%"
+          },
+          {
+            "fato": "val.BR_IGUATEMI.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "14,34%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,53% e a dispersão entre métodos 14,34%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

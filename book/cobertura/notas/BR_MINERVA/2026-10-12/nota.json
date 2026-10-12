@@ -1,0 +1,225 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_MINERVA",
+  "data": "2026-10-12",
+  "tipo": "iniciacao",
+  "titulo": "Minerva — arbitragem de origens e conversão de margem em caixa",
+  "resumo": "A hipótese é que flexibilidade de origens e canais preserve margens ao longo do ciclo pecuário e gere caixa depois de investimento, juros e capital de giro. A condição decisiva é receita exportada converter-se em recebimentos sem alongamento persistente da carteira e estoques. A arbitragem comercial não elimina financiamento ou restrições sanitárias. O teste precisa separar resultado anual e trimestral, dívida efetiva e índice contratual, preservando exposição cambial, custos de proteção e diluição possível. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_MINERVA.rating_codigo}}, com retorno esperado {{fact:val.BR_MINERVA.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Produtora e exportadora de carne bovina e derivados com plantas, distribuição e atuação comercial em diferentes origens sul-americanas e operação de ovinos. Venda doméstica e exportação têm preços, habilitações e prazos de recebimento distintos. O acesso internacional permite redirecionar origens e destinos, condicionado a oferta de animais, sanidade e barreiras comerciais. Dívida em moedas diferentes, operações de proteção e bônus de subscrição afetam capital, custo e retorno por ação.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que flexibilidade de origens e canais preserve margens ao longo do ciclo pecuário e gere caixa depois de investimento, juros e capital de giro. A condição decisiva é receita exportada converter-se em recebimentos sem alongamento persistente da carteira e estoques. A arbitragem comercial não elimina financiamento ou restrições sanitárias. O teste precisa separar resultado anual e trimestral, dívida efetiva e índice contratual, preservando exposição cambial, custos de proteção e diluição possível.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_MINERVA.preco}} e alvo {{fact:val.BR_MINERVA.preco_alvo}}, com potencial {{fact:val.BR_MINERVA.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_MINERVA.ke}} e retorno esperado {{fact:val.BR_MINERVA.etr}}.",
+      "evidencias": [
+        "val.BR_MINERVA.preco",
+        "val.BR_MINERVA.preco_alvo",
+        "val.BR_MINERVA.upside",
+        "val.BR_MINERVA.ke",
+        "val.BR_MINERVA.etr"
+      ]
+    },
+    {
+      "titulo": "Exportação e ciclo financeiro",
+      "texto": "O release relaciona aumento de recebíveis às vendas para clientes asiáticos com prazo maior. A leitura de arbitragem precisa demonstrar que o ganho por destino remunera o capital mantido no ciclo comercial. Exportar mais não basta se cobrança, estoque e proteção exigirem financiamento persistente. Cumprimento contratual declarado na data do balanço tem definição e alcance próprios; não prova folga posterior nem transforma bônus disponíveis em recursos recebidos.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Monitorar abate, utilização, preço de animais e margem por origem e destino. Conciliar recebíveis, estoques, ativo biológico e caixa após juros e capex. Separar dívida gerencial e contratual, expurgos, margens de derivativos, garantias, bônus exercidos e diluição efetiva.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_MINERVA.ke}} e a dispersão entre métodos {{fact:val.BR_MINERVA.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_MINERVA.ke",
+        "val.BR_MINERVA.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Resultados posteriores: acompanhar capital de giro e caixa após custo financeiro e investimento.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "descricao": "Exercício e homologação de bônus, com recursos e diluição efetivamente registrados.",
+      "data": null,
+      "tipo": "capital",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Oferta de gado, sanidade, barreiras e câmbio podem restringir margem. Recebíveis e estoques prolongam giro. Juros, proteção, recursos vinculados e bônus podem limitar liquidez e retorno por ação.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_MINERVA.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_MINERVA.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Origens e canais preservam margem; recebimentos, estoque e investimento sustentam caixa recorrente, com passivos e diluição controlados. O cenário otimista calculado pelo código é {{fact:val.BR_MINERVA.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_MINERVA.preco_alvo}}, com retorno esperado {{fact:val.BR_MINERVA.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Gado, restrições e prazos de exportação pressionam margem e giro; financiamento e proteção absorvem recursos e limitam retorno por ação. O cenário pessimista calculado pelo código é {{fact:val.BR_MINERVA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "O negócio pede caixa normalizado pelo ciclo pecuário, custos por origem e reinvestimento das plantas, com ponte para dívida em moedas distintas e diluição efetiva. EBITDA de período favorável ou saldo de caixa bruto isolado não sustenta valor por ação; métricas contratuais devem conservar expurgos e finalidade próprios. Preço de referência {{fact:val.BR_MINERVA.preco}} e alvo do modelo aberto {{fact:val.BR_MINERVA.preco_alvo}}, com potencial {{fact:val.BR_MINERVA.upside}}. Retorno total esperado {{fact:val.BR_MINERVA.etr}} e custo do capital próprio {{fact:val.BR_MINERVA.ke}}. A dispersão entre métodos é {{fact:val.BR_MINERVA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_MINERVA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_MINERVA.consenso_alvo}}; a diferença {{fact:val.BR_MINERVA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "A comparação trimestral anual mostra receita maior e EBITDA e lucro menores; a melhora sequencial não foi confundida com essa base. Fluxo operacional e caixa livre recentes são negativos, mesmo com acumulado anual de caixa livre positivo. A companhia concluiu emissão e recompras de dívida. Os bônus já exercidos não equivalem ao potencial de recursos futuros. O cumprimento contratual informado na data do balanço não certifica períodos posteriores nem elimina diferenças entre índice gerencial e covenant.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "As notas descrevem cláusulas contratuais, expurgos e proteção cambial próprios. A administração informa cumprimento na data do balanço; esta pesquisa não o recalculou ou estendeu a outro período. Metas ambientais e cobertura de seguro são declarações com escopo específico, sem garantia integral da cadeia. Bônus e homologação posterior modificam capital por ação. O recebimento anterior do RI e da API pública utilizou conexão normalmente verificada; consulta posterior não estabelece disponibilidade histórica dos insumos.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Originação, plantas habilitadas e rede comercial podem permitir atendimento e redirecionamento mais ágeis. A vantagem exige prova por origem, destino, utilização e custo do animal. Demanda externa e menor oferta em outros países criam oportunidade, mas habilitação e logística condicionam acesso. Diversificação de destinos pode reduzir concentração, com prazos próprios de crédito. Rastreabilidade e metas divulgadas apoiam acompanhamento; declarações institucionais não certificam ausência de risco na cadeia.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Receita cresce, enquanto EBITDA e lucro recuam na comparação anual trimestral; a melhora sequencial tem outra base. O fluxo operacional e o caixa livre trimestrais são negativos, com recebíveis, estoques e ativos biológicos consumindo recursos. A geração livre acumulada anual positiva não elimina o consumo recente. Resultado cambial e instrumentos de proteção têm efeitos próprios. As notas informam margens depositadas e conceitos de dívida e covenant diferentes da relação gerencial divulgada.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "A emissão de notas foi concluída e houve recompra e cancelamento de títulos, com finalidade de alongar passivos. Captação amplia liquidez e obrigação, sem representar geração operacional. Bônus já exercidos diferem dos ainda disponíveis; recursos esperados dependem de exercício e implicam diluição. O índice contratual admite expurgos e tem definição própria, sem equivalência automática à alavancagem gerencial. Recursos vinculados, garantias, proteção cambial e custo de refinanciamento precisam de ponte completa.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se crescimento comercial alonga recebíveis e exige financiamento recorrente antes de caixa. EBITDA e geração anual positiva não neutralizam consumo trimestral ou vencimentos. Diversificação perde valor se barreiras reduzem origens habilitadas ou custo de redirecionamento supera ganhos. Expurgos contratuais podem melhorar a métrica sem eliminar obrigações. Bônus ainda não exercidos não são caixa disponível, e redução de dívida por emissão de ações tem custo para retorno por unidade.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Monitorar abate, utilização, preço de animais e margem por origem e destino. Conciliar recebíveis, estoques, ativo biológico e caixa após juros e capex. Separar dívida gerencial e contratual, expurgos, margens de derivativos, garantias, bônus exercidos e diluição efetiva.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_MINERVA.etr}}, custo do capital {{fact:val.BR_MINERVA.ke}} e dispersão entre métodos {{fact:val.BR_MINERVA.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_MINERVA.etr",
+        "val.BR_MINERVA.ke",
+        "val.BR_MINERVA.cv_metodos"
+      ]
+    },
+    {
+      "titulo": "Destino, prazo e caixa depois da proteção",
+      "texto": "Acompanhar prazo de recebimento e concentração por destino, estoque e desembolsos de proteção nas divulgações seguintes. A melhora deve aparecer no caixa depois de juros e investimento, preservando comparação trimestral e anual. Rever a hipótese se o ganho de acesso comercial depender de mais crédito ao cliente ou se recompras e alongamento de dívida não reduzirem a necessidade de financiar o giro.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Recebíveis e estoque impedem a conversão da margem comercial em caixa.",
+    "Origem, sanidade e barreiras reduzem a flexibilidade entre destinos.",
+    "Índices contratuais, expurgos, garantias ou margens de proteção alteram liquidez.",
+    "Exercício de bônus muda capital e retorno por ação sem caixa econômico suficiente."
+  ],
+  "lacunas_de_dados": [
+    "Fluxo contábil, medida livre gerencial e efeitos de juros e proteção não foram integralmente conciliados.",
+    "Alavancagem gerencial e covenant têm definições distintas; não se recalculou folga contratual.",
+    "Capital atual e exercício posterior de bônus exigem atualização por documento, sem antecipar caixa.",
+    "Recebíveis por destino, prazos de exportação e perdas não foram integralmente examinados.",
+    "Recursos vinculados, margens de derivativos e garantias exigem ponte de liquidez.",
+    "Retorno incremental de plantas e concentração de cadeia precisam de diligência específica.",
+    "Guidance agregado, tom e percepção do mercado permanecem não determinados.",
+    "A página institucional não respondeu na nova consulta; sua referência histórica foi preservada. Não há prova nova de liquidez ou covenants posteriores ao balanço."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Minerva Foods",
+      "titulo": "Negócio e materiais públicos do emissor",
+      "url": "https://ri.minervafoods.com/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Minerva Foods",
+      "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/7f2b381f-831b-4aed-b111-417a5585b53b/189fd4d3-3b2c-6755-c132-0bf3b7f65872?origin=2",
+      "publicado_em": "2026-08-12",
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Minerva Foods",
+      "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/7f2b381f-831b-4aed-b111-417a5585b53b/b49cb5bd-df92-3d9f-c1fb-e396bf623336?origin=2",
+      "publicado_em": "2026-08-12",
+      "consultado_em": "2026-10-12"
+    }
+  ],
+  "modelo_ia": null
+}

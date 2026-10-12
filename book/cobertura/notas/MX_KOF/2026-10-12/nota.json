@@ -1,0 +1,252 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_KOF",
+  "data": "2026-10-12",
+  "tipo": "iniciacao",
+  "titulo": "Coca-Cola FEMSA: distribuição rentável, franquia e caixa após expansão",
+  "resumo": "A decisão depende de distribuição e segmentação preservarem contribuição e caixa da engarrafadora após custos de concentrado, embalagem, logística e reinvestimento. A força da marca não assegura a repartição econômica entre franqueador e engarrafadora. O contraponto é receita nominal ou margem ajudada por efeitos excepcionais, sem volume e caixa recorrentes. A leitura qualitativa permanece neutra até conciliar esses mecanismos; o modelo do código indica {{fact:val.MX_KOF.rating_codigo}} e retorno esperado {{fact:val.MX_KOF.etr}}. Não há evidência suficiente para afirmar divergência frente ao mercado.",
+  "negocio": "Coca-Cola FEMSA fabrica, embala e distribui bebidas sob contratos territoriais de engarrafamento nas Américas. A economia combina densidade de distribuição, execução no ponto de venda, preço, embalagem e frequência de compra. O franqueador fornece concentrado e detém marcas e fórmulas; essa relação limita a leitura da marca como ativo livre da engarrafadora. México, América Central e América do Sul possuem condições próprias de renda, custos e moeda. Água, bebidas carbonatadas e outras categorias exigem leitura distinta; receita de cerveja distribuída no Brasil não integra todas as métricas de volume divulgadas.",
+  "pilares_tese": [
+    {
+      "titulo": "Distribuição precisa preservar rentabilidade",
+      "texto": "A hipótese favorável é que segmentação e embalagens acessíveis sustentem procura e contribuição por rota sem exigir subsídio comercial crescente. A condição decisiva é caixa recorrente após embalagem, logística e capacidade. A confirmação exige volumes e transações por território, não apenas receita nominal traduzida em moeda.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Franquia não garante apropriação do valor",
+      "texto": "Os contratos territoriais e a compra de concentrado ligam a operação à Coca-Cola. A tese exige remuneração adequada da engarrafadora depois dessa relação econômica e das obrigações de investimento. Exclusividade comercial não elimina competição de outras bebidas nem o risco de custos de concentrado e condições contratuais.",
+      "evidencias": [
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Melhora precisa sobreviver aos ajustes",
+      "texto": "O release identifica seguros e efeitos de moeda e comparabilidade. A análise exige separar resultado recorrente de recebimentos excepcionais e conciliar EBITDA ajustado, IFRS e caixa. Um ganho contábil sem conversão após manutenção e expansão não comprova maior capacidade de distribuição ao acionista.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.MX_KOF.preco}} e alvo {{fact:val.MX_KOF.preco_alvo}}, com potencial {{fact:val.MX_KOF.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.MX_KOF.ke}} e retorno esperado {{fact:val.MX_KOF.etr}}.",
+      "evidencias": [
+        "val.MX_KOF.preco",
+        "val.MX_KOF.preco_alvo",
+        "val.MX_KOF.upside",
+        "val.MX_KOF.ke",
+        "val.MX_KOF.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Preço, embalagem e frequência de compra",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Monitorar volumes e transações por território, combinação de embalagens e contribuição comercial. Revisar se acessibilidade sustenta demanda sem depender de descontos que transfiram a pressão ao caixa.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Concentrado e repartição de rentabilidade",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar alterações divulgadas nas condições da franquia e no concentrado, junto a embalagem, logística e manutenção. A vantagem precisa remunerar a engarrafadora após essas obrigações.",
+      "evidencias": [
+        "F3"
+      ]
+    },
+    {
+      "vetor": "Capacidade e caixa recorrente",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Confrontar investimento pago, expansão e necessidade de capital de giro com caixa operacional. Separar gasto capitalizado de desembolso e não interpretar redução de capex como melhora estrutural sem analisar capacidade e manutenção.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.MX_KOF.ke}} e a dispersão entre métodos {{fact:val.MX_KOF.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.MX_KOF.ke",
+        "val.MX_KOF.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Tributação e renda pressionam acessibilidade; reajuste pode preservar receita nominal enquanto enfraquece frequência e contribuição por rota. A diversidade territorial não elimina esse mecanismo.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "texto": "Mudanças no concentrado ou nas condições da franquia podem limitar a apropriação de valor. A marca pertence ao franqueador e as obrigações comerciais e de investimento não são opcionais.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F3"
+      ]
+    },
+    {
+      "texto": "Seguros, moeda e comparabilidade podem encobrir recorrência. Expansão, arrendamentos e capital de giro podem absorver caixa mesmo com EBITDA maior.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.MX_KOF.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.MX_KOF.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Distribuição e combinação de produtos sustentam volume e caixa após expansão e manutenção. O cenário otimista calculado pelo código é {{fact:val.MX_KOF.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.MX_KOF.preco_alvo}}, com retorno esperado {{fact:val.MX_KOF.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Pressão sobre consumo e insumos limita a rentabilidade e alonga o retorno dos investimentos. O cenário pessimista calculado pelo código é {{fact:val.MX_KOF.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.MX_KOF.preco}} e alvo do modelo aberto {{fact:val.MX_KOF.preco_alvo}}, com potencial {{fact:val.MX_KOF.upside}}. Retorno total esperado {{fact:val.MX_KOF.etr}} e custo do capital próprio {{fact:val.MX_KOF.ke}}. A dispersão entre métodos é {{fact:val.MX_KOF.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.MX_KOF.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.MX_KOF.consenso_alvo}}; a diferença {{fact:val.MX_KOF.diff_consenso}} não constitui evidência de percepção do mercado. A adequação de fluxos de caixa ou múltiplos de lucro depende de recorrência, repartição econômica da franquia e capital necessário. Seguros e moeda não sustentam perpetuidade; lucro por ADS exige conciliar unidades e direitos. A premissa central é retorno após concentrado, manutenção, expansão e financiamento. Nenhum preço ou cenário é refeito nesta nota.",
+  "ultimo_resultado": "O release apresenta desempenho por divisão e território, além de volumes, transações e receita com perímetros próprios. A gestão atribui a execução comercial à segmentação e acessibilidade; essa é uma alegação a testar. Recebimentos de seguros, tradução cambial e definições comparáveis afetam a leitura. No Brasil, receita de cerveja e métricas de volume não têm o mesmo perímetro. A reconciliação integral com fluxo de caixa e lucro atribuível permanece pendente, apesar da leitura dos documentos.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "FEMSA e The Coca-Cola Company participam da estrutura de controle e dos acordos que afetam a operação. A compra de concentrado e os acordos comerciais exigem análise da repartição de valor e das aprovações aplicáveis. Ações, unidades e ADSs têm composição e direitos próprios; lucro por essas bases não é intercambiável. Dividendos dependem de aprovações, resultados e necessidades de capital, e sua conversão em dólares envolve o depositário. A nota não recompõe equivalências ou capitalização.",
+  "posicao_competitiva": {
+    "titulo": "Densidade de rotas e disciplina comercial",
+    "texto": "A rede territorial e a execução no ponto de venda podem produzir escala e serviço. O teste é manter frequência e contribuição depois de concentrado, embalagem e distribuição. A competição ocorre também por preço, apresentação e substituição entre categorias. Alegações de ganho de participação da gestão não foram tratadas como confirmação independente.",
+    "evidencias": [
+      "F1",
+      "F3"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e perímetro das métricas",
+    "texto": "Distinguir seguros e encargos não monetários de contribuição recorrente. Receitas traduzidas, métricas comparáveis, volume e transações exigem períodos e perímetros consistentes; distribuição de cerveja no Brasil requer atenção própria. A tese depende da ponte para IFRS, caixa operacional e resultado atribuível, sem tomar EBITDA ajustado por caixa livre.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Investimento após manutenção e financiamento",
+    "texto": "A expansão deve demonstrar demanda e retorno depois de manutenção, embalagens, logística e capital de giro. Reconciliar capex capitalizado e desembolsado, arrendamentos, dívida, proteção cambial e dividendos. A disciplina relevante é o caixa após obrigações e financiamento; a relação com o franqueador não substitui esse teste.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "Marca forte pode coexistir com retorno insuficiente",
+    "texto": "A hipótese falha se preço e segmentação sustentarem receita sem frequência ou contribuição, se o franqueador absorver a rentabilidade adicional ou se expansão exigir caixa desproporcional ao retorno. Melhora apoiada em seguros e moeda sem geração recorrente tampouco comprova capacidade de reinvestimento e distribuição.",
+    "evidencias": [
+      "F1",
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Demanda e embalagem por território",
+      "texto": "Acompanhar volume, transações, apresentação e preço local por território. Separar receita de cerveja do perímetro de volume no Brasil. Revisar a hipótese se reajustes não sustentarem frequência e contribuição comercial.",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Caixa e normalização do resultado",
+      "texto": "Revisar seguros, encargos não monetários, conversão cambial e efeitos de comparabilidade antes de avaliar recorrência. Exigir ponte para caixa operacional após capital de giro, manutenção e expansão.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Franquia e retorno do capital",
+      "texto": "Acompanhar condições do concentrado, compromissos de investimento, financiamento e distribuição. Mudanças nesses termos exigem revisar a apropriação de valor pela engarrafadora e o retorno após obrigações.",
+      "evidencias": [
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.MX_KOF.etr}}, custo do capital {{fact:val.MX_KOF.ke}} e dispersão entre métodos {{fact:val.MX_KOF.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.MX_KOF.etr",
+        "val.MX_KOF.ke",
+        "val.MX_KOF.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Preço e segmentação deixam de sustentar frequência de compra e contribuição por território.",
+    "Rentabilidade adicional é absorvida pelo concentrado ou por obrigações de investimento e logística.",
+    "Recorrência depende de seguros ou moeda sem conversão em caixa após reinvestimento.",
+    "Mudanças na franquia, estrutura de capital ou direitos alteram o valor atribuível ao detentor do recibo."
+  ],
+  "lacunas_de_dados": [
+    "Fluxo de caixa, encargos ajustados e resultado atribuível não foram integralmente conciliados com o modelo.",
+    "Capitalização plenamente diluída, arrendamentos e equivalências entre ações, unidades e ADSs exigem reconciliação pelo código.",
+    "Retorno realizado de capacidade e logística não foi reconciliado com investimento e manutenção.",
+    "Participação de mercado alegada pela gestão não recebeu confirmação independente.",
+    "Cronogramas de dividendos nos documentos consultados não foram reconciliados; nenhuma data futura foi adotada.",
+    "Guidance formal agregado, tom da gestão e percepção de mercado permanecem não determinados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Coca-Cola FEMSA",
+      "titulo": "Resultados e prioridades comerciais da engarrafadora",
+      "url": "https://www.femsa.com/en/press-room/press-release/coca-cola-femsa-second-quarter-2026-results/",
+      "publicado_em": "2026-07-27",
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Coca-Cola FEMSA",
+      "titulo": "Release financeiro e definições da engarrafadora",
+      "url": "https://www.femsa.com/wp-content/uploads/2026/07/Coca-Cola-FEMSA-Results-2Q26.pdf",
+      "publicado_em": "2026-07-27",
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Coca-Cola FEMSA",
+      "titulo": "Relatório anual, franquias e direitos do capital",
+      "url": "https://investors.coca-colafemsa.com/assets/files/reportes_resultados_en/2026/20f-2025.pdf",
+      "publicado_em": "2026-04-15",
+      "consultado_em": "2026-10-12"
+    }
+  ],
+  "modelo_ia": null
+}

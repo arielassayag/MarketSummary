@@ -1,0 +1,458 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "aacad758e70ddf3784b5d9a2d46f109b0059437c29c2c6ea3a447a91d0b25922",
+    "factbook": "19235e4243db5a23916452310db1d273e5c6ed5326dc74fe893075c1e03ee6d8",
+    "nota_json": "a9da93f681987868d606f1e58c48db4a00ca36b6f78d63dd7a1d959e3489cbe4"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_COGNA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-11",
+  "published_at": "2026-10-12T14:07:24.677678+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Educbank foi incorporada, trazendo caixa, dívida e direitos contratuais sobre participação remanescente. A análise da dívida sem essa aquisição é hipotética. Investimento em conteúdo e instalações, juros e dividendos competem com recursos. O texto e a tabela divergem sobre direção da dívida bruta, exigindo reconciliação explícita.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: confirmar retenção, renovação e caixa após custo completo.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 3,47, com retorno esperado +22,83%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Retenção e renovação sustentam negócios privados, com ciclos públicos disciplinados; caixa depois de juros remunera investimento e crédito sem comprometer capital. O cenário otimista calculado pelo código é R$ 5,18.",
+      "pessimista": "Evasão, crédito e calendário reduzem recebimento; integração e passivos consomem recursos e as bases ajustadas superestimam a geração recorrente. O cenário pessimista calculado pelo código é R$ 1,81."
+    },
+    "comentario_valuation": "Preço de referência R$ 2,93 e alvo do modelo aberto R$ 3,47, com potencial +18,34%. Retorno total esperado +22,83% e custo do capital próprio 12,79%. A dispersão entre métodos é 29,07%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 3,58; a diferença -3,27% não constitui evidência de percepção do mercado. Kroton deve ser lida por modalidade, retenção e recebimento; educação básica por contratos privados e ciclos públicos. Educbank exige carteira, capital e direitos próprios. A análise precisa ligar o perímetro consolidado ao fluxo após investimento, arrendamento e juros, preservando a divergência entre texto e tabela da dívida; calendário favorável não pode virar perpetuidade automática.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Eficiência e caixa melhores podem refletir calendário público e menor consumo temporário de giro. A base educacional pode encolher enquanto aquisições elevam EBITDA. Se crédito e renovação piorarem, desalavancagem gerencial não confirmará geração recorrente.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.BR_COGNA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 2,93"
+      },
+      {
+        "fato": "val.BR_COGNA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 3,47"
+      },
+      {
+        "fato": "val.BR_COGNA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+18,34%"
+      },
+      {
+        "fato": "val.BR_COGNA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_COGNA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_COGNA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 5,18"
+      },
+      {
+        "fato": "val.BR_COGNA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "9,87%"
+      },
+      {
+        "fato": "val.BR_COGNA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 1,81"
+      },
+      {
+        "fato": "val.BR_COGNA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "15,91%"
+      },
+      {
+        "fato": "val.BR_COGNA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,79%"
+      },
+      {
+        "fato": "val.BR_COGNA.wacc",
+        "rotulo": "WACC",
+        "valor": "9,17%"
+      },
+      {
+        "fato": "val.BR_COGNA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_COGNA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+22,83%"
+      },
+      {
+        "fato": "val.BR_COGNA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+1,43%"
+      },
+      {
+        "fato": "val.BR_COGNA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "6,2x"
+      },
+      {
+        "fato": "val.BR_COGNA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,4x"
+      },
+      {
+        "fato": "val.BR_COGNA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 3,58"
+      },
+      {
+        "fato": "val.BR_COGNA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-3,27%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Cogna",
+        "publicado_em": null,
+        "tipo": "Regulador",
+        "titulo": "Documento original na CVM: negócios e modalidades",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1556591&numSequencia=1081297&numVersao=1"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Cogna",
+        "publicado_em": "2026-08-12",
+        "tipo": "Regulador",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1556591&numSequencia=1081297&numVersao=1"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Cogna",
+        "publicado_em": "2026-08-12",
+        "tipo": "Regulador",
+        "titulo": "Anexos do release original: resultado, balanço e fluxo de caixa",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1556591&numSequencia=1081297&numVersao=1"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Renovação e recebimento pioram após normalizar o calendário das compras públicas.",
+      "Ajustes de modalidades escondem deterioração de captação, evasão ou crédito.",
+      "Capital e obrigações da Educbank crescem sem retorno ao acionista da holding."
+    ],
+    "governanca": "A fonte é o documento original entregue à CVM. O portal de RI recusou acesso e não foi contornado. Reclassificações de modalidades, operações financeiras e direitos sobre participações exigem conciliação. Não foi atribuída revisão independente aos anexos do release nem inferido cumprimento futuro de cláusulas financeiras.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Captação, evasão, modalidade, recebimento e provisões; contratos privados e calendário público separados. Conciliar caixa após investimento, aluguel e juros, dívida e crédito de Educbank. Confirmar os direitos remanescentes e a comparação da dívida gerencial com os anexos.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_COGNA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+22,83%"
+          },
+          {
+            "fato": "val.BR_COGNA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,79%"
+          },
+          {
+            "fato": "val.BR_COGNA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "29,07%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +22,83%, custo do capital 12,79% e dispersão entre métodos 29,07% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Renovação e recebimento pioram após normalizar o calendário das compras públicas. Ajustes de modalidades escondem deterioração de captação, evasão ou crédito. Capital e obrigações da Educbank crescem sem retorno ao acionista da holding.",
+        "titulo": "Evidência que muda a visão"
+      }
+    ],
+    "issuer_id": "BR_COGNA",
+    "lacunas_de_dados": [
+      "O ITR integral e suas notas não foram reconciliados; os anexos citados pertencem ao release.",
+      "O texto e a tabela apresentam direções divergentes para a dívida bruta.",
+      "Retorno, crédito e passivos da Educbank exigem diligência específica.",
+      "Bases reclassificadas e calendário público precisam de conciliação comparável.",
+      "Guidance agregado e posicionamento de mercado não foram comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo de ensino superior, educação básica, conteúdo e serviços educacionais. Kroton combina modalidades sujeitas a regras distintas; Vasta e Saber têm contratos privados e ciclos de compras públicas. Educbank acrescenta crédito e financiamento de escolas, com risco e obrigações diferentes da venda de conteúdo.",
+    "nome": "Cogna",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_AZZAS",
+        "nome": "Azzas 2154"
+      },
+      {
+        "issuer_id": "BR_CEA",
+        "nome": "C&A Modas"
+      },
+      {
+        "issuer_id": "BR_CURY",
+        "nome": "Cury"
+      },
+      {
+        "issuer_id": "BR_CYRELA",
+        "nome": "Cyrela"
+      },
+      {
+        "issuer_id": "BR_DIRECIONAL",
+        "nome": "Direcional"
+      },
+      {
+        "issuer_id": "BR_EZTEC",
+        "nome": "EZTec"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que eficiência e qualidade sustentem retenção, contratos e caixa depois do custo completo. A condição decisiva é crescimento comparável sem depender de concentração do calendário público ou expansão de crédito. Modalidades reclassificadas, consolidação de Vasta e aquisição de Educbank precisam de ponte ao valor atribuível.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_COGNA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 2,93"
+          },
+          {
+            "fato": "val.BR_COGNA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 3,47"
+          },
+          {
+            "fato": "val.BR_COGNA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+18,34%"
+          },
+          {
+            "fato": "val.BR_COGNA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,79%"
+          },
+          {
+            "fato": "val.BR_COGNA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+22,83%"
+          }
+        ],
+        "texto": "Preço de referência R$ 2,93 e alvo R$ 3,47, com potencial +18,34%. A hipótese de investimento deve ser confrontada com o custo do capital 12,79% e retorno esperado +22,83%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A melhora do caixa é um ponto a testar em bases comparáveis, após arrendamento, juros e reinvestimento. O calendário público, a reorganização da educação básica e a aquisição da Educbank têm canais econômicos próprios. O teste da tese é renovação e recebimento sustentarem caixa sem expansão desproporcional do crédito. Crescimento consolidado não elimina a pressão sobre a captação e as modalidades reguladas.",
+        "titulo": "Qualidade do crescimento por ciclo e modalidade"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Marcas, distribuição de conteúdo e relacionamento com escolas podem apoiar renovação. Qualidade, resultados acadêmicos e capacidade regulatória precisam ser comprovados frente aos concorrentes. Adjudicação de compras públicas e crédito escolar não são assinaturas privadas com risco ou prazo equivalentes.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T14:07:24.677678+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A base de captação apresentou queda, com alteração de modalidades e restrições regulatórias. Os resultados de educação básica incluem mudança de perímetro e antecipação do calendário de compras públicas. Caixa após investimento e juros de empréstimos cresceu; o anexo considera pagamentos de arrendamento. Caixa adquirido e dívida de Educbank têm bases próprias.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que eficiência e qualidade sustentem retenção, contratos e caixa depois do custo completo. A condição decisiva é crescimento comparável sem depender de concentração do calendário público ou expansão de crédito. Modalidades reclassificadas, consolidação de Vasta e aquisição de Educbank precisam de ponte ao valor atribuível. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +22,83%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Regulação, retenção e crédito podem pressionar receita e capital de giro. Compras públicas concentram resultado; aquisição financeira acrescenta passivos e opções. Mudanças de perímetro e bases ajustadas podem ocultar retorno insuficiente."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_COGNA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-3,27%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -3,27%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo discricionário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Cogna — retenção, contratos educacionais e crédito",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O release registra maior caixa após investimento e juros, com pagamentos de arrendamento no anexo. Vasta tem perímetro alterado após a saída do mercado e os ciclos de compras públicas afetam o comparável. Educbank foi adquirida, trazendo caixa e dívida, além de direitos sobre participação remanescente. A direção da dívida bruta no texto diverge da tabela. A análise sem Educbank não substitui o consolidado original; dividendos pagos têm registro próprio no material.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Captação, evasão, modalidade, recebimento e provisões; contratos privados e calendário público separados. Conciliar caixa após investimento, aluguel e juros, dívida e crédito de Educbank. Confirmar os direitos remanescentes e a comparação da dívida gerencial com os anexos.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_COGNA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,79%"
+          },
+          {
+            "fato": "val.BR_COGNA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "29,07%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 12,79% e a dispersão entre métodos 29,07%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

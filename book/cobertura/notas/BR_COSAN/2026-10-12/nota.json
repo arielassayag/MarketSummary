@@ -1,0 +1,221 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_COSAN",
+  "data": "2026-10-12",
+  "tipo": "iniciacao",
+  "titulo": "Cosan — cobertura da holding e direitos prioritários de capital",
+  "resumo": "A hipótese é que simplificação e recursos das investidas sustentem o serviço da dívida e retorno residual. A condição decisiva é receber caixa depois dos direitos preferenciais sem depender indefinidamente de alienações. Desconto de holding não pode ser tratado como ganho certo sem conciliar obrigações e financiamento. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_COSAN.rating_codigo}}, com retorno esperado {{fact:val.BR_COSAN.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Holding de participações em logística, gás, lubrificantes e terras. A análise depende de dividendos efetivamente recebidos, custos próprios, dívida e direitos prioritários de sócios. EBITDA integral das investidas não é caixa ou lucro atribuível à Cosan; Raízen possui situação contábil e financeira específica.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que simplificação e recursos das investidas sustentem o serviço da dívida e retorno residual. A condição decisiva é receber caixa depois dos direitos preferenciais sem depender indefinidamente de alienações. Desconto de holding não pode ser tratado como ganho certo sem conciliar obrigações e financiamento.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_COSAN.preco}} e alvo {{fact:val.BR_COSAN.preco_alvo}}, com potencial {{fact:val.BR_COSAN.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_COSAN.ke}} e retorno esperado {{fact:val.BR_COSAN.etr}}.",
+      "evidencias": [
+        "val.BR_COSAN.preco",
+        "val.BR_COSAN.preco_alvo",
+        "val.BR_COSAN.upside",
+        "val.BR_COSAN.ke",
+        "val.BR_COSAN.etr"
+      ]
+    },
+    {
+      "titulo": "Cobertura da dívida com direitos e definições compatíveis",
+      "texto": "O índice de cobertura mudou a apresentação dos dividendos da Compass e dos pagamentos aos preferencialistas. A comparação exige reconstruir a mesma definição, sem contar recebimento bruto como disponibilidade residual. A projeção inclui recurso de alienação condicional e dividendos esperados; melhora projetada não é recorrência realizada. O teste de recuperação é remunerar obrigações prioritárias com caixa efetivamente recebido.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Dividendos por investida, repasses preferenciais e caixa líquido recebido. Conciliar holding, resgates, juros, derivativos e vencimentos. Confirmar condições de Radar e Porto São Luís, situação de Raízen e premissas da projeção de cobertura.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_COSAN.ke}} e a dispersão entre métodos {{fact:val.BR_COSAN.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_COSAN.ke",
+        "val.BR_COSAN.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Próximos resultados: testar cobertura depois de repasses e juros.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "descricao": "Comprovação das condições e recebimentos das alienações anunciadas.",
+      "data": null,
+      "tipo": "m_a",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Investidas podem reter recursos enquanto a holding paga juros e direitos preferenciais. Alienações condicionais podem atrasar; resgates e derivativos exigem caixa. Ajustes contábeis e redução de dívida não asseguram retorno residual.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_COSAN.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_COSAN.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Dividendos e simplificação sustentam cobertura depois de direitos prioritários, com alienações comprovadas e dívida compatível com caixa recorrente. O cenário otimista calculado pelo código é {{fact:val.BR_COSAN.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_COSAN.preco_alvo}}, com retorno esperado {{fact:val.BR_COSAN.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Investidas retêm recursos e alienações atrasam; juros, resgates e repasses absorvem o caixa residual apesar de dívida gerencial menor. O cenário pessimista calculado pelo código é {{fact:val.BR_COSAN.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_COSAN.preco}} e alvo do modelo aberto {{fact:val.BR_COSAN.preco_alvo}}, com potencial {{fact:val.BR_COSAN.upside}}. Retorno total esperado {{fact:val.BR_COSAN.etr}} e custo do capital próprio {{fact:val.BR_COSAN.ke}}. A dispersão entre métodos é {{fact:val.BR_COSAN.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_COSAN.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_COSAN.consenso_alvo}}; a diferença {{fact:val.BR_COSAN.diff_consenso}} não constitui evidência de percepção do mercado. Soma das partes exige participações econômicas, direitos de resgate, repasses e dívida da holding, com uma ponte ao caixa residual. Resultado integral das investidas e ausência de reconhecimento da Raízen não estabelecem fluxo atribuível. O desconto pode refletir custo estrutural e financiamento; convergência exige cobertura recorrente e realização documental dos desinvestimentos.",
+  "ultimo_resultado": "O trimestre teve prejuízo menor e redução da dívida expandida após recursos do IPO secundário da Compass. A cobertura da dívida e dividendos recebidos recuaram, com repasses aos preferencialistas. A nova projeção de cobertura depende de dividendos e venda condicional de Radar. Porto São Luís permanece em negociação indicativa. A não contabilização de Raízen não foi promovida a recuperação; a homologação relatada não comprova cumprimento econômico do plano.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A revisão limitada não tem modificação. Cosan Nove e Cosan Dez possuem direitos de resgate e repasses prioritários. O resultado integral das investidas difere do atribuível. Metadados da disponibilização do ITR são posteriores à data do relatório; a nova projeção não tem direção comparável classificada.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "O portfólio possui ativos e concessões com vantagens potenciais próprias, sem vantagem agregada automaticamente atribuível à holding. Gestão de capital precisa ser testada pela transmissão de recursos, custos e retorno das decisões. Alienação e redução de dívida não substituem rentabilidade recorrente.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Prejuízo e dívida expandida diminuíram, com recebimento do IPO secundário da Compass e amortizações. Não reconhecer resultado de Raízen não prova recuperação econômica dessa investida. Dividendos recebidos e cobertura do serviço da dívida caíram; repasses aos preferencialistas restringem o caixa residual.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "A dívida expandida incorpora direitos de resgate de preferenciais. Caixa gerencial diminuiu após amortizações, mesmo com desinvestimentos. Venda de terras da Radar tem condições precedentes e Porto São Luís tem proposta indicativa, sem recebimento comprovado. A projeção de cobertura inclui dividendos esperados e uma alienação ainda condicional.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "Dívida menor por alienação não prova cobertura recorrente. Se dividendos após preferencialistas não sustentarem juros e custos, o desconto do portfólio poderá refletir obrigações reais; não reconhecer Raízen não elimina seu risco econômico.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Dividendos por investida, repasses preferenciais e caixa líquido recebido. Conciliar holding, resgates, juros, derivativos e vencimentos. Confirmar condições de Radar e Porto São Luís, situação de Raízen e premissas da projeção de cobertura.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_COSAN.etr}}, custo do capital {{fact:val.BR_COSAN.ke}} e dispersão entre métodos {{fact:val.BR_COSAN.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_COSAN.etr",
+        "val.BR_COSAN.ke",
+        "val.BR_COSAN.cv_metodos"
+      ]
+    },
+    {
+      "titulo": "Evidência que muda a visão",
+      "texto": "Dividendos efetivos após repasses preferenciais não cobrem juros e custos recorrentes. Mudança de definição impede comparar a cobertura recebida com a série anterior. Radar, Porto São Luís ou a situação da Raízen alteram recursos e direitos disponíveis.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Dividendos efetivos após repasses preferenciais não cobrem juros e custos recorrentes.",
+    "Mudança de definição impede comparar a cobertura recebida com a série anterior.",
+    "Radar, Porto São Luís ou a situação da Raízen alteram recursos e direitos disponíveis."
+  ],
+  "lacunas_de_dados": [
+    "A ponte integral de caixa residual, direitos preferenciais e financiamento permanece pendente.",
+    "Fechamento e recebimento de Radar e Porto São Luís não foram comprovados.",
+    "Cumprimento econômico do plano de Raízen e exposições associadas exigem diligência.",
+    "Premissas de dividendos e cobertura futura requerem confirmação.",
+    "A nova projeção não possui direção comparável comprovada."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Cosan",
+      "titulo": "Negócio e materiais públicos do emissor",
+      "url": "https://www.cosan.com.br/sobre-a-cosan/quem-somos/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Cosan",
+      "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/6aa68515-2422-4cc4-bafa-8870ccdfedb0/704d98b7-6bc3-4cb3-3f77-bd96e739b6d3?origin=2",
+      "publicado_em": "2026-08-14",
+      "consultado_em": "2026-10-12"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Cosan",
+      "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/6aa68515-2422-4cc4-bafa-8870ccdfedb0/c548bcc7-f46a-6401-478d-36ae99bb411f?origin=2",
+      "publicado_em": "2026-08-17",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

@@ -1,0 +1,565 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "ae81c86e6e38077edb6661770e1b3b93404d16ae632927785124382fb801cad6",
+    "factbook": "72d9e4e7c5bc5a45616ed1b92935e348920821dffa405f21b69c952219a160ee",
+    "nota_json": "0a20336dfcafc8c2a8d491a453dceb8ae0718e576a0781030f069599a258b3f8"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_MBRF",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-12",
+  "published_at": "2026-10-12T14:12:57.822258+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          },
+          {
+            "fonte": "F6"
+          }
+        ],
+        "texto": "Recompras de ações e investimento convivem com dívida líquida gerencial maior. A oferta de recompra de notas anunciada posteriormente foi cancelada por condição de financiamento não atendida, sem compra ou pagamento aos titulares. Sadia Halal teve fechamento da primeira etapa, com contribuição complementar prevista e IPO sujeito a condições. A avaliação deve preservar financiamento, garantias, direitos dos sócios e preços de transferência; aporte da joint venture não é receita operacional ou caixa integral do acionista.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-12-31",
+        "descricao": "Contribuição complementar do parceiro prevista para a Sadia Halal, com comprovação de recebimento e direitos.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F5"
+          }
+        ],
+        "tipo": "capital"
+      },
+      {
+        "data": null,
+        "descricao": "Resultados posteriores: testar sinergias, custo de proteínas e caixa depois de investimento e juros.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Evolução dos preparativos e condições do IPO da Sadia Halal, sem antecipar conclusão ou recursos.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F5"
+          }
+        ],
+        "tipo": "capital"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 24,51, com retorno esperado +38,64%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Integração melhora execução e caixa depois de expansão e juros; parceiros, financiamento e produtos preparados remuneram capital com direitos claros. O cenário otimista calculado pelo código é R$ 26,64.",
+      "pessimista": "Custos e giro permanecem elevados, sinergias não compensam financiamento e expansão, e condições societárias ou de crédito restringem liquidez atribuível. O cenário pessimista calculado pelo código é R$ 22,57."
+    },
+    "comentario_valuation": "A leitura adequada separa bovinos cíclicos, alimentos de marca e participação Halal, com caixa normalizado e ponte de dívida, minoritários e custos centrais. Múltiplos de EBITDA sem reinvestimento ou valor anunciado da joint venture não bastam para valorar a ação; a soma das partes deve evitar dupla contagem. Preço de referência R$ 18,69 e alvo do modelo aberto R$ 24,51, com potencial +31,16%. Retorno total esperado +38,64% e custo do capital próprio 13,19%. A dispersão entre métodos é 44,20%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 22,87; a diferença +7,17% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          },
+          {
+            "fonte": "F6"
+          }
+        ],
+        "texto": "A hipótese enfraquece se integração amplia escala antes de caixa e juros, estoque ou expansão mantêm dependência financeira. Marcas não neutralizam a compra de gado nem asseguram repasse de custos. Resultados reprocessados da plataforma Halal podem criar aparência de recorrência sem caixa atribuível. O cancelamento da oferta mostra que anúncio e prazo passado não comprovam refinanciamento. Valor dos ativos da joint venture e intenção de IPO não estabelecem preço realizável da participação nem distribuição futura.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.BR_MBRF.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 18,69"
+      },
+      {
+        "fato": "val.BR_MBRF.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 24,51"
+      },
+      {
+        "fato": "val.BR_MBRF.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+31,16%"
+      },
+      {
+        "fato": "val.BR_MBRF.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_MBRF.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_MBRF.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 26,64"
+      },
+      {
+        "fato": "val.BR_MBRF.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_MBRF.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 22,57"
+      },
+      {
+        "fato": "val.BR_MBRF.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_MBRF.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "13,19%"
+      },
+      {
+        "fato": "val.BR_MBRF.wacc",
+        "rotulo": "WACC",
+        "valor": "9,87%"
+      },
+      {
+        "fato": "val.BR_MBRF.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_MBRF.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+38,64%"
+      },
+      {
+        "fato": "val.BR_MBRF.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+3,63%"
+      },
+      {
+        "fato": "val.BR_MBRF.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "13,4x"
+      },
+      {
+        "fato": "val.BR_MBRF.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,3x"
+      },
+      {
+        "fato": "val.BR_MBRF.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 22,87"
+      },
+      {
+        "fato": "val.BR_MBRF.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+7,17%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "MBRF",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://ri.mbrf.com/grupo-mbrf/quem-somos/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "MBRF",
+        "publicado_em": "2026-08-13",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/046e3a67-965a-4246-ac46-a0ca4760b186/bf64bbb1-0b12-335c-a79b-0754bdf1299c?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "MBRF",
+        "publicado_em": "2026-08-13",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/046e3a67-965a-4246-ac46-a0ca4760b186/d40acdf7-c5a3-7d21-26e5-7051e426a436?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "MBRF",
+        "publicado_em": "2026-09-28",
+        "tipo": "Relações com investidores",
+        "titulo": "Oferta de recompra de notas posteriormente cancelada",
+        "url": "https://filemanager-cdn.mziq.com/published/046e3a67-965a-4246-ac46-a0ca4760b186/143b30dc-fbe1-4cd5-af8b-c2189040165e"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F5",
+        "instituicao": "MBRF",
+        "publicado_em": "2026-05-03",
+        "tipo": "Relações com investidores",
+        "titulo": "Sadia Halal: fechamento, contribuição complementar e IPO condicional",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/046e3a67-965a-4246-ac46-a0ca4760b186/dcaa607a-29a6-d1b5-ac98-b01d9df51acb?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F6",
+        "instituicao": "MBRF",
+        "publicado_em": "2026-10-02",
+        "tipo": "Relações com investidores",
+        "titulo": "Cancelamento da oferta por condição de financiamento não atendida",
+        "url": "https://filemanager-cdn.mziq.com/published/046e3a67-965a-4246-ac46-a0ca4760b186/e63bfb12-ce67-4630-b6a3-ef112a5ba873"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Sinergias não chegam a caixa depois de implantação, estoque e juros.",
+      "Financiamento efetivo e vencimentos alteram risco financeiro depois da oferta cancelada.",
+      "Sadia Halal muda aporte, direitos, contrato de fornecimento ou condições do IPO.",
+      "Margens de proteínas e bases pro forma deixam de representar retorno atribuível."
+    ],
+    "governanca": "A revisão intermediária tem alcance inferior à auditoria anual. Documentos preservam a pessoa jurídica Marfrig e a identidade comercial MBRF, exigindo continuidade de perímetro e capital. A oferta cancelada foi conferida no comunicado correto, distinto de cancelamento de ações em outra data. A operação Halal inclui contrato de fornecimento e licença de marcas; contribuição do parceiro e minoritários têm direitos próprios. Governança, garantias cruzadas e custo completo da integração ainda exigem exame integral.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          },
+          {
+            "fonte": "F6"
+          }
+        ],
+        "texto": "Conciliar sinergias, custos por proteína, canais e utilização. Separar pro forma de consolidado e caixa trimestral de semestral. Monitorar estoques, ativo biológico, juros, capex, garantias, dívida por entidade, condições do IPO, contribuição complementar e financiamento efetivamente concluído.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_MBRF.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+38,64%"
+          },
+          {
+            "fato": "val.BR_MBRF.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "13,19%"
+          },
+          {
+            "fato": "val.BR_MBRF.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "44,20%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +38,64%, custo do capital 13,19% e dispersão entre métodos 44,20% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F5"
+          },
+          {
+            "fonte": "F6"
+          }
+        ],
+        "texto": "Na divulgação seguinte, comparar margens por operação e caixa depois do giro com a narrativa de integração. Exigir documento de recebimento do aporte complementar, direitos econômicos e destino dos recursos; acompanhar condições do IPO sem tratar calendário como liquidação. A hipótese perde força se o consolidado cresce enquanto o caixa atribuível e o custo financeiro pioram.",
+        "titulo": "Sinergia atribuível e condições de capital"
+      }
+    ],
+    "issuer_id": "BR_MBRF",
+    "lacunas_de_dados": [
+      "Resultado contábil semestral e medida recorrente trimestral de caixa não foram integralmente reconciliados.",
+      "Sinergias, custos de implantação e retorno incremental por unidade precisam de comprovação.",
+      "Capital por entidade, garantias cruzadas e recursos atribuíveis não foram integralmente examinados.",
+      "Sadia Halal tem histórico pro forma gerencial e contribuição complementar futura não antecipada.",
+      "IPO previsto continua condicional; preço e distribuição não foram presumidos.",
+      "Financiamentos posteriores à oferta cancelada precisam de comprovação independente.",
+      "Guidance agregado, tom e percepção do mercado permanecem não determinados.",
+      "A reabertura dos PDFs de resultado e informações intermediárias falhou ou excedeu o limite da consulta; seus achados e datas históricas foram preservados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo multiproteína resultante da combinação de Marfrig e BRF, com bovinos na América do Norte e do Sul, aves, suínos e alimentos preparados. Sadia, Perdigão, Qualy, National Beef e marcas locais atendem canais e países distintos. Sadia Halal reúne distribuição e produção no Oriente Médio, com parceiro e fornecimento próprio. A pessoa jurídica conserva identificação de Marfrig nos documentos. Participações, garantias e capital por entidade modificam o retorno efetivamente atribuível ao acionista.",
+    "nome": "MBRF (Marfrig+BRF)",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AMBEV",
+        "nome": "Ambev"
+      },
+      {
+        "issuer_id": "BR_ASSAI",
+        "nome": "Assaí Atacadista"
+      },
+      {
+        "issuer_id": "BR_MATEUS",
+        "nome": "Grupo Mateus"
+      },
+      {
+        "issuer_id": "BR_MDIAS",
+        "nome": "M. Dias Branco"
+      },
+      {
+        "issuer_id": "BR_NATURA",
+        "nome": "Natura Cosméticos"
+      },
+      {
+        "issuer_id": "BR_PAGUEMENOS",
+        "nome": "Pague Menos"
+      },
+      {
+        "issuer_id": "BR_RAIADROGASIL",
+        "nome": "Raia Drogasil"
+      },
+      {
+        "issuer_id": "BR_SAOMARTINHO",
+        "nome": "São Martinho"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          },
+          {
+            "fonte": "F6"
+          }
+        ],
+        "texto": "A hipótese é que integração comercial e industrial amplie eficiência e produtos de marca, sustentando retorno depois de capital de giro, expansão e juros. A condição decisiva é sinergia comprovada se converter em caixa atribuível e menor dependência de financiamento. A força de BRF e marcas não elimina o ciclo bovino nem os custos da plataforma integrada. O teste deve separar resultado recorrente, bases pro forma e capital de sócios, sem assumir liquidação de ofertas canceladas ou recebimento de aportes futuros.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_MBRF.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 18,69"
+          },
+          {
+            "fato": "val.BR_MBRF.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 24,51"
+          },
+          {
+            "fato": "val.BR_MBRF.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+31,16%"
+          },
+          {
+            "fato": "val.BR_MBRF.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "13,19%"
+          },
+          {
+            "fato": "val.BR_MBRF.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+38,64%"
+          }
+        ],
+        "texto": "Preço de referência R$ 18,69 e alvo R$ 24,51, com potencial +31,16%. A hipótese de investimento deve ser confrontada com o custo do capital 13,19% e retorno esperado +38,64%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F5"
+          },
+          {
+            "fonte": "F6"
+          }
+        ],
+        "texto": "A diligência deve seguir o caixa de cada proteína até a participação atribuível, preservando minoritários, dívida e custos centrais. O contrato Halal separa fornecimento, uso de marcas e capital do parceiro. Preparativos de abertura de capital não equivalem a liquidez realizável. A vantagem comercial só reforça a tese se a margem incremental sobreviver ao ciclo de gado e grãos, à implantação e ao financiamento, sem somar novamente ativos ou resultados já consolidados.",
+        "titulo": "Segmentos e participação sem dupla contagem"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Marcas, distribuição, acesso ao produtor e presença internacional podem apoiar produtos de maior valor agregado e utilização industrial. Sinergias e ganho comercial precisam de prova por operação, preservando custos de implementação. National Beef enfrenta compra de gado cara e margem pressionada. A expansão sul-americana e o canal BRF podem ampliar escala, sem garantir retorno incremental. Sadia Halal tem contrato de fornecimento e sócio; seus resultados pro forma não representam automaticamente caixa do grupo.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T14:12:57.822258+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita e EBITDA ajustado crescem na comparação anual, mas lucro atribuível recua e a medida recorrente de caixa fica negativa no trimestre. Estoques, ativos biológicos e fornecedores consomem recursos; juros e expansão absorvem operação. O fluxo contábil semestral tem escopo diferente do caixa recorrente trimestral. A leitura de Sadia Halal é gerencial, não auditada e reprocessada como pro forma; não deve ser somada novamente ao consolidado. Sinergias declaradas não provam caixa incremental independente.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que integração comercial e industrial amplie eficiência e produtos de marca, sustentando retorno depois de capital de giro, expansão e juros. A condição decisiva é sinergia comprovada se converter em caixa atribuível e menor dependência de financiamento. A força de BRF e marcas não elimina o ciclo bovino nem os custos da plataforma integrada. O teste deve separar resultado recorrente, bases pro forma e capital de sócios, sem assumir liquidação de ofertas canceladas ou recebimento de aportes futuros. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +38,64%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          },
+          {
+            "fonte": "F6"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Gado, grãos, sanidade, logística e comércio podem pressionar margem. Integração, estoque, expansão e juros absorvem caixa. Cancelamento de oferta, garantias e capital de parceiros podem limitar retorno e refinanciamento."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_MBRF.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+7,17%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +7,17%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo básico",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "MBRF — integração multiproteína, caixa e financiamento efetivo",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O resultado diferencia bovinos e BRF; receita consolidada e EBITDA ajustado crescem, enquanto lucro atribuível cai na comparação anual. A medida recorrente de caixa é negativa, com investimento e despesas financeiras relevantes. Sadia Halal apresenta histórico pro forma gerencial. A primeira etapa da joint venture foi concluída; contribuição complementar e IPO conservam condições. O comunicado de outubro cancela a oferta de recompra por financiamento não lançado; não houve compra de notas no âmbito dessa oferta.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Conciliar sinergias, custos por proteína, canais e utilização. Separar pro forma de consolidado e caixa trimestral de semestral. Monitorar estoques, ativo biológico, juros, capex, garantias, dívida por entidade, condições do IPO, contribuição complementar e financiamento efetivamente concluído.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_MBRF.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "13,19%"
+          },
+          {
+            "fato": "val.BR_MBRF.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "44,20%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 13,19% e a dispersão entre métodos 44,20%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

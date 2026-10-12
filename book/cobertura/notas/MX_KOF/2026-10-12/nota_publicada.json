@@ -1,0 +1,513 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "f7d9e94cef433d8497d06695e225a9b31095fb19a0a5c57a47e44c31f1eb39d7",
+    "factbook": "f3d6e062ad5ec04d82547b2b5444339c156fbcec7de8eb2e3b7385ae5071ec72",
+    "nota_json": "201ea56c4a0e6e3a10f12779ba9b00829b4acf3e6a2a351f26a1a1b6844778d7"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_KOF",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-27",
+  "published_at": "2026-10-12T14:09:51.019614+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A expansão deve demonstrar demanda e retorno depois de manutenção, embalagens, logística e capital de giro. Reconciliar capex capitalizado e desembolsado, arrendamentos, dívida, proteção cambial e dividendos. A disciplina relevante é o caixa após obrigações e financiamento; a relação com o franqueador não substitui esse teste.",
+        "titulo": "Investimento após manutenção e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em MXN 157,07, com retorno esperado -17,20%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Distribuição e combinação de produtos sustentam volume e caixa após expansão e manutenção. O cenário otimista calculado pelo código é MXN 188,31.",
+      "pessimista": "Pressão sobre consumo e insumos limita a rentabilidade e alonga o retorno dos investimentos. O cenário pessimista calculado pelo código é MXN 133,03."
+    },
+    "comentario_valuation": "Preço de referência MXN 199,72 e alvo do modelo aberto MXN 157,07, com potencial -21,36%. Retorno total esperado -17,20% e custo do capital próprio 11,23%. A dispersão entre métodos é 14,00%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é MXN 213,21; a diferença -26,33% não constitui evidência de percepção do mercado. A adequação de fluxos de caixa ou múltiplos de lucro depende de recorrência, repartição econômica da franquia e capital necessário. Seguros e moeda não sustentam perpetuidade; lucro por ADS exige conciliar unidades e direitos. A premissa central é retorno após concentrado, manutenção, expansão e financiamento. Nenhum preço ou cenário é refeito nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese falha se preço e segmentação sustentarem receita sem frequência ou contribuição, se o franqueador absorver a rentabilidade adicional ou se expansão exigir caixa desproporcional ao retorno. Melhora apoiada em seguros e moeda sem geração recorrente tampouco comprova capacidade de reinvestimento e distribuição.",
+        "titulo": "Marca forte pode coexistir com retorno insuficiente"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.MX_KOF.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 199,72"
+      },
+      {
+        "fato": "val.MX_KOF.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 157,07"
+      },
+      {
+        "fato": "val.MX_KOF.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-21,36%"
+      },
+      {
+        "fato": "val.MX_KOF.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_KOF.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.MX_KOF.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 188,31"
+      },
+      {
+        "fato": "val.MX_KOF.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_KOF.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 133,03"
+      },
+      {
+        "fato": "val.MX_KOF.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_KOF.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,23%"
+      },
+      {
+        "fato": "val.MX_KOF.wacc",
+        "rotulo": "WACC",
+        "valor": "10,30%"
+      },
+      {
+        "fato": "val.MX_KOF.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_KOF.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-17,20%"
+      },
+      {
+        "fato": "val.MX_KOF.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-12,59%"
+      },
+      {
+        "fato": "val.MX_KOF.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "15,8x"
+      },
+      {
+        "fato": "val.MX_KOF.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "3,0x"
+      },
+      {
+        "fato": "val.MX_KOF.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 213,21"
+      },
+      {
+        "fato": "val.MX_KOF.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-26,33%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Coca-Cola FEMSA",
+        "publicado_em": "2026-07-27",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultados e prioridades comerciais da engarrafadora",
+        "url": "https://www.femsa.com/en/press-room/press-release/coca-cola-femsa-second-quarter-2026-results/"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Coca-Cola FEMSA",
+        "publicado_em": "2026-07-27",
+        "tipo": "Relações com investidores",
+        "titulo": "Release financeiro e definições da engarrafadora",
+        "url": "https://www.femsa.com/wp-content/uploads/2026/07/Coca-Cola-FEMSA-Results-2Q26.pdf"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F3",
+        "instituicao": "Coca-Cola FEMSA",
+        "publicado_em": "2026-04-15",
+        "tipo": "Relações com investidores",
+        "titulo": "Relatório anual, franquias e direitos do capital",
+        "url": "https://investors.coca-colafemsa.com/assets/files/reportes_resultados_en/2026/20f-2025.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Preço e segmentação deixam de sustentar frequência de compra e contribuição por território.",
+      "Rentabilidade adicional é absorvida pelo concentrado ou por obrigações de investimento e logística.",
+      "Recorrência depende de seguros ou moeda sem conversão em caixa após reinvestimento.",
+      "Mudanças na franquia, estrutura de capital ou direitos alteram o valor atribuível ao detentor do recibo."
+    ],
+    "governanca": "FEMSA e The Coca-Cola Company participam da estrutura de controle e dos acordos que afetam a operação. A compra de concentrado e os acordos comerciais exigem análise da repartição de valor e das aprovações aplicáveis. Ações, unidades e ADSs têm composição e direitos próprios; lucro por essas bases não é intercambiável. Dividendos dependem de aprovações, resultados e necessidades de capital, e sua conversão em dólares envolve o depositário. A nota não recompõe equivalências ou capitalização.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar volume, transações, apresentação e preço local por território. Separar receita de cerveja do perímetro de volume no Brasil. Revisar a hipótese se reajustes não sustentarem frequência e contribuição comercial.",
+        "titulo": "Demanda e embalagem por território"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Revisar seguros, encargos não monetários, conversão cambial e efeitos de comparabilidade antes de avaliar recorrência. Exigir ponte para caixa operacional após capital de giro, manutenção e expansão.",
+        "titulo": "Caixa e normalização do resultado"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Acompanhar condições do concentrado, compromissos de investimento, financiamento e distribuição. Mudanças nesses termos exigem revisar a apropriação de valor pela engarrafadora e o retorno após obrigações.",
+        "titulo": "Franquia e retorno do capital"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_KOF.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-17,20%"
+          },
+          {
+            "fato": "val.MX_KOF.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,23%"
+          },
+          {
+            "fato": "val.MX_KOF.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "14,00%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -17,20%, custo do capital 11,23% e dispersão entre métodos 14,00% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "MX_KOF",
+    "lacunas_de_dados": [
+      "Fluxo de caixa, encargos ajustados e resultado atribuível não foram integralmente conciliados com o modelo.",
+      "Capitalização plenamente diluída, arrendamentos e equivalências entre ações, unidades e ADSs exigem reconciliação pelo código.",
+      "Retorno realizado de capacidade e logística não foi reconciliado com investimento e manutenção.",
+      "Participação de mercado alegada pela gestão não recebeu confirmação independente.",
+      "Cronogramas de dividendos nos documentos consultados não foram reconciliados; nenhuma data futura foi adotada.",
+      "Guidance formal agregado, tom da gestão e percepção de mercado permanecem não determinados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Coca-Cola FEMSA fabrica, embala e distribui bebidas sob contratos territoriais de engarrafamento nas Américas. A economia combina densidade de distribuição, execução no ponto de venda, preço, embalagem e frequência de compra. O franqueador fornece concentrado e detém marcas e fórmulas; essa relação limita a leitura da marca como ativo livre da engarrafadora. México, América Central e América do Sul possuem condições próprias de renda, custos e moeda. Água, bebidas carbonatadas e outras categorias exigem leitura distinta; receita de cerveja distribuída no Brasil não integra todas as métricas de volume divulgadas.",
+    "nome": "Coca-Cola FEMSA",
+    "o_que_mudou": null,
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_AC",
+        "nome": "Arca Continental"
+      },
+      {
+        "issuer_id": "MX_BIMBO",
+        "nome": "Grupo Bimbo"
+      },
+      {
+        "issuer_id": "MX_CHEDRAUI",
+        "nome": "Grupo Comercial Chedraui"
+      },
+      {
+        "issuer_id": "MX_GRUMA",
+        "nome": "Gruma"
+      },
+      {
+        "issuer_id": "MX_KIMBER",
+        "nome": "Kimberly-Clark de México"
+      },
+      {
+        "issuer_id": "MX_SIGMA",
+        "nome": "Sigma Foods (ex-Alfa)"
+      },
+      {
+        "issuer_id": "MX_WALMEX",
+        "nome": "Walmart de México"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese favorável é que segmentação e embalagens acessíveis sustentem procura e contribuição por rota sem exigir subsídio comercial crescente. A condição decisiva é caixa recorrente após embalagem, logística e capacidade. A confirmação exige volumes e transações por território, não apenas receita nominal traduzida em moeda.",
+        "titulo": "Distribuição precisa preservar rentabilidade"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Os contratos territoriais e a compra de concentrado ligam a operação à Coca-Cola. A tese exige remuneração adequada da engarrafadora depois dessa relação econômica e das obrigações de investimento. Exclusividade comercial não elimina competição de outras bebidas nem o risco de custos de concentrado e condições contratuais.",
+        "titulo": "Franquia não garante apropriação do valor"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "O release identifica seguros e efeitos de moeda e comparabilidade. A análise exige separar resultado recorrente de recebimentos excepcionais e conciliar EBITDA ajustado, IFRS e caixa. Um ganho contábil sem conversão após manutenção e expansão não comprova maior capacidade de distribuição ao acionista.",
+        "titulo": "Melhora precisa sobreviver aos ajustes"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_KOF.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "MXN 199,72"
+          },
+          {
+            "fato": "val.MX_KOF.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "MXN 157,07"
+          },
+          {
+            "fato": "val.MX_KOF.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-21,36%"
+          },
+          {
+            "fato": "val.MX_KOF.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,23%"
+          },
+          {
+            "fato": "val.MX_KOF.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-17,20%"
+          }
+        ],
+        "texto": "Preço de referência MXN 199,72 e alvo MXN 157,07, com potencial -21,36%. A hipótese de investimento deve ser confrontada com o custo do capital 11,23% e retorno esperado -17,20%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A rede territorial e a execução no ponto de venda podem produzir escala e serviço. O teste é manter frequência e contribuição depois de concentrado, embalagem e distribuição. A competição ocorre também por preço, apresentação e substituição entre categorias. Alegações de ganho de participação da gestão não foram tratadas como confirmação independente.",
+        "titulo": "Densidade de rotas e disciplina comercial"
+      }
+    ],
+    "publicada_em": "2026-10-12T14:09:51.019614+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Distinguir seguros e encargos não monetários de contribuição recorrente. Receitas traduzidas, métricas comparáveis, volume e transações exigem períodos e perímetros consistentes; distribuição de cerveja no Brasil requer atenção própria. A tese depende da ponte para IFRS, caixa operacional e resultado atribuível, sem tomar EBITDA ajustado por caixa livre.",
+        "titulo": "Recorrência e perímetro das métricas"
+      }
+    ],
+    "resumo": "A decisão depende de distribuição e segmentação preservarem contribuição e caixa da engarrafadora após custos de concentrado, embalagem, logística e reinvestimento. A força da marca não assegura a repartição econômica entre franqueador e engarrafadora. O contraponto é receita nominal ou margem ajudada por efeitos excepcionais, sem volume e caixa recorrentes. A leitura qualitativa permanece neutra até conciliar esses mecanismos; o modelo do código indica Neutro e retorno esperado -17,20%. Não há evidência suficiente para afirmar divergência frente ao mercado.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Tributação e renda pressionam acessibilidade; reajuste pode preservar receita nominal enquanto enfraquece frequência e contribuição por rota. A diversidade territorial não elimina esse mecanismo."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Mudanças no concentrado ou nas condições da franquia podem limitar a apropriação de valor. A marca pertence ao franqueador e as obrigações comerciais e de investimento não são opcionais."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Seguros, moeda e comparabilidade podem encobrir recorrência. Expansão, arrendamentos e capital de giro podem absorver caixa mesmo com EBITDA maior."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_KOF.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-26,33%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -26,33%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo básico",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Coca-Cola FEMSA: distribuição rentável, franquia e caixa após expansão",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O release apresenta desempenho por divisão e território, além de volumes, transações e receita com perímetros próprios. A gestão atribui a execução comercial à segmentação e acessibilidade; essa é uma alegação a testar. Recebimentos de seguros, tradução cambial e definições comparáveis afetam a leitura. No Brasil, receita de cerveja e métricas de volume não têm o mesmo perímetro. A reconciliação integral com fluxo de caixa e lucro atribuível permanece pendente, apesar da leitura dos documentos.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar volumes e transações por território, combinação de embalagens e contribuição comercial. Revisar se acessibilidade sustenta demanda sem depender de descontos que transfiram a pressão ao caixa.",
+        "vetor": "Preço, embalagem e frequência de compra"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar alterações divulgadas nas condições da franquia e no concentrado, junto a embalagem, logística e manutenção. A vantagem precisa remunerar a engarrafadora após essas obrigações.",
+        "vetor": "Concentrado e repartição de rentabilidade"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Confrontar investimento pago, expansão e necessidade de capital de giro com caixa operacional. Separar gasto capitalizado de desembolso e não interpretar redução de capex como melhora estrutural sem analisar capacidade e manutenção.",
+        "vetor": "Capacidade e caixa recorrente"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.MX_KOF.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,23%"
+          },
+          {
+            "fato": "val.MX_KOF.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "14,00%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,23% e a dispersão entre métodos 14,00%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

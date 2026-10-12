@@ -1,0 +1,493 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "8675cdc443a8ee7092326de155f32a764023e77e617ec6f156118abada97bc89",
+    "factbook": "9e5bde064bd3e79304e333b206ab07fe76ff6423b88c3c8c805d9ac25e914b77",
+    "nota_json": "4dc83eb56da9ba0f7ba8c1bd5a9021f084aecd5f1e6c023ba0d2457bde2586c0"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_GOAU",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T14:07:55.222400+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Dívida e alavancagem consolidadas diminuem, enquanto o caixa consolidado recua com remuneração e recompra. Linha rotativa integralmente disponível não é caixa sacado da holding. Investimento em competitividade e manutenção deve remunerar o capital; avanço físico e início previsto não comprovam operação concluída. Recompras realizadas, cancelamento aprovado e programa vigente têm estados diferentes. Provento declarado e data passada de pagamento não comprovam crédito.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-26",
+        "descricao": "Divulgação programada de resultados do grupo; rever atribuição, recebimentos, projetos, classes e caixa disponível na holding.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F4"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 13,84, com retorno esperado +26,87%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Margens sustentáveis e projetos rentáveis geram caixa que chega à holding, com despesas disciplinadas e direitos claros de remuneração por ação. O cenário otimista calculado pelo código é R$ 14,76.",
+      "pessimista": "Margens, investimento e giro reduzem recebimentos enquanto custos, direitos e desconto persistente limitam retorno do titular da holding. O cenário pessimista calculado pelo código é R$ 12,94."
+    },
+    "comentario_valuation": "Preço de referência R$ 11,20 e alvo do modelo aberto R$ 13,84, com potencial +23,56%. Retorno total esperado +26,87% e custo do capital próprio 11,80%. A dispersão entre métodos é n/d; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 12,43; a diferença +11,38% não constitui evidência de percepção do mercado. A ponte de valor deve respeitar participação na Gerdau, direitos de classes, tesouraria, cancelamentos e custos próprios. EBITDA consolidado e lucro atribuível têm perímetros diferentes. Comparação com investimento direto precisa de preço do mesmo corte e liquidez; dividendos aprovados e linha disponível não devem ser tratados como caixa já recebido pela holding.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese enfraquece se melhora da investida não chega ao titular ou se desconto persistente remunera menor liquidez e custo estrutural. Demanda norte-americana e proteção comercial podem enfraquecer; projetos podem exigir mais capital. Equivalência não substitui recebimento, e recompra com caixa do grupo não beneficia automaticamente todas as classes na mesma proporção.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.BR_GOAU.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 11,20"
+      },
+      {
+        "fato": "val.BR_GOAU.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 13,84"
+      },
+      {
+        "fato": "val.BR_GOAU.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+23,56%"
+      },
+      {
+        "fato": "val.BR_GOAU.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_GOAU.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_GOAU.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 14,76"
+      },
+      {
+        "fato": "val.BR_GOAU.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_GOAU.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 12,94"
+      },
+      {
+        "fato": "val.BR_GOAU.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_GOAU.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,80%"
+      },
+      {
+        "fato": "val.BR_GOAU.wacc",
+        "rotulo": "WACC",
+        "valor": "8,79%"
+      },
+      {
+        "fato": "val.BR_GOAU.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_GOAU.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+26,87%"
+      },
+      {
+        "fato": "val.BR_GOAU.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+16,92%"
+      },
+      {
+        "fato": "val.BR_GOAU.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "18,6x"
+      },
+      {
+        "fato": "val.BR_GOAU.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,8x"
+      },
+      {
+        "fato": "val.BR_GOAU.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 12,43"
+      },
+      {
+        "fato": "val.BR_GOAU.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+11,38%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Metalúrgica Gerdau",
+        "publicado_em": "2026-08-04",
+        "tipo": "Relações com investidores",
+        "titulo": "ITR com demonstrações individuais, consolidadas e atribuição do lucro",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/0e58d869-d438-4c13-9d23-c24d27e72c47/1ae00877-eabb-0bdc-8eac-eb57dd66ea7b?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Metalúrgica Gerdau",
+        "publicado_em": "2026-08-04",
+        "tipo": "Relações com investidores",
+        "titulo": "Release de resultados, negócios, fluxo e capital",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/0e58d869-d438-4c13-9d23-c24d27e72c47/7235f9dc-6b06-d973-7741-e13db7024fb3?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Metalúrgica Gerdau",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Metodologia indicativa do desconto de holding e histórico de capital",
+        "url": "https://ri.gerdau.com/informacoes-ao-mercado/informacoes-complementares/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "Metalúrgica Gerdau",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário de divulgação futura do grupo",
+        "url": "https://ri.gerdau.com/servicos-de-ri/calendario-de-eventos/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F5",
+        "instituicao": "Metalúrgica Gerdau",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Órgãos de administração da holding",
+        "url": "https://ri.gerdau.com/governanca-corporativa/conselhos-e-diretoria-metalurgica-gerdau/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Melhora da investida não se traduz em recebimentos e retorno da holding.",
+      "Margens norte-americanas normalizam sem compensação no fluxo após investimento.",
+      "Tesouraria, cancelamento, classes ou obrigações mudam a atribuição por ação."
+    ],
+    "governanca": "A administração e o capital da holding têm documentos próprios. Ordinárias, preferenciais, tesouraria e cancelamento precisam ser conciliados na base de avaliação. A metodologia pública de desconto é indicativa, não contábil e válida para uma data específica; a companhia reconhece limites de interpretação. Não se recalculou desconto atual nem se presumiu valor realizável por soma das partes.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Monitorar margem por região e custo completo da investida. Conciliar lucro de não controladores, equivalência, proventos recebidos e despesas da holding. Conferir classes, tesouraria e cancelamento com direitos por ação. Acompanhar dívida, giro, projetos e distribuição efetiva; comparar desconto apenas com participações e preços da mesma data.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_GOAU.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+26,87%"
+          },
+          {
+            "fato": "val.BR_GOAU.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,80%"
+          },
+          {
+            "fato": "val.BR_GOAU.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "n/d"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +26,87%, custo do capital 11,80% e dispersão entre métodos n/d quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Melhora da investida não se traduz em recebimentos e retorno da holding. Margens norte-americanas normalizam sem compensação no fluxo após investimento. Tesouraria, cancelamento, classes ou obrigações mudam a atribuição por ação.",
+        "titulo": "Evidência que muda a visão"
+      }
+    ],
+    "issuer_id": "BR_GOAU",
+    "lacunas_de_dados": [
+      "Notas explicativas completas e fluxo atribuível por entidade não foram integralmente reconciliados.",
+      "Comparativos de lucro por ação divergem entre tabelas do release e exigem confrontação com o ITR.",
+      "A identificação do conselho em trecho de dividendos do release diverge da deliberação apresentada no ITR.",
+      "Direitos, participações, tesouraria e efetivação do cancelamento precisam ser conciliados.",
+      "Desconto atual não foi recalculado com preços e participações da mesma data.",
+      "Pagamento posterior declarado e conclusão dos projetos não foram confirmados nesta pesquisa.",
+      "Guidance, tom agregado e percepção do mercado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Holding controladora das empresas Gerdau, com exposição indireta a siderurgia e mineração no Brasil e exterior. A demonstração consolidada reúne o grupo, mas separa lucro da controladora e dos não controladores. O resultado individual depende principalmente da equivalência patrimonial; recebimentos da investida, despesas e direitos de capital determinam a transmissão de caixa ao titular da holding.",
+    "nome": "Metalúrgica Gerdau",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CBA",
+        "nome": "Companhia Brasileira de Alumínio"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_SUZANO",
+        "nome": "Suzano"
+      },
+      {
+        "issuer_id": "BR_UNIPAR",
+        "nome": "Unipar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que margem industrial sustentável e disciplina de capital da investida se traduzam em retorno por ação da holding. A condição decisiva é transmissão efetiva de resultado e caixa depois de minoritários, despesas e obrigações. Desconto de negociação pode refletir estrutura, direitos e liquidez, sem assegurar convergência automática ou arbitragem frente ao investimento direto na Gerdau.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_GOAU.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 11,20"
+          },
+          {
+            "fato": "val.BR_GOAU.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 13,84"
+          },
+          {
+            "fato": "val.BR_GOAU.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+23,56%"
+          },
+          {
+            "fato": "val.BR_GOAU.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,80%"
+          },
+          {
+            "fato": "val.BR_GOAU.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+26,87%"
+          }
+        ],
+        "texto": "Preço de referência R$ 11,20 e alvo R$ 13,84, com potencial +23,56%. A hipótese de investimento deve ser confrontada com o custo do capital 11,80% e retorno esperado +26,87%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "O fortalecimento operacional norte-americano sustenta uma hipótese sobre a investida, distinta do retorno da holding. A leitura depende de participação econômica, minoritários, classes e recebimentos individuais. Lucro consolidado e recompra do grupo não pertencem automaticamente ao titular na mesma proporção. Desconto de holding tem metodologia indicativa e corte próprio, sem promessa de convergência.",
+        "titulo": "A margem industrial precisa chegar ao titular da holding"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "As operações norte-americanas se beneficiam de mix, utilização e condições comerciais locais; no Brasil, melhora sequencial convive com resultados abaixo da base anual. A vantagem industrial depende de insumos, sucata, energia e investimento, sem ser herdada integralmente pelo acionista da holding. Controle permite orientar capital, mas classes, minoritários e custo da estrutura podem justificar diferença de negociação.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T14:07:55.222400+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Receita, EBITDA e lucro consolidados melhoram no trimestre, com contribuição relevante da América do Norte. O lucro integral do grupo não equivale ao atribuído à controladora. A equivalência individual reconhece a participação, sem comprovar recebimento. Caixa consolidado livre é positivo após giro, investimento, juros e impostos, mas distribuição e recompra reduzem recursos em seção própria. O fluxo individual do semestre distingue proventos recebidos, outras obrigações e remuneração.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que margem industrial sustentável e disciplina de capital da investida se traduzam em retorno por ação da holding. A condição decisiva é transmissão efetiva de resultado e caixa depois de minoritários, despesas e obrigações. Desconto de negociação pode refletir estrutura, direitos e liquidez, sem assegurar convergência automática ou arbitragem frente ao investimento direto na Gerdau. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +26,87%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Ciclo industrial, insumos e condições comerciais podem reduzir caixa. Minoritários, despesas e direitos da holding limitam transmissão de valor. Desconto gerencial e provento declarado não comprovam retorno realizável."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_GOAU.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+11,38%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +11,38%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Metalúrgica Gerdau — resultado atribuível e transmissão de caixa pela holding",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O release apresenta comparativos divergentes de lucro por ação entre tabelas; o ITR explicita a base individual e a atribuição aos não controladores. Há também divergência na identificação do conselho em trecho sobre dividendos, confrontada com a deliberação da holding no ITR. Essas lacunas foram preservadas, sem recalcular números nem tratar o resultado integral do grupo como lucro do titular.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar margem por região e custo completo da investida. Conciliar lucro de não controladores, equivalência, proventos recebidos e despesas da holding. Conferir classes, tesouraria e cancelamento com direitos por ação. Acompanhar dívida, giro, projetos e distribuição efetiva; comparar desconto apenas com participações e preços da mesma data.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_GOAU.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,80%"
+          },
+          {
+            "fato": "val.BR_GOAU.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "n/d"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,80% e a dispersão entre métodos n/d. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

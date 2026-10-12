@@ -1,0 +1,466 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "6dc46ae847e5024e089bda52cdef74e90cc3f102fecc48b8cd2e85320ae04165",
+    "factbook": "69945a150c338860b5a28860f6d431d795fb336f85b3e2db4076f78e1788c85a",
+    "nota_json": "3e46fbf5e9e0f39b5b450143609eedf35016eb379c09de0c293b0fcc224b3d21"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_COSAN",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-13",
+  "published_at": "2026-10-12T14:03:53.845313+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A dívida expandida incorpora direitos de resgate de preferenciais. Caixa gerencial diminuiu após amortizações, mesmo com desinvestimentos. Venda de terras da Radar tem condições precedentes e Porto São Luís tem proposta indicativa, sem recebimento comprovado. A projeção de cobertura inclui dividendos esperados e uma alienação ainda condicional.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar cobertura depois de repasses e juros.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Comprovação das condições e recebimentos das alienações anunciadas.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "m_a"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 4,69, com retorno esperado -10,52%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Dividendos e simplificação sustentam cobertura depois de direitos prioritários, com alienações comprovadas e dívida compatível com caixa recorrente. O cenário otimista calculado pelo código é R$ 5,00.",
+      "pessimista": "Investidas retêm recursos e alienações atrasam; juros, resgates e repasses absorvem o caixa residual apesar de dívida gerencial menor. O cenário pessimista calculado pelo código é R$ 4,39."
+    },
+    "comentario_valuation": "Preço de referência R$ 5,24 e alvo do modelo aberto R$ 4,69, com potencial -10,52%. Retorno total esperado -10,52% e custo do capital próprio 13,79%. A dispersão entre métodos é n/d; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 5,62; a diferença -16,57% não constitui evidência de percepção do mercado. Soma das partes exige participações econômicas, direitos de resgate, repasses e dívida da holding, com uma ponte ao caixa residual. Resultado integral das investidas e ausência de reconhecimento da Raízen não estabelecem fluxo atribuível. O desconto pode refletir custo estrutural e financiamento; convergência exige cobertura recorrente e realização documental dos desinvestimentos.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Dívida menor por alienação não prova cobertura recorrente. Se dividendos após preferencialistas não sustentarem juros e custos, o desconto do portfólio poderá refletir obrigações reais; não reconhecer Raízen não elimina seu risco econômico.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.BR_COSAN.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 5,24"
+      },
+      {
+        "fato": "val.BR_COSAN.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 4,69"
+      },
+      {
+        "fato": "val.BR_COSAN.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-10,52%"
+      },
+      {
+        "fato": "val.BR_COSAN.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_COSAN.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_COSAN.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 5,00"
+      },
+      {
+        "fato": "val.BR_COSAN.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_COSAN.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 4,39"
+      },
+      {
+        "fato": "val.BR_COSAN.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_COSAN.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "13,79%"
+      },
+      {
+        "fato": "val.BR_COSAN.wacc",
+        "rotulo": "WACC",
+        "valor": "10,29%"
+      },
+      {
+        "fato": "val.BR_COSAN.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_COSAN.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-10,52%"
+      },
+      {
+        "fato": "val.BR_COSAN.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-37,08%"
+      },
+      {
+        "fato": "val.BR_COSAN.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "11,5x"
+      },
+      {
+        "fato": "val.BR_COSAN.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "4,2x"
+      },
+      {
+        "fato": "val.BR_COSAN.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 5,62"
+      },
+      {
+        "fato": "val.BR_COSAN.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-16,57%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Cosan",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://www.cosan.com.br/sobre-a-cosan/quem-somos/"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Cosan",
+        "publicado_em": "2026-08-14",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/6aa68515-2422-4cc4-bafa-8870ccdfedb0/704d98b7-6bc3-4cb3-3f77-bd96e739b6d3?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Cosan",
+        "publicado_em": "2026-08-17",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/6aa68515-2422-4cc4-bafa-8870ccdfedb0/c548bcc7-f46a-6401-478d-36ae99bb411f?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Dividendos efetivos após repasses preferenciais não cobrem juros e custos recorrentes.",
+      "Mudança de definição impede comparar a cobertura recebida com a série anterior.",
+      "Radar, Porto São Luís ou a situação da Raízen alteram recursos e direitos disponíveis."
+    ],
+    "governanca": "A revisão limitada não tem modificação. Cosan Nove e Cosan Dez possuem direitos de resgate e repasses prioritários. O resultado integral das investidas difere do atribuível. Metadados da disponibilização do ITR são posteriores à data do relatório; a nova projeção não tem direção comparável classificada.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Dividendos por investida, repasses preferenciais e caixa líquido recebido. Conciliar holding, resgates, juros, derivativos e vencimentos. Confirmar condições de Radar e Porto São Luís, situação de Raízen e premissas da projeção de cobertura.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_COSAN.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-10,52%"
+          },
+          {
+            "fato": "val.BR_COSAN.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "13,79%"
+          },
+          {
+            "fato": "val.BR_COSAN.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "n/d"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -10,52%, custo do capital 13,79% e dispersão entre métodos n/d quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Dividendos efetivos após repasses preferenciais não cobrem juros e custos recorrentes. Mudança de definição impede comparar a cobertura recebida com a série anterior. Radar, Porto São Luís ou a situação da Raízen alteram recursos e direitos disponíveis.",
+        "titulo": "Evidência que muda a visão"
+      }
+    ],
+    "issuer_id": "BR_COSAN",
+    "lacunas_de_dados": [
+      "A ponte integral de caixa residual, direitos preferenciais e financiamento permanece pendente.",
+      "Fechamento e recebimento de Radar e Porto São Luís não foram comprovados.",
+      "Cumprimento econômico do plano de Raízen e exposições associadas exigem diligência.",
+      "Premissas de dividendos e cobertura futura requerem confirmação.",
+      "A nova projeção não possui direção comparável comprovada."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Holding de participações em logística, gás, lubrificantes e terras. A análise depende de dividendos efetivamente recebidos, custos próprios, dívida e direitos prioritários de sócios. EBITDA integral das investidas não é caixa ou lucro atribuível à Cosan; Raízen possui situação contábil e financeira específica.",
+    "nome": "Cosan",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRAVA",
+        "nome": "Brava Energia"
+      },
+      {
+        "issuer_id": "BR_PRIO",
+        "nome": "PRIO"
+      },
+      {
+        "issuer_id": "BR_RECV",
+        "nome": "PetroRecôncavo"
+      },
+      {
+        "issuer_id": "BR_ULTRAPAR",
+        "nome": "Ultrapar"
+      },
+      {
+        "issuer_id": "BR_VIBRA",
+        "nome": "Vibra Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que simplificação e recursos das investidas sustentem o serviço da dívida e retorno residual. A condição decisiva é receber caixa depois dos direitos preferenciais sem depender indefinidamente de alienações. Desconto de holding não pode ser tratado como ganho certo sem conciliar obrigações e financiamento.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_COSAN.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 5,24"
+          },
+          {
+            "fato": "val.BR_COSAN.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 4,69"
+          },
+          {
+            "fato": "val.BR_COSAN.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-10,52%"
+          },
+          {
+            "fato": "val.BR_COSAN.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "13,79%"
+          },
+          {
+            "fato": "val.BR_COSAN.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-10,52%"
+          }
+        ],
+        "texto": "Preço de referência R$ 5,24 e alvo R$ 4,69, com potencial -10,52%. A hipótese de investimento deve ser confrontada com o custo do capital 13,79% e retorno esperado -10,52%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "O índice de cobertura mudou a apresentação dos dividendos da Compass e dos pagamentos aos preferencialistas. A comparação exige reconstruir a mesma definição, sem contar recebimento bruto como disponibilidade residual. A projeção inclui recurso de alienação condicional e dividendos esperados; melhora projetada não é recorrência realizada. O teste de recuperação é remunerar obrigações prioritárias com caixa efetivamente recebido.",
+        "titulo": "Cobertura da dívida com direitos e definições compatíveis"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O portfólio possui ativos e concessões com vantagens potenciais próprias, sem vantagem agregada automaticamente atribuível à holding. Gestão de capital precisa ser testada pela transmissão de recursos, custos e retorno das decisões. Alienação e redução de dívida não substituem rentabilidade recorrente.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T14:03:53.845313+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Prejuízo e dívida expandida diminuíram, com recebimento do IPO secundário da Compass e amortizações. Não reconhecer resultado de Raízen não prova recuperação econômica dessa investida. Dividendos recebidos e cobertura do serviço da dívida caíram; repasses aos preferencialistas restringem o caixa residual.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que simplificação e recursos das investidas sustentem o serviço da dívida e retorno residual. A condição decisiva é receber caixa depois dos direitos preferenciais sem depender indefinidamente de alienações. Desconto de holding não pode ser tratado como ganho certo sem conciliar obrigações e financiamento. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado -10,52%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Investidas podem reter recursos enquanto a holding paga juros e direitos preferenciais. Alienações condicionais podem atrasar; resgates e derivativos exigem caixa. Ajustes contábeis e redução de dívida não asseguram retorno residual."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_COSAN.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-16,57%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -16,57%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Energia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Cosan — cobertura da holding e direitos prioritários de capital",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O trimestre teve prejuízo menor e redução da dívida expandida após recursos do IPO secundário da Compass. A cobertura da dívida e dividendos recebidos recuaram, com repasses aos preferencialistas. A nova projeção de cobertura depende de dividendos e venda condicional de Radar. Porto São Luís permanece em negociação indicativa. A não contabilização de Raízen não foi promovida a recuperação; a homologação relatada não comprova cumprimento econômico do plano.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Dividendos por investida, repasses preferenciais e caixa líquido recebido. Conciliar holding, resgates, juros, derivativos e vencimentos. Confirmar condições de Radar e Porto São Luís, situação de Raízen e premissas da projeção de cobertura.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_COSAN.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "13,79%"
+          },
+          {
+            "fato": "val.BR_COSAN.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "n/d"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 13,79% e a dispersão entre métodos n/d. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

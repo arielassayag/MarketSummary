@@ -1,0 +1,514 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "8bea83f79f66029309577dbc70f065ceb6abfe28069f593d2953bce04b3a6236",
+    "factbook": "dbeb5f5eb90c51d5d047724236071e9085619f648acee0f87223a65ecf15dd29",
+    "nota_json": "2634215a5fbccce6b89f23d5b46eafab2deecfcb56d07da22a113eba8a6a7500"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_TERNIUM",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-03",
+  "published_at": "2026-10-12T14:04:51.378251+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A expansão de Pesquería deve ser avaliada após compromissos, manutenção e financiamento. O relatório anual descreve relações e compromissos com Techgen e partes do grupo. Garantias e obrigações de suprimento requerem inclusão na análise de capital; caixa de controladas e investimentos financeiros não são integralmente distribuíveis por presunção.",
+        "titulo": "Retorno após obrigações e minoritários"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em US$ 56,89, com retorno esperado +12,43%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Integração, execução industrial e demanda sustentam contribuição e caixa após expansão, com remuneração do capital empregado. O cenário otimista calculado pelo código é US$ 98,19.",
+      "pessimista": "Spreads e importações reduzem retorno enquanto capex, estoques e contingências pressionam recursos atribuíveis. O cenário pessimista calculado pelo código é US$ 14,69."
+    },
+    "comentario_valuation": "Preço de referência US$ 56,47 e alvo do modelo aberto US$ 56,89, com potencial +0,74%. Retorno total esperado +12,43% e custo do capital próprio 11,50%. A dispersão entre métodos é 16,17%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é US$ 60,62; a diferença -6,15% não constitui evidência de percepção do mercado. A aplicação de fluxos de caixa ou múltiplos industriais exige margens normalizadas ao longo do ciclo, manutenção e crescimento separados, participação econômica e obrigações no perímetro correto. Picos de contribuição não sustentam perpetuidade. A hipótese de Pesquería precisa justificar reinvestimento e retorno após financiamento; nenhum alvo é refeito nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese falha se Pesquería acrescentar capacidade sem contribuição e caixa que remunerem o capital novo, ou se ganho operacional exigir proteção comercial persistente. Outra refutação é melhora recorrente de EBITDA acompanhada de consumo de caixa, compromissos e recursos inacessíveis à holding. Nesse caso, integração física não produz retorno suficiente ao acionista.",
+        "titulo": "Expansão pode amplificar o ciclo"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.MX_TERNIUM.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 56,47"
+      },
+      {
+        "fato": "val.MX_TERNIUM.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 56,89"
+      },
+      {
+        "fato": "val.MX_TERNIUM.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+0,74%"
+      },
+      {
+        "fato": "val.MX_TERNIUM.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_TERNIUM.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_TERNIUM.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 98,19"
+      },
+      {
+        "fato": "val.MX_TERNIUM.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "2,68%"
+      },
+      {
+        "fato": "val.MX_TERNIUM.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 14,69"
+      },
+      {
+        "fato": "val.MX_TERNIUM.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "0,00%"
+      },
+      {
+        "fato": "val.MX_TERNIUM.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,50%"
+      },
+      {
+        "fato": "val.MX_TERNIUM.wacc",
+        "rotulo": "WACC",
+        "valor": "10,19%"
+      },
+      {
+        "fato": "val.MX_TERNIUM.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.MX_TERNIUM.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+12,43%"
+      },
+      {
+        "fato": "val.MX_TERNIUM.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+7,80%"
+      },
+      {
+        "fato": "val.MX_TERNIUM.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "7,3x"
+      },
+      {
+        "fato": "val.MX_TERNIUM.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,9x"
+      },
+      {
+        "fato": "val.MX_TERNIUM.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 60,62"
+      },
+      {
+        "fato": "val.MX_TERNIUM.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-6,15%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Ternium",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio industrial e integração produtiva",
+        "url": "https://www.ternium.com/en/company"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Ternium",
+        "publicado_em": "2026-08-04",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado semestral apresentado à SEC",
+        "url": "https://www.sec.gov/Archives/edgar/data/1342874/000134287426000044/prternium2q2026.htm"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F3",
+        "instituicao": "SEC e Ternium",
+        "publicado_em": "2026-03-20",
+        "tipo": "Regulador",
+        "titulo": "Relatório anual, compromissos e governança",
+        "url": "https://www.sec.gov/Archives/edgar/data/1342874/000134287426000015/a2025terniumannualreport.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Pesquería não demonstra contribuição e caixa suficientes depois de partida, manutenção e financiamento.",
+      "Realização e utilização passam a depender de proteção comercial sem diferenciação operacional.",
+      "Caixa consolidado melhora sem transmissão documentada para a holding ou com maiores compromissos.",
+      "Novas contingências, minoritários ou partes relacionadas alteram valor e direitos atribuíveis."
+    ],
+    "governanca": "O relatório anual identifica controle ligado a San Faustin e transações com partes relacionadas, além de procedimentos de revisão pelo comitê de auditoria. Essa estrutura exige escrutínio de preços, garantias, investimentos e decisões que favoreçam o grupo. Direitos de minoritários e restrições de distribuição devem ser verificados por entidade. A nota preserva a distinção entre ações, ADSs, lucro consolidado e lucro atribuível; não recompõe equivalências ou capitalização na narrativa.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar embarques, composição comercial e industrial, realização e custo por território. Confrontar substituição de importações alegada pela gestão com demanda dos clientes e utilização; revisar a tese se preço e contribuição deixarem de refletir diferenciação econômica.",
+        "titulo": "Comercial e industrial por território"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Revisar marcos divulgados de partida, utilização e gastos de transição, além do investimento remanescente. Acompanhar retorno do capital novo e necessidades de manutenção sem presumir que a conclusão física assegure retorno financeiro.",
+        "titulo": "Pesquería e capital comprometido"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Monitorar estoques, recebíveis, caixa operacional após investimento, recursos por controlada e distribuição efetiva. Conciliar minoritários, litígios, Unigal, Techgen e compromissos antes de interpretar caixa consolidado como patrimônio disponível.",
+        "titulo": "Caixa atribuível e obrigações"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_TERNIUM.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+12,43%"
+          },
+          {
+            "fato": "val.MX_TERNIUM.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,50%"
+          },
+          {
+            "fato": "val.MX_TERNIUM.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "16,17%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +12,43%, custo do capital 11,50% e dispersão entre métodos 16,17% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "MX_TERNIUM",
+    "lacunas_de_dados": [
+      "Retorno realizado de Pesquería e investimento remanescente não foram conciliados com capital empregado.",
+      "Lucro atribuível, ajustes de Unigal e contingências ainda exigem ponte integral ao caixa.",
+      "Disponibilidade de recursos por entidade e compromissos não foram incorporados a uma capitalização plenamente diluída.",
+      "O Form 20-F integral excedeu o limite da ferramenta; o relatório anual apresentado por 6-K foi lido, sem equiparar os acessos.",
+      "Calendário futuro e percepção de mercado permanecem sem comprovação específica."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Ternium é uma holding domiciliada em Luxemburgo, com operações siderúrgicas e mineração nas Américas e recibos negociados nos Estados Unidos. A exposição operacional mexicana convive com Brasil e região sul; não equivale ao domicílio societário. A receita depende de embarques, composição de produtos e realização por tonelada; custos incluem matérias-primas, placas compradas, energia e operação. Integração e proximidade industrial são hipóteses de vantagem que precisam aparecer no custo completo e na remuneração do capital. Usiminas, Ternium Argentina e associadas possuem direitos, minoritários e necessidades próprias; lucro consolidado e caixa disponível à holding não são intercambiáveis.",
+    "nome": "Ternium",
+    "o_que_mudou": null,
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_CEMEX",
+        "nome": "Cemex"
+      },
+      {
+        "issuer_id": "MX_ENDEAVOUR",
+        "nome": "Endeavour Silver"
+      },
+      {
+        "issuer_id": "MX_GCC",
+        "nome": "GCC"
+      },
+      {
+        "issuer_id": "MX_GMEXICO",
+        "nome": "Grupo México"
+      },
+      {
+        "issuer_id": "MX_ORBIA",
+        "nome": "Orbia"
+      },
+      {
+        "issuer_id": "MX_PENOLES",
+        "nome": "Industrias Peñoles"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Pesquería é o teste decisivo: a expansão deve sustentar contribuição industrial e suprimento competitivo depois de partida e manutenção. A hipótese se confirma com utilização economicamente viável, custo completo e caixa após reinvestimento. Volume adicional, isoladamente, não remunera o capital nem comprova demanda durável.",
+        "titulo": "Integração precisa remunerar o capital novo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O release descreve recuperação comercial mexicana e demanda desigual nas demais regiões. Importações, preço recebido e custo de insumos exigem acompanhamento separado. A leitura favorável perde força se a contribuição depender apenas de proteção comercial ou da valorização temporária do aço, sem diferenciação de produto e serviço.",
+        "titulo": "Ciclo e defesa comercial precisam ser separados"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Capital de giro e expansão absorvem recursos no release. A posição financeira consolidada inclui outros investimentos e recursos de controladas. É necessário distinguir liquidez contabilizada, disponibilidade por entidade e distribuição efetiva; uma medida de dívida líquida não resolve compromissos, minoritários e remessas.",
+        "titulo": "Caixa atribuível é o portão da tese"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_TERNIUM.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "US$ 56,47"
+          },
+          {
+            "fato": "val.MX_TERNIUM.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "US$ 56,89"
+          },
+          {
+            "fato": "val.MX_TERNIUM.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+0,74%"
+          },
+          {
+            "fato": "val.MX_TERNIUM.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,50%"
+          },
+          {
+            "fato": "val.MX_TERNIUM.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+12,43%"
+          }
+        ],
+        "texto": "Preço de referência US$ 56,47 e alvo US$ 56,89, com potencial +0,74%. A hipótese de investimento deve ser confrontada com o custo do capital 11,50% e retorno esperado +12,43%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Integração, suprimento e relacionamento com clientes podem sustentar confiabilidade e especificações. O teste competitivo é contribuição após custo completo frente a importações e alternativas locais. As regiões não têm demanda homogênea; defesa comercial e expansão de capacidade não equivalem a vantagem permanente.",
+        "titulo": "Custo completo e serviço industrial"
+      }
+    ],
+    "publicada_em": "2026-10-12T14:04:51.378251+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "As exclusões de contingências e a inclusão proporcional de Unigal mudam o perímetro do EBITDA ajustado. A análise deve distinguir recorrência industrial, efeitos gerenciais e lucro atribuível. O caixa operacional precisa ser confrontado com capital de giro e investimento; melhora de EBITDA não certifica caixa livre. A conciliação integral permanece uma condição da tese.",
+        "titulo": "Ajustado, consolidado e atribuível"
+      }
+    ],
+    "resumo": "A questão central é se Pesquería transforma integração industrial em retorno do capital e caixa atribuível, ou apenas amplia a exposição ao ciclo. A hipótese favorável exige contribuição operacional durável após partida, manutenção, estoques e financiamento. Defesa comercial pode apoiar realização, mas não comprova vantagem permanente. O contraponto é recuperação de EBITDA sem caixa distribuível, agravada por compromissos e minoritários. A visão qualitativa permanece neutra enquanto essas pontes não forem conciliadas; o modelo do código indica Neutro e retorno esperado +12,43%.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Importações e compressão da realização podem enfraquecer utilização e retorno da expansão. A proteção comercial depende de decisões externas e não assegura poder de preço durável."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Partida, manutenção e capital de giro podem consumir caixa enquanto o EBITDA ajustado melhora. Financiamento, compromissos energéticos e recursos em controladas limitam a leitura direta da dívida líquida consolidada."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Litígios de Usiminas, transações com partes relacionadas e minoritários podem reduzir valor atribuível ou alterar a distribuição. Consolidar uma controlada não concede integralmente seus recursos ao acionista da holding."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_TERNIUM.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-6,15%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -6,15%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Ternium: integração industrial, ciclo e caixa disponível ao acionista",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O resultado consultado relaciona recuperação a embarques e realização, com demanda regional desigual. O EBITDA ajustado exclui contingências e litígios e incorpora EBITDA proporcional de Unigal; o release apresenta conciliações alternativas. Caixa operacional e investimento aparecem separadamente e o capital de giro absorve recursos. A perspectiva gerencial de melhora subsequente é uma expectativa do documento, não resultado realizado nem calendário confirmado. A ponte integral para lucro e caixa atribuíveis continua pendente.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Separar embarques comerciais e industriais, preço realizado, mix e custo de placas, minério e energia por território. A tese exige contribuição após custo completo, não melhora uniforme presumida.",
+        "vetor": "Realização e custo industrial"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar marcos divulgados de construção e partida, utilização, custos de transição e capital ainda comprometido. A condição favorável é retorno demonstrável do ativo, sem atribuir data de conclusão não confirmada.",
+        "vetor": "Partida e retorno de Pesquería"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Confrontar estoques e recebíveis com vendas e caixa operacional; revisar recursos nas controladas, garantias e compromissos. Distribuição à holding deve ser documentada, não presumida a partir do caixa consolidado.",
+        "vetor": "Capital de giro e liquidez disponível"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.MX_TERNIUM.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,50%"
+          },
+          {
+            "fato": "val.MX_TERNIUM.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "16,17%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,50% e a dispersão entre métodos 16,17%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

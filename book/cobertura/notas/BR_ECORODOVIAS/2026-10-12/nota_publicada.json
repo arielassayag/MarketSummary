@@ -1,0 +1,479 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "e081e3783cb4b6cfdc8664ee50eb6eebefac5007352e372aa0ac5a75a3777a99",
+    "factbook": "199b4b1a5126edbcd415e3a57ffd39d5df14a9c6d02b5cc150c4c9c6f4a25fce",
+    "nota_json": "868dedc47773219287274e831c878aaa231229d34cbb28c707ba87aad3b5d163"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_ECORODOVIAS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-09",
+  "published_at": "2026-10-12T14:05:17.686632+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Obras e novas concessões exigem investimento, outorga e financiamento. A dívida informada exclui arrendamentos e obrigações com o concedente. Caixa maior recebeu contribuição de captações e movimentação de aplicações; contas de reserva têm restrições próprias. Arrecadação prevista e reequilíbrio futuro não são caixa realizado.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar tráfego, obras e caixa depois de juros.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Comprovação de arrecadação e reequilíbrios das novas condições contratuais.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "regulatorio"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 20,35, com retorno esperado +48,65%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Tráfego, tarifa e obras executadas sustentam caixa depois de outorgas e juros, com reequilíbrios comprovados e financiamento disciplinado. O cenário otimista calculado pelo código é R$ 31,15.",
+      "pessimista": "Obras e custo financeiro superam geração; tráfego e reequilíbrio frustram premissas e obrigações excluídas da dívida gerencial limitam o retorno. O cenário pessimista calculado pelo código é R$ 10,07."
+    },
+    "comentario_valuation": "Preço de referência R$ 13,77 e alvo do modelo aberto R$ 20,35, com potencial +47,80%. Retorno total esperado +48,65% e custo do capital próprio 14,64%. A dispersão entre métodos é 56,11%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 12,21; a diferença +66,72% não constitui evidência de percepção do mercado. Concessões têm vida finita: fluxo e eventual valor residual precisam respeitar contrato, amortização e renovação não presumida. Receita de construção não equivale a pedágio recebido. Arrendamentos e obrigações com concedentes devem acompanhar a dívida na ponte de valor; reequilíbrio e arrecadação estimados só entram como recebimentos conforme comprovação.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Tráfego comparável e caixa operacional maiores podem coexistir com lucro menor e dívida crescente. Se obras e juros absorverem geração, nova receita regulada não provará retorno econômico ao acionista.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.BR_ECORODOVIAS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 13,77"
+      },
+      {
+        "fato": "val.BR_ECORODOVIAS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 20,35"
+      },
+      {
+        "fato": "val.BR_ECORODOVIAS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+47,80%"
+      },
+      {
+        "fato": "val.BR_ECORODOVIAS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_ECORODOVIAS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_ECORODOVIAS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 31,15"
+      },
+      {
+        "fato": "val.BR_ECORODOVIAS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "5,51%"
+      },
+      {
+        "fato": "val.BR_ECORODOVIAS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 10,07"
+      },
+      {
+        "fato": "val.BR_ECORODOVIAS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "26,08%"
+      },
+      {
+        "fato": "val.BR_ECORODOVIAS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "14,64%"
+      },
+      {
+        "fato": "val.BR_ECORODOVIAS.wacc",
+        "rotulo": "WACC",
+        "valor": "9,19%"
+      },
+      {
+        "fato": "val.BR_ECORODOVIAS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_ECORODOVIAS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+48,65%"
+      },
+      {
+        "fato": "val.BR_ECORODOVIAS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+47,47%"
+      },
+      {
+        "fato": "val.BR_ECORODOVIAS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "17,5x"
+      },
+      {
+        "fato": "val.BR_ECORODOVIAS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,3x"
+      },
+      {
+        "fato": "val.BR_ECORODOVIAS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 12,21"
+      },
+      {
+        "fato": "val.BR_ECORODOVIAS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+66,72%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "EcoRodovias",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://ri.ecorodovias.com.br/a-companhia/historico/"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "EcoRodovias",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/7c109ecb-88c9-441f-91cb-66a8db417120/9d83ccee-0591-e096-4129-d1bd16ce5c22?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "EcoRodovias",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/7c109ecb-88c9-441f-91cb-66a8db417120/f5f47b84-db17-97ec-4f7c-57638f2fd1b3?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Tráfego comparável e tarifas não sustentam caixa após obras, outorgas e juros.",
+      "Atrasos ou custos de obras reduzem retorno mesmo com receita de construção maior.",
+      "Recursos vinculados, dívida ou reequilíbrio alteram distribuição por concessão."
+    ],
+    "governanca": "Construção, provisão de manutenção e acordo do Paraná possuem ajustes próprios. Dívida bruta informada não inclui todas as obrigações com o concedente e arrendamento. Base comparável exclui concessões determinadas. O resíduo textual da capa não substitui o período atual do documento.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Tráfego e tarifa por concessão, com bases comparáveis explícitas. Monitorar obras, manutenção, outorga, recebimento e reequilíbrio. Conciliar caixa após juros, dívida econômica com concedente e arrendamentos, contas de reserva e financiamento de novas operações.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ECORODOVIAS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+48,65%"
+          },
+          {
+            "fato": "val.BR_ECORODOVIAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "14,64%"
+          },
+          {
+            "fato": "val.BR_ECORODOVIAS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "56,11%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +48,65%, custo do capital 14,64% e dispersão entre métodos 56,11% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Tráfego comparável e tarifas não sustentam caixa após obras, outorgas e juros. Atrasos ou custos de obras reduzem retorno mesmo com receita de construção maior. Recursos vinculados, dívida ou reequilíbrio alteram distribuição por concessão.",
+        "titulo": "Evidência que muda a visão"
+      }
+    ],
+    "issuer_id": "BR_ECORODOVIAS",
+    "lacunas_de_dados": [
+      "A data exata de publicação do release recebido não foi comprovada; a consulta foi registrada.",
+      "A ponte integral de outorgas, arrendamentos e caixa atribuível permanece pendente.",
+      "A capa extraída contém resíduo antigo, sem alteração da fonte.",
+      "Arrecadação de novas concessões e reequilíbrios futuros não foram comprovados.",
+      "Retorno e cronograma de obras requerem diligência por concessão.",
+      "Guidance agregado e vantagem independente não foram comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Operadora de concessões rodoviárias e serviços logísticos. Tráfego, tarifa e prazo de concessão determinam receita de pedágio; construção tem reconhecimento contábil diferente. Novas concessões exigem outorga, obras e financiamento antes da arrecadação, com regras próprias de reequilíbrio e manutenção.",
+    "nome": "EcoRodovias",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_SIMPAR",
+        "nome": "Simpar"
+      },
+      {
+        "issuer_id": "BR_TUPY",
+        "nome": "Tupy"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que tráfego e execução das concessões remunerem o investimento ao longo do contrato. A condição decisiva é converter tarifa e expansão em caixa depois de obras, outorgas e juros. Ajustar comparativos de concessões encerradas não elimina obrigações nem prova menor risco de capital.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ECORODOVIAS.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 13,77"
+          },
+          {
+            "fato": "val.BR_ECORODOVIAS.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 20,35"
+          },
+          {
+            "fato": "val.BR_ECORODOVIAS.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+47,80%"
+          },
+          {
+            "fato": "val.BR_ECORODOVIAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "14,64%"
+          },
+          {
+            "fato": "val.BR_ECORODOVIAS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+48,65%"
+          }
+        ],
+        "texto": "Preço de referência R$ 13,77 e alvo R$ 20,35, com potencial +47,80%. A hipótese de investimento deve ser confrontada com o custo do capital 14,64% e retorno esperado +48,65%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "O crescimento de tráfego comparável é positivo para a hipótese, mas deve financiar obras, outorgas e juros. Encerramento de concessão e início de outra alteram a base; comparar tráfego total com margem de perímetro distinto distorce o teste. O retorno do acionista depende do cronograma efetivo de arrecadação e obrigações, com recursos de reserva e financiamentos por concessão.",
+        "titulo": "Demanda remunerada depois do programa de obras"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Corredores e experiência operacional podem apoiar execução e atendimento. Contratos concedem direitos por prazo e condições específicos; não asseguram remuneração sem cumprir obras e serviços. Competição por concessões, rotas alternativas e reequilíbrio regulatório precisam de avaliação independente.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T14:05:17.686632+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Tráfego total recuou com o encerramento da Ecovias Sul, enquanto o comparável cresceu. Receita comparável aumentou, mas EBITDA ajustado trimestral e lucro recorrente caíram. Investimento e dívida líquida aumentaram. Caixa operacional original cresceu antes dos juros classificados no financiamento; receita de construção não é pedágio recebido.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que tráfego e execução das concessões remunerem o investimento ao longo do contrato. A condição decisiva é converter tarifa e expansão em caixa depois de obras, outorgas e juros. Ajustar comparativos de concessões encerradas não elimina obrigações nem prova menor risco de capital. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +48,65%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Tráfego, inflação, juros e obras podem reduzir retorno. Reequilíbrio depende de regras e execução; prazo contratual limita valor. Dívida gerencial pode excluir obrigações relevantes, enquanto caixa de reserva não é distribuível."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ECORODOVIAS.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+66,72%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +66,72%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "EcoRodovias — tráfego comparável, obras e financiamento",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O encerramento de Ecovias Sul reduz o tráfego total, embora a base comparável cresça. EBITDA ajustado trimestral e lucro recorrente recuaram, enquanto investimento, dívida e alavancagem aumentaram. O fluxo original gera caixa antes de juros no financiamento. Ecovias das Gerais foi assumida posteriormente, com arrecadação futura estimada; mudanças de pedágio e reequilíbrio conservam seus estados. A capa extraída contém resíduo de período antigo.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Tráfego e tarifa por concessão, com bases comparáveis explícitas. Monitorar obras, manutenção, outorga, recebimento e reequilíbrio. Conciliar caixa após juros, dívida econômica com concedente e arrendamentos, contas de reserva e financiamento de novas operações.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_ECORODOVIAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "14,64%"
+          },
+          {
+            "fato": "val.BR_ECORODOVIAS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "56,11%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 14,64% e a dispersão entre métodos 56,11%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

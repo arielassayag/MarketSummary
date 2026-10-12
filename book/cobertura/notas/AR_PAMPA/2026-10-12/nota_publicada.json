@@ -1,0 +1,457 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "81d2f62af44f21ffb58922d6aa128a672630fc24f97aba88e069945255c75c66",
+    "factbook": "3c4f892c556bf3c99613fb4c0d0b3ea2fc02492433366a6dac3f7d8a1d7dea2f",
+    "nota_json": "4dcd001d2055eccfb8d3590e3a138cd7f231294e70b5b1f5c67a1a5f5d827d1b"
+  },
+  "is_synthetic": false,
+  "issuer_id": "AR_PAMPA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-02",
+  "published_at": "2026-10-12T14:12:09.694481+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Separar o investimento de Rincón de Aranda das obrigações de Fértil Pampa e das participações em infraestrutura. A aprovação do incentivo é fato; competitividade e rentabilidade futura do complexo de ureia são objetivos da companhia. A análise requer orçamento executado, desembolsos remanescentes, garantias, dívida e recursos próprios por projeto. Capacidade futura ou incentivo fiscal não substitui retorno depois de juros, tributos e reinvestimento.",
+        "titulo": "Projetos precisam superar o teste de financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em US$ 75,21, com retorno esperado -6,74%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Integração demonstra benefício depois do custo total, com contratos e infraestrutura suficientes. Projetos têm execução e financiamento disciplinados, e retorno atribuível se transmite em caixa sem depender de incentivos tratados como resultado realizado. O cenário otimista calculado pelo código é US$ 87,20.",
+      "pessimista": "Preço, remuneração ou transporte limita contribuição, enquanto garantias e expansão absorvem recursos. Projetos atrasam ou exigem mais funding e afiliadas não transferem caixa suficiente para remunerar os compromissos. O cenário pessimista calculado pelo código é US$ 63,97."
+    },
+    "comentario_valuation": "Preço de referência US$ 80,68 e alvo do modelo aberto US$ 75,21, com potencial -6,78%. Retorno total esperado -6,74% e custo do capital próprio 15,66%. A dispersão entre métodos é 84,70%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é US$ 121,09; a diferença -37,89% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota. Para esse portfólio, uma soma de partes com perímetros de dívida e participações consistentes é um teste de adequação mais útil que aplicar um múltiplo uniforme. Separar operações correntes de projetos, tratar reinvestimento e custo de financiamento e evitar dupla contagem das afiliadas. Essa é uma exigência analítica, não uma nova avaliação ou preço-alvo.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese enfraquece se maior produção requer infraestrutura adicional ou garantias que absorvam o caixa, se a remuneração da geração perde o benefício do insumo próprio, ou se afiliadas reconhecem resultado sem distribuí-lo. Também enfraquece se a execução da ureia exige capital não demonstrado ou compromete a liquidez dos negócios correntes. Crescimento do EBITDA com dependência persistente de financiamento não confirma o retorno à acionista.",
+        "titulo": "Quando a integração deixa de remunerar capital"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.AR_PAMPA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 80,68"
+      },
+      {
+        "fato": "val.AR_PAMPA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 75,21"
+      },
+      {
+        "fato": "val.AR_PAMPA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-6,78%"
+      },
+      {
+        "fato": "val.AR_PAMPA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.AR_PAMPA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.AR_PAMPA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 87,20"
+      },
+      {
+        "fato": "val.AR_PAMPA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "49,57%"
+      },
+      {
+        "fato": "val.AR_PAMPA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 63,97"
+      },
+      {
+        "fato": "val.AR_PAMPA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "22,66%"
+      },
+      {
+        "fato": "val.AR_PAMPA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "15,66%"
+      },
+      {
+        "fato": "val.AR_PAMPA.wacc",
+        "rotulo": "WACC",
+        "valor": "13,57%"
+      },
+      {
+        "fato": "val.AR_PAMPA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.AR_PAMPA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-6,74%"
+      },
+      {
+        "fato": "val.AR_PAMPA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-16,74%"
+      },
+      {
+        "fato": "val.AR_PAMPA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "7,0x"
+      },
+      {
+        "fato": "val.AR_PAMPA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,1x"
+      },
+      {
+        "fato": "val.AR_PAMPA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 121,09"
+      },
+      {
+        "fato": "val.AR_PAMPA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-37,89%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Pampa Energía",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e estrutura do negócio",
+        "url": "https://ri.pampa.com/compania/perfil-de-la-compania/"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Pampa Energía",
+        "publicado_em": "2026-08-04",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações financeiras e materiais de análise",
+        "url": "https://www.sec.gov/Archives/edgar/data/1469395/000129281426004047/ex99-1.htm"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F3",
+        "instituicao": "Pampa Energía",
+        "publicado_em": "2026-09-07",
+        "tipo": "Relações com investidores",
+        "titulo": "Aprovação do projeto de fertilizantes no RIGI",
+        "url": "https://ri.pampa.com/press-release/aprobacion-del-proyecto-fertilizantes-al-regimen-de-incentivo-para-grandes-inversiones-rigi/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Produção de Rincón de Aranda cresce sem conexão verificável entre transporte, realização comercial e caixa após reinvestimento.",
+      "Benefício da integração gás-geração não se transmite ao recebimento líquido dos custos completos.",
+      "Caixa nas afiliadas permanece indisponível à listada apesar do resultado proporcional apresentado.",
+      "Garantias de derivativos, capital de giro ou compromissos de Fértil Pampa deterioram a capacidade de financiar o portfólio corrente.",
+      "Novo documento altera orçamento, concessões, direitos de participação ou regime de remuneração adotado na análise."
+    ],
+    "governanca": "A integração vertical exige testar preços e contratos entre negócios para evitar atribuir o mesmo benefício a produtor e gerador. Nas participações, conferir direitos de decisão, restrições de distribuição e caixa recebido pela listada. Para a execução de Fértil Pampa, acompanhar obrigações assumidas, contratos de construção e eventuais partes relacionadas, sem presumir conflito ou benefício econômico apenas pela identidade dos envolvidos.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Conferir produção e realização de petróleo em Rincón de Aranda, destinos do gás, capacidade de transporte contratada, disponibilidade de geração, despacho e recebimentos. Distinguir margem operacional de deslocamentos de caixa por garantias e liquidações de derivativos.",
+        "titulo": "Produção até caixa por canal"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Conciliar bases de moeda e perímetro de TGS, Transener e Barragán com equivalência patrimonial, dividendos declarados e recebidos, caixa restrito e obrigações próprias. A revisão exige a ponte até a companhia listada, sem adicionar EBITDA proporcional ao valor de uma participação já avaliada.",
+        "titulo": "Direitos e transmissão das afiliadas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Acompanhar contratos, desembolsos, financiamento e infraestrutura de suprimento e escoamento. Confrontar avanço físico e orçamento com compromissos totais e liquidez disponível; o ingresso no RIGI é marco regulatório já ocorrido, não catalisador futuro nem comprovação de operação.",
+        "titulo": "Marcos de Fértil Pampa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.AR_PAMPA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-6,74%"
+          },
+          {
+            "fato": "val.AR_PAMPA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "15,66%"
+          },
+          {
+            "fato": "val.AR_PAMPA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "84,70%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -6,74%, custo do capital 15,66% e dispersão entre métodos 84,70% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "AR_PAMPA",
+    "lacunas_de_dados": [
+      "Resultado, moeda das afiliadas e caixa atribuível não foram integralmente reconciliados com o modelo.",
+      "Financiamento integral, orçamento e retorno dos novos projetos permanecem a demonstrar.",
+      "Concessões, contratos e infraestrutura exigem documentação atual completa.",
+      "Garantias de instrumentos financeiros e disponibilidade na holding precisam de conciliação.",
+      "Comparação competitiva e percepção do mercado têm evidência insuficiente.",
+      "Não há catalisador futuro com data precisa adotado nesta pesquisa."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "A Pampa combina produção de petróleo e gás, geração e petroquímica com participações em transmissão e transporte de gás. O controle do insumo pode favorecer a geração, mas produção, transporte firme, despacho e recebimento precisam funcionar em sequência. TGS, Transener e a participação na central Barragán têm perímetros distintos da consolidação. A tese separa a contribuição corrente desses ativos da expansão em Rincón de Aranda e da entrada de Fértil Pampa em ureia.",
+    "nome": "Pampa Energía",
+    "o_que_mudou": null,
+    "pais": "Argentina",
+    "pares": [
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      },
+      {
+        "issuer_id": "BR_CPFL",
+        "nome": "CPFL Energia"
+      }
+    ],
+    "percepcao_variante": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A distinção analítica é entre melhorar a operação integrada e criar valor atribuível após a expansão financiada. Não foi demonstrado que o mercado ignora essa diferença. O consenso e o alvo recebidos são referências do modelo; a hipótese só ganha força quando a ponte de caixa e os compromissos dos projetos permitirem testar remuneração do capital sem depender de capacidade ainda futura.",
+        "titulo": "Benefício industrial não basta para a ação"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A sequência de prova é produção, infraestrutura disponível, realização comercial, caixa operacional e retorno após todo o capital necessário. Nas afiliadas, participação econômica não confere acesso automático ao caixa. Nos projetos futuros, recursos desembolsados e compromissos contratados precisam ser confrontados com financiamento e retorno, sem tratar a aprovação regulatória como conclusão da tese.",
+        "titulo": "Da integração ao retorno atribuível"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.AR_PAMPA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "US$ 80,68"
+          },
+          {
+            "fato": "val.AR_PAMPA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "US$ 75,21"
+          },
+          {
+            "fato": "val.AR_PAMPA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-6,78%"
+          },
+          {
+            "fato": "val.AR_PAMPA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "15,66%"
+          },
+          {
+            "fato": "val.AR_PAMPA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-6,74%"
+          }
+        ],
+        "texto": "Preço de referência US$ 80,68 e alvo US$ 75,21, com potencial -6,78%. A hipótese de investimento deve ser confrontada com o custo do capital 15,66% e retorno esperado -6,74%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A combinação de produção, transporte e geração oferece possibilidade de monetizar gás em canais distintos. A vantagem só se sustenta se o insumo chegar ao ativo, houver remuneração de despacho ou contrato comercial e os recebimentos cobrirem o custo completo. Comparar produtores e geradores na mesma base de preço, qualidade, transporte, disponibilidade e moeda; o portfólio diversificado não elimina concorrência nem risco regulatório.",
+        "titulo": "Integração condicionada a transporte e despacho"
+      }
+    ],
+    "publicada_em": "2026-10-12T14:12:09.694481+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A Pampa divulga em dólar funcional; TGS e Transener têm resultados reexpressos por inflação e convertidos pelo câmbio de fechamento. As bases comparativas não são homogêneas. O EBITDA ajustado incorpora afiliadas proporcionalmente e não equivale ao caixa distribuído. Separar lucro atribuível, equivalência patrimonial, dividendos efetivamente recebidos e a ponte de capital de giro, tributos e derivativos antes de interpretar recorrência.",
+        "titulo": "Moeda funcional, afiliadas e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que a integração entre gás e geração converta maior atividade em caixa disponível à acionista, enquanto a expansão de petróleo e fertilizantes remunera o capital depois de infraestrutura, garantias e financiamento. A condição decisiva é demonstrar essa ponte por segmento, distinguindo EBITDA proporcional de caixa efetivamente transferido por afiliadas. Aprovação de incentivo reduz uma incerteza regulatória, mas não prova financiamento integral nem retorno do projeto. A visão permanece neutra e de baixa convicção. O modelo recebido mantém Neutro e retorno esperado -6,74%; a pesquisa atual não recalcula o retrato.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Preços, remuneração, transporte e garantias podem pressionar caixa. Projetos exigem financiamento e execução. Perímetro, moeda das afiliadas e concessões precisam de análise atual; aprovação de incentivo não comprova retorno nem operação futura."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.AR_PAMPA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-37,89%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -37,89%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Pampa: integração energética e retorno após capital dos projetos",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O release atribui a melhoria operacional à expansão de petróleo e à integração gás-geração, enquanto investimento e garantias de derivativos pressionam a dívida. A demonstração de caixa apresenta capital de giro, tributos, liquidações de derivativos e aquisições de imobilizado separadamente. A aprovação posterior do projeto de fertilizantes no RIGI substitui a pendência regulatória daquele release, sem demonstrar a conclusão da obra ou seu financiamento integral.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Separar contribuição de gás, petróleo, energia e afiliadas; reconciliar caixa, garantias e capital de giro. Conferir orçamento, financiamento, infraestrutura e estágio dos projetos, junto a direitos e distribuições das participações e alterações de concessões.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.AR_PAMPA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "15,66%"
+          },
+          {
+            "fato": "val.AR_PAMPA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "84,70%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 15,66% e a dispersão entre métodos 84,70%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

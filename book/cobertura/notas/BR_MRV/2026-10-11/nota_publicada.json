@@ -1,0 +1,562 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "aae2b1808ad016906f3d20413df27d312569275f11e59812697e4bc5f0b3a739",
+    "factbook": "9a6b72b29d8ed34987368860e264d716ccbc5ee9faf55a5fd33c7117b3c16ac7",
+    "nota_json": "98758e38b2e9f7c214aa5db0f4c146cff22d9ab3785ed1b2ebefcbc966cab86e"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_MRV",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-11",
+  "published_at": "2026-10-12T02:52:39.489999+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          },
+          {
+            "fonte": "F6"
+          },
+          {
+            "fonte": "F7"
+          }
+        ],
+        "texto": "Vendas concluídas de ativos da Resia e da Luggo diferem de contratos ainda sujeitos a condições e financiamento do comprador. A Luggo mantém recebimento diferido depois do fechamento. Na Resia, distribuições aos sócios alteram o caixa atribuível. Dívida brasileira ajustada realoca financiamento do grupo e não elimina obrigação. Cessões com e sem desreconhecimento têm reservas, custos e exposição próprios. A retirada formal de guidance não torna as expectativas operacionais compromissos nem dispensa avaliar liquidez e covenants.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Resultados posteriores à prévia: conciliar repasses, cessões, perdas, juros e caixa atribuível por operação.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F7"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Liquidação das vendas adicionais da Resia e confirmação das parcelas diferidas da Luggo, preservando direitos de sócios.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F5"
+          },
+          {
+            "fonte": "F6"
+          },
+          {
+            "fonte": "F7"
+          }
+        ],
+        "tipo": "m_a"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 4,87, com retorno esperado -24,22%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Safras, repasses e crédito sustentam caixa depois de custos completos; alienações concluídas reduzem risco financeiro e preservam retorno atribuível. O cenário otimista calculado pelo código é R$ 5,89.",
+      "pessimista": "Repasses atrasam, cessões e juros absorvem recursos e ativos são vendidos em condições desfavoráveis, prolongando perda e restrição de capital. O cenário pessimista calculado pelo código é R$ 3,93."
+    },
+    "comentario_valuation": "Preço de referência R$ 6,43 e alvo do modelo aberto R$ 4,87, com potencial -24,22%. Retorno total esperado -24,22% e custo do capital próprio 12,05%. A dispersão entre métodos é 21,66%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 8,44; a diferença -42,26% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          },
+          {
+            "fonte": "F6"
+          },
+          {
+            "fonte": "F7"
+          }
+        ],
+        "texto": "A hipótese enfraquece se margens melhoram antes de caixa e liquidez continua dependente da monetização de ativos e recebíveis. Venda abaixo do custo libera capital com perda econômica, sem provar retorno. A recuperação brasileira pode ser absorvida por juros, obrigações e necessidades da operação estrangeira. A prévia tem bases ajustadas e não auditadas; dívida construída a partir de liquidações não substitui balanço. Menor carteira líquida após cessão pode coexistir com exposição contratual retida.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_MRV.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 6,43"
+      },
+      {
+        "fato": "val.BR_MRV.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 4,87"
+      },
+      {
+        "fato": "val.BR_MRV.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-24,22%"
+      },
+      {
+        "fato": "val.BR_MRV.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_MRV.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_MRV.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 5,89"
+      },
+      {
+        "fato": "val.BR_MRV.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_MRV.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 3,93"
+      },
+      {
+        "fato": "val.BR_MRV.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_MRV.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,05%"
+      },
+      {
+        "fato": "val.BR_MRV.wacc",
+        "rotulo": "WACC",
+        "valor": "9,16%"
+      },
+      {
+        "fato": "val.BR_MRV.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_MRV.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-24,22%"
+      },
+      {
+        "fato": "val.BR_MRV.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-45,55%"
+      },
+      {
+        "fato": "val.BR_MRV.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_MRV.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,8x"
+      },
+      {
+        "fato": "val.BR_MRV.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 8,44"
+      },
+      {
+        "fato": "val.BR_MRV.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-42,26%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "MRV",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Estrutura do grupo e materiais públicos das operações",
+        "url": "https://ri.mrv.com.br/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "MRV",
+        "publicado_em": "2026-08-12",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado: incorporação brasileira, Resia, dívida e fluxo consolidado",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/4b56353d-d5d9-435f-bf63-dcbf0a6c25d5/abfbc3bc-6aa1-9834-d2cf-5122eaac9188?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "MRV",
+        "publicado_em": "2026-08-12",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: cessões, obrigações, sócios e revisão",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/4b56353d-d5d9-435f-bf63-dcbf0a6c25d5/66e7ea93-345b-e5db-9585-4d1a62bc79a7?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "MRV",
+        "publicado_em": "2026-03-09",
+        "tipo": "Relações com investidores",
+        "titulo": "Retirada formal das projeções anuais",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/4b56353d-d5d9-435f-bf63-dcbf0a6c25d5/79e922ec-b1ae-6a53-fad0-46f12d8fe6e8?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F5",
+        "instituicao": "MRV",
+        "publicado_em": "2026-10-01",
+        "tipo": "Relações com investidores",
+        "titulo": "Luggo: venda concluída, administração mantida e recebimento diferido",
+        "url": "https://filemanager-cdn.mziq.com/published/4b56353d-d5d9-435f-bf63-dcbf0a6c25d5/e029504e-9df9-43e3-8de6-089baa57b617"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F6",
+        "instituicao": "MRV",
+        "publicado_em": "2026-08-06",
+        "tipo": "Relações com investidores",
+        "titulo": "Resia: contratos de venda, perdas e condições precedentes",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/4b56353d-d5d9-435f-bf63-dcbf0a6c25d5/6c98d072-3aa8-329e-c948-97c4739f8bf5?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F7",
+        "instituicao": "MRV",
+        "publicado_em": "2026-10-08",
+        "tipo": "Relações com investidores",
+        "titulo": "Prévia posterior: repasses, cessões, sócios e dívida pro forma",
+        "url": "https://filemanager-cdn.mziq.com/published/4b56353d-d5d9-435f-bf63-dcbf0a6c25d5/c41cb50d-8c2e-48f9-a2ed-887aff455ed9"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Safras e vendas não se convertem em caixa depois de juros e cessões.",
+      "Alienações ou perdas não reduzem risco financeiro em condições econômicas adequadas.",
+      "Sócios, reservas, recebimentos diferidos ou covenants limitam recursos atribuíveis.",
+      "Novo balanço diverge da ponte pro forma ou altera premissas de recuperação."
+    ],
+    "governanca": "A revisão intermediária tem alcance inferior à auditoria anual. Cessões podem desreconhecer ativos ou manter passivo e exposição; a carteira líquida gerencial não resolve essa distinção. Sócios dos projetos e financiamento realocado entre operações exigem ponte consolidada. O comunicado da Luggo confirma fechamento com parcela a receber futuramente. Os contratos adicionais da Resia permanecem sujeitos a diligência e financiamento; conclusão e recebimento integral não foram presumidos.",
+    "guidance": "retirado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          },
+          {
+            "fonte": "F6"
+          },
+          {
+            "fonte": "F7"
+          }
+        ],
+        "texto": "Conciliar safras, vendas, produção, registros, repasses e carteira pós-chaves. Separar caixa contábil e gerencial, cessões e juros realocados. Confirmar liquidação de alienações, distribuições aos sócios e recebimentos diferidos. Avaliar dívida consolidada, covenants, perdas e recursos restritos antes de inferir distribuição.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_MRV.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-24,22%"
+          },
+          {
+            "fato": "val.BR_MRV.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,05%"
+          },
+          {
+            "fato": "val.BR_MRV.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "21,66%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -24,22%, custo do capital 12,05% e dispersão entre métodos 21,66% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_MRV",
+    "lacunas_de_dados": [
+      "Caixa gerencial, cessões e demonstração dos fluxos não foram integralmente reconciliados por entidade.",
+      "Fechamento e recebimento integral dos contratos adicionais da Resia não foram comprovados.",
+      "Recebimentos diferidos da Luggo mantêm prazo e risco próprios; não foram antecipados.",
+      "Dívida pro forma da prévia não substitui a posição contábil posterior ainda não examinada.",
+      "Custo completo das safras, financiamento direto e direitos dos sócios exigem ponte detalhada.",
+      "Condições completas de covenants e recursos restritos não foram reconciliadas.",
+      "Participação relativa, tom e percepção do mercado permanecem não determinados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo imobiliário com incorporação residencial brasileira nas marcas MRV e Sensia, loteamentos pela Urba, administração e desenvolvimento de imóveis de locação pela Luggo e operação norte-americana pela Resia. Habitação popular depende de crédito, produção, registro e repasse. Locação, construção e venda de ativos têm ciclos próprios. Sócios dos projetos, recebíveis cedidos e obrigações corporativas modificam os direitos econômicos do acionista; o resultado brasileiro ajustado não representa todo o grupo.",
+    "nome": "MRV Engenharia",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_AZZAS",
+        "nome": "Azzas 2154"
+      },
+      {
+        "issuer_id": "BR_CEA",
+        "nome": "C&A Modas"
+      },
+      {
+        "issuer_id": "BR_COGNA",
+        "nome": "Cogna"
+      },
+      {
+        "issuer_id": "BR_CURY",
+        "nome": "Cury"
+      },
+      {
+        "issuer_id": "BR_CYRELA",
+        "nome": "Cyrela"
+      },
+      {
+        "issuer_id": "BR_DIRECIONAL",
+        "nome": "Direcional"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          },
+          {
+            "fonte": "F6"
+          },
+          {
+            "fonte": "F7"
+          }
+        ],
+        "texto": "A hipótese é que safras habitacionais melhores e simplificação do grupo reduzam risco financeiro e sustentem retorno depois de construção, perdas e juros. A condição decisiva é a incorporação converter vendas e produção em recebimentos recorrentes, enquanto alienações reduzem obrigações sem destruir valor superior ao capital liberado. A liquidez obtida com ativos não prova recuperação estrutural. O teste deve preservar capital dos sócios, juros alocados entre operações e custos das cessões, sem extrapolar margens ou tratar dívida pro forma como balanço efetivo.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_MRV.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 6,43"
+          },
+          {
+            "fato": "val.BR_MRV.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 4,87"
+          },
+          {
+            "fato": "val.BR_MRV.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-24,22%"
+          },
+          {
+            "fato": "val.BR_MRV.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,05%"
+          },
+          {
+            "fato": "val.BR_MRV.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-24,22%"
+          }
+        ],
+        "texto": "Preço de referência R$ 6,43 e alvo R$ 4,87, com potencial -24,22%. A hipótese de investimento deve ser confrontada com o custo do capital 12,05% e retorno esperado -24,22%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Padronização, presença regional, relacionamento com canais bancários e escala de obras podem apoiar o produto habitacional. A vantagem precisa de prova por safra, praça, custo completo e repasse. Resia enfrenta demanda, financiamento e valores de venda do mercado norte-americano; escala brasileira não transfere vantagem automaticamente. O loteamento tem ciclo próprio. A Luggo passa a manter administração de ativos depois da alienação, com base de receitas e capital diferente da construção para locação.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:52:39.489999+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F7"
+          }
+        ],
+        "texto": "O resultado brasileiro ajustado melhora, enquanto o consolidado mantém prejuízo e incorpora perdas nos ativos norte-americanos. Juros ligados ao empréstimo da operação estrangeira são retirados da medida brasileira, sem desaparecer economicamente. A demonstração dos fluxos separa recebimento por venda de controladas e financiamento de recebíveis. A prévia posterior mostra caixa gerencial beneficiado por alienações; na incorporação, a medida ajustada fica negativa ao retirar o efeito líquido das cessões. Ajustes e pro forma exigem ponte própria.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que safras habitacionais melhores e simplificação do grupo reduzam risco financeiro e sustentem retorno depois de construção, perdas e juros. A condição decisiva é a incorporação converter vendas e produção em recebimentos recorrentes, enquanto alienações reduzem obrigações sem destruir valor superior ao capital liberado. A liquidez obtida com ativos não prova recuperação estrutural. O teste deve preservar capital dos sócios, juros alocados entre operações e custos das cessões, sem extrapolar margens ou tratar dívida pro forma como balanço efetivo. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Venda, com retorno esperado -24,22%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          },
+          {
+            "fonte": "F6"
+          },
+          {
+            "fonte": "F7"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Repasses, crédito, custos e perdas podem limitar recuperação. Alienações dependem de compradores e preço. Cessões, juros, sócios e recebimentos diferidos podem restringir o caixa atribuível e manter risco de refinanciamento."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_MRV.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-42,26%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -42,26%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo discricionário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "MRV — recuperação habitacional e desalavancagem com direitos distintos",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O grupo preserva diferença entre lucro brasileiro ajustado e prejuízo consolidado, incluindo perdas de ativos da Resia. A prévia posterior atribui melhora gerencial a vendas concluídas e caixa da Urba, com repasses prejudicados pela greve bancária. A incorporação apresenta consumo na medida sem efeito líquido de cessão. A ponte de dívida posterior é construída a partir da posição anterior e das liquidações; não foi tratada como novo balanço. Eventos posteriores não foram incorporados retrospectivamente ao modelo recebido.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Conciliar safras, vendas, produção, registros, repasses e carteira pós-chaves. Separar caixa contábil e gerencial, cessões e juros realocados. Confirmar liquidação de alienações, distribuições aos sócios e recebimentos diferidos. Avaliar dívida consolidada, covenants, perdas e recursos restritos antes de inferir distribuição.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_MRV.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,05%"
+          },
+          {
+            "fato": "val.BR_MRV.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "21,66%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 12,05% e a dispersão entre métodos 21,66%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

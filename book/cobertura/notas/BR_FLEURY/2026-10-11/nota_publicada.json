@@ -1,0 +1,456 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "a4e0e6a1de2dc7ef10d997e4ece48d5314f9ee02c1f8cfaf7f059be3efca80f7",
+    "factbook": "c352ed8a581f943a18561fb5ac155c3ee5fb5ea16ca8be721f23feb59b2431c9",
+    "nota_json": "28a50c02115c2041b4183301350ac1cb9457f20a5a92e44771dade8712af9634"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_FLEURY",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-05",
+  "published_at": "2026-10-12T02:52:02.324764+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Dívida bruta recuou, mas dívida líquida aumentou na comparação sequencial, com redução da carteira financeira. Pagamentos de aquisições, arrendamento e proventos consomem caixa depois da operação. O fechamento da Femme trouxe dívida e obrigações próprias; a cópia diferencia o balanço inicial do período de incorporação do resultado. Retorno incremental e amortização precisam ser demonstrados.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Resultados posteriores: conciliar consolidação da Femme, integração, crescimento orgânico e caixa atribuível.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Alocação de capital e pagamentos de aquisição, com dívida, arrendamentos e retorno incremental reconciliados.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "capital"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 14,86, com retorno esperado -39,83%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Utilização, marcas e integração sustentam crescimento orgânico e margem com capex normalizado e caixa atribuível após todas as obrigações. O cenário otimista calculado pelo código é R$ 17,72.",
+      "pessimista": "Glosas, custo fixo e integração ampliam necessidade de capital; novas aquisições e juros restringem retorno apesar do crescimento de receita. O cenário pessimista calculado pelo código é R$ 12,58."
+    },
+    "comentario_valuation": "Preço de referência R$ 26,35 e alvo do modelo aberto R$ 14,86, com potencial -43,62%. Retorno total esperado -39,83% e custo do capital próprio 11,75%. A dispersão entre métodos é 26,21%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 21,96; a diferença -32,34% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Expansão adquirida pode ocultar crescimento orgânico insuficiente e exigir capital adicional. A melhoria do EBITDA não garante caixa ao acionista se juros, arrendamento e aquisições o absorverem. Sinergias e retorno declarados precisam persistir depois da integração.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_FLEURY.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 26,35"
+      },
+      {
+        "fato": "val.BR_FLEURY.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 14,86"
+      },
+      {
+        "fato": "val.BR_FLEURY.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-43,62%"
+      },
+      {
+        "fato": "val.BR_FLEURY.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_FLEURY.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_FLEURY.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 17,72"
+      },
+      {
+        "fato": "val.BR_FLEURY.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_FLEURY.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 12,58"
+      },
+      {
+        "fato": "val.BR_FLEURY.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_FLEURY.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,75%"
+      },
+      {
+        "fato": "val.BR_FLEURY.wacc",
+        "rotulo": "WACC",
+        "valor": "10,17%"
+      },
+      {
+        "fato": "val.BR_FLEURY.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_FLEURY.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-39,83%"
+      },
+      {
+        "fato": "val.BR_FLEURY.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-49,12%"
+      },
+      {
+        "fato": "val.BR_FLEURY.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "16,3x"
+      },
+      {
+        "fato": "val.BR_FLEURY.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,6x"
+      },
+      {
+        "fato": "val.BR_FLEURY.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 21,96"
+      },
+      {
+        "fato": "val.BR_FLEURY.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-32,34%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Grupo Fleury",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://ri.fleury.com.br/quem-somos/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Grupo Fleury",
+        "publicado_em": "2026-08-06",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/0b0dbf21-b60a-4ced-a675-18049e9abc9c/9755d796-e857-bd40-480c-c64bb795ce5a?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Grupo Fleury",
+        "publicado_em": "2026-08-06",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/0b0dbf21-b60a-4ced-a675-18049e9abc9c/b77be458-dee8-1adc-a2bf-e3988d452a6f?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Crescimento orgânico e utilização não remuneram capital depois da integração.",
+      "Glosas, recebíveis e juros limitam caixa depois de aluguel e aquisições.",
+      "Femme e novos elos alteram perímetro, dívida ou direitos sem retorno suficiente.",
+      "Novos investimentos e obrigações modificam a flexibilidade financeira."
+    ],
+    "governanca": "A KPMG apresenta revisão intermediária sem modificação, com alcance menor que auditoria anual e referência a outros auditores nos comparativos. A administração declara cumprimento contratual em junho, sem certificação posterior nesta análise. Participações em novos elos, aquisições e partes relacionadas exigem preservar direitos e pagamentos próprios. Alegações de retorno sobre capital não substituem cálculo aberto conciliado por perímetro.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Crescimento orgânico por marca, volume, mix, glosas, recebimento e utilização técnica; integração e capex; caixa depois de juros, arrendamentos e aquisição; dívida e carteira financeira; resultado e direitos dos novos elos e da Femme em bases comparáveis.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_FLEURY.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-39,83%"
+          },
+          {
+            "fato": "val.BR_FLEURY.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,75%"
+          },
+          {
+            "fato": "val.BR_FLEURY.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "26,21%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -39,83%, custo do capital 11,75% e dispersão entre métodos 26,21% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_FLEURY",
+    "lacunas_de_dados": [
+      "Crescimento orgânico, adquirido e contribuição por unidade não foram integralmente reconciliados ao modelo.",
+      "Balanço inicial da Femme e posterior consolidação do resultado exigem ponte temporal e de dívida.",
+      "Outras atividades de investimento e caixa livre não são equivalentes a caixa recorrente atribuível.",
+      "Retorno incremental de integração, aquisições e novos elos permanece a comprovar.",
+      "Critérios contratuais posteriores, participação relativa, guidance e tom não foram certificados.",
+      "Percepção de mercado e posicionamento não têm comprovação nesta pesquisa."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Serviços de medicina diagnóstica em unidades de atendimento e atendimento móvel; exames para laboratórios e hospitais; novos elos ambulatoriais, infusão e plataformas digitais. Marcas locais e a combinação com Pardini ampliam a rede técnica e de distribuição. O resultado depende de utilização, mix, relacionamento médico e com fontes pagadoras, controle de glosas e integração. Aquisições regionais e novos elos têm desembolsos, riscos e direitos próprios.",
+    "nome": "Fleury",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALLOS",
+        "nome": "Allos"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AMBEV",
+        "nome": "Ambev"
+      },
+      {
+        "issuer_id": "BR_ASSAI",
+        "nome": "Assaí Atacadista"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que marcas, rede técnica e integração ampliem utilização e margem com reinvestimento disciplinado. A condição decisiva é transformar crescimento orgânico e adquirido em caixa depois de juros, arrendamentos e aquisição. A melhora do resultado consolidado precisa ser atribuível ao acionista e sustentar retorno econômico, sem confundir entrada de novos ativos com produtividade recorrente.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_FLEURY.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 26,35"
+          },
+          {
+            "fato": "val.BR_FLEURY.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 14,86"
+          },
+          {
+            "fato": "val.BR_FLEURY.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-43,62%"
+          },
+          {
+            "fato": "val.BR_FLEURY.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,75%"
+          },
+          {
+            "fato": "val.BR_FLEURY.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-39,83%"
+          }
+        ],
+        "texto": "Preço de referência R$ 26,35 e alvo R$ 14,86, com potencial -43,62%. A hipótese de investimento deve ser confrontada com o custo do capital 11,75% e retorno esperado -39,83%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Marcas, médicos, conveniência e rede lab-to-lab podem sustentar diferenciação. A escala técnica depende de logística, utilização e qualidade dos exames, além de relacionamento com pagadores. A integração cria oportunidades de diluição, mas também custos e complexidade. Alegações de liderança e ganho de mercado da administração não foram verificadas independentemente.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:52:02.324764+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita, EBITDA e lucro cresceram na comparação anual, com contribuição orgânica e adquirida distinta. Caixa operacional e caixa livre da empresa aumentaram; o caixa livre do acionista caiu depois de juros, arrendamentos e dívida. Outras atividades de investimento integram a ponte de caixa. Femme aparece no balanço de abertura, com resultado a consolidar posteriormente, exigindo cuidado no comparável.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que marcas, rede técnica e integração ampliem utilização e margem com reinvestimento disciplinado. A condição decisiva é transformar crescimento orgânico e adquirido em caixa depois de juros, arrendamentos e aquisição. A melhora do resultado consolidado precisa ser atribuível ao acionista e sustentar retorno econômico, sem confundir entrada de novos ativos com produtividade recorrente. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Venda, com retorno esperado -39,83%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Glosas, concentração em pagadores, custos de pessoal e integração podem limitar conversão. Aquisições e novos elos exigem capital; caixa livre antes de juros e aluguel pode exagerar disponibilidade econômica."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_FLEURY.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-32,34%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -32,34%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Saúde",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Fleury — marcas diagnósticas, integração e retorno após aquisições",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "No material recebido, diagnóstico B2C, B2B e novos elos cresceram na comparação anual, com separação entre expansão orgânica e aquisições. Receita, EBITDA e lucro aumentaram. O fluxo gerencial apresenta maior caixa operacional e caixa livre da empresa; o caixa livre do acionista é menor após juros, arrendamentos e variação da dívida. A dívida bruta caiu e a líquida subiu sequencialmente. A aquisição da Femme foi concluída em maio; as notas explicativas incluem seu balanço inicial, enquanto o resultado e demais efeitos são apresentados para consolidação posterior. A mudança de perímetro exige ponte antes de atribuir melhora orgânica. O ITR recebido tem relatório de revisão de agosto e valores comparativos examinados anteriormente por outra firma.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Crescimento orgânico por marca, volume, mix, glosas, recebimento e utilização técnica; integração e capex; caixa depois de juros, arrendamentos e aquisição; dívida e carteira financeira; resultado e direitos dos novos elos e da Femme em bases comparáveis.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_FLEURY.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,75%"
+          },
+          {
+            "fato": "val.BR_FLEURY.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "26,21%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,75% e a dispersão entre métodos 26,21%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,441 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "7ac3dec96809f8af68c57e41cae0d2e99b7f72462463163ace292c1e14c3b4aa",
+    "factbook": "b34bc25b696115150e0080d7272fc72c082f1e011d2ea28867efb41e377e2d03",
+    "nota_json": "691d5095f106921593d365c765fb45627503cef70e1109905c7decbe61d73b87"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_VAMOS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T02:52:58.470569+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Dívida bruta e líquida recuaram, mas os indicadores contratuais possuem perímetro próprio. Aporte privado recebido não é caixa recorrente. Extensões e reutilização reduzem compra imediata, sem eliminar manutenção e reposição. Cessões, fornecedores e crédito precisam de conciliação antes de atribuir caixa livre.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar ocupação, recebimento e retorno após o ciclo da frota.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 12,29, com retorno esperado +95,14%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Ocupação e renovação disciplinadas sustentam recebimento e caixa depois de crédito, manutenção e juros, com estoques e dívida reconciliados. O cenário otimista calculado pelo código é R$ 16,63.",
+      "pessimista": "Crédito e valor residual deterioram-se; estoque e manutenção consomem geração, enquanto passivos excluídos dos covenants restringem o retorno. O cenário pessimista calculado pelo código é R$ 8,28."
+    },
+    "comentario_valuation": "Preço de referência R$ 6,50 e alvo do modelo aberto R$ 12,29, com potencial +89,13%. Retorno total esperado +95,14% e custo do capital próprio 13,47%. A dispersão entre métodos é 45,01%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 5,12; a diferença +139,96% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Ocupação maior e dívida contratual menor podem depender de aporte e liberação de estoque. Se cessões, crédito e manutenção absorverem recursos, EBITDA ajustado não confirmará caixa sustentável depois do ciclo completo.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_VAMOS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 6,50"
+      },
+      {
+        "fato": "val.BR_VAMOS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 12,29"
+      },
+      {
+        "fato": "val.BR_VAMOS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+89,13%"
+      },
+      {
+        "fato": "val.BR_VAMOS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.BR_VAMOS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_VAMOS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 16,63"
+      },
+      {
+        "fato": "val.BR_VAMOS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_VAMOS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 8,28"
+      },
+      {
+        "fato": "val.BR_VAMOS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_VAMOS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "13,47%"
+      },
+      {
+        "fato": "val.BR_VAMOS.wacc",
+        "rotulo": "WACC",
+        "valor": "9,24%"
+      },
+      {
+        "fato": "val.BR_VAMOS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_VAMOS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+95,14%"
+      },
+      {
+        "fato": "val.BR_VAMOS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+94,71%"
+      },
+      {
+        "fato": "val.BR_VAMOS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "11,6x"
+      },
+      {
+        "fato": "val.BR_VAMOS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,4x"
+      },
+      {
+        "fato": "val.BR_VAMOS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 5,12"
+      },
+      {
+        "fato": "val.BR_VAMOS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+139,96%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Vamos",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://ri.grupovamos.com.br/a-companhia/quem-somos/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Vamos",
+        "publicado_em": "2026-08-11",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/7715d566-5b13-44f4-96c2-0949202d82b4/e249d79a-9f51-e66c-fee7-97208a53d438?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Vamos",
+        "publicado_em": "2026-08-11",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/7715d566-5b13-44f4-96c2-0949202d82b4/0c180c50-3562-7e8d-be00-5383420a7e6d?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+      "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+      "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+      "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    ],
+    "governanca": "O perfil atual separa locação, seminovos e indústria. O indicador de covenant não equivale à dívida com cessões; ajustes de provisões não eliminam risco de crédito. Participação da holding e sócios, capital recebido e retorno anualizado possuem definições próprias.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Ocupação, preço, recebimento e inadimplência por contrato; extensão e novos ativos separados. Monitorar estoque, prazo e margem de usados, manutenção e investimento. Conciliar dívida incluindo cessões, provisões, aporte e juros com caixa original.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_VAMOS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+95,14%"
+          },
+          {
+            "fato": "val.BR_VAMOS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "13,47%"
+          },
+          {
+            "fato": "val.BR_VAMOS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "45,01%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +95,14%, custo do capital 13,47% e dispersão entre métodos 45,01% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_VAMOS",
+    "lacunas_de_dados": [
+      "A ponte integral do fluxo original, juros, fornecedores e cessões permanece pendente.",
+      "Retorno por contrato, crédito e valor residual exigem diligência específica.",
+      "Reutilização e extensão não comprovam menor reposição estrutural.",
+      "Direção agregada de revisão das projeções existentes não foi comprovada.",
+      "Posição de mercado e vantagem independente requerem comparação própria."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Locadora de caminhões, ônibus, máquinas e equipamentos, com venda de seminovos e operações industriais. Contratos novos, extensão e locação de usados possuem capital e maturação distintos. A venda de ativos encerra parte do ciclo; frota total e valor investido não variam necessariamente na mesma direção.",
+    "nome": "Vamos",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_SIMPAR",
+        "nome": "Simpar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que utilização e contratos remunerem a frota depois de crédito, manutenção e juros. A condição decisiva é liberar estoque sem deteriorar valor residual ou recebimento. EBITDA e yield precisam de ponte à geração atribuível depois de cessões e financiamento.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_VAMOS.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 6,50"
+          },
+          {
+            "fato": "val.BR_VAMOS.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 12,29"
+          },
+          {
+            "fato": "val.BR_VAMOS.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+89,13%"
+          },
+          {
+            "fato": "val.BR_VAMOS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "13,47%"
+          },
+          {
+            "fato": "val.BR_VAMOS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+95,14%"
+          }
+        ],
+        "texto": "Preço de referência R$ 6,50 e alvo R$ 12,29, com potencial +89,13%. A hipótese de investimento deve ser confrontada com o custo do capital 13,47% e retorno esperado +95,14%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Rede de atendimento e manutenção pode apoiar locação, extensão e venda. Clientes e setores diversificados não eliminam crédito ou concentração de novos contratos. A posição informada pelo emissor exige comparação própria; preço de usados e programas de financiamento público alteram demanda e ciclo.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:52:58.470569+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Ocupação e locação cresceram, com menor estoque e mais vendas de usados. O lucro melhorou sequencialmente. A redução da dívida também recebeu contribuição de aporte de capital. Covenant exclui cessões e ajusta provisões; não representa dívida econômica integral nem reversão automática do risco de crédito.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que utilização e contratos remunerem a frota depois de crédito, manutenção e juros. A condição decisiva é liberar estoque sem deteriorar valor residual ou recebimento. EBITDA e yield precisam de ponte à geração atribuível depois de cessões e financiamento. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Compra, com retorno esperado +95,14%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Crédito, valor residual, juros e manutenção podem limitar retorno. Reutilização não elimina reposição futura; concentração e programas públicos alteram demanda. Indicadores de covenant podem excluir passivos economicamente relevantes."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_VAMOS.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+139,96%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +139,96%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Vamos — ocupação, crédito e retorno do ativo pesado",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Ocupação e locação avançaram com reutilização de ativos e extensão de contratos; estoque diminuiu e vendas de usados aumentaram. Dívida recuou com contribuição do aumento de capital. O emissor relata atingir uma meta contratual, sem direção agregada de revisão classificada. A dívida para covenant exclui cessões e o EBITDA ajusta perdas de crédito. Retorno anualizado e acumulado conservam bases distintas.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Ocupação, preço, recebimento e inadimplência por contrato; extensão e novos ativos separados. Monitorar estoque, prazo e margem de usados, manutenção e investimento. Conciliar dívida incluindo cessões, provisões, aporte e juros com caixa original.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_VAMOS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "13,47%"
+          },
+          {
+            "fato": "val.BR_VAMOS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "45,01%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 13,47% e a dispersão entre métodos 45,01%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

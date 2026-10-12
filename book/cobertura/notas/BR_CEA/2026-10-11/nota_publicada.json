@@ -1,0 +1,456 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "2d3b933c7c13951ed1fca91fd1d69b0fafbc1cff551eb3d724250862f6371e9f",
+    "factbook": "19235e4243db5a23916452310db1d273e5c6ed5326dc74fe893075c1e03ee6d8",
+    "nota_json": "1ae31463ea14e483248622ffae7eeb6492504b35ac9e4702a84f27acaea4387c"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_CEA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T02:51:23.671002+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Dívida bruta e líquida recuaram anualmente, mas disponibilidade e capacidade de distribuição exigem separar carteira e compromissos. A recompra consumiu caixa; expansão e reformas concorrem com juros e aluguel. Risco sacado é apresentado como operação comercial e deve ser acompanhado como exposição a financiamento, sem reclassificação arbitrária do modelo.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar estoque, carteira própria e caixa depois de juros, aluguel e expansão.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Produtividade das novas lojas, reformas e formato ACE, sem retorno ou data presumidos.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "outro"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 20,10, com retorno esperado +60,39%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Coleções e reposição preservam preço cheio; crédito rentável e expansão disciplinada permitem caixa recorrente após o custo completo. O cenário otimista calculado pelo código é R$ 31,71.",
+      "pessimista": "Demanda e remarcação pressionam margem, estoque e parcelamento absorvem recursos e investimentos ou recompra limitam a flexibilidade financeira. O cenário pessimista calculado pelo código é R$ 9,33."
+    },
+    "comentario_valuation": "Preço de referência R$ 12,53 e alvo do modelo aberto R$ 20,10, com potencial +60,39%. Retorno total esperado +60,39% e custo do capital próprio 12,63%. A dispersão entre métodos é 22,48%; a confiança quantitativa recebida é A. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 16,08; a diferença +24,95% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Margem de vestuário crescente pode encobrir estoque mais lento e recebimentos mais longos. Carteira própria aumenta exposição financeira; recompra reduz caixa antes da confirmação das safras. Se o lucro ajustado não cobrir giro, juros, aluguel e expansão, o ganho comercial não chegará ao acionista.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_CEA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 12,53"
+      },
+      {
+        "fato": "val.BR_CEA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 20,10"
+      },
+      {
+        "fato": "val.BR_CEA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+60,39%"
+      },
+      {
+        "fato": "val.BR_CEA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.BR_CEA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_CEA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 31,71"
+      },
+      {
+        "fato": "val.BR_CEA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "4,30%"
+      },
+      {
+        "fato": "val.BR_CEA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 9,33"
+      },
+      {
+        "fato": "val.BR_CEA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "31,73%"
+      },
+      {
+        "fato": "val.BR_CEA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,63%"
+      },
+      {
+        "fato": "val.BR_CEA.wacc",
+        "rotulo": "WACC",
+        "valor": "9,78%"
+      },
+      {
+        "fato": "val.BR_CEA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_CEA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+60,39%"
+      },
+      {
+        "fato": "val.BR_CEA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+40,42%"
+      },
+      {
+        "fato": "val.BR_CEA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "6,9x"
+      },
+      {
+        "fato": "val.BR_CEA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,0x"
+      },
+      {
+        "fato": "val.BR_CEA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 16,08"
+      },
+      {
+        "fato": "val.BR_CEA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+24,95%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "C&A",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://ri.cea.com.br/a-companhia/historia/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "C&A",
+        "publicado_em": "2026-08-04",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/402adf94-e9a7-4c66-9bd9-3d0ec018abd5/122c2320-51b6-704d-45e0-8cdbf3ae176c?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "C&A",
+        "publicado_em": "2026-08-04",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/402adf94-e9a7-4c66-9bd9-3d0ec018abd5/e1ff2d87-ea5e-3d38-b151-dff0261b65f8?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+      "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+      "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+      "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    ],
+    "governanca": "O ITR contém revisão limitada sem modificação. Contratos têm índices anuais e condições não financeiras; declaração na data-base não comprova aferição futura. Compras relacionadas, risco sacado e remuneração em ações devem preservar finalidade e condições. O histórico institucional tem referências temporais distintas, sem uso de escala global como fato atual da companhia local.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Vestuário e vendas comparáveis, preço cheio, remarcação e estoque por coleção; safras, parcelamento, perdas e recebimento do C&A Pay; fornecedores e risco sacado. Conciliar caixa ajustado de Bradescard, juros, arrendamento, capex pago e reconhecido, execução da recompra e produtividade de novas lojas.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_CEA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+60,39%"
+          },
+          {
+            "fato": "val.BR_CEA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,63%"
+          },
+          {
+            "fato": "val.BR_CEA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "22,48%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +60,39%, custo do capital 12,63% e dispersão entre métodos 22,48% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_CEA",
+    "lacunas_de_dados": [
+      "A reconciliação integral de Bradescard, crédito próprio e caixa recebido ao modelo permanece pendente.",
+      "Retorno de estoque, novas lojas e formatos precisa ser comprovado por safra.",
+      "A comparação de capex reconhecido e pago exige ponte completa.",
+      "Risco sacado, partes relacionadas e aferição contratual anual exigem acompanhamento específico.",
+      "Guidance agregado e direção formal não foram qualificados em material integral.",
+      "Participação relativa, percepção, posicionamento e catalisadores datados atuais não foram comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Varejo de moda com lojas e canais digitais, coleções, logística e crédito pelo C&A Pay. A retirada de telefonia e encerramento da parceria Bradescard alteram composição de vendas, estoques e bases financeiras. Desenvolvimento de produto e disponibilidade precisam preservar preço cheio e giro. A carteira própria exige provisões, recebimento e financiamento separados da margem de mercadorias.",
+    "nome": "C&A Modas",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_AZZAS",
+        "nome": "Azzas 2154"
+      },
+      {
+        "issuer_id": "BR_COGNA",
+        "nome": "Cogna"
+      },
+      {
+        "issuer_id": "BR_CURY",
+        "nome": "Cury"
+      },
+      {
+        "issuer_id": "BR_CYRELA",
+        "nome": "Cyrela"
+      },
+      {
+        "issuer_id": "BR_DIRECIONAL",
+        "nome": "Direcional"
+      },
+      {
+        "issuer_id": "BR_EZTEC",
+        "nome": "EZTec"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que coleção, gestão do estoque e digital sustentem margem e produtividade com crédito rentável. A condição decisiva é gerar caixa depois de giro, juros, aluguel e investimento, sem depender de reversões ou venda de carteira. Margem e lucro ajustado maiores não confirmam retorno se estoque, parcelamento e expansão absorverem recursos.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_CEA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 12,53"
+          },
+          {
+            "fato": "val.BR_CEA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 20,10"
+          },
+          {
+            "fato": "val.BR_CEA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+60,39%"
+          },
+          {
+            "fato": "val.BR_CEA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,63%"
+          },
+          {
+            "fato": "val.BR_CEA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+60,39%"
+          }
+        ],
+        "texto": "Preço de referência R$ 12,53 e alvo R$ 20,10, com potencial +60,39%. A hipótese de investimento deve ser confrontada com o custo do capital 12,63% e retorno esperado +60,39%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Marca, sortimento, preço acessível e canais podem melhorar frequência e utilização. Acerto de coleção e reposição evitam remarcação; formatos novos exigem retorno por safra. Crédito próprio pode apoiar relacionamento, mas precisa remunerar perdas e capital. Escala global da marca não comprova participação ou vantagens econômicas locais da companhia coberta.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:51:23.671002+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Lucro contábil recuou anualmente, com reversão de provisão no período e alienação de carteira na base anterior; o lucro ajustado aumentou. A comparação do caixa ajusta Bradescard e bases de ocupação. Giro piorou com estoques, composição e parcelamento; caixa livre trimestral ajustado positivo diminuiu. Juros de empréstimos e arrendamentos têm classificação financeira nas demonstrações.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que coleção, gestão do estoque e digital sustentem margem e produtividade com crédito rentável. A condição decisiva é gerar caixa depois de giro, juros, aluguel e investimento, sem depender de reversões ou venda de carteira. Margem e lucro ajustado maiores não confirmam retorno se estoque, parcelamento e expansão absorverem recursos. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Compra, com retorno esperado +60,39%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Estoque, remarcação, concessão de crédito e expansão podem reduzir conversão. Reversões e base de alienação tornam lucro pouco comparável; risco sacado e obrigações de ocupação precisam de liquidez. Crescimento digital sem contribuição econômica pode consumir capital."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_CEA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+24,95%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +24,95%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo discricionário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "C&A — coleção, crédito próprio e conversão da margem em caixa",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "As vendas de vestuário e comparáveis cresceram e a margem bruta melhorou. O lucro contábil caiu na comparação anual, enquanto o ajustado cresceu; reversão de provisão e alienação de carteira na base anterior têm tratamentos distintos. O ciclo de caixa piorou anualmente com estoque e parcelamento, e o caixa livre ajustado trimestral caiu apesar de continuar positivo. A retirada de telefonia e a expansão alteram giro e comparabilidade. Dívida bruta e líquida diminuíram anualmente; recompra e financiamento consumiram caixa. O ITR informa cumprimento dos contratos na data-base, com aferição anual própria.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Vestuário e vendas comparáveis, preço cheio, remarcação e estoque por coleção; safras, parcelamento, perdas e recebimento do C&A Pay; fornecedores e risco sacado. Conciliar caixa ajustado de Bradescard, juros, arrendamento, capex pago e reconhecido, execução da recompra e produtividade de novas lojas.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_CEA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,63%"
+          },
+          {
+            "fato": "val.BR_CEA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "22,48%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 12,63% e a dispersão entre métodos 22,48%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

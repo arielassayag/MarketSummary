@@ -1,0 +1,168 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_MOTIVA",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Motiva: retorno das concessões após a simplificação do portfólio",
+  "resumo": "A hipótese é que simplificação do portfólio e disciplina de capital melhorem retorno das concessões remanescentes após investimento e financiamento. A condição decisiva é uso dos recursos e caixa sustentável dos contratos. Alienação de ativos não comprova criação de valor futura nem torna o caixa recebido equivalente a resultado recorrente. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_MOTIVA.rating_codigo}}, com retorno esperado {{fact:val.BR_MOTIVA.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "A Motiva, anteriormente Grupo CCR, reúne concessões de rodovias e transporte sobre trilhos. O RI divulga a conclusão da alienação de sua plataforma aeroportuária à ASUR. A pesquisa precisa separar os ativos remanescentes, obrigações contratuais e recursos da transação. Receita de concessões, tráfego e remuneração contratual dependem de investimentos, operação e financiamento em cada projeto.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que simplificação do portfólio e disciplina de capital melhorem retorno das concessões remanescentes após investimento e financiamento. A condição decisiva é uso dos recursos e caixa sustentável dos contratos. Alienação de ativos não comprova criação de valor futura nem torna o caixa recebido equivalente a resultado recorrente.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_MOTIVA.preco}} e alvo {{fact:val.BR_MOTIVA.preco_alvo}}, com potencial {{fact:val.BR_MOTIVA.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_MOTIVA.ke}} e retorno esperado {{fact:val.BR_MOTIVA.etr}}.",
+      "evidencias": [
+        "val.BR_MOTIVA.preco",
+        "val.BR_MOTIVA.preco_alvo",
+        "val.BR_MOTIVA.upside",
+        "val.BR_MOTIVA.ke",
+        "val.BR_MOTIVA.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Atualizar o perímetro remanescente e reconciliar dívida, obrigações e recursos da alienação; acompanhar tráfego, tarifa, execução, capital comprometido e caixa de cada concessão. Examinar retorno após financiamento e condições de novos contratos.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_MOTIVA.ke}} e a dispersão entre métodos {{fact:val.BR_MOTIVA.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_MOTIVA.ke",
+        "val.BR_MOTIVA.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Tráfego, obras, remuneração contratual e financiamento podem frustrar retorno das concessões. Novos projetos elevam capital comprometido. Perímetro após a venda, passivos remanescentes e uso dos recursos exigem conciliação para evitar dupla contagem.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_MOTIVA.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_MOTIVA.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Contratos remanescentes geram caixa após obras e financiamento, e recursos da venda são usados com retorno demonstrado. Novas concessões têm remuneração compatível com os riscos e a simplificação melhora a disciplina de capital. O cenário otimista calculado pelo código é {{fact:val.BR_MOTIVA.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_MOTIVA.preco_alvo}}, com retorno esperado {{fact:val.BR_MOTIVA.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Novos projetos e obrigações absorvem liquidez da venda, enquanto tráfego, obras ou financiamento pioram. Avaliação sem conciliação do perímetro duplica ativos ou recursos e não sustenta retorno ao acionista. O cenário pessimista calculado pelo código é {{fact:val.BR_MOTIVA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_MOTIVA.preco}} e alvo do modelo aberto {{fact:val.BR_MOTIVA.preco_alvo}}, com potencial {{fact:val.BR_MOTIVA.upside}}. Retorno total esperado {{fact:val.BR_MOTIVA.etr}} e custo do capital próprio {{fact:val.BR_MOTIVA.ke}}. A dispersão entre métodos é {{fact:val.BR_MOTIVA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_MOTIVA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_MOTIVA.consenso_alvo}}; a diferença {{fact:val.BR_MOTIVA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "O fato relevante consultado confirma a conclusão da alienação da plataforma aeroportuária. Esse evento exige separar operações continuadas, ganho de venda, recursos recebidos e passivos remanescentes. O último resultado e a transmissão integral da transação ao modelo recebido ainda não foram reconciliados.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Recursos da venda devem ser confrontados com dívida, obrigações dos contratos e retorno de novos projetos. Concessões podem consumir capital antes da geração de caixa prevista. A disciplina da gestão deve ser demonstrada pelo capital comprometido e por retorno após financiamento, sem extrapolar uma transação para todo o programa de investimentos.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Infraestrutura, contratos e experiência de execução podem influenciar acesso e operação de concessões. Eles não comprovam que novos projetos serão contratados por preço adequado. A análise deve avaliar retorno, prazo, riscos e obrigações de cada contrato, junto a disciplina em processos competitivos.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "A alienação aeroportuária exige reconciliar operações continuadas, perímetro, ganho de transação, caixa recebido e passivos que permaneceram. Receita de construção e efeitos contratuais podem afastar lucro do caixa. O fato relevante confirma a conclusão; a pesquisa ainda não reconciliou integralmente seu efeito no modelo de avaliação recebido.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Recursos da venda devem ser confrontados com dívida, obrigações dos contratos e retorno de novos projetos. Concessões podem consumir capital antes da geração de caixa prevista. A disciplina da gestão deve ser demonstrada pelo capital comprometido e por retorno após financiamento, sem extrapolar uma transação para todo o programa de investimentos.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "Venda pode melhorar liquidez temporariamente enquanto novos contratos consomem recursos com retorno insuficiente. Tráfego, custos ou obras podem frustrar geração de caixa das concessões. Se a avaliação mantém ativos alienados ou duplica recursos recebidos, a conclusão pode ficar sem suporte econômico.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Atualizar o perímetro remanescente e reconciliar dívida, obrigações e recursos da alienação; acompanhar tráfego, tarifa, execução, capital comprometido e caixa de cada concessão. Examinar retorno após financiamento e condições de novos contratos.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_MOTIVA.etr}}, custo do capital {{fact:val.BR_MOTIVA.ke}} e dispersão entre métodos {{fact:val.BR_MOTIVA.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_MOTIVA.etr",
+        "val.BR_MOTIVA.ke",
+        "val.BR_MOTIVA.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Perímetro do modelo após a alienação dos aeroportos precisa de reconciliação documental.",
+    "Uso dos recursos, passivos remanescentes e ganho de transação não foram integralmente reconciliados.",
+    "Retorno após financiamento e obrigações de cada concessão permanece a demonstrar.",
+    "Último resultado e fluxo de caixa das operações continuadas exigem leitura completa.",
+    "Percepção do mercado e posicionamento não têm evidência suficiente.",
+    "Não há catalisador futuro com data precisa confirmado nesta nota."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Motiva",
+      "titulo": "Perfil e estrutura do negócio",
+      "url": "https://ri.motiva.com.br/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Motiva",
+      "titulo": "Informações financeiras e materiais de análise",
+      "url": "https://ri.motiva.com.br/noticia/fato-relevante-conclusao-da-transacao-da-plataforma-de-aeroportos/",
+      "publicado_em": "2026-09-01",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

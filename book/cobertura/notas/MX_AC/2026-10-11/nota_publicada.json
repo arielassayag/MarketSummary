@@ -1,0 +1,410 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "a0e4fa260ddb6ac4c9f131ed609224a3970fcd906e4310f32da45f0e2106faaf",
+    "factbook": "f3d6e062ad5ec04d82547b2b5444339c156fbcec7de8eb2e3b7385ae5071ec72",
+    "nota_json": "158646931a04d809e5d16b9cc8d8805248b0e38912e2803eda6069dae70ca4d1"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_AC",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-30",
+  "published_at": "2026-10-12T02:52:20.631337+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Confrontar expansão comercial, capacidade e dividendos com caixa recorrente e necessidades da franquia. O release relata dividendo extraordinário aprovado para pagamento posterior; confirmação do pagamento e direitos por ação permanecem a reconciliar.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-30",
+        "descricao": "Teleconferência de resultados anunciada no calendário do emissor; acompanhar a confirmação do evento e os materiais divulgados.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em MXN 144,06, com retorno esperado -23,32%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Produtividade e execução comercial preservam volume e caixa após compromissos de reinvestimento. O cenário otimista calculado pelo código é MXN 173,59.",
+      "pessimista": "Pressão de consumo e custos reduz o retorno enquanto expansão e distribuição de capital consomem caixa. O cenário pessimista calculado pelo código é MXN 120,55."
+    },
+    "comentario_valuation": "Preço de referência MXN 195,69 e alvo do modelo aberto MXN 144,06, com potencial -26,38%. Retorno total esperado -23,32% e custo do capital próprio 11,22%. A dispersão entre métodos é 14,71%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é MXN 238,33; a diferença -39,55% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese enfraquece se eficiência declarada não chegar ao caixa ou se diversificação mascarar perda de retorno em territórios relevantes.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.MX_AC.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 195,69"
+      },
+      {
+        "fato": "val.MX_AC.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 144,06"
+      },
+      {
+        "fato": "val.MX_AC.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-26,38%"
+      },
+      {
+        "fato": "val.MX_AC.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.MX_AC.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_AC.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 173,59"
+      },
+      {
+        "fato": "val.MX_AC.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_AC.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 120,55"
+      },
+      {
+        "fato": "val.MX_AC.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_AC.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,22%"
+      },
+      {
+        "fato": "val.MX_AC.wacc",
+        "rotulo": "WACC",
+        "valor": "10,33%"
+      },
+      {
+        "fato": "val.MX_AC.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_AC.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-23,32%"
+      },
+      {
+        "fato": "val.MX_AC.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-18,94%"
+      },
+      {
+        "fato": "val.MX_AC.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "18,1x"
+      },
+      {
+        "fato": "val.MX_AC.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,6x"
+      },
+      {
+        "fato": "val.MX_AC.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 238,33"
+      },
+      {
+        "fato": "val.MX_AC.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-39,55%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Arca Continental",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e estrutura do negócio",
+        "url": "https://www.arcacontal.com/en/investors"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Arca Continental",
+        "publicado_em": "2026-07-23",
+        "tipo": "Relações com investidores",
+        "titulo": "Release da controladora e desempenho territorial",
+        "url": "https://fdecorpwsprdeus2-bfb4cgcde4ftcff6.a01.azurefd.net/files/2026-07/VF%20AC_2Q26%20ENG.pdf"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Arca Continental",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário de resultados e materiais do investidor",
+        "url": "https://www.arcacontal.com/en/investors"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+      "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+      "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+      "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+    ],
+    "governanca": "Confrontar expansão comercial, capacidade e dividendos com caixa recorrente e necessidades da franquia. O release relata dividendo extraordinário aprovado para pagamento posterior; confirmação do pagamento e direitos por ação permanecem a reconciliar.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar volumes comparáveis, preços, formatos de embalagem, custos de distribuição e caixa por região. Verificar se produtividade compensa pressão de consumo e tributação sem comprometer disponibilidade e retorno do investimento.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_AC.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-23,32%"
+          },
+          {
+            "fato": "val.MX_AC.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,22%"
+          },
+          {
+            "fato": "val.MX_AC.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "14,71%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -23,32%, custo do capital 11,22% e dispersão entre métodos 14,71% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "MX_AC",
+    "lacunas_de_dados": [
+      "Reconciliação integral do release com IFRS, participações não controladoras e caixa por entidade permanece pendente.",
+      "Direitos, classes e base plenamente diluída precisam de conciliação com o modelo.",
+      "Pagamento do dividendo extraordinário e retorno das expansões exigem documentação posterior.",
+      "Vantagem competitiva, orientação e tom da gestão não estão concluídos.",
+      "A percepção do mercado não tem suporte documental suficiente."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "A Arca Continental combina engarrafamento franqueado, distribuição e negócios complementares em territórios distintos. O ativo analisado é a controladora; resultado de subsidiária não substitui sua participação econômica consolidada.",
+    "nome": "Arca Continental",
+    "o_que_mudou": null,
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_BIMBO",
+        "nome": "Grupo Bimbo"
+      },
+      {
+        "issuer_id": "MX_CHEDRAUI",
+        "nome": "Grupo Comercial Chedraui"
+      },
+      {
+        "issuer_id": "MX_GRUMA",
+        "nome": "Gruma"
+      },
+      {
+        "issuer_id": "MX_KIMBER",
+        "nome": "Kimberly-Clark de México"
+      },
+      {
+        "issuer_id": "MX_KOF",
+        "nome": "Coca-Cola FEMSA"
+      },
+      {
+        "issuer_id": "MX_SIGMA",
+        "nome": "Sigma Foods (ex-Alfa)"
+      },
+      {
+        "issuer_id": "MX_WALMEX",
+        "nome": "Walmart de México"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese é que execução comercial e diversificação territorial sustentem caixa recorrente. A condição é comprovar retorno da rede e transmissão de caixa ao acionista depois de investimento, tributos e participações não controladoras.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_AC.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "MXN 195,69"
+          },
+          {
+            "fato": "val.MX_AC.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "MXN 144,06"
+          },
+          {
+            "fato": "val.MX_AC.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-26,38%"
+          },
+          {
+            "fato": "val.MX_AC.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,22%"
+          },
+          {
+            "fato": "val.MX_AC.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-23,32%"
+          }
+        ],
+        "texto": "Preço de referência MXN 195,69 e alvo MXN 144,06, com potencial -26,38%. A hipótese de investimento deve ser confrontada com o custo do capital 11,22% e retorno esperado -23,32%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Testar disponibilidade de produtos, acessibilidade e produtividade da distribuição por território. As afirmações da administração sobre execução precisam de indicadores comparáveis; presença internacional não comprova vantagem econômica.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:52:20.631337+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Separar desempenho em moeda local de conversão e trimestre de semestre. O EBITDA gerencial adiciona despesas não recorrentes; volumes e vendas também têm exclusões próprias. Exigir ponte com IFRS, resultado atribuível e caixa, preservando essas bases.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que execução comercial e diversificação territorial sustentem caixa recorrente. A condição é comprovar retorno da rede e transmissão de caixa ao acionista depois de investimento, tributos e participações não controladoras. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Venda, com retorno esperado -23,32%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Consumo, impostos e insumos podem pressionar acessibilidade, enquanto manutenção da rede exige desembolso. Moeda e subsidiárias podem alterar a leitura consolidada."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_AC.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-39,55%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -39,55%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo básico",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Arca Continental: retorno da distribuição e diversificação territorial",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O release da controladora recebido apresenta bebidas e negócios complementares por região, com definições próprias para métricas gerenciais e comparação em moeda local. Sua reconciliação completa com demonstrações, caixa e participações permanece pendente.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar volumes comparáveis, preços, formatos de embalagem, custos de distribuição e caixa por região. Verificar se produtividade compensa pressão de consumo e tributação sem comprometer disponibilidade e retorno do investimento.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.MX_AC.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,22%"
+          },
+          {
+            "fato": "val.MX_AC.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "14,71%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,22% e a dispersão entre métodos 14,71%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

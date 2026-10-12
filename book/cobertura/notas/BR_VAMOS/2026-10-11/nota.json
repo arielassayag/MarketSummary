@@ -1,0 +1,196 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_VAMOS",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Vamos — ocupação, crédito e retorno do ativo pesado",
+  "resumo": "A hipótese é que utilização e contratos remunerem a frota depois de crédito, manutenção e juros. A condição decisiva é liberar estoque sem deteriorar valor residual ou recebimento. EBITDA e yield precisam de ponte à geração atribuível depois de cessões e financiamento. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_VAMOS.rating_codigo}}, com retorno esperado {{fact:val.BR_VAMOS.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Locadora de caminhões, ônibus, máquinas e equipamentos, com venda de seminovos e operações industriais. Contratos novos, extensão e locação de usados possuem capital e maturação distintos. A venda de ativos encerra parte do ciclo; frota total e valor investido não variam necessariamente na mesma direção.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que utilização e contratos remunerem a frota depois de crédito, manutenção e juros. A condição decisiva é liberar estoque sem deteriorar valor residual ou recebimento. EBITDA e yield precisam de ponte à geração atribuível depois de cessões e financiamento.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_VAMOS.preco}} e alvo {{fact:val.BR_VAMOS.preco_alvo}}, com potencial {{fact:val.BR_VAMOS.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_VAMOS.ke}} e retorno esperado {{fact:val.BR_VAMOS.etr}}.",
+      "evidencias": [
+        "val.BR_VAMOS.preco",
+        "val.BR_VAMOS.preco_alvo",
+        "val.BR_VAMOS.upside",
+        "val.BR_VAMOS.ke",
+        "val.BR_VAMOS.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Ocupação, preço, recebimento e inadimplência por contrato; extensão e novos ativos separados. Monitorar estoque, prazo e margem de usados, manutenção e investimento. Conciliar dívida incluindo cessões, provisões, aporte e juros com caixa original.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_VAMOS.ke}} e a dispersão entre métodos {{fact:val.BR_VAMOS.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_VAMOS.ke",
+        "val.BR_VAMOS.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Próximos resultados: testar ocupação, recebimento e retorno após o ciclo da frota.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Crédito, valor residual, juros e manutenção podem limitar retorno. Reutilização não elimina reposição futura; concentração e programas públicos alteram demanda. Indicadores de covenant podem excluir passivos economicamente relevantes.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_VAMOS.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_VAMOS.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Ocupação e renovação disciplinadas sustentam recebimento e caixa depois de crédito, manutenção e juros, com estoques e dívida reconciliados. O cenário otimista calculado pelo código é {{fact:val.BR_VAMOS.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_VAMOS.preco_alvo}}, com retorno esperado {{fact:val.BR_VAMOS.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Crédito e valor residual deterioram-se; estoque e manutenção consomem geração, enquanto passivos excluídos dos covenants restringem o retorno. O cenário pessimista calculado pelo código é {{fact:val.BR_VAMOS.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_VAMOS.preco}} e alvo do modelo aberto {{fact:val.BR_VAMOS.preco_alvo}}, com potencial {{fact:val.BR_VAMOS.upside}}. Retorno total esperado {{fact:val.BR_VAMOS.etr}} e custo do capital próprio {{fact:val.BR_VAMOS.ke}}. A dispersão entre métodos é {{fact:val.BR_VAMOS.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_VAMOS.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_VAMOS.consenso_alvo}}; a diferença {{fact:val.BR_VAMOS.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "Ocupação e locação avançaram com reutilização de ativos e extensão de contratos; estoque diminuiu e vendas de usados aumentaram. Dívida recuou com contribuição do aumento de capital. O emissor relata atingir uma meta contratual, sem direção agregada de revisão classificada. A dívida para covenant exclui cessões e o EBITDA ajusta perdas de crédito. Retorno anualizado e acumulado conservam bases distintas.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "O perfil atual separa locação, seminovos e indústria. O indicador de covenant não equivale à dívida com cessões; ajustes de provisões não eliminam risco de crédito. Participação da holding e sócios, capital recebido e retorno anualizado possuem definições próprias.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Rede de atendimento e manutenção pode apoiar locação, extensão e venda. Clientes e setores diversificados não eliminam crédito ou concentração de novos contratos. A posição informada pelo emissor exige comparação própria; preço de usados e programas de financiamento público alteram demanda e ciclo.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Ocupação e locação cresceram, com menor estoque e mais vendas de usados. O lucro melhorou sequencialmente. A redução da dívida também recebeu contribuição de aporte de capital. Covenant exclui cessões e ajusta provisões; não representa dívida econômica integral nem reversão automática do risco de crédito.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Dívida bruta e líquida recuaram, mas os indicadores contratuais possuem perímetro próprio. Aporte privado recebido não é caixa recorrente. Extensões e reutilização reduzem compra imediata, sem eliminar manutenção e reposição. Cessões, fornecedores e crédito precisam de conciliação antes de atribuir caixa livre.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "Ocupação maior e dívida contratual menor podem depender de aporte e liberação de estoque. Se cessões, crédito e manutenção absorverem recursos, EBITDA ajustado não confirmará caixa sustentável depois do ciclo completo.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Ocupação, preço, recebimento e inadimplência por contrato; extensão e novos ativos separados. Monitorar estoque, prazo e margem de usados, manutenção e investimento. Conciliar dívida incluindo cessões, provisões, aporte e juros com caixa original.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_VAMOS.etr}}, custo do capital {{fact:val.BR_VAMOS.ke}} e dispersão entre métodos {{fact:val.BR_VAMOS.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_VAMOS.etr",
+        "val.BR_VAMOS.ke",
+        "val.BR_VAMOS.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+    "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+    "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+    "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "A ponte integral do fluxo original, juros, fornecedores e cessões permanece pendente.",
+    "Retorno por contrato, crédito e valor residual exigem diligência específica.",
+    "Reutilização e extensão não comprovam menor reposição estrutural.",
+    "Direção agregada de revisão das projeções existentes não foi comprovada.",
+    "Posição de mercado e vantagem independente requerem comparação própria."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Vamos",
+      "titulo": "Negócio e materiais públicos do emissor",
+      "url": "https://ri.grupovamos.com.br/a-companhia/quem-somos/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Vamos",
+      "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/7715d566-5b13-44f4-96c2-0949202d82b4/e249d79a-9f51-e66c-fee7-97208a53d438?origin=2",
+      "publicado_em": "2026-08-11",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Vamos",
+      "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/7715d566-5b13-44f4-96c2-0949202d82b4/0c180c50-3562-7e8d-be00-5383420a7e6d?origin=2",
+      "publicado_em": "2026-08-11",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

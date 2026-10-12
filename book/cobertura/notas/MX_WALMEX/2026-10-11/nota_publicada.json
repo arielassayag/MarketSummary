@@ -1,0 +1,387 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "3f04bb180096db2253fea192de300a386c6dd47a338e833eb81077c637ed39ce",
+    "factbook": "f3d6e062ad5ec04d82547b2b5444339c156fbcec7de8eb2e3b7385ae5071ec72",
+    "nota_json": "fdf598a8086e1c80739b3a5e9c4f8527216f7501e4fe578438b42f78de2deae7"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_WALMEX",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-27",
+  "published_at": "2026-10-12T02:50:07.223828+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Novas lojas, logística e canais digitais devem ser avaliados após capital de giro e compromissos de uso. As notas divulgam pagamentos, modificações de arrendamentos e contratos com partes relacionadas. Distribuição ao acionista deve ser confrontada com esses compromissos e com retorno das novas iniciativas, sem duplicar obrigações na ponte de valor.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em MXN 38,10, com retorno esperado -15,03%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Produtividade e giro permitem competir em preço com contribuição econômica preservada. Canais e formatos remuneram investimento, e caixa após compromissos sustenta expansão disciplinada e retorno ao acionista. O cenário otimista calculado pelo código é MXN 46,23.",
+      "pessimista": "Competição ou composição de consumo reduz margem, e estoques e entrega absorvem caixa. Expansão e arrendamentos limitam retorno; novos negócios ou estimativas de ágio permanecem sem suporte de geração econômica. O cenário pessimista calculado pelo código é MXN 31,23."
+    },
+    "comentario_valuation": "Preço de referência MXN 47,25 e alvo do modelo aberto MXN 38,10, com potencial -19,36%. Retorno total esperado -15,03% e custo do capital próprio 11,53%. A dispersão entre métodos é 8,42%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é MXN 58,04; a diferença -34,35% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Preço competitivo e crescimento digital podem ampliar vendas com contribuição insuficiente depois de entrega, estoque e investimento. Novos negócios podem consumir capital sem retorno demonstrado. Giro ou margem menor e obrigações de uso podem reduzir caixa, invalidando a extrapolação da escala comercial.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.MX_WALMEX.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 47,25"
+      },
+      {
+        "fato": "val.MX_WALMEX.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 38,10"
+      },
+      {
+        "fato": "val.MX_WALMEX.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-19,36%"
+      },
+      {
+        "fato": "val.MX_WALMEX.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.MX_WALMEX.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_WALMEX.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 46,23"
+      },
+      {
+        "fato": "val.MX_WALMEX.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_WALMEX.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 31,23"
+      },
+      {
+        "fato": "val.MX_WALMEX.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_WALMEX.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,53%"
+      },
+      {
+        "fato": "val.MX_WALMEX.wacc",
+        "rotulo": "WACC",
+        "valor": "10,99%"
+      },
+      {
+        "fato": "val.MX_WALMEX.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_WALMEX.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-15,03%"
+      },
+      {
+        "fato": "val.MX_WALMEX.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-10,94%"
+      },
+      {
+        "fato": "val.MX_WALMEX.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "15,0x"
+      },
+      {
+        "fato": "val.MX_WALMEX.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "3,4x"
+      },
+      {
+        "fato": "val.MX_WALMEX.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 58,04"
+      },
+      {
+        "fato": "val.MX_WALMEX.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-34,35%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Walmart de México y Centroamérica",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e estrutura do negócio",
+        "url": "https://informes.walmex.mx/2025/en/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Walmart de México y Centroamérica",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Informações financeiras e materiais de análise",
+        "url": "https://informes.walmex.mx/2025/pdf/Eng_Walmart_IA25_Auditores_Independientes_EEFF.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+      "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+      "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+      "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+    ],
+    "governanca": "Novas lojas, logística e canais digitais devem ser avaliados após capital de giro e compromissos de uso. As notas divulgam pagamentos, modificações de arrendamentos e contratos com partes relacionadas. Distribuição ao acionista deve ser confrontada com esses compromissos e com retorno das novas iniciativas, sem duplicar obrigações na ponte de valor.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar tráfego, volume, preço e composição; reconciliar giro de estoques, abastecimento, produtividade das lojas e contribuição digital. Acompanhar caixa após expansão, pagamentos de uso, contratos com partes relacionadas e retorno das novas iniciativas.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_WALMEX.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-15,03%"
+          },
+          {
+            "fato": "val.MX_WALMEX.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,53%"
+          },
+          {
+            "fato": "val.MX_WALMEX.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "8,42%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -15,03%, custo do capital 11,53% e dispersão entre métodos 8,42% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "MX_WALMEX",
+    "lacunas_de_dados": [
+      "Último resultado e notas explicativas não foram integralmente reconciliados nesta pesquisa.",
+      "Guidance e tom da gestão não foram avaliados em material atual completo.",
+      "Participação de mercado e desempenho relativo frente a concorrentes exigem comprovação específica.",
+      "Percepção do mercado, posicionamento e interesse vendido não têm suporte documental suficiente.",
+      "Retorno econômico de projetos e decisões recentes de capital permanece a comprovar.",
+      "Não há catalisador datado confirmado neste estudo."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "A Walmart de México y Centroamérica opera varejo no México e na América Central, com supermercados, supercenters, clubes de associação e formatos de desconto. Seu relatório apresenta canais digitais e negócios associados ao varejo. A economia depende de preço, volume, composição, estoque, abastecimento e custos das lojas e da entrega. A proposta comercial de preços baixos precisa ser confrontada com produtividade e retorno do capital.",
+    "nome": "Walmart de México",
+    "o_que_mudou": null,
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_AC",
+        "nome": "Arca Continental"
+      },
+      {
+        "issuer_id": "MX_BIMBO",
+        "nome": "Grupo Bimbo"
+      },
+      {
+        "issuer_id": "MX_CHEDRAUI",
+        "nome": "Grupo Comercial Chedraui"
+      },
+      {
+        "issuer_id": "MX_GRUMA",
+        "nome": "Gruma"
+      },
+      {
+        "issuer_id": "MX_KIMBER",
+        "nome": "Kimberly-Clark de México"
+      },
+      {
+        "issuer_id": "MX_KOF",
+        "nome": "Coca-Cola FEMSA"
+      },
+      {
+        "issuer_id": "MX_SIGMA",
+        "nome": "Sigma Foods (ex-Alfa)"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese é que abastecimento e produtividade preservem competitividade de preço e caixa depois de expansão e obrigações de uso. A condição decisiva é giro com margem e contribuição dos canais, sem depender de capital crescente ou receitas acessórias incertas. Escala e presença digital só sustentam valor quando remuneram o investimento e os compromissos assumidos.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_WALMEX.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "MXN 47,25"
+          },
+          {
+            "fato": "val.MX_WALMEX.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "MXN 38,10"
+          },
+          {
+            "fato": "val.MX_WALMEX.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-19,36%"
+          },
+          {
+            "fato": "val.MX_WALMEX.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,53%"
+          },
+          {
+            "fato": "val.MX_WALMEX.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-15,03%"
+          }
+        ],
+        "texto": "Preço de referência MXN 47,25 e alvo MXN 38,10, com potencial -19,36%. A hipótese de investimento deve ser confrontada com o custo do capital 11,53% e retorno esperado -15,03%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Rede, compras, distribuição e formatos podem influenciar conveniência e custo. A alegação de preços baixos no relatório não demonstra vantagem persistente em todas as categorias. A pesquisa deve comparar oferta, disponibilidade, produtividade e contribuição de lojas e canais digitais, sem confundir tráfego ou venda com retorno econômico.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:50:07.223828+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "As demonstrações consultadas tratam estoques, recebíveis, arrendamentos e transações com partes relacionadas. A auditoria destaca julgamento na recuperabilidade do ágio. A tese exige reconciliar margem e caixa com giro e obrigações de uso; parecer de auditoria não certifica retorno dos projetos nem elimina sensibilidade das estimativas.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que abastecimento e produtividade preservem competitividade de preço e caixa depois de expansão e obrigações de uso. A condição decisiva é giro com margem e contribuição dos canais, sem depender de capital crescente ou receitas acessórias incertas. Escala e presença digital só sustentam valor quando remuneram o investimento e os compromissos assumidos. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Venda, com retorno esperado -15,03%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Competição de preço, composição de consumo, estoques e entrega podem pressionar margem e caixa. Expansão e arrendamentos elevam compromissos. Novas iniciativas, estimativas de ágio e partes relacionadas exigem análise de retorno e comparabilidade."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_WALMEX.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-34,35%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -34,35%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo básico",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Walmex: produtividade, giro e retorno da expansão omnicanal",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A leitura consolidada do modelo está disponível no retrato recebido. A reconciliação integral do último release, das notas explicativas e da apresentação por negócio permanece pendente; não se atribui alteração de guidance nem tom à gestão sem essa evidência.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Separar tráfego, volume, preço e composição; reconciliar giro de estoques, abastecimento, produtividade das lojas e contribuição digital. Acompanhar caixa após expansão, pagamentos de uso, contratos com partes relacionadas e retorno das novas iniciativas.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.MX_WALMEX.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,53%"
+          },
+          {
+            "fato": "val.MX_WALMEX.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "8,42%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,53% e a dispersão entre métodos 8,42%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,402 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "298311bcb63681042644881e68e24fe9dc0364942ef4b8111e5e5d1b7b5d239f",
+    "factbook": "514a18a021f80b567a7ae2c9113001a3c06ed28c438ddbbcfebb8c62fa308410",
+    "nota_json": "7c667712a9544e0a07bd7823224bdf83b3509ee07a8084478467b17fa61b1705"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_CPFL",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-12",
+  "published_at": "2026-10-12T02:51:43.167510+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Investimento nas concessões e nos projetos exige capital antes do recebimento. Dívida, empréstimos entre empresas e medidas contratuais têm perímetros próprios, incluindo participação nas investidas. Crédito tributário devolvido a consumidores não pertence integralmente ao acionista. Seguro recebido e redução da alíquota por dedução específica não foram perpetuados como caixa livre recorrente.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 68,58, com retorno esperado +41,34%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Qualidade e disciplina de investimento preservam remuneração das redes, enquanto contratação sustenta caixa de geração depois da dívida. O cenário otimista calculado pelo código é R$ 82,07.",
+      "pessimista": "Custos, perdas, restrições e financiamento consomem recursos, e a melhora consolidada não se sustenta sem efeitos específicos. O cenário pessimista calculado pelo código é R$ 55,94."
+    },
+    "comentario_valuation": "Preço de referência R$ 50,36 e alvo do modelo aberto R$ 68,58, com potencial +36,18%. Retorno total esperado +41,34% e custo do capital próprio 10,28%. A dispersão entre métodos é 40,15%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 51,57; a diferença +32,98% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se despesas e investimento crescem sem remuneração suficiente, enquanto financiamento absorve contribuição operacional. Lucro consolidado melhor pode depender de seguro e comparação favorável, com geração física menor. Expansão de rede e projeções de investimento não comprovam retorno econômico nem disponibilidade para dividendos.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_CPFL.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 50,36"
+      },
+      {
+        "fato": "val.BR_CPFL.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 68,58"
+      },
+      {
+        "fato": "val.BR_CPFL.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+36,18%"
+      },
+      {
+        "fato": "val.BR_CPFL.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.BR_CPFL.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_CPFL.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 82,07"
+      },
+      {
+        "fato": "val.BR_CPFL.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_CPFL.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 55,94"
+      },
+      {
+        "fato": "val.BR_CPFL.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_CPFL.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,28%"
+      },
+      {
+        "fato": "val.BR_CPFL.wacc",
+        "rotulo": "WACC",
+        "valor": "8,69%"
+      },
+      {
+        "fato": "val.BR_CPFL.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_CPFL.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+41,34%"
+      },
+      {
+        "fato": "val.BR_CPFL.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+44,37%"
+      },
+      {
+        "fato": "val.BR_CPFL.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "12,4x"
+      },
+      {
+        "fato": "val.BR_CPFL.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,6x"
+      },
+      {
+        "fato": "val.BR_CPFL.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 51,57"
+      },
+      {
+        "fato": "val.BR_CPFL.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+32,98%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "CPFL Energia",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Relatório anual e perfil dos negócios, com eventos subsequentes identificados",
+        "url": "https://www.grupocpfl.com.br/sites/default/files/2026-03/CPFL2025_v06.pdf"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "CPFL Energia",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Release de resultados arquivado na CVM, segmentos, projeções e dívida",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1557383&numSequencia=1082089&numVersao=1"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Investimento, perdas e qualidade deixam de sustentar remuneração econômica das concessões.",
+      "Compras e restrições reduzem margem de geração sem compensação contratual comprovada.",
+      "Seguro, tributos e efeitos de comparação explicam melhora sem caixa recorrente equivalente.",
+      "Financiamento e contratos com partes relacionadas reduzem retorno atribuível ao minoritário."
+    ],
+    "governanca": "Controle e empréstimos entre empresas exigem conciliar entidade, contrato e direitos do minoritário. A incorporação da CPFL Geração e a saída de Epasa alteram o perímetro, sem transformar ativos vendidos em geração atual. Renovação de concessões e reclassificação de ativos não constituem recebimento imediato. Projeções de investimento excluem obrigações financiadas pelos consumidores; compensação estimada por restrições não foi reconhecida como caixa recebido.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Monitorar margem regulatória da distribuição, perdas, inadimplência, qualidade e investimento por concessão. Separar energia distribuída de geração distribuída compensada e receita de repasses. Na geração, acompanhar produção, compras e preço líquido por contrato; na transmissão, distinguir construção, remuneração financeira e caixa. Conciliar dívida, partes relacionadas e recursos atribuíveis.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_CPFL.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+41,34%"
+          },
+          {
+            "fato": "val.BR_CPFL.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,28%"
+          },
+          {
+            "fato": "val.BR_CPFL.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "40,15%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +41,34%, custo do capital 10,28% e dispersão entre métodos 40,15% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_CPFL",
+    "lacunas_de_dados": [
+      "Demonstrações completas, fluxo livre e dívida por entidade não foram integralmente reconciliados.",
+      "Data de publicação dos documentos não foi comprovada; ano do relatório e data da conferência não a substituem.",
+      "O release tem divergência entre texto e tabela sobre as bases da queda de geração.",
+      "Critérios regulatórios, empréstimos intragrupo e participação das investidas exigem conciliação própria.",
+      "Efeito da tempestade posterior, compensações e retorno final dos projetos permanecem a comprovar.",
+      "Há projeções plurianuais, sem direção agregada de revisão de guidance classificada.",
+      "Não há catalisador futuro datado confirmado nesta pesquisa.",
+      "Tom agregado, vantagem relativa e percepção do mercado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo de distribuição, transmissão, geração de energia e soluções e serviços, sob controle de empresas do grupo State Grid. Distribuição combina concessões e obrigações de qualidade; geração tem recursos e contratos distintos; transmissão remunera disponibilidade. Integração dos negócios não elimina regras próprias de receita, financiamento e participação atribuível.",
+    "nome": "CPFL Energia",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      },
+      {
+        "issuer_id": "BR_ENERGISA",
+        "nome": "Energisa"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que investimento nas redes e disciplina de contratação sustentem retorno e caixa após obrigações. A condição decisiva é remuneração efetiva do capital, com qualidade e custos adequados em cada negócio. Repasses setoriais, seguros, créditos tributários e receita de construção não comprovam crescimento recorrente do caixa disponível ao acionista.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_CPFL.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 50,36"
+          },
+          {
+            "fato": "val.BR_CPFL.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 68,58"
+          },
+          {
+            "fato": "val.BR_CPFL.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+36,18%"
+          },
+          {
+            "fato": "val.BR_CPFL.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,28%"
+          },
+          {
+            "fato": "val.BR_CPFL.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+41,34%"
+          }
+        ],
+        "texto": "Preço de referência R$ 50,36 e alvo R$ 68,58, com potencial +36,18%. A hipótese de investimento deve ser confrontada com o custo do capital 10,28% e retorno esperado +41,34%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Presença em concessões e experiência de operação podem apoiar eficiência, mas tarifa, qualidade, perdas e investimento obedecem a regras específicas. A cooperação com o controlador é uma afirmação do grupo, sem vantagem de financiamento independente comprovada neste estudo. Na geração, diversificação física não elimina hidrologia, vento, restrições e obrigações de compra.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:51:43.167510+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Receita, resultado operacional e lucro aumentam na comparação anual, com contribuições diferentes por negócio. Seguros de Ceran foram recebidos, mas não são receita recorrente. A comparação de geração contém efeito anterior de Epasa e menor produção; a distribuição tem despesas operacionais e perdas de crédito maiores apesar da redução de custos apresentada para o grupo.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que investimento nas redes e disciplina de contratação sustentem retorno e caixa após obrigações. A condição decisiva é remuneração efetiva do capital, com qualidade e custos adequados em cada negócio. Repasses setoriais, seguros, créditos tributários e receita de construção não comprovam crescimento recorrente do caixa disponível ao acionista. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Compra, com retorno esperado +41,34%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Qualidade, perdas, tarifas e custo de investimento podem reduzir retorno das redes. Hidrologia, vento e restrições afetam geração. Seguro, crédito fiscal e ajustes contábeis não asseguram caixa recorrente ou distribuição ao titular."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_CPFL.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+32,98%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +32,98%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "CPFL — retorno das redes e geração depois de repasses, investimento e financiamento",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Os indicadores de qualidade divulgados se referem à data-base; a tempestade posterior exige acompanhamento próprio. A geração tem contribuição física menor, enquanto seguro e comparação anterior favorecem resultado operacional. O texto inicial e a tabela do segmento usam a mesma queda para bases diferentes de geração e vento; essa divergência foi preservada, sem recalcular o modelo. Transmissão tem diferença importante entre resultado societário e regulatório.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar margem regulatória da distribuição, perdas, inadimplência, qualidade e investimento por concessão. Separar energia distribuída de geração distribuída compensada e receita de repasses. Na geração, acompanhar produção, compras e preço líquido por contrato; na transmissão, distinguir construção, remuneração financeira e caixa. Conciliar dívida, partes relacionadas e recursos atribuíveis.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_CPFL.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,28%"
+          },
+          {
+            "fato": "val.BR_CPFL.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "40,15%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,28% e a dispersão entre métodos 40,15%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

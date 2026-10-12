@@ -1,0 +1,19 @@
+{
+  "mind": "codex",
+  "headline": "CDP avança {{fact:day.ret}}; exposição líquida permanece acima do limite",
+  "paragraphs": [
+    "DADOS SIMULADOS: carteira com preços reais e execução hipotética. Em 12/10/2026, o resultado foi de {{fact:day.ret}} ({{fact:day.pnl_usd}}), com NAV de {{fact:nav}} e retorno desde o início de {{fact:itd.ret}}. Ações contribuíram {{fact:attr.equity}}, financiamento {{fact:attr.financing}} e aluguel {{fact:attr.borrow}}; os custos de execução no dia foram {{fact:attr.costs}}.",
+    "O lado comprado contribuiu {{fact:attr.long}} e o vendido {{fact:attr.short}}. A atribuição fatorial foi de {{fact:attr.factor}}, ante {{fact:attr.specific}} na parcela específica, com contribuição setorial de materiais de {{fact:attr.sector.Materials}} e de serviços financeiros de {{fact:attr.sector.Financials}}. Lithium Argentina, Sigma Lithium e Aeroméxico contribuíram, respectivamente, {{fact:top.contrib.1.contrib}}, {{fact:top.contrib.2.contrib}} e {{fact:top.contrib.3.contrib}}; YPF, Pátria e ASUR detrataram {{fact:top.detract.1.contrib}}, {{fact:top.detract.2.contrib}} e {{fact:top.detract.3.contrib}}. A exposição a emissores argentinos respondeu por {{fact:attr.country.AR}}; essa atribuição não equivale ao retorno da bolsa local.",
+    "A B3 não teve negociação em 12/10/2026 por Nossa Senhora Aparecida, conforme comunicado da bolsa de 08/10/2026. Os calendários públicos da NYSE e da Bolsa Mexicana de Valores não previam fechamento nessa data. Nas referências disponíveis, o ETF de ações latino-americanas variou {{fact:mkt.ILF.ret_1d}}, o ETF de ações mexicanas {{fact:mkt.EWW.ret_1d}} e o índice mexicano {{fact:mkt.MXX.ret_1d}} em moeda local. Os futuros de Brent e cobre registraram {{fact:mkt.BZ_F.ret_1d}} e {{fact:mkt.HG_F.ret_1d}}, enquanto o peso mexicano variou {{fact:fx.MXN.ret_1d}} contra o dólar. Essas referências descrevem o contexto, sem comprovar causalidade para o resultado da carteira.",
+    "A vol ex-ante ficou em {{fact:risk.ex_ante_vol}}, dentro da banda de {{fact:mandate.vol_band_min}} a {{fact:mandate.vol_band_max}}, com beta de {{fact:risk.beta}}, VaR de um dia de {{fact:risk.var_1d}} e expected shortfall de {{fact:risk.es_1d}}. A exposição bruta foi de {{fact:risk.gross}} e a líquida de {{fact:risk.net}}, acima do limite de neutralidade. Inter, Equatorial, Sanepar e dLocal apresentam risco de squeeze alto nas posições vendidas e exigem reavaliação. A janela eleitoral brasileira permanece ativa.",
+    "As linhas sem preço no pregão tiveram o valor mantido, sem reprecificação. As variações cambiais do real e do peso chileno e os benchmarks locais ausentes permanecem indisponíveis; ausência não representa estabilidade de mercado. Os retornos fatoriais foram estimados por regressão transversal com exposições da sessão anterior. Fundamentos atuais, universo sem composição histórica integral, defasagem dos dados de posições vendidas e revisões históricas não incorporadas limitam a leitura da atribuição. A volatilidade realizada permanece indisponível."
+  ],
+  "risk_flags": [
+    "Exposição líquida de {{fact:risk.net}} acima do limite de neutralidade indicado pelo controle de risco.",
+    "Shorts de Inter, Equatorial, Sanepar e dLocal com risco de squeeze alto; posições nessa condição: {{fact:risk.squeeze_high_shorts}}.",
+    "Linhas sem preço tiveram o valor mantido; câmbio do real e do peso chileno e benchmarks locais sem observação no pregão.",
+    "Retornos fatoriais estimados por regressão transversal; limitações dos insumos e revisões históricas não incorporadas detalhadas no relatório.",
+    "Janela eleitoral brasileira ativa; acompanhamento do risco por país e da liquidez permanece necessário.",
+    "Alertas registrados no dia: {{fact:day.n_alerts}}."
+  ]
+}

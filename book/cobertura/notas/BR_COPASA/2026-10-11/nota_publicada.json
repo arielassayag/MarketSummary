@@ -1,0 +1,391 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "e99f2799d7ee84ec9b6f1c174745b0b7efee8213570d5fb8daa36b277ae8ab08",
+    "factbook": "514a18a021f80b567a7ae2c9113001a3c06ed28c438ddbbcfebb8c62fa308410",
+    "nota_json": "5e73734bdca968e5bbe9e628f473302f7f28cbb75e6d685e80acb2e8cfe441dd"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_COPASA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-13",
+  "published_at": "2026-10-12T02:08:32.462637+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Expansão e obrigações das concessões devem ser confrontadas com financiamento, remuneração contratual e capacidade de execução. A participação de acionistas privados e os direitos especiais do Estado exigem leitura dos documentos vigentes. Não se atribui ganho de retorno a mudança de governança antes de demonstrar sua transmissão aos investimentos e ao caixa.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 47,35, com retorno esperado -20,50%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Eficiência reduz perdas e sustenta cobrança, enquanto expansão contratualmente remunerada tem financiamento adequado. Governança e execução demonstram retorno do investimento e caixa disponível após obrigações de serviço. O cenário otimista calculado pelo código é R$ 55,98.",
+      "pessimista": "Obras e obrigações consomem capital sem retorno suficiente; perdas ou cobrança frustram a eficiência. Financiamento e conflitos de governança limitam distribuição, e expectativas de melhora pelo perfil acionário não se confirmam. O cenário pessimista calculado pelo código é R$ 39,97."
+    },
+    "comentario_valuation": "Preço de referência R$ 63,69 e alvo do modelo aberto R$ 47,35, com potencial -25,65%. Retorno total esperado -20,50% e custo do capital próprio 10,19%. A dispersão entre métodos é 22,28%; a confiança quantitativa recebida é A. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 72,89; a diferença -35,03% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Metas de expansão podem consumir caixa antes de redução de perdas ou remuneração adequada. Governança ou incentivos podem permanecer desalinhados, e financiamento pode limitar distribuição. Uma tese baseada apenas na identidade de acionistas falha se contratos e execução não sustentam retorno do capital.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_COPASA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 63,69"
+      },
+      {
+        "fato": "val.BR_COPASA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 47,35"
+      },
+      {
+        "fato": "val.BR_COPASA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-25,65%"
+      },
+      {
+        "fato": "val.BR_COPASA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_COPASA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_COPASA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 55,98"
+      },
+      {
+        "fato": "val.BR_COPASA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_COPASA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 39,97"
+      },
+      {
+        "fato": "val.BR_COPASA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_COPASA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,19%"
+      },
+      {
+        "fato": "val.BR_COPASA.wacc",
+        "rotulo": "WACC",
+        "valor": "9,07%"
+      },
+      {
+        "fato": "val.BR_COPASA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_COPASA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-20,50%"
+      },
+      {
+        "fato": "val.BR_COPASA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-17,08%"
+      },
+      {
+        "fato": "val.BR_COPASA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "15,4x"
+      },
+      {
+        "fato": "val.BR_COPASA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,7x"
+      },
+      {
+        "fato": "val.BR_COPASA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 72,89"
+      },
+      {
+        "fato": "val.BR_COPASA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-35,03%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Copasa",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e estrutura do negócio",
+        "url": "https://ri.copasa.com.br/a-companhia/perfil-corporativo/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Copasa",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Informações financeiras e materiais de análise",
+        "url": "https://ri.copasa.com.br/governanca-corporativa/composicao-acionaria/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+      "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+      "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+      "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+    ],
+    "governanca": "Expansão e obrigações das concessões devem ser confrontadas com financiamento, remuneração contratual e capacidade de execução. A participação de acionistas privados e os direitos especiais do Estado exigem leitura dos documentos vigentes. Não se atribui ganho de retorno a mudança de governança antes de demonstrar sua transmissão aos investimentos e ao caixa.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar perdas, cobrança, qualidade, cobertura e prazo de obras por concessão; reconciliar remuneração regulatória, caixa após investimentos e financiamento. Examinar documentos vigentes de governança e direitos especiais antes de atribuir ganhos ao novo perfil acionário.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_COPASA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-20,50%"
+          },
+          {
+            "fato": "val.BR_COPASA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,19%"
+          },
+          {
+            "fato": "val.BR_COPASA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "22,28%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -20,50%, custo do capital 10,19% e dispersão entre métodos 22,28% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_COPASA",
+    "lacunas_de_dados": [
+      "Último resultado e notas explicativas não foram integralmente reconciliados nesta pesquisa.",
+      "Guidance e tom da gestão não foram avaliados em material atual completo.",
+      "Participação de mercado e desempenho relativo frente a concorrentes exigem comprovação específica.",
+      "Percepção do mercado, posicionamento e interesse vendido não têm suporte documental suficiente.",
+      "Retorno econômico de projetos e decisões recentes de capital permanece a comprovar.",
+      "Não há catalisador datado confirmado neste estudo."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "A Copasa presta serviços de abastecimento de água e esgotamento sanitário por concessões. Seu perfil descreve captação, tratamento, distribuição, coleta e tratamento de esgoto. A composição divulgada identifica Equatorial, fundos Perfin e participação do Estado de Minas Gerais com ação de direitos especiais. A economia do negócio depende de contratos, tarifas, eficiência, investimento e condições de governança.",
+    "nome": "Copasa",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      },
+      {
+        "issuer_id": "BR_CPFL",
+        "nome": "CPFL Energia"
+      },
+      {
+        "issuer_id": "BR_ENERGISA",
+        "nome": "Energisa"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese é que eficiência operacional e expansão contratualmente remunerada se convertam em caixa após financiamento e obrigações de serviço. A condição decisiva é retorno do investimento junto a redução de perdas, qualidade e cobrança. Um novo perfil acionário não comprova execução, prazo de universalização ou remuneração suficiente do capital.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_COPASA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 63,69"
+          },
+          {
+            "fato": "val.BR_COPASA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 47,35"
+          },
+          {
+            "fato": "val.BR_COPASA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-25,65%"
+          },
+          {
+            "fato": "val.BR_COPASA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,19%"
+          },
+          {
+            "fato": "val.BR_COPASA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-20,50%"
+          }
+        ],
+        "texto": "Preço de referência R$ 63,69 e alvo R$ 47,35, com potencial -25,65%. A hipótese de investimento deve ser confrontada com o custo do capital 10,19% e retorno esperado -20,50%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Contratos e infraestrutura dão características locais à prestação do serviço, mas não dispensam eficiência nem cumprimento das obrigações. O perfil descreve vantagens consideradas pela companhia; a pesquisa deve testar perdas, qualidade, cobrança e retorno das concessões sem tratar alegações institucionais como superioridade comprovada.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:08:32.462637+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Lucro, tarifa reconhecida e investimento podem ter ritmos distintos do caixa. A análise deve reconciliar perdas físicas e comerciais, cobrança, capital regulatório e caixa após obras. A composição acionária e a notícia de rescisão do acordo são evidências de governança a examinar; não substituem demonstrações nem comprovam controle operacional uniforme.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que eficiência operacional e expansão contratualmente remunerada se convertam em caixa após financiamento e obrigações de serviço. A condição decisiva é retorno do investimento junto a redução de perdas, qualidade e cobrança. Um novo perfil acionário não comprova execução, prazo de universalização ou remuneração suficiente do capital. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Venda, com retorno esperado -20,50%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Tarifas, perdas, cobrança, qualidade e execução de obras podem pressionar caixa. Obrigações de expansão elevam capital e financiamento necessários. Contratos, direitos especiais e mudanças de acordo acionário exigem análise própria."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_COPASA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-35,03%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -35,03%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Copasa: eficiência e financiamento da expansão dos serviços",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A leitura consolidada do modelo está disponível no retrato recebido. A reconciliação integral do último release, das notas explicativas e da apresentação por negócio permanece pendente; não se atribui alteração de guidance nem tom à gestão sem essa evidência.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar perdas, cobrança, qualidade, cobertura e prazo de obras por concessão; reconciliar remuneração regulatória, caixa após investimentos e financiamento. Examinar documentos vigentes de governança e direitos especiais antes de atribuir ganhos ao novo perfil acionário.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_COPASA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,19%"
+          },
+          {
+            "fato": "val.BR_COPASA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "22,28%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,19% e a dispersão entre métodos 22,28%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

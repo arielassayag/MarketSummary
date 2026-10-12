@@ -1,0 +1,169 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_OMA",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "OMA: remuneração das concessões e disciplina de investimento",
+  "resumo": "A hipótese é que demanda e monetização comercial remunerem o capital das concessões. A condição é comprovar caixa depois de manutenção maior, direitos de uso, tributos e desenvolvimento contratado; margem ajustada isolada não basta. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.MX_OMA.rating_codigo}}, com retorno esperado {{fact:val.MX_OMA.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "A OMA explora concessões aeroportuárias, serviços aeronáuticos e atividades comerciais. Receita depende de demanda e condições contratuais; converter resultado em valor exige remunerar manutenção e compromissos de desenvolvimento.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que demanda e monetização comercial remunerem o capital das concessões. A condição é comprovar caixa depois de manutenção maior, direitos de uso, tributos e desenvolvimento contratado; margem ajustada isolada não basta.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.MX_OMA.preco}} e alvo {{fact:val.MX_OMA.preco_alvo}}, com potencial {{fact:val.MX_OMA.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.MX_OMA.ke}} e retorno esperado {{fact:val.MX_OMA.etr}}.",
+      "evidencias": [
+        "val.MX_OMA.preco",
+        "val.MX_OMA.preco_alvo",
+        "val.MX_OMA.upside",
+        "val.MX_OMA.ke",
+        "val.MX_OMA.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar tráfego, receita comercial por passageiro, direitos de uso e custos por aeroporto. Comparar provisão de manutenção com desembolsos e compromissos dos planos; observar refinanciamento e capacidade de distribuição.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.MX_OMA.ke}} e a dispersão entre métodos {{fact:val.MX_OMA.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.MX_OMA.ke",
+        "val.MX_OMA.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Demanda e regras tarifárias podem restringir caixa enquanto compromissos continuam exigíveis. Desembolsos de manutenção podem divergir do resultado ajustado divulgado.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.MX_OMA.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.MX_OMA.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Demanda e monetização sustentam caixa recorrente depois dos compromissos contratuais. O cenário otimista calculado pelo código é {{fact:val.MX_OMA.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.MX_OMA.preco_alvo}}, com retorno esperado {{fact:val.MX_OMA.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Pressão de demanda e custos de desenvolvimento reduzem o caixa atribuível ao acionista. O cenário pessimista calculado pelo código é {{fact:val.MX_OMA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.MX_OMA.preco}} e alvo do modelo aberto {{fact:val.MX_OMA.preco_alvo}}, com potencial {{fact:val.MX_OMA.upside}}. Retorno total esperado {{fact:val.MX_OMA.etr}} e custo do capital próprio {{fact:val.MX_OMA.ke}}. A dispersão entre métodos é {{fact:val.MX_OMA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.MX_OMA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.MX_OMA.consenso_alvo}}; a diferença {{fact:val.MX_OMA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "O release recebido discrimina receitas comerciais e aeronáuticas, construção, manutenção maior, investimento e resultado atribuível. A página de RI consultada exibia materiais históricos; o resultado atual foi localizado na bolsa. Reconciliação integral e eventos posteriores permanecem pendentes.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Confrontar programas de desenvolvimento, investimento estratégico e manutenção maior com financiamento e retorno econômico. Reconciliar dívida, distribuições, classes e recibos antes de afirmar caixa transferível ou valor por ação plenamente diluído.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Testar demanda e receita por passageiro por aeroporto, capacidade e alternativas de transporte. As concessões devem ser examinadas com suas obrigações e limites tarifários, sem pressupor vantagem econômica apenas pela localização.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O release distingue receita de construção e custo correspondente sem resultado. A provisão de manutenção maior depende dos planos de desenvolvimento; separar ajuste contábil, desembolso, EBITDA ajustado e lucro atribuível ao controlador.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Confrontar programas de desenvolvimento, investimento estratégico e manutenção maior com financiamento e retorno econômico. Reconciliar dívida, distribuições, classes e recibos antes de afirmar caixa transferível ou valor por ação plenamente diluído.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se margem ajustada permanecer elevada mas não remunerar manutenção, desenvolvimento e financiamento em caixa.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar tráfego, receita comercial por passageiro, direitos de uso e custos por aeroporto. Comparar provisão de manutenção com desembolsos e compromissos dos planos; observar refinanciamento e capacidade de distribuição.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.MX_OMA.etr}}, custo do capital {{fact:val.MX_OMA.ke}} e dispersão entre métodos {{fact:val.MX_OMA.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.MX_OMA.etr",
+        "val.MX_OMA.ke",
+        "val.MX_OMA.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Demonstrações e caixa não foram integralmente reconciliados com provisões e resultados gerenciais.",
+    "Termos completos dos programas de desenvolvimento e sua remuneração econômica precisam de conciliação.",
+    "Direitos, classes, recibos e base plenamente diluída não estão reconciliados com o modelo.",
+    "Comunicados posteriores de auditor e financiamento não tiveram seus anexos integralmente examinados.",
+    "Guidance, tom da gestão, vantagem competitiva e percepção do mercado não estão concluídos.",
+    "Não há catalisador futuro datado confirmado neste estudo."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Aeroportuario Centro Norte",
+      "titulo": "Comunicados públicos do emissor na bolsa",
+      "url": "https://www.bmv.com.mx/es/emisoras/eventosrelevantes/OMA-6707-CGEN_CAPIT",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Aeroportuario Centro Norte",
+      "titulo": "Release operacional, financeiro e compromissos de concessão",
+      "url": "https://www.bmv.com.mx/docs-pub/eventemi/eventemi_1577262_1.pdf",
+      "publicado_em": "2026-07-27",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

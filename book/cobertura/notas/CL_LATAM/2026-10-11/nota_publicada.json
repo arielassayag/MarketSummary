@@ -1,0 +1,398 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "054d63ff3bf042b78318403ec34ba57cba71a599c5594c09ced9ca67a0e6c0b0",
+    "factbook": "8a0b69d7a0718ce73072988e10dac61ebc65fa8d5f4248a103e871abb2da8229",
+    "nota_json": "3e6a359488deebaa46566de36c711c12c528d39e1e5b29927603251ff5667e72"
+  },
+  "is_synthetic": false,
+  "issuer_id": "CL_LATAM",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T02:08:57.650334+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Compromissos de frota e arrendamento devem ser confrontados com caixa e financiamento. O programa de recompra foi aprovado, com execução delegada ao conselho e sujeita a condições; aprovação não demonstra compras realizadas. A geração residual precisa incorporar capital de frota e riscos de renovação.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em Em revisão, com retorno esperado Em revisão. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Gestão de rede e capacidade sustenta receita e caixa depois da frota, com financiamento compatível e exposição administrável a combustível e moeda. O cenário otimista calculado pelo código é Em revisão.",
+      "pessimista": "Demanda e tarifa enfraquecem enquanto combustível e obrigações da frota pressionam caixa, reduzindo flexibilidade e retorno ao acionista. O cenário pessimista calculado pelo código é Em revisão."
+    },
+    "comentario_valuation": "Preço de referência US$ 50,44 e alvo do modelo aberto Em revisão, com potencial Em revisão. Retorno total esperado Em revisão e custo do capital próprio 8,85%. A dispersão entre métodos é 48,30%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é US$ 74,26; a diferença Em revisão não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese perde força se crescimento ou clientes premium não compensam custos e reinvestimento da frota. Liquidez com linhas não sacadas e caixa livre ajustado podem parecer mais fortes que os recursos disponíveis depois de todas as obrigações.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.CL_LATAM.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 50,44"
+      },
+      {
+        "fato": "val.CL_LATAM.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_LATAM.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_LATAM.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_LATAM.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.CL_LATAM.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_LATAM.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_LATAM.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_LATAM.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_LATAM.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "8,85%"
+      },
+      {
+        "fato": "val.CL_LATAM.wacc",
+        "rotulo": "WACC",
+        "valor": "7,31%"
+      },
+      {
+        "fato": "val.CL_LATAM.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.CL_LATAM.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_LATAM.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_LATAM.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,4x"
+      },
+      {
+        "fato": "val.CL_LATAM.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "7,2x"
+      },
+      {
+        "fato": "val.CL_LATAM.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 74,26"
+      },
+      {
+        "fato": "val.CL_LATAM.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "LATAM Airlines",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil de passageiros, carga e fidelidade",
+        "url": "https://ir.latam.com/English/overview/default.aspx"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "LATAM Airlines",
+        "publicado_em": "2026-08-04",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado trimestral, orientação e caixa ajustado",
+        "url": "https://www.sec.gov/Archives/edgar/data/1047716/000104771626000087/results-eng2q2026.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+      "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+      "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+      "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+    ],
+    "governanca": "A análise deve reconciliar ações, recibos, capital potencialmente diluído e direitos dos minoritários. Financiamento, recompra e investimentos precisam demonstrar retorno por ação depois de obrigações contratuais.",
+    "guidance": "elevado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar receita e custo unitários na mesma base, ocupação, disponibilidade de frota e margem de carga. Conciliar caixa contábil e ajustado, arrendamentos, financiamento de aeronaves, garantias e distribuição. Revisar combustível, moeda, competição e execução da orientação.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_LATAM.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.CL_LATAM.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "8,85%"
+          },
+          {
+            "fato": "val.CL_LATAM.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "48,30%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado Em revisão, custo do capital 8,85% e dispersão entre métodos 48,30% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "CL_LATAM",
+    "lacunas_de_dados": [
+      "Demonstrações completas, caixa semestral e ponte de caixa ajustado permanecem a conciliar.",
+      "Frota, leasing, compromissos, cobertura de combustível e financiamento exigem atualização documental.",
+      "A execução do programa de recompra não foi comprovada neste estudo.",
+      "Mudanças de guidance foram identificadas no release, sem reestimativa independente de premissas.",
+      "Tom da gestão e evento futuro datado permanecem não avaliados.",
+      "Não há suporte suficiente para percepção do mercado, posicionamento ou interesse vendido.",
+      "A reconciliação integral ao modelo e a disponibilidade histórica dos documentos no corte recebido não foram comprovadas."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo de transporte aéreo de passageiros e carga, com rede regional e internacional e programa de fidelidade. A operação depende de frota, contratos de arrendamento, combustível e financiamento; cada segmento exige avaliação de margem e capital.",
+    "nome": "LATAM Airlines Group",
+    "o_que_mudou": null,
+    "pais": "Chile",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_SIMPAR",
+        "nome": "Simpar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese exige que conectividade, serviço e gestão de capacidade sustentem receita suficiente para remunerar frota e capital através do ciclo. Carga e fidelidade podem diversificar receitas, mas seu benefício deve aparecer em caixa depois de custos e obrigações. Crescimento de capacidade não cria valor se demanda ou preço não o sustentam.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_LATAM.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "US$ 50,44"
+          },
+          {
+            "fato": "val.CL_LATAM.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.CL_LATAM.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.CL_LATAM.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "8,85%"
+          },
+          {
+            "fato": "val.CL_LATAM.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          }
+        ],
+        "texto": "Preço de referência US$ 50,44 e alvo Em revisão, com potencial Em revisão. A hipótese de investimento deve ser confrontada com o custo do capital 8,85% e retorno esperado Em revisão.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Conectividade e qualidade de serviço podem apoiar preferência e clientes de maior valor. A vantagem precisa aparecer em receita unitária, custo comparável e retenção, considerando concorrência e capacidade; repasse de combustível observado em um trimestre não garante proteção permanente.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:08:57.650334+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A apresentação em formato norte-americano mantém IFRS. Liquidez inclui linha rotativa não sacada. Caixa livre ajustado e CAPEX líquido de financiamento exigem ponte própria; caixa contábil semestral não é o mesmo indicador trimestral ajustado. Custo sem combustível também preserva exclusões específicas.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese exige que conectividade, serviço e gestão de capacidade sustentem receita suficiente para remunerar frota e capital através do ciclo. Carga e fidelidade podem diversificar receitas, mas seu benefício deve aparecer em caixa depois de custos e obrigações. Crescimento de capacidade não cria valor se demanda ou preço não o sustentam. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Em revisão, com retorno esperado Em revisão. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Combustível, câmbio e capacidade concorrente podem reduzir margem antes de a companhia ajustar tarifas ou frota. Arrendamento e compromissos de aeronaves limitam flexibilidade; proteção financeira tem prazo, custo e cobertura específicos."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_LATAM.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "Em revisão"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é Em revisão. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "LATAM Airlines — rede remuneradora depois de frota e combustível",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O comunicado eleva a faixa de EBITDA ajustado na orientação anual e restabelece outros parâmetros. Essa classificação tem escopo específico, sem presumir elevação de todas as metas. Recompra aprovada e entregas esperadas de frota não foram tratadas como execução comprovada.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar receita e custo unitários na mesma base, ocupação, disponibilidade de frota e margem de carga. Conciliar caixa contábil e ajustado, arrendamentos, financiamento de aeronaves, garantias e distribuição. Revisar combustível, moeda, competição e execução da orientação.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.CL_LATAM.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "8,85%"
+          },
+          {
+            "fato": "val.CL_LATAM.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "48,30%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 8,85% e a dispersão entre métodos 48,30%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

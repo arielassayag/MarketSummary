@@ -1,0 +1,487 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "6e9b2448158d9310c7bba67dfe67032e5f00f16336d9af53d07fdedfeff86699",
+    "factbook": "d99d0b6d749df11aa538cfad95df09073b581ad49ba4e2021583baa3000f5995",
+    "nota_json": "566c134a519f1e6923e5281497597a2b0b3a9d48b34779c769f5ce78dc7c40aa"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_TENDA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-04",
+  "published_at": "2026-10-12T02:11:04.996115+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "Alavancagem total recua, mas dívida corporativa em relação ao patrimônio tem direção sequencial diferente e exclui modalidades de projeto. Terrenos, reservas de cessões, equipamentos e capital da Alea exigem recursos. O guidance combina melhoria de projeções da Tenda e lucro consolidado com piora do EBITDA esperado da Alea; o consumo de caixa projetado desta é mantido. O estudo não atribui direção agregada única. Recompra, remuneração em ações e swaps relacionados precisam de leitura conjunta antes de inferir distribuição sustentável.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Resultado posterior à prévia: testar efeitos da redução do crédito direto, mix, repasses e perdas sobre margem e caixa.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Estabilização operacional da Alea e revisão das projeções por segmento, preservando capital e participação econômica.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "guidance"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 38,36, com retorno esperado +35,52%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Industrialização e disciplina das safras sustentam margem depois de perdas e financiamento, enquanto crédito melhora e Alea estabiliza execução com capital controlado. O cenário otimista calculado pelo código é R$ 41,89.",
+      "pessimista": "Crédito e custos deterioram, margens de entrega normalizam e Alea exige recursos adicionais, limitando caixa e retorno por ação. O cenário pessimista calculado pelo código é R$ 35,18."
+    },
+    "comentario_valuation": "Preço de referência R$ 29,49 e alvo do modelo aberto R$ 38,36, com potencial +30,07%. Retorno total esperado +35,52% e custo do capital próprio 10,53%. A dispersão entre métodos é 5,37%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 46,54; a diferença -17,59% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A hipótese enfraquece se lucro recupera por economia nas entregas ou swap sem margem sustentável das novas safras. A redução do pró-soluto pode proteger crédito e simultaneamente limitar preço e absorção. A Alea pode consumir capital além do previsto sem estabilizar execução. Menor dívida total não elimina obrigações corporativas ou reserva vinculada. Resultado futuro a apropriar precisa resistir a custos, distratos e mudanças metodológicas, antes de sustentar distribuição ao acionista.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_TENDA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 29,49"
+      },
+      {
+        "fato": "val.BR_TENDA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 38,36"
+      },
+      {
+        "fato": "val.BR_TENDA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+30,07%"
+      },
+      {
+        "fato": "val.BR_TENDA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.BR_TENDA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_TENDA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 41,89"
+      },
+      {
+        "fato": "val.BR_TENDA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_TENDA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 35,18"
+      },
+      {
+        "fato": "val.BR_TENDA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_TENDA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,53%"
+      },
+      {
+        "fato": "val.BR_TENDA.wacc",
+        "rotulo": "WACC",
+        "valor": "9,30%"
+      },
+      {
+        "fato": "val.BR_TENDA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_TENDA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+35,52%"
+      },
+      {
+        "fato": "val.BR_TENDA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+15,85%"
+      },
+      {
+        "fato": "val.BR_TENDA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "4,5x"
+      },
+      {
+        "fato": "val.BR_TENDA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,3x"
+      },
+      {
+        "fato": "val.BR_TENDA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 46,54"
+      },
+      {
+        "fato": "val.BR_TENDA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-17,59%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Tenda",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil de habitação popular, construção industrial e Alea",
+        "url": "https://ri.tenda.com/companhia/perfil/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Tenda",
+        "publicado_em": "2026-08-04",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado trimestral: safras, crédito, Alea, projeções e caixa",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/36c72d10-4c63-4c06-a420-f7797fcde0bf/7170e331-7514-f8a8-e284-41ba7a87815a?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Tenda",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: crédito, fluxo, obrigações e participações",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/36c72d10-4c63-4c06-a420-f7797fcde0bf/0045eedf-c940-f727-7664-1d83ed5cd285?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "Tenda",
+        "publicado_em": "2026-10-08",
+        "tipo": "Relações com investidores",
+        "titulo": "Prévia operacional posterior: política de crédito direto, preço e absorção",
+        "url": "https://filemanager-cdn.mziq.com/published/36c72d10-4c63-4c06-a420-f7797fcde0bf/8bdede3e-f088-4fc8-af11-9dc6717520e9"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Margem de novas safras não sustenta a recuperação depois de custos e perdas.",
+      "Redução do crédito direto não melhora qualidade ou limita absorção econômica.",
+      "Alea exige capital adicional sem estabilização da unidade econômica.",
+      "Swaps, reservas, obrigações e metodologia alteram a interpretação de caixa ou retorno."
+    ],
+    "governanca": "Resultados integrais, participação econômica na Alea e minoritários permanecem distintos. Swaps associados à remuneração em ações exigem conciliar marcação, liquidação e custo de remuneração, sem presumir exclusão econômica de todos os ajustes. Carteira administrada inclui bases reconhecidas e não reconhecidas no balanço; obrigação de projeto não desaparece da medida corporativa. O perfil institucional contém descrições regionais não perfeitamente consistentes; a nota não inventa contagem de presença.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "Conciliar custo e margem por safra, economias de entrega, distratos, repasses e preço após crédito direto. Monitorar atraso, provisões, cessões, reserva e risco sacado. Separar caixa gerencial, swap e fluxo contábil. Avaliar retorno e consumo de capital da Alea, dívida corporativa e obrigações de projeto.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_TENDA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+35,52%"
+          },
+          {
+            "fato": "val.BR_TENDA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,53%"
+          },
+          {
+            "fato": "val.BR_TENDA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "5,37%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +35,52%, custo do capital 10,53% e dispersão entre métodos 5,37% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_TENDA",
+    "lacunas_de_dados": [
+      "Fluxo gerencial, derivativos, cessões e demonstração dos fluxos não foram integralmente reconciliados.",
+      "Mudança da margem a apropriar exige ponte comparável por safra e segmento.",
+      "Qualidade de crédito depois da nova política e efeito completo sobre vendas ainda não foram comprovados.",
+      "Retorno, capital e estabilização da Alea precisam de demonstração operacional detalhada.",
+      "Covenants, recursos vinculados e obrigações totais exigem conciliação completa.",
+      "Perfil regional e bases da carteira administrada mantêm diferenças explícitas, sem preenchimento arbitrário.",
+      "Prévia posterior é sujeita a revisão; tom e percepção do mercado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Construtora e incorporadora de habitação popular ligada ao Minha Casa Minha Vida, com construção padronizada e mão de obra direta. Tenda e Alea têm sistemas construtivos, estágios e participações diferentes. A Alea desenvolve modelo industrial de casas e busca estabilizar a economia das unidades. Repasses bancários, pró-soluto pós-chaves e programas públicos mantêm riscos próprios de crédito e recebimento. Vendas, obra concluída e resultado reconhecido não são etapas equivalentes.",
+    "nome": "Tenda",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_AZZAS",
+        "nome": "Azzas 2154"
+      },
+      {
+        "issuer_id": "BR_CEA",
+        "nome": "C&A Modas"
+      },
+      {
+        "issuer_id": "BR_COGNA",
+        "nome": "Cogna"
+      },
+      {
+        "issuer_id": "BR_CURY",
+        "nome": "Cury"
+      },
+      {
+        "issuer_id": "BR_CYRELA",
+        "nome": "Cyrela"
+      },
+      {
+        "issuer_id": "BR_DIRECIONAL",
+        "nome": "Direcional"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A hipótese é que padronização e disciplina das safras sustentem margem e caixa depois de custos completos, perdas e financiamento. A condição decisiva é demonstrar retorno recorrente na Tenda sem extrapolar economias de entrega, enquanto Alea estabiliza execução dentro do capital disponível. A redução do crédito direto pode proteger qualidade da venda, mas também altera preço nominal e conversão. Recuperação de lucro exige controle de recebíveis, provisões e obrigações; geração gerencial beneficiada por derivativos não demonstra sozinha caixa estrutural.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_TENDA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 29,49"
+          },
+          {
+            "fato": "val.BR_TENDA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 38,36"
+          },
+          {
+            "fato": "val.BR_TENDA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+30,07%"
+          },
+          {
+            "fato": "val.BR_TENDA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,53%"
+          },
+          {
+            "fato": "val.BR_TENDA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+35,52%"
+          }
+        ],
+        "texto": "Preço de referência R$ 29,49 e alvo R$ 38,36, com potencial +30,07%. A hipótese de investimento deve ser confrontada com o custo do capital 10,53% e retorno esperado +35,52%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Formas de alumínio, verticalização da mão de obra e padronização podem reduzir exposição relativa a inflação de serviços e melhorar execução. Esses atributos precisam de prova por safra, prazo e custo completo. O público popular depende de renda, subsídio e aprovação bancária. A Alea exige validação industrial e logística própria, sem presumir que crescimento de lançamentos remunere capital. Produtos faixa de renda, regiões e contratos públicos têm absorção e crédito diferentes.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:11:04.996115+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "Receita, margem e lucro refletem recuperação das safras, com contribuição de economias em obras concluídas que a administração considera não extrapolável. Ajustes excluem juros capitalizados, minoritários e remuneração em ações, preservando custos e direitos econômicos. Provisões de crédito crescem e o crédito direto exige acompanhamento. Fluxo gerencial usa dívida, cessões, reservas e efeito caixa de swap; a demonstração dos fluxos tem base distinta e contém risco sacado. Alea mantém perda e consumo de recursos, exigindo separar segmento e consolidado.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que padronização e disciplina das safras sustentem margem e caixa depois de custos completos, perdas e financiamento. A condição decisiva é demonstrar retorno recorrente na Tenda sem extrapolar economias de entrega, enquanto Alea estabiliza execução dentro do capital disponível. A redução do crédito direto pode proteger qualidade da venda, mas também altera preço nominal e conversão. Recuperação de lucro exige controle de recebíveis, provisões e obrigações; geração gerencial beneficiada por derivativos não demonstra sozinha caixa estrutural. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Compra, com retorno esperado +35,52%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Inadimplência, crédito e custos podem limitar margem e repasse. Economia de entrega e derivativos têm recorrência própria. Alea, terras, reservas de cessão e obrigações de projetos podem absorver caixa e atrasar retorno."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_TENDA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-17,59%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -17,59%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo discricionário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Tenda — safras populares, risco de crédito e estabilização da Alea",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A atualização de projeções eleva EBITDA e vendas esperados da Tenda e lucro consolidado sem swap, reduz a projeção de EBITDA da Alea e mantém seu consumo de caixa; não há direção agregada classificada. O resultado a apropriar muda metodologia ao excluir corretagem, exigindo ponte comparável. A prévia posterior registra menor crédito direto pós-chaves e preços com efeitos de mix, sem comprovar inadimplência futura menor. Tenda e Alea têm direção comercial própria. Dados preliminares permanecem sujeitos a revisão e não foram incorporados retrospectivamente ao modelo.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Conciliar custo e margem por safra, economias de entrega, distratos, repasses e preço após crédito direto. Monitorar atraso, provisões, cessões, reserva e risco sacado. Separar caixa gerencial, swap e fluxo contábil. Avaliar retorno e consumo de capital da Alea, dívida corporativa e obrigações de projeto.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_TENDA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,53%"
+          },
+          {
+            "fato": "val.BR_TENDA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "5,37%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,53% e a dispersão entre métodos 5,37%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

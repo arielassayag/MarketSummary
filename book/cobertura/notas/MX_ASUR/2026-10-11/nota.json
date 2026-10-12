@@ -1,0 +1,192 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_ASUR",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "ASUR: concessões, perímetro adquirido e retorno sobre expansão",
+  "resumo": "A hipótese é que concessões e monetização comercial possam remunerar manutenção e expansão. A condição é demonstrar retorno após financiamento, compromissos contratuais e diluição; ampliar o portfólio não comprova criação de valor. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.MX_ASUR.rating_codigo}}, com retorno esperado {{fact:val.MX_ASUR.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "A ASUR explora concessões aeroportuárias e receitas comerciais. O perfil institucional não descreve sozinho o perímetro atual; operações e aquisições posteriores exigem datas, participação econômica e obrigações próprias.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que concessões e monetização comercial possam remunerar manutenção e expansão. A condição é demonstrar retorno após financiamento, compromissos contratuais e diluição; ampliar o portfólio não comprova criação de valor.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.MX_ASUR.preco}} e alvo {{fact:val.MX_ASUR.preco_alvo}}, com potencial {{fact:val.MX_ASUR.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.MX_ASUR.ke}} e retorno esperado {{fact:val.MX_ASUR.etr}}.",
+      "evidencias": [
+        "val.MX_ASUR.preco",
+        "val.MX_ASUR.preco_alvo",
+        "val.MX_ASUR.upside",
+        "val.MX_ASUR.ke",
+        "val.MX_ASUR.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar tráfego e receita comercial em bases comparáveis, desembolsos de concessões, dívida por entidade e retorno das operações adquiridas. Conciliar a base por ação e a transferência de caixa antes de interpretar expansão como valor ao acionista.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.MX_ASUR.ke}} e a dispersão entre métodos {{fact:val.MX_ASUR.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.MX_ASUR.ke",
+        "val.MX_ASUR.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Demanda turística, regras de concessão e compromissos de expansão podem reduzir o caixa. Financiamento e diluição podem consumir o retorno econômico das aquisições.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.MX_ASUR.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.MX_ASUR.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Operações existentes e adquiridas geram caixa suficiente para remunerar compromissos e financiar a plataforma. O cenário otimista calculado pelo código é {{fact:val.MX_ASUR.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.MX_ASUR.preco_alvo}}, com retorno esperado {{fact:val.MX_ASUR.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Tráfego e receita comparável enfraquecem enquanto dívida e expansão reduzem o caixa atribuível. O cenário pessimista calculado pelo código é {{fact:val.MX_ASUR.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.MX_ASUR.preco}} e alvo do modelo aberto {{fact:val.MX_ASUR.preco_alvo}}, com potencial {{fact:val.MX_ASUR.upside}}. Retorno total esperado {{fact:val.MX_ASUR.etr}} e custo do capital próprio {{fact:val.MX_ASUR.ke}}. A dispersão entre métodos é {{fact:val.MX_ASUR.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.MX_ASUR.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.MX_ASUR.consenso_alvo}}; a diferença {{fact:val.MX_ASUR.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "O release trimestral recebido distingue receitas comerciais, construção e operação adquirida sem base comparável anterior. As demonstrações intermediárias consultadas descrevem aquisição posterior e reorganização de capital. A conciliação entre os documentos e sua incorporação ao modelo permanecem pendentes.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A fonte descreve aquisição financiada e alocação contábil ainda preliminar. Reconciliar a colocação posterior de dívida de Cancún, garantias, utilização dos recursos e reorganização com emissão prevista de ações; aprovação não comprova incorporação na base do modelo.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Testar demanda por aeroporto, condições da concessão e monetização por passageiro. Receita comercial adicional não substitui análise do tráfego, das obrigações de investimento e dos direitos econômicos de cada operação.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Separar receitas de construção e sua contrapartida de custo, operações comerciais adquiridas e resultados comparáveis. O perímetro adquirido da Motiva foi concluído depois do trimestre e não integra aquelas demonstrações; não mesclar dados posteriores com a base histórica.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "A fonte descreve aquisição financiada e alocação contábil ainda preliminar. Reconciliar a colocação posterior de dívida de Cancún, garantias, utilização dos recursos e reorganização com emissão prevista de ações; aprovação não comprova incorporação na base do modelo.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se crescimento do perímetro esconder queda de desempenho comparável ou se o retorno adquirido não cobrir financiamento e compromissos contratuais.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar tráfego e receita comercial em bases comparáveis, desembolsos de concessões, dívida por entidade e retorno das operações adquiridas. Conciliar a base por ação e a transferência de caixa antes de interpretar expansão como valor ao acionista.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3",
+        "F4"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.MX_ASUR.etr}}, custo do capital {{fact:val.MX_ASUR.ke}} e dispersão entre métodos {{fact:val.MX_ASUR.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.MX_ASUR.etr",
+        "val.MX_ASUR.ke",
+        "val.MX_ASUR.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Reconciliação integral entre release gerencial, demonstrações intermediárias e resultado atribuível permanece pendente.",
+    "Aquisição posterior está fora da base histórica; alocação contábil e perímetro corrente exigem conciliação própria.",
+    "Reorganização, emissão prevista, classes e recibos exigem base plenamente diluída conciliada com o modelo.",
+    "Garantias, aplicação da dívida posterior e caixa transferível por entidade não foram integralmente examinados.",
+    "Retorno dos novos investimentos e vantagem competitiva não estão demonstrados.",
+    "Não há catalisador futuro datado confirmado neste estudo."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Aeroportuario del Sureste",
+      "titulo": "Perfil e estrutura do negócio",
+      "url": "https://www.asur.com.mx/conoce-asur-0",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Aeroportuario del Sureste",
+      "titulo": "Release financeiro das concessões e operações comerciais",
+      "url": "https://www.asur.com.mx/media/Informes%20Financieros/2026/2/ASUR-Aeropuerto-Cancun-Mexico-Informe-Financiero-2T26.pdf",
+      "publicado_em": "2026-07-23",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Aeroportuario del Sureste",
+      "titulo": "Demonstrações intermediárias e acontecimentos posteriores",
+      "url": "https://www.sec.gov/Archives/edgar/data/1123452/000110465926111185/tm2626158d1_ex99-1.htm",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Aeroportuario del Sureste",
+      "titulo": "Colocação de dívida da subsidiária de Cancún",
+      "url": "https://www.asur.com.mx/asur-signs-deal-to-acquire-motiva-s-stake-in-airport-business-in-brazil-ecuador-costa-rica-and-curacao-4",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

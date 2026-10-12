@@ -1,0 +1,444 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "fa346bbbb3d06d20e9a4da6ba9fa78487172f385a0ee73715fcc6900da881434",
+    "factbook": "916d85d1cc9eda4c6df225feabcf05f574701578de1ce9e8a5b591125cbcc204",
+    "nota_json": "1c091bc788845170c7cd73b272b758bd36188ddd07cb6e98d16fab177572fe5c"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_ALLOS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T02:09:48.326547+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A captação de CRI foi integralizada e ampliou caixa e dívida, sem representar geração operacional. Dívida tem exposição predominante a juros flutuantes; medidas de custo excluem obrigações e ajustes próprios. Alienação de Curitiba e permutas são descritas como concluídas, enquanto a compra adicional de Recife permanece sujeita a condições no release. O guidance é reafirmado no documento escolhido, sem garantia de dividendos futuros. Distribuição, capex e desenvolvimento precisam de ponte completa de recursos atribuíveis.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Resultados posteriores: reconciliar locação, mídia, desenvolvimento, bases gerenciais e caixa depois de financiamento e investimentos.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Comprovação das condições de compra e implantação dos projetos de uso misto, com direitos e capital efetivamente atribuíveis.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "m_a"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 30,32, com retorno esperado -8,52%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Locação e serviços sustentam caixa depois de juros e manutenção; expansão e capital remuneram o acionista com participação e risco controlados. O cenário otimista calculado pelo código é R$ 34,50.",
+      "pessimista": "Aluguel, mídia ou crédito deterioram, juros e investimento absorvem recursos e distribuição depende de financiamento ou alienações adicionais. O cenário pessimista calculado pelo código é R$ 26,19."
+    },
+    "comentario_valuation": "Preço de referência R$ 35,13 e alvo do modelo aberto R$ 30,32, com potencial -13,68%. Retorno total esperado -8,52% e custo do capital próprio 10,29%. A dispersão entre métodos é 31,53%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 35,19; a diferença -13,84% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese enfraquece se novas receitas e economia de despesas mascaram piora do aluguel ou saúde dos lojistas. FFO pode crescer antes de caixa depois de juros e investimentos. Receitas de mídia ligadas a eventos e monetização de terrenos não devem ser perpetuadas sem prova. Uso misto anunciado não estabelece receita, lucro ou participação da companhia. Distribuição financiada por captação ou alienação pode limitar expansão futura; o teste exige manter ativos e direitos econômicos, sem confundir bases gerenciais e contábeis.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_ALLOS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 35,13"
+      },
+      {
+        "fato": "val.BR_ALLOS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 30,32"
+      },
+      {
+        "fato": "val.BR_ALLOS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-13,68%"
+      },
+      {
+        "fato": "val.BR_ALLOS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_ALLOS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_ALLOS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 34,50"
+      },
+      {
+        "fato": "val.BR_ALLOS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_ALLOS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 26,19"
+      },
+      {
+        "fato": "val.BR_ALLOS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_ALLOS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,29%"
+      },
+      {
+        "fato": "val.BR_ALLOS.wacc",
+        "rotulo": "WACC",
+        "valor": "10,24%"
+      },
+      {
+        "fato": "val.BR_ALLOS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_ALLOS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-8,52%"
+      },
+      {
+        "fato": "val.BR_ALLOS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-5,80%"
+      },
+      {
+        "fato": "val.BR_ALLOS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "18,4x"
+      },
+      {
+        "fato": "val.BR_ALLOS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,4x"
+      },
+      {
+        "fato": "val.BR_ALLOS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 35,19"
+      },
+      {
+        "fato": "val.BR_ALLOS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-13,84%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "ALLOS",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil institucional e plataforma de shoppings",
+        "url": "https://ri.allos.com.br/a-companhia/perfil-corporativo/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "ALLOS",
+        "publicado_em": "2026-08-06",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado, versão pública posterior: operação, FFO, caixa e conciliações",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1553831&numSequencia=1078537&numVersao=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "ALLOS",
+        "publicado_em": "2026-08-06",
+        "tipo": "Relações com investidores",
+        "titulo": "Esclarecimento formal: métricas divulgadas antecipadamente eram parciais",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1553345&numSequencia=1078051&numVersao=1"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Locação e serviços deixam de sustentar caixa depois de juros e investimentos.",
+      "Desconto, inadimplência ou vacância deterioram a base comparável.",
+      "Mídia, desenvolvimento e ajustes não sustentam recorrência atribuível.",
+      "Distribuição, dívida e projetos alteram a capacidade de remunerar capital."
+    ],
+    "governanca": "O esclarecimento formal confirma circulação antecipada de métricas parciais e informa que o conjunto seria divulgado após o pregão; não foi usado para substituir a análise completa. As informações gerenciais do release não foram revisadas pelos auditores, segundo o próprio documento. A cópia direta do RI foi recusada, enquanto o documento público da CVM foi recebido normalmente. A leitura do perfil e do release não equivale à reconciliação integral do ITR e suas notas explicativas.",
+    "guidance": "mantido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Conciliar participações, aluguel, ocupação, descontos e inadimplência por base comparável. Separar mídia, desenvolvimento, volume digital e receita. Monitorar FFO ajustado, tributos diferidos, fluxo depois de juros e investimentos, dívida, alienações, condições de compra e distribuição efetiva.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ALLOS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-8,52%"
+          },
+          {
+            "fato": "val.BR_ALLOS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,29%"
+          },
+          {
+            "fato": "val.BR_ALLOS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "31,53%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -8,52%, custo do capital 10,29% e dispersão entre métodos 31,53% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_ALLOS",
+    "lacunas_de_dados": [
+      "ITR completo, notas explicativas e conclusão de revisão não foram integralmente examinados; os anexos do release não os substituem.",
+      "Fluxo gerencial, contábil e caixa depois de juros e investimentos exigem ponte completa.",
+      "Perfil institucional e portfólio atual têm datas diferentes; não se adotou contagem antiga como retrato atual.",
+      "Condições posteriores da compra adicional de Recife não foram comprovadas.",
+      "Recorrência de mídia, tributos e monetização imobiliária precisa de acompanhamento específico.",
+      "A versão pública posterior não demonstra disponibilidade da versão anterior em cada instante.",
+      "Guidance é mantido no documento escolhido; alterações posteriores, tom e percepção do mercado permanecem a verificar."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Plataforma de shoppings com locação, estacionamento, administração de terceiros, mídia pela helloo, produtos digitais e desenvolvimento de uso misto no entorno dos ativos. Aluguel mínimo, percentual e serviços têm contratos e sensibilidades diferentes. A participação econômica por shopping difere da consolidação contábil e da operação integral. O perfil institucional é anterior ao retrato financeiro escolhido. Vendas dos lojistas e volume digital não são receitas próprias; potencial imobiliário depende de direitos, parceiros e implantação.",
+    "nome": "Allos",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_IGUATEMI",
+        "nome": "Iguatemi"
+      },
+      {
+        "issuer_id": "BR_MULTIPLAN",
+        "nome": "Multiplan"
+      },
+      {
+        "issuer_id": "CL_CENCOMALLS",
+        "nome": "Cencosud Shopping"
+      },
+      {
+        "issuer_id": "CL_MALLPLAZA",
+        "nome": "Plaza SA (Mallplaza)"
+      },
+      {
+        "issuer_id": "CL_PARAUCO",
+        "nome": "Parque Arauco"
+      },
+      {
+        "issuer_id": "MX_FIBRAPL",
+        "nome": "Fibra Prologis"
+      },
+      {
+        "issuer_id": "MX_VESTA",
+        "nome": "Corporación Inmobiliaria Vesta"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que localização, ocupação e novas receitas remunerem manutenção, expansão e financiamento, sustentando distribuição sem degradar os ativos. A condição decisiva é confirmar caixa atribuível depois de juros e investimentos, separando aluguel, mídia e monetização imobiliária. Ganhos de eficiência podem apoiar retorno, mas crescimento de FFO ajustado não demonstra sozinho caixa livre. Potencial de uso misto e volume digital exigem prova de participação e margem; não foram capitalizados pela narrativa. A avaliação deve controlar perímetro e critérios de comparação.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ALLOS.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 35,13"
+          },
+          {
+            "fato": "val.BR_ALLOS.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 30,32"
+          },
+          {
+            "fato": "val.BR_ALLOS.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-13,68%"
+          },
+          {
+            "fato": "val.BR_ALLOS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,29%"
+          },
+          {
+            "fato": "val.BR_ALLOS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-8,52%"
+          }
+        ],
+        "texto": "Preço de referência R$ 35,13 e alvo R$ 30,32, com potencial -13,68%. A hipótese de investimento deve ser confrontada com o custo do capital 10,29% e retorno esperado -8,52%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Portfólio, localização, relações com lojistas e distribuição de mídia podem apoiar atração de público e receitas complementares. Escala não prova poder de preço permanente; renovação, desconto, ocupação e saúde do lojista precisam de teste. Mídia pode crescer com eventos específicos e negócios fora do shopping, com custos próprios. Plataforma digital mede transações dos parceiros, sem equivalência a receita. O desenvolvimento do entorno pode ampliar frequência, mas depende de aprovação, capital e acordos com incorporadores.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:09:48.326547+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Receita gerencial e FFO ajustado crescem, com contribuição de mídia, desenvolvimento e despesas menores. A receita contábil e a gerencial têm perímetros distintos; a comparação pro forma aplica participações atuais ao passado e a base sem Tijuca é separada. Lucro recebe crédito tributário diferido e efeitos financeiros sem caixa imediato. A demonstração dos fluxos separa juros no financiamento, alienações no investimento e recursos de captação. FFO ajustado exclui itens específicos e não substitui fluxo livre após investimentos e juros.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que localização, ocupação e novas receitas remunerem manutenção, expansão e financiamento, sustentando distribuição sem degradar os ativos. A condição decisiva é confirmar caixa atribuível depois de juros e investimentos, separando aluguel, mídia e monetização imobiliária. Ganhos de eficiência podem apoiar retorno, mas crescimento de FFO ajustado não demonstra sozinho caixa livre. Potencial de uso misto e volume digital exigem prova de participação e margem; não foram capitalizados pela narrativa. A avaliação deve controlar perímetro e critérios de comparação. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado -8,52%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Consumo, crédito de lojistas, vacância e juros podem limitar caixa. Mídia e desenvolvimento têm recorrência própria. Distribuição e capex competem por recursos; pro forma, tributos diferidos e volume digital podem distorcer a leitura."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ALLOS.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-13,84%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -13,84%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Imobiliário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "ALLOS — aluguel, mídia e distribuição depois do financiamento",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O documento reafirma projeções anuais de EBITDA, capex e distribuição. Vendas dos lojistas, participações atuais aplicadas ao passado e indicadores sem Tijuca têm bases próprias. O desenvolvimento de Uberlândia contribui para resultado; o potencial do masterplan do Parque Dom Pedro não representa receita, lucro ou geração de caixa da ALLOS. Lucro contábil recebe contribuição tributária diferida. A versão posterior do release foi consultada na CVM; recebimento desta cópia não comprova o instante de disponibilidade da versão anterior.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Conciliar participações, aluguel, ocupação, descontos e inadimplência por base comparável. Separar mídia, desenvolvimento, volume digital e receita. Monitorar FFO ajustado, tributos diferidos, fluxo depois de juros e investimentos, dívida, alienações, condições de compra e distribuição efetiva.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_ALLOS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,29%"
+          },
+          {
+            "fato": "val.BR_ALLOS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "31,53%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,29% e a dispersão entre métodos 31,53%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

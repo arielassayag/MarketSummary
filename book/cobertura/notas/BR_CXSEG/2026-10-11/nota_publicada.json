@@ -1,0 +1,442 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "4aed49d006cfa06692564cf85a9904dc6bfb592cb113036395c1a517c62c20c8",
+    "factbook": "038dc511f011581f7f2d67a2e793ed58e413d257b0d64a4aa0ee69644c6a2e9b",
+    "nota_json": "7471126cba0054ae78c1429a4a48397bc5f1120d126729dffdd4e43164b2c689"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_CXSEG",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-09",
+  "published_at": "2026-10-12T02:12:22.076358+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Reservas de previdência, ativos garantidores e patrimônio das participações não são caixa da holding. O retorno sobre patrimônio usa base ajustada e distribuição, que exigem conciliação por ação. O aviso específico confirma dividendos aprovados com data-base e pagamento futuros; aprovação não foi promovida a recebimento.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-17",
+        "descricao": "Pagamento de dividendos programado no aviso específico, sujeito à posição acionária e regras informadas; conferir efetivo crédito.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "dividendos"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 17,56, com retorno esperado -11,18%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "A rede amplia emissão rentável e receitas recorrentes, com perdas e custos controlados e caixa efetivamente recebido pela holding. O cenário otimista calculado pelo código é R$ 19,68.",
+      "pessimista": "Mix e emissão enfraquecem, custos ou sinistros absorvem receita e os rendimentos financeiros deixam de compensar a operação. O cenário pessimista calculado pelo código é R$ 15,73."
+    },
+    "comentario_valuation": "Preço de referência R$ 21,40 e alvo do modelo aberto R$ 17,56, com potencial -17,95%. Retorno total esperado -11,18% e custo do capital próprio 11,85%. A dispersão entre métodos é 25,48%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 20,26; a diferença -13,32% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se crescimento de distribuição e rendimento das reservas encobre menor rentabilidade de subscrição ou custo comercial maior. Receitas ligadas à rede podem persistir sem retorno suficiente depois da remuneração dos parceiros e da retenção de capital.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_CXSEG.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 21,40"
+      },
+      {
+        "fato": "val.BR_CXSEG.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 17,56"
+      },
+      {
+        "fato": "val.BR_CXSEG.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-17,95%"
+      },
+      {
+        "fato": "val.BR_CXSEG.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_CXSEG.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_CXSEG.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 19,68"
+      },
+      {
+        "fato": "val.BR_CXSEG.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_CXSEG.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 15,73"
+      },
+      {
+        "fato": "val.BR_CXSEG.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_CXSEG.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,85%"
+      },
+      {
+        "fato": "val.BR_CXSEG.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_CXSEG.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_CXSEG.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-11,18%"
+      },
+      {
+        "fato": "val.BR_CXSEG.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-40,51%"
+      },
+      {
+        "fato": "val.BR_CXSEG.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "12,7x"
+      },
+      {
+        "fato": "val.BR_CXSEG.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "4,7x"
+      },
+      {
+        "fato": "val.BR_CXSEG.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 20,26"
+      },
+      {
+        "fato": "val.BR_CXSEG.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-13,32%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Caixa Seguridade",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e estrutura do negócio",
+        "url": "https://www.ri.caixaseguridade.com.br/a-companhia/historico-e-perfil-corporativo/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Caixa Seguridade",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado, reconciliação contábil e desempenho por negócio",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/3972906b-e50b-4f74-ab74-4d0d32125d11/460a0d8d-9a1d-b81b-5b0d-ebbf391e4cd4?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Caixa Seguridade",
+        "publicado_em": "2026-08-10",
+        "tipo": "Relações com investidores",
+        "titulo": "Aviso de aprovação e pagamento futuro de dividendos",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/3972906b-e50b-4f74-ab74-4d0d32125d11/de9d1427-2967-3f75-6950-47dbea4a183a?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "Caixa Seguridade",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Estrutura das participações",
+        "url": "https://www.ri.caixaseguridade.com.br/a-companhia/estrutura-societaria/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Distribuição rentável e retenção não confirmam crescimento de receita recorrente por ação.",
+      "Custo comercial, sinistros ou despesas absorvem a contribuição operacional.",
+      "Contratos, relacionadas ou regras de produtos alteram a economia da rede e das participações.",
+      "Recebimentos, capital e base ajustada não sustentam a transmissão de resultado à holding."
+    ],
+    "governanca": "Controle estatal, sociedades com parceiros e remuneração da rede exigem examinar relacionadas e contratos. A norma gerencial anterior de seguros e a norma contábil atual têm bases diferentes. Equivalência, resultado financeiro das participações e resultado financeiro da holding não podem ser somados como contribuições independentes sem conciliação.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Monitorar emissão e prêmio ganho por ramo, comissões, rede e marca, sinistralidade e combinado antes dos rendimentos. Acompanhar entradas e resgates da previdência, taxa de administração e retorno das participações. Separar capitalização e consórcio de crédito próprio. Conciliar patrimônio ajustado, recebimentos e pagamentos da holding.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_CXSEG.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-11,18%"
+          },
+          {
+            "fato": "val.BR_CXSEG.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,85%"
+          },
+          {
+            "fato": "val.BR_CXSEG.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "25,48%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -11,18%, custo do capital 11,85% e dispersão entre métodos 25,48% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_CXSEG",
+    "lacunas_de_dados": [
+      "Demonstrações completas, reservas, solvência e capital por entidade não foram integralmente reconciliados.",
+      "Data de publicação do release não foi comprovada e permanece ausente.",
+      "Contratos, remuneração da rede e retorno por produto exigem documentos completos.",
+      "O aviso específico comprova pagamento futuro; efetivo recebimento não foi antecipado.",
+      "Patrimônio ajustado, equivalência e contribuição financeira requerem conciliação com o modelo recebido.",
+      "Guidance, tom agregado da gestão e percepção do mercado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Holding controlada pela Caixa Econômica Federal, com seguros, previdência, capitalização, consórcios e corretagem. A economia reúne participações operacionais, comissões e uso da rede e marca. Os negócios têm parceiros e contratos com vigências próprias; cartas de consórcio administradas não são carteira de empréstimos da holding.",
+    "nome": "Caixa Seguridade",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      },
+      {
+        "issuer_id": "BR_IRB",
+        "nome": "IRB Brasil RE"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que a rede e o relacionamento da Caixa sustentem distribuição rentável e receita recorrente por ação. A condição decisiva é resultado depois de sinistros, comissões e capital nas operações, recebido pela holding sem dupla contagem. Expansão de habitação pode coexistir com menor emissão em outros seguros e não comprova crescimento uniforme.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_CXSEG.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 21,40"
+          },
+          {
+            "fato": "val.BR_CXSEG.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 17,56"
+          },
+          {
+            "fato": "val.BR_CXSEG.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-17,95%"
+          },
+          {
+            "fato": "val.BR_CXSEG.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,85%"
+          },
+          {
+            "fato": "val.BR_CXSEG.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-11,18%"
+          }
+        ],
+        "texto": "Preço de referência R$ 21,40 e alvo R$ 17,56, com potencial -17,95%. A hipótese de investimento deve ser confrontada com o custo do capital 11,85% e retorno esperado -11,18%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A ligação com crédito habitacional e a rede pode apoiar aquisição e retenção. A emissão de habitação, prestamista e vida depende de canais e produtos distintos. O teste da distribuição exige prêmio ganho, persistência e custo comercial na mesma base; vigência contratual e acesso à marca não comprovam vantagem perpétua.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:12:22.076358+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O lucro cresce na base anual, mas a comparação sequencial tem direção diferente entre gerencial e contábil. A equivalência patrimonial inclui rendimento financeiro das participações, não apenas subscrição. A sinistralidade melhora enquanto o combinado permanece estável; a medida ampliada recebe contribuição financeira e precisa conservar sua definição.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que a rede e o relacionamento da Caixa sustentem distribuição rentável e receita recorrente por ação. A condição decisiva é resultado depois de sinistros, comissões e capital nas operações, recebido pela holding sem dupla contagem. Expansão de habitação pode coexistir com menor emissão em outros seguros e não comprova crescimento uniforme. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Venda, com retorno esperado -11,18%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Dependência da rede, parceiros, habitação e regras dos produtos pode reduzir receita. Sinistros, despesas e rentabilidade das reservas têm sensibilidades distintas. Resultado de equivalência e caixa da holding não são intercambiáveis."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_CXSEG.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-13,32%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -13,32%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Caixa Seguridade — economia da distribuição após sinistros, parceiros e capital",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Habitação cresce enquanto prestamista e vida recuam, com suspensão anterior de produto associado ao INSS ainda descrita no material. Previdência tem captação líquida positiva, sem dispensar conferir remuneração sobre reservas. Redução da sinistralidade não implica queda de todo custo: consultoria, tecnologia e publicidade também afetam despesas. Incentivos fiscais e ajustes de patrimônio precisam ser separados da recorrência.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar emissão e prêmio ganho por ramo, comissões, rede e marca, sinistralidade e combinado antes dos rendimentos. Acompanhar entradas e resgates da previdência, taxa de administração e retorno das participações. Separar capitalização e consórcio de crédito próprio. Conciliar patrimônio ajustado, recebimentos e pagamentos da holding.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_CXSEG.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,85%"
+          },
+          {
+            "fato": "val.BR_CXSEG.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "25,48%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,85% e a dispersão entre métodos 25,48%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

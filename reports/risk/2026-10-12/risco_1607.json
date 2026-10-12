@@ -1,0 +1,785 @@
+{
+  "fundo": "CDP — Cabra da Peste",
+  "gerado_em": "2026-10-12T16:07:07.061359-03:00",
+  "data": "2026-10-12",
+  "modo": "último fechamento",
+  "kill_switch": {
+    "ativo": false
+  },
+  "decisao_pendente": null,
+  "status": "ok",
+  "aviso": "Dados reais de mercado (Yahoo Finance, B3, FINRA, BCB); carteira simulada com execução hipotética no leilão de fechamento e custos do modelo.",
+  "base": {
+    "registro": "2026-10-09",
+    "registro_hash": "093e281066e765e6c8d90317169c98769a20b26e12b896fb80f827df21508337",
+    "semana_vigente": "2026-10-09",
+    "proposta_vigente": "CDP-2026-10-09-cdp"
+  },
+  "nav": {
+    "fechamento_usd": 998936.8428484211,
+    "pico_usd": 1000000.0,
+    "retorno_dia": -0.0010631571515789797,
+    "retorno_acumulado": -0.0010631571515788973,
+    "nav_inicial_usd": 1000000.0
+  },
+  "drawdown": {
+    "fechamento": -0.0010631571515788973,
+    "estagio": "normal",
+    "escada": {
+      "soft_stop": -0.025,
+      "hard_stop": -0.05,
+      "stop_out": -0.075
+    }
+  },
+  "risco": {
+    "vol_ex_ante": 0.03675490110151105,
+    "vol_alvo": 0.05,
+    "banda_vol": [
+      0.03,
+      0.07
+    ],
+    "dentro_da_banda": true,
+    "beta": 0.009986856821247225,
+    "beta_limite": 0.05,
+    "net": 0.012505207040619158,
+    "net_limite": 0.01,
+    "gross": 0.6478384161794536,
+    "gross_limites": [
+      0.5,
+      2.5
+    ],
+    "long": 0.3301718116100364,
+    "short": -0.31766660456941714,
+    "n_long": 37,
+    "n_short": 36,
+    "var_1d_99": 0.005386288933033823,
+    "var_limite": 0.01,
+    "es_1d_99": 0.006170880124767168,
+    "es_limite": 0.0125,
+    "vol_realizada_21d": null,
+    "vol_realizada_63d": null
+  },
+  "idio": {
+    "data": "2026-10-09",
+    "ex_ante": 0.941092,
+    "realizada_63d": null,
+    "sem_modelo_63d": null,
+    "sem_modelo_banda": null,
+    "sem_modelo_obs": null,
+    "meta": 0.9,
+    "piso": 0.85,
+    "kappa_f": 1.45,
+    "janela_pregoes": 63,
+    "registros": 1,
+    "regressores": [
+      "ILF",
+      "EWZ",
+      "EWW",
+      "ECH",
+      "EPU",
+      "COLO",
+      "ARGT",
+      "BZ=F",
+      "HG=F",
+      "GC=F",
+      "DX-Y.NYB"
+    ],
+    "base_vinculante": "base",
+    "medidas_base_evento": {
+      "base": {
+        "complete": true,
+        "factor_vol": 0.005626297475379351,
+        "idio": 0.9586172113534719,
+        "idio_kf": 0.9410919570534119,
+        "missing_macro": [],
+        "outside_model": [],
+        "reasons": [],
+        "specific_vol": 0.027079174769912073,
+        "vol": 0.02765749318902389,
+        "vol_kf": 0.02791382775574786
+      },
+      "evento": {
+        "complete": true,
+        "factor_vol": 0.005694050806916087,
+        "idio": 0.9759999493145134,
+        "idio_kf": 0.9655717523657501,
+        "missing_macro": [],
+        "outside_model": [],
+        "reasons": [],
+        "specific_vol": 0.036311162751833166,
+        "vol": 0.03675490110151105,
+        "vol_kf": 0.03695284497231765
+      }
+    }
+  },
+  "exposicoes": [
+    {
+      "grupo": "country",
+      "nome": "AR",
+      "net": -0.0024061278642900337,
+      "gross": 0.06390619244521444,
+      "limite": 0.02,
+      "excede": false
+    },
+    {
+      "grupo": "country",
+      "nome": "BR",
+      "net": 0.005484734244402383,
+      "gross": 0.4299068121524221,
+      "limite": 0.02,
+      "excede": false
+    },
+    {
+      "grupo": "country",
+      "nome": "CL",
+      "net": 0.005056385730972559,
+      "gross": 0.024557178104887355,
+      "limite": 0.02,
+      "excede": false
+    },
+    {
+      "grupo": "country",
+      "nome": "CO",
+      "net": -5.263577692089967e-05,
+      "gross": 0.01627203949842341,
+      "limite": 0.02,
+      "excede": false
+    },
+    {
+      "grupo": "country",
+      "nome": "LATAM",
+      "net": -0.0012929444297199869,
+      "gross": 0.021538308574693424,
+      "limite": 0.02,
+      "excede": false
+    },
+    {
+      "grupo": "country",
+      "nome": "MX",
+      "net": 0.009969487351758689,
+      "gross": 0.0874041931882292,
+      "limite": 0.02,
+      "excede": false
+    },
+    {
+      "grupo": "country",
+      "nome": "UY",
+      "net": -0.004253692215583549,
+      "gross": 0.004253692215583549,
+      "limite": 0.02,
+      "excede": false
+    },
+    {
+      "grupo": "sector",
+      "nome": "Communication Services",
+      "net": -0.0035058071752567467,
+      "gross": 0.009353704325315366,
+      "limite": 0.025,
+      "excede": false
+    },
+    {
+      "grupo": "sector",
+      "nome": "Consumer Discretionary",
+      "net": 0.017128474221326594,
+      "gross": 0.05954532100811521,
+      "limite": 0.025,
+      "excede": false
+    },
+    {
+      "grupo": "sector",
+      "nome": "Consumer Staples",
+      "net": 0.015652516280643097,
+      "gross": 0.06240317864998045,
+      "limite": 0.025,
+      "excede": false
+    },
+    {
+      "grupo": "sector",
+      "nome": "Energy",
+      "net": -0.0009276315626660179,
+      "gross": 0.10253433366586753,
+      "limite": 0.025,
+      "excede": false
+    },
+    {
+      "grupo": "sector",
+      "nome": "Financials",
+      "net": -0.008608454527479475,
+      "gross": 0.1587002361246572,
+      "limite": 0.025,
+      "excede": false
+    },
+    {
+      "grupo": "sector",
+      "nome": "Health Care",
+      "net": 0.0002259243914316993,
+      "gross": 0.011914600734109746,
+      "limite": 0.025,
+      "excede": false
+    },
+    {
+      "grupo": "sector",
+      "nome": "Industrials",
+      "net": 0.0019838508342233004,
+      "gross": 0.0572532132432992,
+      "limite": 0.025,
+      "excede": false
+    },
+    {
+      "grupo": "sector",
+      "nome": "Information Technology",
+      "net": 0.0063388892811055905,
+      "gross": 0.0063388892811055905,
+      "limite": 0.025,
+      "excede": false
+    },
+    {
+      "grupo": "sector",
+      "nome": "Materials",
+      "net": 0.0003621980755987089,
+      "gross": 0.09691534248508318,
+      "limite": 0.025,
+      "excede": false
+    },
+    {
+      "grupo": "sector",
+      "nome": "Real Estate",
+      "net": -0.008051622059224462,
+      "gross": 0.015545268899836302,
+      "limite": 0.025,
+      "excede": false
+    },
+    {
+      "grupo": "sector",
+      "nome": "Utilities",
+      "net": -0.008093130719083127,
+      "gross": 0.06733432776208373,
+      "limite": 0.025,
+      "excede": false
+    },
+    {
+      "grupo": "style",
+      "nome": "beta",
+      "net": -0.009350796152587588,
+      "gross": 0.009350796152587588,
+      "limite": 0.1,
+      "excede": false
+    },
+    {
+      "grupo": "style",
+      "nome": "size",
+      "net": -0.05560919433528016,
+      "gross": 0.05560919433528016,
+      "limite": 0.1,
+      "excede": false
+    },
+    {
+      "grupo": "style",
+      "nome": "momentum",
+      "net": -0.032910887811761866,
+      "gross": 0.032910887811761866,
+      "limite": 0.1,
+      "excede": false
+    },
+    {
+      "grupo": "style",
+      "nome": "resvol",
+      "net": 0.03296370450591204,
+      "gross": 0.03296370450591204,
+      "limite": 0.1,
+      "excede": false
+    },
+    {
+      "grupo": "style",
+      "nome": "value",
+      "net": -0.005515818313255011,
+      "gross": 0.005515818313255011,
+      "limite": 0.1,
+      "excede": false
+    },
+    {
+      "grupo": "style",
+      "nome": "liquidity",
+      "net": -0.02206655684240094,
+      "gross": 0.02206655684240094,
+      "limite": 0.1,
+      "excede": false
+    },
+    {
+      "grupo": "style",
+      "nome": "fx_sens",
+      "net": 0.01705965274868263,
+      "gross": 0.01705965274868263,
+      "limite": 0.1,
+      "excede": false
+    }
+  ],
+  "exposicoes_acima_do_limite": [],
+  "liquidez": {
+    "max_dias_para_liquidar": 0.36196362188700365,
+    "pct_gross_liquido_1d": 0.9999999999999998,
+    "unidade": "fechamentos",
+    "posicoes_acima_do_limite": [],
+    "sem_adtv": [],
+    "fonte_adtv": "capacidade de fechamento gravada na decisão da semana vigente"
+  },
+  "squeeze": {
+    "shorts_high": [],
+    "n_high_no_fechamento": 1,
+    "stops_fechamento": [
+      {
+        "ticker": "PAX",
+        "emissor": "BR_PATRIA",
+        "preco_medio_entrada": 11.670000076293945,
+        "preco_atual": 11.670000076293945,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "INTR",
+        "emissor": "BR_INTER",
+        "preco_medio_entrada": 7.679999828338623,
+        "preco_atual": 7.679999828338623,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "UGPA3.SA",
+        "emissor": "BR_ULTRAPAR",
+        "preco_medio_entrada": 39.09000015258789,
+        "preco_atual": 39.09000015258789,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "BBDC4.SA",
+        "emissor": "BR_BRADESCO",
+        "preco_medio_entrada": 21.610000610351562,
+        "preco_atual": 21.610000610351562,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "FMX",
+        "emissor": "MX_FEMSA",
+        "preco_medio_entrada": 119.23999786376953,
+        "preco_atual": 119.23999786376953,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "CX",
+        "emissor": "MX_CEMEX",
+        "preco_medio_entrada": 9.5600004196167,
+        "preco_atual": 9.5600004196167,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "EQTL3.SA",
+        "emissor": "BR_EQUATORIAL",
+        "preco_medio_entrada": 50.75,
+        "preco_atual": 50.75,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "YPF",
+        "emissor": "AR_YPF",
+        "preco_medio_entrada": 50.040000915527344,
+        "preco_atual": 50.040000915527344,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "ALOS3.SA",
+        "emissor": "BR_ALLOS",
+        "preco_medio_entrada": 35.83000183105469,
+        "preco_atual": 35.83000183105469,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "BRAV3.SA",
+        "emissor": "BR_BRAVA",
+        "preco_medio_entrada": 20.56999969482422,
+        "preco_atual": 20.56999969482422,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "VBBR3.SA",
+        "emissor": "BR_VIBRA",
+        "preco_medio_entrada": 36.880001068115234,
+        "preco_atual": 36.880001068115234,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "AGRO",
+        "emissor": "AR_ADECOAGRO",
+        "preco_medio_entrada": 10.239999771118164,
+        "preco_atual": 10.239999771118164,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "SAPR11.SA",
+        "emissor": "BR_SANEPAR",
+        "preco_medio_entrada": 45.06999969482422,
+        "preco_atual": 45.06999969482422,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "ASR",
+        "emissor": "MX_ASUR",
+        "preco_medio_entrada": 231.75,
+        "preco_atual": 231.75,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "LAR",
+        "emissor": "AR_LAR",
+        "preco_medio_entrada": 5.269999980926514,
+        "preco_atual": 5.269999980926514,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "SGML",
+        "emissor": "BR_SIGMALITH",
+        "preco_medio_entrada": 9.350000381469727,
+        "preco_atual": 9.350000381469727,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "ALPA4.SA",
+        "emissor": "BR_ALPARGATAS",
+        "preco_medio_entrada": 16.670000076293945,
+        "preco_atual": 16.670000076293945,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "CIB",
+        "emissor": "CO_CIBEST",
+        "preco_medio_entrada": 94.80999755859375,
+        "preco_atual": 94.80999755859375,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "ORVR3.SA",
+        "emissor": "BR_ORIZON",
+        "preco_medio_entrada": 22.020000457763672,
+        "preco_atual": 22.020000457763672,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "MELI",
+        "emissor": "LA_MELI",
+        "preco_medio_entrada": 1889.8499755859375,
+        "preco_atual": 1889.8499755859375,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "BCH",
+        "emissor": "CL_BCHILE",
+        "preco_medio_entrada": 38.88999938964844,
+        "preco_atual": 38.88999938964844,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "USIM5.SA",
+        "emissor": "BR_USIMINAS",
+        "preco_medio_entrada": 7.300000190734863,
+        "preco_atual": 7.300000190734863,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "LILAK",
+        "emissor": "LA_LILA",
+        "preco_medio_entrada": 8.119999885559082,
+        "preco_atual": 8.119999885559082,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "EMBJ",
+        "emissor": "BR_EMBRAER",
+        "preco_medio_entrada": 71.16000366210938,
+        "preco_atual": 71.16000366210938,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "RDOR3.SA",
+        "emissor": "BR_REDEDOR",
+        "preco_medio_entrada": 45.75,
+        "preco_atual": 45.75,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "ARCO",
+        "emissor": "LA_ARCOS",
+        "preco_medio_entrada": 7.769999980926514,
+        "preco_atual": 7.769999980926514,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "CSMG3.SA",
+        "emissor": "BR_COPASA",
+        "preco_medio_entrada": 64.55999755859375,
+        "preco_atual": 64.55999755859375,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "CBAV3.SA",
+        "emissor": "BR_CBA",
+        "preco_medio_entrada": 11.239999771118164,
+        "preco_atual": 11.239999771118164,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "KLBN11.SA",
+        "emissor": "BR_KLABIN",
+        "preco_medio_entrada": 18.1299991607666,
+        "preco_atual": 18.1299991607666,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "DLO",
+        "emissor": "LA_DLOCAL",
+        "preco_medio_entrada": 15.229999542236328,
+        "preco_atual": 15.229999542236328,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "CMIG4.SA",
+        "emissor": "BR_CEMIG",
+        "preco_medio_entrada": 12.130000114440918,
+        "preco_atual": 12.130000114440918,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "SBSP3.SA",
+        "emissor": "BR_SABESP",
+        "preco_medio_entrada": 33.599998474121094,
+        "preco_atual": 33.599998474121094,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "BRSR6.SA",
+        "emissor": "BR_BANRISUL",
+        "preco_medio_entrada": 18.8700008392334,
+        "preco_atual": 18.8700008392334,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "OMAB",
+        "emissor": "MX_OMA",
+        "preco_medio_entrada": 90.27999877929688,
+        "preco_atual": 90.27999877929688,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "BSAC",
+        "emissor": "CL_BSAC",
+        "preco_medio_entrada": 32.220001220703125,
+        "preco_atual": 32.220001220703125,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      },
+      {
+        "ticker": "EGIE3.SA",
+        "emissor": "BR_ENGIE",
+        "preco_medio_entrada": 31.729999542236328,
+        "preco_atual": 31.729999542236328,
+        "perda_desde_entrada": 0.0,
+        "perda_usd": 0.0,
+        "perda_pct_nav": 0.0,
+        "stop_posicao": false,
+        "stop_nav": false
+      }
+    ],
+    "stops_intradiario": [],
+    "regra": "por nome",
+    "vetos_compra": [],
+    "escalada": {
+      "emissores_em_stop": [],
+      "entradas": {},
+      "pregoes_na_janela": 1,
+      "limite": 2,
+      "janela_pregoes": 5,
+      "escalada": false
+    }
+  },
+  "alertas_do_registro": [
+    "Exposição líquida +1,25% fora do limite ±1,00% (net neutral).",
+    "Short INTR (BR_INTER) com risco de squeeze HIGH (era LOW na decisão): reavaliar/reduzir.",
+    "Limitação de dados: Viés de sobrevivência: o universo foi definido na data de criação (não é point-in-time); emissores deslistados antes dessa data não aparecem no histórico.",
+    "Limitação de dados: Fundamentos (Yahoo Ticker.info) são retrato atual, NÃO point-in-time; múltiplos podem misturar moedas/classes — ver coluna fundamentals_quality.",
+    "Limitação de dados: Adj Close do Yahoo é ajustado retroativamente por proventos/desdobramentos e muda a cada novo evento; o hash é por snapshot.",
+    "Limitação de dados: Câmbio do Yahoo (=X) usa barras diárias carimbadas em Europe/London, normalizadas para a data do pregão; não é fixing oficial (PTAX/FIX/TRM).",
+    "Limitação de dados: Short interest de ADRs refere-se ao float do ADS (não ao float total da companhia) e é publicado pela FINRA com defasagem (liquidação + 7 dias úteis).",
+    "Limitação de dados: Saldo de aluguel B3 (BTC) inclui arbitragem/ETF/hedge (limite superior do short); taxas sem contratos no dia são a última taxa calculada (rate_stale).",
+    "Limitação de dados: Notícias (Google News RSS) são conteúdo NÃO confiável: usadas apenas como dado citado.",
+    "Limitação de dados: Notícias indisponíveis para 10 emissores.",
+    "Limitação de dados: Volume zero com preço válido tratado como AUSENTE (NaN + volume_suspeito): 4547 observações em 108 linhas; maiores: EISA.SN (635), AMXB.MX (625), SGML (362), PCAR3.SA (252), GRUPOSURA.CL (186), GRUPOARGOS.CL (165), CIBEST.CL (159), ERO (156).",
+    "Limitação de dados: Retornos diários > 35% em módulo (revisar eventos corporativos): BBAR (2), BMA (2), BMA.BA (1), CAAP (2), CEPU (2), CIBEST.CL (2), COLBUN.SN (1), CRESY (1), DLO (1), GGAL (2), GGAL.BA (1), GRUPOARGOS.CL (1), GRUPOSURA.CL (1), GTE (3), HAPV3.SA (1), IRS (1), JBSS32.SA (1), LOMA (1), LTM.SN (15), NAT…",
+    "Limitação de dados: QA paridade ADR: SID vs CSNA3.SA desvio mediano -3.7% (último -1.8%; referência +0.0%; tolerância 3%).",
+    "Limitação de dados: Argentina: CCL implícito nas paridades ADR ≈ +5.9% vs câmbio oficial (ARS=X); preços locais em ARS embutem o CCL.",
+    "Limitação de dados: Revisões de fechamento do Yahoo em datas anteriores NÃO aplicadas (159): AC.MX@2026-10-05 (0.9995), ALPEKA.MX@2026-10-05 (1.0048), ALSEA.MX@2026-10-05 (0.9998), AMXB.MX@2026-10-05 (0.9985), ANDINA-B.SN@2026-10-05 (0.9592), ASURB.MX@2026-10-05 (0.9966), BBAJIOO.MX@2026-10-05 (0.9990), BCI.SN@2026-10…",
+    "Limitação de dados: Revisões de volume em datas anteriores NÃO aplicadas: 807.",
+    "Limitação de dados: QA paridade ADR: SID vs CSNA3.SA desvio -3.3% no pregão (mediana -3.6%; tolerância 3%).",
+    "Janela de evento ativa: Eleição Brasil 2026 (2º turno 25/out) (vol × 1,50 em BR)."
+  ],
+  "gatilhos": [
+    {
+      "nivel": "SOFT",
+      "codigo": "net_fora_do_limite",
+      "motivo": "Exposição líquida +1,25% fora do limite ±1,00% (net neutral)",
+      "acao": "reequilibrar no próximo rebalanceamento"
+    },
+    {
+      "nivel": "SOFT",
+      "codigo": "squeeze_high",
+      "motivo": "Shorts com risco de squeeze HIGH: 1 no último fechamento",
+      "acao": "reavaliar/reduzir no próximo rebalanceamento"
+    },
+    {
+      "nivel": "INFO",
+      "codigo": "janela_incompleta",
+      "motivo": "Janela de 5 registros incompleta (1): gatilho de 5 pregões não avaliado.",
+      "acao": ""
+    }
+  ],
+  "acoes_recomendadas": [
+    "revisar: Exposição líquida +1,25% fora do limite ±1,00% (net neutral)",
+    "revisar: Shorts com risco de squeeze HIGH: 1 no último fechamento"
+  ],
+  "motivo_kill_switch": null,
+  "limitacoes": []
+}

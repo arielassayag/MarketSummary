@@ -1,0 +1,188 @@
+{
+  "mind": "codex",
+  "issuer_id": "CL_BSAC",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Santander Chile — monetização da franquia e margem sem efeito transitório",
+  "resumo": "A hipótese é que o relacionamento e a eficiência sustentem margem depois de perdas e capital ao longo do ciclo. A recuperação precisa preservar receitas de clientes quando a inflação normaliza. Tecnologia cria valor se reduz o custo total de servir sem comprometer disponibilidade, segurança e monetização. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.CL_BSAC.rating_codigo}}, com retorno esperado {{fact:val.CL_BSAC.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Banco chileno controlado pelo grupo Santander, com crédito, depósitos, investimentos e serviços de pagamentos para indivíduos e empresas. Atendimento digital e canais físicos compõem a franquia local. O vínculo com o grupo deve respeitar riscos, recursos e direitos da entidade chilena.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que o relacionamento e a eficiência sustentem margem depois de perdas e capital ao longo do ciclo. A recuperação precisa preservar receitas de clientes quando a inflação normaliza. Tecnologia cria valor se reduz o custo total de servir sem comprometer disponibilidade, segurança e monetização.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.CL_BSAC.preco}} e alvo {{fact:val.CL_BSAC.preco_alvo}}, com potencial {{fact:val.CL_BSAC.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.CL_BSAC.ke}} e retorno esperado {{fact:val.CL_BSAC.etr}}.",
+      "evidencias": [
+        "val.CL_BSAC.preco",
+        "val.CL_BSAC.preco_alvo",
+        "val.CL_BSAC.upside",
+        "val.CL_BSAC.ke",
+        "val.CL_BSAC.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar margem com clientes, exposição indexada e custo de funding, preservando inflação e hedge. Revisar crédito, recuperação e reversão de casos específicos. Medir eficiência sem efeitos sazonais e capital, distribuição e monetização de canais na mesma base.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.CL_BSAC.ke}} e a dispersão entre métodos {{fact:val.CL_BSAC.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.CL_BSAC.ke",
+        "val.CL_BSAC.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Disponibilização de demonstrações trimestrais prevista no calendário oficial; revisar inflação, crédito e capital.",
+      "data": "2026-10-30",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Normalização da inflação, deterioração de crédito e despesas digitais podem reduzir o retorno. Fraude e indisponibilidade podem prejudicar clientes e capital. Expectativas regulatórias ou efeitos específicos de provisão podem exagerar a capacidade recorrente de distribuição.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.CL_BSAC.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.CL_BSAC.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Monetização e eficiência sustentam retorno depois de risco mesmo com normalização da inflação, preservando capital e distribuição. O cenário otimista calculado pelo código é {{fact:val.CL_BSAC.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.CL_BSAC.preco_alvo}}, com retorno esperado {{fact:val.CL_BSAC.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Margem indexada normaliza e crédito exige provisões enquanto despesas, fraude e capital limitam remuneração do acionista. O cenário pessimista calculado pelo código é {{fact:val.CL_BSAC.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.CL_BSAC.preco}} e alvo do modelo aberto {{fact:val.CL_BSAC.preco_alvo}}, com potencial {{fact:val.CL_BSAC.upside}}. Retorno total esperado {{fact:val.CL_BSAC.etr}} e custo do capital próprio {{fact:val.CL_BSAC.ke}}. A dispersão entre métodos é {{fact:val.CL_BSAC.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.CL_BSAC.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.CL_BSAC.consenso_alvo}}; a diferença {{fact:val.CL_BSAC.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "O emissor revisou expectativas de margem, retorno, custo de crédito, receitas não financeiras e eficiência com direções próprias. A pesquisa não transforma essa combinação em melhora uniforme de guidance. Bases prudenciais, resultado indexado e reversões específicas permanecem separados.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Examinar controle do grupo Santander, ações e recibos, negócios relacionados e direitos dos minoritários. Distinguir recursos locais de recursos do grupo e provisão de dividendos de transferência efetivamente liquidada.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Marca, produtos e canais podem apoiar depósitos e recorrência de uso. A vantagem exige receita líquida por cliente, retenção e funding sustentável. Clientes e produtividade declarados precisam ser comparáveis; o acesso ao grupo global não comprova rentabilidade incremental ou suporte irrestrito.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "O trimestre recebeu forte contribuição da posição em UF, e o patrimônio inclui efeito não realizado de hedge. A reversão de provisão de cliente comercial reduziu o custo de crédito. Gastos e eficiência incluem sazonalidade e liberação anterior de contingências. NPL e carteira deteriorada têm definições distintas.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Capital principal, instrumentos adicionais e capital total exigem tratamento próprio. Dividendos aprovados e provisionados não são automaticamente pagamentos verificados. A possível mudança regulatória relatada estava em consulta naquele corte; ganho de capital não é incorporado antes de comprovar regra e efeito.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se o ganho de lucro depende da posição em UF e de reversões enquanto receita por cliente não cobre custo e risco. Eficiência favorável pode refletir receita transitória e não melhora durável do custo de atendimento.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar margem com clientes, exposição indexada e custo de funding, preservando inflação e hedge. Revisar crédito, recuperação e reversão de casos específicos. Medir eficiência sem efeitos sazonais e capital, distribuição e monetização de canais na mesma base.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.CL_BSAC.etr}}, custo do capital {{fact:val.CL_BSAC.ke}} e dispersão entre métodos {{fact:val.CL_BSAC.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.CL_BSAC.etr",
+        "val.CL_BSAC.ke",
+        "val.CL_BSAC.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Notas completas, perdas esperadas e capital não foram integralmente reconciliados.",
+    "UF, hedges, NPL e retorno precisam de bases homogêneas com o modelo.",
+    "Classes, recibos e ações em circulação permanecem a comprovar.",
+    "Liquidação de dividendos e situação regulatória atual requerem documentos originais.",
+    "As projeções têm direções específicas; tom da gestão permanece não classificado."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Banco Santander Chile",
+      "titulo": "Portal oficial e calendário de resultados",
+      "url": "https://ir.santander.cl/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Banco Santander Chile",
+      "titulo": "Margem, crédito, capital e perspectivas gerenciais",
+      "url": "https://www.sec.gov/Archives/edgar/data/1027552/000102755226000098/managementcommentary2q20.htm",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Banco Santander Chile",
+      "titulo": "Data prevista de disponibilização das demonstrações",
+      "url": "https://bancosantanderchile.investor-relations.co/centro-de-resultados?lang=es-CL",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

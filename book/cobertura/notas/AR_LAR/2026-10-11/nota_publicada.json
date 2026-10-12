@@ -1,0 +1,459 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "d3738d00015389c2f1dfd828018165cf3b8fcb649cb4fa7cc8003e599cca9c9e",
+    "factbook": "e546d20b7fe561467393f3ed1672e59493137e46fc31c69d1dd1f02c78ca7f00",
+    "nota_json": "ae896b6f34097849df7bc5fa325c48dbd4584df3512e430ff8cb334dc57decb0"
+  },
+  "is_synthetic": false,
+  "issuer_id": "AR_LAR",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-09",
+  "published_at": "2026-10-12T02:31:11.255870+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "O investimento conversível foi concluído; a conversão e seus efeitos por ação permanecem condicionais. O estudo de expansão considera processo e cronograma distintos da fase inicial acelerada. A autorização chinesa para tecnologia ainda não havia sido obtida naquele comunicado; engenharia antecipada não elimina esse risco.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-10",
+        "descricao": "Divulgação e discussão de resultado anunciadas pelo emissor; revisar caixa, financiamento e desenvolvimento sem antecipar o resultado.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F5"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em Em revisão, com retorno esperado Em revisão. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "A operação demonstra custos e caixa atribuível resistentes; expansão licenciada e bem financiada acrescenta retorno sem comprometer o acionista. O cenário otimista calculado pelo código é Em revisão.",
+      "pessimista": "Preços e recuperação industrial frustram caixa; licenças ou tecnologia atrasam expansão, com maior necessidade de financiamento e diluição. O cenário pessimista calculado pelo código é Em revisão."
+    },
+    "comentario_valuation": "Preço de referência US$ 5,26 e alvo do modelo aberto Em revisão, com potencial Em revisão. Retorno total esperado Em revisão e custo do capital próprio 17,40%. A dispersão entre métodos é n/d; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é US$ 11,57; a diferença Em revisão não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Maior produção pode não criar valor se o custo total e o capital investido consomem o ganho. Uma avaliação que atribua à companhia a totalidade do projeto ou trate estudo preliminar como caixa certo superestima a hipótese.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.AR_LAR.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 5,26"
+      },
+      {
+        "fato": "val.AR_LAR.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_LAR.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_LAR.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_LAR.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.AR_LAR.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_LAR.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_LAR.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_LAR.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_LAR.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "17,40%"
+      },
+      {
+        "fato": "val.AR_LAR.wacc",
+        "rotulo": "WACC",
+        "valor": "15,30%"
+      },
+      {
+        "fato": "val.AR_LAR.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.AR_LAR.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_LAR.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_LAR.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "16,4x"
+      },
+      {
+        "fato": "val.AR_LAR.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,1x"
+      },
+      {
+        "fato": "val.AR_LAR.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 11,57"
+      },
+      {
+        "fato": "val.AR_LAR.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Lithium Argentina",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e ativos em parceria",
+        "url": "https://investors.lithium-argentina.com/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Lithium Argentina",
+        "publicado_em": "2026-08-11",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado trimestral e notas operacionais",
+        "url": "https://investors.lithium-argentina.com/news-releases/news-release-details/lithium-argentina-reports-second-quarter-2026-results"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Lithium Argentina",
+        "publicado_em": "2026-09-15",
+        "tipo": "Relações com investidores",
+        "titulo": "Conclusão do investimento conversível",
+        "url": "https://investors.lithium-argentina.com/news-releases/news-release-details/lithium-argentina-announces-closing-180m-strategic-investment"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "Lithium Argentina",
+        "publicado_em": "2026-09-30",
+        "tipo": "Relações com investidores",
+        "titulo": "Estudo de expansão e fase inicial condicionada",
+        "url": "https://investors.lithium-argentina.com/news-releases/news-release-details/lithium-argentina-announces-cauchari-olaroz-stage-2-scoping"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F5",
+        "instituicao": "Lithium Argentina",
+        "publicado_em": "2026-10-08",
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário anunciado para divulgação de resultados",
+        "url": "https://investors.lithium-argentina.com/news-releases/news-release-details/lithium-argentina-release-third-quarter-2026-results-november-10"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+      "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+      "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+      "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+    ],
+    "governanca": "A parceria exige conciliar direitos de voto, distribuição, obrigações e capital potencialmente diluído. A confiança no parceiro não dispensa avaliação de contratos, conflitos e proteção do acionista listado.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "Acompanhar recuperação industrial, especificação do produto, preço realizado e caixa distribuído à companhia. Separar financiamento de projeto, caixa corporativo, participação econômica e potencial diluição. Na expansão, acompanhar engenharia, água, licenças, implantação e desempenho do processo.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.AR_LAR.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.AR_LAR.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "17,40%"
+          },
+          {
+            "fato": "val.AR_LAR.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "n/d"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado Em revisão, custo do capital 17,40% e dispersão entre métodos n/d quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "AR_LAR",
+    "lacunas_de_dados": [
+      "Demonstrações e participação econômica exigem conciliação entre resultados de projeto e caixa corporativo.",
+      "Contratos e potencial diluição do financiamento conversível não foram integralmente reconstituídos.",
+      "Não se comprovou neste estudo a conclusão da joint venture PPG anunciada anteriormente.",
+      "O relatório técnico integral da expansão não foi recebido; recursos minerais não são reservas demonstradas.",
+      "Licenças, processo, orçamento e financiamento da fase acelerada permanecem condicionais.",
+      "Guidance e tom da gestão não foram classificados após reconciliação integral.",
+      "Não há evidência suficiente de percepção do mercado, posicionamento ou interesse vendido.",
+      "Os documentos não foram integralmente reconciliados ao modelo; a consulta atual não comprova disponibilidade histórica no corte recebido."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Companhia com interesses em ativos de lítio argentinos, operando Cauchari-Olaroz com Ganfeng e desenvolvendo outros projetos. Indicadores físicos do projeto e direitos econômicos da companhia listada não são a mesma base.",
+    "nome": "Lithium Argentina",
+    "o_que_mudou": null,
+    "pais": "Argentina",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CBA",
+        "nome": "Companhia Brasileira de Alumínio"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_SUZANO",
+        "nome": "Suzano"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A hipótese é que produtividade e disciplina de capital permitam gerar caixa atribuível em um ciclo de preços adverso, preservando capacidade de financiar desenvolvimento. A expansão é uma opção condicionada: retorno exige engenharia, licenças, financiamento e recuperação industrial comprovados, sem diluição que absorva o benefício.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.AR_LAR.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "US$ 5,26"
+          },
+          {
+            "fato": "val.AR_LAR.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.AR_LAR.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.AR_LAR.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "17,40%"
+          },
+          {
+            "fato": "val.AR_LAR.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          }
+        ],
+        "texto": "Preço de referência US$ 5,26 e alvo Em revisão, com potencial Em revisão. A hipótese de investimento deve ser confrontada com o custo do capital 17,40% e retorno esperado Em revisão.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Infraestrutura existente e aprendizado industrial podem beneficiar uma expansão. Essa possibilidade precisa ser demonstrada em custo total, consumo de água, recuperação e confiabilidade, em comparação consistente com alternativas. Recursos minerais e estimativas de estudo não demonstram automaticamente viabilidade econômica.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:31:11.255870+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O release apresenta indicadores do projeto em base integral, salvo indicação distinta. Custos operacionais divulgados não equivalem ao caixa residual do acionista. Distribuições recebidas, participação no resultado e tributos precisam ser reconciliados à demonstração da companhia.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que produtividade e disciplina de capital permitam gerar caixa atribuível em um ciclo de preços adverso, preservando capacidade de financiar desenvolvimento. A expansão é uma opção condicionada: retorno exige engenharia, licenças, financiamento e recuperação industrial comprovados, sem diluição que absorva o benefício. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Em revisão, com retorno esperado Em revisão. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Preço do lítio, execução industrial e financiamento podem impedir retorno. A expansão envolve risco de tecnologia e licenças; acesso ao caixa do projeto depende de parceiros e obrigações, enquanto financiamento conversível pode diluir direitos econômicos."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.AR_LAR.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "Em revisão"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é Em revisão. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Lithium Argentina — caixa atribuível e expansão condicionada",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A análise distingue operação do projeto e caixa atribuível à companhia. O financiamento conversível foi concluído depois do trimestre; expansão e cronograma acelerado são planos condicionados. Esses eventos não foram incorporados automaticamente aos alvos do retrato recebido.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar recuperação industrial, especificação do produto, preço realizado e caixa distribuído à companhia. Separar financiamento de projeto, caixa corporativo, participação econômica e potencial diluição. Na expansão, acompanhar engenharia, água, licenças, implantação e desempenho do processo.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.AR_LAR.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "17,40%"
+          },
+          {
+            "fato": "val.AR_LAR.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "n/d"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 17,40% e a dispersão entre métodos n/d. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,456 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "233a1aa0e85a4a24141d801bd4772e993e01c487d6f13acf649616a860c4c694",
+    "factbook": "8c2de0332beab3cd23d32bfb13a277039a6d240dc11c62fb20ff8e63992ac782",
+    "nota_json": "43a16e80f2a60fc28a40a9744374857cca554977eda6c1c244da0cf827070641"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_ORIZON",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T02:28:39.934531+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A incorporação foi concluída com emissão de ações e bônus, alterando capital e dívida. Bônus têm exercício futuro incerto, sem aporte recebido presumido. Investimento em biometano e manutenção exige recursos. Rondonópolis foi contratado com condições precedentes; o desdobramento altera unidade por ação, sem criar valor econômico.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar integração, caixa original e maturação energética.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Comprovação das condições de Rondonópolis e recursos dos bônus futuros.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "capital"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 10,10, com retorno esperado -51,19%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Integração e maturação sustentam margem e recebimento, com obrigações ambientais e capital por ação conciliados depois do reinvestimento. O cenário otimista calculado pelo código é R$ 12,66.",
+      "pessimista": "Sinergias e projetos frustram retorno; giro, obras e passivos absorvem caixa, enquanto recursos adquiridos e bônus sugerem liquidez sem recorrência. O cenário pessimista calculado pelo código é R$ 7,50."
+    },
+    "comentario_valuation": "Preço de referência R$ 21,26 e alvo do modelo aberto R$ 10,10, com potencial -52,49%. Retorno total esperado -51,19% e custo do capital próprio 11,68%. A dispersão entre métodos é 48,44%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 23,40; a diferença -56,83% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita combinada e caixa incorporado podem coexistir com consumo operacional e resultado ajustado menor. Se sinergias e produção energética não remunerarem capital e manutenção, bônus potenciais e escala não confirmarão caixa recorrente.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_ORIZON.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 21,26"
+      },
+      {
+        "fato": "val.BR_ORIZON.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 10,10"
+      },
+      {
+        "fato": "val.BR_ORIZON.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-52,49%"
+      },
+      {
+        "fato": "val.BR_ORIZON.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_ORIZON.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_ORIZON.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 12,66"
+      },
+      {
+        "fato": "val.BR_ORIZON.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_ORIZON.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 7,50"
+      },
+      {
+        "fato": "val.BR_ORIZON.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_ORIZON.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,68%"
+      },
+      {
+        "fato": "val.BR_ORIZON.wacc",
+        "rotulo": "WACC",
+        "valor": "10,70%"
+      },
+      {
+        "fato": "val.BR_ORIZON.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_ORIZON.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-51,19%"
+      },
+      {
+        "fato": "val.BR_ORIZON.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-51,52%"
+      },
+      {
+        "fato": "val.BR_ORIZON.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "21,1x"
+      },
+      {
+        "fato": "val.BR_ORIZON.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,4x"
+      },
+      {
+        "fato": "val.BR_ORIZON.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 23,40"
+      },
+      {
+        "fato": "val.BR_ORIZON.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-56,83%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Orizon Valorização de Resíduos",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://ri.orizonvr.com.br/a-orizon/historico-e-perfil-corporativo/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Orizon Valorização de Resíduos",
+        "publicado_em": "2026-08-13",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/9267dc34-24be-4623-bcda-2414abcbda9a/257e5556-4090-b46e-67bb-9e3c26c4251b?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Orizon Valorização de Resíduos",
+        "publicado_em": "2026-08-20",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/9267dc34-24be-4623-bcda-2414abcbda9a/9ce75f26-e5d8-18f1-4e50-1921575f1466?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+      "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+      "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+      "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    ],
+    "governanca": "O ITR recebido tem versão posterior, distinta da data do release. Combinação, mudança do conselho, desdobramento e bônus têm direitos próprios. Receita de construção e atualização de recebível público não equivalem a caixa recebido. Divergência entre texto e tabela foi preservada.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Volumes, tarifas, recebimento e margem por negócio; legado, pro forma e consolidado separados. Conciliar manutenção, obras, juros, caixa adquirido e passivos. Verificar sinergias, produção energética, fechamento de Rondonópolis e unidade de ações e bônus.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ORIZON.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-51,19%"
+          },
+          {
+            "fato": "val.BR_ORIZON.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,68%"
+          },
+          {
+            "fato": "val.BR_ORIZON.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "48,44%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -51,19%, custo do capital 11,68% e dispersão entre métodos 48,44% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_ORIZON",
+    "lacunas_de_dados": [
+      "O texto e a tabela divergem sobre resultado financeiro de Vital.",
+      "A ponte integral entre pro forma, ITR posterior e caixa adquirido permanece pendente.",
+      "A unidade por ação e bônus após o desdobramento requer conciliação específica.",
+      "Fechamento de Rondonópolis e exercício futuro de bônus não foram comprovados.",
+      "Sinergias, maturação energética e retorno depois de passivos ambientais exigem diligência.",
+      "Guidance agregado e comparação competitiva independente não foram comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Plataforma de destinação e gestão integrada de resíduos, com ecoparques, coleta, biogás, biometano e créditos de carbono. A incorporação de Vital, GBio e Orbis modifica capital e perímetro. Construção de concessões, atualização de recebíveis e produção energética possuem reconhecimento e recebimento distintos.",
+    "nome": "Orizon",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_SIMPAR",
+        "nome": "Simpar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que licenças, destinação e valorização remunerem o capital depois da integração. A condição decisiva é converter volumes e maturação energética em caixa recorrente, sem confundir caixa adquirido ou bônus futuros com geração. Obrigações ambientais e recebíveis públicos precisam de ponte ao acionista.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ORIZON.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 21,26"
+          },
+          {
+            "fato": "val.BR_ORIZON.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 10,10"
+          },
+          {
+            "fato": "val.BR_ORIZON.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-52,49%"
+          },
+          {
+            "fato": "val.BR_ORIZON.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,68%"
+          },
+          {
+            "fato": "val.BR_ORIZON.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-51,19%"
+          }
+        ],
+        "texto": "Preço de referência R$ 21,26 e alvo R$ 10,10, com potencial -52,49%. A hipótese de investimento deve ser confrontada com o custo do capital 11,68% e retorno esperado -51,19%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Licenciamento, localização e capacidade de tratamento podem apoiar contratos e atendimento. Integração amplia serviços, mas sinergias precisam de teste econômico. Certificações de carbono e projetos de biometano não garantem preço, venda ou retorno; gestão pública tem condições contratuais próprias.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:28:39.934531+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "O release usa base pro forma com trimestre integral de Vital, diferente da consolidação original. Receita cresceu, mas EBITDA e lucro ajustados combinados recuaram. O legado teve prejuízo contábil; juros de recebível regulatório não equivalem a caixa. O fluxo original semestral consumiu caixa operacional e recebeu caixa da incorporação.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que licenças, destinação e valorização remunerem o capital depois da integração. A condição decisiva é converter volumes e maturação energética em caixa recorrente, sem confundir caixa adquirido ou bônus futuros com geração. Obrigações ambientais e recebíveis públicos precisam de ponte ao acionista. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado -51,19%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Licenças, contratos públicos, integração e maturação energética podem limitar retorno. Obras, manutenção e passivos ambientais absorvem caixa. Recebíveis e bônus futuros não são liquidez realizada; mudanças por ação restringem comparação."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ORIZON.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-56,83%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -56,83%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Orizon — integração, caixa adquirido e maturação energética",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Vital, GBio e Orbis foram incorporadas; o release apresenta trimestre pro forma integral, enquanto a consolidação original começa depois. Receita combinada aumentou e EBITDA e lucro ajustados recuaram. O fluxo original consumiu caixa operacional e recebeu caixa da incorporação. Rondonópolis permanece condicional no documento; bônus têm exercício futuro e o desdobramento conserva valor econômico. Texto e tabela de resultado financeiro de Vital divergem.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Volumes, tarifas, recebimento e margem por negócio; legado, pro forma e consolidado separados. Conciliar manutenção, obras, juros, caixa adquirido e passivos. Verificar sinergias, produção energética, fechamento de Rondonópolis e unidade de ações e bônus.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_ORIZON.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,68%"
+          },
+          {
+            "fato": "val.BR_ORIZON.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "48,44%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,68% e a dispersão entre métodos 48,44%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,424 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "ed138ffa4fc375b3f702d932faef766227b882768e87d47be720b5a1215c260b",
+    "factbook": "514a18a021f80b567a7ae2c9113001a3c06ed28c438ddbbcfebb8c62fa308410",
+    "nota_json": "bfa67dc2d846769471dee7f8ad19e566b23b651372d294e3178057d8bac79c7d"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_ALUPAR",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T02:30:29.640598+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Caixa líquido positivo na holding não elimina dívida nas concessionárias e projetos. Captações, empréstimos de transição, encargos e amortizações têm cronogramas próprios. Dividendos recebidos pela holding e pagos aos titulares não são iguais. O aviso posterior fixa pagamento já passado na data da consulta, sem comprovação adicional do crédito efetivo.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-05",
+        "descricao": "Divulgação programada de resultados; rever receita regulatória, implantação, dívida e caixa atribuível.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 53,17, com retorno esperado +37,92%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Projetos entram em operação com disponibilidade e custo adequados, permitindo receber remuneração e transferir caixa após obrigações. O cenário otimista calculado pelo código é R$ 61,85.",
+      "pessimista": "Implantação e dívida consomem recursos, penalidades reduzem receita e geração exige compras, enfraquecendo o caixa atribuível. O cenário pessimista calculado pelo código é R$ 44,83."
+    },
+    "comentario_valuation": "Preço de referência R$ 39,36 e alvo do modelo aberto R$ 53,17, com potencial +35,08%. Retorno total esperado +37,92% e custo do capital próprio 11,18%. A dispersão entre métodos é 61,71%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 42,78; a diferença +24,29% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se expansão reconhecida em resultado exige capital e dívida sem caixa regulatório suficiente. Reajuste contratual pode coexistir com penalidades e custo maior; geração pode absorver parte da contribuição da transmissão. Crescimento consolidado sem atribuição e transferência de caixa não assegura retorno por unidade.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_ALUPAR.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 39,36"
+      },
+      {
+        "fato": "val.BR_ALUPAR.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 53,17"
+      },
+      {
+        "fato": "val.BR_ALUPAR.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+35,08%"
+      },
+      {
+        "fato": "val.BR_ALUPAR.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_ALUPAR.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_ALUPAR.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 61,85"
+      },
+      {
+        "fato": "val.BR_ALUPAR.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_ALUPAR.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 44,83"
+      },
+      {
+        "fato": "val.BR_ALUPAR.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_ALUPAR.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,18%"
+      },
+      {
+        "fato": "val.BR_ALUPAR.wacc",
+        "rotulo": "WACC",
+        "valor": "8,41%"
+      },
+      {
+        "fato": "val.BR_ALUPAR.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_ALUPAR.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+37,92%"
+      },
+      {
+        "fato": "val.BR_ALUPAR.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+39,90%"
+      },
+      {
+        "fato": "val.BR_ALUPAR.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "14,5x"
+      },
+      {
+        "fato": "val.BR_ALUPAR.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,3x"
+      },
+      {
+        "fato": "val.BR_ALUPAR.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 42,78"
+      },
+      {
+        "fato": "val.BR_ALUPAR.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+24,29%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Alupar",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Portal de RI, perfil e calendário de resultados",
+        "url": "https://ri.alupar.com.br/pt"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Alupar",
+        "publicado_em": "2026-08-06",
+        "tipo": "Relações com investidores",
+        "titulo": "Release de resultados, bases regulatória e societária, projetos e dívida",
+        "url": "https://d169uzu5o4xu1k.cloudfront.net/2c93fb35-d1f1-4125-a660-c9b7378d3259/2026/7d16f13e-9385-4973-a864-a3aa1f067107.pdf"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Alupar",
+        "publicado_em": "2026-09-25",
+        "tipo": "Relações com investidores",
+        "titulo": "Aviso que fixa a data de pagamento dos dividendos intercalares",
+        "url": "https://d169uzu5o4xu1k.cloudfront.net/2c93fb35-d1f1-4125-a660-c9b7378d3259/2026/038e3c3f-1ef4-468e-afc9-c520aeb2243b.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Penalidades, custos e disponibilidade impedem conversão da receita contratual em caixa.",
+      "Licenças, obras ou energização atrasam e elevam capital e financiamento necessários.",
+      "Compras e restrições de geração absorvem contribuição recorrente das concessões.",
+      "Reconciliação de classes, participações e caixa altera retorno atribuível por unidade."
+    ],
+    "governanca": "Controle, participações, direitos de cada classe e composição da unidade exigem conciliação com o modelo por titular. As bases societária e regulatória têm perímetros e critérios próprios. Estimativas de prazo e custo não equivalem a autorização, contrato cumprido ou retorno realizado. Benefícios fiscais com vigências diferentes não foram perpetuados.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Monitorar disponibilidade, parcela variável, receita regulatória, custos, licenças e energização por projeto. Separar receita de infraestrutura, correção contratual e recebimento. Na geração, acompanhar produção, compras, preços e restrições conforme os contratos. Conciliar dívida por entidade, caixa transferido à holding, minoritários e direitos por unidade.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ALUPAR.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+37,92%"
+          },
+          {
+            "fato": "val.BR_ALUPAR.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,18%"
+          },
+          {
+            "fato": "val.BR_ALUPAR.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "61,71%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +37,92%, custo do capital 11,18% e dispersão entre métodos 61,71% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_ALUPAR",
+    "lacunas_de_dados": [
+      "Demonstrações completas, dívida por projeto e fluxo livre não foram integralmente reconciliados.",
+      "Bases societária e regulatória e participação de controle compartilhado exigem comparação própria.",
+      "Composição da unidade e resultado atribuível não foram reconciliados com todos os insumos do modelo.",
+      "O aviso fixa pagamento passado; crédito efetivo posterior não foi conferido nesta pesquisa.",
+      "Custos finais, licenças e retorno dos projetos em implantação permanecem a comprovar.",
+      "Guidance, tom agregado da gestão, vantagem relativa e percepção do mercado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Holding de transmissão e geração de energia, com negócios no Brasil e em outros países da América Latina. Concessões operacionais convivem com projetos em implantação e participações com controle compartilhado. A unidade negociada reúne ações de classes distintas; receitas consolidadas não são resultado integralmente atribuível ao titular.",
+    "nome": "Alupar",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      },
+      {
+        "issuer_id": "BR_CPFL",
+        "nome": "CPFL Energia"
+      },
+      {
+        "issuer_id": "BR_ENERGISA",
+        "nome": "Energisa"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que disponibilidade das linhas e implantação disciplinada sustentem caixa por unidade depois de investimento, financiamento e participação de terceiros. A condição decisiva é remuneração contratual efetivamente recebida com retorno sobre o capital empregado. Construção e correção do ativo contratual elevam resultado societário sem comprovar entrada equivalente de caixa.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ALUPAR.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 39,36"
+          },
+          {
+            "fato": "val.BR_ALUPAR.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 53,17"
+          },
+          {
+            "fato": "val.BR_ALUPAR.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+35,08%"
+          },
+          {
+            "fato": "val.BR_ALUPAR.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,18%"
+          },
+          {
+            "fato": "val.BR_ALUPAR.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+37,92%"
+          }
+        ],
+        "texto": "Preço de referência R$ 39,36 e alvo R$ 53,17, com potencial +35,08%. A hipótese de investimento deve ser confrontada com o custo do capital 11,18% e retorno esperado +37,92%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Histórico de construção, operação e acesso a financiamento pode apoiar novos projetos, mas cada concessão tem preço, prazo, obrigação e risco próprios. Receita anual permitida remunera disponibilidade; penalidades, atrasos e custos de reforço podem reduzir sua conversão econômica. Desconto estimado de investimento frente à referência do leilão não comprova retorno realizado.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:30:29.640598+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O lucro societário melhora fortemente na comparação anual, enquanto o lucro regulatório atribuível diminui. Construção, inflação do ativo contratual e diferenças de consolidação explicam leituras distintas. A transmissão aumenta receita regulatória, mas a parcela variável e despesas exigem exame; geração tem receita e resultado operacional menores, com compras de energia e restrições de geração.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que disponibilidade das linhas e implantação disciplinada sustentem caixa por unidade depois de investimento, financiamento e participação de terceiros. A condição decisiva é remuneração contratual efetivamente recebida com retorno sobre o capital empregado. Construção e correção do ativo contratual elevam resultado societário sem comprovar entrada equivalente de caixa. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +37,92%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Atrasos, penalidades, custo de obra e financiamento podem reduzir retorno das concessões. Hidrologia, compras de energia e restrições de geração afetam negócios distintos. Lucro societário e caixa da holding não demonstram distribuição integral."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ALUPAR.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+24,29%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +24,29%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Alupar — remuneração das concessões convertida em caixa por unidade",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A expansão de receita de transmissão inclui novos ativos e reajustes, com efeitos específicos de revisão tarifária e benefícios tributários. Na participação de controle compartilhado, a passagem de encargos financeiros da capitalização ao resultado altera a leitura regulatória. A geração tem contribuição menor e tratamento contratual diferente para restrições. Licença de construção, energização e operação comercial preservam seus estados.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar disponibilidade, parcela variável, receita regulatória, custos, licenças e energização por projeto. Separar receita de infraestrutura, correção contratual e recebimento. Na geração, acompanhar produção, compras, preços e restrições conforme os contratos. Conciliar dívida por entidade, caixa transferido à holding, minoritários e direitos por unidade.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_ALUPAR.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,18%"
+          },
+          {
+            "fato": "val.BR_ALUPAR.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "61,71%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,18% e a dispersão entre métodos 61,71%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

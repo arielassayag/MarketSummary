@@ -1,0 +1,84 @@
+{
+  "avisos_tecnicos": [],
+  "dados_ate": "2026-10-09",
+  "data": "2026-10-11",
+  "fontes_sugeridas": [
+    {
+      "instituicao": "SEC EDGAR — busca de documentos (20-F, 6-K, 10-K, 8-K)",
+      "tipo": "regulatorio",
+      "url": "https://www.sec.gov/edgar/search/"
+    },
+    {
+      "instituicao": "SEC EDGAR — dados XBRL por empresa (companyfacts)",
+      "tipo": "regulatorio",
+      "url": "https://www.sec.gov/search-filings/edgar-application-programming-interfaces"
+    },
+    {
+      "instituicao": "Damodaran Online (NYU Stern) — prêmios de risco, betas e múltiplos setoriais",
+      "tipo": "dados_publicos",
+      "url": "https://pages.stern.nyu.edu/~adamodar/"
+    },
+    {
+      "instituicao": "FRED (Federal Reserve Bank of St. Louis) — juros e indicadores dos EUA",
+      "tipo": "dados_publicos",
+      "url": "https://fred.stlouisfed.org/"
+    }
+  ],
+  "is_synthetic": false,
+  "issuer_id": "LA_LILA",
+  "lacunas": [
+    "Preço-alvo de 12 meses: sem dado na data.",
+    "Potencial até o alvo: sem dado na data.",
+    "Rating da cobertura: sem dado na data.",
+    "Cenário otimista: sem dado na data.",
+    "Probabilidade implícita do otimista: sem dado na data.",
+    "Cenário pessimista: sem dado na data.",
+    "Probabilidade implícita do pessimista: sem dado na data.",
+    "Retorno total esperado: sem dado na data.",
+    "Alpha relativo aos pares: sem dado na data.",
+    "P/L à frente: sem dado na data.",
+    "Alvo da casa contra o consenso: sem dado na data."
+  ],
+  "nome": "Liberty Latin America",
+  "nomes": {
+    "BR_TIM": "TIM Brasil",
+    "BR_VIVO": "Telefônica Brasil (Vivo)",
+    "LA_LILA": "Liberty Latin America",
+    "LA_MILLICOM": "Millicom (Tigo)",
+    "MX_AMX": "América Móvil",
+    "MX_MEGACABLE": "Megacable",
+    "MX_TELEVISA": "Grupo Televisa"
+  },
+  "nota_anterior": null,
+  "pais": "LATAM",
+  "pais_pt": "Regional (América Latina)",
+  "pares": [
+    "BR_TIM",
+    "BR_VIVO",
+    "LA_MILLICOM",
+    "MX_AMX",
+    "MX_MEGACABLE",
+    "MX_TELEVISA"
+  ],
+  "proximo_resultado": "2026-11-04",
+  "schema": "cdp.nota.contexto/v1",
+  "setor": "Communication Services",
+  "setor_pt": "Comunicações",
+  "snapshot": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "tem_linha_eua": true,
+  "termos": [
+    "TIMS3",
+    "TIMS3.SA",
+    "VIVT3",
+    "VIVT3.SA"
+  ],
+  "tickers": [
+    "LILA",
+    "LILAK"
+  ],
+  "tipo_esperado": "iniciacao"
+}

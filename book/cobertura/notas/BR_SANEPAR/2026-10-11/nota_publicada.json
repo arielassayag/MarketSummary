@@ -1,0 +1,455 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "1d31653794dd259cf5cd76fec52364b1f7300ca775d2c19b319554f6d268ce18",
+    "factbook": "2bfd78c1d7672f678fe8acb0c8815cb417f23dc7bad4e7e7248e9b608c079f50",
+    "nota_json": "bdfe9ca82c9d384ba5dfe8e2ecb98d3c4c511d656cde73f144c8b64cf4a3f530"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_SANEPAR",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T02:29:06.854510+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Dívida líquida recuou com maior caixa, sem provar que o precatório seja distribuível. Investimento diminuiu no trimestre e a rede mantém obrigações futuras. A companhia não declarou JCP do semestre; pagamentos registrados de proventos anteriores têm base distinta. Contratos e recursos vinculados exigem conciliação própria.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar tarifa, obras e caixa depois das obrigações.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Atualização pública da destinação regulatória do precatório e seus efeitos.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "regulatorio"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 44,10, com retorno esperado +3,56%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Eficiência e expansão sustentam remuneração das redes e caixa após obras, juros e obrigações regulatórias, com distribuição disciplinada. O cenário otimista calculado pelo código é R$ 52,68.",
+      "pessimista": "Regulação e investimento absorvem recursos; perdas e qualidade pressionam operação e liquidez elevada não se converte em distribuição ao titular. O cenário pessimista calculado pelo código é R$ 37,50."
+    },
+    "comentario_valuation": "Preço de referência R$ 43,05 e alvo do modelo aberto R$ 44,10, com potencial +2,44%. Retorno total esperado +3,56% e custo do capital próprio 10,28%. A dispersão entre métodos é 60,32%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 41,60; a diferença +6,00% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Dívida líquida menor e lucro ajustado maior podem coexistir com prejuízo e recursos destinados à tarifa. Se obras e obrigações regulatórias absorverem liquidez, o saldo de caixa não provará retorno distribuível ao acionista.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_SANEPAR.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 43,05"
+      },
+      {
+        "fato": "val.BR_SANEPAR.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 44,10"
+      },
+      {
+        "fato": "val.BR_SANEPAR.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+2,44%"
+      },
+      {
+        "fato": "val.BR_SANEPAR.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_SANEPAR.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_SANEPAR.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 52,68"
+      },
+      {
+        "fato": "val.BR_SANEPAR.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "30,95%"
+      },
+      {
+        "fato": "val.BR_SANEPAR.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 37,50"
+      },
+      {
+        "fato": "val.BR_SANEPAR.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "30,17%"
+      },
+      {
+        "fato": "val.BR_SANEPAR.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,28%"
+      },
+      {
+        "fato": "val.BR_SANEPAR.wacc",
+        "rotulo": "WACC",
+        "valor": "8,70%"
+      },
+      {
+        "fato": "val.BR_SANEPAR.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_SANEPAR.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+3,56%"
+      },
+      {
+        "fato": "val.BR_SANEPAR.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+7,65%"
+      },
+      {
+        "fato": "val.BR_SANEPAR.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "28,6x"
+      },
+      {
+        "fato": "val.BR_SANEPAR.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,1x"
+      },
+      {
+        "fato": "val.BR_SANEPAR.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 41,60"
+      },
+      {
+        "fato": "val.BR_SANEPAR.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+6,00%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Sanepar",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Documento original: concessões, operação e regulação",
+        "url": "https://ri.sanepar.com.br/docs/Sanepar-2026-06-30-LhNKMDPD.pdf"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Sanepar",
+        "publicado_em": "2026-08-13",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://ri.sanepar.com.br/docs/Sanepar-2026-06-30-LhNKMDPD.pdf"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Sanepar",
+        "publicado_em": "2026-08-13",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://ri.sanepar.com.br/docs/ITR-Sanepar-2026-06-30-kcDdgkwC.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+      "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+      "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+      "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    ],
+    "governanca": "Controle público, contratos municipais e regulação têm direitos próprios. A decisão de não declarar JCP preserva eventual contestação administrativa ou judicial, sem resultado favorável presumido. Classes de ações e units exigem unidade consistente; caixa de precatório não foi tratado como livre para acionistas.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Economias, volume, tarifa, perdas e qualidade de água e esgoto. Conciliar passivo regulatório, precatório, caixa vinculado e resultado ajustado. Monitorar obras, juros, contrato municipal, retorno regulado e decisões de distribuição por período.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_SANEPAR.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+3,56%"
+          },
+          {
+            "fato": "val.BR_SANEPAR.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,28%"
+          },
+          {
+            "fato": "val.BR_SANEPAR.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "60,32%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +3,56%, custo do capital 10,28% e dispersão entre métodos 60,32% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_SANEPAR",
+    "lacunas_de_dados": [
+      "A ponte integral de passivo regulatório, precatório e caixa disponível permanece pendente.",
+      "Resultado de eventual contestação da decisão regulatória não foi comprovado.",
+      "Retorno de obras, perdas e metas contratuais exige diligência por concessão.",
+      "A unidade de ações e units e direitos de distribuição requerem conciliação.",
+      "Guidance agregado e comparação competitiva independente não foram comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Prestadora de tratamento e distribuição de água, coleta e tratamento de esgoto em concessões municipais. Economias atendidas, volume, tarifa e eficiência determinam receita. Universalização e redes exigem investimento; contratos, regulação e controle público limitam a livre destinação de recursos.",
+    "nome": "Sanepar",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      },
+      {
+        "issuer_id": "BR_CPFL",
+        "nome": "CPFL Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que expansão e eficiência sustentem remuneração adequada das redes. A condição decisiva é gerar caixa depois de obras e juros sem atribuir ao acionista valores destinados à modicidade tarifária. Resultado ajustado, precatório e capital regulado possuem obrigações próprias.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_SANEPAR.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 43,05"
+          },
+          {
+            "fato": "val.BR_SANEPAR.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 44,10"
+          },
+          {
+            "fato": "val.BR_SANEPAR.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+2,44%"
+          },
+          {
+            "fato": "val.BR_SANEPAR.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,28%"
+          },
+          {
+            "fato": "val.BR_SANEPAR.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+3,56%"
+          }
+        ],
+        "texto": "Preço de referência R$ 43,05 e alvo R$ 44,10, com potencial +2,44%. A hipótese de investimento deve ser confrontada com o custo do capital 10,28% e retorno esperado +3,56%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Redes e contratos apoiam continuidade do atendimento, com prazo e metas específicos. Regulação e municípios determinam condições de remuneração; monopólio local não prova retorno livre de risco. Segurança hídrica, perdas e qualidade precisam de investimento e execução contínuos.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:29:06.854510+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita cresceu, EBITDA contábil ficou próximo da base anual e houve prejuízo. Medidas ajustadas excluem passivo regulatório e outros itens. O recebimento de precatório ampliou liquidez, mas a decisão regulatória destina seus recursos à tarifa. Caixa operacional trimestral caiu e precede juros e arrendamentos no financiamento.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que expansão e eficiência sustentem remuneração adequada das redes. A condição decisiva é gerar caixa depois de obras e juros sem atribuir ao acionista valores destinados à modicidade tarifária. Resultado ajustado, precatório e capital regulado possuem obrigações próprias. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +3,56%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Regulação, recursos hídricos, perdas e obras podem reduzir retorno. Controle público e modicidade tarifária limitam distribuição. Caixa de precatório e ajuste de lucro não eliminam obrigações; contratos e investimento exigem capital."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_SANEPAR.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+6,00%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +6,00%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Sanepar — remuneração regulada e caixa vinculado à tarifa",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Receita aumentou, EBITDA contábil ficou próximo da base anterior e o trimestre teve prejuízo por passivo regulatório complementar e tributos. Os resultados ajustados têm exclusões próprias. O precatório elevou liquidez, mas seus recursos foram destinados à modicidade tarifária pela decisão relatada. JCP do semestre não foi declarado, sem confundir pagamentos anteriores com nova distribuição. Caixa operacional trimestral recuou antes de juros no financiamento.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Economias, volume, tarifa, perdas e qualidade de água e esgoto. Conciliar passivo regulatório, precatório, caixa vinculado e resultado ajustado. Monitorar obras, juros, contrato municipal, retorno regulado e decisões de distribuição por período.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_SANEPAR.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,28%"
+          },
+          {
+            "fato": "val.BR_SANEPAR.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "60,32%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,28% e a dispersão entre métodos 60,32%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

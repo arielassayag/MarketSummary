@@ -1,0 +1,420 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "ea24759e08da9f9bfbe632106f7179516b39d428c851492e7ebdaf6423824966",
+    "factbook": "69945a150c338860b5a28860f6d431d795fb336f85b3e2db4076f78e1788c85a",
+    "nota_json": "8b13da0da333213e2256baa12f3b325f7dff4176f5caa08fe9d23a11d77e7422"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_BRAVA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-05",
+  "published_at": "2026-10-12T02:27:30.842922+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Caixa operacional já considera o desembolso da proteção de óleo; a medida antes desse efeito não é caixa efetivamente gerado. Reembolso de parcela de aquisição reduz o investimento líquido sem constituir geração recorrente. Amortizações antecipadas, novas captações e juros consomem recursos. Caixa gerencial inclui saldo restrito e exclui aplicação vinculada à dívida compensada; parcelas diferidas e contingentes de aquisição têm conciliação própria.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 20,20, com retorno esperado +9,88%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Operação se estabiliza, novos poços convertem investimento em produção econômica e margem integrada sustenta caixa depois de proteção e dívida. O cenário otimista calculado pelo código é R$ 40,03.",
+      "pessimista": "Paradas, custos, derivativos e obrigações de aquisição reduzem recursos enquanto novos investimentos e decisões do controlador limitam retorno ao minoritário. O cenário pessimista calculado pelo código é R$ 0,91."
+    },
+    "comentario_valuation": "Preço de referência R$ 20,57 e alvo do modelo aberto R$ 20,20, com potencial -1,81%. Retorno total esperado +9,88% e custo do capital próprio 13,49%. A dispersão entre métodos é 34,09%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 22,11; a diferença -8,64% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese enfraquece se retomadas e novos poços não sustentam produtividade depois do investimento, ou se preço e spreads explicam melhora transitória. Ganho contábil em derivativos pode coexistir com saída de caixa. Controle por grupo maior não assegura apoio financeiro nem remuneração adequada do minoritário; aquisição, dívida e passivos ambientais continuam econômicos.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_BRAVA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 20,57"
+      },
+      {
+        "fato": "val.BR_BRAVA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 20,20"
+      },
+      {
+        "fato": "val.BR_BRAVA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-1,81%"
+      },
+      {
+        "fato": "val.BR_BRAVA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_BRAVA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_BRAVA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 40,03"
+      },
+      {
+        "fato": "val.BR_BRAVA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "2,95%"
+      },
+      {
+        "fato": "val.BR_BRAVA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 0,91"
+      },
+      {
+        "fato": "val.BR_BRAVA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "0,00%"
+      },
+      {
+        "fato": "val.BR_BRAVA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "13,49%"
+      },
+      {
+        "fato": "val.BR_BRAVA.wacc",
+        "rotulo": "WACC",
+        "valor": "9,44%"
+      },
+      {
+        "fato": "val.BR_BRAVA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_BRAVA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+9,88%"
+      },
+      {
+        "fato": "val.BR_BRAVA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-15,72%"
+      },
+      {
+        "fato": "val.BR_BRAVA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,6x"
+      },
+      {
+        "fato": "val.BR_BRAVA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,8x"
+      },
+      {
+        "fato": "val.BR_BRAVA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 22,11"
+      },
+      {
+        "fato": "val.BR_BRAVA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-8,64%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Brava Energia",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil integrado de exploração, infraestrutura e refino",
+        "url": "https://bravaenergia.com/sobre-nos/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Brava Energia",
+        "publicado_em": "2026-08-05",
+        "tipo": "Relações com investidores",
+        "titulo": "Release arquivado na CVM, produção, hedge, fluxo e compromissos de aquisição",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1552890&numSequencia=1077596&numVersao=1"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Brava Energia",
+        "publicado_em": "2026-08-17",
+        "tipo": "Relações com investidores",
+        "titulo": "Conclusão da aquisição de controle pela Ecopetrol",
+        "url": "https://bravaenergia.com/noticias/brava-conclui-operacao-com-ecopetrol-e-fortalece-posicao-como-plataforma-estrategica-de-oleo-e-gas-no-brasil/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "Brava Energia",
+        "publicado_em": "2026-09-29",
+        "tipo": "Relações com investidores",
+        "titulo": "Início autorizado de produção de novo poço em Papa-Terra",
+        "url": "https://bravaenergia.com/noticias/novo-poco-em-producao-no-campo-de-papa-terra/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Disponibilidade, restrições e custo impedem converter investimentos em produção econômica.",
+      "Resultado ajustado melhora sem caixa após proteção financeira e compras de petróleo.",
+      "Dívida, recursos restritos e compromissos de aquisição reduzem capital disponível.",
+      "Novo controle e partes relacionadas alteram direitos ou transmissão de valor ao minoritário."
+    ],
+    "governanca": "A conclusão da oferta e aquisição pela Ecopetrol está documentada; não foi mantida como evento meramente proposto nem incorporada retrospectivamente ao trimestre. Integração, contratos intragrupo e incentivos exigem acompanhar a participação minoritária. A autorização e produção inicial do novo poço não comprovam vazão estabilizada ou conclusão de toda a campanha. Dívida compensada por aplicação, recursos restritos e parcelas contingentes preservam suas bases.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "Monitorar disponibilidade, restrições, produção e custo por participação. Conferir vendas, utilização da refinaria e margem depois de compras. Separar derivativo reconhecido e liquidado, capex e desembolso, dívida e obrigações do portfólio. Acompanhar novo controle, partes relacionadas e direitos do minoritário antes de inferir apoio financeiro.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BRAVA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+9,88%"
+          },
+          {
+            "fato": "val.BR_BRAVA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "13,49%"
+          },
+          {
+            "fato": "val.BR_BRAVA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "34,09%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +9,88%, custo do capital 13,49% e dispersão entre métodos 34,09% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_BRAVA",
+    "lacunas_de_dados": [
+      "Demonstrações completas, contratos de proteção e fluxo livre não foram integralmente reconciliados.",
+      "Reservas, obrigações ambientais, custo final e retorno da campanha exigem análise por campo.",
+      "Participações, dívida compensada, caixa restrito e compromissos contingentes têm bases próprias a conciliar.",
+      "Retomada integral das operações e vazão estabilizada do poço posterior não foram confirmadas.",
+      "Documentos completos da oferta, acordos de controle e partes relacionadas não foram integralmente examinados.",
+      "Há estimativas de projetos, sem direção agregada de revisão de guidance classificada.",
+      "Não há catalisador futuro datado confirmado nesta pesquisa.",
+      "Tom agregado, vantagem relativa e percepção do mercado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Empresa integrada de produção de petróleo e gás em terra e no mar, processamento, logística e refino. O portfólio combinado reúne operações com participações e custos distintos. Vendas entre negócios são eliminadas no consolidado; produção própria, compra de petróleo e margem de derivados não devem ser somadas como contribuições independentes. O controle foi adquirido pela Ecopetrol em operação concluída depois do trimestre.",
+    "nome": "Brava Energia",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_COSAN",
+        "nome": "Cosan"
+      },
+      {
+        "issuer_id": "BR_PRIO",
+        "nome": "PRIO"
+      },
+      {
+        "issuer_id": "BR_RECV",
+        "nome": "PetroRecôncavo"
+      },
+      {
+        "issuer_id": "BR_ULTRAPAR",
+        "nome": "Ultrapar"
+      },
+      {
+        "issuer_id": "BR_VIBRA",
+        "nome": "Vibra Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que confiabilidade dos campos, novos poços e integração industrial sustentem caixa depois de proteção financeira, manutenção e obrigações de aquisição. A condição decisiva é margem realizada com capital suficiente e transmissão ao minoritário sob o novo controle. Aumento de EBITDA, capacidade e preço do petróleo não demonstra melhora uniforme da produção, rentabilidade por barril ou liquidez livre.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BRAVA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 20,57"
+          },
+          {
+            "fato": "val.BR_BRAVA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 20,20"
+          },
+          {
+            "fato": "val.BR_BRAVA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-1,81%"
+          },
+          {
+            "fato": "val.BR_BRAVA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "13,49%"
+          },
+          {
+            "fato": "val.BR_BRAVA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+9,88%"
+          }
+        ],
+        "texto": "Preço de referência R$ 20,57 e alvo R$ 20,20, com potencial -1,81%. A hipótese de investimento deve ser confrontada com o custo do capital 13,49% e retorno esperado +9,88%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Infraestrutura de processamento e refino pode facilitar monetização do portfólio, mas exige operação segura, integridade e abastecimento. A participação em cada campo e as relações com operadores determinam custo e volume atribuível. Maior margem do refino pode coexistir com menor utilização; melhora do spread não comprova vantagem permanente. A liderança declarada pela administração não foi tratada como comparação independente.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:27:30.842922+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A produção melhora sequencialmente, mas recua na comparação anual, com comportamentos distintos de petróleo e gás. Receita e resultado operacional ajustado aumentam, enquanto lucro permanece menor que no ano anterior. Custo unitário de extração cresce com mistura de ativos e repasses do operador. No refino, margem melhora apesar de volume e utilização menores. Marcação de derivativos favorece lucro financeiro, mas liquidação de proteção de óleo reduz caixa operacional.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que confiabilidade dos campos, novos poços e integração industrial sustentem caixa depois de proteção financeira, manutenção e obrigações de aquisição. A condição decisiva é margem realizada com capital suficiente e transmissão ao minoritário sob o novo controle. Aumento de EBITDA, capacidade e preço do petróleo não demonstra melhora uniforme da produção, rentabilidade por barril ou liquidez livre. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +9,88%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Paradas, integridade, preço do petróleo, proteção financeira e obrigações de aquisição podem absorver caixa. Saldo restrito não é liquidez livre; novo controle e partes relacionadas exigem verificar retorno e direitos do minoritário."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BRAVA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-8,64%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -8,64%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Energia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Brava Energia — produção integrada após confiabilidade, proteção financeira e novo controle",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A recuperação offshore convive com restrições e retomada gradual no Potiguar. A alavancagem de covenant sobe sequencialmente, apesar da queda anual de dívida, porque a proteção liquidada pressiona o resultado de referência. O reconhecimento de reembolso de descomissionamento não elimina a obrigação ambiental; compensação de contas tem natureza distinta de recebimento livre. O poço posterior em Papa-Terra iniciou produção após autorização, mas permanecia em estabilização inicial no comunicado.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar disponibilidade, restrições, produção e custo por participação. Conferir vendas, utilização da refinaria e margem depois de compras. Separar derivativo reconhecido e liquidado, capex e desembolso, dívida e obrigações do portfólio. Acompanhar novo controle, partes relacionadas e direitos do minoritário antes de inferir apoio financeiro.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_BRAVA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "13,49%"
+          },
+          {
+            "fato": "val.BR_BRAVA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "34,09%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 13,49% e a dispersão entre métodos 34,09%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -213,6 +213,8 @@ class ContextoTaxasBrasilAPI(BaseModel):
             if type(item) is not dict or type(item.get("nome")) is not str:
                 raise ValueError("Registro de taxa sem nome textual.")
             name = item["nome"].upper()
+            if name not in {"SELIC", "CDI"}:
+                continue  # extras permanecem no corpo bruto, sem domínio imposto pelos fatos alvo
             if name in names:
                 raise ValueError("Taxa duplicada no corpo recebido.")
             names.add(name)
@@ -220,10 +222,11 @@ class ContextoTaxasBrasilAPI(BaseModel):
             if type(value) not in (str, int, float):
                 raise ValueError("Valor de taxa inválido.")
             number = float(value)
-            if not math.isfinite(number) or number <= 0:
-                raise ValueError("Taxa ausente, não finita ou não positiva.")
-            if name in {"SELIC", "CDI"}:
-                received[name] = number
+            if not math.isfinite(number):
+                raise ValueError("Taxa não finita.")
+            if number <= 0:
+                raise ValueError("Taxa fora do domínio positivo declarado para SELIC/CDI.")
+            received[name] = number
         return received
 
 

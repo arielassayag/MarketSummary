@@ -44,11 +44,21 @@ def test_taxas_contexto_estruturado_preserva_ausencia_e_proveniencia(tmp_path):
     assert received.taxas_contexto.arquivo_sha256 in facts.facts["macro.selic.rate"].input_refs[0]
 
 
-@pytest.mark.parametrize("corpo", ['{}', '[{"nome":"Selic","valor":true}]', '[{"nome":"Selic","valor":null}]', '[{"nome":"Selic","valor":"NaN"}]', '[{"nome":"Selic","valor":13},{"nome":"SELIC","valor":14}]'])
+@pytest.mark.parametrize("corpo", ['{}', '[{"nome":"Selic","valor":true}]', '[{"nome":"Selic","valor":null}]', '[{"nome":"Selic","valor":"NaN"}]', '[{"nome":"Selic","valor":0}]', '[{"nome":"Selic","valor":-1}]', '[{"nome":"Selic","valor":13},{"nome":"SELIC","valor":14}]'])
 def test_taxas_contexto_malformado_bloqueia_sem_zero(tmp_path, corpo):
     received = load_and_validate_package(_pacote_taxas(tmp_path, corpo=corpo))
     assert received.is_blocked
     assert received.taxas_contexto is None
+
+
+@pytest.mark.parametrize("extra", [0, -0.1])
+def test_extra_nao_impoe_dominio_das_taxas_alvo(tmp_path, extra):
+    raw = json.dumps([{"nome": "IPCA", "valor": extra}, {"nome": "Selic", "valor": 13.75}, {"nome": "CDI", "valor": 13.65}])
+    received = load_and_validate_package(_pacote_taxas(tmp_path, corpo=raw))
+    assert not received.is_blocked
+    assert received.taxas_contexto is not None
+    assert received.taxas_contexto.contexto.corpo_json == raw
+    assert received.taxas_contexto.contexto.taxas() == {"SELIC": 13.75, "CDI": 13.65}
 
 
 def test_taxas_origem_nao_brasilapi_recusada(tmp_path):

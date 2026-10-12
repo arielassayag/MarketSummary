@@ -618,6 +618,8 @@ def evaluate_golden_set(provider: LLMProvider, cases_path: str | Path | None = N
     """
     cfg = cfg or FundConfig()
     cases = cases if cases is not None else load_golden_cases(cases_path)
+    if not cases:
+        raise ValueError("Golden set vazio: avaliação exige ao menos um caso.")
     outcomes = [(c, _evaluate_case(c, provider, cfg)) for c in cases]
     schema = [ok for _, o in outcomes for ok in o.schema_ok]
     evidence = [ok for _, o in outcomes for ok in o.accepted_evidence_ok]

@@ -320,12 +320,15 @@ def _regressao_sem_modelo(y: pd.Series, X: pd.DataFrame) -> tuple[float, int, in
     :data:`MIN_GL_SEM_MODELO` graus de liberdade no resíduo). ``1 − R²_aj = (1 − R²)·(n − 1)/
     (n − k − 1)``, limitado a [0, 1]: sem viés para um fundo sem exposição aos regressores."""
     df = pd.concat([y.rename("_y"), X], axis=1).dropna()
-    k, n = X.shape[1], len(df)
-    if k == 0 or n - k - 1 < MIN_GL_SEM_MODELO:
-        return float("nan"), n, k
+    n = len(df)
+    if n == 0 or X.shape[1] == 0:
+        return float("nan"), n, 0
     yy = df["_y"].to_numpy(dtype=float)
     xx = np.column_stack([np.ones(n), df.drop(columns="_y").to_numpy(dtype=float)])
-    coef, *_ = np.linalg.lstsq(xx, yy, rcond=None)
+    coef, _, rank, _ = np.linalg.lstsq(xx, yy, rcond=None)
+    k = int(rank) - 1  # intercepto não conta como regressora independente
+    if k == 0 or n - k - 1 < MIN_GL_SEM_MODELO:
+        return float("nan"), n, k
     resid = yy - xx @ coef
     tss = float(np.sum((yy - yy.mean()) ** 2))
     if not tss > 0:

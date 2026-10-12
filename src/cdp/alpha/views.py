@@ -40,8 +40,15 @@ def _finite(x: object) -> bool:
 
 
 def _as_views(views: Iterable[View | dict]) -> list[View]:
-    """Valida as visões pelo contrato (dicionários são aceitos e validados)."""
-    return [v if isinstance(v, View) else View.model_validate(v) for v in views]
+    """Valida contrato e unicidade PM; pesquisa pode ter múltiplas visões agregadas."""
+    out = [v if isinstance(v, View) else View.model_validate(v) for v in views]
+    seen_pm: set[str] = set()
+    for view in out:
+        if view.source == ViewSource.PM:
+            if view.issuer_id in seen_pm:
+                raise ValueError(f"Visão PM duplicada para o emissor {view.issuer_id}.")
+            seen_pm.add(view.issuer_id)
+    return out
 
 
 def mandate_max_abs_weight(cfg: FundConfig) -> float:
@@ -213,7 +220,7 @@ def final_view_sign(views: list[View]) -> dict[str, int]:
     """Sinal final da visão por emissor: o PM prevalece; senão Σ score·confiança da pesquisa."""
     pm: dict[str, int] = {}
     ai: dict[str, float] = {}
-    for v in views:
+    for v in _as_views(views):
         if v.score == 0:
             continue
         if v.source == ViewSource.PM:

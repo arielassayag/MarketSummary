@@ -45,18 +45,41 @@ e resultado literal igual ao remoto; erro de leitura recusa a publicação. Seus
 casos focais aprovados permanecem separados dos39 anteriores e da suíte conjunta.
 F09 está fechado na documentação: Claude Code é alternativa, com configuração e
 registro explícitos, enquanto Codex é o executor corrente.
-Empacotamento instalado/STDIO e CI Linux são etapas distintas, ainda pendentes.
+Wheel e sdist foram construídos no ambiente próprio, com os corpos do pacote
+confrontados integralmente com a fonte. A instalação fresh fora do clone, sem
+editable, recebeu o SDK MCP2.3.0 físico e concluiu três kernels, onze recursos e
+nove consultas nativas pelo STDIO, com paridade, ausência real, autoria divergente,
+instrumento fora do universo, adulteração e recuperação. As negativas do helper
+anteriores foram preservadas; o sucessor corrigiu seus oráculos conforme os
+contratos nativos, sem mudar o leitor. O SDK negocia a sessão antes da entrada do
+cliente; o ramo discover/adopt versus initialize não foi registrado. Isso qualifica
+esta instalação e o corpus DADOS SIMULADOS, sem autoridade financeira, PIT ou prova
+universal de ausência de rede. UVtool/UVx da nova composição permanecem apenas
+preparados; a qualificação histórica não é atribuída a esta fonte.
+
+A primeira suíte integral local de `836c783` encerrou na primeira falha documental:
+faltava o histórico preservado no mapa de AGENTS. Foram2170 casos únicos executados,
+2153 aprovados, dezesseis ignorados e uma falha; não é uma suíte integral aprovada.
+O mapa foi corrigido mantendo o teste. A CI inicial recusou quatro expressões
+`runner.temp` no nível de ambiente do job antes de iniciar jobs; o sucessor usa
+diretórios privados declarados em etapa própria. Na CI de `0880123`, os jobs de
+wheel/SDK/STDIO e livro/rotinas/skills/portal foram observados aprovados; a qualidade
+integral ainda está em andamento. Fechamento Linux concluiu111 casos únicos
+aprovados em `836c783`. Resultados de fontes distintas permanecem separados.
 
 A composição CDP recebe a fonte privada0594f14, incluindo escritores NET,
 recepção bancária opt-in, diagnósticos P1 em sombra, técnicas e MCP1.7.
-São candidatos de fonte com focais anteriores; instalação final, STDIO e suíte
-conjunta da fonte composta ainda não foram concluídos. Não atribuir seus resultados
-anteriores ao novo pai. Os contratos/hard gates/configuração continuam preservados,
+São candidatos de fonte recebidos; a instalação/STDIO acima foi qualificada no
+recorte declarado. A suíte conjunta e a CI final ainda precisam concluir. Não
+atribuir resultados de fontes anteriores ao novo pai. Os contratos/hard gates/configuração continuam preservados,
 sem integração financeira automática dos protótipos ou nova operação de09/10.
 O [registro privado histórico](HISTORICO_PRIVADO_2026-10-10_CONSOLIDACAO.md)
 conserva integralmente o corpo da passagem dessa frente e seus limites originais.
 Evidências novas ficam em `.cdp/estudos/CONSOLIDACAO_AI_NOTES_12OUT/`.
-Fonte não enviada nem integrada em main; ROOT recebe a entrega antes da publicação.
+Fonte enviada ao PR7 como draft, sem integração em main ou nova publicação do portal.
+O merge normal do relatório oficial de risco de16:07 preservou a rotina em main;
+nenhuma operação foi realizada pela sessão de desenvolvimento. ROOT recebe a
+entrega final antes da integração e publicação.
 
 ## Aprofundamento dos 85 — conclusão em 12/10/2026
 

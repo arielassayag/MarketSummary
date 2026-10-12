@@ -2468,7 +2468,7 @@ CATALOGO_FONTES: dict[str, str] = {
     "cdp.data.yahoo": "4ee8f8126d37e2966de4f1c764944219b5742714f42332a65935afee9dcbf578",
     "cdp.ensaio": "98fd6e6a19e2525b156872b292f485ecbf8c6f9e7982c31e2a4703f29f2458c5",
     "cdp.estado": "06b594276c0e37fca985218c28390fb3db925daead68deacc77c3613c976b83e",
-    "cdp.executor": "854366952fbc59ba13de1c9b8870c2e15dbac66affe8a5c8b1c47ac9dcaebd30",
+    "cdp.executor": "c0c971d24f8380360b8df7a3419ee0ae3919684b99c474e922270e1cb5d0c5c0",
     "cdp.hashing": "82d6e86d2205a9067077f08d74248bbd10001241df453288ff0235e9d6fac1ea",
     "cdp.market": "b9ed9c6035946576e6d03ecaa535007dccc111b708cce34e88e8c1578cbb76f6",
     "cdp.noticias": "204d2919f79bd2b56990391faa3950f5245c4f394a8be6d15307816567aeab5c",

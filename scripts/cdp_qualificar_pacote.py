@@ -10,6 +10,7 @@ import asyncio
 import hashlib
 import importlib.metadata
 import importlib.util
+import inspect
 import json
 import os
 import sys
@@ -39,6 +40,53 @@ def categorias_nao_finitas(value) -> set[str]:
     if type(value) is list:
         return set().union(*(categorias_nao_finitas(x) for x in value))
     return set()
+
+
+def receber_sdk(area: Path) -> dict:
+    """Recebe corpos físicos SDK/contratos antes de abrir Client ou iniciar STDIO."""
+    prefix = Path(sys.prefix).resolve()
+    received = {}
+    for name in ("mcp", "mcp-types"):
+        dist = importlib.metadata.distribution(name)
+        if dist.version != "2.3.0":
+            raise ValueError("Versão SDK/contratos divergente")
+        for entry in sorted(dist.files or [], key=str):
+            rel = Path(str(entry))
+            if rel.is_absolute() or ".." in rel.parts or "__pycache__" in rel.parts:
+                continue  # entrypoints não são fontes do SDK
+            path = Path(dist.locate_file(entry)).resolve(strict=True)
+            if not path.is_relative_to(prefix):
+                raise ValueError("Fonte SDK fora do prefixo instalado")
+            body = path.read_bytes()
+            target = area / name / rel
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(body)
+            received[str(path)] = {"distribution": name, "relativo": rel.as_posix(),
+                                   "sha256": sha(body), "bytes": len(body), "copia": str(target)}
+    gravar(area / "RECEBIDO.json", received)
+    return received
+
+
+def conferir_sdk_importado(area: Path, received: dict) -> None:
+    from mcp import Client, StdioServerParameters
+    from mcp.server.stdio import stdio_server
+
+    owners = {}
+    for obj in (Client, StdioServerParameters, stdio_server):
+        original = inspect.unwrap(obj)
+        path = Path(inspect.getfile(original)).resolve()
+        if str(path) not in received or sha(path.read_bytes()) != received[str(path)]["sha256"]:
+            raise ValueError("Origem importada Client/STDIO não recebida")
+        owners[obj.__name__] = {"module": obj.__module__, "path": str(path),
+                               "sha256": received[str(path)]["sha256"]}
+        if original is not obj:
+            wrapper = Path(inspect.getfile(obj)).resolve()
+            if not wrapper.is_relative_to(Path(sys.base_prefix).resolve()):
+                raise ValueError("Wrapper STDIO fora da stdlib do runtime recebido")
+            body = wrapper.read_bytes()
+            (area / ("stdlib-" + wrapper.name)).write_bytes(body)
+            owners[obj.__name__]["wrapper_stdlib"] = {"path": str(wrapper), "sha256": sha(body)}
+    gravar(area / "IMPORTS_CLIENT_STDIO.json", owners)
 
 
 def codigo_instalado(source: Path) -> dict:
@@ -233,6 +281,8 @@ def main() -> int:
         env[key] = str(temp)
     payload = codigo_instalado(args.fonte)
     gravar(args.saida / "INSTALACAO.json", payload)
+    sdk_sources = receber_sdk(args.saida / "sdk-fontes")
+    conferir_sdk_importado(args.saida / "sdk-fontes", sdk_sources)
     recipe_path = args.fonte / "tests/cdp/fixture_leitura_operacional.py"
     gravar(args.saida / "RECEITA.json", {"path": str(recipe_path), "sha256": sha(recipe_path.read_bytes()),
                                        "aviso": "DADOS SIMULADOS; sem autoridade operacional/PIT"})

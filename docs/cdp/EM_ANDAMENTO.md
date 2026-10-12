@@ -39,6 +39,12 @@ e os pais por descritores/no-follow antes de aplicar, e append serializa a cauda
 e o flush. A importação é POSIX e não é transação multi-arquivo; Windows não foi
 qualificado. Os39 focais do autor não são uma suíte integral da composição. F03 recebe recusa de módulo JS obrigatório ausente na construção
 e na conferência do portal, inclusive quando manifesto/somas foram refeitos.
+O sucessor do inventário de commits confere origens de renomeações e cada pai dos
+merges, com remoto e cabeça pinados. A exceção para código remoto exige pai autorizado
+e resultado literal igual ao remoto; erro de leitura recusa a publicação. Seus17
+casos focais aprovados permanecem separados dos39 anteriores e da suíte conjunta.
+F09 está fechado na documentação: Claude Code é alternativa, com configuração e
+registro explícitos, enquanto Codex é o executor corrente.
 Empacotamento instalado/STDIO e CI Linux são etapas distintas, ainda pendentes.
 
 A composição CDP recebe a fonte privada0594f14, incluindo escritores NET,

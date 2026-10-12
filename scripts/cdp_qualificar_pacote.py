@@ -189,6 +189,7 @@ async def qualificar_kernels(area: Path, empty: Path, env: dict) -> None:
                 assert result.structured_content["resultado"]["custo"] == {"estado": "mais_infinito", "valor": None}
             else:
                 assert result.is_error
+                assert result.structured_content["resultado"]["codigo"] == {"unknown": "TECNICA_DESCONHECIDA", "bool": "ENTRADA_INVALIDA"}[label]
         assert not (await client.call_tool("calcular_ke", args["calcular_ke"])).is_error
 
 
@@ -227,7 +228,8 @@ async def qualificar_operacional(area: Path, empty: Path, env: dict, corpus: dic
             native_refs = {(r["membro_id"], r["sha256"], r["bytes"]) for r in expected[name]["readset"]}
             assert {(r["membro_id"], r["sha256"], r["bytes"]) for r in payload["readset"]} == native_refs
         for label, name, changes, status in (
-            ("ausencia", "ler_modelo_cobertura", {"instrumento_id": "AUSENTE"}, "indisponivel"),
+            ("ausencia", "ler_fatos", {"data": "2026-10-07"}, "indisponivel"),
+            ("instrumento_fora_universo", "ler_modelo_cobertura", {"instrumento_id": "AUSENTE"}, "recusado"),
             ("autoria", "validar_documento", {"mente_esperada": "outro"}, "recusado"),
         ):
             arguments = {**corpus["ingressos"][name], **changes}
@@ -236,6 +238,8 @@ async def qualificar_operacional(area: Path, empty: Path, env: dict, corpus: dic
             gravar(area / ("controle-" + label + ".json"), {"ingresso": arguments,
                                                           "resposta": payload, "is_error": result.is_error})
             assert result.is_error and payload["status"] == status
+            assert payload["falha"]["codigo"] == ("ARQUIVO_AUSENTE" if label == "ausencia" else "INGRESSO_INVALIDO")
+            assert payload["resultado"] is None and payload["resultado_sha256"] is None
         result = await client.call_tool("ler_modelo_cobertura", corpus["ingressos"]["ler_modelo_cobertura"])
         assert not result.is_error
     assert inventario(context_path.parent) == baseline, "Consulta modificou corpus recebido"
@@ -254,7 +258,9 @@ async def qualificar_operacional(area: Path, empty: Path, env: dict, corpus: dic
         result = await client.call_tool(name, corpus["ingressos"][name])
         payload = validar_json_resposta(result.structured_content)
         gravar(area / "controle-tamper.json", {"is_error": result.is_error, "resposta": payload})
-        assert result.is_error and payload["status"] == "recusado"
+        assert result.is_error and payload["status"] == "indisponivel"
+        assert payload["falha"]["codigo"] == "INTEGRIDADE_DA_FONTE"
+        assert payload["resultado"] is None and payload["resultado_sha256"] is None
 
 
 def main() -> int:

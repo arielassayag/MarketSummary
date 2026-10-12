@@ -1,0 +1,481 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "1ebd1c54048a86c356cdc73599e166f256b7562f352c89a6c8496a8cc59033ad",
+    "factbook": "f564a626a29917b14fe624da50006d68948ce912d5251bdf166da770bcdd7013",
+    "nota_json": "8ffd94a5ec58657f11201891b84f9941e2df17d1731ec9824f1cdfda657e1f11"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_SLC",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T14:55:26.374690+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Dívida líquida ajustada aumenta, com giro, arrendamentos e aquisição de ativos. A operação com Terrus teve parcela recebida, distinta do valor total e de outros direitos. Pagamentos por Sierentz e terras consomem capital, enquanto novos ativos exigem retorno incremental. Projetos de irrigação e algodoeira têm cronograma e investimento próprios. Compra de terra da Radar foi anunciada depois do trimestre, com área já operada em parte; não se antecipou conclusão integral, pagamento ou crescimento de área econômica.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Resultados posteriores: confirmar expedição, safra, custeio, arrendamentos e caixa atribuível.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Comprovação de condições e efeitos da aquisição posterior de terras, com área econômica e financiamento próprios.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "m_a"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 8,84, com retorno esperado -43,84%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Produtividade, expedição e custo sustentam caixa após custeio e arrendamento; aquisições e irrigação preservam retorno incremental atribuível. O cenário otimista calculado pelo código é R$ 21,56.",
+      "pessimista": "Clima e preços reduzem margem, estoques prolongam giro e dívida, arrendamento e expansão limitam caixa ao acionista. O cenário pessimista calculado pelo código é R$ 0,00."
+    },
+    "comentario_valuation": "A avaliação pode combinar terra própria e operação agrícola, evitando dupla contagem da renda do solo. Terra arrendada exige obrigações e prazo próprios; patrimônio avaliado não é liquidez demonstrada. Caixa normalizado por cultura e ciclo deve incluir custeio, proteção, manutenção e expansão; ativos biológicos não substituem recebimentos. Preço de referência R$ 17,52 e alvo do modelo aberto R$ 8,84, com potencial -49,56%. Retorno total esperado -43,84% e custo do capital próprio 11,73%. A dispersão entre métodos é 41,27%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 19,20; a diferença -53,97% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese enfraquece se expansão de área, patrimônio ou EBITDA antecede caixa e exige dívida crescente. Valor justo dos cultivos e terra não substitui venda, recebimento ou produtividade. Proteção tem preço, prazo e compromisso de entrega próprios. Irrigação e beneficiamento precisam remunerar capital adicional. A compra de terra já operada muda propriedade e financiamento, sem adicionar produção automaticamente. Lucro trimestral e semestral ou consolidado e atribuível não permitem a mesma conclusão.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.BR_SLC.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 17,52"
+      },
+      {
+        "fato": "val.BR_SLC.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 8,84"
+      },
+      {
+        "fato": "val.BR_SLC.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-49,56%"
+      },
+      {
+        "fato": "val.BR_SLC.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_SLC.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_SLC.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 21,56"
+      },
+      {
+        "fato": "val.BR_SLC.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "24,44%"
+      },
+      {
+        "fato": "val.BR_SLC.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 0,00"
+      },
+      {
+        "fato": "val.BR_SLC.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_SLC.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,73%"
+      },
+      {
+        "fato": "val.BR_SLC.wacc",
+        "rotulo": "WACC",
+        "valor": "9,13%"
+      },
+      {
+        "fato": "val.BR_SLC.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_SLC.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-43,84%"
+      },
+      {
+        "fato": "val.BR_SLC.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-74,43%"
+      },
+      {
+        "fato": "val.BR_SLC.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "12,6x"
+      },
+      {
+        "fato": "val.BR_SLC.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,6x"
+      },
+      {
+        "fato": "val.BR_SLC.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 19,20"
+      },
+      {
+        "fato": "val.BR_SLC.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-53,97%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "SLC Agrícola",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://ri.slcagricola.com.br/"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "SLC Agrícola",
+        "publicado_em": "2026-08-12",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/a975c39b-3eca-4ad8-9330-2c0a0b8d1060/da017e37-1ea8-7eef-ac2c-243762280f70?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "SLC Agrícola",
+        "publicado_em": "2026-08-12",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/a975c39b-3eca-4ad8-9330-2c0a0b8d1060/8d1db399-886e-9850-dbb5-102265342bcd?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Produtividade e expedição deixam de remunerar custeio e arrendamento.",
+      "Valor justo, hedge e reversões se afastam da margem realizada e recebimentos.",
+      "Aquisições, irrigação ou beneficiamento ampliam dívida sem retorno incremental.",
+      "Terra, fundos, sócios e área econômica alteram capital e retorno atribuível."
+    ],
+    "governanca": "A revisão intermediária tem alcance inferior à auditoria anual. Terra, fundos, joint ventures e arrendamento têm direitos distintos do capital consolidado. A avaliação patrimonial divulgada não garante preço realizável ou caixa distribuível. Pagamentos e parcela recebida em transações foram preservados em seus estados. A fonte mantém referências a safras e períodos de faturamento próprios, sem correção editorial para torná-los equivalentes. Controle, contratos, garantias e retorno por projeto precisam de exame integral.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Conciliar produtividade, custo, estoque e expedição por cultura e safra. Separar hedge, valor justo e reversões de caixa. Monitorar custeio, arrendamentos, aquisições, direitos de fundos e sócios, dívida ajustada, cronogramas de irrigação e retorno incremental das terras.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_SLC.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-43,84%"
+          },
+          {
+            "fato": "val.BR_SLC.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,73%"
+          },
+          {
+            "fato": "val.BR_SLC.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "41,27%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -43,84%, custo do capital 11,73% e dispersão entre métodos 41,27% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Na divulgação seguinte, verificar estoque expedido, recebimentos e custo por cultura e fazenda; separar proteção liquidada, reversões e valor justo. Comparar irrigação e algodoeira com orçamento e utilização, preservando terra própria, arrendada e participação em fundos. Rever a hipótese se EBITDA e patrimônio crescerem com custeio e dívida persistentes, sem caixa depois de arrendamento e manutenção.",
+        "titulo": "Caixa de safra e retorno da expansão"
+      }
+    ],
+    "issuer_id": "BR_SLC",
+    "lacunas_de_dados": [
+      "Safras, produtividade realizada, previsão e período de faturamento têm bases distintas.",
+      "Fluxo apresentado, ajustado, capex reconhecido e desembolsos não foram integralmente reconciliados.",
+      "Valor justo, hedge e reversões por cultura precisam de ponte completa com recebimento.",
+      "Direitos econômicos de fundos, sócios e terras arrendadas não foram integralmente examinados.",
+      "Aquisição posterior da Radar tem condições e direitos a comprovar, sem produção adicional presumida.",
+      "Avaliação de terras e retorno incremental de irrigação e beneficiamento exigem diligência específica.",
+      "Projeções por cultura têm direções distintas; guidance agregado, tom e percepção do mercado permanecem não determinados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Produtora agrícola com soja, algodão, milho, sementes e pecuária, operando terras próprias e arrendadas, sociedades e participações em fundos. Clima, produtividade, preço, proteção e expedição condicionam margem e calendário de caixa. Valor das terras e direitos econômicos não são equivalentes a liquidez imediata. Aquisições, irrigação e beneficiamento exigem capital e retorno próprios. Área cultivada, plantada, operada e econômica precisam de base consistente, preservando sócios, arrendamentos e origem da produção faturada.",
+    "nome": "SLC Agrícola",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AMBEV",
+        "nome": "Ambev"
+      },
+      {
+        "issuer_id": "BR_ASSAI",
+        "nome": "Assaí Atacadista"
+      },
+      {
+        "issuer_id": "BR_MATEUS",
+        "nome": "Grupo Mateus"
+      },
+      {
+        "issuer_id": "BR_MBRF",
+        "nome": "MBRF (Marfrig+BRF)"
+      },
+      {
+        "issuer_id": "BR_MDIAS",
+        "nome": "M. Dias Branco"
+      },
+      {
+        "issuer_id": "BR_NATURA",
+        "nome": "Natura Cosméticos"
+      },
+      {
+        "issuer_id": "BR_PAGUEMENOS",
+        "nome": "Pague Menos"
+      },
+      {
+        "issuer_id": "BR_RAIADROGASIL",
+        "nome": "Raia Drogasil"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que escala, produtividade e disciplina comercial sustentem retorno depois do custeio da safra, arrendamento e investimento. A condição decisiva é a expedição converter produção e margens em caixa atribuível sem dependência persistente de dívida ou valorização contábil. O valor das terras pode apoiar patrimônio, sem financiar automaticamente a operação. O teste deve separar culturas, períodos, hedge, ativos biológicos e direitos de fundos e sócios, controlando capital necessário à expansão.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_SLC.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 17,52"
+          },
+          {
+            "fato": "val.BR_SLC.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 8,84"
+          },
+          {
+            "fato": "val.BR_SLC.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-49,56%"
+          },
+          {
+            "fato": "val.BR_SLC.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,73%"
+          },
+          {
+            "fato": "val.BR_SLC.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-43,84%"
+          }
+        ],
+        "texto": "Preço de referência R$ 17,52 e alvo R$ 8,84, com potencial -49,56%. A hipótese de investimento deve ser confrontada com o custo do capital 11,73% e retorno esperado -43,84%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A tese agrícola precisa seguir a cultura desde custeio e colheita até expedição e recebimento, mantendo preço protegido e venda física distintos. Irrigação e beneficiamento podem alterar produtividade, mas exigem execução e capital próprios. Compra de terra já operada modifica propriedade e financiamento sem acrescentar produção automaticamente. Patrimônio fundiário, valor justo dos cultivos e fluxo agrícola não devem ser somados como fontes independentes de retorno.",
+        "titulo": "Safra econômica e propriedade da terra não são a mesma exposição"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Escala, práticas agrícolas, originação de insumos e integração do beneficiamento podem apoiar custo e qualidade. A vantagem exige prova por fazenda, cultura e safra, preservando produtividade e capital empregado. Irrigação reduz exposição climática com custo e execução próprios. A expansão de área e aquisição de terras já operadas têm efeitos distintos; não se tratou mudança de propriedade como crescimento automático de produção. Sementes e pecuária ampliam mix, com demanda, risco e margens diferentes.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T14:55:26.374690+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita e EBITDA ajustado crescem no trimestre anual, enquanto o lucro semestral recua; lucro consolidado e atribuível têm bases próprias. Ativos biológicos e estoques recebem valor justo e reversões, diferentes de caixa. Resultado de hedge é alocado por cultura, sem tornar o preço físico idêntico à receita protegida. O fluxo livre apresentado e o ajustado ficam negativos, com custeio, arrendamentos e aquisições. Capex reconhecido, desembolso e compra de terras têm pontes próprias; valorização patrimonial não é recebimento.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que escala, produtividade e disciplina comercial sustentem retorno depois do custeio da safra, arrendamento e investimento. A condição decisiva é a expedição converter produção e margens em caixa atribuível sem dependência persistente de dívida ou valorização contábil. O valor das terras pode apoiar patrimônio, sem financiar automaticamente a operação. O teste deve separar culturas, períodos, hedge, ativos biológicos e direitos de fundos e sócios, controlando capital necessário à expansão. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado -43,84%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Clima, preço, qualidade e prazo de expedição podem reduzir caixa. Custeio, arrendamento e expansão ampliam financiamento. Valor justo, direitos de fundos e compra de terras podem distorcer leitura de retorno e liquidez."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_SLC.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-53,97%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -53,97%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo básico",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "SLC Agrícola — produtividade, terra e caixa depois do ciclo da safra",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O trimestre anual apresenta receita e EBITDA ajustado maiores, enquanto a comparação semestral de lucro é negativa. A safra tem produtividade de soja realizada e projeções de algodão e milho com direções distintas. Não se agregou revisão de guidance a essas medidas. Valor justo de cultivos e estoques, hedge e reversões exigem ponte. Fluxo livre apresentado e ajustado são negativos; o ajustado considera arrendamentos e transações de participação. Aquisição posterior de terras já operadas não foi promovida a nova produção.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Conciliar produtividade, custo, estoque e expedição por cultura e safra. Separar hedge, valor justo e reversões de caixa. Monitorar custeio, arrendamentos, aquisições, direitos de fundos e sócios, dívida ajustada, cronogramas de irrigação e retorno incremental das terras.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_SLC.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,73%"
+          },
+          {
+            "fato": "val.BR_SLC.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "41,27%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,73% e a dispersão entre métodos 41,27%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,437 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "282566d0933f0e25560bebcab57905dc81ca1a958b626db69f650115df37b758",
+    "factbook": "ad5bff1b8d93907107562f53ff105231c85019c37d83a5cff0e9d62e885dee03",
+    "nota_json": "dd20c506b6388cfcbad48c7d78d72af2769e554cace79097dff0ba1176ab32a0"
+  },
+  "is_synthetic": false,
+  "issuer_id": "CL_BCI",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-30",
+  "published_at": "2026-10-12T15:03:44.107603+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "O retrato posterior ao trimestre registra Bci Group como acionista direto. Não resolve todas as etapas da reorganização nem a equivalência das ações. Conferir participação, capital regulatório, dividendos permitidos e direitos dos minoritários por entidade antes de atribuir valor à matriz ou ao banco. Expansão internacional deve disputar capital com o negócio chileno sob bases comparáveis.",
+        "titulo": "Direitos do banco e da nova matriz"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em CLP 74.365,00, com retorno esperado +19,90%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Negócios regionais remuneram risco e capital; evolução societária preserva direitos e melhora a alocação e transmissão de recursos. O cenário otimista calculado pelo código é CLP 90.998,90.",
+      "pessimista": "Crédito, tesouraria e financiamento pressionam resultado enquanto reorganização e restrições locais reduzem o benefício atribuível. O cenário pessimista calculado pelo código é CLP 59.953,80."
+    },
+    "comentario_valuation": "Preço de referência CLP 63.300,00 e alvo do modelo aberto CLP 74.365,00, com potencial +17,48%. Retorno total esperado +19,90% e custo do capital próprio 9,66%. A dispersão entre métodos é 6,15%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é CLP 68.402,20; a diferença +8,72% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota. Para um banco, confrontar valor patrimonial e lucro residual com retorno após perdas e capital regulatório por entidade. Uma soma das participações exige direitos e caixa transferível conciliados; ações do banco e da matriz não recebem valor equivalente por inferência.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A tese perde suporte se a margem do cliente cede à disputa por depósitos ou perdas de crédito, enquanto inflação e tesouraria sustentam o lucro publicado. Também falha se retorno estrangeiro exige capital retido sem transferência econômica ao banco, ou se a reorganização muda direitos sem benefício atribuível. Crescimento consolidado, sozinho, não refuta esses testes.",
+        "titulo": "Como o retorno regional pode falhar"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.CL_BCI.preco",
+        "rotulo": "Preço de referência",
+        "valor": "CLP 63.300,00"
+      },
+      {
+        "fato": "val.CL_BCI.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "CLP 74.365,00"
+      },
+      {
+        "fato": "val.CL_BCI.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+17,48%"
+      },
+      {
+        "fato": "val.CL_BCI.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.CL_BCI.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.CL_BCI.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "CLP 90.998,90"
+      },
+      {
+        "fato": "val.CL_BCI.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "12,83%"
+      },
+      {
+        "fato": "val.CL_BCI.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "CLP 59.953,80"
+      },
+      {
+        "fato": "val.CL_BCI.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "38,84%"
+      },
+      {
+        "fato": "val.CL_BCI.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "9,66%"
+      },
+      {
+        "fato": "val.CL_BCI.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_BCI.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,09%"
+      },
+      {
+        "fato": "val.CL_BCI.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+19,90%"
+      },
+      {
+        "fato": "val.CL_BCI.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-3,23%"
+      },
+      {
+        "fato": "val.CL_BCI.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "11,3x"
+      },
+      {
+        "fato": "val.CL_BCI.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,8x"
+      },
+      {
+        "fato": "val.CL_BCI.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "CLP 68.402,20"
+      },
+      {
+        "fato": "val.CL_BCI.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+8,72%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Banco de Crédito e Inversiones",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil do grupo financeiro",
+        "url": "https://www.bci.cl/investor-relations/informacion-corporativa/sobre-bci"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Banco de Crédito e Inversiones",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado semestral e evolução societária",
+        "url": "https://cdn3.bci.cl/uploads/f47538a9-4203-4724-9ed3-886a89b9168d/original/Iinforme_Financiero_2T_2026.pdf"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F3",
+        "instituicao": "Bci",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Acionistas diretos em retrato posterior ao trimestre",
+        "url": "https://www.bci.cl/investor-relations/informacion-corporativa/accionistas"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Margem do cliente deteriora após excluir inflação e tesouraria.",
+      "Perdas ou custo de depósitos consomem o retorno do capital por país.",
+      "Atos societários alteram direitos ou identidade do instrumento coberto.",
+      "Restrições locais impedem que resultado estrangeiro se converta em benefício atribuível."
+    ],
+    "governanca": "Revisar controle, bancos por jurisdição, matriz e proposta de participação dos minoritários. Ação do banco e ação da nova matriz não são presumidas equivalentes. Documentos originais e direitos devem orientar qualquer mudança de identidade no modelo.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Reconciliar margem do cliente, inflação, vendas de títulos e posições direcionais. Verificar custo e prazo dos depósitos, perdas e provisões por país; manter normas chilena e americana separadas no CNB. Conferir a mudança do cashback antes de comparar comissões.",
+        "titulo": "Margem recorrente e crédito"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Acompanhar atos da reorganização, identidade do instrumento e participação econômica, cotejando-os com a lista de acionistas. Exigir capital regulatório e restrições a distribuições por entidade; não tratar ativos de clientes como caixa próprio nem dividendo deliberado como recebido.",
+        "titulo": "Capital, direitos e caixa transferível"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_BCI.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+19,90%"
+          },
+          {
+            "fato": "val.CL_BCI.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "9,66%"
+          },
+          {
+            "fato": "val.CL_BCI.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "6,15%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +19,90%, custo do capital 9,66% e dispersão entre métodos 6,15% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "CL_BCI",
+    "lacunas_de_dados": [
+      "Notas de crédito, capital e normas por jurisdição não foram integralmente conciliadas.",
+      "Inflação, títulos, cashback e séries por segmento exigem base homogênea.",
+      "Estágio atual de divisão, fusão, troca e direitos dos minoritários permanece a comprovar.",
+      "Instrumento coberto, participação em CNB e base por ação requerem diligência própria.",
+      "Guidance, tom da gestão e evento futuro datado seguem não classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo bancário chileno com negócios em outros países, incluindo City National Bank of Florida, operações em Miami e Bci Perú, além de plataformas digitais e serviços financeiros. O instrumento Banco Bci precisa ser distinguido da nova matriz Bci Group e das etapas de reorganização.",
+    "nome": "Banco de Crédito e Inversiones",
+    "o_que_mudou": null,
+    "pais": "Chile",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      }
+    ],
+    "percepcao_variante": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A leitura alternativa é que a complexidade regional e societária importa mais para o acionista do banco do que o crescimento agregado. Isso seria testável pela ponte entre resultado por entidade, capital retido e direitos econômicos. Não há evidência suficiente para afirmar que essa leitura diverge do preço ou do consenso de mercado.",
+        "titulo": "Hipótese alternativa, sem consenso inferido"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A cadeia é relacionamento → depósitos e crédito → margem após perdas → retorno do capital por entidade. A condição decisiva é melhora do negócio do cliente sem depender de inflação, negociação de títulos ou migração contábil de comissões. CNB deve remunerar o capital na sua base própria; a diversificação não garante que esse caixa possa chegar ao acionista do Banco Bci.",
+        "titulo": "Retorno do cliente e capital por jurisdição"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_BCI.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "CLP 63.300,00"
+          },
+          {
+            "fato": "val.CL_BCI.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "CLP 74.365,00"
+          },
+          {
+            "fato": "val.CL_BCI.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+17,48%"
+          },
+          {
+            "fato": "val.CL_BCI.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "9,66%"
+          },
+          {
+            "fato": "val.CL_BCI.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+19,90%"
+          }
+        ],
+        "texto": "Preço de referência CLP 63.300,00 e alvo CLP 74.365,00, com potencial +17,48%. A hipótese de investimento deve ser confrontada com o custo do capital 9,66% e retorno esperado +19,90%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A rede empresarial regional pode apoiar crédito, pagamentos e captação entre países. A prova de vantagem é retenção de clientes com margem depois de risco e custo de servir, não volume de contas digitais ou ativos sob custódia. Concorrência por depósitos e crédito pode consumir o benefício da escala; o reporte exige separar clientes, tesouraria e cada jurisdição.",
+        "titulo": "Relacionamento precisa converter em retorno"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:03:44.107603+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A margem inclui reajustes de inflação, e o resultado financeiro inclui vendas de títulos e posições direcionais. Mudança contábil no cashback afeta comparativos de comissões. O resultado de CNB em norma chilena não é automaticamente equivalente à sua base americana; provisões e despesas variam por segmento.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que relações comerciais e integração regional sustentem retorno por negócio depois de risco, financiamento e capital. A diversificação internacional deve aumentar a geração atribuível sem ocultar exposições e restrições locais. A reorganização só acrescenta valor quando direitos, participação e uso do capital melhoram de forma demonstrável. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +19,90%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Crédito, títulos, moeda e financiamento em mercados distintos podem consumir capital. Mudanças de estrutura podem alterar direitos e acesso ao caixa. Medidas locais, normas contábeis e cortes diferentes dificultam comparação e podem ocultar concentração de risco."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_BCI.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+8,72%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +8,72%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Bci — retorno por país e direitos na evolução societária",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A leitura distingue norma local, inflação, moeda e resultado por atividade. O retrato de acionistas posterior ao trimestre é usado apenas para registrar a presença direta de Bci Group, sem antecipar conclusão de todas as etapas ou ajustar o modelo por inferência.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar margem e perda de crédito por país, depósitos por origem e prazo e resultado de títulos separado do cliente. Revisar custos de fidelização, monetização digital e capital por entidade. Conferir documentos e estágio de cada etapa societária, evitando sobreposição entre banco, matriz e CNB.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.CL_BCI.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "9,66%"
+          },
+          {
+            "fato": "val.CL_BCI.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "6,15%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 9,66% e a dispersão entre métodos 6,15%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,458 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "9b9c054d13a6907ae5c200cda0548647e41a0b76d737d4fa70a6657c0e769372",
+    "factbook": "916d85d1cc9eda4c6df225feabcf05f574701578de1ce9e8a5b591125cbcc204",
+    "nota_json": "9ca0a0516e5bc64103fe4fe57d26b902d87d783098c3e5bba0fc6858ca78e835"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_VESTA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-22",
+  "published_at": "2026-10-12T14:55:52.379283+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A oferta foi concluída e ampliou recursos e base de ações no trimestre. A quitação de financiamentos privados anunciada depois incluiu juros e custos de antecipação; não deve ser retroprojetada sobre o balanço semestral. Distribuição e flexibilidade dependem do caixa após desenvolvimento e obrigações.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-22",
+        "descricao": "Divulgação de resultados prevista no calendário oficial; revisar projetos, caixa por ação e financiamento.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F4"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em US$ 45,31, com retorno esperado +34,27%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Entrega e locação rentável elevam caixa por ação depois de impostos e capex, com dívida e diluição conciliadas. O cenário otimista calculado pelo código é US$ 52,26.",
+      "pessimista": "Atrasos, vacância e custos absorvem expansão enquanto impostos e capital emitido pressionam retorno por ação. O cenário pessimista calculado pelo código é US$ 39,30."
+    },
+    "comentario_valuation": "A diligência é patrimônio econômico dos imóveis estabilizados mais desenvolvimento líquido dos gastos restantes, sem duplicar renda e reavaliação. Verificar caixa normalizado por ação após impostos, manutenção, incentivos e financiamento, mantendo ações e recibos na unidade correta. Rendimento projetado da obra não equivale a contrato recebido. Preço de referência US$ 33,94 e alvo do modelo aberto US$ 45,31, com potencial +33,49%. Retorno total esperado +34,27% e custo do capital próprio 10,22%. A dispersão entre métodos é 57,65%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é US$ 38,68; a diferença +17,15% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se expansão e valorização não se convertem em caixa depois de impostos por ação. O capital captado pode elevar capacidade sem retorno que compense diluição, vacância e reinvestimento.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.MX_VESTA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 33,94"
+      },
+      {
+        "fato": "val.MX_VESTA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 45,31"
+      },
+      {
+        "fato": "val.MX_VESTA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+33,49%"
+      },
+      {
+        "fato": "val.MX_VESTA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_VESTA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.MX_VESTA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 52,26"
+      },
+      {
+        "fato": "val.MX_VESTA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_VESTA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 39,30"
+      },
+      {
+        "fato": "val.MX_VESTA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_VESTA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,22%"
+      },
+      {
+        "fato": "val.MX_VESTA.wacc",
+        "rotulo": "WACC",
+        "valor": "8,94%"
+      },
+      {
+        "fato": "val.MX_VESTA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.MX_VESTA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+34,27%"
+      },
+      {
+        "fato": "val.MX_VESTA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+37,79%"
+      },
+      {
+        "fato": "val.MX_VESTA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "17,6x"
+      },
+      {
+        "fato": "val.MX_VESTA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,0x"
+      },
+      {
+        "fato": "val.MX_VESTA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 38,68"
+      },
+      {
+        "fato": "val.MX_VESTA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+17,15%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Vesta",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Informações e calendário de investidores",
+        "url": "https://ir.vesta.com.mx/"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Vesta",
+        "publicado_em": "2026-07-22",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado semestral de propriedades industriais",
+        "url": "https://ir.vesta.com.mx/news-events/press-releases/detail/151/corporacin-inmobiliaria-vesta-reports-second-quarter-2026-earnings-results"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F3",
+        "instituicao": "Vesta",
+        "publicado_em": "2026-09-09",
+        "tipo": "Relações com investidores",
+        "titulo": "Quitação antecipada de financiamentos privados",
+        "url": "https://ir.vesta.com.mx/news-events/press-releases/detail/155/vesta-repays-us105-million-of-private-debt-ahead-of-maturity"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F4",
+        "instituicao": "Vesta",
+        "publicado_em": "2026-09-28",
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário de divulgação e conferência de resultados",
+        "url": "https://ir.vesta.com.mx/news-events/press-releases/detail/156/vesta-announces-third-quarter-2026-earnings-conference-call-and-webcast"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Entregas e ocupação não se convertem em renda recebida após carências e incentivos.",
+      "Custo de conclusão, manutenção ou adequação supera retorno dos contratos e do capital captado.",
+      "FFO total ou reavaliação cresce sem caixa após impostos por ação compatível.",
+      "Quitação e novos projetos reduzem liquidez apesar da flexibilidade anunciada."
+    ],
+    "governanca": "Revisar direitos da ação e do recibo de depósito, incentivos de desenvolvimento e retornos após emissão. Decisões de financiamento devem considerar custo total da quitação e recursos necessários para o conjunto de projetos.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar locação e pré-locação, custo e entrega dos projetos, renda dos mesmos imóveis e manutenção. Conciliar FFO depois de impostos por ação, efeitos da emissão e instrumentos cobertos. Revisar quitação, custos financeiros, caixa após capex e remuneração atribuível.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_VESTA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+34,27%"
+          },
+          {
+            "fato": "val.MX_VESTA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,22%"
+          },
+          {
+            "fato": "val.MX_VESTA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "57,65%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +34,27%, custo do capital 10,22% e dispersão entre métodos 57,65% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Confrontar contrato, pré-locação, entrega, ocupação estabilizada e recebimento por imóvel, separando energia, carências e incentivos ao locatário. Acompanhar vencimentos, renovação e custo de manutenção e adequação, além do orçamento até conclusão. Conciliar renda dos mesmos imóveis e caixa depois de impostos por ação com capital médio/diluído. Verificar caixa utilizado, juros e custos da quitação posterior, sem retroagir ao balanço semestral.",
+        "titulo": "Locação efetiva e retorno do capital novo"
+      }
+    ],
+    "issuer_id": "MX_VESTA",
+    "lacunas_de_dados": [
+      "FFO depois de impostos, lucro e fluxo por ação não foram integralmente conciliados.",
+      "Direitos, conversão dos recibos e bases médias de ações exigem reconciliação.",
+      "Retorno dos projetos, manutenção e custos de locação permanecem a comprovar.",
+      "Quitação posterior e caixa depois de capex não foram integralmente conciliados.",
+      "Guidance e tom da gestão não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Empresa mexicana que possui, desenvolve e administra imóveis industriais e centros de distribuição. Portfólio total, estabilizado e mesmos imóveis usam bases de ocupação diferentes. Ações ordinárias e recibos de depósito representam instrumentos distintos; a análise deve preservar a unidade coberta e o capital médio.",
+    "nome": "Corporación Inmobiliaria Vesta",
+    "o_que_mudou": null,
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "BR_ALLOS",
+        "nome": "Allos"
+      },
+      {
+        "issuer_id": "BR_IGUATEMI",
+        "nome": "Iguatemi"
+      },
+      {
+        "issuer_id": "BR_MULTIPLAN",
+        "nome": "Multiplan"
+      },
+      {
+        "issuer_id": "CL_CENCOMALLS",
+        "nome": "Cencosud Shopping"
+      },
+      {
+        "issuer_id": "CL_MALLPLAZA",
+        "nome": "Plaza SA (Mallplaza)"
+      },
+      {
+        "issuer_id": "CL_PARAUCO",
+        "nome": "Parque Arauco"
+      },
+      {
+        "issuer_id": "MX_FIBRAPL",
+        "nome": "Fibra Prologis"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que localização e execução do desenvolvimento sustentem contratos e caixa por ação depois de impostos, investimento e financiamento. Oferta de capital só cria valor se os projetos remuneram diluição e risco de locação. O potencial industrial exige contratos, entregas e retorno realizado, além de metas de expansão.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_VESTA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "US$ 33,94"
+          },
+          {
+            "fato": "val.MX_VESTA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "US$ 45,31"
+          },
+          {
+            "fato": "val.MX_VESTA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+33,49%"
+          },
+          {
+            "fato": "val.MX_VESTA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,22%"
+          },
+          {
+            "fato": "val.MX_VESTA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+34,27%"
+          }
+        ],
+        "texto": "Preço de referência US$ 33,94 e alvo US$ 45,31, com potencial +33,49%. A hipótese de investimento deve ser confrontada com o custo do capital 10,22% e retorno esperado +34,27%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O relatório distingue carteira total, estabilizada e mesmos imóveis, e separa renda com energia da renda imobiliária. A tese exige que entrega gere recebimento sustentado, com custo de obra e manutenção compatíveis, e não apenas ocupação ou valor de avaliação maior. Captação amplia capacidade para desenvolver; risco de locação, concessões comerciais, prazo até recebimento e impostos precisa ser remunerado por ação após diluição.",
+        "titulo": "Contrato rentável precede valor projetado do desenvolvimento"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Parques e execução podem facilitar relacionamento e atender necessidades industriais. A vantagem exige testar locação, pré-locação, custo de construção e retenção frente à oferta concorrente. Projetos e rendimento projetado exigem confirmação de locação e retorno após os investimentos.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T14:55:52.379283+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O release mostra aumento da renda e do FFO total, enquanto FFO após impostos por ação tem trajetória distinta. Lucro inclui reavaliação de propriedades. Emissão altera a base de ações; ocupação total e estabilizada não são equivalentes, e investimento em imóveis deve ser separado de valorização.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que localização e execução do desenvolvimento sustentem contratos e caixa por ação depois de impostos, investimento e financiamento. Oferta de capital só cria valor se os projetos remuneram diluição e risco de locação. O potencial industrial exige contratos, entregas e retorno realizado, além de metas de expansão. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +34,27%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Oferta de imóveis, atraso e custos de construção podem reduzir retorno do desenvolvimento. Impostos, dívida e diluição podem absorver renda crescente. Avaliações e ocupação agregada podem ocultar risco do conjunto de projetos e contribuição insuficiente por ação."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_VESTA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+17,15%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +17,15%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Imobiliário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Vesta — desenvolvimento industrial e caixa depois de diluição e impostos",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A análise distingue renda, valorização, FFO total e medida depois de impostos por ação. Captação e ações emitidas afetam a comparação. Quitação posterior tem documento próprio e não é incorporada retrospectivamente àquelas demonstrações ou presumida no modelo recebido.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar locação e pré-locação, custo e entrega dos projetos, renda dos mesmos imóveis e manutenção. Conciliar FFO depois de impostos por ação, efeitos da emissão e instrumentos cobertos. Revisar quitação, custos financeiros, caixa após capex e remuneração atribuível.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.MX_VESTA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,22%"
+          },
+          {
+            "fato": "val.MX_VESTA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "57,65%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,22% e a dispersão entre métodos 57,65%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

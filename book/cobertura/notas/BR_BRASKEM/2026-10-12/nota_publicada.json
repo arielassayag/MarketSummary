@@ -1,0 +1,573 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "b5e75d17f06e2e667c31d26f5b81e0e3df27e9e70fd65e4f71789df7e74cafb3",
+    "factbook": "3e17fda347b1646b92bdc6fd11099b1d79971efdc4be9b64724b31fa2f4dc041",
+    "nota_json": "8fac7cf2609235dd9f00221aeaed471a12763d533e51bed6f8065742a410b7b6"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_BRASKEM",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T15:03:17.243975+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F8"
+          }
+        ],
+        "texto": "As demonstrações registram patrimônio e giro negativos e incerteza relevante de continuidade. Obrigações em default passam a exigir tratamento circulante posterior ao trimestre; proteção judicial não elimina a dívida. Cartas de crédito liquidadas pelos bancos geram reembolso financeiro. O pedido posterior de recuperação extrajudicial admite alongamento, capitalização e apoio de liquidez a negociar. A decisão posterior revoga a suspensão para devedoras específicas e limita novos atos patrimoniais ligados à Idesa. Provisões de Alagoas não encerram todos os pleitos.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-16",
+        "descricao": "Leilão previsto da OPA; verificar edital, elegibilidade, classe e liquidação, sem presumir valor ou recebimento.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F6"
+          }
+        ],
+        "tipo": "m_a"
+      },
+      {
+        "data": null,
+        "descricao": "Adesão individual, plano atualizado e decisões posteriores; reavaliar proteção, liquidez, garantias e diluição.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          },
+          {
+            "fonte": "F7"
+          },
+          {
+            "fonte": "F8"
+          }
+        ],
+        "tipo": "capital"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 6,74, com retorno esperado +53,86%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Produtividade e ciclo sustentam caixa após manutenção, e termos executáveis de reestruturação preservam continuidade e valor atribuível, com direitos e obrigações reconciliados. O cenário otimista calculado pelo código é R$ 69,67.",
+      "pessimista": "Spreads recuam enquanto default, capital adicional e passivos consomem liquidez, restringem operação e reduzem ou diluem o valor do acionista. O cenário pessimista calculado pelo código é R$ 0,00."
+    },
+    "comentario_valuation": "Preço de referência R$ 4,38 e alvo do modelo aberto R$ 6,74, com potencial +53,86%. Retorno total esperado +53,86% e custo do capital próprio 14,64%. A dispersão entre métodos é n/d; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 8,38; a diferença -19,56% não constitui evidência de percepção do mercado. A avaliação do ciclo deve distinguir lucro ajustado, crédito reconhecido e caixa efetivo depois da manutenção. Patrimônio negativo e incerteza de continuidade tornam decisiva a ponte entre valor operacional e direitos prioritários, inclusive eventual diluição. Múltiplos históricos e alvo do modelo não estabelecem piso para a ação em reestruturação; OPA exige instrumento e elegibilidade próprios.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F6"
+          },
+          {
+            "fonte": "F8"
+          }
+        ],
+        "texto": "A hipótese enfraquece se a recuperação de margem é conjuntural e não financia manutenção e obrigações. Alongamento pode preservar operação e ainda reduzir valor do acionista por diluição, garantias ou transferência de recursos. Quórum agregado não comprova adesão individual. Encerramento de extração e acordos existentes não eliminam riscos técnicos ou novos pleitos de Alagoas. OPA e recuperação têm objetivos e direitos próprios.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.BR_BRASKEM.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 4,38"
+      },
+      {
+        "fato": "val.BR_BRASKEM.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 6,74"
+      },
+      {
+        "fato": "val.BR_BRASKEM.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+53,86%"
+      },
+      {
+        "fato": "val.BR_BRASKEM.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_BRASKEM.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_BRASKEM.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 69,67"
+      },
+      {
+        "fato": "val.BR_BRASKEM.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "0,01%"
+      },
+      {
+        "fato": "val.BR_BRASKEM.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 0,00"
+      },
+      {
+        "fato": "val.BR_BRASKEM.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BRASKEM.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "14,64%"
+      },
+      {
+        "fato": "val.BR_BRASKEM.wacc",
+        "rotulo": "WACC",
+        "valor": "9,97%"
+      },
+      {
+        "fato": "val.BR_BRASKEM.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_BRASKEM.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+53,86%"
+      },
+      {
+        "fato": "val.BR_BRASKEM.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+70,82%"
+      },
+      {
+        "fato": "val.BR_BRASKEM.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BRASKEM.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BRASKEM.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 8,38"
+      },
+      {
+        "fato": "val.BR_BRASKEM.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-19,56%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Braskem",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil, integração industrial e segmentos geográficos",
+        "url": "https://www.braskem-ri.com.br/a-companhia/perfil/"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Braskem",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado trimestral: ciclo, caixa, dívida, reestruturação e Alagoas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/540b55c5-af99-45f7-a772-92665eb948e9/c1f2dfbc-ca3a-8c28-d561-aa7a2d9d4b9a?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Braskem",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Demonstrações intermediárias e revisão: incerteza relevante de continuidade",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/540b55c5-af99-45f7-a772-92665eb948e9/c778e4be-486a-7727-ff80-dbd3ba23b64d?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "Braskem",
+        "publicado_em": "2026-08-24",
+        "tipo": "Relações com investidores",
+        "titulo": "Pedido de recuperação extrajudicial e parâmetros negociáveis",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/540b55c5-af99-45f7-a772-92665eb948e9/d61128cd-39a7-8847-67d4-f8aaa3fc48d4?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F5",
+        "instituicao": "Braskem",
+        "publicado_em": "2026-08-28",
+        "tipo": "Relações com investidores",
+        "titulo": "Deferimento do processamento, suspensão e necessidade de adesão",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/540b55c5-af99-45f7-a772-92665eb948e9/63ebdcd3-cd5d-0702-74a6-fd0157c2f9eb?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F6",
+        "instituicao": "Braskem",
+        "publicado_em": "2026-09-23",
+        "tipo": "Relações com investidores",
+        "titulo": "Lançamento da OPA, leilão previsto e restrições de elegibilidade",
+        "url": "https://filemanager-cdn.mziq.com/published/540b55c5-af99-45f7-a772-92665eb948e9/b96238e7-90f2-4b0d-bfdd-164720ba49aa"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F7",
+        "instituicao": "Braskem",
+        "publicado_em": "2026-09-25",
+        "tipo": "Relações com investidores",
+        "titulo": "Comunicado sobre decisão, ainda pendente de publicação oficial na divulgação",
+        "url": "https://filemanager-cdn.mziq.com/published/540b55c5-af99-45f7-a772-92665eb948e9/33304ae3-940b-4bf5-acc0-490202ad3418"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F8",
+        "instituicao": "TJSP; cópia pública disponibilizada pela Braskem",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Decisão assinada: quórum individual, suspensão específica, Idesa e administração judicial",
+        "url": "https://filemanager-cdn.mziq.com/published/540b55c5-af99-45f7-a772-92665eb948e9/264dca0a-c208-4bcf-ba3d-380febc84412"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Melhora de spread não financia manutenção, juros e obrigações por entidade.",
+      "Termos da reestruturação transferem valor ou impõem diluição ao acionista.",
+      "Adesão por devedora, situação de Idesa ou novos pleitos de Alagoas alteram o caixa residual."
+    ],
+    "governanca": "A alienação de controle foi concluída e o comunicado posterior anuncia OPA em decorrência desse evento; lançamento e leilão não equivalem a liquidação. Classes ordinárias, preferenciais e recibos têm direitos e elegibilidade distintos. O documento exclui oferta direcionada a pessoas nos Estados Unidos e titulares de ADS; não se presume participação automática. A nomeação de administradora judicial é auxiliar de fiscalização, sem equivaler a substituição integral da gestão. Partes relacionadas, adesão e obrigações intercompany exigem conciliação por entidade.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F6"
+          },
+          {
+            "fonte": "F8"
+          }
+        ],
+        "texto": "Acompanhar spread, utilização, insumos, giro, manutenção e recebimentos de incentivos por segmento. Conciliar dívida e caixa por entidade, obrigações em default, adesão individual, proteção judicial e diluição. Verificar compromissos de Idesa, Alagoas e direitos da OPA antes de atribuir recursos ao acionista.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BRASKEM.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+53,86%"
+          },
+          {
+            "fato": "val.BR_BRASKEM.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "14,64%"
+          },
+          {
+            "fato": "val.BR_BRASKEM.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "n/d"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +53,86%, custo do capital 14,64% e dispersão entre métodos n/d quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F8"
+          }
+        ],
+        "texto": "Melhora de spread não financia manutenção, juros e obrigações por entidade. Termos da reestruturação transferem valor ou impõem diluição ao acionista. Adesão por devedora, situação de Idesa ou novos pleitos de Alagoas alteram o caixa residual.",
+        "titulo": "Evidência que muda a visão"
+      }
+    ],
+    "issuer_id": "BR_BRASKEM",
+    "lacunas_de_dados": [
+      "Termos definitivos, adesão por entidade e homologação do plano não foram comprovados.",
+      "A cópia da decisão não substitui autenticação, intimação e consulta atual dos autos; recursos posteriores não foram reconciliados.",
+      "Edital integral e elegibilidade de cada classe na OPA precisam de diligência própria.",
+      "Pontes de caixa, dívida corporativa e mexicana e números dos diferentes comunicados não foram integralmente reconciliados.",
+      "Alagoas permanece sujeito a revisão técnica, procedimentos e pleitos além das provisões reconhecidas.",
+      "Retorno econômico e liquidez atribuível depois de manutenção e compromissos de Idesa precisam de conciliação.",
+      "Guidance agregado, tom e percepção do mercado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Produtora integrada de químicos básicos e resinas termoplásticas, com operações no Brasil, Estados Unidos, Europa e México. Margem depende da diferença entre preço de resinas e insumos, utilização, mix, câmbio e logística. Polietileno renovável tem cadeia e custos próprios. Braskem Idesa e seu terminal têm obrigações, financiamento e perímetros distintos da dívida corporativa. A extração de sal-gema em Maceió foi encerrada; reparação, monitoramento e obrigações continuam.",
+    "nome": "Braskem",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CBA",
+        "nome": "Companhia Brasileira de Alumínio"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_SUZANO",
+        "nome": "Suzano"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F8"
+          }
+        ],
+        "texto": "A hipótese é que recuperação industrial e uma estrutura financeira executável preservem valor econômico atribuível ao acionista depois de manutenção e obrigações. A condição decisiva é continuidade com liquidez suficiente, termos de reestruturação e direitos por entidade e classe. Melhora temporária de spread não resolve default, passivos socioambientais ou necessidade de capital. A visão permanece condicionada à documentação de adesão, proteção judicial, financiamento e eventual diluição; preço-alvo recebido não comprova recuperação do capital próprio.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BRASKEM.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 4,38"
+          },
+          {
+            "fato": "val.BR_BRASKEM.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 6,74"
+          },
+          {
+            "fato": "val.BR_BRASKEM.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+53,86%"
+          },
+          {
+            "fato": "val.BR_BRASKEM.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "14,64%"
+          },
+          {
+            "fato": "val.BR_BRASKEM.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+53,86%"
+          }
+        ],
+        "texto": "Preço de referência R$ 4,38 e alvo R$ 6,74, com potencial +53,86%. A hipótese de investimento deve ser confrontada com o custo do capital 14,64% e retorno esperado +53,86%.",
+        "titulo": "Preço e premissas do modelo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F8"
+          }
+        ],
+        "texto": "Recuperação de spread pode preservar a operação sem assegurar retorno das ações. Manutenção, dívida, obrigações de Idesa e compromissos de Alagoas concorrem com a geração. O plano em negociação, a proteção judicial e a OPA possuem direitos diferentes. É necessário verificar adesão por devedora, prioridade e financiamento antes de promover reestruturação anunciada a recuperação do valor residual.",
+        "titulo": "A operação e o valor residual têm condições distintas"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Integração, infraestrutura, escala e acesso a matérias-primas podem apoiar eficiência, mas a vantagem depende do preço relativo dos insumos e da utilização. Operações brasileiras, americanas e mexicanas têm exposições distintas. Incentivos e proteção comercial são condicionados e temporais, sem comprovar vantagem permanente. Liderança e segurança são afirmações institucionais, que precisam ser confrontadas com custo entregue, obrigações e produtividade comparável.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T15:03:17.243975+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "EBITDA recorrente melhora sequencialmente e na comparação anual, favorecido pelo ciclo, volumes e créditos de incentivo químico. Lucro reportado também melhora, com efeito financeiro e cambial próprio. O fluxo recorrente trimestral torna-se positivo, mas o calendário de juros, investimento e pagamentos de Alagoas altera a conversão final em caixa. Recursos restritos e perímetros corporativo e mexicano não são intercambiáveis. Crédito reconhecido e spread favorecido pela conjuntura não demonstram caixa sustentável disponível ao acionista.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que recuperação industrial e uma estrutura financeira executável preservem valor econômico atribuível ao acionista depois de manutenção e obrigações. A condição decisiva é continuidade com liquidez suficiente, termos de reestruturação e direitos por entidade e classe. Melhora temporária de spread não resolve default, passivos socioambientais ou necessidade de capital. A visão permanece condicionada à documentação de adesão, proteção judicial, financiamento e eventual diluição; preço-alvo recebido não comprova recuperação do capital próprio. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +53,86%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F6"
+          },
+          {
+            "fonte": "F8"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Default, continuidade, reestruturação e obrigações de Alagoas podem comprometer o capital próprio. Spreads e insumos são cíclicos. Proteção judicial, plano protocolado e OPA lançada não garantem liquidez, homologação ou recebimento por todas as classes."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BRASKEM.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-19,56%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -19,56%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Braskem — ciclo petroquímico, continuidade e direitos na reestruturação",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A melhora do trimestre não elimina a ênfase de continuidade da revisão, cuja conclusão não foi modificada por esse assunto. O pedido de recuperação e a decisão posteriores têm estados próprios. A decisão afasta consolidação substancial e exige quórum individual; revoga a suspensão para Braskem Netherlands B.V. e Braskem America Finance Company e determina abstenção de novos atos patrimoniais extraordinários na operação Idesa, até nova deliberação. Esses documentos não comprovam homologação final ou estado judicial atualizado e não foram incorporados retrospectivamente ao modelo.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar spread, utilização, insumos, giro, manutenção e recebimentos de incentivos por segmento. Conciliar dívida e caixa por entidade, obrigações em default, adesão individual, proteção judicial e diluição. Verificar compromissos de Idesa, Alagoas e direitos da OPA antes de atribuir recursos ao acionista.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_BRASKEM.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "14,64%"
+          },
+          {
+            "fato": "val.BR_BRASKEM.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "n/d"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 14,64% e a dispersão entre métodos n/d. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

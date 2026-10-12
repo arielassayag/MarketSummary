@@ -1,0 +1,435 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-12",
+  "hashes": {
+    "contexto": "1b68562626bfca6b4587dcdcc3ec5cfa8439c409c8316250ae7d0a799c397260",
+    "factbook": "7de072e5bfdc74c6421035d426ee3720d2e79f2664a53ec429adfcab876d9817",
+    "nota_json": "5ac81b8b59a62e5c9e7fb821f6a3cd700d273d45a3a5bf6253bc86544edaff87"
+  },
+  "is_synthetic": false,
+  "issuer_id": "CL_CENCOSUD",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-05",
+  "published_at": "2026-10-12T14:56:17.763934+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Separar gasto de transformação, reforma, expansão e aquisição do capital necessário à operação corrente. Confrontar o refinanciamento descrito no trimestre com dívida, juros e vencimentos, sem presumir caixa disponível atual. Arrendamentos, centros comerciais e serviços financeiros exigem tratamento coerente de passivos e participação; não duplicar imóveis nem atribuir todo caixa consolidado à ação.",
+        "titulo": "Reinvestimento, contratos de uso e participação"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em CLP 1.297,58, com retorno esperado -28,03%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Produtividade por formato e contribuição digital se confirmam em bases comparáveis. Estoque e capital são disciplinados, e caixa depois de uso dos imóveis e financiamento sustenta investimento de retorno demonstrado. O cenário otimista calculado pelo código é CLP 1.897,60.",
+      "pessimista": "Promoções, custos e menor giro limitam caixa, apesar de indicadores de uso. Ajustes ou mudanças de definição afastam a leitura do resultado econômico; transformação e expansão consomem capital sem retorno suficiente. O cenário pessimista calculado pelo código é CLP 777,33."
+    },
+    "comentario_valuation": "Preço de referência CLP 1.890,00 e alvo do modelo aberto CLP 1.297,58, com potencial -31,34%. Retorno total esperado -28,03% e custo do capital próprio 11,43%. A dispersão entre métodos é 59,21%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é CLP 2.691,82; a diferença -51,80% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota. Avaliar formatos separadamente, com margem e reinvestimento normalizados e arrendamentos tratados de forma consistente. Participações imobiliárias e financeiras pedem direitos próprios; múltiplo consolidado não resolve inflação, perímetro ou diferenças de capital.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A tese falha se vendas digitais ou comparáveis melhoram com promoção e nova definição, sem contribuição depois de entrega e estoque. Crescimento também pode consumir caixa por reformas, arrendamentos ou crédito ao cliente. Resultado ajustado e refinanciamento não refutam essa hipótese enquanto não houver ponte de caixa atribuível por formato e participação.",
+        "titulo": "Crescer sem remunerar o capital"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-12",
+    "ficha": [
+      {
+        "fato": "val.CL_CENCOSUD.preco",
+        "rotulo": "Preço de referência",
+        "valor": "CLP 1.890,00"
+      },
+      {
+        "fato": "val.CL_CENCOSUD.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "CLP 1.297,58"
+      },
+      {
+        "fato": "val.CL_CENCOSUD.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-31,34%"
+      },
+      {
+        "fato": "val.CL_CENCOSUD.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.CL_CENCOSUD.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.CL_CENCOSUD.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "CLP 1.897,60"
+      },
+      {
+        "fato": "val.CL_CENCOSUD.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "52,23%"
+      },
+      {
+        "fato": "val.CL_CENCOSUD.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "CLP 777,33"
+      },
+      {
+        "fato": "val.CL_CENCOSUD.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "0,37%"
+      },
+      {
+        "fato": "val.CL_CENCOSUD.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,43%"
+      },
+      {
+        "fato": "val.CL_CENCOSUD.wacc",
+        "rotulo": "WACC",
+        "valor": "8,97%"
+      },
+      {
+        "fato": "val.CL_CENCOSUD.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,09%"
+      },
+      {
+        "fato": "val.CL_CENCOSUD.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-28,03%"
+      },
+      {
+        "fato": "val.CL_CENCOSUD.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-38,37%"
+      },
+      {
+        "fato": "val.CL_CENCOSUD.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "11,0x"
+      },
+      {
+        "fato": "val.CL_CENCOSUD.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,0x"
+      },
+      {
+        "fato": "val.CL_CENCOSUD.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "CLP 2.691,82"
+      },
+      {
+        "fato": "val.CL_CENCOSUD.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-51,80%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F1",
+        "instituicao": "Cencosud",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e estrutura do negócio",
+        "url": "https://www.cencosud.com/en/unidades_de_negocios_inversionistas"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F2",
+        "instituicao": "Cencosud",
+        "publicado_em": "2026-08-06",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações financeiras e materiais de análise",
+        "url": "https://www.cencosud.com/cencosud/site/docs/20260610/20260610154219/press_release_cencosud_2t26__esp_.pdf"
+      },
+      {
+        "consultado_em": "2026-10-12",
+        "id": "F3",
+        "instituicao": "Cencosud",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Demonstrações intermediárias e notas de contratos de uso",
+        "url": "https://www.cencosud.com/cencosud/site/docs/20260506/20260506161759/estados_financieros__pdf_93834000_202606.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Série comparável não pode ser reconciliada após a inclusão do canal digital.",
+      "Contribuição dos canais cai apesar de crescimento de vendas.",
+      "Estoque, contratos de uso e transformação absorvem a geração operacional.",
+      "Participações ou refinanciamento alteram a ponte entre valor do negócio e valor da ação."
+    ],
+    "governanca": "Reformas, lojas, aquisições e infraestrutura digital devem remunerar capital após estoque, contratos de uso e financiamento. O portfólio inclui centros comerciais e serviços financeiros com direitos e passivos próprios. Distribuição deve ser examinada na base atribuível correta, sem duplicar valor de imóveis, participações ou obrigações.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Conciliar a metodologia de vendas comparáveis que incorpora o digital com o glossário de lojas físicas. Separar país, moeda, inflação argentina e perímetro. Acompanhar contribuição após promoção e entrega, giro e recebimento, mantendo ajuste de transformação distinto de economia efetiva.",
+        "titulo": "Comparabilidade e contribuição dos canais"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Reconciliar caixa operacional com estoques, investimentos e pagamentos dos contratos de uso. Verificar juros e perfil da dívida após refinanciamento, além de participação e restrições nos centros comerciais e serviços financeiros.",
+        "titulo": "Caixa depois dos imóveis e do financiamento"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_CENCOSUD.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-28,03%"
+          },
+          {
+            "fato": "val.CL_CENCOSUD.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,43%"
+          },
+          {
+            "fato": "val.CL_CENCOSUD.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "59,21%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -28,03%, custo do capital 11,43% e dispersão entre métodos 59,21% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "CL_CENCOSUD",
+    "lacunas_de_dados": [
+      "Reconciliação numérica do trimestre e efeitos de comparabilidade com o modelo permanece pendente.",
+      "Geração de caixa atribuível por país, formato e participação exige documentação completa.",
+      "Transformação, capital e retorno das novas iniciativas ainda precisam de comprovação.",
+      "Contratos de uso e serviços financeiros devem ser reconciliados na ponte de valor.",
+      "Percepção do mercado e posicionamento não têm suporte suficiente.",
+      "Não há catalisador futuro com data precisa confirmado nesta nota."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "A Cencosud opera supermercados, melhoramento do lar, lojas de departamento, centros comerciais e serviços financeiros. Seu resumo apresenta negócios no Chile, Argentina, Estados Unidos, Brasil, Peru e Colômbia. A economia varia por formato e país, combinando giro de estoque, margem, recebimento e uso dos imóveis. Participação econômica e capital devem ser separados na avaliação do portfólio.",
+    "nome": "Cencosud",
+    "o_que_mudou": null,
+    "pais": "Chile",
+    "pares": [
+      {
+        "issuer_id": "AR_ADECOAGRO",
+        "nome": "Adecoagro"
+      },
+      {
+        "issuer_id": "BR_AMBEV",
+        "nome": "Ambev"
+      },
+      {
+        "issuer_id": "BR_ASSAI",
+        "nome": "Assaí Atacadista"
+      },
+      {
+        "issuer_id": "BR_MATEUS",
+        "nome": "Grupo Mateus"
+      },
+      {
+        "issuer_id": "BR_MBRF",
+        "nome": "MBRF (Marfrig+BRF)"
+      },
+      {
+        "issuer_id": "BR_MDIAS",
+        "nome": "M. Dias Branco"
+      },
+      {
+        "issuer_id": "BR_NATURA",
+        "nome": "Natura Cosméticos"
+      },
+      {
+        "issuer_id": "BR_PAGUEMENOS",
+        "nome": "Pague Menos"
+      }
+    ],
+    "percepcao_variante": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese alternativa é que contribuição e capital de giro explicam melhor a criação de valor que crescimento dos canais ou indicadores ajustados. Comparar essas bases pode revelar negócios que financiam a transformação e outros que a consomem. Não se afirma que essa leitura seja desconhecida ou esteja ausente do preço.",
+        "titulo": "Produtividade além do indicador de vendas"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A cadeia é oferta e abastecimento → vendas por formato e canal → margem após promoção e entrega → giro e recebimento → caixa após imóveis e financiamento. A condição decisiva é produtividade econômica na mesma base de país, perímetro e definição de vendas. Expansão digital ou indicador ajustado não comprova retorno se estoque, arrendamentos e transformação absorvem o ganho.",
+        "titulo": "Contribuição comparável depois de estoque e imóveis"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_CENCOSUD.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "CLP 1.890,00"
+          },
+          {
+            "fato": "val.CL_CENCOSUD.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "CLP 1.297,58"
+          },
+          {
+            "fato": "val.CL_CENCOSUD.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-31,34%"
+          },
+          {
+            "fato": "val.CL_CENCOSUD.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,43%"
+          },
+          {
+            "fato": "val.CL_CENCOSUD.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-28,03%"
+          }
+        ],
+        "texto": "Preço de referência CLP 1.890,00 e alvo CLP 1.297,58, com potencial -31,34%. A hipótese de investimento deve ser confrontada com o custo do capital 11,43% e retorno esperado -28,03%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Oferta, localização, abastecimento e integração dos canais podem influenciar uso e custo. O release descreve expansão digital e fidelização, que precisam ser confrontadas com contribuição depois de entrega e promoção. A tese exige comparação por formato; diversificação regional não comprova vantagem uniforme ou compensa automaticamente operações de retorno insuficiente.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T14:56:17.763934+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O release distingue efeitos de inflação e conversão na Argentina, despesas de transformação e comparabilidade de perímetro. Também informa mudança na metodologia de vendas comparáveis para incluir o canal digital. A leitura deve reconciliar essas bases com margem, recebimento e caixa; ajustes e novas definições não podem ser tratados como melhora operacional isolada. A metodologia do trimestre inclui vendas digitais, mas o glossário ainda descreve lojas físicas: a série precisa ser conciliada antes de atribuir evolução a produtividade.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que produtividade dos formatos e seleção de investimentos melhorem caixa após estoque, contratos de uso e financiamento. A condição decisiva é contribuição econômica comparável por país e canal. Crescimento de clientes ou venda digital não comprova retorno quando promoção, transformação, crédito ou expansão absorvem os ganhos. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado -28,03%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Consumo, promoção, estoque e entrega podem pressionar caixa. Inflação, moeda, perímetro e definições afetam comparabilidade. Transformação, imóveis e serviços financeiros exigem conciliar capital, risco e participação econômica."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_CENCOSUD.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-51,80%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -51,80%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo básico",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Cencosud: produtividade do varejo e caixa na base econômica comparável",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O release de 2T26 foi consultado e distingue efeitos de inflação e moeda na Argentina, transformação, perímetro e mudança da definição de vendas comparáveis com inclusão do canal digital. As demonstrações intermediárias também foram consultadas para os contratos de uso. A reconciliação numérica integral com o modelo recebido permanece pendente; nenhum indicador da página é incorporado pela mente.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Reconciliar vendas por país e formato na mesma base, separando moeda, inflação, perímetro e definição dos canais. Acompanhar margem, giro, recebimento e contribuição digital; confrontar transformação, expansão, uso dos imóveis e financiamento com caixa atribuível.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.CL_CENCOSUD.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,43%"
+          },
+          {
+            "fato": "val.CL_CENCOSUD.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "59,21%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,43% e a dispersão entre métodos 59,21%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

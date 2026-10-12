@@ -1,0 +1,375 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "d26b85f469c1257215a8a65278805f20e9ada708097320a852678d478b56da33",
+    "factbook": "131e31a417fc79f6f5ce029b71fe6d6fd5923e6627fe9cc2e70332cb47ab3d23",
+    "nota_json": "d441eb23a720070a5f473a4fc945f35e45f0e80b06e97bf92880e83bf13c4302"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_VIVO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-10",
+  "published_at": "2026-10-12T02:47:00.064538+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese depende de comparar investimento em redes e serviços com caixa disponível e retorno de alternativas. Controle e transações com partes relacionadas exigem exame próprio. Remuneração ao acionista deve ser confrontada com manutenção, expansão, espectro, arrendamentos e financiamento, sem considerar distribuição como prova de retorno operacional.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 28,86, com retorno esperado -2,25%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Qualidade e ofertas integradas preservam retenção e monetização, com redes ocupadas e investimentos disciplinados. Serviços associados demonstram contribuição incremental, e o caixa após obrigações sustenta retorno ao acionista. O cenário otimista calculado pelo código é R$ 33,78.",
+      "pessimista": "Competição e cancelamentos limitam receita, enquanto redes e atendimento exigem capital. Serviços associados não remuneram investimentos, e caixa após obrigações restringe a distribuição. O cenário pessimista calculado pelo código é R$ 24,91."
+    },
+    "comentario_valuation": "Preço de referência R$ 32,03 e alvo do modelo aberto R$ 28,86, com potencial -9,90%. Retorno total esperado -2,25% e custo do capital próprio 10,56%. A dispersão entre métodos é 37,92%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 37,31; a diferença -22,66% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Expansão de cobertura pode aumentar capital e atendimento sem monetização ou retenção compatíveis. Competição pode comprimir preços, e novos serviços podem consumir recursos antes de demonstrar contribuição. Caixa distribuído em determinada fase não comprova que o retorno da rede sustente a política de capital.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_VIVO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 32,03"
+      },
+      {
+        "fato": "val.BR_VIVO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 28,86"
+      },
+      {
+        "fato": "val.BR_VIVO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-9,90%"
+      },
+      {
+        "fato": "val.BR_VIVO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_VIVO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_VIVO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 33,78"
+      },
+      {
+        "fato": "val.BR_VIVO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "41,19%"
+      },
+      {
+        "fato": "val.BR_VIVO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 24,91"
+      },
+      {
+        "fato": "val.BR_VIVO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "17,43%"
+      },
+      {
+        "fato": "val.BR_VIVO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,56%"
+      },
+      {
+        "fato": "val.BR_VIVO.wacc",
+        "rotulo": "WACC",
+        "valor": "9,78%"
+      },
+      {
+        "fato": "val.BR_VIVO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_VIVO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-2,25%"
+      },
+      {
+        "fato": "val.BR_VIVO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-12,68%"
+      },
+      {
+        "fato": "val.BR_VIVO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "11,0x"
+      },
+      {
+        "fato": "val.BR_VIVO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,6x"
+      },
+      {
+        "fato": "val.BR_VIVO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 37,31"
+      },
+      {
+        "fato": "val.BR_VIVO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-22,66%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Telefônica Brasil",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e estrutura do negócio",
+        "url": "https://ri.telefonica.com.br/a-empresa/perfil-corporativo/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Telefônica Brasil",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Informações financeiras e materiais de análise",
+        "url": "https://ri.telefonica.com.br/a-empresa/estrutura-societaria/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+      "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+      "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+      "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+    ],
+    "governanca": "A hipótese depende de comparar investimento em redes e serviços com caixa disponível e retorno de alternativas. Controle e transações com partes relacionadas exigem exame próprio. Remuneração ao acionista deve ser confrontada com manutenção, expansão, espectro, arrendamentos e financiamento, sem considerar distribuição como prova de retorno operacional.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar preço e base ativa por serviço, retenção e qualidade, ocupação da fibra, custo de atender e capital incremental. Reconciliar caixa após manutenção, arrendamentos, espectro e expansão; testar contribuição dos serviços digitais e decisões de distribuição.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_VIVO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-2,25%"
+          },
+          {
+            "fato": "val.BR_VIVO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,56%"
+          },
+          {
+            "fato": "val.BR_VIVO.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "37,92%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -2,25%, custo do capital 10,56% e dispersão entre métodos 37,92% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_VIVO",
+    "lacunas_de_dados": [
+      "Último resultado, caixa e obrigações de uso não foram integralmente reconciliados.",
+      "O perfil de RI combina referência operacional posterior à data do rodapé; a publicação histórica não foi comprovada.",
+      "Retenção e posição competitiva atual exigem comparação independente por serviço.",
+      "Retorno incremental da expansão e dos serviços digitais permanece a comprovar.",
+      "Partes relacionadas e decisões recentes de capital requerem análise documental completa.",
+      "Percepção do mercado e interesse vendido não têm suporte suficiente."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "A Telefônica Brasil oferece telecomunicações fixas e móveis sob a marca Vivo, atendendo consumidores e empresas. O perfil descreve fibra, conectividade e serviços digitais associados, sob controle do grupo Telefónica. Receita e caixa dependem de base ativa, preço, retenção e uso das redes, junto a investimento, atendimento e obrigações contratuais. A presença comercial não demonstra retorno adequado de cada expansão.",
+    "nome": "Telefônica Brasil (Vivo)",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_TIM",
+        "nome": "TIM Brasil"
+      },
+      {
+        "issuer_id": "MX_AMX",
+        "nome": "América Móvil"
+      },
+      {
+        "issuer_id": "MX_MEGACABLE",
+        "nome": "Megacable"
+      },
+      {
+        "issuer_id": "MX_TELEVISA",
+        "nome": "Grupo Televisa"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese é que redes e relacionamento sustentem monetização e caixa após investimento e obrigações de uso. A condição decisiva é crescimento econômico da base com disciplina de aquisição, retenção e capital. Expandir cobertura ou serviços digitais só cria valor se a contribuição incremental remunera os recursos necessários.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_VIVO.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 32,03"
+          },
+          {
+            "fato": "val.BR_VIVO.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 28,86"
+          },
+          {
+            "fato": "val.BR_VIVO.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-9,90%"
+          },
+          {
+            "fato": "val.BR_VIVO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,56%"
+          },
+          {
+            "fato": "val.BR_VIVO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-2,25%"
+          }
+        ],
+        "texto": "Preço de referência R$ 32,03 e alvo R$ 28,86, com potencial -9,90%. A hipótese de investimento deve ser confrontada com o custo do capital 10,56% e retorno esperado -2,25%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Rede, marca e ofertas convergentes podem influenciar qualidade percebida e retenção. O perfil da companhia descreve diferenciação, mas a pesquisa não comprovou vantagem econômica persistente frente a concorrentes. É preciso confrontar preços, cancelamento, qualidade e ocupação das redes em bases comparáveis.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:47:00.064538+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Resultado de telecomunicações exige separar efeitos de arrendamento, depreciação, direitos de uso, receitas e investimento recorrente. Caixa após financiamento e manutenção é central para a tese. O perfil operacional e a estrutura acionária não substituem demonstrações e a reconciliação da geração de caixa por serviço.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que redes e relacionamento sustentem monetização e caixa após investimento e obrigações de uso. A condição decisiva é crescimento econômico da base com disciplina de aquisição, retenção e capital. Expandir cobertura ou serviços digitais só cria valor se a contribuição incremental remunera os recursos necessários. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Venda, com retorno esperado -2,25%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Preços, retenção, qualidade de serviço e ocupação das redes podem frustrar monetização. Manutenção, expansão, obrigações de uso e regulação podem consumir caixa. Serviços digitais e partes relacionadas exigem análise de contribuição e incentivos."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_VIVO.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-22,66%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -22,66%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Comunicações",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Vivo: monetização das redes e caixa após reinvestimento",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A leitura consolidada do modelo está disponível no retrato recebido. A reconciliação integral do último release, das notas explicativas e da apresentação por negócio permanece pendente; não se atribui alteração de guidance nem tom à gestão sem essa evidência.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar preço e base ativa por serviço, retenção e qualidade, ocupação da fibra, custo de atender e capital incremental. Reconciliar caixa após manutenção, arrendamentos, espectro e expansão; testar contribuição dos serviços digitais e decisões de distribuição.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_VIVO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,56%"
+          },
+          {
+            "fato": "val.BR_VIVO.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "37,92%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,56% e a dispersão entre métodos 37,92%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

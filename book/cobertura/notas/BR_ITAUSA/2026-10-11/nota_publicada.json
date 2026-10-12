@@ -1,0 +1,403 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "5b8d6f07053e8d8421ea89ceffcb8c4fabcfad86033d5cb723d6c76b02eecefc",
+    "factbook": "abf9f094ed2cfaad5ef48ac828415af482d9527bfc586b21b70d6162d93fd056",
+    "nota_json": "bf10cfc6f98749e560ea8c35f6f349ef82ed9299407f66f15ef3eb61e1365abd"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_ITAUSA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T02:46:20.802140+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Novos investimentos, aportes e distribuição ao acionista devem ser confrontados com retorno econômico e capacidade de financiar compromissos da holding. O RI divulga gestão de passivos; a análise ainda precisa testar caixa de proventos, despesas de juros e oportunidades alternativas em bases comparáveis.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 15,45, com retorno esperado +1,65%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Investidas geram caixa distribuível e decisões de capital preservam retorno. Passivos e despesas no nível da holding permanecem compatíveis com proventos e a transmissão de valor ganha suporte verificável. O cenário otimista calculado pelo código é R$ 16,44.",
+      "pessimista": "Caixa das investidas se reduz ou fica comprometido com aportes; avaliações privadas e passivos pressionam o valor disponível. O desconto persiste sem mecanismo demonstrado de remuneração do minoritário. O cenário pessimista calculado pelo código é R$ 14,36."
+    },
+    "comentario_valuation": "Preço de referência R$ 16,05 e alvo do modelo aberto R$ 15,45, com potencial -3,76%. Retorno total esperado +1,65% e custo do capital próprio 11,85%. A dispersão entre métodos é n/d; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 17,06; a diferença -9,44% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Um desconto pode remunerar despesas, risco de alocação, baixa liquidez de participações ou incerteza de avaliações privadas. Sem conversão de resultados em caixa ou mecanismos de transmissão ao minoritário, o desconto pode persistir. Crescimento das investidas não assegura retorno na ação da holding.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_ITAUSA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 16,05"
+      },
+      {
+        "fato": "val.BR_ITAUSA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 15,45"
+      },
+      {
+        "fato": "val.BR_ITAUSA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-3,76%"
+      },
+      {
+        "fato": "val.BR_ITAUSA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_ITAUSA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_ITAUSA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 16,44"
+      },
+      {
+        "fato": "val.BR_ITAUSA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "50,58%"
+      },
+      {
+        "fato": "val.BR_ITAUSA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 14,36"
+      },
+      {
+        "fato": "val.BR_ITAUSA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "30,29%"
+      },
+      {
+        "fato": "val.BR_ITAUSA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,85%"
+      },
+      {
+        "fato": "val.BR_ITAUSA.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_ITAUSA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_ITAUSA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+1,65%"
+      },
+      {
+        "fato": "val.BR_ITAUSA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-28,31%"
+      },
+      {
+        "fato": "val.BR_ITAUSA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,7x"
+      },
+      {
+        "fato": "val.BR_ITAUSA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,9x"
+      },
+      {
+        "fato": "val.BR_ITAUSA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 17,06"
+      },
+      {
+        "fato": "val.BR_ITAUSA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-9,44%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Itaúsa",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e estrutura do negócio",
+        "url": "https://www.itausa.com.br/portfolio/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Itaúsa",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Informações financeiras e materiais de análise",
+        "url": "https://ri.itausa.com.br/informacoes-financeiras/valor-do-portfolio-e-desconto/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Itaúsa",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Passivos e financiamento da holding",
+        "url": "https://ri.itausa.com.br/informacoes-financeiras/divida-e-rating/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+      "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+      "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+      "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+    ],
+    "governanca": "Novos investimentos, aportes e distribuição ao acionista devem ser confrontados com retorno econômico e capacidade de financiar compromissos da holding. O RI divulga gestão de passivos; a análise ainda precisa testar caixa de proventos, despesas de juros e oportunidades alternativas em bases comparáveis.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Reconciliar proventos recebidos e resultado por equivalência, despesas e dívida da holding; atualizar bases de valor das investidas privadas e listadas, participações, classes e critérios de alocação sem dupla contagem.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ITAUSA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+1,65%"
+          },
+          {
+            "fato": "val.BR_ITAUSA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,85%"
+          },
+          {
+            "fato": "val.BR_ITAUSA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "n/d"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +1,65%, custo do capital 11,85% e dispersão entre métodos n/d quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_ITAUSA",
+    "lacunas_de_dados": [
+      "Último resultado e notas explicativas não foram integralmente reconciliados nesta pesquisa.",
+      "Guidance e tom da gestão não foram avaliados em material atual completo.",
+      "Participação de mercado e desempenho relativo frente a concorrentes exigem comprovação específica.",
+      "Percepção do mercado, posicionamento e interesse vendido não têm suporte documental suficiente.",
+      "Retorno econômico de projetos e decisões recentes de capital permanece a comprovar.",
+      "Não há catalisador datado confirmado neste estudo."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "A Itaúsa detém participações em negócios financeiros, industriais e de infraestrutura, incluindo Itaú Unibanco, Dexco, Alpargatas, Motiva, Aegea, Copa Energia e NTS. Atua em governança das investidas e alocação de capital. A renda econômica da holding depende de valor e distribuição das participações, descontados passivos, despesas e decisões de capital em seu próprio nível.",
+    "nome": "Itaúsa",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese é que o valor econômico das investidas chegue ao acionista após dívida, despesas e reinvestimento da holding. A condição decisiva é caixa disponível no nível correto, e não apenas lucro por equivalência ou soma bruta das participações. Redução do desconto exige mecanismo verificável de criação ou transmissão de valor.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ITAUSA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 16,05"
+          },
+          {
+            "fato": "val.BR_ITAUSA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 15,45"
+          },
+          {
+            "fato": "val.BR_ITAUSA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-3,76%"
+          },
+          {
+            "fato": "val.BR_ITAUSA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,85%"
+          },
+          {
+            "fato": "val.BR_ITAUSA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+1,65%"
+          }
+        ],
+        "texto": "Preço de referência R$ 16,05 e alvo R$ 15,45, com potencial -3,76%. A hipótese de investimento deve ser confrontada com o custo do capital 11,85% e retorno esperado +1,65%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A capacidade de influenciar governança e combinar decisões de portfólio pode ser relevante para alocação de capital. Ela não prova vantagem competitiva uniforme das investidas nem eliminação do desconto da holding. Cada participação mantém seus próprios riscos, capital necessário e perspectivas de retorno.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:46:20.802140+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Lucro por equivalência patrimonial não é caixa recebido pela holding. O RI descreve a soma das participações com bases de valor distintas para ativos listados e não listados. A diligência deve reconciliar caixa distribuído, despesas, tributação e passivos no nível individual, sem duplicar dívida das investidas.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que o valor econômico das investidas chegue ao acionista após dívida, despesas e reinvestimento da holding. A condição decisiva é caixa disponível no nível correto, e não apenas lucro por equivalência ou soma bruta das participações. Redução do desconto exige mecanismo verificável de criação ou transmissão de valor. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Venda, com retorno esperado +1,65%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Dependência dos proventos das investidas, avaliações privadas e despesas ou dívida da holding pode impedir transmissão de valor. Somar participações sem reconciliar passivos e classes de capital pode superestimar a exposição econômica."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ITAUSA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-9,44%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -9,44%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Itaúsa: transmissão de valor das investidas ao acionista da holding",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A leitura consolidada do modelo está disponível no retrato recebido. A reconciliação integral do último release, das notas explicativas e da apresentação por negócio permanece pendente; não se atribui alteração de guidance nem tom à gestão sem essa evidência.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Reconciliar proventos recebidos e resultado por equivalência, despesas e dívida da holding; atualizar bases de valor das investidas privadas e listadas, participações, classes e critérios de alocação sem dupla contagem.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_ITAUSA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,85%"
+          },
+          {
+            "fato": "val.BR_ITAUSA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "n/d"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,85% e a dispersão entre métodos n/d. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

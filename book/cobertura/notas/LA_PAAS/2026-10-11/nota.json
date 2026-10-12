@@ -1,0 +1,232 @@
+{
+  "mind": "codex",
+  "issuer_id": "LA_PAAS",
+  "data": "2026-10-11",
+  "tipo": "atualizacao",
+  "titulo": "Pan American Silver — caixa atribuível, custos e reinvestimento mineral",
+  "resumo": "A hipótese é que produção e preços remunerem manutenção, impostos e capital ao longo do ciclo. A condição decisiva é converter geração atribuível em recursos efetivamente disponíveis depois de direitos de sócios. Projetos e caixa proporcional de participação não devem ser tratados como produção ou liquidez livre da controladora. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.LA_PAAS.rating_codigo}}, com retorno esperado {{fact:val.LA_PAAS.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Mineradora de prata e ouro com operações nas Américas e participação em Juanicipio. Produção, reservas, teor, recuperação e preço determinam receita; participação atribuível difere da consolidação contábil. Escobal permanece sem operação e sem calendário comprovado de reinício. Expansão e licenças têm obrigações próprias.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que produção e preços remunerem manutenção, impostos e capital ao longo do ciclo. A condição decisiva é converter geração atribuível em recursos efetivamente disponíveis depois de direitos de sócios. Projetos e caixa proporcional de participação não devem ser tratados como produção ou liquidez livre da controladora.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.LA_PAAS.preco}} e alvo {{fact:val.LA_PAAS.preco_alvo}}, com potencial {{fact:val.LA_PAAS.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.LA_PAAS.ke}} e retorno esperado {{fact:val.LA_PAAS.etr}}.",
+      "evidencias": [
+        "val.LA_PAAS.preco",
+        "val.LA_PAAS.preco_alvo",
+        "val.LA_PAAS.upside",
+        "val.LA_PAAS.ke",
+        "val.LA_PAAS.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Produção, teor, recuperação, preço e custo por metal e mina. Conciliar créditos de subprodutos, impostos, giro e investimento. Separar atribuível e consolidado, direitos de sócios, caixa disponível, expansão e situação documental de Escobal.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.LA_PAAS.ke}} e a dispersão entre métodos {{fact:val.LA_PAAS.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.LA_PAAS.ke",
+        "val.LA_PAAS.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Divulgação anunciada do próximo resultado financeiro.",
+      "data": "2026-11-04",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F4"
+      ]
+    },
+    {
+      "descricao": "Saída anunciada de conselheiro, com eficácia futura.",
+      "data": "2026-10-31",
+      "tipo": "outro",
+      "direcao": "incerto",
+      "evidencias": [
+        "F5"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Preço, teor, recuperação e impostos podem reduzir geração. Participações e manutenção limitam caixa disponível. Licenças, consulta comunitária e custos ambientais afetam projetos; crédito de subprodutos não é redução garantida do desembolso bruto.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4",
+        "F5"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.LA_PAAS.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.LA_PAAS.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Produção e custo sustentam geração depois de impostos e manutenção, com recebimento de participações e expansão disciplinados. O cenário otimista calculado pelo código é {{fact:val.LA_PAAS.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.LA_PAAS.preco_alvo}}, com retorno esperado {{fact:val.LA_PAAS.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Preço, teor e custos deterioram geração; impostos e projetos absorvem recursos, e caixa proporcional não se converte em distribuição da controladora. O cenário pessimista calculado pelo código é {{fact:val.LA_PAAS.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.LA_PAAS.preco}} e alvo do modelo aberto {{fact:val.LA_PAAS.preco_alvo}}, com potencial {{fact:val.LA_PAAS.upside}}. Retorno total esperado {{fact:val.LA_PAAS.etr}} e custo do capital próprio {{fact:val.LA_PAAS.ke}}. A dispersão entre métodos é {{fact:val.LA_PAAS.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.LA_PAAS.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.LA_PAAS.consenso_alvo}}; a diferença {{fact:val.LA_PAAS.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "Receita, lucro e caixa aumentaram anualmente. Medidas atribuíveis acrescentam participação em Juanicipio, em base distinta da consolidação. Caixa operacional já considera impostos e giro; caixa divulgado inclui parcela proporcional da investida. Prata ficou no alto da faixa trimestral e ouro abaixo. Guidance operacional anual foi mantido, com ouro esperado no limite menos favorável e projeção maior de impostos pagos. Dividendos e recompras foram realizados; nova declaração preserva seu calendário.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Direitos de Juanicipio e San Vicente alteram atribuição. Medidas de custo são líquidas de créditos de outros metais, com unidades distintas. Escobal não tem data de reinício comprovada. A saída anunciada de conselheiro tem eficácia futura; não foi tratada como já concluída ou como avaliação de qualidade da gestão.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Localização, reservas, escala e eficiência podem apoiar custo e vida útil das minas. Vantagem exige testar teor, recuperação, manutenção e obrigações ambientais. Crédito de outros metais melhora o custo informado, mas depende de preços. Consulta comunitária e licenças não asseguram reinício de Escobal.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Lucro e caixa cresceram anualmente com preços maiores. Fluxo operacional inclui impostos pagos e capital de giro; medidas atribuíveis incorporam participação em Juanicipio fora da consolidação equivalente. Ouro ficou abaixo da faixa trimestral. Produção e custos anuais foram mantidos, com expectativa menos favorável para ouro e impostos pagos maiores.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Manutenção, expansão e recuperação ambiental usam recursos antes do retorno. Caixa e investimentos atribuíveis incluem parcela de Juanicipio, sem disponibilidade integral à controladora. Linha não sacada e expansão opcional não são caixa recebido. Houve dividendos e recompras pagos; nova declaração possui calendário próprio.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4",
+      "F5"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "Caixa atribuível e custo líquido favorável podem refletir preço de metais e parcela de participação sem distribuição. Se manutenção, impostos e projetos absorverem recursos, geração proporcional e linha disponível não confirmarão retorno livre ao acionista.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4",
+      "F5"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Produção, teor, recuperação, preço e custo por metal e mina. Conciliar créditos de subprodutos, impostos, giro e investimento. Separar atribuível e consolidado, direitos de sócios, caixa disponível, expansão e situação documental de Escobal.",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4",
+        "F5"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.LA_PAAS.etr}}, custo do capital {{fact:val.LA_PAAS.ke}} e dispersão entre métodos {{fact:val.LA_PAAS.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.LA_PAAS.etr",
+        "val.LA_PAAS.ke",
+        "val.LA_PAAS.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": "Nova versão documental com hipótese, posição competitiva, qualidade dos resultados, capital, contratese e monitoramento. Fontes públicas foram revistas na data da consulta; o histórico publicado e o retrato determinístico permanecem preservados.",
+  "gatilhos_revisao": [
+    "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+    "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+    "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+    "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Demonstrações completas, reconciliação atribuível e recebimentos da participação permanecem pendentes.",
+    "Reservas, manutenção e obrigações ambientais exigem diligência independente.",
+    "Liquidez disponível à controladora não foi integralmente reconciliada.",
+    "Pagamento da nova declaração não foi confirmado apenas pelo calendário.",
+    "Mudanças distintas de produção, custo e imposto não têm direção agregada única classificada."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Pan American Silver",
+      "titulo": "Negócio e materiais públicos do emissor",
+      "url": "https://panamericansilver.com/news/pan-american-silver-reports-second-quarter-2026-financial-results-2/",
+      "publicado_em": "2026-08-12",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Pan American Silver",
+      "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+      "url": "https://s202.q4cdn.com/876548212/files/doc_news/Pan-American-Silver-Reports-Second-Quarter-2026-Financial-Results-2026.pdf",
+      "publicado_em": "2026-08-12",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Pan American Silver",
+      "titulo": "Release com reconciliações gerenciais de caixa, atribuição e custos",
+      "url": "https://s202.q4cdn.com/876548212/files/doc_news/Pan-American-Silver-Reports-Second-Quarter-2026-Financial-Results-2026.pdf",
+      "publicado_em": "2026-08-12",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Pan American Silver",
+      "titulo": "Calendário anunciado para a divulgação do resultado posterior",
+      "url": "https://panamericansilver.com/news/pan-american-silver-to-announce-third-quarter-2026-unaudited-financial-results/",
+      "publicado_em": "2026-10-07",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F5",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Pan American Silver",
+      "titulo": "Saída anunciada de conselheiro com eficácia futura",
+      "url": "https://panamericansilver.com/news/pan-american-silver-announces-director-retirement/",
+      "publicado_em": "2026-10-07",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

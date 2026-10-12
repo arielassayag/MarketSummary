@@ -1,0 +1,441 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "c00730ee23852548d0b3c76a36f9ad0dc9473cb281d9aff48a6a4b19c6882ad6",
+    "factbook": "199b4b1a5126edbcd415e3a57ffd39d5df14a9c6d02b5cc150c4c9c6f4a25fce",
+    "nota_json": "24debb0e77200927c561f9a47bcdeff4688109fc93ea38cd2b3776a534dfe040"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_LOCALIZA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-05",
+  "published_at": "2026-10-12T02:45:42.451765+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Expansão e rejuvenescimento exigem compra de frota antes do recebimento. Fornecedores de carros apoiaram caixa, com obrigação futura correspondente. Dívida líquida aumentou desde o encerramento anual; rolagem posterior altera vencimentos, sem ser geração operacional. JCP aprovado para pagamento posterior não foi presumido pago.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar depreciação e caixa depois de renovação e juros.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 39,37, com retorno esperado -16,79%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Preço e utilização remuneram renovação e financiamento, com valores residuais prudentes e caixa após pagamento das montadoras. O cenário otimista calculado pelo código é R$ 58,79.",
+      "pessimista": "Depreciação e juros superam ganhos de preço; renovação e fornecedores consomem recursos, e venda de seminovos não sustenta retorno residual. O cenário pessimista calculado pelo código é R$ 18,92."
+    },
+    "comentario_valuation": "Preço de referência R$ 52,32 e alvo do modelo aberto R$ 39,37, com potencial -24,76%. Retorno total esperado -16,79% e custo do capital próprio 12,01%. A dispersão entre métodos é 18,36%; a confiança quantitativa recebida é A. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 54,01; a diferença -27,11% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Margem e venda de seminovos podem crescer enquanto compra de frota e juros consomem recursos. Se valor residual cair ou pagamento de montadoras liberar menos financiamento, o retorno divulgado e a expansão não confirmarão caixa sustentável.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_LOCALIZA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 52,32"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 39,37"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-24,76%"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 58,79"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "34,75%"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 18,92"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "1,24%"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,01%"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.wacc",
+        "rotulo": "WACC",
+        "valor": "9,57%"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-16,79%"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-18,59%"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "12,1x"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,1x"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 54,01"
+      },
+      {
+        "fato": "val.BR_LOCALIZA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-27,11%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Localiza",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/08f327aa-e610-4d9d-b683-8ff0f7caae07/ffd204e4-d65f-5649-63a7-f12a8b70f4bd?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Localiza",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/08f327aa-e610-4d9d-b683-8ff0f7caae07/ffd204e4-d65f-5649-63a7-f12a8b70f4bd?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Localiza",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Release com demonstrações resumidas e fluxo original de frota e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/08f327aa-e610-4d9d-b683-8ff0f7caae07/ffd204e4-d65f-5649-63a7-f12a8b70f4bd?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+      "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+      "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+      "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    ],
+    "governanca": "O retorno divulgado exclui ágio da base de capital e possui ajustes de eventos anteriores e alienação de subsidiárias. Caixa gerencial e original não foram tratados como medidas equivalentes. Rolagem posterior, cessão por fornecedores e calendário de JCP preservam obrigações e período.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Diária, ocupação, idade, manutenção e valor residual por divisão. Conciliar venda, compra, fornecedores, depreciação e juros com caixa original. Monitorar dívida, rolagem, retorno com e sem alienação de subsidiárias e remuneração efetivamente paga.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_LOCALIZA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-16,79%"
+          },
+          {
+            "fato": "val.BR_LOCALIZA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,01%"
+          },
+          {
+            "fato": "val.BR_LOCALIZA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "18,36%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -16,79%, custo do capital 12,01% e dispersão entre métodos 18,36% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_LOCALIZA",
+    "lacunas_de_dados": [
+      "A data de publicação do arquivo recebido não foi comprovada nesta consulta.",
+      "A ponte integral entre caixa gerencial, fornecedores, cessão e demonstrações permanece pendente.",
+      "Valor residual e retorno por divisão exigem diligência independente.",
+      "O pagamento posterior do JCP não foi confirmado apenas pelo calendário.",
+      "Guidance agregado e percepção do mercado não foram comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Locadora de veículos, gestão de frotas e venda de seminovos no Brasil e México. Diárias, ocupação, manutenção e valor residual determinam retorno. Venda de carros faz parte do ciclo de renovação; não é receita de aluguel. Preço de compra, depreciação e juros precisam ser avaliados em conjunto.",
+    "nome": "Localiza",
+    "o_que_mudou": "Nova versão documental com hipótese, posição competitiva, qualidade dos resultados, capital, contratese e monitoramento. Fontes públicas foram revistas na data da consulta; o histórico publicado e o retrato determinístico permanecem preservados.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_SIMPAR",
+        "nome": "Simpar"
+      },
+      {
+        "issuer_id": "BR_TUPY",
+        "nome": "Tupy"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que preço e utilização remunerem a frota depois de renovação e financiamento. A condição decisiva é sustentar retorno sem adiar obrigações com montadoras ou subestimar depreciação. Crescimento de seminovos e margem de aluguel não comprovam caixa livre depois do custo completo do veículo.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_LOCALIZA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 52,32"
+          },
+          {
+            "fato": "val.BR_LOCALIZA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 39,37"
+          },
+          {
+            "fato": "val.BR_LOCALIZA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-24,76%"
+          },
+          {
+            "fato": "val.BR_LOCALIZA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,01%"
+          },
+          {
+            "fato": "val.BR_LOCALIZA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-16,79%"
+          }
+        ],
+        "texto": "Preço de referência R$ 52,32 e alvo R$ 39,37, com potencial -24,76%. A hipótese de investimento deve ser confrontada com o custo do capital 12,01% e retorno esperado -16,79%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Rede, compra e canais de venda podem apoiar utilização e renovação. Escala exige avaliar desconto de compra, custo de manutenção e preço efetivo de venda. Novas montadoras e modelos mudam valor residual; reputação e métricas declaradas não demonstram vantagem independente de retorno.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:45:42.451765+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receitas, EBITDA e EBIT cresceram; o lucro é comparado com base anterior ajustada por baixa de crédito fiscal. Depreciação por carro continua aumentando. O caixa gerencial antes de juros recebeu contribuição de fornecedores; a demonstração original inclui compra e venda de carros e juros na operação.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que preço e utilização remunerem a frota depois de renovação e financiamento. A condição decisiva é sustentar retorno sem adiar obrigações com montadoras ou subestimar depreciação. Crescimento de seminovos e margem de aluguel não comprovam caixa livre depois do custo completo do veículo. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Venda, com retorno esperado -16,79%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Juros e queda de valor residual podem reduzir retorno. Renovação e expansão absorvem caixa; fornecedores financiam parte do ciclo. Comparativo ajustado e venda de subsidiária podem ampliar lucro e retorno sem a mesma recorrência."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_LOCALIZA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-27,11%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -27,11%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Localiza — retorno da frota, valor residual e caixa após renovação",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Aluguel, gestão e seminovos cresceram, com EBITDA e EBIT maiores. Lucro usa comparação ajustada pela baixa anterior de crédito fiscal. Depreciação continuou subindo. No semestre, a compra líquida de carros consumiu a geração de aluguel; fornecedores contribuíram para o subtotal antes de juros. O fluxo original inclui veículos e juros na operação. Dívida líquida cresceu desde o encerramento anual; rolagem posterior e JCP têm estados próprios.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Diária, ocupação, idade, manutenção e valor residual por divisão. Conciliar venda, compra, fornecedores, depreciação e juros com caixa original. Monitorar dívida, rolagem, retorno com e sem alienação de subsidiárias e remuneração efetivamente paga.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_LOCALIZA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,01%"
+          },
+          {
+            "fato": "val.BR_LOCALIZA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "18,36%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 12,01% e a dispersão entre métodos 18,36%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

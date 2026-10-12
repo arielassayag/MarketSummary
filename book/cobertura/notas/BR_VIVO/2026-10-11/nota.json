@@ -1,0 +1,168 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_VIVO",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "Vivo: monetização das redes e caixa após reinvestimento",
+  "resumo": "A hipótese é que redes e relacionamento sustentem monetização e caixa após investimento e obrigações de uso. A condição decisiva é crescimento econômico da base com disciplina de aquisição, retenção e capital. Expandir cobertura ou serviços digitais só cria valor se a contribuição incremental remunera os recursos necessários. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_VIVO.rating_codigo}}, com retorno esperado {{fact:val.BR_VIVO.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "A Telefônica Brasil oferece telecomunicações fixas e móveis sob a marca Vivo, atendendo consumidores e empresas. O perfil descreve fibra, conectividade e serviços digitais associados, sob controle do grupo Telefónica. Receita e caixa dependem de base ativa, preço, retenção e uso das redes, junto a investimento, atendimento e obrigações contratuais. A presença comercial não demonstra retorno adequado de cada expansão.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que redes e relacionamento sustentem monetização e caixa após investimento e obrigações de uso. A condição decisiva é crescimento econômico da base com disciplina de aquisição, retenção e capital. Expandir cobertura ou serviços digitais só cria valor se a contribuição incremental remunera os recursos necessários.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_VIVO.preco}} e alvo {{fact:val.BR_VIVO.preco_alvo}}, com potencial {{fact:val.BR_VIVO.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_VIVO.ke}} e retorno esperado {{fact:val.BR_VIVO.etr}}.",
+      "evidencias": [
+        "val.BR_VIVO.preco",
+        "val.BR_VIVO.preco_alvo",
+        "val.BR_VIVO.upside",
+        "val.BR_VIVO.ke",
+        "val.BR_VIVO.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar preço e base ativa por serviço, retenção e qualidade, ocupação da fibra, custo de atender e capital incremental. Reconciliar caixa após manutenção, arrendamentos, espectro e expansão; testar contribuição dos serviços digitais e decisões de distribuição.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_VIVO.ke}} e a dispersão entre métodos {{fact:val.BR_VIVO.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_VIVO.ke",
+        "val.BR_VIVO.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Preços, retenção, qualidade de serviço e ocupação das redes podem frustrar monetização. Manutenção, expansão, obrigações de uso e regulação podem consumir caixa. Serviços digitais e partes relacionadas exigem análise de contribuição e incentivos.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_VIVO.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_VIVO.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Qualidade e ofertas integradas preservam retenção e monetização, com redes ocupadas e investimentos disciplinados. Serviços associados demonstram contribuição incremental, e o caixa após obrigações sustenta retorno ao acionista. O cenário otimista calculado pelo código é {{fact:val.BR_VIVO.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_VIVO.preco_alvo}}, com retorno esperado {{fact:val.BR_VIVO.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Competição e cancelamentos limitam receita, enquanto redes e atendimento exigem capital. Serviços associados não remuneram investimentos, e caixa após obrigações restringe a distribuição. O cenário pessimista calculado pelo código é {{fact:val.BR_VIVO.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_VIVO.preco}} e alvo do modelo aberto {{fact:val.BR_VIVO.preco_alvo}}, com potencial {{fact:val.BR_VIVO.upside}}. Retorno total esperado {{fact:val.BR_VIVO.etr}} e custo do capital próprio {{fact:val.BR_VIVO.ke}}. A dispersão entre métodos é {{fact:val.BR_VIVO.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_VIVO.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_VIVO.consenso_alvo}}; a diferença {{fact:val.BR_VIVO.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "A leitura consolidada do modelo está disponível no retrato recebido. A reconciliação integral do último release, das notas explicativas e da apresentação por negócio permanece pendente; não se atribui alteração de guidance nem tom à gestão sem essa evidência.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A hipótese depende de comparar investimento em redes e serviços com caixa disponível e retorno de alternativas. Controle e transações com partes relacionadas exigem exame próprio. Remuneração ao acionista deve ser confrontada com manutenção, expansão, espectro, arrendamentos e financiamento, sem considerar distribuição como prova de retorno operacional.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Rede, marca e ofertas convergentes podem influenciar qualidade percebida e retenção. O perfil da companhia descreve diferenciação, mas a pesquisa não comprovou vantagem econômica persistente frente a concorrentes. É preciso confrontar preços, cancelamento, qualidade e ocupação das redes em bases comparáveis.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Resultado de telecomunicações exige separar efeitos de arrendamento, depreciação, direitos de uso, receitas e investimento recorrente. Caixa após financiamento e manutenção é central para a tese. O perfil operacional e a estrutura acionária não substituem demonstrações e a reconciliação da geração de caixa por serviço.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "A hipótese depende de comparar investimento em redes e serviços com caixa disponível e retorno de alternativas. Controle e transações com partes relacionadas exigem exame próprio. Remuneração ao acionista deve ser confrontada com manutenção, expansão, espectro, arrendamentos e financiamento, sem considerar distribuição como prova de retorno operacional.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "Expansão de cobertura pode aumentar capital e atendimento sem monetização ou retenção compatíveis. Competição pode comprimir preços, e novos serviços podem consumir recursos antes de demonstrar contribuição. Caixa distribuído em determinada fase não comprova que o retorno da rede sustente a política de capital.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Acompanhar preço e base ativa por serviço, retenção e qualidade, ocupação da fibra, custo de atender e capital incremental. Reconciliar caixa após manutenção, arrendamentos, espectro e expansão; testar contribuição dos serviços digitais e decisões de distribuição.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_VIVO.etr}}, custo do capital {{fact:val.BR_VIVO.ke}} e dispersão entre métodos {{fact:val.BR_VIVO.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_VIVO.etr",
+        "val.BR_VIVO.ke",
+        "val.BR_VIVO.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+  ],
+  "lacunas_de_dados": [
+    "Último resultado, caixa e obrigações de uso não foram integralmente reconciliados.",
+    "O perfil de RI combina referência operacional posterior à data do rodapé; a publicação histórica não foi comprovada.",
+    "Retenção e posição competitiva atual exigem comparação independente por serviço.",
+    "Retorno incremental da expansão e dos serviços digitais permanece a comprovar.",
+    "Partes relacionadas e decisões recentes de capital requerem análise documental completa.",
+    "Percepção do mercado e interesse vendido não têm suporte suficiente."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Telefônica Brasil",
+      "titulo": "Perfil e estrutura do negócio",
+      "url": "https://ri.telefonica.com.br/a-empresa/perfil-corporativo/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Telefônica Brasil",
+      "titulo": "Informações financeiras e materiais de análise",
+      "url": "https://ri.telefonica.com.br/a-empresa/estrutura-societaria/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

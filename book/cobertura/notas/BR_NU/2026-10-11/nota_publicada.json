@@ -1,0 +1,441 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "a1f998b116139d54583fc42f54dcb430ab47682fd1f6c1b5c1fddcba016ddfa4",
+    "factbook": "0be1702e8a90d5badc5ec007e9b13d43dca692152d8cfd754274aa7cb97c0237",
+    "nota_json": "55327376955330aef04fec6242f68661ac30c80e56818fcb3adf801916e385c7"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_NU",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-12",
+  "published_at": "2026-10-12T02:43:51.825999+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Crédito e expansão usam capital e captação; depósitos são obrigação com clientes. Houve recompra efetiva no semestre, mantida em tesouraria, sem cancelamento. Autorização restante não é gasto realizado. Capital, licenças e liquidez por país restringem distribuição e transferência do caixa consolidado.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar safras, monetização e capital na expansão internacional.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em US$ 8,72, com retorno esperado -40,28%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Atividade e monetização sustentam margem depois das perdas, com capital e liquidez por país compatíveis com expansão e direitos dos acionistas. O cenário otimista calculado pelo código é US$ 9,88.",
+      "pessimista": "Sazonalidade deixa de compensar risco maior; perdas e expansão absorvem capital e liquidez, enquanto lucro e recompra sugerem retorno sem geração residual equivalente. O cenário pessimista calculado pelo código é US$ 7,76."
+    },
+    "comentario_valuation": "Preço de referência US$ 15,38 e alvo do modelo aberto US$ 8,72, com potencial -43,27%. Retorno total esperado -40,28% e custo do capital próprio 10,89%. A dispersão entre métodos é 10,84%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é US$ 18,77; a diferença -53,53% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita e lucro podem crescer com consumo de caixa operacional e inadimplência longa maior. Se safras e expansão exigirem perdas e capital adicionais, eficiência digital e recompra não confirmarão retorno sustentável por ação.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_NU.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 15,38"
+      },
+      {
+        "fato": "val.BR_NU.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 8,72"
+      },
+      {
+        "fato": "val.BR_NU.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-43,27%"
+      },
+      {
+        "fato": "val.BR_NU.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_NU.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_NU.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 9,88"
+      },
+      {
+        "fato": "val.BR_NU.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_NU.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 7,76"
+      },
+      {
+        "fato": "val.BR_NU.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_NU.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,89%"
+      },
+      {
+        "fato": "val.BR_NU.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_NU.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.BR_NU.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-40,28%"
+      },
+      {
+        "fato": "val.BR_NU.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-68,68%"
+      },
+      {
+        "fato": "val.BR_NU.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "14,7x"
+      },
+      {
+        "fato": "val.BR_NU.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "5,6x"
+      },
+      {
+        "fato": "val.BR_NU.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 18,77"
+      },
+      {
+        "fato": "val.BR_NU.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-53,53%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Nu Holdings",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://www.investors.nu/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Nu Holdings",
+        "publicado_em": "2026-08-13",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/59a081d2-0d63-4bb5-b786-4c07ae26bc74/f025bbb1-09d6-3228-d4c8-dbd8e80986e8?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Nu Holdings",
+        "publicado_em": "2026-08-13",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/59a081d2-0d63-4bb5-b786-4c07ae26bc74/b4d27ecb-504c-b153-475c-fdc1609e2aa9?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+      "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+      "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+      "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    ],
+    "governanca": "As taxas de crescimento do release são majoritariamente ajustadas ao câmbio; não se misturam com dólares reportados. Tesouraria, remuneração em ações e classes de controle possuem direitos distintos. A estrutura bancária brasileira permanece em evolução descrita, sem licença concluída presumida. Caixa por país não foi considerado livremente transferível.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Atividade, receita por cliente, margem depois de perdas e safras por país. Separar atraso inicial e longo, sazonalidade e risco intencional. Conciliar crédito, depósitos, capital, liquidez, despesas internacionais, tesouraria e diluição por remuneração.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_NU.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-40,28%"
+          },
+          {
+            "fato": "val.BR_NU.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,89%"
+          },
+          {
+            "fato": "val.BR_NU.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "10,84%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -40,28%, custo do capital 10,89% e dispersão entre métodos 10,84% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_NU",
+    "lacunas_de_dados": [
+      "A ponte integral de resultados gerenciais, capital e liquidez por país permanece pendente.",
+      "Safras, risco intencional e recuperação exigem análise independente.",
+      "Licença brasileira e resultados dos lançamentos posteriores não foram comprovados.",
+      "Tesouraria e diluição futura precisam de conciliação por classe.",
+      "Guidance agregado e qualificação bancária experimental conservam seu estado."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo financeiro digital com cartões, crédito, depósitos e serviços no Brasil, México e Colômbia. Cliente cadastrado difere de cliente ativo e receita por cliente. Crescimento de crédito, perdas, captação e licenças têm bases por país; classes de ações e remuneração em ações afetam retorno e controle.",
+    "nome": "Nu Holdings",
+    "o_que_mudou": "Nova versão documental com hipótese, posição competitiva, qualidade dos resultados, capital, contratese e monitoramento. Fontes públicas foram revistas na data da consulta; o histórico publicado e o retrato determinístico permanecem preservados.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que atividade e monetização remunerem risco e expansão internacional. A condição decisiva é preservar margem depois de perdas durante o amadurecimento do crédito, com capital e liquidez por país. Escala digital não elimina safras, custos de captação ou direitos de controle.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_NU.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "US$ 15,38"
+          },
+          {
+            "fato": "val.BR_NU.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "US$ 8,72"
+          },
+          {
+            "fato": "val.BR_NU.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-43,27%"
+          },
+          {
+            "fato": "val.BR_NU.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,89%"
+          },
+          {
+            "fato": "val.BR_NU.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-40,28%"
+          }
+        ],
+        "texto": "Preço de referência US$ 15,38 e alvo US$ 8,72, com potencial -43,27%. A hipótese de investimento deve ser confrontada com o custo do capital 10,89% e retorno esperado -40,28%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Distribuição digital, dados e relacionamento podem apoiar atividade e custo de serviço. A vantagem deve ser testada por retenção, margem ajustada ao risco e qualidade das safras. Modelo de IA e premiações não comprovam desempenho independente. Licença anunciada e lançamento posterior possuem estados distintos.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:43:51.825999+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita, lucro e margem ajustada ao risco cresceram. Atrasos iniciais melhoraram sazonalmente, mas inadimplência longa aumentou; expansão em risco maior foi intencional. Eficiência piorou sequencialmente com despesas e expansão. O fluxo original semestral consumiu caixa operacional apesar do lucro, com crescimento de ativos financeiros.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que atividade e monetização remunerem risco e expansão internacional. A condição decisiva é preservar margem depois de perdas durante o amadurecimento do crédito, com capital e liquidez por país. Escala digital não elimina safras, custos de captação ou direitos de controle. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Venda, com retorno esperado -40,28%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Maturação de safras e expansão em risco maior podem pressionar perdas. Depósitos e capital têm restrições por país; licenças e custos internacionais limitam monetização. Crescimento e recompra não garantem caixa residual ou proteção de minoritários."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_NU.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-53,53%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -53,53%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Nu Holdings — monetização, risco do crédito e capital por país",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Receita e lucro aumentaram, com crescimento de margem ajustada ao risco e melhora sazonal dos atrasos iniciais. Inadimplência longa subiu; eficiência piorou sequencialmente. No semestre, o fluxo original consumiu caixa operacional com expansão de ativos financeiros. A demonstração confirma recompra efetiva em tesouraria, sem cancelamento. Depósitos mexicanos recuaram na estratégia relatada, apesar do crescimento consolidado. Lançamento bancário mexicano e Croma são posteriores ao trimestre.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Atividade, receita por cliente, margem depois de perdas e safras por país. Separar atraso inicial e longo, sazonalidade e risco intencional. Conciliar crédito, depósitos, capital, liquidez, despesas internacionais, tesouraria e diluição por remuneração.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_NU.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,89%"
+          },
+          {
+            "fato": "val.BR_NU.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "10,84%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,89% e a dispersão entre métodos 10,84%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

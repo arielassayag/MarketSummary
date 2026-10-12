@@ -1,0 +1,455 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "80f70d4f04f5a07ad5de1cb052ff854c3d49bb7fa93bc20496cce817cd77262a",
+    "factbook": "36055a8bf7d29d1054081e1a8ff2a0e2085256dd04cab1d19b3d978f7d66ede0",
+    "nota_json": "1160615535824d7d4822d4f54bf1d64226d8426875563ef05b90dc35ea9a0ef5"
+  },
+  "is_synthetic": false,
+  "issuer_id": "PE_HUDBAY",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-29",
+  "published_at": "2026-10-12T02:46:01.893354+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Parte relevante do caixa está restrita a Copper World e indisponível ao grupo geral. Amortização de dívida usou caixa e saque de crédito; não é integralmente desalavancagem orgânica. A aquisição de Cactus emitiu ações. Caixa livre gerencial exclui giro e deduz manutenção, sem incluir integralmente crescimento e passivos ambientais.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar geração mineral e recursos disponíveis depois das restrições.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Comprovação da decisão de investimento e financiamento de Copper World.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "capital"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em US$ 16,24, com retorno esperado -35,51%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Operação sustenta caixa após manutenção, com projetos e direitos de sócios financiados de forma disciplinada e recursos restritos corretamente conciliados. O cenário otimista calculado pelo código é US$ 22,14.",
+      "pessimista": "Preço, teor e custo pressionam operação; projetos e restrições absorvem recursos, enquanto crédito de ouro e financiamento sugerem liquidez sem retorno residual equivalente. O cenário pessimista calculado pelo código é US$ 10,70."
+    },
+    "comentario_valuation": "Preço de referência US$ 25,39 e alvo do modelo aberto US$ 16,24, com potencial -36,04%. Retorno total esperado -35,51% e custo do capital próprio 10,11%. A dispersão entre métodos é 31,94%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é US$ 34,95; a diferença -53,54% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Custo líquido menor e dívida líquida negativa podem coexistir com caixa restrito, nova dívida e resultado ajustado menor. Se ouro, giro e recursos do sócio não sustentarem projetos, a liquidez divulgada e o caixa livre gerencial não confirmarão retorno residual.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.PE_HUDBAY.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 25,39"
+      },
+      {
+        "fato": "val.PE_HUDBAY.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 16,24"
+      },
+      {
+        "fato": "val.PE_HUDBAY.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-36,04%"
+      },
+      {
+        "fato": "val.PE_HUDBAY.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.PE_HUDBAY.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.PE_HUDBAY.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 22,14"
+      },
+      {
+        "fato": "val.PE_HUDBAY.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.PE_HUDBAY.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 10,70"
+      },
+      {
+        "fato": "val.PE_HUDBAY.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.PE_HUDBAY.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,11%"
+      },
+      {
+        "fato": "val.PE_HUDBAY.wacc",
+        "rotulo": "WACC",
+        "valor": "9,60%"
+      },
+      {
+        "fato": "val.PE_HUDBAY.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.PE_HUDBAY.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-35,51%"
+      },
+      {
+        "fato": "val.PE_HUDBAY.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-34,16%"
+      },
+      {
+        "fato": "val.PE_HUDBAY.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "13,5x"
+      },
+      {
+        "fato": "val.PE_HUDBAY.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,1x"
+      },
+      {
+        "fato": "val.PE_HUDBAY.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 34,95"
+      },
+      {
+        "fato": "val.PE_HUDBAY.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-53,54%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Hudbay Minerals",
+        "publicado_em": "2026-07-29",
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://s23.q4cdn.com/405985100/files/doc_financials/2026/q2/NRQ226.pdf"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Hudbay Minerals",
+        "publicado_em": "2026-07-29",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://s23.q4cdn.com/405985100/files/doc_financials/2026/q2/NRQ226.pdf"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Hudbay Minerals",
+        "publicado_em": "2026-07-29",
+        "tipo": "Relações com investidores",
+        "titulo": "Release com reconciliações de caixa livre, dívida, recursos restritos e custos",
+        "url": "https://s23.q4cdn.com/405985100/files/doc_financials/2026/q2/NRQ226.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+      "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+      "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+      "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    ],
+    "governanca": "Mitsubishi é sócia de Copper World; recursos contratuais de projeto não estão disponíveis ao grupo geral. Aquisição de Arizona Sonoran foi concluída com emissão de ações, sem produção de Cactus presumida. Dividendo declarado tem data posterior. Indicadores não contábeis e custo líquido conservam suas exclusões.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Produção, vendas, teor, recuperação e preço por operação; créditos de ouro separados de custo bruto. Conciliar embarques, giro e manutenção. Monitorar caixa restrito, crédito sacado, direitos de Mitsubishi, capital por ação e decisões efetivas de projetos.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.PE_HUDBAY.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-35,51%"
+          },
+          {
+            "fato": "val.PE_HUDBAY.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,11%"
+          },
+          {
+            "fato": "val.PE_HUDBAY.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "31,94%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -35,51%, custo do capital 10,11% e dispersão entre métodos 31,94% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "PE_HUDBAY",
+    "lacunas_de_dados": [
+      "Demonstrações completas e ponte integral de dívida, caixa restrito e direitos do sócio permanecem pendentes.",
+      "Reservas, custos ambientais e retorno de projetos exigem diligência independente.",
+      "Investimento total e geração residual não foram integralmente reconciliados.",
+      "Decisão futura de Copper World e pagamento posterior do dividendo não foram comprovados.",
+      "Redução de custo e aumento de investimento não têm direção agregada única classificada."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Mineradora de cobre com produção de ouro e outros metais no Peru, Canadá e projetos nos Estados Unidos. Teor, recuperação, embarque e preço determinam receita. Copper World tem sócio e recursos contratualmente restritos; Cactus foi adquirido com ações, sem equivaler a produção atual.",
+    "nome": "Hudbay Minerals",
+    "o_que_mudou": "Nova versão documental com hipótese, posição competitiva, qualidade dos resultados, capital, contratese e monitoramento. Fontes públicas foram revistas na data da consulta; o histórico publicado e o retrato determinístico permanecem preservados.",
+    "pais": "Peru",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CBA",
+        "nome": "Companhia Brasileira de Alumínio"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_SUZANO",
+        "nome": "Suzano"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que operação mineral sustente retorno depois de manutenção e projetos. A condição decisiva é preservar geração com custos e teor prudentes, separando crédito do ouro, capital de giro e recursos restritos. Expansão precisa remunerar capital e direitos de sócios, sem antecipar decisões de investimento.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.PE_HUDBAY.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "US$ 25,39"
+          },
+          {
+            "fato": "val.PE_HUDBAY.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "US$ 16,24"
+          },
+          {
+            "fato": "val.PE_HUDBAY.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-36,04%"
+          },
+          {
+            "fato": "val.PE_HUDBAY.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,11%"
+          },
+          {
+            "fato": "val.PE_HUDBAY.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-35,51%"
+          }
+        ],
+        "texto": "Preço de referência US$ 25,39 e alvo US$ 16,24, com potencial -36,04%. A hipótese de investimento deve ser confrontada com o custo do capital 10,11% e retorno esperado -35,51%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Reservas, infraestrutura e diversificação de metais podem apoiar produção e custo. Vantagem exige testar teor, recuperação e investimento ao longo da vida útil. Créditos de ouro dependem de preço; licença de capacidade e estudo de viabilidade não são expansão já operada nem rentabilidade garantida.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:46:01.893354+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "EBITDA e lucro ajustados recuaram sequencialmente com menos vendas; fechamento do porto atrasou embarques posteriormente entregues. Caixa operacional aumentou com giro, enquanto geração antes de giro ficou próxima e caixa livre gerencial permaneceu semelhante. Custo líquido menor inclui créditos de ouro, com despesas de insumos maiores.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que operação mineral sustente retorno depois de manutenção e projetos. A condição decisiva é preservar geração com custos e teor prudentes, separando crédito do ouro, capital de giro e recursos restritos. Expansão precisa remunerar capital e direitos de sócios, sem antecipar decisões de investimento. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Venda, com retorno esperado -35,51%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Preço, teor, embarque e insumos podem reduzir geração. Caixa restrito e sócios limitam recursos disponíveis; obras e passivos ambientais absorvem capital. Créditos de ouro e indicador líquido negativo não significam despesa bruta inexistente."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.PE_HUDBAY.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-53,54%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -53,54%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Hudbay Minerals — geração mineral e financiamento dos projetos",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "EBITDA e lucro ajustados recuaram sequencialmente com menor venda, incluindo atraso de embarques no Peru já entregues depois. Caixa operacional cresceu com giro; caixa livre gerencial foi semelhante e ajusta giro e manutenção. A projeção de custo líquido foi reduzida com crédito de ouro, enquanto investimento de crescimento aumentou. Parte do caixa está restrita a Copper World. A amortização utilizou novo saque de crédito; Cactus foi adquirido com ações, e a decisão de Copper World continua futura.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Produção, vendas, teor, recuperação e preço por operação; créditos de ouro separados de custo bruto. Conciliar embarques, giro e manutenção. Monitorar caixa restrito, crédito sacado, direitos de Mitsubishi, capital por ação e decisões efetivas de projetos.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.PE_HUDBAY.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,11%"
+          },
+          {
+            "fato": "val.PE_HUDBAY.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "31,94%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,11% e a dispersão entre métodos 31,94%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

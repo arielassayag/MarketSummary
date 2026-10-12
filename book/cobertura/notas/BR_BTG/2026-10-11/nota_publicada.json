@@ -1,0 +1,441 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "c1aa1d624f2f7bcee642744040bc580994500b797861b3c32bbd347409666720",
+    "factbook": "038dc511f011581f7f2d67a2e793ed58e413d257b0d64a4aa0ee69644c6a2e9b",
+    "nota_json": "ec37e80d3da9b4d05d26102ae33dad41b5d5dc19d35f02046bb0af247e142873"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_BTG",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T02:45:24.419838+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Crédito, negociação e aquisições exigem capital e financiamento. Depósitos e captações de mercado ampliam liquidez, com obrigações correspondentes. Juros sobre capital foram pagos; ativos administrados não pertencem ao banco. Classes de capital, participação de sócios e instrumentos subordinados restringem atribuição de retorno.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar recorrência, risco e retorno depois do capital requerido.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 62,80, com retorno esperado -16,59%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Retenção e taxas sustentam receita recorrente, com perdas e risco de mercado disciplinados e capital suficiente para distribuir retorno. O cenário otimista calculado pelo código é R$ 73,49.",
+      "pessimista": "Ciclo de mercado e crédito pressionam resultado; integração e financiamento absorvem capital enquanto comparativos ajustados sugerem crescimento sem retorno residual. O cenário pessimista calculado pelo código é R$ 53,38."
+    },
+    "comentario_valuation": "Preço de referência R$ 77,47 e alvo do modelo aberto R$ 62,80, com potencial -18,94%. Retorno total esperado -16,59% e custo do capital próprio 11,85%. A dispersão entre métodos é 13,30%; a confiança quantitativa recebida é A. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 69,23; a diferença -9,29% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Captação e lucro ajustado podem crescer enquanto receita de emissões e negociação recua. Se crédito, remuneração e integração exigirem capital excessivo, expansão da plataforma e caixa financiado não confirmarão retorno residual recorrente.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_BTG.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 77,47"
+      },
+      {
+        "fato": "val.BR_BTG.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 62,80"
+      },
+      {
+        "fato": "val.BR_BTG.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-18,94%"
+      },
+      {
+        "fato": "val.BR_BTG.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_BTG.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_BTG.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 73,49"
+      },
+      {
+        "fato": "val.BR_BTG.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BTG.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 53,38"
+      },
+      {
+        "fato": "val.BR_BTG.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BTG.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,85%"
+      },
+      {
+        "fato": "val.BR_BTG.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BTG.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_BTG.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-16,59%"
+      },
+      {
+        "fato": "val.BR_BTG.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-45,72%"
+      },
+      {
+        "fato": "val.BR_BTG.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "13,1x"
+      },
+      {
+        "fato": "val.BR_BTG.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "3,6x"
+      },
+      {
+        "fato": "val.BR_BTG.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 69,23"
+      },
+      {
+        "fato": "val.BR_BTG.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-9,29%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "BTG Pactual",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://institucional.btgpactual.com/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "BTG Pactual",
+        "publicado_em": "2026-08-11",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://d169uzu5o4xu1k.cloudfront.net/78a5a309-f13a-41ed-a7d1-814e37b63259/2026/3b140a94-9099-43e5-ad8d-bfc1724b8ddb.pdf"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "BTG Pactual",
+        "publicado_em": "2026-08-11",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://d169uzu5o4xu1k.cloudfront.net/78a5a309-f13a-41ed-a7d1-814e37b63259/2026/4d65bcc6-110f-41d3-a617-598789e8ce86.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+      "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+      "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+      "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    ],
+    "governanca": "Documentos foram consultados nos canais públicos do emissor. Demonstração original e resultado ajustado possuem bases próprias. Integração do Pan, units, capital subordinado e direitos de sócios exigem conciliação. O estudo não promove qualificação bancária experimental.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Captação líquida, retenção e taxas por segmento; atividade de emissão, crédito e negociação. Separar Pan e bases gerenciais ajustadas. Conciliar perdas esperadas, capital, captação, depósitos, participações e distribuição com retorno recorrente.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BTG.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-16,59%"
+          },
+          {
+            "fato": "val.BR_BTG.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,85%"
+          },
+          {
+            "fato": "val.BR_BTG.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "13,30%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -16,59%, custo do capital 11,85% e dispersão entre métodos 13,30% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_BTG",
+    "lacunas_de_dados": [
+      "A ponte integral de Pan, ajustes gerenciais e direitos por unit permanece pendente.",
+      "Capital econômico, perdas e risco de mercado não foram integralmente reconciliados.",
+      "Retenção, taxas e concorrência independentes exigem diligência.",
+      "Guidance agregado e percepção do mercado não foram comprovados.",
+      "Modelos bancários experimentais de outra frente conservam seu estado."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Banco de investimento e plataforma de gestão, patrimônio, crédito corporativo, consumo e negociação. Ativos de clientes sob gestão ou administração não são patrimônio próprio. A inclusão integral do Banco Pan altera o perímetro; receita de mercado e comissões têm sazonalidade e riscos distintos.",
+    "nome": "BTG Pactual",
+    "o_que_mudou": "Nova versão documental com hipótese, posição competitiva, qualidade dos resultados, capital, contratese e monitoramento. Fontes públicas foram revistas na data da consulta; o histórico publicado e o retrato determinístico permanecem preservados.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      },
+      {
+        "issuer_id": "BR_IRB",
+        "nome": "IRB Brasil RE"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que captação de clientes e serviços sustentem retorno depois de risco, remuneração e capital. A condição decisiva é converter expansão da franquia em resultado recorrente com bases comparáveis. Crédito, negociação e receitas de gestão não devem ser tratados como fontes idênticas de previsibilidade.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BTG.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 77,47"
+          },
+          {
+            "fato": "val.BR_BTG.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 62,80"
+          },
+          {
+            "fato": "val.BR_BTG.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-18,94%"
+          },
+          {
+            "fato": "val.BR_BTG.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,85%"
+          },
+          {
+            "fato": "val.BR_BTG.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-16,59%"
+          }
+        ],
+        "texto": "Preço de referência R$ 77,47 e alvo R$ 62,80, com potencial -18,94%. A hipótese de investimento deve ser confrontada com o custo do capital 11,85% e retorno esperado -16,59%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Distribuição, relacionamento e integração dos serviços podem apoiar originação e retenção. Captação líquida ajuda a testar a franquia, mas prêmio e posição declarada não comprovam vantagem independente. Recursos administrados e valor de mercado dos ativos exigem separação de taxas efetivamente recebidas.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T02:45:24.419838+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita e lucro ajustado aumentaram; gestão e crédito cresceram anualmente, enquanto banco de investimento e negociação recuaram. Comparativos gerenciais incorporam a aquisição integral do Pan. O caixa operacional semestral passou a positivo com contribuição relevante de depósitos e captações, sem representar fluxo livre de acionistas.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que captação de clientes e serviços sustentem retorno depois de risco, remuneração e capital. A condição decisiva é converter expansão da franquia em resultado recorrente com bases comparáveis. Crédito, negociação e receitas de gestão não devem ser tratados como fontes idênticas de previsibilidade. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Venda, com retorno esperado -16,59%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Ciclo de emissões, crédito e mercado podem reduzir receitas e exigir capital. Integração e comparativos ajustados limitam leitura orgânica. Caixa financiado e ativos de clientes não comprovam recursos livres para distribuição."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BTG.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-9,29%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -9,29%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "BTG Pactual — franquia de clientes, risco e rentabilidade do capital",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Receita e lucro ajustado cresceram; comparativos foram ajustados pela aquisição integral do Pan. Gestão e crédito expandiram receitas anualmente, com menor receita de banco de investimento e negociação. Captação de gestão e patrimônio aumentou. O fluxo original semestral tornou-se positivo com depósitos e captações de mercado relevantes; essa classificação bancária não é fluxo livre industrial. JCP pago conserva seu período.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Captação líquida, retenção e taxas por segmento; atividade de emissão, crédito e negociação. Separar Pan e bases gerenciais ajustadas. Conciliar perdas esperadas, capital, captação, depósitos, participações e distribuição com retorno recorrente.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_BTG.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,85%"
+          },
+          {
+            "fato": "val.BR_BTG.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "13,30%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 11,85% e a dispersão entre métodos 13,30%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

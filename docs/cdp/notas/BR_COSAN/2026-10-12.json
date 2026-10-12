@@ -1,7 +1,7 @@
 {
   "mind": "codex",
   "issuer_id": "BR_COSAN",
-  "data": "2026-10-11",
+  "data": "2026-10-12",
   "tipo": "iniciacao",
   "titulo": "Cosan — cobertura da holding e direitos prioritários de capital",
   "resumo": "A hipótese é que simplificação e recursos das investidas sustentem o serviço da dívida e retorno residual. A condição decisiva é receber caixa depois dos direitos preferenciais sem depender indefinidamente de alienações. Desconto de holding não pode ser tratado como ganho certo sem conciliar obrigações e financiamento. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_COSAN.rating_codigo}}, com retorno esperado {{fact:val.BR_COSAN.etr}}. A visão da nota não altera esse modelo.",
@@ -25,6 +25,14 @@
         "val.BR_COSAN.upside",
         "val.BR_COSAN.ke",
         "val.BR_COSAN.etr"
+      ]
+    },
+    {
+      "titulo": "Cobertura da dívida com direitos e definições compatíveis",
+      "texto": "O índice de cobertura mudou a apresentação dos dividendos da Compass e dos pagamentos aos preferencialistas. A comparação exige reconstruir a mesma definição, sem contar recebimento bruto como disponibilidade residual. A projeção inclui recurso de alienação condicional e dividendos esperados; melhora projetada não é recorrência realizada. O teste de recuperação é remunerar obrigações prioritárias com caixa efetivamente recebido.",
+      "evidencias": [
+        "F2",
+        "F3"
       ]
     }
   ],
@@ -96,7 +104,7 @@
     "base": "Caso-base do modelo em {{fact:val.BR_COSAN.preco_alvo}}, com retorno esperado {{fact:val.BR_COSAN.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
     "pessimista": "Investidas retêm recursos e alienações atrasam; juros, resgates e repasses absorvem o caixa residual apesar de dívida gerencial menor. O cenário pessimista calculado pelo código é {{fact:val.BR_COSAN.alvo_pessimista}}."
   },
-  "comentario_valuation": "Preço de referência {{fact:val.BR_COSAN.preco}} e alvo do modelo aberto {{fact:val.BR_COSAN.preco_alvo}}, com potencial {{fact:val.BR_COSAN.upside}}. Retorno total esperado {{fact:val.BR_COSAN.etr}} e custo do capital próprio {{fact:val.BR_COSAN.ke}}. A dispersão entre métodos é {{fact:val.BR_COSAN.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_COSAN.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_COSAN.consenso_alvo}}; a diferença {{fact:val.BR_COSAN.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "comentario_valuation": "Preço de referência {{fact:val.BR_COSAN.preco}} e alvo do modelo aberto {{fact:val.BR_COSAN.preco_alvo}}, com potencial {{fact:val.BR_COSAN.upside}}. Retorno total esperado {{fact:val.BR_COSAN.etr}} e custo do capital próprio {{fact:val.BR_COSAN.ke}}. A dispersão entre métodos é {{fact:val.BR_COSAN.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_COSAN.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_COSAN.consenso_alvo}}; a diferença {{fact:val.BR_COSAN.diff_consenso}} não constitui evidência de percepção do mercado. Soma das partes exige participações econômicas, direitos de resgate, repasses e dívida da holding, com uma ponte ao caixa residual. Resultado integral das investidas e ausência de reconhecimento da Raízen não estabelecem fluxo atribuível. O desconto pode refletir custo estrutural e financiamento; convergência exige cobertura recorrente e realização documental dos desinvestimentos.",
   "ultimo_resultado": "O trimestre teve prejuízo menor e redução da dívida expandida após recursos do IPO secundário da Compass. A cobertura da dívida e dividendos recebidos recuaram, com repasses aos preferencialistas. A nova projeção de cobertura depende de dividendos e venda condicional de Radar. Porto São Luís permanece em negociação indicativa. A não contabilização de Raízen não foi promovida a recuperação; a homologação relatada não comprova cumprimento econômico do plano.",
   "guidance": "nd",
   "tom_gestao": "nd",
@@ -151,6 +159,14 @@
         "val.BR_COSAN.ke",
         "val.BR_COSAN.cv_metodos"
       ]
+    },
+    {
+      "titulo": "Evidência que muda a visão",
+      "texto": "Dividendos efetivos após repasses preferenciais não cobrem juros e custos recorrentes. Mudança de definição impede comparar a cobertura recebida com a série anterior. Radar, Porto São Luís ou a situação da Raízen alteram recursos e direitos disponíveis.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
     }
   ],
   "estrutura_etf": null,
@@ -159,10 +175,9 @@
   "aderencia_indice_etf": null,
   "o_que_mudou": null,
   "gatilhos_revisao": [
-    "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
-    "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
-    "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
-    "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    "Dividendos efetivos após repasses preferenciais não cobrem juros e custos recorrentes.",
+    "Mudança de definição impede comparar a cobertura recebida com a série anterior.",
+    "Radar, Porto São Luís ou a situação da Raízen alteram recursos e direitos disponíveis."
   ],
   "lacunas_de_dados": [
     "A ponte integral de caixa residual, direitos preferenciais e financiamento permanece pendente.",
@@ -190,7 +205,7 @@
       "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
       "url": "https://api.mziq.com/mzfilemanager/v2/d/6aa68515-2422-4cc4-bafa-8870ccdfedb0/704d98b7-6bc3-4cb3-3f77-bd96e739b6d3?origin=2",
       "publicado_em": "2026-08-14",
-      "consultado_em": "2026-10-11"
+      "consultado_em": "2026-10-12"
     },
     {
       "id": "F3",

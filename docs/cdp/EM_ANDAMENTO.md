@@ -5,7 +5,27 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## Dashboards e publicação das teses — atualização em 12/10/2026
+## Aprofundamento dos pendentes — retomada em 12/10/2026
+
+Após o encerramento parcial abaixo, o humano determinou: “Conclua os 85 restantes
+em profundidade”. Esse pedido responde à extensão do orçamento solicitada e autoriza
+a continuidade desta sessão fora do corte anterior. Gates, trava, executor interno
+e limite de doze por execução permanecem obrigatórios, sem mudança de configuração.
+
+Os rascunhos pendentes são revisados no ramo de desenvolvimento com documentos
+primários públicos e data própria de 12/10. A revisão preserva os achados específicos,
+aprofundando mecanismos econômicos, adequação do valuation, contratese e gatilhos
+observáveis. Consultas anteriores conservam sua data quando a fonte não foi
+reaberta; recusa de acesso não comprova leitura. Os modelos e preços mantêm seu
+corte nativo. Os rascunhos anteriores são substituídos prospectivamente; notas
+oficiais, dados e relatórios imutáveis permanecem preservados. A pré-validação usa
+uma cópia privada do livro e não constitui publicação. A adoção e a validação
+oficiais continuam sendo do executor `.cdp/rotinas`.
+
+Entrega ainda em execução. O registro abaixo é o checkpoint parcial anterior,
+incluindo sua antiga pendência de resposta, agora superada pelo pedido humano.
+
+## Dashboards e publicação das teses — checkpoint anterior em 12/10/2026
 
 Pedido humano explícito: revisar e publicar as teses de todo o universo e oferecer
 dashboards profissionais de cases/comparáveis e de risco/fatores. O desenvolvimento

@@ -1,7 +1,7 @@
 {
   "mind": "codex",
   "issuer_id": "BR_GOAU",
-  "data": "2026-10-11",
+  "data": "2026-10-12",
   "tipo": "iniciacao",
   "titulo": "Metalúrgica Gerdau — resultado atribuível e transmissão de caixa pela holding",
   "resumo": "A hipótese é que margem industrial sustentável e disciplina de capital da investida se traduzam em retorno por ação da holding. A condição decisiva é transmissão efetiva de resultado e caixa depois de minoritários, despesas e obrigações. Desconto de negociação pode refletir estrutura, direitos e liquidez, sem assegurar convergência automática ou arbitragem frente ao investimento direto na Gerdau. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_GOAU.rating_codigo}}, com retorno esperado {{fact:val.BR_GOAU.etr}}. A visão da nota não altera esse modelo.",
@@ -24,6 +24,15 @@
         "val.BR_GOAU.upside",
         "val.BR_GOAU.ke",
         "val.BR_GOAU.etr"
+      ]
+    },
+    {
+      "titulo": "A margem industrial precisa chegar ao titular da holding",
+      "texto": "O fortalecimento operacional norte-americano sustenta uma hipótese sobre a investida, distinta do retorno da holding. A leitura depende de participação econômica, minoritários, classes e recebimentos individuais. Lucro consolidado e recompra do grupo não pertencem automaticamente ao titular na mesma proporção. Desconto de holding tem metodologia indicativa e corte próprio, sem promessa de convergência.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
       ]
     }
   ],
@@ -85,7 +94,7 @@
     "base": "Caso-base do modelo em {{fact:val.BR_GOAU.preco_alvo}}, com retorno esperado {{fact:val.BR_GOAU.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
     "pessimista": "Margens, investimento e giro reduzem recebimentos enquanto custos, direitos e desconto persistente limitam retorno do titular da holding. O cenário pessimista calculado pelo código é {{fact:val.BR_GOAU.alvo_pessimista}}."
   },
-  "comentario_valuation": "Preço de referência {{fact:val.BR_GOAU.preco}} e alvo do modelo aberto {{fact:val.BR_GOAU.preco_alvo}}, com potencial {{fact:val.BR_GOAU.upside}}. Retorno total esperado {{fact:val.BR_GOAU.etr}} e custo do capital próprio {{fact:val.BR_GOAU.ke}}. A dispersão entre métodos é {{fact:val.BR_GOAU.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_GOAU.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_GOAU.consenso_alvo}}; a diferença {{fact:val.BR_GOAU.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "comentario_valuation": "Preço de referência {{fact:val.BR_GOAU.preco}} e alvo do modelo aberto {{fact:val.BR_GOAU.preco_alvo}}, com potencial {{fact:val.BR_GOAU.upside}}. Retorno total esperado {{fact:val.BR_GOAU.etr}} e custo do capital próprio {{fact:val.BR_GOAU.ke}}. A dispersão entre métodos é {{fact:val.BR_GOAU.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_GOAU.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_GOAU.consenso_alvo}}; a diferença {{fact:val.BR_GOAU.diff_consenso}} não constitui evidência de percepção do mercado. A ponte de valor deve respeitar participação na Gerdau, direitos de classes, tesouraria, cancelamentos e custos próprios. EBITDA consolidado e lucro atribuível têm perímetros diferentes. Comparação com investimento direto precisa de preço do mesmo corte e liquidez; dividendos aprovados e linha disponível não devem ser tratados como caixa já recebido pela holding.",
   "ultimo_resultado": "O release apresenta comparativos divergentes de lucro por ação entre tabelas; o ITR explicita a base individual e a atribuição aos não controladores. Há também divergência na identificação do conselho em trecho sobre dividendos, confrontada com a deliberação da holding no ITR. Essas lacunas foram preservadas, sem recalcular números nem tratar o resultado integral do grupo como lucro do titular.",
   "guidance": "nd",
   "tom_gestao": "nd",
@@ -142,6 +151,15 @@
         "val.BR_GOAU.ke",
         "val.BR_GOAU.cv_metodos"
       ]
+    },
+    {
+      "titulo": "Evidência que muda a visão",
+      "texto": "Melhora da investida não se traduz em recebimentos e retorno da holding. Margens norte-americanas normalizam sem compensação no fluxo após investimento. Tesouraria, cancelamento, classes ou obrigações mudam a atribuição por ação.",
+      "evidencias": [
+        "F1",
+        "F2",
+        "F3"
+      ]
     }
   ],
   "estrutura_etf": null,
@@ -150,10 +168,9 @@
   "aderencia_indice_etf": null,
   "o_que_mudou": null,
   "gatilhos_revisao": [
-    "Margem da investida deixa de sustentar caixa depois de giro, manutenção e expansão.",
-    "Equivalência não se converte em recebimentos e retorno por ação da holding.",
-    "Minoritários, classes, tesouraria e despesas alteram a transmissão de valor.",
-    "Desconto e preços conciliados deixam de apoiar a hipótese depois dos custos da estrutura."
+    "Melhora da investida não se traduz em recebimentos e retorno da holding.",
+    "Margens norte-americanas normalizam sem compensação no fluxo após investimento.",
+    "Tesouraria, cancelamento, classes ou obrigações mudam a atribuição por ação."
   ],
   "lacunas_de_dados": [
     "Notas explicativas completas e fluxo atribuível por entidade não foram integralmente reconciliados.",
@@ -183,7 +200,7 @@
       "titulo": "Release de resultados, negócios, fluxo e capital",
       "url": "https://api.mziq.com/mzfilemanager/v2/d/0e58d869-d438-4c13-9d23-c24d27e72c47/7235f9dc-6b06-d973-7741-e13db7024fb3?origin=2",
       "publicado_em": "2026-08-04",
-      "consultado_em": "2026-10-11"
+      "consultado_em": "2026-10-12"
     },
     {
       "id": "F3",

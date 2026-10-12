@@ -1,7 +1,7 @@
 {
   "mind": "codex",
   "issuer_id": "BR_COGNA",
-  "data": "2026-10-11",
+  "data": "2026-10-12",
   "tipo": "iniciacao",
   "titulo": "Cogna — retenção, contratos educacionais e crédito",
   "resumo": "A hipótese é que eficiência e qualidade sustentem retenção, contratos e caixa depois do custo completo. A condição decisiva é crescimento comparável sem depender de concentração do calendário público ou expansão de crédito. Modalidades reclassificadas, consolidação de Vasta e aquisição de Educbank precisam de ponte ao valor atribuível. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_COGNA.rating_codigo}}, com retorno esperado {{fact:val.BR_COGNA.etr}}. A visão da nota não altera esse modelo.",
@@ -25,6 +25,13 @@
         "val.BR_COGNA.upside",
         "val.BR_COGNA.ke",
         "val.BR_COGNA.etr"
+      ]
+    },
+    {
+      "titulo": "Qualidade do crescimento por ciclo e modalidade",
+      "texto": "A melhora do caixa é um ponto a testar em bases comparáveis, após arrendamento, juros e reinvestimento. O calendário público, a reorganização da educação básica e a aquisição da Educbank têm canais econômicos próprios. O teste da tese é renovação e recebimento sustentarem caixa sem expansão desproporcional do crédito. Crescimento consolidado não elimina a pressão sobre a captação e as modalidades reguladas.",
+      "evidencias": [
+        "F2"
       ]
     }
   ],
@@ -86,7 +93,7 @@
     "base": "Caso-base do modelo em {{fact:val.BR_COGNA.preco_alvo}}, com retorno esperado {{fact:val.BR_COGNA.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
     "pessimista": "Evasão, crédito e calendário reduzem recebimento; integração e passivos consomem recursos e as bases ajustadas superestimam a geração recorrente. O cenário pessimista calculado pelo código é {{fact:val.BR_COGNA.alvo_pessimista}}."
   },
-  "comentario_valuation": "Preço de referência {{fact:val.BR_COGNA.preco}} e alvo do modelo aberto {{fact:val.BR_COGNA.preco_alvo}}, com potencial {{fact:val.BR_COGNA.upside}}. Retorno total esperado {{fact:val.BR_COGNA.etr}} e custo do capital próprio {{fact:val.BR_COGNA.ke}}. A dispersão entre métodos é {{fact:val.BR_COGNA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_COGNA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_COGNA.consenso_alvo}}; a diferença {{fact:val.BR_COGNA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "comentario_valuation": "Preço de referência {{fact:val.BR_COGNA.preco}} e alvo do modelo aberto {{fact:val.BR_COGNA.preco_alvo}}, com potencial {{fact:val.BR_COGNA.upside}}. Retorno total esperado {{fact:val.BR_COGNA.etr}} e custo do capital próprio {{fact:val.BR_COGNA.ke}}. A dispersão entre métodos é {{fact:val.BR_COGNA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_COGNA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_COGNA.consenso_alvo}}; a diferença {{fact:val.BR_COGNA.diff_consenso}} não constitui evidência de percepção do mercado. Kroton deve ser lida por modalidade, retenção e recebimento; educação básica por contratos privados e ciclos públicos. Educbank exige carteira, capital e direitos próprios. A análise precisa ligar o perímetro consolidado ao fluxo após investimento, arrendamento e juros, preservando a divergência entre texto e tabela da dívida; calendário favorável não pode virar perpetuidade automática.",
   "ultimo_resultado": "O release registra maior caixa após investimento e juros, com pagamentos de arrendamento no anexo. Vasta tem perímetro alterado após a saída do mercado e os ciclos de compras públicas afetam o comparável. Educbank foi adquirida, trazendo caixa e dívida, além de direitos sobre participação remanescente. A direção da dívida bruta no texto diverge da tabela. A análise sem Educbank não substitui o consolidado original; dividendos pagos têm registro próprio no material.",
   "guidance": "nd",
   "tom_gestao": "nd",
@@ -141,6 +148,13 @@
         "val.BR_COGNA.ke",
         "val.BR_COGNA.cv_metodos"
       ]
+    },
+    {
+      "titulo": "Evidência que muda a visão",
+      "texto": "Renovação e recebimento pioram após normalizar o calendário das compras públicas. Ajustes de modalidades escondem deterioração de captação, evasão ou crédito. Capital e obrigações da Educbank crescem sem retorno ao acionista da holding.",
+      "evidencias": [
+        "F2"
+      ]
     }
   ],
   "estrutura_etf": null,
@@ -149,10 +163,9 @@
   "aderencia_indice_etf": null,
   "o_que_mudou": null,
   "gatilhos_revisao": [
-    "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
-    "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
-    "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
-    "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    "Renovação e recebimento pioram após normalizar o calendário das compras públicas.",
+    "Ajustes de modalidades escondem deterioração de captação, evasão ou crédito.",
+    "Capital e obrigações da Educbank crescem sem retorno ao acionista da holding."
   ],
   "lacunas_de_dados": [
     "O ITR integral e suas notas não foram reconciliados; os anexos citados pertencem ao release.",
@@ -166,7 +179,7 @@
   "fontes": [
     {
       "id": "F1",
-      "tipo": "relacoes_com_investidores",
+      "tipo": "regulatorio",
       "instituicao": "Cogna",
       "titulo": "Documento original na CVM: negócios e modalidades",
       "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1556591&numSequencia=1081297&numVersao=1",
@@ -175,16 +188,16 @@
     },
     {
       "id": "F2",
-      "tipo": "relacoes_com_investidores",
+      "tipo": "regulatorio",
       "instituicao": "Cogna",
       "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
       "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1556591&numSequencia=1081297&numVersao=1",
       "publicado_em": "2026-08-12",
-      "consultado_em": "2026-10-11"
+      "consultado_em": "2026-10-12"
     },
     {
       "id": "F3",
-      "tipo": "relacoes_com_investidores",
+      "tipo": "regulatorio",
       "instituicao": "Cogna",
       "titulo": "Anexos do release original: resultado, balanço e fluxo de caixa",
       "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1556591&numSequencia=1081297&numVersao=1",

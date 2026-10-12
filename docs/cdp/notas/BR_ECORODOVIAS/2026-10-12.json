@@ -1,7 +1,7 @@
 {
   "mind": "codex",
   "issuer_id": "BR_ECORODOVIAS",
-  "data": "2026-10-11",
+  "data": "2026-10-12",
   "tipo": "iniciacao",
   "titulo": "EcoRodovias — tráfego comparável, obras e financiamento",
   "resumo": "A hipótese é que tráfego e execução das concessões remunerem o investimento ao longo do contrato. A condição decisiva é converter tarifa e expansão em caixa depois de obras, outorgas e juros. Ajustar comparativos de concessões encerradas não elimina obrigações nem prova menor risco de capital. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_ECORODOVIAS.rating_codigo}}, com retorno esperado {{fact:val.BR_ECORODOVIAS.etr}}. A visão da nota não altera esse modelo.",
@@ -25,6 +25,14 @@
         "val.BR_ECORODOVIAS.upside",
         "val.BR_ECORODOVIAS.ke",
         "val.BR_ECORODOVIAS.etr"
+      ]
+    },
+    {
+      "titulo": "Demanda remunerada depois do programa de obras",
+      "texto": "O crescimento de tráfego comparável é positivo para a hipótese, mas deve financiar obras, outorgas e juros. Encerramento de concessão e início de outra alteram a base; comparar tráfego total com margem de perímetro distinto distorce o teste. O retorno do acionista depende do cronograma efetivo de arrecadação e obrigações, com recursos de reserva e financiamentos por concessão.",
+      "evidencias": [
+        "F2",
+        "F3"
       ]
     }
   ],
@@ -96,7 +104,7 @@
     "base": "Caso-base do modelo em {{fact:val.BR_ECORODOVIAS.preco_alvo}}, com retorno esperado {{fact:val.BR_ECORODOVIAS.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
     "pessimista": "Obras e custo financeiro superam geração; tráfego e reequilíbrio frustram premissas e obrigações excluídas da dívida gerencial limitam o retorno. O cenário pessimista calculado pelo código é {{fact:val.BR_ECORODOVIAS.alvo_pessimista}}."
   },
-  "comentario_valuation": "Preço de referência {{fact:val.BR_ECORODOVIAS.preco}} e alvo do modelo aberto {{fact:val.BR_ECORODOVIAS.preco_alvo}}, com potencial {{fact:val.BR_ECORODOVIAS.upside}}. Retorno total esperado {{fact:val.BR_ECORODOVIAS.etr}} e custo do capital próprio {{fact:val.BR_ECORODOVIAS.ke}}. A dispersão entre métodos é {{fact:val.BR_ECORODOVIAS.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_ECORODOVIAS.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_ECORODOVIAS.consenso_alvo}}; a diferença {{fact:val.BR_ECORODOVIAS.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "comentario_valuation": "Preço de referência {{fact:val.BR_ECORODOVIAS.preco}} e alvo do modelo aberto {{fact:val.BR_ECORODOVIAS.preco_alvo}}, com potencial {{fact:val.BR_ECORODOVIAS.upside}}. Retorno total esperado {{fact:val.BR_ECORODOVIAS.etr}} e custo do capital próprio {{fact:val.BR_ECORODOVIAS.ke}}. A dispersão entre métodos é {{fact:val.BR_ECORODOVIAS.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_ECORODOVIAS.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_ECORODOVIAS.consenso_alvo}}; a diferença {{fact:val.BR_ECORODOVIAS.diff_consenso}} não constitui evidência de percepção do mercado. Concessões têm vida finita: fluxo e eventual valor residual precisam respeitar contrato, amortização e renovação não presumida. Receita de construção não equivale a pedágio recebido. Arrendamentos e obrigações com concedentes devem acompanhar a dívida na ponte de valor; reequilíbrio e arrecadação estimados só entram como recebimentos conforme comprovação.",
   "ultimo_resultado": "O encerramento de Ecovias Sul reduz o tráfego total, embora a base comparável cresça. EBITDA ajustado trimestral e lucro recorrente recuaram, enquanto investimento, dívida e alavancagem aumentaram. O fluxo original gera caixa antes de juros no financiamento. Ecovias das Gerais foi assumida posteriormente, com arrecadação futura estimada; mudanças de pedágio e reequilíbrio conservam seus estados. A capa extraída contém resíduo de período antigo.",
   "guidance": "nd",
   "tom_gestao": "nd",
@@ -151,6 +159,14 @@
         "val.BR_ECORODOVIAS.ke",
         "val.BR_ECORODOVIAS.cv_metodos"
       ]
+    },
+    {
+      "titulo": "Evidência que muda a visão",
+      "texto": "Tráfego comparável e tarifas não sustentam caixa após obras, outorgas e juros. Atrasos ou custos de obras reduzem retorno mesmo com receita de construção maior. Recursos vinculados, dívida ou reequilíbrio alteram distribuição por concessão.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
     }
   ],
   "estrutura_etf": null,
@@ -159,10 +175,9 @@
   "aderencia_indice_etf": null,
   "o_que_mudou": null,
   "gatilhos_revisao": [
-    "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
-    "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
-    "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
-    "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    "Tráfego comparável e tarifas não sustentam caixa após obras, outorgas e juros.",
+    "Atrasos ou custos de obras reduzem retorno mesmo com receita de construção maior.",
+    "Recursos vinculados, dívida ou reequilíbrio alteram distribuição por concessão."
   ],
   "lacunas_de_dados": [
     "A data exata de publicação do release recebido não foi comprovada; a consulta foi registrada.",
@@ -191,7 +206,7 @@
       "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
       "url": "https://api.mziq.com/mzfilemanager/v2/d/7c109ecb-88c9-441f-91cb-66a8db417120/9d83ccee-0591-e096-4129-d1bd16ce5c22?origin=2",
       "publicado_em": null,
-      "consultado_em": "2026-10-11"
+      "consultado_em": "2026-10-12"
     },
     {
       "id": "F3",

@@ -1,7 +1,7 @@
 {
   "mind": "codex",
   "issuer_id": "BR_BRADSAUDE",
-  "data": "2026-10-11",
+  "data": "2026-10-12",
   "tipo": "iniciacao",
   "titulo": "Bradsaúde — economia da saúde após reorganização, sinistros e capital",
   "resumo": "A hipótese é que relacionamento, dados e escala ampliem atendimento rentável com retorno recorrente por ação depois de custo médico e capital. A condição decisiva é economia dos contratos e transmissão do lucro atribuível na nova estrutura. Crescimento de beneficiários e investimento em hospitais não comprovam sinergia realizada nem tornam toda capacidade anunciada operacional. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_BRADSAUDE.rating_codigo}}, com retorno esperado {{fact:val.BR_BRADSAUDE.etr}}. A visão da nota não altera esse modelo.",
@@ -24,6 +24,13 @@
         "val.BR_BRADSAUDE.upside",
         "val.BR_BRADSAUDE.ke",
         "val.BR_BRADSAUDE.etr"
+      ]
+    },
+    {
+      "titulo": "Subscrição e retorno por ação na nova estrutura",
+      "texto": "A expansão da margem recebida teve contribuição financeira e de despesas enquanto a sinistralidade médica trimestral piorou. A tese precisa demonstrar subscrição rentável e retorno atribuível por ação na estrutura reorganizada. Escala de beneficiários, capacidade hospitalar anunciada e participações não são sinergias realizadas. A nova base societária continua sendo condição decisiva para interpretar o alvo quantitativo.",
+      "evidencias": [
+        "F2"
       ]
     }
   ],
@@ -92,7 +99,7 @@
     "base": "Caso-base do modelo em {{fact:val.BR_BRADSAUDE.preco_alvo}}, com retorno esperado {{fact:val.BR_BRADSAUDE.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
     "pessimista": "Utilização e despesas absorvem receita, o rendimento financeiro deixa de compensar e capital ou integração exigem recursos adicionais. O cenário pessimista calculado pelo código é {{fact:val.BR_BRADSAUDE.alvo_pessimista}}."
   },
-  "comentario_valuation": "Preço de referência {{fact:val.BR_BRADSAUDE.preco}} e alvo do modelo aberto {{fact:val.BR_BRADSAUDE.preco_alvo}}, com potencial {{fact:val.BR_BRADSAUDE.upside}}. Retorno total esperado {{fact:val.BR_BRADSAUDE.etr}} e custo do capital próprio {{fact:val.BR_BRADSAUDE.ke}}. A dispersão entre métodos é {{fact:val.BR_BRADSAUDE.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_BRADSAUDE.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_BRADSAUDE.consenso_alvo}}; a diferença {{fact:val.BR_BRADSAUDE.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "comentario_valuation": "Preço de referência {{fact:val.BR_BRADSAUDE.preco}} e alvo do modelo aberto {{fact:val.BR_BRADSAUDE.preco_alvo}}, com potencial {{fact:val.BR_BRADSAUDE.upside}}. Retorno total esperado {{fact:val.BR_BRADSAUDE.etr}} e custo do capital próprio {{fact:val.BR_BRADSAUDE.ke}}. A dispersão entre métodos é {{fact:val.BR_BRADSAUDE.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_BRADSAUDE.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_BRADSAUDE.consenso_alvo}}; a diferença {{fact:val.BR_BRADSAUDE.diff_consenso}} não constitui evidência de percepção do mercado. A avaliação deve separar subscrição, resultado das reservas e participações, preservando capital regulatório e caixa por entidade. Comparação por ação exige reconciliação da reorganização, dos históricos gerenciais recompostos e do reconhecimento contábil efetivo. O alvo recebido fica sujeito a essa lacuna; crescimento consolidado não justifica por si só retorno maior ao titular.",
   "ultimo_resultado": "A reorganização foi concluída e o novo código de negociação já está em uso. A base gerencial recast inclui estrutura atual em períodos anteriores, enquanto a contábil reconhece negócios incorporados apenas depois da conclusão. Sinistralidade trimestral, semestral e acumulada têm direções próprias. Fluxo de caixa recebe efeitos de consolidação e reservas, sem comprovar caixa livre ao acionista.",
   "guidance": "nd",
   "tom_gestao": "nd",
@@ -144,6 +151,13 @@
         "val.BR_BRADSAUDE.ke",
         "val.BR_BRADSAUDE.cv_metodos"
       ]
+    },
+    {
+      "titulo": "Evidência que muda a visão",
+      "texto": "Reajustes e retenção não compensam custo médico e utilização por contrato. Margem depende de rendimento das reservas enquanto a subscrição perde rentabilidade. Base acionária e lucro atribuível permanecem incompatíveis com o histórico recomposto.",
+      "evidencias": [
+        "F2"
+      ]
     }
   ],
   "estrutura_etf": null,
@@ -152,10 +166,9 @@
   "aderencia_indice_etf": null,
   "o_que_mudou": null,
   "gatilhos_revisao": [
-    "Preço e retenção não compensam utilização, custo médico e despesas recorrentes.",
-    "Integração e investimento não confirmam retorno atribuível depois de capital.",
-    "Reconciliação da reorganização altera bases por ação, patrimônio ou resultados do modelo recebido.",
-    "Controle, dispersão, relacionadas ou direitos modificam a transmissão de valor ao acionista."
+    "Reajustes e retenção não compensam custo médico e utilização por contrato.",
+    "Margem depende de rendimento das reservas enquanto a subscrição perde rentabilidade.",
+    "Base acionária e lucro atribuível permanecem incompatíveis com o histórico recomposto."
   ],
   "lacunas_de_dados": [
     "Base acionária, lucro atribuível e modelo quantitativo não foram reconciliados após a reorganização.",
@@ -184,7 +197,7 @@
       "titulo": "Release após reorganização, bases gerenciais e demonstrações",
       "url": "https://api.mziq.com/mzfilemanager/v2/d/c504a4a5-75e7-4404-8af7-524b50cd7e11/5f967584-b370-d17f-328a-9991fafea1c8?origin=2",
       "publicado_em": "2026-08-03",
-      "consultado_em": "2026-10-11"
+      "consultado_em": "2026-10-12"
     },
     {
       "id": "F3",

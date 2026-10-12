@@ -1,7 +1,7 @@
 {
   "mind": "codex",
   "issuer_id": "BR_MINERVA",
-  "data": "2026-10-11",
+  "data": "2026-10-12",
   "tipo": "iniciacao",
   "titulo": "Minerva — arbitragem de origens e conversão de margem em caixa",
   "resumo": "A hipótese é que flexibilidade de origens e canais preserve margens ao longo do ciclo pecuário e gere caixa depois de investimento, juros e capital de giro. A condição decisiva é receita exportada converter-se em recebimentos sem alongamento persistente da carteira e estoques. A arbitragem comercial não elimina financiamento ou restrições sanitárias. O teste precisa separar resultado anual e trimestral, dívida efetiva e índice contratual, preservando exposição cambial, custos de proteção e diluição possível. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_MINERVA.rating_codigo}}, com retorno esperado {{fact:val.BR_MINERVA.etr}}. A visão da nota não altera esse modelo.",
@@ -25,6 +25,14 @@
         "val.BR_MINERVA.upside",
         "val.BR_MINERVA.ke",
         "val.BR_MINERVA.etr"
+      ]
+    },
+    {
+      "titulo": "Exportação e ciclo financeiro",
+      "texto": "O release relaciona aumento de recebíveis às vendas para clientes asiáticos com prazo maior. A leitura de arbitragem precisa demonstrar que o ganho por destino remunera o capital mantido no ciclo comercial. Exportar mais não basta se cobrança, estoque e proteção exigirem financiamento persistente. Cumprimento contratual declarado na data do balanço tem definição e alcance próprios; não prova folga posterior nem transforma bônus disponíveis em recursos recebidos.",
+      "evidencias": [
+        "F2",
+        "F3"
       ]
     }
   ],
@@ -96,11 +104,11 @@
     "base": "Caso-base do modelo em {{fact:val.BR_MINERVA.preco_alvo}}, com retorno esperado {{fact:val.BR_MINERVA.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
     "pessimista": "Gado, restrições e prazos de exportação pressionam margem e giro; financiamento e proteção absorvem recursos e limitam retorno por ação. O cenário pessimista calculado pelo código é {{fact:val.BR_MINERVA.alvo_pessimista}}."
   },
-  "comentario_valuation": "Preço de referência {{fact:val.BR_MINERVA.preco}} e alvo do modelo aberto {{fact:val.BR_MINERVA.preco_alvo}}, com potencial {{fact:val.BR_MINERVA.upside}}. Retorno total esperado {{fact:val.BR_MINERVA.etr}} e custo do capital próprio {{fact:val.BR_MINERVA.ke}}. A dispersão entre métodos é {{fact:val.BR_MINERVA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_MINERVA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_MINERVA.consenso_alvo}}; a diferença {{fact:val.BR_MINERVA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "comentario_valuation": "O negócio pede caixa normalizado pelo ciclo pecuário, custos por origem e reinvestimento das plantas, com ponte para dívida em moedas distintas e diluição efetiva. EBITDA de período favorável ou saldo de caixa bruto isolado não sustenta valor por ação; métricas contratuais devem conservar expurgos e finalidade próprios. Preço de referência {{fact:val.BR_MINERVA.preco}} e alvo do modelo aberto {{fact:val.BR_MINERVA.preco_alvo}}, com potencial {{fact:val.BR_MINERVA.upside}}. Retorno total esperado {{fact:val.BR_MINERVA.etr}} e custo do capital próprio {{fact:val.BR_MINERVA.ke}}. A dispersão entre métodos é {{fact:val.BR_MINERVA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_MINERVA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_MINERVA.consenso_alvo}}; a diferença {{fact:val.BR_MINERVA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
   "ultimo_resultado": "A comparação trimestral anual mostra receita maior e EBITDA e lucro menores; a melhora sequencial não foi confundida com essa base. Fluxo operacional e caixa livre recentes são negativos, mesmo com acumulado anual de caixa livre positivo. A companhia concluiu emissão e recompras de dívida. Os bônus já exercidos não equivalem ao potencial de recursos futuros. O cumprimento contratual informado na data do balanço não certifica períodos posteriores nem elimina diferenças entre índice gerencial e covenant.",
   "guidance": "nd",
   "tom_gestao": "nd",
-  "governanca": "As notas descrevem cláusulas contratuais, expurgos e proteção cambial próprios. A administração informa cumprimento na data do balanço; esta pesquisa não o recalculou ou estendeu a outro período. Metas ambientais e cobertura de seguro são declarações com escopo específico, sem garantia integral da cadeia. Bônus e homologação posterior modificam capital por ação. O RI e a API pública foram recebidos por conexão normalmente verificada; consulta posterior não estabelece disponibilidade histórica dos insumos.",
+  "governanca": "As notas descrevem cláusulas contratuais, expurgos e proteção cambial próprios. A administração informa cumprimento na data do balanço; esta pesquisa não o recalculou ou estendeu a outro período. Metas ambientais e cobertura de seguro são declarações com escopo específico, sem garantia integral da cadeia. Bônus e homologação posterior modificam capital por ação. O recebimento anterior do RI e da API pública utilizou conexão normalmente verificada; consulta posterior não estabelece disponibilidade histórica dos insumos.",
   "posicao_competitiva": {
     "titulo": "Posição competitiva a comprovar",
     "texto": "Originação, plantas habilitadas e rede comercial podem permitir atendimento e redirecionamento mais ágeis. A vantagem exige prova por origem, destino, utilização e custo do animal. Demanda externa e menor oferta em outros países criam oportunidade, mas habilitação e logística condicionam acesso. Diversificação de destinos pode reduzir concentração, com prazos próprios de crédito. Rastreabilidade e metas divulgadas apoiam acompanhamento; declarações institucionais não certificam ausência de risco na cadeia.",
@@ -151,6 +159,14 @@
         "val.BR_MINERVA.ke",
         "val.BR_MINERVA.cv_metodos"
       ]
+    },
+    {
+      "titulo": "Destino, prazo e caixa depois da proteção",
+      "texto": "Acompanhar prazo de recebimento e concentração por destino, estoque e desembolsos de proteção nas divulgações seguintes. A melhora deve aparecer no caixa depois de juros e investimento, preservando comparação trimestral e anual. Rever a hipótese se o ganho de acesso comercial depender de mais crédito ao cliente ou se recompras e alongamento de dívida não reduzirem a necessidade de financiar o giro.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
     }
   ],
   "estrutura_etf": null,
@@ -171,7 +187,8 @@
     "Recebíveis por destino, prazos de exportação e perdas não foram integralmente examinados.",
     "Recursos vinculados, margens de derivativos e garantias exigem ponte de liquidez.",
     "Retorno incremental de plantas e concentração de cadeia precisam de diligência específica.",
-    "Guidance agregado, tom e percepção do mercado permanecem não determinados."
+    "Guidance agregado, tom e percepção do mercado permanecem não determinados.",
+    "A página institucional não respondeu na nova consulta; sua referência histórica foi preservada. Não há prova nova de liquidez ou covenants posteriores ao balanço."
   ],
   "stance": 0,
   "conviccao": 1,
@@ -192,7 +209,7 @@
       "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
       "url": "https://api.mziq.com/mzfilemanager/v2/d/7f2b381f-831b-4aed-b111-417a5585b53b/189fd4d3-3b2c-6755-c132-0bf3b7f65872?origin=2",
       "publicado_em": "2026-08-12",
-      "consultado_em": "2026-10-11"
+      "consultado_em": "2026-10-12"
     },
     {
       "id": "F3",
@@ -201,7 +218,7 @@
       "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
       "url": "https://api.mziq.com/mzfilemanager/v2/d/7f2b381f-831b-4aed-b111-417a5585b53b/b49cb5bd-df92-3d9f-c1fb-e396bf623336?origin=2",
       "publicado_em": "2026-08-12",
-      "consultado_em": "2026-10-11"
+      "consultado_em": "2026-10-12"
     }
   ],
   "modelo_ia": null

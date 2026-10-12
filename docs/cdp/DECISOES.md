@@ -1019,6 +1019,17 @@ o valuation. Na carteira, registro diário e proposta, risco diário e ex-ante e
 da mesma semana ficam separados. Ausentes continuam `n/d`; sinais e excessos de limites
 não são ocultados. Os renderizadores não aprovam decisões nem alteram mandato ou posições.
 
+## 2026-10-12 · Concluir os pendentes com aprofundamento documental
+
+Contexto: após a entrega parcial, o humano determinou “Conclua os 85 restantes
+em profundidade”, respondendo à extensão de orçamento solicitada. → Decisão:
+prosseguir nesta sessão além do corte anterior, preservando gates, trava,
+executor interno e limite vigente por execução. → Consequências: novas consultas
+e versões de pesquisa usam a data efetiva, sem retroagir conhecimento ao modelo;
+revisões são entregues como rascunhos e adotadas pelo fluxo canônico. O pedido não
+autoriza mudança de mandato, cálculos pela mente, fontes restritas ou alteração
+de publicações imutáveis. A configuração das rotinas permanece igual.
+
 ## 2026-10-11 · Recalcular risco entre ambientes sem alterar o arquivo autenticado
 
 Contexto: o job Linux recusou medidas arquivadas do risco diário efetivo e sombra,

@@ -1,0 +1,395 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "fe296ed2932d0d6b91444b50756ab42107dfc07a550b1a313b843bd7b7f1521d",
+    "factbook": "514a18a021f80b567a7ae2c9113001a3c06ed28c438ddbbcfebb8c62fa308410",
+    "nota_json": "e08c4157f9759a2d1cebfb8ca61bd6f64066bc9925bbe2c68a08255cb53498e1"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_ENERGISA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T03:27:13.488330+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A entrada de capital na Denerge foi concluída segundo o release, com direitos de novo investidor; não é lucro de venda. Ativos de transmissão classificados para venda não representam recebimento concluído no trimestre. Dívida líquida desconta créditos setoriais, além de caixa, e a medida contratual de resultado difere da recorrente. Dividendos programados para data passada não foram promovidos a crédito confirmado.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 55,09, com retorno esperado -15,68%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Redes e qualidade sustentam remuneração recebida, com financiamento e capital preservando retorno atribuível ao titular. O cenário otimista calculado pelo código é R$ 63,19.",
+      "pessimista": "Custos, perdas e obrigações de qualidade exigem capital, enquanto dívida e direitos de terceiros absorvem caixa. O cenário pessimista calculado pelo código é R$ 47,99."
+    },
+    "comentario_valuation": "Preço de referência R$ 66,25 e alvo do modelo aberto R$ 55,09, com potencial -16,85%. Retorno total esperado -15,68% e custo do capital próprio 10,68%. A dispersão entre métodos é 50,54%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 65,77; a diferença -16,24% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se investimento e receita regulatória não cobrem qualidade, perdas e financiamento. Reversões específicas podem encobrir custo recorrente maior; contribuição de gás e soluções pode não compensar menor resultado da distribuição elétrica. Crescimento consolidado antes de minoritários não assegura retorno por unidade.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_ENERGISA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 66,25"
+      },
+      {
+        "fato": "val.BR_ENERGISA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 55,09"
+      },
+      {
+        "fato": "val.BR_ENERGISA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-16,85%"
+      },
+      {
+        "fato": "val.BR_ENERGISA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_ENERGISA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_ENERGISA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 63,19"
+      },
+      {
+        "fato": "val.BR_ENERGISA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_ENERGISA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 47,99"
+      },
+      {
+        "fato": "val.BR_ENERGISA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_ENERGISA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,68%"
+      },
+      {
+        "fato": "val.BR_ENERGISA.wacc",
+        "rotulo": "WACC",
+        "valor": "8,64%"
+      },
+      {
+        "fato": "val.BR_ENERGISA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_ENERGISA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-15,68%"
+      },
+      {
+        "fato": "val.BR_ENERGISA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-12,94%"
+      },
+      {
+        "fato": "val.BR_ENERGISA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "31,0x"
+      },
+      {
+        "fato": "val.BR_ENERGISA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,7x"
+      },
+      {
+        "fato": "val.BR_ENERGISA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 65,77"
+      },
+      {
+        "fato": "val.BR_ENERGISA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-16,24%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Energisa",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Portal de RI e informações do grupo",
+        "url": "https://ri.energisa.com.br/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Energisa",
+        "publicado_em": "2026-08-06",
+        "tipo": "Relações com investidores",
+        "titulo": "Release de resultados, recorrência, concessões, capital e projeções",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/60f49a2d-bd8c-4fd9-95ab-bdf833097a83/c4a851a2-10c3-3c55-3d68-fcf7f6306b96?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Qualidade, perdas e custos impedem remuneração suficiente do investimento nas redes.",
+      "Créditos setoriais e resultado ajustado não se convertem em caixa após dívida.",
+      "Alienações e entrada de minoritários alteram direitos e retorno sem capital atribuível suficiente.",
+      "Novos documentos modificam projeções, reconhecimento regulatório e bases por unidade."
+    ],
+    "governanca": "Renovações de concessões relatadas como concluídas preservam obrigações e metas de serviço. Consolidado, controladora, participação econômica e composição da unidade exigem conciliação. Resultado contratual de dívida, resultado recorrente e recebíveis setoriais não são intercambiáveis. Algumas projeções foram retiradas por estratégia ou realização, enquanto outra permanece; não se classificou direção agregada uniforme.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Monitorar qualidade e perdas por distribuidora, energia faturada, inadimplência recorrente, custos e investimento reconhecido. Conciliar créditos setoriais, recebimentos, dívida e encargos depois da proteção. Separar contribuições do gás, comercialização, geração e serviços financeiros. Acompanhar vendas de ativos, capital de minoritários e direitos por unidade.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ENERGISA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-15,68%"
+          },
+          {
+            "fato": "val.BR_ENERGISA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,68%"
+          },
+          {
+            "fato": "val.BR_ENERGISA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "50,54%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -15,68%, custo do capital 10,68% e dispersão entre métodos 50,54% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_ENERGISA",
+    "lacunas_de_dados": [
+      "Demonstrações completas, concessões e retorno da base regulatória não foram integralmente reconciliados.",
+      "Dívida contratual, créditos setoriais e caixa livre exigem conciliação por entidade.",
+      "Resultado consolidado, controladora, minoritários e unidade não foram reconciliados com todos os insumos do modelo.",
+      "Conclusão de vendas, crédito de proventos e retorno de investimentos posteriores não foram comprovados.",
+      "Projeções têm estados diferentes; direção agregada e tom da gestão permanecem não determinados.",
+      "Não há catalisador futuro datado confirmado nesta pesquisa.",
+      "Vantagem relativa, percepção do mercado e risco detalhado dos negócios financeiros permanecem a comprovar."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo de distribuição e transmissão de eletricidade, distribuição de gás, geração e soluções de energia. Negócios financeiros e de comercialização têm riscos diferentes das redes reguladas. As participações em gás combinam consolidação e equivalência patrimonial. A unidade negociada e os minoritários exigem conciliar resultado e direitos de capital por titular.",
+    "nome": "Energisa",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      },
+      {
+        "issuer_id": "BR_CPFL",
+        "nome": "CPFL Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que investimento em redes e qualidade do serviço sustente remuneração regulatória e caixa por unidade depois de financiamento. A condição decisiva é retorno da base investida efetivamente recebido com perdas, despesas e capital compatíveis. Reajuste da conta do consumidor e reversão de contingências não comprovam melhora recorrente da margem atribuível.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ENERGISA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 66,25"
+          },
+          {
+            "fato": "val.BR_ENERGISA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 55,09"
+          },
+          {
+            "fato": "val.BR_ENERGISA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-16,85%"
+          },
+          {
+            "fato": "val.BR_ENERGISA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,68%"
+          },
+          {
+            "fato": "val.BR_ENERGISA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-15,68%"
+          }
+        ],
+        "texto": "Preço de referência R$ 66,25 e alvo R$ 55,09, com potencial -16,85%. A hipótese de investimento deve ser confrontada com o custo do capital 10,68% e retorno esperado -15,68%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Concessões e redes estabelecidas apoiam atendimento local, mas impõem investimento, qualidade e metas próprias. Expansão de base regulatória só remunera capital conforme contratos e reconhecimento. Crescimento do consumo total difere de energia faturada após geração distribuída. Novos mercados de gás e soluções exigem margem e retorno, sem presumir vantagem apenas pela escala.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:27:13.488330+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O resultado operacional recorrente consolidado cresce modestamente na comparação anual, enquanto a distribuição elétrica recua e o lucro recorrente diminui. O trimestre tem prejuízo societário, com atribuição diferente entre consolidado e controladora. Acordo de Rondônia, reversões, baixas de crédito, reclassificação de ativos à venda e encargos financeiros têm naturezas diferentes.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que investimento em redes e qualidade do serviço sustente remuneração regulatória e caixa por unidade depois de financiamento. A condição decisiva é retorno da base investida efetivamente recebido com perdas, despesas e capital compatíveis. Reajuste da conta do consumidor e reversão de contingências não comprovam melhora recorrente da margem atribuível. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado -15,68%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Qualidade, perdas, inadimplência e reconhecimento regulatório podem exigir investimento adicional. Dívida e custo financeiro consomem resultado. Reversões, créditos setoriais e capital de minoritários não são caixa livre integralmente atribuível."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ENERGISA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-16,24%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -16,24%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Energisa — retorno das redes após investimento, minoritários e dívida",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Reversões do acordo de Rondônia reduzem despesas reportadas, mas custos e perdas de crédito recorrentes têm leitura própria. O efeito financeiro do acordo não é igual à reversão operacional. A distribuição tem indicadores de duração de interrupções acima de metas em várias concessões, embora frequência cumpra os limites apresentados. Na comercialização, marcação favorece o resultado reportado; melhora operacional ajustada não elimina o prejuízo após financiamento.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar qualidade e perdas por distribuidora, energia faturada, inadimplência recorrente, custos e investimento reconhecido. Conciliar créditos setoriais, recebimentos, dívida e encargos depois da proteção. Separar contribuições do gás, comercialização, geração e serviços financeiros. Acompanhar vendas de ativos, capital de minoritários e direitos por unidade.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_ENERGISA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,68%"
+          },
+          {
+            "fato": "val.BR_ENERGISA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "50,54%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,68% e a dispersão entre métodos 50,54%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

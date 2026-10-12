@@ -1,0 +1,480 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "e56b7cfa64f23f95ef44cc1bd655c83a57414e2c4534d792fc80c1ae4688cb3c",
+    "factbook": "19235e4243db5a23916452310db1d273e5c6ed5326dc74fe893075c1e03ee6d8",
+    "nota_json": "9dc1233d83a56ed0a092855352ee1e1e86e4ed3cdfbc891085a6fe092a7007d8"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_DIRECIONAL",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T03:28:10.747450+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A dívida líquida recua sequencialmente, com situação anual distinta; dívida corporativa exclui determinadas modalidades de projeto. Cessões permanecem registradas com passivos e cotas subordinadas, sem presumir transferência completa do risco. Aplicações e saldo de dívida com swaps exigem conciliação. A oferta posterior tem anúncio de encerramento e quadro de títulos subscritos e integralizados; financiamento recebido não equivale a geração operacional. Registro automático e programa de apoio não estabelecem garantia de solvência.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Resultado posterior e comportamento das safras, após repasses elevados, distratos e mudanças na liquidez gerencial.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Uso do financiamento integralizado, obrigações contratuais e retorno de novas regiões e joint ventures.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "tipo": "capital"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 12,67, com retorno esperado +19,94%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Execução, produto e repasses sustentam margens depois de financiamento, com crédito controlado e expansão regional remunerando capital atribuível. O cenário otimista calculado pelo código é R$ 13,72.",
+      "pessimista": "Distratos, custos e crédito direto crescem, exigindo financiamento e cessões enquanto retorno e caixa por participação se deterioram. O cenário pessimista calculado pelo código é R$ 11,78."
+    },
+    "comentario_valuation": "Preço de referência R$ 11,56 e alvo do modelo aberto R$ 12,67, com potencial +9,61%. Retorno total esperado +19,94% e custo do capital próprio 10,66%. A dispersão entre métodos é 7,03%; a confiança quantitativa recebida é B. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 18,79; a diferença -32,57% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A hipótese enfraquece se crescimento econômico depender de mix, crédito direto ou aquisição de participações sem retorno equivalente. Originação de cessões pode sustentar liquidez enquanto amplia exposição retida. Margem ajustada não remunera automaticamente custo financeiro e risco da construção. Mais repasses não eliminam carteira pós-chaves; venda societária e alteração de bloqueio bancário podem melhorar caixa sem se repetir. O capital deve ser testado por marca, projeto e entidade.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_DIRECIONAL.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 11,56"
+      },
+      {
+        "fato": "val.BR_DIRECIONAL.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 12,67"
+      },
+      {
+        "fato": "val.BR_DIRECIONAL.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+9,61%"
+      },
+      {
+        "fato": "val.BR_DIRECIONAL.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_DIRECIONAL.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_DIRECIONAL.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 13,72"
+      },
+      {
+        "fato": "val.BR_DIRECIONAL.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_DIRECIONAL.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 11,78"
+      },
+      {
+        "fato": "val.BR_DIRECIONAL.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_DIRECIONAL.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,66%"
+      },
+      {
+        "fato": "val.BR_DIRECIONAL.wacc",
+        "rotulo": "WACC",
+        "valor": "9,02%"
+      },
+      {
+        "fato": "val.BR_DIRECIONAL.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_DIRECIONAL.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+19,94%"
+      },
+      {
+        "fato": "val.BR_DIRECIONAL.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "0,00%"
+      },
+      {
+        "fato": "val.BR_DIRECIONAL.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "5,4x"
+      },
+      {
+        "fato": "val.BR_DIRECIONAL.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,6x"
+      },
+      {
+        "fato": "val.BR_DIRECIONAL.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 18,79"
+      },
+      {
+        "fato": "val.BR_DIRECIONAL.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-32,57%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Direcional",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil de construção industrial e segmentos habitacionais",
+        "url": "https://ri.direcional.com.br/a-companhia/perfil-corporativo/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Direcional",
+        "publicado_em": "2026-08-11",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado trimestral: marcas, margens, repasses, cessões e dívida",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/ada9bc2c-f7d0-4359-9eaf-851b679ab788/8966f336-97d7-142e-654a-b27fae98b331?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Direcional",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: reconhecimento, crédito, fluxo e revisão",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/ada9bc2c-f7d0-4359-9eaf-851b679ab788/e7250290-a0ce-9144-cc4e-169db46844eb?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "Direcional",
+        "publicado_em": "2026-10-05",
+        "tipo": "Relações com investidores",
+        "titulo": "Encerramento da oferta e quadro final de títulos integralizados",
+        "url": "https://filemanager-cdn.mziq.com/published/ada9bc2c-f7d0-4359-9eaf-851b679ab788/c36f23cd-1a25-423a-806b-31f67912116f"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Cessões e monetização sustentam caixa sem conversão recorrente das obras.",
+      "Distratos e perdas do crédito direto comprometem a rentabilidade das safras.",
+      "Custo completo e juros divergem da melhoria das margens ajustadas.",
+      "Expansão ou dívida altera direitos, liquidez e retorno atribuível."
+    ],
+    "governanca": "A análise preserva Direcional, Riva, projetos e minoritários em seus perímetros. Crédito cedido e risco retido não são tratados como ausência de exposição. O encerramento da oferta comprova distribuição e integralização indicadas no quadro; a destinação e obrigações da escritura exigem leitura própria. Recompra autorizada não demonstra execução integral. Revisão intermediária não equivale a auditoria anual. Comparações de alavancagem e receita devem manter direitos e eliminações.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "Conciliar vendas integrais e econômicas, repasses, distratos, margem por safra e marcas. Separar fluxo contábil, variação de dívida, cessões, cotas subordinadas e monetização societária. Acompanhar financiamento direto, perdas, obras, permutas, covenants e capital efetivamente atribuível antes de inferir distribuição.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_DIRECIONAL.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+19,94%"
+          },
+          {
+            "fato": "val.BR_DIRECIONAL.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,66%"
+          },
+          {
+            "fato": "val.BR_DIRECIONAL.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "7,03%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +19,94%, custo do capital 10,66% e dispersão entre métodos 7,03% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_DIRECIONAL",
+    "lacunas_de_dados": [
+      "Pontes de variação da dívida líquida, swaps e fluxo livre não foram integralmente reconciliadas.",
+      "Carteira cedida, obrigações remanescentes e perdas das cotas subordinadas exigem conciliação detalhada.",
+      "Direitos, retorno e capital das novas joint ventures não foram integralmente examinados.",
+      "Destinação, garantias e covenants da escritura da emissão posterior permanecem a reconciliar.",
+      "Calendário atual e prévia posterior não foram integralmente avaliados.",
+      "Guidance agregado, tom e percepção do mercado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Construtora e incorporadora habitacional com atuação em diferentes regiões e marcas Direcional e Riva, voltadas a públicos e faixas de renda distintas. Industrialização, seleção de áreas e repasse bancário integram a operação. Joint ventures e sociedades de propósito específico mantêm participações próprias. VGV integral, parcela econômica e receita consolidada não são intercambiáveis. Crédito direto, pró-soluto e cessões de recebíveis ampliam a necessidade de avaliar risco além da venda.",
+    "nome": "Direcional",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_AZZAS",
+        "nome": "Azzas 2154"
+      },
+      {
+        "issuer_id": "BR_CEA",
+        "nome": "C&A Modas"
+      },
+      {
+        "issuer_id": "BR_COGNA",
+        "nome": "Cogna"
+      },
+      {
+        "issuer_id": "BR_CURY",
+        "nome": "Cury"
+      },
+      {
+        "issuer_id": "BR_CYRELA",
+        "nome": "Cyrela"
+      },
+      {
+        "issuer_id": "BR_EZTEC",
+        "nome": "EZTec"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A hipótese é que escala de construção e produto adequado sustentem retorno depois do terreno, financiamento e risco de crédito. A condição decisiva é que crescimento por marca se converta em margem e caixa atribuível sem depender de monetização de participações ou originação contínua de cessões. Expansão por regiões e joint ventures pode ampliar acesso a demanda, mas aumenta exigência de controles, execução e escolha de capital. O teste de valor é a rentabilidade das safras concluídas, com repasses, distratos e perdas reconhecidos em bases comparáveis.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_DIRECIONAL.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 11,56"
+          },
+          {
+            "fato": "val.BR_DIRECIONAL.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 12,67"
+          },
+          {
+            "fato": "val.BR_DIRECIONAL.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+9,61%"
+          },
+          {
+            "fato": "val.BR_DIRECIONAL.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,66%"
+          },
+          {
+            "fato": "val.BR_DIRECIONAL.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+19,94%"
+          }
+        ],
+        "texto": "Preço de referência R$ 11,56 e alvo R$ 12,67, com potencial +9,61%. A hipótese de investimento deve ser confrontada com o custo do capital 10,66% e retorno esperado +19,94%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Processos padronizados, relacionamento bancário e aquisição de terrenos por permuta podem apoiar escala e reduzir determinados desembolsos iniciais. Permuta mantém obrigação econômica e não torna terreno gratuito. Riva e Direcional têm concorrentes, mix e crédito distintos. Marca e backlog não garantem absorção local. Participações e empreendimentos não consolidados exigem controlar direitos e obrigações; capacidade de operar regionalmente precisa ser demonstrada por margem, prazo de obra e recebimento.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:28:10.747450+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita e EBITDA ajustado crescem, com lucro operacional próximo do trimestre anterior e lucro reportado com comparação sequencial distinta. Margens ajustadas excluem juros capitalizados; margem contábil sofre efeito de mix. Distratos e despesas comerciais aumentam a exigência de capital. A companhia chama de caixa contábil uma medida baseada em variação de dívida líquida, distinta da demonstração dos fluxos. A ponte operacional retira cessões, monetização societária, dividendos da Riva e mudança de bloqueio da Caixa; não é fluxo livre automaticamente.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que escala de construção e produto adequado sustentem retorno depois do terreno, financiamento e risco de crédito. A condição decisiva é que crescimento por marca se converta em margem e caixa atribuível sem depender de monetização de participações ou originação contínua de cessões. Expansão por regiões e joint ventures pode ampliar acesso a demanda, mas aumenta exigência de controles, execução e escolha de capital. O teste de valor é a rentabilidade das safras concluídas, com repasses, distratos e perdas reconhecidos em bases comparáveis. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +19,94%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Crédito, distratos, custo de construção e absorção regional podem reduzir caixa. Cessões e cotas subordinadas mantêm exposição. Permutas, projetos, financiamento e minoritários limitam a transmissão direta do EBITDA ao acionista."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_DIRECIONAL.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-32,57%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -32,57%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo discricionário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Direcional — execução habitacional, repasses e risco no crédito direto",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O release distingue vendas integrais e parcela da companhia, com direções anuais diferentes. Repasse cresce, mas crédito direto e cotas subordinadas exigem leitura própria. Distratos incluem contratos regionais descontinuados; revenda declarada pela gestão não comprova recebimento integral. Receita total gerencial inclui sociedades não consolidadas. O saldo a apropriar aumenta com margem menor, sem equivaler a receita ou caixa realizado. A emissão posterior mantém sua data e não altera retrospectivamente o retrato do modelo.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Conciliar vendas integrais e econômicas, repasses, distratos, margem por safra e marcas. Separar fluxo contábil, variação de dívida, cessões, cotas subordinadas e monetização societária. Acompanhar financiamento direto, perdas, obras, permutas, covenants e capital efetivamente atribuível antes de inferir distribuição.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_DIRECIONAL.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,66%"
+          },
+          {
+            "fato": "val.BR_DIRECIONAL.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "7,03%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 10,66% e a dispersão entre métodos 7,03%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

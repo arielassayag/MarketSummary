@@ -1,0 +1,396 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "0f39cd781346595635b2e662ba165f5c156d243bded9e0e4794bf69a5a7bbb17",
+    "factbook": "fe9699539b803b27a0ff55c2a6d628c52a88b19294eb0e8172841719de79b660",
+    "nota_json": "e0edc0256b84dab4c77b6ab76e61f45f95c05c73272f4885ed9e7528d68524f2"
+  },
+  "is_synthetic": false,
+  "issuer_id": "AR_GALICIA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-24",
+  "published_at": "2026-10-12T03:25:17.002561+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Índices de capital do grupo e do banco têm perímetros diferentes; reexpressão inflacionária afeta a comparação. Liquidez inclui títulos públicos a valor justo. Ativos de fundos pertencem aos clientes e não podem ser tratados como recursos próprios disponíveis para distribuição.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em Em revisão, com retorno esperado Em revisão. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Integração melhora serviço e eficiência; cada negócio remunera risco e capital e transmite recursos atribuíveis ao grupo. O cenário otimista calculado pelo código é Em revisão.",
+      "pessimista": "Crédito, falhas de integração e reversão de ganhos financeiros consomem as economias e limitam remuneração do capital. O cenário pessimista calculado pelo código é Em revisão."
+    },
+    "comentario_valuation": "Preço de referência US$ 36,76 e alvo do modelo aberto Em revisão, com potencial Em revisão. Retorno total esperado Em revisão e custo do capital próprio 16,18%. A dispersão entre métodos é 6,69%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é US$ 66,57; a diferença Em revisão não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese enfraquece se as economias da integração dependem de efeitos sazonais ou se expansão digital não cobre perdas e capital. Ganhos de títulos e seguros não substituem a comprovação do retorno recorrente de cada negócio.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.AR_GALICIA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 36,76"
+      },
+      {
+        "fato": "val.AR_GALICIA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_GALICIA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_GALICIA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_GALICIA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.AR_GALICIA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_GALICIA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_GALICIA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_GALICIA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_GALICIA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "16,18%"
+      },
+      {
+        "fato": "val.AR_GALICIA.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.AR_GALICIA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.AR_GALICIA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_GALICIA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_GALICIA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "5,7x"
+      },
+      {
+        "fato": "val.AR_GALICIA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,3x"
+      },
+      {
+        "fato": "val.AR_GALICIA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 66,57"
+      },
+      {
+        "fato": "val.AR_GALICIA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Grupo Financiero Galicia",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Portal institucional de informação ao investidor",
+        "url": "https://www.gfgsa.com/es"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Grupo Financiero Galicia",
+        "publicado_em": "2026-08-25",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultados do grupo e negócios financeiros",
+        "url": "https://www.sec.gov/Archives/edgar/data/1114700/000111470026000073/grupogaliciapressrelease.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+      "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+      "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+      "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+    ],
+    "governanca": "Revisar classes e recibos, controle da holding, acordos e transferências nas subsidiárias. Distinguir participação econômica, resultado atribuível e recursos dos clientes de recursos livres do acionista.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar economia de integração, serviço e receita por cliente em banco e fintech. Revisar custo de funding, crédito por safra, provisões e recuperações. Separar resultado técnico dos seguros e receitas de gestão, conciliando capital e transferências por entidade.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.AR_GALICIA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.AR_GALICIA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "16,18%"
+          },
+          {
+            "fato": "val.AR_GALICIA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "6,69%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado Em revisão, custo do capital 16,18% e dispersão entre métodos 6,69% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "AR_GALICIA",
+    "lacunas_de_dados": [
+      "Demonstrações e perdas esperadas por entidade não foram integralmente conciliadas.",
+      "Perímetros de capital, NPL e retorno exigem séries homogêneas.",
+      "Integração, classes, recibos e base atual por ação permanecem a comprovar.",
+      "Resultado técnico de seguros e transferências à holding precisam de abertura.",
+      "Guidance, tom da gestão e evento futuro datado seguem não classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo argentino com Banco Galicia, fintech Naranja X, seguros e gestão de fundos FIMA. A integração de Galicia Más, antigo HSBC local, afeta operação e comparabilidade. Resultado da holding, do banco e da fintech deve respeitar o perímetro efetivamente consolidado.",
+    "nome": "Grupo Financiero Galicia",
+    "o_que_mudou": null,
+    "pais": "Argentina",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que integração e canais complementares ampliem relacionamento rentável depois do risco e do capital necessário. Escala digital e transacional deve converter-se em funding, comissões e crédito com retorno. Sinergia só sustenta valor quando as economias aparecem sem perda de serviço, clientes ou disciplina de crédito.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.AR_GALICIA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "US$ 36,76"
+          },
+          {
+            "fato": "val.AR_GALICIA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.AR_GALICIA.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.AR_GALICIA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "16,18%"
+          },
+          {
+            "fato": "val.AR_GALICIA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          }
+        ],
+        "texto": "Preço de referência US$ 36,76 e alvo Em revisão, com potencial Em revisão. A hipótese de investimento deve ser confrontada com o custo do capital 16,18% e retorno esperado Em revisão.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Banco, fintech e gestão podem atender diferentes necessidades e perfis de clientes. A vantagem exige monetização líquida e retenção, além de usuários e contas. Sobreposição de clientes não deve ser contada como diversificação, e participação declarada pelo grupo precisa de base comparável.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:25:17.002561+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O trimestre inclui títulos indexados, ganhos de venda e derivativos, além de menor perda monetária e despesas de integração. A melhora de provisões convive com aumento de NPL. Naranja X tem ajustes próprios de consolidação. Lucro de seguros pode depender do resultado financeiro, distinto da qualidade da subscrição.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que integração e canais complementares ampliem relacionamento rentável depois do risco e do capital necessário. Escala digital e transacional deve converter-se em funding, comissões e crédito com retorno. Sinergia só sustenta valor quando as economias aparecem sem perda de serviço, clientes ou disciplina de crédito. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Em revisão, com retorno esperado Em revisão. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Integração, crédito ao consumidor, inflação e títulos podem pressionar retorno. Crescimento digital pode elevar perdas e despesas. Capital, restrições de transferência e direitos podem limitar o benefício atribuível ao acionista."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.AR_GALICIA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "Em revisão"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é Em revisão. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Galicia — integração da franquia e retorno após risco por negócio",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O estudo preserva perímetros do grupo, banco e fintech, e o efeito de inflação nos comparativos. A redução de provisões não é apresentada como redução automática de NPL. Bases e rótulos dos resultados de seguros requerem confronto com os documentos originais.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar economia de integração, serviço e receita por cliente em banco e fintech. Revisar custo de funding, crédito por safra, provisões e recuperações. Separar resultado técnico dos seguros e receitas de gestão, conciliando capital e transferências por entidade.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.AR_GALICIA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "16,18%"
+          },
+          {
+            "fato": "val.AR_GALICIA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "6,69%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 16,18% e a dispersão entre métodos 6,69%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

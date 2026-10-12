@@ -1,0 +1,444 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "0df7c40b5bc397affa6774dbeedd61cc43c9a1701da36eb52c0ff6d6aed8a8e5",
+    "factbook": "416880e34f3da0e4bb00e5da4766bb3962ea85becc0488d7a88f447fe9f1232c",
+    "nota_json": "ecd92bdecc0f80572d7734cc821b39fe0dec0c53f573375426278fa5da59440d"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_TOTVS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-04",
+  "published_at": "2026-10-12T03:24:57.632159+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Aquisições e desenvolvimento exigem capital, com alocação preliminar do preço e obrigações contingentes próprias. Financiamento da Linx elevou dívida. Alienação de Dimensa e recompra tiveram movimentos efetivos; venda anteriormente contratada de RJ foi rescindida e o ativo permanece mantido para venda. Recursos de Techfin não são integralmente livres da holding.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar integração, retenção e caixa recorrente.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Definição das obrigações de aquisições e situação do ativo mantido para venda.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "m_a"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 16,60, com retorno esperado -57,37%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Integração melhora retenção e receita própria, com desenvolvimento e dívida disciplinados; caixa recorrente remunera capital, e Techfin preserva crédito e direitos de sócios. O cenário otimista calculado pelo código é R$ 19,12.",
+      "pessimista": "Integração e competição enfraquecem margem; juros, desenvolvimento e crédito consomem recursos, enquanto alienações e ajustes mascaram geração insuficiente. O cenário pessimista calculado pelo código é R$ 14,33."
+    },
+    "comentario_valuation": "Preço de referência R$ 40,81 e alvo do modelo aberto R$ 16,60, com potencial -59,33%. Retorno total esperado -57,37% e custo do capital próprio 12,95%. A dispersão entre métodos é 31,00%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 48,93; a diferença -66,07% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Crescimento pro forma e menor dívida líquida podem coexistir com dívida bruta maior e recebimento de alienação. Produtos novos não garantem monetização. Se retenção e integração não remunerarem capital e financiamento, a expansão do ecossistema não confirmará valor por ação.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_TOTVS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 40,81"
+      },
+      {
+        "fato": "val.BR_TOTVS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 16,60"
+      },
+      {
+        "fato": "val.BR_TOTVS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-59,33%"
+      },
+      {
+        "fato": "val.BR_TOTVS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_TOTVS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_TOTVS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 19,12"
+      },
+      {
+        "fato": "val.BR_TOTVS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_TOTVS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 14,33"
+      },
+      {
+        "fato": "val.BR_TOTVS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_TOTVS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,95%"
+      },
+      {
+        "fato": "val.BR_TOTVS.wacc",
+        "rotulo": "WACC",
+        "valor": "11,72%"
+      },
+      {
+        "fato": "val.BR_TOTVS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_TOTVS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-57,37%"
+      },
+      {
+        "fato": "val.BR_TOTVS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-39,49%"
+      },
+      {
+        "fato": "val.BR_TOTVS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "20,1x"
+      },
+      {
+        "fato": "val.BR_TOTVS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "4,3x"
+      },
+      {
+        "fato": "val.BR_TOTVS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 48,93"
+      },
+      {
+        "fato": "val.BR_TOTVS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-66,07%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "TOTVS",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://ri.totvs.com/a-companhia/historico-e-perfil/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "TOTVS",
+        "publicado_em": "2026-08-05",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/d3be5d49-62e7-4def-a3e1-ab25ff09f153/29ca7a02-e9c5-d3b1-6d1e-578cf0ac69d8?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "TOTVS",
+        "publicado_em": "2026-08-05",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/d3be5d49-62e7-4def-a3e1-ab25ff09f153/397fa7b1-ae79-e876-e2bc-353649700381?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+      "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+      "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+      "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    ],
+    "governanca": "Aquisições concluídas, preço alocado provisoriamente e contraprestações contingentes têm estados distintos. O perfil corporativo contém histórico anterior e não substitui o perímetro atual dos resultados. Techfin tem direitos compartilhados e informações próprias. Ativo mantido para venda não comprova fechamento nem recebimento.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Renovação, receita recorrente e transacional, monetização e margem por solução; desenvolvimento e integração da Linx. Conciliar caixa, juros, aluguel, aquisições e alienações. Acompanhar crédito, provisões e direitos de Techfin, sem atribuir seu resultado integralmente à holding.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_TOTVS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-57,37%"
+          },
+          {
+            "fato": "val.BR_TOTVS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,95%"
+          },
+          {
+            "fato": "val.BR_TOTVS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "31,00%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -57,37%, custo do capital 12,95% e dispersão entre métodos 31,00% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_TOTVS",
+    "lacunas_de_dados": [
+      "A ponte integral de caixa e juros, dívida e retorno da Linx permanece pendente.",
+      "Alocação preliminar do preço e obrigações contingentes requerem atualização.",
+      "Retenção, monetização e retorno de produtos novos não foram comprovados independentemente.",
+      "Crédito, direitos de sócios e caixa atribuível de Techfin exigem diligência.",
+      "Venda da RJ não foi comprovada como concluída após a rescisão relatada.",
+      "Guidance agregado e participação de mercado não foram comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo de software de gestão, soluções verticais, recursos humanos e serviços digitais. Linx e RD Station ampliam o ecossistema, com integração e desenvolvimento próprios. Techfin tem operações financeiras e direitos compartilhados, distintos da receita de software. Receita transacional anualizada não é integralmente uma assinatura contratada.",
+    "nome": "Totvs",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "AR_GLOBANT",
+        "nome": "Globant"
+      },
+      {
+        "issuer_id": "BR_BEMOBI",
+        "nome": "Bemobi"
+      },
+      {
+        "issuer_id": "BR_INTELBRAS",
+        "nome": "Intelbras"
+      },
+      {
+        "issuer_id": "BR_LOCAWEB",
+        "nome": "Locaweb (LWSA)"
+      },
+      {
+        "issuer_id": "BR_VTEX",
+        "nome": "VTEX"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que integração e produtividade sustentem retenção e expansão da receita própria depois do custo completo. A condição decisiva é remunerar o capital empregado na Linx sem depender de vendas de ativos ou ajustes. Software e Techfin devem preservar riscos, direitos e critérios de atribuição distintos.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_TOTVS.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 40,81"
+          },
+          {
+            "fato": "val.BR_TOTVS.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 16,60"
+          },
+          {
+            "fato": "val.BR_TOTVS.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-59,33%"
+          },
+          {
+            "fato": "val.BR_TOTVS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,95%"
+          },
+          {
+            "fato": "val.BR_TOTVS.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-57,37%"
+          }
+        ],
+        "texto": "Preço de referência R$ 40,81 e alvo R$ 16,60, com potencial -59,33%. A hipótese de investimento deve ser confrontada com o custo do capital 12,95% e retorno esperado -57,37%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Base instalada, conhecimento de processos e integração podem elevar custo de mudança. Linx amplia a exposição ao varejo; soluções de inteligência artificial exigem adoção e monetização comprovadas. Recorrência transacional e relacionamento não asseguram margem ou vantagem permanente diante de concorrência e novos produtos.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:24:57.632159+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Linx foi adquirida e entrou no consolidado; comparativos gerenciais pro forma diferem da incorporação original. Caixa livre gerencial cresceu, com juros, tributos e ocupação em linhas próprias. Dívida líquida caiu sequencialmente com contribuição da venda de Dimensa, enquanto a bruta aumentou. Techfin apresentou resultado ajustado negativo e provisões maiores.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que integração e produtividade sustentem retenção e expansão da receita própria depois do custo completo. A condição decisiva é remunerar o capital empregado na Linx sem depender de vendas de ativos ou ajustes. Software e Techfin devem preservar riscos, direitos e critérios de atribuição distintos. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado -57,37%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Integração, concorrência e desenvolvimento podem absorver margem e caixa. Dívida e obrigações contingentes elevam compromisso de capital. Techfin acrescenta crédito e provisões; bases pro forma e alienações podem superestimar recorrência."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_TOTVS.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-66,07%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -66,07%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Tecnologia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "TOTVS — software, integração e capital depois da Linx",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Linx passou a integrar o consolidado após aquisição concluída; alocação do preço permanece preliminar. O release usa comparativos pro forma. Caixa livre gerencial cresceu, mas a redução sequencial da dívida líquida também recebeu contribuição da venda de Dimensa; dívida bruta aumentou. Techfin apresentou resultado ajustado negativo e provisões maiores. O contrato de venda de RJ foi rescindido e o ativo segue mantido para venda, sem alienação concluída presumida.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Renovação, receita recorrente e transacional, monetização e margem por solução; desenvolvimento e integração da Linx. Conciliar caixa, juros, aluguel, aquisições e alienações. Acompanhar crédito, provisões e direitos de Techfin, sem atribuir seu resultado integralmente à holding.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_TOTVS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,95%"
+          },
+          {
+            "fato": "val.BR_TOTVS.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "31,00%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 12,95% e a dispersão entre métodos 31,00%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

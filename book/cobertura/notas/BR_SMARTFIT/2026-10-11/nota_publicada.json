@@ -1,0 +1,456 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "02a9c1e4a283067b55944612f5864a3bd6676dd358460fe9a1cc6878fa3ad7f2",
+    "factbook": "a167427a7ff2be0a97d75679bdb69b85156065a909966c2339ee2e2dfc925014",
+    "nota_json": "7b2b6d63a95972e40d375a6259e2917cf668a34ff2021f19adb79bcedca9e195"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_SMARTFIT",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-12T03:28:29.581925+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Expansão e manutenção aumentaram, com unidades premium exigindo investimento próprio. A dívida ajustada inclui passivos e direitos contratuais, em base distinta da dívida simples. A aquisição do controle da Evolve foi concluída depois do trimestre, com aporte inicial e saldo condicionado. Emissão aprovada para refinanciamento não comprova captação integral.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximos resultados: testar maturação, retenção e caixa após manutenção e expansão.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Confirmação dos aportes condicionais da Evolve e do refinanciamento aprovado.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "capital"
+      }
+    ],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 17,92, com retorno esperado -16,50%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Maturação e retenção remuneram capital, mantendo qualidade; expansão e financiamento disciplinados sustentam caixa após custo completo e direitos de terceiros. O cenário otimista calculado pelo código é R$ 26,58.",
+      "pessimista": "Maturação e retenção enfraquecem, manutenção e ocupação aumentam, e juros e câmbio absorvem contribuição; aquisições exigem mais recursos antes de retorno. O cenário pessimista calculado pelo código é R$ 9,21."
+    },
+    "comentario_valuation": "Preço de referência R$ 23,57 e alvo do modelo aberto R$ 17,92, com potencial -23,95%. Retorno total esperado -16,50% e custo do capital próprio 12,52%. A dispersão entre métodos é 49,11%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 31,12; a diferença -42,39% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Rede e conveniência podem crescer sem retorno suficiente por unidade. Lucro recorrente maior pode coexistir com dívida e investimento crescentes. Se manutenção, aluguel e financiamento absorverem maturação, conversão operacional elevada não confirmará retorno ao acionista.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_SMARTFIT.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 23,57"
+      },
+      {
+        "fato": "val.BR_SMARTFIT.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 17,92"
+      },
+      {
+        "fato": "val.BR_SMARTFIT.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-23,95%"
+      },
+      {
+        "fato": "val.BR_SMARTFIT.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_SMARTFIT.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_SMARTFIT.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 26,58"
+      },
+      {
+        "fato": "val.BR_SMARTFIT.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "35,42%"
+      },
+      {
+        "fato": "val.BR_SMARTFIT.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 9,21"
+      },
+      {
+        "fato": "val.BR_SMARTFIT.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "1,26%"
+      },
+      {
+        "fato": "val.BR_SMARTFIT.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,52%"
+      },
+      {
+        "fato": "val.BR_SMARTFIT.wacc",
+        "rotulo": "WACC",
+        "valor": "10,03%"
+      },
+      {
+        "fato": "val.BR_SMARTFIT.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_SMARTFIT.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-16,50%"
+      },
+      {
+        "fato": "val.BR_SMARTFIT.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-39,01%"
+      },
+      {
+        "fato": "val.BR_SMARTFIT.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "12,4x"
+      },
+      {
+        "fato": "val.BR_SMARTFIT.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,4x"
+      },
+      {
+        "fato": "val.BR_SMARTFIT.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 31,12"
+      },
+      {
+        "fato": "val.BR_SMARTFIT.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-42,39%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Smart Fit",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócio e materiais públicos do emissor",
+        "url": "https://investor.smartfit.com.br/o-grupo/estrategia-e-modelo-de-negocios/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Smart Fit",
+        "publicado_em": "2026-08-05",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/757d3905-6a2d-496a-bbb0-32ddd17de6a0/f949e040-5053-254d-6a03-2865a71a132a?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Smart Fit",
+        "publicado_em": "2026-08-05",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações intermediárias: caixa, obrigações e notas explicativas",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/757d3905-6a2d-496a-bbb0-32ddd17de6a0/e6ace007-95e4-6270-6e1f-a5f49597a415?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
+      "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
+      "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
+      "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    ],
+    "governanca": "A revisão limitada do ITR não tem modificação. Índices contratuais e bases com e sem arrendamento diferem das métricas simples ou anualizadas; cumprimento relatado no trimestre não certifica o futuro. Aquisições possuem participações, opções e contraprestações específicas. Recursos de linha aprovada ainda não desembolsados não são caixa livre disponível.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Retenção, preço, ocupação e margem por safra e país; unidades próprias e franquias, custos pré-operacionais e TotalPass. Conciliar manutenção, expansão, aluguel, juros e caixa por entidade. Confirmar aportes condicionais, direitos de minoritários, moeda e índices contratuais em suas bases próprias.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_SMARTFIT.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-16,50%"
+          },
+          {
+            "fato": "val.BR_SMARTFIT.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,52%"
+          },
+          {
+            "fato": "val.BR_SMARTFIT.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "49,11%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -16,50%, custo do capital 12,52% e dispersão entre métodos 49,11% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_SMARTFIT",
+    "lacunas_de_dados": [
+      "A ponte integral de caixa, arrendamentos e obrigações contratuais permanece pendente.",
+      "Retorno e maturação por safra, país e marca exigem avaliação específica.",
+      "Receita e caixa atribuível de TotalPass, franquias e minoritários precisam de diligência.",
+      "Saldo condicionado da Evolve e eventual ajuste de participação não foram confirmados como realizados.",
+      "Captação integral da emissão posterior não foi comprovada.",
+      "Guidance agregado, participação e posicionamento de mercado não foram comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Rede de academias e serviços fitness, com unidades próprias, franquias, marcas de diferentes faixas e agregador TotalPass. Mensalidade, ocupação e retenção influenciam recorrência. Unidades novas têm maturação e gastos pré-operacionais; unidades maduras exigem manutenção. Expansão internacional e aquisições acrescentam moeda, regras locais e direitos de sócios.",
+    "nome": "Smart Fit",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_AZZAS",
+        "nome": "Azzas 2154"
+      },
+      {
+        "issuer_id": "BR_CEA",
+        "nome": "C&A Modas"
+      },
+      {
+        "issuer_id": "BR_COGNA",
+        "nome": "Cogna"
+      },
+      {
+        "issuer_id": "BR_CURY",
+        "nome": "Cury"
+      },
+      {
+        "issuer_id": "BR_CYRELA",
+        "nome": "Cyrela"
+      },
+      {
+        "issuer_id": "BR_DIRECIONAL",
+        "nome": "Direcional"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese é que conveniência e escala permitam maturar unidades com retorno superior ao custo completo. A condição decisiva é geração após manutenção, ocupação, expansão e financiamento, preservando retenção e qualidade. Margem antes de gastos pré-operacionais e conversão operacional não comprovam caixa livre distribuível.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_SMARTFIT.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 23,57"
+          },
+          {
+            "fato": "val.BR_SMARTFIT.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 17,92"
+          },
+          {
+            "fato": "val.BR_SMARTFIT.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-23,95%"
+          },
+          {
+            "fato": "val.BR_SMARTFIT.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,52%"
+          },
+          {
+            "fato": "val.BR_SMARTFIT.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-16,50%"
+          }
+        ],
+        "texto": "Preço de referência R$ 23,57 e alvo R$ 17,92, com potencial -23,95%. A hipótese de investimento deve ser confrontada com o custo do capital 12,52% e retorno esperado -16,50%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Rede, localização, preço e plano de acesso podem reforçar conveniência. Capacidade, qualidade e uso efetivo limitam retenção; franquias e agregador têm economics diferentes das unidades próprias. A barreira de entrada relatada pelo emissor exige prova de retorno, maturação e resposta dos concorrentes, sem assumir crescimento indefinido.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:28:29.581925+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita, EBITDA e lucro recorrente cresceram anualmente, mas lucro reportado caiu no trimestre. Custos de resgate de dívida e aquisições têm ajustes próprios. Caixa operacional cresceu, com menor taxa de conversão trimestral; investimentos e financiamento ampliaram dívida ajustada. Bases com e sem arrendamento e EBITDA anualizado não são intercambiáveis.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que conveniência e escala permitam maturar unidades com retorno superior ao custo completo. A condição decisiva é geração após manutenção, ocupação, expansão e financiamento, preservando retenção e qualidade. Margem antes de gastos pré-operacionais e conversão operacional não comprovam caixa livre distribuível. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado -16,50%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Expansão pode atrasar maturação e elevar manutenção, aluguel e juros. Retenção, competição e agregadores alteram receita e margem. Câmbio, direitos de minoritários e aportes condicionais exigem capital, limitando caixa distribuível."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_SMARTFIT.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-42,39%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -42,39%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Consumo discricionário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Smart Fit — maturação, arrendamentos e retorno da expansão",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Receita, EBITDA e lucro recorrente cresceram anualmente, enquanto lucro reportado trimestral caiu. Ajustes incluem aquisições e custos de resgate antecipado de dívida. A conversão operacional trimestral diminuiu e investimento e serviço da dívida elevaram a dívida ajustada. A manutenção cresceu com idade e capacidade da rede. O controle da Evolve foi adquirido posteriormente, com aporte inicial realizado e saldo condicionado; nova emissão aprovada para refinanciamento tem comprovação própria, sem captação integral presumida.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Retenção, preço, ocupação e margem por safra e país; unidades próprias e franquias, custos pré-operacionais e TotalPass. Conciliar manutenção, expansão, aluguel, juros e caixa por entidade. Confirmar aportes condicionais, direitos de minoritários, moeda e índices contratuais em suas bases próprias.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_SMARTFIT.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,52%"
+          },
+          {
+            "fato": "val.BR_SMARTFIT.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "49,11%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 12,52% e a dispersão entre métodos 49,11%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,389 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "83008bf5318bc813a471fb72ac496cc9ea6a7b072b74eb00f90ab0b4046dbaa3",
+    "factbook": "6a76b6d196353b47aff91911608d3cc731b4a39aa97a528f1db4feb3c60def32",
+    "nota_json": "62e1f580611297da468b6eb936c01ce56d8210d2dfb488607e23d6dfbd8db342"
+  },
+  "is_synthetic": false,
+  "issuer_id": "AR_GLOBANT",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-19",
+  "published_at": "2026-10-12T03:27:51.473377+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Confrontar recompra realizada e autorização remanescente com caixa depois de investimento e obrigações. Aquisições e remuneração em ações exigem ponte com direitos e diluição. Otimização da estrutura pode custar caixa antes de remunerar a transição comercial.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em US$ 25,75, com retorno esperado -30,49%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Entregas e retenção preservam remuneração, e os novos contratos comprovam retorno depois dos custos. O cenário otimista calculado pelo código é US$ 32,22.",
+      "pessimista": "Pressão de preço e transição comercial limitam utilização e caixa disponível. O cenário pessimista calculado pelo código é US$ 19,49."
+    },
+    "comentario_valuation": "Preço de referência US$ 37,05 e alvo do modelo aberto US$ 25,75, com potencial -30,49%. Retorno total esperado -30,49% e custo do capital próprio 18,04%. A dispersão entre métodos é 40,01%; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é US$ 51,23; a diferença -49,73% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese enfraquece se produtividade favorecer apenas o cliente ou se os produtos novos não compensarem deterioração do retorno dos serviços.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.AR_GLOBANT.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 37,05"
+      },
+      {
+        "fato": "val.AR_GLOBANT.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 25,75"
+      },
+      {
+        "fato": "val.AR_GLOBANT.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-30,49%"
+      },
+      {
+        "fato": "val.AR_GLOBANT.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.AR_GLOBANT.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.AR_GLOBANT.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 32,22"
+      },
+      {
+        "fato": "val.AR_GLOBANT.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.AR_GLOBANT.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 19,49"
+      },
+      {
+        "fato": "val.AR_GLOBANT.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.AR_GLOBANT.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "18,04%"
+      },
+      {
+        "fato": "val.AR_GLOBANT.wacc",
+        "rotulo": "WACC",
+        "valor": "15,55%"
+      },
+      {
+        "fato": "val.AR_GLOBANT.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.AR_GLOBANT.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-30,49%"
+      },
+      {
+        "fato": "val.AR_GLOBANT.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-17,88%"
+      },
+      {
+        "fato": "val.AR_GLOBANT.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "6,1x"
+      },
+      {
+        "fato": "val.AR_GLOBANT.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,8x"
+      },
+      {
+        "fato": "val.AR_GLOBANT.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 51,23"
+      },
+      {
+        "fato": "val.AR_GLOBANT.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-49,73%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "Globant",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e estrutura do negócio",
+        "url": "https://investors.globant.com/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "Globant",
+        "publicado_em": "2026-08-13",
+        "tipo": "Relações com investidores",
+        "titulo": "Release de resultados e orientação de métricas contábeis e ajustadas",
+        "url": "https://investors.globant.com/2026-08-13-Globant-Reports-2026-Second-Quarter-Financial-Results"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "Globant",
+        "publicado_em": "2026-05-14",
+        "tipo": "Relações com investidores",
+        "titulo": "Orientação apresentada no resultado anterior",
+        "url": "https://www.sec.gov/Archives/edgar/data/1557860/000110465926061172/tm2614678d1_ex99-1.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
+      "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
+      "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
+      "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+    ],
+    "governanca": "Confrontar recompra realizada e autorização remanescente com caixa depois de investimento e obrigações. Aquisições e remuneração em ações exigem ponte com direitos e diluição. Otimização da estrutura pode custar caixa antes de remunerar a transição comercial.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Acompanhar renovação, concentração, carteira contratada, utilização e remuneração por projeto. Distinguir produtos novos de serviços existentes; confrontar produtividade com custos e preço, e caixa ajustado com o contábil. Examinar encargos de reorganização e diluição.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.AR_GLOBANT.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-30,49%"
+          },
+          {
+            "fato": "val.AR_GLOBANT.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "18,04%"
+          },
+          {
+            "fato": "val.AR_GLOBANT.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "40,01%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado -30,49%, custo do capital 18,04% e dispersão entre métodos 40,01% quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "AR_GLOBANT",
+    "lacunas_de_dados": [
+      "Demonstrações interinas completas, notas e base diluída não foram reconciliadas com o modelo.",
+      "Contrato, retenção, preço e custo dos produtos de inteligência artificial exigem comprovação.",
+      "Guidance anterior e atual não foram integralmente reconciliados por definição e premissa.",
+      "Encargos de reorganização, aquisições e remuneração em ações precisam de avaliação econômica.",
+      "Tom da gestão, percepção de mercado e catalisador futuro datado não estão concluídos."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "A Globant presta serviços de transformação digital e oferece produtos de inteligência artificial. A mudança anunciada para cobrança por resultado ou consumo deve ser avaliada por contrato; não converte automaticamente toda a receita em assinatura recorrente.",
+    "nome": "Globant",
+    "o_que_mudou": null,
+    "pais": "Argentina",
+    "pares": [
+      {
+        "issuer_id": "BR_BEMOBI",
+        "nome": "Bemobi"
+      },
+      {
+        "issuer_id": "BR_INTELBRAS",
+        "nome": "Intelbras"
+      },
+      {
+        "issuer_id": "BR_LOCAWEB",
+        "nome": "Locaweb (LWSA)"
+      },
+      {
+        "issuer_id": "BR_VTEX",
+        "nome": "VTEX"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese é que conhecimento dos clientes e execução técnica sustentem retorno na nova forma de entrega. A condição é preservar remuneração e retenção depois de tecnologia, pessoas e riscos contratuais. Produtividade pode beneficiar o cliente sem aumentar o caixa pertencente à companhia.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.AR_GLOBANT.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "US$ 37,05"
+          },
+          {
+            "fato": "val.AR_GLOBANT.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "US$ 25,75"
+          },
+          {
+            "fato": "val.AR_GLOBANT.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "-30,49%"
+          },
+          {
+            "fato": "val.AR_GLOBANT.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "18,04%"
+          },
+          {
+            "fato": "val.AR_GLOBANT.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-30,49%"
+          }
+        ],
+        "texto": "Preço de referência US$ 37,05 e alvo US$ 25,75, com potencial -30,49%. A hipótese de investimento deve ser confrontada com o custo do capital 18,04% e retorno esperado -30,49%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Testar entregas, renovação e responsabilidade por resultados frente a prestadores e ferramentas alternativos. Credenciais e parcerias não demonstram retorno econômico. A mudança do esforço vendido para resultados exige evidência de preço, custo e divisão do ganho de produtividade.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:27:51.473377+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Separar receita reconhecida da medida anualizada de produtos de inteligência artificial. Resultado ajustado exclui remuneração em ações e outros encargos; o release não constitui demonstração interina completa. A fonte não oferece reconciliação quantitativa da orientação ajustada futura com o resultado contábil.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que conhecimento dos clientes e execução técnica sustentem retorno na nova forma de entrega. A condição é preservar remuneração e retenção depois de tecnologia, pessoas e riscos contratuais. Produtividade pode beneficiar o cliente sem aumentar o caixa pertencente à companhia. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado -30,49%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Demanda discricionária, concentração e pressão de preço podem afetar utilização. Cobrança por resultado transfere risco de entrega; inteligência artificial pode reduzir horas faturáveis sem assegurar nova remuneração equivalente."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.AR_GLOBANT.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-49,73%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é -49,73%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Tecnologia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "Globant: retorno dos serviços na transição para inteligência artificial",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O release consultado apresenta estabilidade da receita e mudança de modelo de entrega, além de métricas ajustadas e orientação futura. A orientação do período anterior também foi consultada; sua conciliação integral e a tradução para premissas do modelo permanecem pendentes. Indicadores anualizados dos produtos novos não foram tratados como receita contábil recorrente.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar renovação, concentração, carteira contratada, utilização e remuneração por projeto. Distinguir produtos novos de serviços existentes; confrontar produtividade com custos e preço, e caixa ajustado com o contábil. Examinar encargos de reorganização e diluição.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.AR_GLOBANT.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "18,04%"
+          },
+          {
+            "fato": "val.AR_GLOBANT.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "40,01%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 18,04% e a dispersão entre métodos 40,01%. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

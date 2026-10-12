@@ -1,0 +1,474 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-09",
+    "manifest_sha256": "14e4222608f9c15f61f48ef86c4ad566895dc91efef59e88f2248f27fecba86c",
+    "modelo_as_of": "2026-10-09"
+  },
+  "conviccao": 1,
+  "data": "2026-10-11",
+  "hashes": {
+    "contexto": "8138d6814dfbdfe79f92b1ededefdade4fd3dab1276769848033ed678b363795",
+    "factbook": "9e5bde064bd3e79304e333b206ab07fe76ff6423b88c3c8c805d9ac25e914b77",
+    "nota_json": "eaac70247a834e10ed18e787cb75b2cd0aa09abbae60a381b1e6613e90b35f52"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_CSN",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-10",
+  "published_at": "2026-10-12T03:26:53.161331+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F5"
+          },
+          {
+            "fonte": "F6"
+          }
+        ],
+        "texto": "Dívida líquida e alavancagem aumentam no trimestre apesar da liberação de capital de giro. Aporte na Transnordestina, amortizações de pré-pagamento, câmbio e investimento têm efeitos próprios. Medidas gerenciais incluem participação ferroviária e excluem risco sacado; ações da Usiminas entram em métrica de alavancagem. A troca de títulos prevê vencimento mais longo, taxa maior e pagamento de contraprestação, sem entrada de caixa. Liquidação programada exige confirmação separada.",
+        "titulo": "Retorno e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Caso-base do modelo em R$ 7,26, com retorno esperado +14,19%. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Margens recorrentes e capital disciplinado sustentam caixa, compromissos são financiados e alienações concluídas melhoram retorno dos negócios remanescentes. O cenário otimista calculado pelo código é R$ 8,37.",
+      "pessimista": "Frete, importações e custos comprimem margem enquanto dívida, investimento e alienações adiadas mantêm dependência de recursos externos. O cenário pessimista calculado pelo código é R$ 6,25."
+    },
+    "comentario_valuation": "Preço de referência R$ 6,36 e alvo do modelo aberto R$ 7,26, com potencial +14,19%. Retorno total esperado +14,19% e custo do capital próprio 14,64%. A dispersão entre métodos é n/d; a confiança quantitativa recebida é C. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é R$ 7,11; a diferença +2,18% não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A hipótese enfraquece se melhora operacional não reduz necessidade de financiamento ou se liberação de giro e receita excepcional explicam caixa. Venda de ativo rentável pode reduzir dívida e também resultado futuro; valor da operação não é caixa líquido garantido. Alongamento com custo maior não elimina obrigação, e queda de volume mineral afeta o portfólio integrado.",
+        "titulo": "O que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-09",
+    "dados_simulados": false,
+    "data": "2026-10-11",
+    "ficha": [
+      {
+        "fato": "val.BR_CSN.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 6,36"
+      },
+      {
+        "fato": "val.BR_CSN.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 7,26"
+      },
+      {
+        "fato": "val.BR_CSN.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+14,19%"
+      },
+      {
+        "fato": "val.BR_CSN.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_CSN.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_CSN.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 8,37"
+      },
+      {
+        "fato": "val.BR_CSN.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "30,41%"
+      },
+      {
+        "fato": "val.BR_CSN.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 6,25"
+      },
+      {
+        "fato": "val.BR_CSN.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "50,53%"
+      },
+      {
+        "fato": "val.BR_CSN.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "14,64%"
+      },
+      {
+        "fato": "val.BR_CSN.wacc",
+        "rotulo": "WACC",
+        "valor": "10,33%"
+      },
+      {
+        "fato": "val.BR_CSN.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_CSN.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+14,19%"
+      },
+      {
+        "fato": "val.BR_CSN.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+2,12%"
+      },
+      {
+        "fato": "val.BR_CSN.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_CSN.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,7x"
+      },
+      {
+        "fato": "val.BR_CSN.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 7,11"
+      },
+      {
+        "fato": "val.BR_CSN.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+2,18%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F1",
+        "instituicao": "CSN",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Histórico e perfil integrado de negócios",
+        "url": "https://ri.csn.com.br/a-companhia/historico-e-perfil-corporativo/"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F2",
+        "instituicao": "CSN",
+        "publicado_em": "2026-08-12",
+        "tipo": "Relações com investidores",
+        "titulo": "Release de resultados, segmentos, perímetros gerenciais e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/29633c00-23f7-4765-9594-926012179477/5ffaa693-869a-c253-6b5d-9d72a1e79070?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F3",
+        "instituicao": "CSN",
+        "publicado_em": "2026-09-29",
+        "tipo": "Relações com investidores",
+        "titulo": "Redução temporária em Pires e revisão de produção, compras e custo",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/29633c00-23f7-4765-9594-926012179477/0d206362-9998-0e13-5ee9-93a219df1d9a?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F4",
+        "instituicao": "CSN",
+        "publicado_em": "2026-10-09",
+        "tipo": "Relações com investidores",
+        "titulo": "Term sheet vinculante de alienação da SWT sujeito a documentos e condições",
+        "url": "https://filemanager-cdn.mziq.com/published/29633c00-23f7-4765-9594-926012179477/a527e1ff-3460-490a-8acd-51db5cd908f7"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F5",
+        "instituicao": "CSN",
+        "publicado_em": "2026-08-10",
+        "tipo": "Relações com investidores",
+        "titulo": "Recebimento de propostas vinculantes para potencial venda de cimentos",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/29633c00-23f7-4765-9594-926012179477/62030836-0e48-d6ba-15d9-8f7a9fdc9c7a?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F6",
+        "instituicao": "CSN",
+        "publicado_em": "2026-08-11",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado da oferta de troca e liquidação programada de títulos",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/29633c00-23f7-4765-9594-926012179477/fb849e31-2ffb-4617-df8e-7475f0c26d88?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-11",
+        "id": "F7",
+        "instituicao": "CSN",
+        "publicado_em": "2026-09-02",
+        "tipo": "Relações com investidores",
+        "titulo": "Eleição da presidência do conselho e anúncio da presidência executiva",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/29633c00-23f7-4765-9594-926012179477/4c35060a-b22a-7c0a-d929-7dd689417689?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Margens recorrentes deixam de sustentar recursos depois de investimento e obrigações.",
+      "Financiamento, liberação de giro e receita retroativa explicam caixa sem geração operacional equivalente.",
+      "Volumes, frete e custo do minério invalidam as premissas de recuperação integrada.",
+      "Alienações, sucessão e refinanciamento alteram perímetro, condições ou retorno atribuível."
+    ],
+    "governanca": "A eleição da presidência do conselho e anúncio da presidência executiva conservam a data posterior. O term sheet da SWT é vinculante, mas depende de documentos definitivos e condições; seu valor empresarial não equivale a recebimento líquido do acionista. Propostas vinculantes de cimentos não comprovam venda concluída. O resultado da troca de títulos fixa liquidação programada e condições, sem comprovar quitação final apenas pelo título do comunicado.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          },
+          {
+            "fonte": "F6"
+          }
+        ],
+        "texto": "Monitorar margem siderúrgica após insumos e preço realizado do minério após frete. Conferir recorrência de cimento, energia e logística. Conciliar geração operacional, captações, giro, pré-pagamentos e investimento. Acompanhar dívida, risco sacado e capital por entidade, além de contratos definitivos, condições e recursos líquidos das alienações.",
+        "titulo": "Indicadores operacionais e de caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_CSN.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+14,19%"
+          },
+          {
+            "fato": "val.BR_CSN.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "14,64%"
+          },
+          {
+            "fato": "val.BR_CSN.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "n/d"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +14,19%, custo do capital 14,64% e dispersão entre métodos n/d quando novos resultados e documentos forem incorporados pelo código.",
+        "titulo": "Revisão das premissas"
+      }
+    ],
+    "issuer_id": "BR_CSN",
+    "lacunas_de_dados": [
+      "Demonstrações completas, fluxo operacional e ponte gerencial não foram integralmente reconciliados.",
+      "Participação ferroviária, eliminações e bases da mineração exigem conciliação por entidade.",
+      "Pré-pagamentos, risco sacado, dívida e valor das ações usadas na alavancagem requerem análise própria.",
+      "Liquidação final da troca de títulos e condições do empréstimo ponte não foram integralmente confirmadas.",
+      "Alienações de SWT e cimentos e recursos líquidos não têm conclusão comprovada nesta pesquisa.",
+      "Projeções minerais têm volume reduzido e custo elevado, sem direção agregada classificada.",
+      "Não há catalisador futuro com dia exato confirmado nesta pesquisa.",
+      "Tom agregado, vantagem relativa e percepção do mercado não foram classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-09",
+    "negocio": "Grupo industrial com siderurgia, mineração, cimentos, energia e logística. A receita entre negócios e participações ferroviárias têm eliminações e consolidação próprias. O EBITDA gerencial inclui participação proporcional em investida e não equivale a resultado integralmente atribuível. O retorno do acionista depende dos negócios remanescentes, dívida, contratos de pré-pagamento e destinação econômica de potenciais alienações.",
+    "nome": "CSN Siderúrgica Nacional",
+    "o_que_mudou": null,
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CBA",
+        "nome": "Companhia Brasileira de Alumínio"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_SUZANO",
+        "nome": "Suzano"
+      },
+      {
+        "issuer_id": "BR_UNIPAR",
+        "nome": "Unipar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que recuperação de margem industrial e disciplina de capital sustentem caixa após obrigações e reduzam a dependência de financiamento. A condição decisiva é geração recorrente com estrutura de capital viável, sem antecipar receita de alienações. Diversificação operacional e alongamento de dívida não demonstram, por si, desalavancagem econômica ou remuneração do acionista.",
+        "titulo": "Hipótese e condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_CSN.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 6,36"
+          },
+          {
+            "fato": "val.BR_CSN.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 7,26"
+          },
+          {
+            "fato": "val.BR_CSN.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+14,19%"
+          },
+          {
+            "fato": "val.BR_CSN.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "14,64%"
+          },
+          {
+            "fato": "val.BR_CSN.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+14,19%"
+          }
+        ],
+        "texto": "Preço de referência R$ 6,36 e alvo R$ 7,26, com potencial +14,19%. A hipótese de investimento deve ser confrontada com o custo do capital 14,64% e retorno esperado +14,19%.",
+        "titulo": "Preço e premissas do modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Integração de insumos, transporte e indústria pode apoiar disponibilidade e custo, mas sinergia exige retorno depois de investimento e transações internas. Margem siderúrgica depende de preço, matéria-prima e competição de importados; medidas comerciais não asseguram proteção permanente. Cimento e logística têm ciclos próprios. Ganho excepcional de energia e vendas de ativos não representam vantagens operacionais recorrentes.",
+        "titulo": "Posição competitiva a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-12T03:26:53.161331+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Receita e EBITDA ajustado aumentam, enquanto prejuízo líquido se amplia com despesas financeiras e comparação anterior favorecida por reversões. Siderurgia, cimento e logística melhoram; mineração sofre com frete e câmbio. Energia tem reconhecimento retroativo excepcional. A ponte denominada fluxo livre inclui captações, inclusive empréstimo ponte: financiamento recebido não foi atribuído a geração operacional recorrente. Liberação de estoque contribui para caixa, sem ser repetível indefinidamente.",
+        "titulo": "Recorrência e caixa"
+      }
+    ],
+    "resumo": "A hipótese é que recuperação de margem industrial e disciplina de capital sustentem caixa após obrigações e reduzam a dependência de financiamento. A condição decisiva é geração recorrente com estrutura de capital viável, sem antecipar receita de alienações. Diversificação operacional e alongamento de dívida não demonstram, por si, desalavancagem econômica ou remuneração do acionista. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como Neutro, com retorno esperado +14,19%. A visão da nota não altera esse modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Custos, competição, ciclo mineral e dívida podem absorver margem. Fluxo gerencial com captações não comprova recorrência. Pré-pagamentos, risco sacado e alienações condicionais exigem conciliar obrigações e recursos líquidos."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_CSN.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+2,18%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença entre o alvo do modelo e o consenso público é +2,18%. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "iniciacao",
+    "tipo_pt": "Iniciação de cobertura",
+    "titulo": "CSN — margem dos negócios após liquidez, obrigações e alienações condicionais",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O comunicado posterior reduz a projeção de produção e compras de minério e eleva a de custo, com redução temporária da planta a seco em Pires. Isso não foi transformado em resultado financeiro já realizado nem incorporado retrospectivamente ao modelo. EBITDA e receita do segmento mineral têm bases diferentes das medidas da mineradora listada. As tabelas contábeis e a ponte de caixa exigem reconciliação integral, sobretudo porque a fonte usa financiamento dentro da medida denominada livre.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar margem siderúrgica após insumos e preço realizado do minério após frete. Conferir recorrência de cimento, energia e logística. Conciliar geração operacional, captações, giro, pré-pagamentos e investimento. Acompanhar dívida, risco sacado e capital por entidade, além de contratos definitivos, condições e recursos líquidos das alienações.",
+        "vetor": "Conversão econômica em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_CSN.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "14,64%"
+          },
+          {
+            "fato": "val.BR_CSN.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "n/d"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio é 14,64% e a dispersão entre métodos n/d. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+        "vetor": "Premissas de avaliação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

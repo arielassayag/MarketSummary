@@ -1,0 +1,227 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_CSN",
+  "data": "2026-10-11",
+  "tipo": "iniciacao",
+  "titulo": "CSN — margem dos negócios após liquidez, obrigações e alienações condicionais",
+  "resumo": "A hipótese é que recuperação de margem industrial e disciplina de capital sustentem caixa após obrigações e reduzam a dependência de financiamento. A condição decisiva é geração recorrente com estrutura de capital viável, sem antecipar receita de alienações. Diversificação operacional e alongamento de dívida não demonstram, por si, desalavancagem econômica ou remuneração do acionista. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_CSN.rating_codigo}}, com retorno esperado {{fact:val.BR_CSN.etr}}. A visão da nota não altera esse modelo.",
+  "negocio": "Grupo industrial com siderurgia, mineração, cimentos, energia e logística. A receita entre negócios e participações ferroviárias têm eliminações e consolidação próprias. O EBITDA gerencial inclui participação proporcional em investida e não equivale a resultado integralmente atribuível. O retorno do acionista depende dos negócios remanescentes, dívida, contratos de pré-pagamento e destinação econômica de potenciais alienações.",
+  "pilares_tese": [
+    {
+      "titulo": "Hipótese e condição decisiva",
+      "texto": "A hipótese é que recuperação de margem industrial e disciplina de capital sustentem caixa após obrigações e reduzam a dependência de financiamento. A condição decisiva é geração recorrente com estrutura de capital viável, sem antecipar receita de alienações. Diversificação operacional e alongamento de dívida não demonstram, por si, desalavancagem econômica ou remuneração do acionista.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e premissas do modelo",
+      "texto": "Preço de referência {{fact:val.BR_CSN.preco}} e alvo {{fact:val.BR_CSN.preco_alvo}}, com potencial {{fact:val.BR_CSN.upside}}. A hipótese de investimento deve ser confrontada com o custo do capital {{fact:val.BR_CSN.ke}} e retorno esperado {{fact:val.BR_CSN.etr}}.",
+      "evidencias": [
+        "val.BR_CSN.preco",
+        "val.BR_CSN.preco_alvo",
+        "val.BR_CSN.upside",
+        "val.BR_CSN.ke",
+        "val.BR_CSN.etr"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão econômica em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Monitorar margem siderúrgica após insumos e preço realizado do minério após frete. Conferir recorrência de cimento, energia e logística. Conciliar geração operacional, captações, giro, pré-pagamentos e investimento. Acompanhar dívida, risco sacado e capital por entidade, além de contratos definitivos, condições e recursos líquidos das alienações.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Premissas de avaliação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O custo do capital próprio é {{fact:val.BR_CSN.ke}} e a dispersão entre métodos {{fact:val.BR_CSN.cv_metodos}}. A leitura do retorno exige testar a adequação das premissas ao negócio, sem promover a confiança do modelo a diligência qualitativa concluída.",
+      "evidencias": [
+        "val.BR_CSN.ke",
+        "val.BR_CSN.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Custos, competição, ciclo mineral e dívida podem absorver margem. Fluxo gerencial com captações não comprova recorrência. Pré-pagamentos, risco sacado e alienações condicionais exigem conciliar obrigações e recursos líquidos.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4"
+      ]
+    },
+    {
+      "texto": "A diferença entre o alvo do modelo e o consenso público é {{fact:val.BR_CSN.diff_consenso}}. Essa comparação não comprova o que está precificado nem resolve as lacunas de resultados e premissas.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "val.BR_CSN.diff_consenso"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Margens recorrentes e capital disciplinado sustentam caixa, compromissos são financiados e alienações concluídas melhoram retorno dos negócios remanescentes. O cenário otimista calculado pelo código é {{fact:val.BR_CSN.alvo_otimista}}.",
+    "base": "Caso-base do modelo em {{fact:val.BR_CSN.preco_alvo}}, com retorno esperado {{fact:val.BR_CSN.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Frete, importações e custos comprimem margem enquanto dívida, investimento e alienações adiadas mantêm dependência de recursos externos. O cenário pessimista calculado pelo código é {{fact:val.BR_CSN.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_CSN.preco}} e alvo do modelo aberto {{fact:val.BR_CSN.preco_alvo}}, com potencial {{fact:val.BR_CSN.upside}}. Retorno total esperado {{fact:val.BR_CSN.etr}} e custo do capital próprio {{fact:val.BR_CSN.ke}}. A dispersão entre métodos é {{fact:val.BR_CSN.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_CSN.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_CSN.consenso_alvo}}; a diferença {{fact:val.BR_CSN.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "ultimo_resultado": "O comunicado posterior reduz a projeção de produção e compras de minério e eleva a de custo, com redução temporária da planta a seco em Pires. Isso não foi transformado em resultado financeiro já realizado nem incorporado retrospectivamente ao modelo. EBITDA e receita do segmento mineral têm bases diferentes das medidas da mineradora listada. As tabelas contábeis e a ponte de caixa exigem reconciliação integral, sobretudo porque a fonte usa financiamento dentro da medida denominada livre.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A eleição da presidência do conselho e anúncio da presidência executiva conservam a data posterior. O term sheet da SWT é vinculante, mas depende de documentos definitivos e condições; seu valor empresarial não equivale a recebimento líquido do acionista. Propostas vinculantes de cimentos não comprovam venda concluída. O resultado da troca de títulos fixa liquidação programada e condições, sem comprovar quitação final apenas pelo título do comunicado.",
+  "posicao_competitiva": {
+    "titulo": "Posição competitiva a comprovar",
+    "texto": "Integração de insumos, transporte e indústria pode apoiar disponibilidade e custo, mas sinergia exige retorno depois de investimento e transações internas. Margem siderúrgica depende de preço, matéria-prima e competição de importados; medidas comerciais não asseguram proteção permanente. Cimento e logística têm ciclos próprios. Ganho excepcional de energia e vendas de ativos não representam vantagens operacionais recorrentes.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e caixa",
+    "texto": "Receita e EBITDA ajustado aumentam, enquanto prejuízo líquido se amplia com despesas financeiras e comparação anterior favorecida por reversões. Siderurgia, cimento e logística melhoram; mineração sofre com frete e câmbio. Energia tem reconhecimento retroativo excepcional. A ponte denominada fluxo livre inclui captações, inclusive empréstimo ponte: financiamento recebido não foi atribuído a geração operacional recorrente. Liberação de estoque contribui para caixa, sem ser repetível indefinidamente.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno e financiamento",
+    "texto": "Dívida líquida e alavancagem aumentam no trimestre apesar da liberação de capital de giro. Aporte na Transnordestina, amortizações de pré-pagamento, câmbio e investimento têm efeitos próprios. Medidas gerenciais incluem participação ferroviária e excluem risco sacado; ações da Usiminas entram em métrica de alavancagem. A troca de títulos prevê vencimento mais longo, taxa maior e pagamento de contraprestação, sem entrada de caixa. Liquidação programada exige confirmação separada.",
+    "evidencias": [
+      "F2",
+      "F4",
+      "F5",
+      "F6"
+    ]
+  },
+  "percepcao_variante": null,
+  "contratese": {
+    "titulo": "O que enfraquece a hipótese",
+    "texto": "A hipótese enfraquece se melhora operacional não reduz necessidade de financiamento ou se liberação de giro e receita excepcional explicam caixa. Venda de ativo rentável pode reduzir dívida e também resultado futuro; valor da operação não é caixa líquido garantido. Alongamento com custo maior não elimina obrigação, e queda de volume mineral afeta o portfólio integrado.",
+    "evidencias": [
+      "F2",
+      "F3",
+      "F4"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Indicadores operacionais e de caixa",
+      "texto": "Monitorar margem siderúrgica após insumos e preço realizado do minério após frete. Conferir recorrência de cimento, energia e logística. Conciliar geração operacional, captações, giro, pré-pagamentos e investimento. Acompanhar dívida, risco sacado e capital por entidade, além de contratos definitivos, condições e recursos líquidos das alienações.",
+      "evidencias": [
+        "F2",
+        "F3",
+        "F4",
+        "F6"
+      ]
+    },
+    {
+      "titulo": "Revisão das premissas",
+      "texto": "Reavaliar retorno esperado {{fact:val.BR_CSN.etr}}, custo do capital {{fact:val.BR_CSN.ke}} e dispersão entre métodos {{fact:val.BR_CSN.cv_metodos}} quando novos resultados e documentos forem incorporados pelo código.",
+      "evidencias": [
+        "val.BR_CSN.etr",
+        "val.BR_CSN.ke",
+        "val.BR_CSN.cv_metodos"
+      ]
+    }
+  ],
+  "estrutura_etf": null,
+  "exposicao_etf": null,
+  "custos_liquidez_etf": null,
+  "aderencia_indice_etf": null,
+  "o_que_mudou": null,
+  "gatilhos_revisao": [
+    "Margens recorrentes deixam de sustentar recursos depois de investimento e obrigações.",
+    "Financiamento, liberação de giro e receita retroativa explicam caixa sem geração operacional equivalente.",
+    "Volumes, frete e custo do minério invalidam as premissas de recuperação integrada.",
+    "Alienações, sucessão e refinanciamento alteram perímetro, condições ou retorno atribuível."
+  ],
+  "lacunas_de_dados": [
+    "Demonstrações completas, fluxo operacional e ponte gerencial não foram integralmente reconciliados.",
+    "Participação ferroviária, eliminações e bases da mineração exigem conciliação por entidade.",
+    "Pré-pagamentos, risco sacado, dívida e valor das ações usadas na alavancagem requerem análise própria.",
+    "Liquidação final da troca de títulos e condições do empréstimo ponte não foram integralmente confirmadas.",
+    "Alienações de SWT e cimentos e recursos líquidos não têm conclusão comprovada nesta pesquisa.",
+    "Projeções minerais têm volume reduzido e custo elevado, sem direção agregada classificada.",
+    "Não há catalisador futuro com dia exato confirmado nesta pesquisa.",
+    "Tom agregado, vantagem relativa e percepção do mercado não foram classificados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "CSN",
+      "titulo": "Histórico e perfil integrado de negócios",
+      "url": "https://ri.csn.com.br/a-companhia/historico-e-perfil-corporativo/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "CSN",
+      "titulo": "Release de resultados, segmentos, perímetros gerenciais e financiamento",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/29633c00-23f7-4765-9594-926012179477/5ffaa693-869a-c253-6b5d-9d72a1e79070?origin=2",
+      "publicado_em": "2026-08-12",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "CSN",
+      "titulo": "Redução temporária em Pires e revisão de produção, compras e custo",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/29633c00-23f7-4765-9594-926012179477/0d206362-9998-0e13-5ee9-93a219df1d9a?origin=2",
+      "publicado_em": "2026-09-29",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F4",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "CSN",
+      "titulo": "Term sheet vinculante de alienação da SWT sujeito a documentos e condições",
+      "url": "https://filemanager-cdn.mziq.com/published/29633c00-23f7-4765-9594-926012179477/a527e1ff-3460-490a-8acd-51db5cd908f7",
+      "publicado_em": "2026-10-09",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F5",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "CSN",
+      "titulo": "Recebimento de propostas vinculantes para potencial venda de cimentos",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/29633c00-23f7-4765-9594-926012179477/62030836-0e48-d6ba-15d9-8f7a9fdc9c7a?origin=2",
+      "publicado_em": "2026-08-10",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F6",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "CSN",
+      "titulo": "Resultado da oferta de troca e liquidação programada de títulos",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/29633c00-23f7-4765-9594-926012179477/fb849e31-2ffb-4617-df8e-7475f0c26d88?origin=2",
+      "publicado_em": "2026-08-11",
+      "consultado_em": "2026-10-11"
+    },
+    {
+      "id": "F7",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "CSN",
+      "titulo": "Eleição da presidência do conselho e anúncio da presidência executiva",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/29633c00-23f7-4765-9594-926012179477/4c35060a-b22a-7c0a-d929-7dd689417689?origin=2",
+      "publicado_em": "2026-09-02",
+      "consultado_em": "2026-10-11"
+    }
+  ],
+  "modelo_ia": null
+}

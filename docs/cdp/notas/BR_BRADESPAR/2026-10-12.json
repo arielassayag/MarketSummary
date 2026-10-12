@@ -1,7 +1,7 @@
 {
   "mind": "codex",
   "issuer_id": "BR_BRADESPAR",
-  "data": "2026-10-11",
+  "data": "2026-10-12",
   "tipo": "iniciacao",
   "titulo": "Bradespar — valor da participação após recebimento, despesas e direitos de capital",
   "resumo": "A hipótese é que recebimentos da participação e disciplina da holding sustentem retorno por ação depois de despesas, tributos e obrigações. A condição decisiva é transmissão efetiva do valor econômico ao titular. Desconto ao valor dos ativos é uma observação de data específica, sem garantir convergência, arbitragem ou acesso imediato ao patrimônio da investida. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_BRADESPAR.rating_codigo}}, com retorno esperado {{fact:val.BR_BRADESPAR.etr}}. A visão da nota não altera esse modelo.",
@@ -24,6 +24,13 @@
         "val.BR_BRADESPAR.upside",
         "val.BR_BRADESPAR.ke",
         "val.BR_BRADESPAR.etr"
+      ]
+    },
+    {
+      "titulo": "Recebimento e direitos determinam o retorno da holding",
+      "texto": "A representação na Vale oferece acompanhamento, sem controle sobre toda sua geração. A holding precisa demonstrar transmissão do caixa depois de gastos, tributos e obrigações de cada classe. O desconto observado pode persistir por liquidez e estrutura; não constitui arbitragem garantida. Dívida e reparação da investida concorrem com dividendos e precisam ser avaliadas antes de supor convergência.",
+      "evidencias": [
+        "F2"
       ]
     }
   ],
@@ -84,7 +91,7 @@
     "base": "Caso-base do modelo em {{fact:val.BR_BRADESPAR.preco_alvo}}, com retorno esperado {{fact:val.BR_BRADESPAR.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
     "pessimista": "Resultados e recebimentos da investida enfraquecem enquanto despesas, obrigações e desconto persistente limitam retorno do titular da holding. O cenário pessimista calculado pelo código é {{fact:val.BR_BRADESPAR.alvo_pessimista}}."
   },
-  "comentario_valuation": "Preço de referência {{fact:val.BR_BRADESPAR.preco}} e alvo do modelo aberto {{fact:val.BR_BRADESPAR.preco_alvo}}, com potencial {{fact:val.BR_BRADESPAR.upside}}. Retorno total esperado {{fact:val.BR_BRADESPAR.etr}} e custo do capital próprio {{fact:val.BR_BRADESPAR.ke}}. A dispersão entre métodos é {{fact:val.BR_BRADESPAR.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_BRADESPAR.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_BRADESPAR.consenso_alvo}}; a diferença {{fact:val.BR_BRADESPAR.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "comentario_valuation": "Preço de referência {{fact:val.BR_BRADESPAR.preco}} e alvo do modelo aberto {{fact:val.BR_BRADESPAR.preco_alvo}}, com potencial {{fact:val.BR_BRADESPAR.upside}}. Retorno total esperado {{fact:val.BR_BRADESPAR.etr}} e custo do capital próprio {{fact:val.BR_BRADESPAR.ke}}. A dispersão entre métodos é {{fact:val.BR_BRADESPAR.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_BRADESPAR.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_BRADESPAR.consenso_alvo}}; a diferença {{fact:val.BR_BRADESPAR.diff_consenso}} não constitui evidência de percepção do mercado. Valor líquido dos ativos exige participação econômica, tesouraria, preços do mesmo corte e obrigações da holding. O resultado de equivalência não é provento recebido. Comparação com investimento direto na Vale precisa preservar classes e liquidez; desconto histórico não deve ser aplicado novamente sobre um alvo que já contenha efeito estrutural sem demonstrar sua composição.",
   "ultimo_resultado": "O informe descreve a queda da dívida expandida da Vale contra o ano anterior, enquanto o relatório da própria investida associa o mesmo movimento ao trimestre anterior; essa divergência de período foi preservada. O valor dos ativos usa preços e participação de uma data específica e exclui ações em tesouraria na base descrita. Não se recalculou desconto atual nem se tratou alvo do modelo como preço automaticamente realizável por soma das partes.",
   "guidance": "nd",
   "tom_gestao": "nd",
@@ -138,6 +145,13 @@
         "val.BR_BRADESPAR.ke",
         "val.BR_BRADESPAR.cv_metodos"
       ]
+    },
+    {
+      "titulo": "Evidência que muda a visão",
+      "texto": "Proventos recebidos da Vale não sustentam custos e remuneração da holding. Compromissos da investida restringem distribuição apesar de equivalência positiva. Preço, participação, tesouraria ou direitos por classe mudam a base do desconto.",
+      "evidencias": [
+        "F2"
+      ]
     }
   ],
   "estrutura_etf": null,
@@ -146,10 +160,9 @@
   "aderencia_indice_etf": null,
   "o_que_mudou": null,
   "gatilhos_revisao": [
-    "Recebimentos da participação deixam de sustentar retorno após despesas e obrigações.",
-    "Caixa da investida fica comprometido com dívida, projetos ou reparação.",
-    "Classes, tesouraria e tributos alteram a transmissão do valor por ação.",
-    "Desconto e preços da mesma data deixam de apoiar a hipótese depois do custo da holding."
+    "Proventos recebidos da Vale não sustentam custos e remuneração da holding.",
+    "Compromissos da investida restringem distribuição apesar de equivalência positiva.",
+    "Preço, participação, tesouraria ou direitos por classe mudam a base do desconto."
   ],
   "lacunas_de_dados": [
     "Fluxo de caixa completo, recebimentos e obrigações da holding não foram integralmente reconciliados.",
@@ -179,7 +192,7 @@
       "titulo": "Informe aos investidores, participação, resultado e valor líquido dos ativos",
       "url": "https://bradespar.bradesco/content/dam/banco-bradesco/bradespar/staticfiles/assets/pdf/resultados-trimestrais/2026/RRI%2006.2026.pdf",
       "publicado_em": "2026-08-13",
-      "consultado_em": "2026-10-11"
+      "consultado_em": "2026-10-12"
     },
     {
       "id": "F3",

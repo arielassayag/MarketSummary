@@ -1,7 +1,7 @@
 {
   "mind": "codex",
   "issuer_id": "BR_AUREN",
-  "data": "2026-10-11",
+  "data": "2026-10-12",
   "tipo": "iniciacao",
   "titulo": "Auren — geração e comercialização convertidas em caixa após integração e dívida",
   "resumo": "A hipótese é que portfólio e contratação reduzam o custo de atender clientes e gerem caixa recorrente após investimento e financiamento. A condição decisiva é margem realizada, com proteção e geração compatíveis com as obrigações. Receita maior, marcação de contratos e dividendos declarados por investidas não comprovam recuperação equivalente de caixa. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_AUREN.rating_codigo}}, com retorno esperado {{fact:val.BR_AUREN.etr}}. A visão da nota não altera esse modelo.",
@@ -24,6 +24,13 @@
         "val.BR_AUREN.upside",
         "val.BR_AUREN.ke",
         "val.BR_AUREN.etr"
+      ]
+    },
+    {
+      "titulo": "Margem contratada precisa tornar-se margem realizada",
+      "texto": "Diversificação tem valor se a energia disponível atender os contratos após restrições, modulação e compras. A receita maior e a marcação de contratos não resolvem perdas na comercialização. O teste de recuperação é caixa recorrente depois do reinvestimento e serviço da dívida por entidade. Compensações potenciais e etapas societárias posteriores ao protocolo permanecem condições, sem antecipar recursos à holding.",
+      "evidencias": [
+        "F2"
       ]
     }
   ],
@@ -84,7 +91,7 @@
     "base": "Caso-base do modelo em {{fact:val.BR_AUREN.preco_alvo}}, com retorno esperado {{fact:val.BR_AUREN.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
     "pessimista": "Restrições, compras e perdas comerciais reduzem margem, enquanto financiamento e integração absorvem recursos. O cenário pessimista calculado pelo código é {{fact:val.BR_AUREN.alvo_pessimista}}."
   },
-  "comentario_valuation": "Preço de referência {{fact:val.BR_AUREN.preco}} e alvo do modelo aberto {{fact:val.BR_AUREN.preco_alvo}}, com potencial {{fact:val.BR_AUREN.upside}}. Retorno total esperado {{fact:val.BR_AUREN.etr}} e custo do capital próprio {{fact:val.BR_AUREN.ke}}. A dispersão entre métodos é {{fact:val.BR_AUREN.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_AUREN.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_AUREN.consenso_alvo}}; a diferença {{fact:val.BR_AUREN.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "comentario_valuation": "Preço de referência {{fact:val.BR_AUREN.preco}} e alvo do modelo aberto {{fact:val.BR_AUREN.preco_alvo}}, com potencial {{fact:val.BR_AUREN.upside}}. Retorno total esperado {{fact:val.BR_AUREN.etr}} e custo do capital próprio {{fact:val.BR_AUREN.ke}}. A dispersão entre métodos é {{fact:val.BR_AUREN.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_AUREN.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_AUREN.consenso_alvo}}; a diferença {{fact:val.BR_AUREN.diff_consenso}} não constitui evidência de percepção do mercado. Avaliação por ativo e contratos deve preservar hidrologia, restrições de geração, compras e risco de contraparte. Dívida e recursos vinculados precisam de ponte por projeto; dividendos declarados não são recebimentos repetíveis. Valor terminal baseado em EBITDA ajustado exige margem realizada e manutenção, sem incorporar compensações ainda não recebidas.",
   "ultimo_resultado": "A contribuição por fonte, contratos e participações tem bases distintas. Dividendos declarados por investidas excedem os recebidos no período e não podem ser contados novamente como caixa livre. O projeto Cajuína tinha equipamentos em teste, com conclusão comercial estimada. A compensação por cortes de geração exigia validação, eventual contestação e adesão, sem antecipação de recebimento.",
   "guidance": "nd",
   "tom_gestao": "nd",
@@ -140,6 +147,13 @@
         "val.BR_AUREN.ke",
         "val.BR_AUREN.cv_metodos"
       ]
+    },
+    {
+      "titulo": "Evidência que muda a visão",
+      "texto": "A recuperação hídrica não se traduz em margem realizada e caixa após compras de energia. Recursos vinculados ou garantias de projetos limitam a distribuição à holding. Compensações e etapas societárias estimadas não têm condições ou recebimento comprovados.",
+      "evidencias": [
+        "F2"
+      ]
     }
   ],
   "estrutura_etf": null,
@@ -148,10 +162,9 @@
   "aderencia_indice_etf": null,
   "o_que_mudou": null,
   "gatilhos_revisao": [
-    "Contratação e produção deixam de sustentar margem após compras e modulação.",
-    "Marcação e dividendos das investidas não se convertem em caixa disponível.",
-    "Integração, garantias ou financiamento exigem recursos além da contribuição recorrente.",
-    "Novos documentos alteram fechamento da reorganização ou elegibilidade e recebimento das compensações."
+    "A recuperação hídrica não se traduz em margem realizada e caixa após compras de energia.",
+    "Recursos vinculados ou garantias de projetos limitam a distribuição à holding.",
+    "Compensações e etapas societárias estimadas não têm condições ou recebimento comprovados."
   ],
   "lacunas_de_dados": [
     "Demonstrações completas, contratos e fluxo livre não foram integralmente reconciliados.",
@@ -180,7 +193,7 @@
       "titulo": "Release de resultados, contratos, geração, integração e financiamento",
       "url": "https://api.mziq.com/mzfilemanager/v2/d/691c9da5-45e0-458f-a3da-41982b1730fc/dc5fdc3a-062b-e2db-c2c2-364fc1474185?origin=2",
       "publicado_em": "2026-08-05",
-      "consultado_em": "2026-10-11"
+      "consultado_em": "2026-10-12"
     },
     {
       "id": "F3",

@@ -1,7 +1,7 @@
 {
   "mind": "codex",
   "issuer_id": "BR_HAPVIDA",
-  "data": "2026-10-11",
+  "data": "2026-10-12",
   "tipo": "iniciacao",
   "titulo": "Hapvida — rentabilidade assistencial, reestruturação e capital regulatório",
   "resumo": "A hipótese é que revisão comercial, integração e eficiência assistencial recuperem rentabilidade sem comprometer qualidade e retenção. A condição decisiva é reduzir o custo dos serviços e converter resultado em caixa depois de aluguéis, juros, contingências e capital regulatório. Reajustar ou encerrar contratos sob avaliação é uma expectativa da administração; ainda precisa demonstrar efeito econômico líquido. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_HAPVIDA.rating_codigo}}, com retorno esperado {{fact:val.BR_HAPVIDA.etr}}. A visão da nota não altera esse modelo.",
@@ -26,6 +26,14 @@
         "val.BR_HAPVIDA.upside",
         "val.BR_HAPVIDA.ke",
         "val.BR_HAPVIDA.etr"
+      ]
+    },
+    {
+      "titulo": "Seleção comercial sem perda da capacidade assistencial",
+      "texto": "O release apresenta revisão de contratos e cobrança como medidas em implementação. A tese exige melhora líquida após retenção, utilização da rede e custo de atendimento, sem tratar retirada pro forma de beneficiários como execução. A verticalização deve reduzir o custo do percurso assistencial e preservar acesso; estrutura própria ociosa ou reclamações crescentes podem contrariar essa vantagem. Receita por beneficiário e sinistralidade precisam ser lidas com composição de produto e região.",
+      "evidencias": [
+        "F1",
+        "F2"
       ]
     }
   ],
@@ -98,7 +106,7 @@
     "base": "Caso-base do modelo em {{fact:val.BR_HAPVIDA.preco_alvo}}, com retorno esperado {{fact:val.BR_HAPVIDA.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
     "pessimista": "Custo, cancelamento, contingências e integração mantêm pressão sobre margem e caixa; capital vinculado e dívida limitam flexibilidade. O cenário pessimista calculado pelo código é {{fact:val.BR_HAPVIDA.alvo_pessimista}}."
   },
-  "comentario_valuation": "Preço de referência {{fact:val.BR_HAPVIDA.preco}} e alvo do modelo aberto {{fact:val.BR_HAPVIDA.preco_alvo}}, com potencial {{fact:val.BR_HAPVIDA.upside}}. Retorno total esperado {{fact:val.BR_HAPVIDA.etr}} e custo do capital próprio {{fact:val.BR_HAPVIDA.ke}}. A dispersão entre métodos é {{fact:val.BR_HAPVIDA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_HAPVIDA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_HAPVIDA.consenso_alvo}}; a diferença {{fact:val.BR_HAPVIDA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "comentario_valuation": "A avaliação deve conciliar lucro e caixa recorrentes com capital regulatório, ativos garantidores, arrendamentos e passivos por operadora. Rede própria e intangíveis de aquisições não demonstram valor recuperável por si; EBITDA ajustado antes dessas obrigações é controle insuficiente para valorar a ação. Preço de referência {{fact:val.BR_HAPVIDA.preco}} e alvo do modelo aberto {{fact:val.BR_HAPVIDA.preco_alvo}}, com potencial {{fact:val.BR_HAPVIDA.upside}}. Retorno total esperado {{fact:val.BR_HAPVIDA.etr}} e custo do capital próprio {{fact:val.BR_HAPVIDA.ke}}. A dispersão entre métodos é {{fact:val.BR_HAPVIDA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_HAPVIDA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_HAPVIDA.consenso_alvo}}; a diferença {{fact:val.BR_HAPVIDA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
   "ultimo_resultado": "O release datado em agosto apresenta receita crescente, sinistralidade caixa pior e redução do EBITDA ajustado nas comparações anual e sequencial. O lucro ajustado recuou e coexistiu com prejuízo contábil. A revisão comercial identifica contratos sob avaliação, com renegociação ou possível descontinuação; a retirada da base é uma hipótese pro forma, não um fato consumado. A geração livre gerencial do semestre antecede despesas financeiras; a dívida líquida e os índices de alavancagem aumentaram. Caixa livre e superávit regulatório diminuíram, e a própria companhia diferencia soma de entidades de consolidação hipotética. A central oferece demonstrações em bases anterior e norma de seguros vigente. Metadados e data do release têm estados distintos; resíduos editoriais da cópia não foram corrigidos.",
   "guidance": "nd",
   "tom_gestao": "nd",
@@ -156,6 +164,13 @@
         "val.BR_HAPVIDA.ke",
         "val.BR_HAPVIDA.cv_metodos"
       ]
+    },
+    {
+      "titulo": "Retenção, custo e caixa disponível por operadora",
+      "texto": "Na renovação seguinte, separar saída de contratos reavaliados de cancelamento da base rentável; acompanhar utilização e reclamações com a sinistralidade. Confrontar a melhora assistencial com caixa depois de juros, aluguéis e contingências. Superávits individuais e ativos vinculados devem permanecer separados de recursos que poderiam chegar à holding; não inferir fungibilidade da soma divulgada.",
+      "evidencias": [
+        "F2"
+      ]
     }
   ],
   "estrutura_etf": null,
@@ -188,7 +203,7 @@
       "titulo": "Negócio e materiais públicos do emissor",
       "url": "https://ri.hapvida.com.br/a-companhia/perfil-corporativo-e-mercado-de-atuacao/",
       "publicado_em": null,
-      "consultado_em": "2026-10-11"
+      "consultado_em": "2026-10-12"
     },
     {
       "id": "F2",
@@ -197,7 +212,7 @@
       "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
       "url": "https://api.mziq.com/mzfilemanager/v2/d/6bbd1770-f9f4-44e8-a1b1-d26b7585eec1/2da3a782-e91a-675b-c1ad-9b08af4c71b0?origin=2",
       "publicado_em": "2026-08-13",
-      "consultado_em": "2026-10-11"
+      "consultado_em": "2026-10-12"
     },
     {
       "id": "F3",

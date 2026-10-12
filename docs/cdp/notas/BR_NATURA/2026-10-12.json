@@ -1,7 +1,7 @@
 {
   "mind": "codex",
   "issuer_id": "BR_NATURA",
-  "data": "2026-10-11",
+  "data": "2026-10-12",
   "tipo": "iniciacao",
   "titulo": "Natura — execução comercial, perímetro e caixa após financiamento",
   "resumo": "A hipótese é que disponibilidade, incentivos comerciais e execução recuperem receita e rentabilidade no Brasil, preservando a evolução dos mercados hispânicos. A condição decisiva é caixa depois de juros, derivativos e ocupação, com dívida e direitos do FIDC reconciliados. Simplificação societária e promessa de recuperação não comprovam valor por ação. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_NATURA.rating_codigo}}, com retorno esperado {{fact:val.BR_NATURA.etr}}. A visão da nota não altera esse modelo.",
@@ -25,6 +25,14 @@
         "val.BR_NATURA.upside",
         "val.BR_NATURA.ke",
         "val.BR_NATURA.etr"
+      ]
+    },
+    {
+      "titulo": "Canal comercial depende de produto disponível",
+      "texto": "O release atribui parte da pressão brasileira a disponibilidade e mudanças comerciais; nos mercados hispânicos, moeda e produtividade têm bases distintas. A recuperação precisa aparecer em atividade e venda final, depois dos incentivos às consultoras e custos de atendimento. Marcas e canais não asseguram retorno se ruptura ou mudança de regras reduzir confiança e frequência de compra. Venda às franquias deve ser distinguida da demanda efetiva do consumidor.",
+      "evidencias": [
+        "F1",
+        "F2"
       ]
     }
   ],
@@ -96,7 +104,7 @@
     "base": "Caso-base do modelo em {{fact:val.BR_NATURA.preco_alvo}}, com retorno esperado {{fact:val.BR_NATURA.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
     "pessimista": "Rupturas e execução comercial continuam pressionando receita; juros, câmbio e investimento absorvem recursos, enquanto bases ajustadas ocultam a fragilidade do caixa atribuível. O cenário pessimista calculado pelo código é {{fact:val.BR_NATURA.alvo_pessimista}}."
   },
-  "comentario_valuation": "O retrato tem preço {{fact:val.BR_NATURA.preco}}, alvo {{fact:val.BR_NATURA.preco_alvo}}, potencial {{fact:val.BR_NATURA.upside}}, retorno esperado {{fact:val.BR_NATURA.etr}} e custo do capital {{fact:val.BR_NATURA.ke}}. Dispersão {{fact:val.BR_NATURA.cv_metodos}} e confiança {{fact:val.BR_NATURA.confianca_codigo}} são calculadas pelo código. Consenso público {{fact:val.BR_NATURA.consenso_alvo}} e diferença {{fact:val.BR_NATURA.diff_consenso}} não comprovam percepção do mercado. Perímetro, passivos, direitos de terceiros e base por ação exigem ponte ao valor atribuível. A narrativa não recalcula preços nem incorpora retrospectivamente a reorganização ao modelo. Comparativos pro forma não substituem os registros originais.",
+  "comentario_valuation": "O valuation pede fluxo normalizado do perímetro remanescente por país e marca, depois de logística, inovação e financiamento. Simplificação societária não é reavaliação automática. Dívida gerencial, cotas seniores, arrendamentos e base por ação precisam de ponte ao capital atribuível; margens contra bases ajustadas distintas não provam trajetória uniforme. O retrato tem preço {{fact:val.BR_NATURA.preco}}, alvo {{fact:val.BR_NATURA.preco_alvo}}, potencial {{fact:val.BR_NATURA.upside}}, retorno esperado {{fact:val.BR_NATURA.etr}} e custo do capital {{fact:val.BR_NATURA.ke}}. Dispersão {{fact:val.BR_NATURA.cv_metodos}} e confiança {{fact:val.BR_NATURA.confianca_codigo}} são calculadas pelo código. Consenso público {{fact:val.BR_NATURA.consenso_alvo}} e diferença {{fact:val.BR_NATURA.diff_consenso}} não comprovam percepção do mercado. Perímetro, passivos, direitos de terceiros e base por ação exigem ponte ao valor atribuível. A narrativa não recalcula preços nem incorpora retrospectivamente a reorganização ao modelo. Comparativos pro forma não substituem os registros originais.",
   "ultimo_resultado": "Receita, EBITDA e lucro continuado diminuíram anualmente, com Brasil pressionado e mercados hispânicos em bases distintas de moeda. A comparação de margem reportada difere da margem contra base ajustada anterior. O FCFF gerencial foi positivo, enquanto caixa livre continuado após juros e derivativos foi neutro no trimestre. Entrada do FIDC também contribuiu à dívida gerencial menor. A mensagem reconhece revisão das ambições e preservação de investimentos, mas contém redação ambígua sobre expansão de margem; não foi atribuída direção agregada de guidance.",
   "guidance": "nd",
   "tom_gestao": "nd",
@@ -151,6 +159,14 @@
         "val.BR_NATURA.ke",
         "val.BR_NATURA.cv_metodos"
       ]
+    },
+    {
+      "titulo": "Disponibilidade, canal e caixa após obrigações",
+      "texto": "Na próxima divulgação, confrontar disponibilidade com atividade e produtividade das consultoras, venda final e recomposição de estoques por país. Separar moeda reportada de constante e margem atual da base ajustada anterior. Rever a tese se demanda não reagir aos gastos comerciais ou se liberação de giro e captação no FIDC sustentarem a liquidez sem melhora do caixa depois de juros, derivativos e ocupação.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
     }
   ],
   "estrutura_etf": null,
@@ -159,10 +175,10 @@
   "aderencia_indice_etf": null,
   "o_que_mudou": null,
   "gatilhos_revisao": [
-    "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
-    "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
-    "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
-    "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    "Disponibilidade melhora sem recuperação de atividade, produtividade e venda final das consultoras.",
+    "Incentivos e mudanças de preço/canal ampliam custo sem retenção e retorno comercial.",
+    "Moeda ou mudança de base explica a margem sem melhora econômica comparável.",
+    "Giro liberado e FIDC sustentam liquidez sem caixa depois de juros, derivativos e ocupação."
   ],
   "lacunas_de_dados": [
     "A redação da revisão das ambições de margem requer esclarecimento; direção agregada permanece não determinada.",
@@ -182,7 +198,7 @@
       "titulo": "Negócio e materiais públicos do emissor",
       "url": "https://ri.natura.com.br/a-companhia/quem-somos/",
       "publicado_em": null,
-      "consultado_em": "2026-10-11"
+      "consultado_em": "2026-10-12"
     },
     {
       "id": "F2",
@@ -191,7 +207,7 @@
       "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
       "url": "https://api.mziq.com/mzfilemanager/v2/d/67c3b7d4-64ea-4c2f-b380-6596a2ac2fbf/06d20fb4-f6d1-2246-8eb3-ae1fc5db4f2b?origin=2",
       "publicado_em": "2026-08-10",
-      "consultado_em": "2026-10-11"
+      "consultado_em": "2026-10-12"
     },
     {
       "id": "F3",

@@ -1,7 +1,7 @@
 {
   "mind": "codex",
   "issuer_id": "BR_IRB",
-  "data": "2026-10-11",
+  "data": "2026-10-12",
   "tipo": "iniciacao",
   "titulo": "IRB Re — disciplina de subscrição após reservas, retrocessão e capital",
   "resumo": "A hipótese é que seleção de riscos e encerramento de carteiras menos adequadas produzam retorno recorrente após sinistros e capital. A condição decisiva é qualidade das reservas e resultado de subscrição em diferentes anos de ocorrência. Menor emissão pode refletir disciplina, sem comprovar que reversão de provisão ou menor retrocessão tenha reduzido risco final. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_IRB.rating_codigo}}, com retorno esperado {{fact:val.BR_IRB.etr}}. A visão da nota não altera esse modelo.",
@@ -24,6 +24,13 @@
         "val.BR_IRB.upside",
         "val.BR_IRB.ke",
         "val.BR_IRB.etr"
+      ]
+    },
+    {
+      "titulo": "Resultado de subscrição por ano de ocorrência",
+      "texto": "O relatório separa prêmio ganho, sinistro retido, retrocessão e resultado financeiro; o índice ampliado incorpora base diferente do combinado. A tese de disciplina exige que contratos renovados remunerem a perda final e o capital, sem depender de reversões de reservas antigas ou receitas financeiras. Reduzir prêmio pode proteger retorno, mas reduzir retrocessão aumenta a importância de examinar a exposição efetivamente retida e sua concentração.",
+      "evidencias": [
+        "F2"
       ]
     }
   ],
@@ -83,7 +90,7 @@
     "base": "Caso-base do modelo em {{fact:val.BR_IRB.preco_alvo}}, com retorno esperado {{fact:val.BR_IRB.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
     "pessimista": "Desenvolvimento de sinistros e perdas externas exigem provisões, proteção e financiamento adicional, absorvendo retorno ao acionista. O cenário pessimista calculado pelo código é {{fact:val.BR_IRB.alvo_pessimista}}."
   },
-  "comentario_valuation": "Preço de referência {{fact:val.BR_IRB.preco}} e alvo do modelo aberto {{fact:val.BR_IRB.preco_alvo}}, com potencial {{fact:val.BR_IRB.upside}}. Retorno total esperado {{fact:val.BR_IRB.etr}} e custo do capital próprio {{fact:val.BR_IRB.ke}}. A dispersão entre métodos é {{fact:val.BR_IRB.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_IRB.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_IRB.consenso_alvo}}; a diferença {{fact:val.BR_IRB.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "comentario_valuation": "Para resseguro, patrimônio e lucro residual normalizado são lentes mais adequadas que EBITDA industrial. Reservas, ativos garantidores e base prudencial precisam sustentar retorno recorrente após o capital requerido. Relação preço/patrimônio não demonstra desconto econômico sem adequação das provisões e reconciliação das bases contábeis. Preço de referência {{fact:val.BR_IRB.preco}} e alvo do modelo aberto {{fact:val.BR_IRB.preco_alvo}}, com potencial {{fact:val.BR_IRB.upside}}. Retorno total esperado {{fact:val.BR_IRB.etr}} e custo do capital próprio {{fact:val.BR_IRB.ke}}. A dispersão entre métodos é {{fact:val.BR_IRB.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_IRB.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_IRB.consenso_alvo}}; a diferença {{fact:val.BR_IRB.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
   "ultimo_resultado": "O lucro trimestral melhora, mas a leitura semestral e os ajustes têm trajetórias próprias. Reversão de reserva doméstica, provisão de crédito de vida e baixa de tributos diferidos têm naturezas diferentes. Encerramento britânico e efeitos cambiais precisam conservar seu tratamento. O release apresenta percentuais divergentes para uma comparação de lucro; a fonte não foi corrigida e seus números não foram incorporados à mão.",
   "guidance": "nd",
   "tom_gestao": "nd",
@@ -135,6 +142,13 @@
         "val.BR_IRB.ke",
         "val.BR_IRB.cv_metodos"
       ]
+    },
+    {
+      "titulo": "Reservas, renovação e capital distribuível",
+      "texto": "Na divulgação seguinte, acompanhar desenvolvimento dos sinistros por ocorrência e geografia, custo da proteção e termos de renovação. Confrontar o resultado de subscrição com despesas e tributos, mantendo a ponte entre visão gerencial e norma de seguros. Verificar liquidação da debênture no vencimento e disponibilidade de ativos garantidores; suficiência prudencial não equivale a todo patrimônio livre para distribuição.",
+      "evidencias": [
+        "F2"
+      ]
     }
   ],
   "estrutura_etf": null,
@@ -154,7 +168,8 @@
     "Percentuais divergentes no release foram preservados como inconsistência, sem correção da fonte.",
     "Liquidação posterior da dívida e novas autorizações não foram comprovadas nesta consulta.",
     "Retrocessão, garantias, tributos e operações internacionais exigem documentação detalhada.",
-    "Guidance, tom agregado da gestão e percepção do mercado não foram classificados."
+    "Guidance, tom agregado da gestão e percepção do mercado não foram classificados.",
+    "A extração contém datas de relatório e apresentação distintas, além de resíduos antigos. Publicação exata não foi estabelecida; consulta atual não comprova posse histórica."
   ],
   "stance": 0,
   "conviccao": 1,
@@ -174,8 +189,8 @@
       "instituicao": "IRB Re",
       "titulo": "Resultado gerencial, reservas, solvência e asseguração",
       "url": "https://api.mziq.com/mzfilemanager/v2/d/0d797649-90df-4c56-aa01-6ee9c8a13d75/b41b5ae3-2660-80fc-03ca-a4f683e5b125?origin=2",
-      "publicado_em": "2026-08-14",
-      "consultado_em": "2026-10-11"
+      "publicado_em": null,
+      "consultado_em": "2026-10-12"
     }
   ],
   "modelo_ia": null

@@ -1,7 +1,7 @@
 {
   "mind": "codex",
   "issuer_id": "MX_PENOLES",
-  "data": "2026-10-11",
+  "data": "2026-10-12",
   "tipo": "iniciacao",
   "titulo": "Peñoles — preço dos metais, manutenção e resultado atribuível",
   "resumo": "A hipótese é que recursos minerais e integração sustentem caixa após desenvolvimento, manutenção e obrigações ambientais. Preços altos precisam se traduzir em retorno atribuível ao acionista, sem ocultar paradas e teores menores. A condição decisiva é continuidade remuneradora de operação e reposição de reservas. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.MX_PENOLES.rating_codigo}}, com retorno esperado {{fact:val.MX_PENOLES.etr}}. A visão da nota não altera esse modelo.",
@@ -24,6 +24,14 @@
         "val.MX_PENOLES.upside",
         "val.MX_PENOLES.ke",
         "val.MX_PENOLES.etr"
+      ]
+    },
+    {
+      "titulo": "Integração exige separar metal próprio e remuneração do processamento",
+      "texto": "O informe distingue compra de material de terceiros, remuneração de tratamento e efeitos de preço em estoques. A hipótese de integração precisa mostrar margem recebida e disponibilidade do circuito, além do preço do metal. Crédito contábil no custo e menor carga processada podem favorecer margem sem elevar volume ou caixa sustentável; o retorno deve suportar desenvolvimento, rejeitos e fechamento por operação.",
+      "evidencias": [
+        "F2",
+        "F3"
       ]
     }
   ],
@@ -74,7 +82,7 @@
     "base": "Caso-base do modelo em {{fact:val.MX_PENOLES.preco_alvo}}, com retorno esperado {{fact:val.MX_PENOLES.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
     "pessimista": "Metais, moeda e disponibilidade pressionam caixa enquanto reinvestimento e minoritários limitam retorno. O cenário pessimista calculado pelo código é {{fact:val.MX_PENOLES.alvo_pessimista}}."
   },
-  "comentario_valuation": "Preço de referência {{fact:val.MX_PENOLES.preco}} e alvo do modelo aberto {{fact:val.MX_PENOLES.preco_alvo}}, com potencial {{fact:val.MX_PENOLES.upside}}. Retorno total esperado {{fact:val.MX_PENOLES.etr}} e custo do capital próprio {{fact:val.MX_PENOLES.ke}}. A dispersão entre métodos é {{fact:val.MX_PENOLES.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.MX_PENOLES.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.MX_PENOLES.consenso_alvo}}; a diferença {{fact:val.MX_PENOLES.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "comentario_valuation": "A diligência adequada é valor presente dos fluxos de minas de vida finita, com reservas verificadas, desenvolvimento, rejeitos e fechamento, somado ao refino e químicos sem duplicar Fresnillo ou minoritários. Lucro de um ciclo favorável não deve ser perpetuado; dívida e caixa atribuível são por entidade. Preço de referência {{fact:val.MX_PENOLES.preco}} e alvo do modelo aberto {{fact:val.MX_PENOLES.preco_alvo}}, com potencial {{fact:val.MX_PENOLES.upside}}. Retorno total esperado {{fact:val.MX_PENOLES.etr}} e custo do capital próprio {{fact:val.MX_PENOLES.ke}}. A dispersão entre métodos é {{fact:val.MX_PENOLES.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.MX_PENOLES.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.MX_PENOLES.consenso_alvo}}; a diferença {{fact:val.MX_PENOLES.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
   "ultimo_resultado": "A análise distingue mina, refino e processamento de terceiros, além de recuperação contra base paralisada. O informe separa efeitos de preços, moeda, imposto e participação. A página traz datas estimadas de calendário; previsão de divulgação não comprova publicação efetiva.",
   "guidance": "nd",
   "tom_gestao": "nd",
@@ -127,6 +135,14 @@
         "val.MX_PENOLES.ke",
         "val.MX_PENOLES.cv_metodos"
       ]
+    },
+    {
+      "titulo": "Ponte entre mina, circuito metalúrgico e acionista",
+      "texto": "Conciliar produção pagável e propriedade econômica, preço realizado, estoques físicos e créditos de tratamento. Verificar reinício e recorrência das paradas, capital para depósitos de rejeitos e obrigações de fechamento. Confrontar imposto pago com diferido e dividendos da subsidiária com caixa da controladora. A hipótese enfraquece se margens por estoque ou preços favoráveis ocultam deterioração operacional e reinvestimento insuficiente.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
     }
   ],
   "estrutura_etf": null,
@@ -135,10 +151,10 @@
   "aderencia_indice_etf": null,
   "o_que_mudou": null,
   "gatilhos_revisao": [
-    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
-    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
-    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
-    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+    "Paradas ou deterioração de teor e recuperação impedem caixa após desenvolvimento e manutenção.",
+    "Melhora de margem depende de preço, estoque ou crédito de tratamento sem realização equivalente.",
+    "Rejeitos, fechamento ou reposição de reservas exigem capital não refletido nas premissas.",
+    "Caixa consolidado não chega à controladora após minoritários, tributos e obrigações."
   ],
   "lacunas_de_dados": [
     "Minas, refino, materiais de terceiros e minoritários exigem reconciliação integral.",
@@ -157,7 +173,7 @@
       "titulo": "Calendário e materiais oficiais de resultados",
       "url": "https://www.penoles.com.mx/inversionistas/reportes-y-presentaciones/",
       "publicado_em": null,
-      "consultado_em": "2026-10-11"
+      "consultado_em": "2026-10-12"
     },
     {
       "id": "F2",
@@ -166,7 +182,7 @@
       "titulo": "Informe de resultados e fluxo de caixa",
       "url": "https://www.penoles.com.mx/assets/files/reportes/BMV/informe/Informe_Director_2T26.pdf",
       "publicado_em": "2026-08-04",
-      "consultado_em": "2026-10-11"
+      "consultado_em": "2026-10-12"
     },
     {
       "id": "F3",
@@ -175,7 +191,7 @@
       "titulo": "Demonstrações consolidadas semestrais em dólar",
       "url": "https://www.penoles.com.mx/assets/files/reportes/BMV/trimestral/IPSAB_BMV_2T2026_USD.pdf",
       "publicado_em": null,
-      "consultado_em": "2026-10-11"
+      "consultado_em": "2026-10-12"
     }
   ],
   "modelo_ia": null

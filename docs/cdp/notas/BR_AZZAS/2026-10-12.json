@@ -1,7 +1,7 @@
 {
   "mind": "codex",
   "issuer_id": "BR_AZZAS",
-  "data": "2026-10-11",
+  "data": "2026-10-12",
   "tipo": "iniciacao",
   "titulo": "Azzas — marcas, capital de giro e reorganização condicional",
   "resumo": "A hipótese é que marcas, disciplina comercial e gestão de estoque recuperem contribuição e caixa, com governança adequada ao capital de cada negócio. A condição decisiva é remunerar giro, ocupação, juros e reinvestimento. Separação anunciada não comprova novos direitos implementados, listagem concluída ou liberação de caixa; valor de FARM não pode ser contado integralmente em cada parte. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_AZZAS.rating_codigo}}, com retorno esperado {{fact:val.BR_AZZAS.etr}}. A visão da nota não altera esse modelo.",
@@ -27,6 +27,15 @@
         "val.BR_AZZAS.upside",
         "val.BR_AZZAS.ke",
         "val.BR_AZZAS.etr"
+      ]
+    },
+    {
+      "titulo": "Recuperação comercial antes da separação societária",
+      "texto": "A hipótese operacional depende de venda ao consumidor, saúde do canal e estoque remunerado depois de aluguel e juros. A separação proposta pode alterar governança e financiamento, mas exige aprovação e definição executável de dívida, garantias e direitos. FARM será compartilhada no desenho anunciado; seu valor não pertence integralmente a cada companhia resultante. Substituição no conselho não comprova a consumação da cisão.",
+      "evidencias": [
+        "F2",
+        "F4",
+        "F5"
       ]
     }
   ],
@@ -100,7 +109,7 @@
     "base": "Caso-base do modelo em {{fact:val.BR_AZZAS.preco_alvo}}, com retorno esperado {{fact:val.BR_AZZAS.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
     "pessimista": "Vendas e margens enfraquecem, parceiros e perdas consomem recursos e a reorganização se prolonga ou restringe direitos sem aliviar compromissos financeiros. O cenário pessimista calculado pelo código é {{fact:val.BR_AZZAS.alvo_pessimista}}."
   },
-  "comentario_valuation": "O retrato recebido tem preço {{fact:val.BR_AZZAS.preco}}, alvo {{fact:val.BR_AZZAS.preco_alvo}}, potencial {{fact:val.BR_AZZAS.upside}}, retorno esperado {{fact:val.BR_AZZAS.etr}} e custo do capital {{fact:val.BR_AZZAS.ke}}. Dispersão {{fact:val.BR_AZZAS.cv_metodos}} e confiança {{fact:val.BR_AZZAS.confianca_codigo}} pertencem ao código. Consenso público {{fact:val.BR_AZZAS.consenso_alvo}} e diferença {{fact:val.BR_AZZAS.diff_consenso}} não comprovam percepção do mercado. Valor operacional, prioridade dos credores, direitos de terceiros e base por ação exigem ponte econômica consistente. Homologação ou reorganização anunciada não atualiza automaticamente a dívida nem o perímetro do modelo. Não se recalculam preços ou probabilidades na narrativa e não se incorporam retrospectivamente documentos posteriores.",
+  "comentario_valuation": "O retrato recebido tem preço {{fact:val.BR_AZZAS.preco}}, alvo {{fact:val.BR_AZZAS.preco_alvo}}, potencial {{fact:val.BR_AZZAS.upside}}, retorno esperado {{fact:val.BR_AZZAS.etr}} e custo do capital {{fact:val.BR_AZZAS.ke}}. Dispersão {{fact:val.BR_AZZAS.cv_metodos}} e confiança {{fact:val.BR_AZZAS.confianca_codigo}} pertencem ao código. Consenso público {{fact:val.BR_AZZAS.consenso_alvo}} e diferença {{fact:val.BR_AZZAS.diff_consenso}} não comprovam percepção do mercado. Valor operacional, prioridade dos credores, direitos de terceiros e base por ação exigem ponte econômica consistente. Homologação ou reorganização anunciada não atualiza automaticamente a dívida nem o perímetro do modelo. Não se recalculam preços ou probabilidades na narrativa e não se incorporam retrospectivamente documentos posteriores. A leitura por marca e canal precisa de caixa após remarcação, recebíveis, ocupação e capital de giro. Soma das partes exige perímetro e dívida próprios, incluindo participação compartilhada da FARM e custos de separação. Uma expansão de múltiplos não está sustentada apenas pelo anúncio; a comparação deve manter bases continuadas, recorrentes e consolidadas distintas.",
   "ultimo_resultado": "Receita de marcas continuadas e EBITDA recorrente recuaram anualmente, especialmente na venda ao canal; a margem bruta melhorou, com mix e bases distintas. A geração operacional e pós-capex gerencial cresceu, precedendo juros. O ciclo financeiro contém comparação ajustada por provisões de estoque e recebíveis. Dívida líquida menor coexistiu com alavancagem maior sequencialmente. Posteriormente, os blocos acionários acordaram reorganização sujeita a órgãos societários, CADE e listagem; não há consumação comprovada neste estudo. O comunicado atual confirma renúncias e eleição de substitutos no conselho até a próxima assembleia.",
   "guidance": "nd",
   "tom_gestao": "nd",
@@ -161,6 +170,15 @@
         "val.BR_AZZAS.ke",
         "val.BR_AZZAS.cv_metodos"
       ]
+    },
+    {
+      "titulo": "Evidência que muda a visão",
+      "texto": "Venda ao consumidor e recebimento do canal não confirmam recuperação do estoque. Caixa após juros e aluguel piora apesar da geração gerencial divulgada. Separação não comprova direitos, dívida e custos sem dupla contagem de FARM.",
+      "evidencias": [
+        "F2",
+        "F4",
+        "F5"
+      ]
     }
   ],
   "estrutura_etf": null,
@@ -169,10 +187,9 @@
   "aderencia_indice_etf": null,
   "o_que_mudou": null,
   "gatilhos_revisao": [
-    "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
-    "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
-    "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
-    "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    "Venda ao consumidor e recebimento do canal não confirmam recuperação do estoque.",
+    "Caixa após juros e aluguel piora apesar da geração gerencial divulgada.",
+    "Separação não comprova direitos, dívida e custos sem dupla contagem de FARM."
   ],
   "lacunas_de_dados": [
     "A publicação específica da versão revista do ITR não foi comprovada.",
@@ -201,7 +218,7 @@
       "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
       "url": "https://api.mziq.com/mzfilemanager/v2/d/2edfd667-eaa1-4187-9777-1528284720de/a99b5067-d063-1676-95ec-b9609bb74531?origin=2",
       "publicado_em": "2026-08-12",
-      "consultado_em": "2026-10-11"
+      "consultado_em": "2026-10-12"
     },
     {
       "id": "F3",
@@ -219,7 +236,7 @@
       "titulo": "Acordo de reorganização e condições precedentes",
       "url": "https://api.mziq.com/mzfilemanager/v2/d/2edfd667-eaa1-4187-9777-1528284720de/af04645f-3aab-4f68-7d69-98a22347b317?origin=2",
       "publicado_em": "2026-09-02",
-      "consultado_em": "2026-10-11"
+      "consultado_em": "2026-10-12"
     },
     {
       "id": "F5",
@@ -228,7 +245,7 @@
       "titulo": "Renúncias e substituição de conselheiros",
       "url": "https://filemanager-cdn.mziq.com/published/2edfd667-eaa1-4187-9777-1528284720de/8d37c823-aae8-4df2-9df0-d607bd760cc5",
       "publicado_em": "2026-10-08",
-      "consultado_em": "2026-10-11"
+      "consultado_em": "2026-10-12"
     }
   ],
   "modelo_ia": null

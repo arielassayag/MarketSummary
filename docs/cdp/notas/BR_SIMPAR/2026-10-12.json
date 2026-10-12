@@ -1,7 +1,7 @@
 {
   "mind": "codex",
   "issuer_id": "BR_SIMPAR",
-  "data": "2026-10-11",
+  "data": "2026-10-12",
   "tipo": "iniciacao",
   "titulo": "Simpar — transmissão de caixa, frota e estrutura da holding",
   "resumo": "A hipótese é que escala e produtividade das investidas sustentem caixa depois de frota, obras e juros. A condição decisiva é transmitir recursos à holding sem contar aportes internos ou alienações condicionais como geração recorrente. Financiamento e direitos de terceiros precisam de ponte por entidade. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_SIMPAR.rating_codigo}}, com retorno esperado {{fact:val.BR_SIMPAR.etr}}. A visão da nota não altera esse modelo.",
@@ -25,6 +25,14 @@
         "val.BR_SIMPAR.upside",
         "val.BR_SIMPAR.ke",
         "val.BR_SIMPAR.etr"
+      ]
+    },
+    {
+      "titulo": "Escala das investidas não equivale a liquidez da holding",
+      "texto": "O release apresenta dívida e caixa da holding separadamente e distingue captação externa de aportes dentro do grupo. A tese exige transmissão de caixa das investidas depois de frota, obras e credores, preservando minoritários. Monetização por valor da empresa e desconsolidação contábil não provam caixa líquido recebido. A segregação do BBC em métricas contratuais não elimina sua exposição econômica; derivativo sem caixa imediato mantém liquidação futura própria.",
+      "evidencias": [
+        "F1",
+        "F2"
       ]
     }
   ],
@@ -106,7 +114,7 @@
     "base": "Caso-base do modelo em {{fact:val.BR_SIMPAR.preco_alvo}}, com retorno esperado {{fact:val.BR_SIMPAR.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
     "pessimista": "Frota, juros e obras absorvem geração; alienações atrasam e obrigações por entidade impedem a transmissão de recursos ao controlador. O cenário pessimista calculado pelo código é {{fact:val.BR_SIMPAR.alvo_pessimista}}."
   },
-  "comentario_valuation": "Preço de referência {{fact:val.BR_SIMPAR.preco}} e alvo do modelo aberto {{fact:val.BR_SIMPAR.preco_alvo}}, com potencial {{fact:val.BR_SIMPAR.upside}}. Retorno total esperado {{fact:val.BR_SIMPAR.etr}} e custo do capital próprio {{fact:val.BR_SIMPAR.ke}}. A dispersão entre métodos é {{fact:val.BR_SIMPAR.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_SIMPAR.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_SIMPAR.consenso_alvo}}; a diferença {{fact:val.BR_SIMPAR.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "comentario_valuation": "A soma das partes deve refletir participações econômicas, dívida e despesas da holding, evitando dupla contagem de dívida já incorporada ao valor das investidas. O desconto de holding requer fundamento em direitos e transmissão de caixa. Frota, obras, BBC e derivativos têm obrigações próprias; métricas contratuais não substituem essa ponte. Preço de referência {{fact:val.BR_SIMPAR.preco}} e alvo do modelo aberto {{fact:val.BR_SIMPAR.preco_alvo}}, com potencial {{fact:val.BR_SIMPAR.upside}}. Retorno total esperado {{fact:val.BR_SIMPAR.etr}} e custo do capital próprio {{fact:val.BR_SIMPAR.ke}}. A dispersão entre métodos é {{fact:val.BR_SIMPAR.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_SIMPAR.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_SIMPAR.consenso_alvo}}; a diferença {{fact:val.BR_SIMPAR.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
   "ultimo_resultado": "Serviços e EBITDA cresceram, com menor receita de renovação da frota e prejuízo consolidado. O investimento líquido aumentou. Aportes privados foram concluídos e a monetização de Porto Aratu continua condicionada; classificações de ativos para venda não comprovam fechamento. Medidas de covenant separam BBC e adicionam itens com definições próprias. A marcação de derivativos de ações não teve caixa imediato, mas há liquidação futura.",
   "guidance": "nd",
   "tom_gestao": "nd",
@@ -161,6 +169,14 @@
         "val.BR_SIMPAR.ke",
         "val.BR_SIMPAR.cv_metodos"
       ]
+    },
+    {
+      "titulo": "Caixa recebido e compromissos da controladora",
+      "texto": "Na divulgação seguinte, seguir dividendos e outros recursos efetivamente recebidos pela holding, comparando-os com juros e reinvestimento por investida. Exigir fechamento e caixa líquido das alienações, sem contar aportes internos novamente. Acompanhar derivativos de ações e obrigações excluídas de métricas gerenciais. Rever a hipótese se EBITDA consolidado crescer enquanto a holding depender de capital externo para sustentar seus compromissos.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
     }
   ],
   "estrutura_etf": null,
@@ -169,10 +185,10 @@
   "aderencia_indice_etf": null,
   "o_que_mudou": null,
   "gatilhos_revisao": [
-    "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
-    "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
-    "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
-    "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    "Investidas ampliam EBITDA sem transmitir caixa após frota, obras, juros e minoritários.",
+    "Holding necessita novos aportes ou dívida para compromissos apesar da liquidez consolidada divulgada.",
+    "Alienações não fecham ou caixa líquido recebido diverge do valor empresarial anunciado.",
+    "Derivativos, direitos de terceiros e restrições contratuais mudam o valor atribuível à controladora."
   ],
   "lacunas_de_dados": [
     "A ponte integral de caixa da holding, dívidas e minoritários permanece pendente.",
@@ -191,7 +207,7 @@
       "titulo": "Negócio e materiais públicos do emissor",
       "url": "https://ri.simpar.com.br/a-companhia/perfil-organizacional/",
       "publicado_em": null,
-      "consultado_em": "2026-10-11"
+      "consultado_em": "2026-10-12"
     },
     {
       "id": "F2",
@@ -200,7 +216,7 @@
       "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
       "url": "https://api.mziq.com/mzfilemanager/v2/d/0f7b667d-72c4-4013-ad2f-58abeff9b857/dd3d121e-b6b5-c4dc-f942-96b08fd01ae7?origin=2",
       "publicado_em": "2026-08-12",
-      "consultado_em": "2026-10-11"
+      "consultado_em": "2026-10-12"
     },
     {
       "id": "F3",

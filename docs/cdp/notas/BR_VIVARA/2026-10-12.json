@@ -1,7 +1,7 @@
 {
   "mind": "codex",
   "issuer_id": "BR_VIVARA",
-  "data": "2026-10-11",
+  "data": "2026-10-12",
   "tipo": "iniciacao",
   "titulo": "Vivara — produtividade, metais e capital empregado",
   "resumo": "A hipótese é que marcas, produtividade e disciplina de estoque sustentem retorno depois do custo completo. A condição decisiva é converter demanda final em caixa sem depender de antecipações ou benefícios fiscais. Estoque menor em dias não comprova menor valor imobilizado, quando custo dos metais e base de consumo mudam. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_VIVARA.rating_codigo}}, com retorno esperado {{fact:val.BR_VIVARA.etr}}. A visão da nota não altera esse modelo.",
@@ -25,6 +25,13 @@
         "val.BR_VIVARA.upside",
         "val.BR_VIVARA.ke",
         "val.BR_VIVARA.etr"
+      ]
+    },
+    {
+      "titulo": "Coleção e metal exigem leitura física e monetária",
+      "texto": "O release distingue matéria-prima e produtos acabados, com movimentos próprios de custo médio e volume dos metais. A tese precisa demonstrar que coleção e preço conservam demanda sem imobilizar capital de forma crescente. Life e Vivara têm custos de abertura e maturação distintos; expansão conjunta não prova retorno homogêneo. Redução de dias de estoque deve ser acompanhada pelo valor e composição, sem transformar esse indicador em liberação de caixa presumida.",
+      "evidencias": [
+        "F2"
       ]
     }
   ],
@@ -86,11 +93,11 @@
     "base": "Caso-base do modelo em {{fact:val.BR_VIVARA.preco_alvo}}, com retorno esperado {{fact:val.BR_VIVARA.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
     "pessimista": "Metais, demanda e estoque comprimem margem; investimento e tributos consomem recursos e medidas ajustadas não se convertem em caixa recorrente. O cenário pessimista calculado pelo código é {{fact:val.BR_VIVARA.alvo_pessimista}}."
   },
-  "comentario_valuation": "Preço de referência {{fact:val.BR_VIVARA.preco}} e alvo do modelo aberto {{fact:val.BR_VIVARA.preco_alvo}}, com potencial {{fact:val.BR_VIVARA.upside}}. Retorno total esperado {{fact:val.BR_VIVARA.etr}} e custo do capital próprio {{fact:val.BR_VIVARA.ke}}. A dispersão entre métodos é {{fact:val.BR_VIVARA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_VIVARA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_VIVARA.consenso_alvo}}; a diferença {{fact:val.BR_VIVARA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "comentario_valuation": "Fluxo de caixa normalizado por bandeira é a lente principal, com custo de reposição de metais, estoque, manutenção e maturação de lojas. Lucro beneficiado por tributos ou recebíveis normalizados exige reconciliação antes de múltiplos. A dívida e o aluguel precisam de base consistente; estoque de joias não é caixa realizável ao valor contábil sem prova. Preço de referência {{fact:val.BR_VIVARA.preco}} e alvo do modelo aberto {{fact:val.BR_VIVARA.preco_alvo}}, com potencial {{fact:val.BR_VIVARA.upside}}. Retorno total esperado {{fact:val.BR_VIVARA.etr}} e custo do capital próprio {{fact:val.BR_VIVARA.ke}}. A dispersão entre métodos é {{fact:val.BR_VIVARA.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_VIVARA.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_VIVARA.consenso_alvo}}; a diferença {{fact:val.BR_VIVARA.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
   "ultimo_resultado": "Receita aumentou anualmente, com margens menores. EBITDA comparável e lucro comparável usam ajustes distintos de subvenção, imposto diferido e itens pontuais. O caixa operacional e livre gerenciais trimestrais foram positivos e menores no comparável; a conversão normalizada trata recebíveis antecipados em outras datas. Dívida líquida diminuiu. Dias de estoque caíram enquanto seu valor aumentou anualmente, com custo e composição de metais. O release contém valores de lucro diferentes entre páginas e reconciliações, preservados como lacuna.",
   "guidance": "nd",
   "tom_gestao": "nd",
-  "governanca": "Resultado gerencial, subvenções e base sem arrendamento precisam de ponte ao ITR. Diferenças de saldos de lucro não foram corrigidas por inferência. Capital e decisões de expansão devem ser avaliados pelo retorno realizado, com leitura própria dos compromissos. A consulta ao RI usou TLS normal do sistema, preservando erro de certificado do cliente anterior.",
+  "governanca": "Resultado gerencial, subvenções e base sem arrendamento precisam de ponte ao ITR. Diferenças de saldos de lucro não foram corrigidas por inferência. Capital e decisões de expansão devem ser avaliados pelo retorno realizado, com leitura própria dos compromissos.",
   "posicao_competitiva": {
     "titulo": "Posição competitiva a comprovar",
     "texto": "Marca, coleção, presença física e integração podem apoiar preço e relacionamento. Life tem proposta e maturação distintas das lojas Vivara. Ouro e prata influenciam custo, preço percebido e giro. Escala de produção não assegura margem quando estoques e tributos mudam; participação relatada requer verificação independente.",
@@ -141,6 +148,14 @@
         "val.BR_VIVARA.ke",
         "val.BR_VIVARA.cv_metodos"
       ]
+    },
+    {
+      "titulo": "Reposição de metais e retorno por bandeira",
+      "texto": "Na divulgação seguinte, acompanhar preço praticado, margem após reposição de metal, giro de coleções e capital por loja madura e nova. Conciliar estoque em quantidade e valor, descontos, provisões e recebíveis antecipados. Rever a tese se vendas e área crescerem enquanto caixa após aluguel, juros e manutenção enfraquecer, ou se a comparação de lucro depender de subvenções e normalizações não recorrentes.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
     }
   ],
   "estrutura_etf": null,
@@ -149,10 +164,10 @@
   "aderencia_indice_etf": null,
   "o_que_mudou": null,
   "gatilhos_revisao": [
-    "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese.",
-    "Capital de giro, reinvestimento, juros e direitos de terceiros alteram o retorno atribuível.",
-    "Novos documentos mudam perímetro, base contábil, condições contratuais ou unidade da avaliação.",
-    "Eventos anunciados não são comprovados ou a governança restringe a transmissão de valor."
+    "Reposição de metais comprime margem sem compensação por preço, mix ou produtividade.",
+    "Dias de estoque caem sem redução correspondente do capital imobilizado ou das perdas de coleção.",
+    "Novas lojas Life e Vivara não demonstram retorno após estoque, aluguel e manutenção.",
+    "Tributos e normalização de recebíveis sustentam lucro sem caixa recorrente depois de juros."
   ],
   "lacunas_de_dados": [
     "Valores de lucro divergem entre reconciliações do release e exigem esclarecimento.",
@@ -181,7 +196,7 @@
       "titulo": "Resultado e apresentação dos negócios, caixa e financiamento",
       "url": "https://api.mziq.com/mzfilemanager/v2/d/61a4df2d-a461-44d6-9128-da74058019db/cda0f39f-8ec4-4b0d-0db3-6f9a0395f592?origin=2",
       "publicado_em": "2026-08-05",
-      "consultado_em": "2026-10-11"
+      "consultado_em": "2026-10-12"
     },
     {
       "id": "F3",

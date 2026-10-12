@@ -1,7 +1,7 @@
 {
   "mind": "codex",
   "issuer_id": "BR_JHSF",
-  "data": "2026-10-11",
+  "data": "2026-10-12",
   "tipo": "iniciacao",
   "titulo": "JHSF — ecossistema de alta renda, fundos e caixa depois da expansão",
   "resumo": "A hipótese é que ativos diferenciados e serviços recorrentes remunerem expansão e financiamento, com integração comercial sustentando demanda. A condição decisiva é demonstrar caixa depois de investimentos e juros, sem depender de valorização contábil, receitas de incorporação antecipadamente recebidas ou liquidez de fundos relacionados. O retorno exige disciplina por negócio e direitos econômicos. Crescimento de ativos sob gestão não equivale a patrimônio ou caixa do grupo; a venda a fundo deve ser avaliada junto das cotas retidas, contratos e exposição transferida. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_JHSF.rating_codigo}}, com retorno esperado {{fact:val.BR_JHSF.etr}}. A visão da nota não altera esse modelo.",
@@ -27,6 +27,14 @@
         "val.BR_JHSF.upside",
         "val.BR_JHSF.ke",
         "val.BR_JHSF.etr"
+      ]
+    },
+    {
+      "titulo": "Ecossistema e renda economicamente atribuível",
+      "texto": "A leitura por negócio deve separar imóvel detido, contrato de operação e taxa da gestora. O release exclui incorporação, varejo e holding da renda recorrente; essa base não é o grupo inteiro. O teste econômico consiste em demonstrar ocupação, tarifa e utilização que remunerem manutenção e expansão, depois de sócios e financiamento. Reconhecimento de estoques vendidos ao fundo pode ampliar resultado sem gerar novo recebimento na mesma data.",
+      "evidencias": [
+        "F1",
+        "F2"
       ]
     }
   ],
@@ -54,8 +62,8 @@
   ],
   "catalisadores": [
     {
-      "descricao": "Formalização, desempenho e recebimento da parcela seguinte da venda ao fundo, conforme prazo divulgado, sem antecipar reconhecimento ou liquidação.",
-      "data": "2026-12-31",
+      "descricao": "Conclusão prevista da tranche da alienação em dezembro de 2026, sujeita aos termos divulgados; dia exato de liquidação não confirmado.",
+      "data": null,
       "tipo": "capital",
       "direcao": "incerto",
       "evidencias": [
@@ -102,7 +110,7 @@
     "base": "Caso-base do modelo em {{fact:val.BR_JHSF.preco_alvo}}, com retorno esperado {{fact:val.BR_JHSF.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
     "pessimista": "Expansão e financiamento absorvem recursos, receitas e recebimentos se desencontram e estruturas relacionadas limitam retorno e distribuição. O cenário pessimista calculado pelo código é {{fact:val.BR_JHSF.alvo_pessimista}}."
   },
-  "comentario_valuation": "Preço de referência {{fact:val.BR_JHSF.preco}} e alvo do modelo aberto {{fact:val.BR_JHSF.preco_alvo}}, com potencial {{fact:val.BR_JHSF.upside}}. Retorno total esperado {{fact:val.BR_JHSF.etr}} e custo do capital próprio {{fact:val.BR_JHSF.ke}}. A dispersão entre métodos é {{fact:val.BR_JHSF.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_JHSF.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_JHSF.consenso_alvo}}; a diferença {{fact:val.BR_JHSF.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "comentario_valuation": "A soma das partes é uma lente adequada aos negócios heterogêneos: renda dos imóveis, operação de serviços, incorporação e gestora exigem bases próprias. Deduzir capital e direitos de terceiros sem contar duas vezes o fundo, as cotas retidas e os ativos. Valor justo e ativos sob gestão não substituem caixa normalizado atribuível. Preço de referência {{fact:val.BR_JHSF.preco}} e alvo do modelo aberto {{fact:val.BR_JHSF.preco_alvo}}, com potencial {{fact:val.BR_JHSF.upside}}. Retorno total esperado {{fact:val.BR_JHSF.etr}} e custo do capital próprio {{fact:val.BR_JHSF.ke}}. A dispersão entre métodos é {{fact:val.BR_JHSF.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_JHSF.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_JHSF.consenso_alvo}}; a diferença {{fact:val.BR_JHSF.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
   "ultimo_resultado": "O reconhecimento de estoques vendidos ao fundo e reclassificações de contratos contribui para incorporação; a nota explicativa esclarece que transferências de base não são novas vendas. Parte do recebimento ocorreu antes do reconhecimento, enquanto a parcela seguinte depende de formalização e desempenho. O lucro consolidado também inclui efeitos de valor justo e tributação. A renda recorrente tem perímetro próprio. A aquisição de direitos de aviação executiva nos Estados Unidos é contabilizada como ativos; contrato de gestão hoteleira não foi tratado como compra imobiliária.",
   "guidance": "nd",
   "tom_gestao": "nd",
@@ -163,6 +171,14 @@
         "val.BR_JHSF.ke",
         "val.BR_JHSF.cv_metodos"
       ]
+    },
+    {
+      "titulo": "Retenção de exposição e retorno da expansão",
+      "texto": "Na divulgação seguinte, acompanhar ocupação e renda dos ativos maduros separadamente de novas entregas, taxas da gestora e incorporação. Confrontar recebimentos com as condições da venda ao fundo, cotas retidas e obrigações relacionadas. Rever a tese se o crescimento do ecossistema requerer expansão contínua enquanto caixa recorrente atribuível ficar aquém do financiamento e manutenção.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
     }
   ],
   "estrutura_etf": null,
@@ -183,7 +199,8 @@
     "Recebimento da parcela futura e cumprimento de condições não foram comprovados.",
     "Aplicação da captação e amortização integral do empréstimo-ponte permanecem a verificar.",
     "Retorno da expansão e disponibilidade irrestrita de recursos exigem ponte completa.",
-    "Guidance agregado, tom e percepção do mercado não foram classificados."
+    "Guidance agregado, tom e percepção do mercado não foram classificados.",
+    "A previsão de conclusão da tranche informa dezembro de 2026; o dia exato e a liquidação efetiva não foram comprovados."
   ],
   "stance": 0,
   "conviccao": 1,
@@ -195,7 +212,7 @@
       "titulo": "Negócios, estratégia e materiais públicos do grupo",
       "url": "https://ri.jhsf.com.br/",
       "publicado_em": null,
-      "consultado_em": "2026-10-11"
+      "consultado_em": "2026-10-12"
     },
     {
       "id": "F2",
@@ -204,7 +221,7 @@
       "titulo": "Resultado: renda recorrente, incorporação, capital e caixa",
       "url": "https://api.mziq.com/mzfilemanager/v2/d/1389c06d-4b85-4082-ae2b-3cc3b67db647/eb507b65-aef9-704c-e6c9-cb0feae7c20e?origin=2",
       "publicado_em": null,
-      "consultado_em": "2026-10-11"
+      "consultado_em": "2026-10-12"
     },
     {
       "id": "F3",

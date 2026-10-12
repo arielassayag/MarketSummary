@@ -1,7 +1,7 @@
 {
   "mind": "codex",
   "issuer_id": "BR_YDUQS",
-  "data": "2026-10-11",
+  "data": "2026-10-12",
   "tipo": "iniciacao",
   "titulo": "Yduqs: caixa da educação e disciplina na combinação proposta",
   "resumo": "A hipótese é que retenção, cobrança e oferta acadêmica adequada sustentem caixa. A condição decisiva é remunerar investimento e obrigações depois de inadimplência e financiamento. A combinação proposta deve ser julgada separadamente, com custos e benefícios comprovados após condições de fechamento. A leitura qualitativa permanece neutra e de baixa convicção, até a reconciliação das lacunas. O código classifica o modelo como {{fact:val.BR_YDUQS.rating_codigo}}, com retorno esperado {{fact:val.BR_YDUQS.etr}}. A visão da nota não altera esse modelo.",
@@ -23,6 +23,14 @@
         "val.BR_YDUQS.upside",
         "val.BR_YDUQS.ke",
         "val.BR_YDUQS.etr"
+      ]
+    },
+    {
+      "titulo": "Empresa atual e combinação proposta exigem teses distintas",
+      "texto": "O fato relevante descreve complementaridade entre educação médica e portfólio diversificado, com sinergias estimadas e aprovações pendentes. A tese da empresa atual continua dependente de captação, retenção e cobrança por modalidade. A associação só fortalece retorno se benefícios líquidos sobreviverem a integração, tributos e condições de fechamento. Participação projetada, compromisso de voto e valor presente anunciado não comprovam fechamento ou caixa das ações atuais.",
+      "evidencias": [
+        "F1",
+        "F2"
       ]
     }
   ],
@@ -72,7 +80,7 @@
     "base": "Caso-base do modelo em {{fact:val.BR_YDUQS.preco_alvo}}, com retorno esperado {{fact:val.BR_YDUQS.etr}}. A hipótese exige confirmação dos indicadores operacionais e de caixa; não se atribui probabilidade adicional à narrativa.",
     "pessimista": "Captação e financiamento limitam caixa, enquanto integração e condições da combinação reduzem seu benefício econômico. O cenário pessimista calculado pelo código é {{fact:val.BR_YDUQS.alvo_pessimista}}."
   },
-  "comentario_valuation": "Preço de referência {{fact:val.BR_YDUQS.preco}} e alvo do modelo aberto {{fact:val.BR_YDUQS.preco_alvo}}, com potencial {{fact:val.BR_YDUQS.upside}}. Retorno total esperado {{fact:val.BR_YDUQS.etr}} e custo do capital próprio {{fact:val.BR_YDUQS.ke}}. A dispersão entre métodos é {{fact:val.BR_YDUQS.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_YDUQS.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_YDUQS.consenso_alvo}}; a diferença {{fact:val.BR_YDUQS.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
+  "comentario_valuation": "A avaliação deve separar caixa normalizado por modalidade da hipótese de combinação, preservando perímetro e ações atuais. Medicina, negócios e ensino de escala têm reinvestimento e retenção próprios. Sinergia estimada exige ponte para integração, tributos, dívida e diluição; valor presente anunciado não é caixa anual distribuível. Preço de referência {{fact:val.BR_YDUQS.preco}} e alvo do modelo aberto {{fact:val.BR_YDUQS.preco_alvo}}, com potencial {{fact:val.BR_YDUQS.upside}}. Retorno total esperado {{fact:val.BR_YDUQS.etr}} e custo do capital próprio {{fact:val.BR_YDUQS.ke}}. A dispersão entre métodos é {{fact:val.BR_YDUQS.cv_metodos}}; a confiança quantitativa recebida é {{fact:val.BR_YDUQS.confianca_codigo}}. Essas medidas são do código e não encerram as lacunas qualitativas. O alvo médio do consenso público é {{fact:val.BR_YDUQS.consenso_alvo}}; a diferença {{fact:val.BR_YDUQS.diff_consenso}} não constitui evidência de percepção do mercado. A interpretação deve testar geração de caixa, reinvestimento e adequação das premissas ao negócio. Nenhum cenário ou preço é recalculado nesta nota.",
   "ultimo_resultado": "A apresentação pública reafirma a orientação de caixa ao acionista e lucro por ação. Mostra ajustes de financiamento estudantil e uma ponte gerencial de caixa, que exige conciliação. O fato relevante posterior descreve combinação condicionada; não comprova aprovação final, fechamento ou realização de sinergias.",
   "guidance": "mantido",
   "tom_gestao": "nd",
@@ -124,6 +132,14 @@
         "val.BR_YDUQS.ke",
         "val.BR_YDUQS.cv_metodos"
       ]
+    },
+    {
+      "titulo": "Cobrança atual e preservação de valor até o fechamento",
+      "texto": "Na próxima divulgação, seguir alunos, retenção e recebimentos por modalidade, incluindo financiamento estudantil e arrendamentos. No evento, verificar aprovações efetivas, consentimentos, restrições de dívida e distribuições, antes de antecipar participação combinada. Rever a hipótese se caixa atual enfraquecer enquanto a expectativa de sinergias crescer, ou se custos e remédios alterarem o benefício líquido anunciado.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
     }
   ],
   "estrutura_etf": null,
@@ -132,10 +148,10 @@
   "aderencia_indice_etf": null,
   "o_que_mudou": null,
   "gatilhos_revisao": [
-    "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento.",
-    "Reinvestimento ou financiamento consome capital sem retorno econômico suficiente.",
-    "Novos documentos alteram premissas, classes de capital ou citabilidade do modelo.",
-    "Mudanças de governança ou partes relacionadas comprometem transmissão de valor."
+    "Captação e retenção por modalidade deixam de gerar recebimentos depois das provisões e do custo acadêmico.",
+    "Arrendamentos, financiamento estudantil e juros consomem a recuperação de caixa operacional.",
+    "Condições precedentes, consentimentos ou restrições alteram viabilidade econômica da combinação.",
+    "Custos de integração, tributos e direitos diluídos absorvem benefícios estimados da associação."
   ],
   "lacunas_de_dados": [
     "Apresentação recebida não substitui release completo, demonstrações e notas reconciliadas.",
@@ -154,7 +170,7 @@
       "titulo": "Fato relevante sobre combinação de negócios com a Afya",
       "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1571031&numSequencia=1095737&numVersao=1",
       "publicado_em": "2026-09-23",
-      "consultado_em": "2026-10-11"
+      "consultado_em": "2026-10-12"
     },
     {
       "id": "F2",

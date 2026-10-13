@@ -62,7 +62,7 @@ concluiu uma nova instalação em prefixo próprio: 276 corpos do pacote iguais 
 fonte, SDK MCP 2.3.0 físico, três kernels, onze recursos e nove consultas nativas
 pelo STDIO com os controles declarados. As seis etapas concluíram com saída zero,
 sem rebuild ou retry posterior. O corpus de adulteração final é privado e foi
-preservado nesse estado. Os três reparos posteriores são exclusivos de testes;
+preservado nesse estado. Os quatro reparos posteriores são exclusivos de testes;
 produto, recursos, helper, configuração e lock permanecem iguais aos corpos
 instalados. A ponte corporal não é uma nova execução e não atribui ao sdist
 anterior os testes CDP alterados, que nem integram esse arquivo.

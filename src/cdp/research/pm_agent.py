@@ -39,6 +39,8 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
+from cdp.leitura_arquivos import ler_texto, recusar_escrita
+
 from .. import SIMULATED_DATA_NOTICE
 from ..config import FundConfig, load_config
 from ..contracts import (
@@ -87,7 +89,6 @@ from .providers.base import (
 )
 from .providers.cache import LLMCallLedger
 from .providers.demo import DEMO_NAME, stance_from_alpha
-from .providers.imported import load_imported_pack
 
 if TYPE_CHECKING:  # import tardio em ``to_bundle`` (evita carregar o otimizador)
     from ..workflow.weekly import PMDecisionBundle
@@ -474,11 +475,12 @@ def _write_files(out_dir: Path, texts: Mapping[str, str], overwrite: bool) -> di
     Conteúdo idêntico é aceito (reexecução idempotente). Os conflitos são checados antes de
     qualquer gravação (tudo ou nada).
     """
+    recusar_escrita()
     out_dir = Path(out_dir)
     conflicts = []
     for name, text in texts.items():
         path = out_dir / name
-        if path.exists() and not overwrite and path.read_text(encoding="utf-8") != text:
+        if path.exists() and not overwrite and ler_texto(path, encoding='utf-8') != text:
             conflicts.append(path.as_posix())
     if conflicts:
         raise FileExistsError("Arquivos já existem com conteúdo diferente (use overwrite=True "
@@ -488,7 +490,7 @@ def _write_files(out_dir: Path, texts: Mapping[str, str], overwrite: bool) -> di
     for name, text in texts.items():
         path = out_dir / name
         out[name] = path
-        if path.exists() and path.read_text(encoding="utf-8") == text:
+        if path.exists() and ler_texto(path, encoding='utf-8') == text:
             continue
         fd, tmp_name = tempfile.mkstemp(prefix=".tmp_", dir=out_dir)
         try:
@@ -1932,7 +1934,7 @@ def _validation_issues(exc: ValidationError, prefix: str = "") -> list[str]:
 
 def _read_json(path: Path) -> tuple[Any, str | None]:
     try:
-        return json.loads(path.read_text(encoding="utf-8")), None
+        return json.loads(ler_texto(path, encoding='utf-8')), None
     except UnicodeDecodeError as exc:
         return None, f"arquivo não está em UTF-8: {exc}"
     except json.JSONDecodeError as exc:
@@ -2055,11 +2057,10 @@ def load_research_pack_file(path: Path | str, ctx: PMContext, *,
     payload = {"notes": prepared(raw.get("notes"), "notes"),
                "macro": prepared(raw.get("macro"), "macro"),
                "views": prepared(raw.get("views"), "views")}
-    with tempfile.TemporaryDirectory() as td:
-        tmp = Path(td) / RESEARCH_INPUT
-        tmp.write_text(json.dumps(payload, ensure_ascii=False), encoding="utf-8")
-        pack, load_issues = load_imported_pack(tmp, ctx.week, fb.snapshot_id, fb, cutoff,
-                                               cfg=ctx.cfg, news=ctx.news)
+    from .providers.imported import parse_imported_pack
+
+    pack, load_issues = parse_imported_pack(payload, ctx.week, fb.snapshot_id, fb, cutoff,
+                                           cfg=ctx.cfg, news=ctx.news)
     issues += load_issues
     return pack.model_copy(update={"mind": mind}), issues
 

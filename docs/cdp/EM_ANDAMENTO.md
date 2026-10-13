@@ -5,6 +5,187 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## Consolidação do projeto — desenvolvimento em 12/10/2026
+
+Pedido humano: integrar o projeto e publicar, com revisão ROOT antes de main.
+O ramo `codex/cdp-consolidacao-ai-notes-12out`, no checkout interno
+`.cdp/integracoes/risco-unidades`, conserva a conclusão oficial 241 abaixo.
+Fechamento foi recebido dos cinco diffs humanos sem alterar o checkout original:
+contratos distinguem data de publicação informada pela fonte e horário retornado pela fonte,
+registros malformados são recusados por item e RSS permanece contingência.
+Os dezesseis arquivos de teste de Fechamento concluíram 92 casos únicos aprovados,
+sem skip, falha ou erro; Ruff passou. Uma CI própria foi acrescentada sem retirar
+os jobs CDP. Negativos intermediários ficaram preservados; nenhuma fonte externa
+ou execução financeira foi certificada por esses testes.
+
+Revisão dirigida posterior separou as taxas da BrasilAPI em contexto estruturado,
+com corpo JSON bruto, hora de consulta e SHA de `sources.json` no manifesto. Nenhuma
+manchete cria taxas no FactBook. RSS e GDELT compartilham validação HTTP(S) de URL;
+registros inválidos não eliminam o próximo válido. O reparo de seleção ignora valores
+de índices extras ao validar Selic/CDI, preservando o corpo inteiro e o domínio
+positivo declarado dos alvos. Ausência, valor não finito e domínio não positivo são
+condições distintas; não se inventa publicação ou vigência. A rodada final dos dezesseis
+arquivos, incluindo o rótulo informado pela fonte e mensagens de domínio distintas,
+concluiu 111 casos únicos aprovados, sem skip/falha/erro. A fonte final exige sua
+própria qualificação conjunta; as negativas intermediárias permanecem privadas.
+
+A auditoria histórica F01–F09 foi confrontada com os corpos atuais. Os reparos
+F05–F08 foram recebidos em commit local independente: risco valida B/F/D detidos,
+regressão usa o posto efetivo, PM duplicado é recusado na fronteira comum e golden
+set vazio não produz avaliação. Os 132 casos focais do autor não são somados ao
+Fechamento. F01/F02/F04 foram recebidos e incorporados de autor independente: commits
+pendentes também exigem trava, push usa o SHA conferido, importação valida o pacote
+e os pais por descritores/no-follow antes de aplicar, e append serializa a cauda
+e o flush. A importação é POSIX e não é transação multi-arquivo; Windows não foi
+qualificado. Os 39 focais do autor não são uma suíte integral da composição. F03 recebe recusa de módulo JS obrigatório ausente na construção
+e na conferência do portal, inclusive quando manifesto/somas foram refeitos.
+O sucessor do inventário de commits confere origens de renomeações e cada pai dos
+merges, com remoto e cabeça pinados. A exceção para código remoto exige pai autorizado
+e resultado literal igual ao remoto; erro de leitura recusa a publicação. Seus 17
+casos focais aprovados permanecem separados dos 39 anteriores e da suíte conjunta.
+F09 está fechado na documentação: Claude Code é alternativa, com configuração e
+registro explícitos, enquanto Codex é o executor corrente.
+Wheel e sdist foram construídos no ambiente próprio, com os corpos do pacote
+confrontados integralmente com a fonte. A instalação fresh fora do clone, sem
+editable, recebeu o SDK MCP 2.3.0 físico e concluiu três kernels, onze recursos e
+nove consultas nativas pelo STDIO, com paridade, ausência real, autoria divergente,
+instrumento fora do universo, adulteração e recuperação. As negativas do helper
+anteriores foram preservadas; o sucessor corrigiu seus oráculos conforme os
+contratos nativos, sem mudar o leitor. O SDK negocia a sessão antes da entrada do
+cliente; o ramo discover/adopt versus initialize não foi registrado. Isso qualifica
+esta instalação e o corpus DADOS SIMULADOS, sem autoridade financeira, PIT ou prova
+universal de ausência de rede. UVtool/UVx da nova composição permanecem apenas
+preparados; a qualificação histórica não é atribuída a esta fonte.
+A primeira instalação recebida acima pertence à fonte `836c783` e permanece
+histórica. Depois do reparo em Book/Daily e nos pins do catálogo, a fonte `ad0b03f`
+concluiu uma nova instalação em prefixo próprio: 276 corpos do pacote iguais à
+fonte, SDK MCP 2.3.0 físico, três kernels, onze recursos e nove consultas nativas
+pelo STDIO com os controles declarados. As seis etapas concluíram com saída zero,
+sem rebuild ou retry posterior. O corpus de adulteração final é privado e foi
+preservado nesse estado. Os quatro reparos posteriores são exclusivos de testes;
+produto, recursos, helper, configuração e lock permanecem iguais aos corpos
+instalados. A ponte corporal não é uma nova execução e não atribui ao sdist
+anterior os testes CDP alterados, que nem integram esse arquivo.
+
+A primeira suíte integral local de `836c783` encerrou na primeira falha documental:
+faltava o histórico preservado no mapa de AGENTS. Foram 2170 casos únicos executados,
+2153 aprovados, dezesseis ignorados e uma falha; não é uma suíte integral aprovada.
+O mapa foi corrigido mantendo o teste. A CI inicial recusou quatro expressões
+`runner.temp` no nível de ambiente do job antes de iniciar jobs; o sucessor usa
+diretórios privados declarados em etapa própria. Na CI de `0880123`, os jobs de
+wheel/SDK/STDIO e livro/rotinas/skills/portal concluíram; a qualidade foi cancelada
+automaticamente pela concorrência ao enviar o sucessor, sem JUnit integral.
+Fechamento Linux de `28b3594` concluiu 111 casos únicos aprovados. Resultados de
+fontes distintas permanecem separados.
+
+O full local e a CI Linux de `28b3594` encerraram, separadamente, na mesma primeira
+negativa de setup: 4860 casos únicos executados em cada ambiente, 4842 aprovados,
+dezessete ignorados e um erro, sem falha de assertion. A fixture de limites de
+replay não selava gênese antes da operação inaugural. A captura mínima do retorno
+nativo confirmou `NET UNVERIFIABLE: gênese econômica autenticada ausente`; a
+negativa instrumental anterior de representação de data também foi preservada.
+A fixture passou a usar `ReplayOrigin` simulada e seu produtor monetário nativo
+antes do primeiro preparo, com manifesto físico, sem mudar sementes, arrays,
+datas, configuração, modelos ou limites. Cinco ausências de dados e o caso HARD
+concluíram positivamente; o caso de squeeze encontrou uma nova recusa NET após
+custos, registrada como caducidade, com carteira anterior mantida.
+
+Esse cenário fixo não prova um corte operacional positivo. O teste foi renomeado
+para exigir a recusa NET literal, posições e custos preservados, hashes imutáveis,
+episódio pendente, veto e idempotência. Sete controles específicos concluíram
+aprovados, com Ruff e identidade da fonte: o cenário corrigido, três regras
+existentes de corte parcial/episódio/veto e três contratos NET/HOLD nativos.
+Os seis positivos anteriores não foram repetidos nem somados a esse focal.
+A prova de corte positivo de squeeze por MOC sob o gate NET permanece aberta;
+os testes de regras com registros sintéticos não a substituem. Naquela versão, o campo textual
+`regra` ainda mencionava kill switch; a correção futura descrita abaixo preserva
+os registros originais e o motivo NET específico.
+
+Uma coleta sem executar casos recebeu 6174 IDs únicos e comparou o conjunto com
+os 4860 IDs do full interrompido. O plano local distingue casos ainda não executados,
+afetados e provas já recebidas; a renomeação do teste tem relação explícita de IDs.
+Não é uma nova suíte integral local aprovada. A CI integral Linux do sucessor
+continua obrigatória antes da revisão de integração em main.
+
+O recorte local de `6b4caff` parou depois de 241 aprovados e uma falha: o mock
+Git devolvia vazio para os SHAs exigidos pelo inventário. A captura causal confirmou
+o motivo nativo; o mock foi fechado por comandos, com versões simuladas coerentes,
+história sem pendentes e recusa de comando desconhecido. Três controles passaram,
+conservando seleção, retificação, perda da trava e recusa de história ilegível.
+A continuação recebeu 309 aprovados e um erro instrumental: o helper histórico
+exige o temporário nativo e o `basetemp` estava dentro do checkout. O harness foi
+corrigido sem mudar a guarda. A execução externa seguinte recebeu 87 aprovados e
+uma falha material de auditoria; essas execuções não são somadas como full.
+
+O preflight puro recusava o kill switch antes do método que emitia
+`BOOKING_REFUSED`. O produtor foi reparado com uma exceção tipada e causa preservada:
+os coordenadores escritores diário e API direta registram o evento padronizado,
+com proposta, aprovação, semana, ator, motivo e hash, antes da caducidade quando
+cabível. O preflight/dry-run continua sem escrita e a recusa de persistência já
+auditada não duplica o evento. Sete controles nativos passaram: o caso inaugural
+original com retry/caducidade, cinco controles novos e o cenário squeeze existente.
+O catálogo recebeu os 79 owners reais e conservou as 257 representações.
+A regra textual futura de caducidade agora abrange recusas pelo kill switch ou NET;
+registros anteriores continuam autenticados pelos próprios bytes e hashes.
+O controle de legado é um corpus simulado criado hoje, sem alegação de PIT.
+Não há nova prova de atomicidade entre os eventos ou de corrida após o prepare.
+
+A CI de `6b4caff` foi cancelada automaticamente pela concorrência e permanece
+uma execução própria, sem JUnit integral ou atribuição ao produtor reparado.
+Fechamento Linux de `ad0b03f` concluiu 111 casos únicos aprovados, sem skip,
+falha ou erro. A CI CDP dessa cabeça recebeu 669 casos únicos: 668 PASS e uma
+falha, sem erro ou skip. A preparação do controle novo falhou em
+`weekly_decide`/`build_positions`, com short em SIM015 sem linha de aluguel,
+antes de ativar o kill switch ou chegar ao preflight-alvo. O vetor completo não
+consta do log; magnitude e causa numérica continuam desconhecidas. Os jobs de
+pacote instalado/SDK/STDIO e livro/rotinas/skills/portal concluíram. Esse relatório
+é recebido separadamente e não qualifica os testes corrigidos depois do envio.
+
+Os quatro controles novos de recusa/auditoria passaram a receber a proposta
+unitária nativa do corpus diário, com configuração/NAV, semana, snapshot e
+aprovação por hash coerentes. O diagnóstico declara `fixture_sem_solver`, sem
+chamar uma otimização; RiskSummary e compliance são insumos DADOS SIMULADOS,
+não aprovação econômica. Plan/context/preparação e os produtores do livro
+continuam reais; as três recusas também exigem o motivo KILL_SWITCH.
+O módulo concluiu cinco PASS no Mac. O original end-to-end de robustez permaneceu
+literal e concluiu um PASS em execução separada no Mac, sem explicar a diferença
+Linux. A CI final terá esses seis controles em etapa dirigida, com JUnit próprio
+antes da suíte integral obrigatória. O full CDP de 6068 casos, com prazo de
+150 minutos, e Fechamento continuam necessários na cabeça final; os dois
+relatórios CDP não serão somados.
+
+Os restantes locais foram percorridos por listas exatas, com as primeiras
+negativas preservadas. O primeiro recorte de 669 recebeu 51 PASS e uma falha:
+o teste contava permissões no frontmatter como chamadas do gate. O oráculo agora
+separa metadata e corpo, conserva as permissões e exige uma única chamada entre
+as duas formas CLI; o controle isolado passou. A continuação de 617 recebeu
+184 PASS e uma falha no proxy de demo, que copiava o corpus mas devolvia `None`.
+O proxy passou a devolver o resumo nativo já persistido e a conferir metadata e
+preservação do corpus. A continuação de 433 recebeu 107 PASS e uma falha na
+whitelist antiga de três exports; a API documentada possui nove nomes. O teste
+agora exige nove nomes fixos, seis identidades nativas/callable e as quatro
+proibições de escritores, sem invocar os cálculos. O último recorte de 326
+concluiu 326 PASS, sem skip, falha ou erro, incluindo esse controle corrigido.
+Todos os restantes planejados encerraram; essas parcelas e focais têm fontes e
+manifestos próprios e não são apresentados como uma nova suíte integral Mac.
+
+A composição CDP recebe a fonte privada 0594f14, incluindo escritores NET,
+recepção bancária opt-in, diagnósticos P1 em sombra, técnicas e MCP 1.7.
+São candidatos de fonte recebidos; a instalação/STDIO acima foi qualificada no
+recorte declarado e os restantes locais encerraram. A CI integral da cabeça
+final ainda precisa concluir. Não atribuir resultados de fontes anteriores ao
+novo pai. Os contratos/hard gates/configuração continuam preservados,
+sem integração financeira automática dos protótipos ou nova operação de 09/10.
+O [registro privado histórico](HISTORICO_PRIVADO_2026-10-10_CONSOLIDACAO.md)
+conserva integralmente o corpo da passagem dessa frente e seus limites originais.
+Evidências novas ficam em `.cdp/estudos/CONSOLIDACAO_AI_NOTES_12OUT/` e nas áreas
+privadas de qualificação da composição e do replay.
+Fonte enviada ao PR 7 como draft, sem integração em main ou nova publicação do portal.
+Os merges normais do relatório oficial de risco de 16:07 e do fechamento de 12/10
+preservaram as rotinas em main;
+nenhuma operação foi realizada pela sessão de desenvolvimento. ROOT recebe a
+entrega final antes da integração e publicação.
+
 ## Aprofundamento dos 85 — conclusão em 12/10/2026
 
 Após o encerramento parcial abaixo, o humano determinou: “Conclua os 85 restantes

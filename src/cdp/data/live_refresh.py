@@ -180,6 +180,8 @@ def save_slow_refresh(refresh: SlowRefresh, out_dir: Path) -> dict[str, str]:
 
 
 def load_slow_refresh(out_dir: Path, expected: dict[str, str]) -> SlowRefresh:
+    from cdp.leitura_arquivos import ler_parquet, ler_texto
+
     out_dir = Path(out_dir)
     vals: dict[str, object] = {}
     for key, name in FILES.items():
@@ -191,11 +193,11 @@ def load_slow_refresh(out_dir: Path, expected: dict[str, str]) -> SlowRefresh:
             raise ValueError(f"Hash divergente na atualização ao vivo: {path}")
         if key == "news":
             vals[key] = [NewsItem.model_validate_json(line) for line in
-                         path.read_text(encoding="utf-8").splitlines() if line.strip()]
+                         ler_texto(path, encoding="utf-8").splitlines() if line.strip()]
         else:
-            vals[key] = pd.read_parquet(path)
+            vals[key] = ler_parquet(path)
     failures_path = out_dir / "failures.json"
-    failures = json.loads(failures_path.read_text(encoding="utf-8")) if failures_path.exists() else []
+    failures = json.loads(ler_texto(failures_path, encoding="utf-8")) if failures_path.exists() else []
     return SlowRefresh(vals["fundamentals"], vals["short_interest"], vals["lending"],  # type: ignore[arg-type]
                        vals["news"], failures)  # type: ignore[arg-type]
 

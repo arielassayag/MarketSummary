@@ -82,6 +82,7 @@ from pathlib import Path
 
 from . import SIMULATED_DATA_NOTICE
 from .contracts import HARNESS_MINDS
+from .permissoes import ArgumentParserCDP
 from .workflow.pacote import ETAPAS_PACOTE, MENTE_PADRAO
 from .workflow.painel_artifact import painel_artifact_check  # reexportado (skills/testes)
 
@@ -478,12 +479,18 @@ def cmd_kill_switch(args: argparse.Namespace) -> int:
 
 
 def cmd_demo(args: argparse.Namespace) -> int:
+    from .config import load_config
     from .workflow.demo import run_demo
+    from .workflow.net_moc import NetUnverifiable
 
-    print(f"{SIMULATED_DATA_NOTICE}: demonstração offline com mercado sintético.")
-    out = run_demo(Path(args.out), days=args.days)
+    print(f"{SIMULATED_DATA_NOTICE}: demonstração offline com mercado sintético.", file=sys.stderr)
+    try:
+        out = run_demo(Path(args.out), days=args.days, cfg=load_config(args.config))
+    except NetUnverifiable as exc:
+        print(f"cdp demo: {exc}", file=sys.stderr)
+        return 2
     _print(out)
-    return 0
+    return 0 if out.get("integridade") is True else 2
 
 
 def cmd_agenda(args: argparse.Namespace) -> int:
@@ -663,7 +670,7 @@ def cmd_genese(args: argparse.Namespace) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(prog="cdp", description="CDP — Cabra da Peste (PM autônomo LatAm L/S)")
+    p = ArgumentParserCDP(prog="cdp", description="CDP — Cabra da Peste (PM autônomo LatAm L/S)")
     p.add_argument("--config", default=None, help="fund.yaml (padrão: configs/cdp/fund.yaml)")
     p.add_argument("--book", default=str(DEFAULT_BOOK))
     p.add_argument("--market", default=str(DEFAULT_MARKET))

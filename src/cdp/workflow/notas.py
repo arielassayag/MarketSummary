@@ -31,6 +31,8 @@ from datetime import date, datetime
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
+from cdp.leitura_arquivos import ler_texto, recusar_escrita
+
 from ..contracts import FactBook
 from ..hashing import sha256_file, sha256_obj, sha256_text
 
@@ -105,7 +107,7 @@ def published_notes(book_root: Path | str, issuer_id: str | None = None) -> list
 def load_published(book_root: Path | str, issuer_id: str, d: date) -> dict[str, Any] | None:
     path = nota_dir(book_root, issuer_id, d) / PUBLISHED_JSON
     try:
-        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw = json.loads(ler_texto(path, encoding='utf-8'))
     except (OSError, ValueError):
         return None
     return raw if isinstance(raw, dict) else None
@@ -390,8 +392,8 @@ def prepare_note(rt: Runtime, issuer_id: str, d: date) -> dict[str, Any]:
 def load_prepared(folder: Path) -> tuple[FactBook, ContextoNota]:
     from ..research.notas import contexto_de_json
 
-    fb = FactBook.model_validate(json.loads((folder / FACTBOOK_JSON).read_text(encoding="utf-8")))
-    ctx = contexto_de_json(json.loads((folder / CONTEXTO_JSON).read_text(encoding="utf-8")))
+    fb = FactBook.model_validate(json.loads(ler_texto(folder / FACTBOOK_JSON, encoding='utf-8')))
+    ctx = contexto_de_json(json.loads(ler_texto(folder / CONTEXTO_JSON, encoding='utf-8')))
     return fb, ctx
 
 
@@ -405,7 +407,7 @@ def load_note_file(path: Path, fb: FactBook, ctx: ContextoNota, *,
     if not path.is_file():
         return None, [f"{NOTA_JSON} ausente ({path.as_posix()})"]
     try:
-        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw = json.loads(ler_texto(path, encoding='utf-8'))
     except (OSError, ValueError) as exc:
         return None, [f"{NOTA_JSON}: JSON inválido ({exc})"]
     nota, issues = parse_nota(raw)
@@ -509,6 +511,7 @@ def publish_note(rt: Runtime, issuer_id: str, d: date) -> dict[str, Any]:
     problemas listados. Falha no meio ⇒ arquivos removidos (nada publicado sem evento). Já
     publicada ⇒ ``FileExistsError``; publicação interrompida antes do evento ⇒ retomada se os
     arquivos conferirem byte a byte com o recálculo."""
+    recusar_escrita()
     from ..research.pm_agent import _write_files
     from .book import _write_exclusive
 
@@ -520,7 +523,7 @@ def publish_note(rt: Runtime, issuer_id: str, d: date) -> dict[str, Any]:
     fb, ctx, texts = _build_prepared(rt, issuer_id, d)
     notes: list[str] = []
     changed = [n for n in (FACTBOOK_JSON, CONTEXTO_JSON)
-               if (folder / n).is_file() and (folder / n).read_text(encoding="utf-8") != texts[n]]
+               if (folder / n).is_file() and ler_texto(folder / n, encoding='utf-8') != texts[n]]
     if changed:
         notes.append("Arquivos preparados diferentes do recálculo do código (" + ", ".join(changed)
                      + "): regravados; a publicação usa o recálculo.")
@@ -566,8 +569,8 @@ def _resume(rt: Runtime, issuer_id: str, d: date) -> dict[str, Any]:
     text, markdown, autoria2, problems, mind = _compose(
         fb, ctx, folder / NOTA_JSON, published_at=str(doc.get("published_at")),
         expected_mind=_mente_esperada(rt, issuer_id, d))
-    if pub.read_text(encoding="utf-8") != text or autoria2 != autoria or (
-            md_path.exists() and md_path.read_text(encoding="utf-8") != markdown):
+    if ler_texto(pub, encoding='utf-8') != text or autoria2 != autoria or (
+            md_path.exists() and ler_texto(md_path, encoding='utf-8') != markdown):
         raise ValueError(f"Publicação incompleta da nota de {issuer_id} em {d}: os arquivos "
                          "existentes não conferem com o recálculo do código e não estão na "
                          "trilha; publicação recusada (intervenção manual).")
@@ -802,6 +805,7 @@ def note_agenda(rt: Runtime, d: date, limit: int = LIMITE_POR_EXECUCAO) -> dict[
 
 def write_demo_note(rt: Runtime, issuer_id: str, d: date) -> Path:
     """A mente ``demo`` escreve ``nota.json`` (a nota automática, só fatos citados)."""
+    recusar_escrita()
     from ..research.notas import template_nota
 
     prepare_note(rt, issuer_id, d)

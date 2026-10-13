@@ -30,6 +30,8 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
+from cdp.leitura_arquivos import ler_csv
+
 from .. import SIMULATED_DATA_NOTICE
 from ..alpha.combine import AlphaResult, build_alpha, reresidualize
 from ..alpha.signals import compute_signals
@@ -141,7 +143,7 @@ class WeekContext:
 def load_themes(path: str = THEMES_PATH) -> dict[str, list[str]]:
     """Temas (ex.: estatais) por emissor a partir de ``issuer_id,theme``; ausente ⇒ vazio."""
     try:
-        df = pd.read_csv(path)
+        df = ler_csv(path)
     except FileNotFoundError:
         return {}
     return {t: sorted(g["issuer_id"].astype(str)) for t, g in df.groupby("theme")}
@@ -907,6 +909,10 @@ def build_proposal(ctx: WeekContext, *, views: list[View], overrides: dict | Non
     ``factbook``: fatos da semana para resolver os ``{{fact:id}}`` citados no memo."""
     cfg = ctx.cfg
     overrides = dict(overrides or {})
+    from .net_moc import PROPOSAL_KEY as NET_KEY
+
+    if NET_KEY in overrides:
+        raise ValueError("contrato NET é reservado ao gerador prospectivo")
     extended = metodologia_ativa(cfg)
     cfg_v = _effective_cfg_for_views(cfg)
     spec_vol = ctx.model.specific_vol
@@ -1006,6 +1012,9 @@ def build_proposal(ctx: WeekContext, *, views: list[View], overrides: dict | Non
     diag = OptimizerDiagnostics(**{**diag.model_dump(), "notes": notes})
     week_id = ctx.week.isoformat()
     recorded: dict = {"label": label, **overrides}
+    from .net_moc import stamp as net_stamp
+
+    recorded[NET_KEY] = net_stamp(cfg)  # Antes de qualquer hash, fingerprint ou aprovação.
     if extended:
         recorded.update(_open_model_overrides(ctx, w, result, cinfo, risk_extra))
     if executa_fechamento:
@@ -1283,12 +1292,25 @@ def hold_proposal(ctx: WeekContext, research_hash: str, version: int,
         checks = _hold_checks(ctx, w) if metodologia_ativa(ctx.cfg) else []
     diag = OptimizerDiagnostics(status="hold", solver="none", solve_seconds=0.0,
                                 notes=[reason] + list(ctx.notes))
+    from .net_moc import PROPOSAL_KEY as NET_KEY
+    from .net_moc import stamp as net_stamp
+
+    recorded = {"label": label, NET_KEY: net_stamp(ctx.cfg)}
+    if ctx.cfg.execution is not None:
+        from .contrato_custos import PROPOSAL_KEY as COST_KEY
+        from .contrato_custos import stamp as cost_stamp
+        from .estimativa_custos import PLANNED_KEY, estimate
+
+        _, planned = estimate([], ctx.cfg, prices=pd.Series(dtype=float), as_of=ctx.as_of,
+                              snapshot_hash=ctx.snapshot_hash)
+        recorded[COST_KEY], recorded[PLANNED_KEY] = cost_stamp(), planned
     p = Proposal(
         proposal_id=f"CDP-{ctx.week.isoformat()}-{label}", week=ctx.week, version=version,
         created_at=created_at or datetime.now(UTC), created_by=SYSTEM_CREATOR, nav_usd=ctx.nav,
         snapshot_id=ctx.snapshot_id, snapshot_hash=ctx.snapshot_hash,
         config_hash=ctx.cfg.config_hash(), research_hash=research_hash,
-        overrides={"label": label}, positions=[], trades=[], fx_hedges=[], risk=summary,
+        overrides=recorded,
+        positions=[], trades=[], fx_hedges=[], risk=summary,
         compliance=checks, optimizer=diag, is_synthetic=ctx.is_synthetic,
         data_notice=SIMULATED_DATA_NOTICE if ctx.is_synthetic else "Dados reais.")
     return p.model_copy(update={"memo_markdown": render_memo(p, None, None, config=ctx.cfg)})
@@ -1488,6 +1510,10 @@ def run_weekly_decision(ctx: WeekContext, pack: ResearchPack, pm: PMDecisionBund
     """
     from ..hashing import combine_hashes
     from .autonomy import effective_vol_target, make_autonomous_decision
+    from .net_moc import PROPOSAL_KEY as NET_KEY
+
+    if NET_KEY in pm.overrides:
+        raise ValueError("contrato NET é reservado ao gerador prospectivo")
 
     research_hash = combine_hashes(pack.research_hash(), pm.pm_output_hash)
     vt_default = effective_vol_target(ctx.cfg, None, live_weeks)

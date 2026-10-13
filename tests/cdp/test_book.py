@@ -9,6 +9,7 @@ from datetime import UTC, date, datetime
 import numpy as np
 import pandas as pd
 import pytest
+from historico_simulado import instalar_booking_historico
 
 from cdp.config import FundConfig
 from cdp.contracts import (
@@ -376,7 +377,9 @@ def test_proposal_and_decision_immutability(tmp_path):
     with pytest.raises(FileExistsError):
         book.save_decision(d)
     entry = book_entry_from_proposal(p, d, booked_at=NOW)
-    book.save_booked(entry, SNAP_H, CFG_H, RES_H)
+    with pytest.raises(ValueError, match="NET UNVERIFIABLE"):
+        book.save_booked(entry, SNAP_H, CFG_H, RES_H)
+    instalar_booking_historico(book, entry)
     with pytest.raises(FileExistsError):
         book.save_booked(entry, SNAP_H, CFG_H, RES_H)
     with pytest.raises(ValueError, match="efetivada"):
@@ -437,7 +440,10 @@ def test_state_derivation_across_versions(tmp_path):
     assert book.load_decision(WEEK) == d4
     assert set(book.list_decisions(WEEK)) == {2, 4}
     assert book.latest_booked() is None
-    book.save_booked(book_entry_from_proposal(v4, d4, booked_at=NOW), SNAP_H, CFG_H, RES_H)
+    entry = book_entry_from_proposal(v4, d4, booked_at=NOW)
+    with pytest.raises(ValueError, match="NET UNVERIFIABLE"):
+        book.save_booked(entry, SNAP_H, CFG_H, RES_H)
+    instalar_booking_historico(book, entry)
     assert book.proposal_state(WEEK, 4) == ProposalState.BOOKED
     assert book.latest_booked().proposal_id == v4.proposal_id
     ok, problems = book.verify_integrity()
@@ -471,8 +477,9 @@ def test_booking_requires_valid_approval_and_matching_positions(tmp_path):
     with pytest.raises(ValueError, match="approval_hash"):
         book2.save_booked(forged, SNAP_H, CFG_H, RES_H)
     assert book2.load_booked(WEEK) is None
-    book2.save_booked(entry, SNAP_H, CFG_H, RES_H)
-    assert book2.load_booked(WEEK) == entry
+    with pytest.raises(ValueError, match="NET UNVERIFIABLE"):
+        book2.save_booked(entry, SNAP_H, CFG_H, RES_H)
+    assert book2.load_booked(WEEK) is None
 
 
 def test_tampered_proposal_file_invalidates_approval(tmp_path):
@@ -938,7 +945,10 @@ def test_review_book_accepts_decisions_from_autonomy_module(tmp_path):
     assert verify_decision(d, p, SNAP_H, CFG_H, RES_H)[0]
     book.save_decision(d)
     assert book.proposal_state(WEEK, 1) == ProposalState.APPROVED
-    book.save_booked(book_entry_from_proposal(p, d, booked_at=NOW), SNAP_H, CFG_H, RES_H)
+    entry = book_entry_from_proposal(p, d, booked_at=NOW)
+    with pytest.raises(ValueError, match="NET UNVERIFIABLE"):
+        book.save_booked(entry, SNAP_H, CFG_H, RES_H)
+    instalar_booking_historico(book, entry)
     assert book.proposal_state(WEEK, 1) == ProposalState.BOOKED
     assert book.verify_integrity()[0]
 
@@ -1001,7 +1011,10 @@ def test_review_tampered_booked_week_is_blocked(tmp_path):
     path = book.save_proposal(p)
     d = _approve(p)
     book.save_decision(d)
-    book.save_booked(book_entry_from_proposal(p, d, booked_at=NOW), SNAP_H, CFG_H, RES_H)
+    entry = book_entry_from_proposal(p, d, booked_at=NOW)
+    with pytest.raises(ValueError, match="NET UNVERIFIABLE"):
+        book.save_booked(entry, SNAP_H, CFG_H, RES_H)
+    instalar_booking_historico(book, entry)
     assert book.proposal_state(WEEK, 1) == ProposalState.BOOKED
     data = json.loads(path.read_text(encoding="utf-8"))
     data["positions"][0]["weight"] = 0.039
@@ -1029,7 +1042,8 @@ def test_review_booking_notional_and_nav_must_match_weights(tmp_path):
     assert book.load_booked(WEEK) is None
     refused = [e for e in book.audit.events() if e.event_type == "BOOKING_REFUSED"]
     assert len(refused) == 3
-    book.save_booked(entry, SNAP_H, CFG_H, RES_H)
+    with pytest.raises(ValueError, match="NET UNVERIFIABLE"):
+        book.save_booked(entry, SNAP_H, CFG_H, RES_H)
     assert book.verify_integrity()[0]
 
 
@@ -1082,7 +1096,10 @@ def test_review_kill_switch_allows_only_risk_reduction(tmp_path):
     with pytest.raises(ValueError, match="KILL_SWITCH"):
         book.save_booked(book_entry_from_proposal(p, d, booked_at=NOW), SNAP_H, CFG_H, RES_H)
     (tmp_path / "KILL_SWITCH").unlink()
-    book.save_booked(book_entry_from_proposal(p, d, booked_at=NOW), SNAP_H, CFG_H, RES_H)
+    entry = book_entry_from_proposal(p, d, booked_at=NOW)
+    with pytest.raises(ValueError, match="NET UNVERIFIABLE"):
+        book.save_booked(entry, SNAP_H, CFG_H, RES_H)
+    instalar_booking_historico(book, entry)
     # Semana seguinte com kill switch: só reduções de posições existentes são aceitas.
     (tmp_path / "KILL_SWITCH").write_text("parar", encoding="utf-8")
     week2 = date(2026, 10, 13)
@@ -1093,8 +1110,11 @@ def test_review_kill_switch_allows_only_risk_reduction(tmp_path):
     book.save_proposal(p2)
     d2 = _approve(p2)
     book.save_decision(d2)
-    book.save_booked(book_entry_from_proposal(p2, d2, booked_at=NOW), SNAP_H, CFG_H, RES_H)
-    assert book.proposal_state(week2, 1) == ProposalState.BOOKED
+    entry2 = book_entry_from_proposal(p2, d2, booked_at=NOW)
+    assert book._kill_switch_violations(entry2) == []
+    with pytest.raises(ValueError, match="NET UNVERIFIABLE"):
+        book.save_booked(entry2, SNAP_H, CFG_H, RES_H)
+    assert book.proposal_state(week2, 1) == ProposalState.APPROVED
 
 
 def test_review_mtm_rate_in_percent_and_stale_rate_rejected():
@@ -1181,7 +1201,10 @@ def test_review_latest_booked_refuses_portfolio_edited_outside_book(tmp_path):
     book.save_proposal(p)
     d = _approve(p)
     book.save_decision(d)
-    book.save_booked(book_entry_from_proposal(p, d, booked_at=NOW), SNAP_H, CFG_H, RES_H)
+    entry = book_entry_from_proposal(p, d, booked_at=NOW)
+    with pytest.raises(ValueError, match="NET UNVERIFIABLE"):
+        book.save_booked(entry, SNAP_H, CFG_H, RES_H)
+    instalar_booking_historico(book, entry)
     assert book.latest_booked().proposal_id == p.proposal_id
     path = book.week_dir(WEEK) / "booked.json"
     data = json.loads(path.read_text(encoding="utf-8"))

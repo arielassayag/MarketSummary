@@ -19,6 +19,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import pytest
+from demo_historica import run_historical_demo as run_demo
 
 from cdp.__main__ import main
 from cdp.audit import AuditLog
@@ -29,18 +30,11 @@ from cdp.calendar import (
     proximas_montagens,
     week_id,
 )
-from cdp.config import FundConfig, load_config
+from cdp.config import FundConfig, config_json, load_config
 from cdp.hashing import sha256_obj
 from cdp.workflow.agenda import agenda
 from cdp.workflow.book import GENESIS_EVENT, GENESIS_FILE, Book, _check_week
-from cdp.workflow.demo import (
-    DEMO_HISTORY_START,
-    DEMO_MIND,
-    DEMO_SEED,
-    DemoStore,
-    run_demo,
-    write_demo_inputs,
-)
+from cdp.workflow.net_moc import CONFIG_FOLDER, economic_genesis, stamp
 from cdp.workflow.reinicio import MOTIVO_KILL_SWITCH, STAGING_NAME, executar, plano, situacao
 from cdp.workflow.risk_monitor import PRE_INICIO, run_risk_monitor
 from cdp.workflow.runtime import Runtime
@@ -179,7 +173,8 @@ def test_execute_opens_fresh_chain_and_is_idempotent(copia):
     audit_sha = hashlib.sha256((copia / "book" / "audit_log.jsonl").read_bytes()).hexdigest()
     code, out = executar(rt, copia / "pesquisa")
     assert code == 0 and out["executado"] is True, out["motivo"]
-    assert sorted(p.name for p in (copia / "book").iterdir()) == ["audit_log.jsonl", GENESIS_FILE]
+    assert sorted(p.name for p in (copia / "book").iterdir()) == [
+        "audit_log.jsonl", GENESIS_FILE, CONFIG_FOLDER]
     assert not (copia / "reports" / "daily" / "2024-03-04").exists()
     assert not (copia / "reports" / "weekly" / "2024-03-04").exists()
     assert not (copia / "reports" / "risk" / "2024-03-05").exists()
@@ -194,9 +189,13 @@ def test_execute_opens_fresh_chain_and_is_idempotent(copia):
     raw = (copia / "book" / GENESIS_FILE).read_text(encoding="utf-8")
     gen = json.loads(raw)
     assert sha256_obj(gen) == events[0].payload_hash
-    # Gênese enxuta: só o necessário para conferir a abertura do livro (DESIGN §15.2).
-    assert set(gen) == {"inception_date", "config_hash", "codigo", "ancora_sha256"}
+    # A abertura recebe também a origem monetária e a configuração integral própria.
+    assert set(gen) == {"inception_date", "config_hash", "codigo", "ancora_sha256", "economic"}
     assert gen["inception_date"] == "2026-10-09" and gen["config_hash"] == rt.cfg.config_hash()
+    assert gen["economic"] == economic_genesis(rt.cfg)
+    config_path = copia / "book" / stamp(rt.cfg)["config_path"]
+    assert sorted((copia / "book" / CONFIG_FOLDER).iterdir()) == [config_path]
+    assert config_path.read_text(encoding="utf-8") == config_json(rt.cfg)
     assert gen["ancora_sha256"] == audit_sha
     for word in ("anterior", "removid", "arquivos", "lista", "reinicio", "reinício"):
         assert word not in raw.lower(), word
@@ -364,6 +363,28 @@ def test_failure_after_moving_rolls_everything_back(copia, monkeypatch):
     assert _tree(copia) == before and not (copia / STAGING_NAME).exists()
 
 
+@pytest.mark.parametrize("after_archive", [False, True], ids=["antes", "depois"])
+def test_failure_in_config_archive_restores_every_original_byte(copia, monkeypatch,
+                                                               after_archive):
+    from cdp.workflow import net_moc
+
+    rt = _rt(copia)
+    assert (copia / "book" / CONFIG_FOLDER).is_dir()
+    before = _tree(copia)
+    real = net_moc.archive_config
+
+    def fail(root, cfg):
+        if after_archive:
+            real(root, cfg)
+        raise OSError("falha simulada no arquivamento da configuração própria")
+
+    monkeypatch.setattr(net_moc, "archive_config", fail)
+    code, out = executar(rt, copia / "pesquisa")
+    assert code == 1 and "estado anterior restaurado" in out["motivo"]
+    assert "restauração incompleta" not in out["motivo"]
+    assert _tree(copia) == before and not (copia / STAGING_NAME).exists()
+
+
 def test_empty_book_has_nothing_to_do(tmp_path):
     rt = _rt(tmp_path)
     code, out = executar(rt, tmp_path / "pesquisa")
@@ -391,28 +412,26 @@ def test_inception_date_is_always_an_assembly_day_even_on_friday():
     assert chave_da_semana(date(2026, 10, 14), cfg) == date(2026, 10, 13)
 
 
-def test_friday_inception_runs_end_to_end(tmp_path):
-    """Carteira inaugural numa sexta (mercado sintético): prepare, decide e execução no
-    fechamento do mesmo dia; a chave do livro é a sexta (mesmo na regra legada de segunda)."""
-    from cdp.data.synthetic import make_synthetic_market
+def test_friday_inception_calendar_adopts_closed_legacy_corpus(tmp_path):
+    """Corpus de formato legado produzido hoje: leitura inaugural numa sexta.
 
+    A demo nativa recusa execution=None sem I/O antes de o helper fechar somente
+    serializers/eventos hipotéticos. Nenhuma nova escrita NET é autorizada.
+    """
     friday = date(2024, 3, 8)
     cfg = _legado(friday)
-    md = make_synthetic_market(seed=DEMO_SEED, start=DEMO_HISTORY_START, as_of=friday)
-    clock = {"now": _at(friday, 11)}
-    rt = _rt(tmp_path, cfg=cfg, store_override=DemoStore(md),
-             clock=lambda: clock["now"].astimezone(UTC))
+    calendar_rt = _rt(tmp_path / "agenda", cfg=cfg,
+                      clock=lambda: _at(friday, 11).astimezone(UTC))
+    assert agenda(calendar_rt, _at(friday, 11, 7))["semanal"]["acao"] == "montar"
+    corpus = tmp_path / "corpus"
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
-        assert agenda(rt, _at(friday, 11, 7))["semanal"]["acao"] == "montar"
-        rt.weekly_prepare(friday, mind=DEMO_MIND, live=False)
-        clock["now"] = _at(friday, 12)
-        write_demo_inputs(rt, friday)
-        clock["now"] = _at(friday, 15)
-        rt.weekly_decide(friday, mind=DEMO_MIND)
-        clock["now"] = _at(friday, 19, 20)
-        close = rt.daily_close(friday, live=False, mind=DEMO_MIND)
+        summary = run_demo(corpus, days=1, first_week=friday, cfg=cfg,
+                           inaugural_calendar=True)
+    rt = _rt(corpus, cfg=cfg, clock=lambda: _at(friday, 19, 20).astimezone(UTC))
+    close = next(e for e in summary["etapas"] if e.get("data") == friday)
     assert close["status"] == "registrado" and close["efetivacao"]
+    assert "DADOS SIMULADOS" in summary["aviso"] and "sem origem PIT" in summary["aviso"]
     assert rt.book.list_weeks() == [friday] and rt.book.load_booked(friday) is not None
     rec = rt.track().last()
     assert rec.date == friday and rec.live_book_week == friday

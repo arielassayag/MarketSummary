@@ -96,3 +96,41 @@ def test_news_item_contract() -> None:
     )
     assert news.news_id == "news_1"
     assert "PETR4" in news.related_tickers
+    assert news.published_at == now
+    assert news.time_label == "Data de publicação informada pela fonte"
+
+
+def test_news_observada_nao_inventa_publicacao() -> None:
+    now = datetime.now(UTC)
+    news = NewsItem(news_id="observada", title="Título", body="Manchete", source="Fonte",
+                    published_at=None, observed_at=now, source_timestamp="20260925T180500Z")
+    assert news.published_at is None
+    assert news.evidence_time == now
+    assert news.time_label == "Horário retornado pela fonte"
+
+
+def test_news_sem_qualquer_horario_recusada() -> None:
+    import pytest
+    from pydantic import ValidationError
+
+    with pytest.raises(ValidationError, match="horário"):
+        NewsItem(news_id="sem-data", title="Título", body="Manchete", source="Fonte",
+                 published_at=None)
+
+
+def test_news_naive_observada_recusada() -> None:
+    import pytest
+    from pydantic import ValidationError
+
+    with pytest.raises(ValidationError, match="fuso"):
+        NewsItem(news_id="sem-fuso", title="Título", body="Manchete", source="Fonte",
+                 observed_at=datetime(2026, 9, 25, 18))
+
+
+def test_news_corte_nao_ignora_observacao_posterior() -> None:
+    published = datetime(2026, 9, 25, 17, tzinfo=UTC)
+    observed = datetime(2026, 9, 25, 18, tzinfo=UTC)
+    news = NewsItem(news_id="dois-horarios", title="Título", body="Manchete", source="Fonte",
+                    published_at=published, observed_at=observed)
+    assert news.published_at == published
+    assert news.evidence_time == observed

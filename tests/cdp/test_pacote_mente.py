@@ -18,13 +18,14 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import pytest
+from demo_historica import run_historical_demo as run_demo
 
 from cdp.__main__ import build_parser, main
 from cdp.config import load_config
 from cdp.research.guardrails import style_issues
 from cdp.research.prompts import ESTILO_REGRAS
 from cdp.workflow import notas as N
-from cdp.workflow.demo import DEMO_FIRST_WEEK, DEMO_SEED, demo_sessions, run_demo
+from cdp.workflow.demo import DEMO_FIRST_WEEK, DEMO_SEED, demo_sessions
 from cdp.workflow.pacote import ETAPAS_PACOTE
 from cdp.workflow.runtime import Runtime
 

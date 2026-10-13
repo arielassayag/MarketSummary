@@ -8,6 +8,7 @@ from types import SimpleNamespace
 from zoneinfo import ZoneInfo
 
 import pytest
+import yaml
 
 from cdp import executor as ex
 from cdp import rotinas as ro
@@ -261,8 +262,30 @@ def test_12_prompts_have_exact_own_id_single_gate_and_opt_in():
         assert (ROOT / rel).read_text() == text
         assert (ROOT / rel.replace(".agents/", ".claude/", 1)).read_text() == text
         if "cdp-retomar/" not in rel:
-            assert text.count("uv run python -m cdp rotinas gate") == 1
-            assert "--aguardar-horario" in text
+            assert text.startswith("---\n")
+            frontmatter, delimiter, body = text[4:].partition("\n---\n")
+            assert delimiter
+            metadata = yaml.safe_load(frontmatter)
+            tids = [t.id for t in ROT.familias()[metadata["name"]]]
+            assert metadata["metadata"]["tarefas"].split() == tids
+            prefixes = ("uv run cdp rotinas gate", "uv run python -m cdp rotinas gate")
+            allowed_gates = {tool for tool in metadata["allowed-tools"]
+                             if tool.startswith(tuple("Bash(" + prefix for prefix in prefixes))}
+            assert allowed_gates == {
+                f"Bash({prefix} --tarefa {tid}{suffix})"
+                for prefix in prefixes for tid in tids for suffix in ("", " *")
+            }
+            command = "uv run python -m cdp rotinas gate"
+            assert body.count(command) == 1
+            assert sum(body.count(prefix) for prefix in prefixes) == 1
+            gate_line = next(line for line in body.splitlines() if command in line)
+            assert gate_line.startswith(
+                f"2. `{command} --tarefa <a tarefa que disparou você; padrão {tids[0]}>")
+            gate_command = gate_line.split("`", 2)[1]
+            assert gate_command.count("--aguardar-horario") == 1
+            assert "--manual" not in gate_command
+            assert "`executar: false`" in gate_line
+            assert "encerre (nunca rode o gate duas vezes)" in gate_line
 
 
 @pytest.mark.parametrize("opt_in", [False, True])

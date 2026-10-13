@@ -315,7 +315,23 @@ def test_exclusive_publisher_carries_original_and_errata_with_current_gate(case,
     task = carregar(Path(__file__).resolve().parents[2] / "configs/cdp/rotinas.yaml").tarefa("cdp-diario")
     assert task.exclusiva
     transport = []
-    monkeypatch.setattr(executor, "git", lambda *args, **kw: SimpleNamespace(stdout="", returncode=0))
+    git_calls = []
+    sha_simulado = "d" * 40
+
+    def git_simulado(args, *extra, **kw):
+        git_calls.append(list(args))
+        if args == ["diff", "--cached", "--name-only"]:
+            stdout = ""
+        elif args in (["rev-parse", "--verify", "origin/main^{commit}"],
+                      ["rev-parse", "--verify", "HEAD^{commit}"]):
+            stdout = sha_simulado + "\n"
+        elif args == ["rev-list", "--parents", f"{sha_simulado}..{sha_simulado}"]:
+            stdout = ""  # História simulada recebida: nenhuma diferença entre as pontas.
+        else:
+            raise AssertionError(f"Git simulado fora do contrato: {args}")
+        return SimpleNamespace(stdout=stdout, stderr="", returncode=0)
+
+    monkeypatch.setattr(executor, "git", git_simulado)
     monkeypatch.setattr(executor, "verificar", lambda *args, **kw: (executor.OK, {"sou_o_executor": True}))
     monkeypatch.setattr(executor, "ler_execucao", lambda *args: current_gate)
     monkeypatch.setattr(executor, "estado_dos_caminhos", lambda *args: current_files)
@@ -328,7 +344,13 @@ def test_exclusive_publisher_carries_original_and_errata_with_current_gate(case,
     monkeypatch.setattr(executor, "_publicar_delta", capture)
     code, out = executor.publicar(root, task, "CDP: DADOS SIMULADOS retificação",
                                  rt=rt, env={}, execucao="DIARIA-NOVA", trava="TRAVA-NOVA", mente="codex")
-    assert code == executor.OK and len(transport) == 1
+    assert code == executor.OK and len(transport) == 1, (code, out, transport, git_calls)
+    assert git_calls == [
+        ["diff", "--cached", "--name-only"],
+        ["rev-parse", "--verify", "origin/main^{commit}"],
+        ["rev-parse", "--verify", "HEAD^{commit}"],
+        ["rev-list", "--parents", f"{sha_simulado}..{sha_simulado}"],
+    ]
     assert transport[0]["delta"] == sorted(current_files)
     assert transport[0]["exec_id"] == "DIARIA-NOVA" and transport[0]["exige"]
     assert transport[0]["trava_id"] == "TRAVA-NOVA" and transport[0]["verificar_livro"]

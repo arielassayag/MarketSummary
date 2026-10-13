@@ -23,6 +23,8 @@ from typing import Any
 
 import pandas as pd
 
+from cdp.leitura_arquivos import ler_csv
+
 from .yahoo import Downloader, FetchError, Sleeper, download_bars, http_request, to_float
 
 log = logging.getLogger(__name__)
@@ -91,7 +93,7 @@ def fetch_fred_series(series_id: str, start: date, end: date, *, session: Any | 
                                 "coed": end.isoformat()})
     if resp.status_code != 200:
         raise FetchError(f"FRED {series_id}: HTTP {resp.status_code}")
-    df = pd.read_csv(io.StringIO(resp.text), na_values=[".", ""], keep_default_na=True)
+    df = ler_csv(io.StringIO(resp.text), na_values=['.', ''], keep_default_na=True)
     if df.shape[1] < 2:
         raise FetchError(f"FRED {series_id}: CSV inesperado")
     dcol, vcol = df.columns[0], df.columns[1]

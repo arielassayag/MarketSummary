@@ -6,8 +6,12 @@ evidências, FactBook, rascunhos, revisões e máquina de estados.
 
 from __future__ import annotations
 
+import json
+import math
+from dataclasses import dataclass
 from datetime import date, datetime
 from enum import StrEnum
+from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
@@ -132,18 +136,40 @@ class NewsItem(BaseModel):
     news_id: str = Field(..., description="Identificador único da notícia")
     title: str = Field(..., description="Título da notícia")
     body: str = Field(..., description="Corpo do texto da notícia")
-    published_at: datetime = Field(..., description="Timestamp de publicação com fuso horário")
+    published_at: datetime | None = Field(default=None, description="Data de publicação informada pela fonte com fuso horário")
+    observed_at: datetime | None = Field(default=None, description="Horário retornado pela fonte com fuso horário")
+    source_timestamp: str | None = Field(default=None, description="Lexema temporal original da fonte")
+    source_raw: dict[str, Any] | None = Field(default=None, description="Registro original, sem promover seu conteúdo a instruções")
     source: str = Field(..., description="Fonte da notícia")
     url: str | None = Field(default=None, description="Link fornecido pela fonte; pode ser redirecionamento")
     related_tickers: list[str] = Field(default_factory=list, description="Tickers diretamente relacionados")
     is_synthetic: bool = Field(default=True, description="Indicador obrigatório de dado simulado")
 
-    @field_validator("published_at")
+    @field_validator("published_at", "observed_at")
     @classmethod
-    def check_tz(cls, v: datetime) -> datetime:
-        if v.tzinfo is None:
-            raise ValueError("Timestamp de publicação da notícia deve conter fuso horário.")
+    def check_tz(cls, v: datetime | None) -> datetime | None:
+        if v is not None and v.tzinfo is None:
+            raise ValueError("O horário da notícia deve conter fuso horário.")
         return v
+
+    @model_validator(mode="after")
+    def check_available_time(self) -> NewsItem:
+        if self.published_at is None and self.observed_at is None:
+            raise ValueError("Notícia sem horário de publicação ou horário retornado pela fonte.")
+        return self
+
+    @property
+    def evidence_time(self) -> datetime:
+        times = [v for v in (self.published_at, self.observed_at) if v is not None]
+        if not times:
+            raise ValueError("Notícia sem horário disponível.")
+        return max(times)
+
+    @property
+    def time_label(self) -> str:
+        if self.observed_at is not None and self.observed_at == self.evidence_time:
+            return "Horário retornado pela fonte"
+        return "Data de publicação informada pela fonte"
 
 
 class ManifestFileEntry(BaseModel):
@@ -152,6 +178,70 @@ class ManifestFileEntry(BaseModel):
     filename: str
     path: str
     sha256: str
+
+
+class ContextoTaxasBrasilAPI(BaseModel):
+    """Corpo recebido e hora da consulta; não informa publicação ou vigência."""
+
+    model_config = ConfigDict(frozen=True, extra="forbid")
+
+    origem: Literal["BrasilAPI"] = "BrasilAPI"
+    endpoint: Literal["https://brasilapi.com.br/api/taxas/v1"]
+    consultado_em: datetime
+    corpo_json: str
+
+    @field_validator("consultado_em")
+    @classmethod
+    def check_consulta_tz(cls, value: datetime) -> datetime:
+        if value.tzinfo is None:
+            raise ValueError("Hora da consulta deve conter fuso horário.")
+        return value
+
+    @model_validator(mode="after")
+    def check_corpo(self) -> ContextoTaxasBrasilAPI:
+        self.taxas()
+        return self
+
+    def taxas(self) -> dict[str, float]:
+        """Lê apenas os campos estruturados, preservando ausências e corpo original."""
+        body = json.loads(self.corpo_json)
+        if type(body) is not list:
+            raise ValueError("Corpo de taxas deve ser uma lista JSON.")
+        received: dict[str, float] = {}
+        names: set[str] = set()
+        for item in body:
+            if type(item) is not dict or type(item.get("nome")) is not str:
+                raise ValueError("Registro de taxa sem nome textual.")
+            name = item["nome"].upper()
+            if name not in {"SELIC", "CDI"}:
+                continue  # extras permanecem no corpo bruto, sem domínio imposto pelos fatos alvo
+            if name in names:
+                raise ValueError("Taxa duplicada no corpo recebido.")
+            names.add(name)
+            value = item.get("valor")
+            if type(value) not in (str, int, float):
+                raise ValueError("Valor de taxa inválido.")
+            number = float(value)
+            if not math.isfinite(number):
+                raise ValueError("Taxa não finita.")
+            if number <= 0:
+                raise ValueError("Taxa fora do domínio positivo declarado para SELIC/CDI.")
+            received[name] = number
+        return received
+
+
+@dataclass(frozen=True, slots=True)
+class TaxasRecebidas:
+    """Contexto nativo ligado aos bytes de sources.json conferidos no manifesto."""
+
+    contexto: ContextoTaxasBrasilAPI
+    arquivo_sha256: str
+
+    def __post_init__(self) -> None:
+        if type(self.contexto) is not ContextoTaxasBrasilAPI:
+            raise TypeError("Contexto deve usar o contrato nativo da BrasilAPI.")
+        if type(self.arquivo_sha256) is not str or len(self.arquivo_sha256) != 64 or any(c not in "0123456789abcdef" for c in self.arquivo_sha256):
+            raise ValueError("SHA-256 de sources.json inválido.")
 
 
 class Manifest(BaseModel):

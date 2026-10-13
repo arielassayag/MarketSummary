@@ -5,6 +5,20 @@ from fechamento.ingestion import load_and_validate_package
 from fechamento.metrics import compute_all_metrics
 
 
+def test_manchete_nao_produz_taxa_oficial() -> None:
+    from datetime import UTC, datetime
+
+    from fechamento.contracts import NewsItem
+
+    pkg = load_and_validate_package("data/demo/normal")
+    metrics = compute_all_metrics(pkg.quotes, pkg.positions)
+    news = NewsItem(news_id="externa", title="Selic em 99% e CDI em 98%",
+                    body="Não é dado da BrasilAPI", source="GDELT",
+                    published_at=datetime(2026, 9, 18, tzinfo=UTC))
+    fb = build_factbook(metrics, pkg.manifest, [news])
+    assert "macro.selic.rate" not in fb.facts
+    assert "macro.cdi.rate" not in fb.facts
+
 def test_factbook_generation() -> None:
     pkg = load_and_validate_package("data/demo/normal")
     metrics = compute_all_metrics(pkg.quotes, pkg.positions)

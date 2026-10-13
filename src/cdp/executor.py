@@ -31,15 +31,19 @@ import argparse
 import base64
 import json
 import os
+import stat
 import subprocess
 import uuid
 from collections.abc import Mapping, Sequence
+from contextlib import contextmanager
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 from zoneinfo import ZoneInfo
 
 import yaml
+
+from cdp.leitura_arquivos import ler_texto, recusar_escrita
 
 if TYPE_CHECKING:  # pragma: no cover
     from .rotinas import Tarefa
@@ -101,6 +105,15 @@ def git(args: Sequence[str], raiz: Path | str, *, env: Mapping[str, str] | None 
     """``git`` sem prompts, em inglês (saída estável) e, em chamadas de rede, com o token de
     ``CDP_GIT_TOKEN`` injetado só nesta chamada."""
     pre: list[str] = []
+    from .leitura_arquivos import em_leitura, recusar_escrita
+
+    readonly = em_leitura()
+    if readonly:
+        if (rede or entrada is not None or extra_env is not None or type(args) is not list
+                or not args or any(type(x) is not str for x in args)
+                or args[0] not in {"rev-parse", "branch", "rev-list", "status", "log", "show", "merge-base"}
+                or (args[0] == "branch" and args != ["branch", "--show-current"])):
+            recusar_escrita()
     token = (env or os.environ).get("CDP_GIT_TOKEN") if rede else None
     if token:
         cred = base64.b64encode(f"x-access-token:{token}".encode()).decode()
@@ -108,6 +121,10 @@ def git(args: Sequence[str], raiz: Path | str, *, env: Mapping[str, str] | None 
     # Cada operação pertence à raiz informada; nunca descubra o Git de um projeto pai.
     # Repositórios normais, bare e worktrees possuem sua própria raiz e continuam válidos.
     git_env = _git_env(extra_env)
+    if readonly:
+        git_env["GIT_OPTIONAL_LOCKS"] = "0"
+        git_env["GIT_CONFIG_NOSYSTEM"] = "1"
+        git_env["GIT_CONFIG_GLOBAL"] = os.devnull
     ceiling = str(Path(raiz).resolve().parent)
     previous_ceiling = git_env.get("GIT_CEILING_DIRECTORIES")
     git_env["GIT_CEILING_DIRECTORIES"] = (
@@ -164,7 +181,7 @@ def ler_executor(texto: str) -> dict[str, Any]:
 def carregar_executor(raiz: Path | str, caminho: Path | None = None) -> dict[str, Any]:
     path = Path(raiz) / (caminho or EXECUTOR_PADRAO)
     try:
-        return ler_executor(path.read_text(encoding="utf-8"))
+        return ler_executor(ler_texto(path, encoding='utf-8'))
     except OSError as exc:
         raise ErroExecutor(f"não consegui ler {path}: {exc}") from exc
 
@@ -214,7 +231,7 @@ def identidade(raiz: Path | str, env: Mapping[str, str] | None = None) -> dict[s
     path = Path(raiz) / LOCAL_YAML
     if path.is_file():
         try:
-            raw = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+            raw = yaml.safe_load(ler_texto(path, encoding='utf-8')) or {}
         except (OSError, yaml.YAMLError):
             raw = {}
         if isinstance(raw, dict) and raw.get("executor"):
@@ -316,6 +333,7 @@ def trailers(tarefa_id: str, ident: Mapping[str, Any], execucao: str,
 
 
 def registrar_execucao(raiz: Path | str, exec_id: str, dados: Mapping[str, Any]) -> None:
+    recusar_escrita()
     pasta = Path(raiz) / EXECUCOES_DIR
     try:
         pasta.mkdir(parents=True, exist_ok=True)
@@ -327,8 +345,7 @@ def registrar_execucao(raiz: Path | str, exec_id: str, dados: Mapping[str, Any])
 
 def ler_execucao(raiz: Path | str, exec_id: str) -> dict[str, Any] | None:
     try:
-        return json.loads((Path(raiz) / EXECUCOES_DIR / f"{exec_id}.json")
-                          .read_text(encoding="utf-8"))
+        return json.loads(ler_texto(Path(raiz) / EXECUCOES_DIR / f'{exec_id}.json', encoding='utf-8'))
     except (OSError, ValueError):
         return None
 
@@ -585,13 +602,13 @@ def proteger_ensaio(raiz: Path | str) -> dict[str, Any]:
     """Instala ``pre-push`` que recusa todo push enquanto ``CDP_ENSAIO=1`` e, fora do ensaio, o
     push de qualquer commit com o trailer ``CDP-Ensaio`` (defesa além do prompt e do
     ``cdp publicar``). Não sobrescreve um gancho alheio."""
+    recusar_escrita()
     pasta = _ok(git(["rev-parse", "--path-format=absolute", "--git-path", "hooks"], raiz))
     if not pasta:
         return {"instalado": False, "motivo": "fora de um repositório git"}
     hook = Path(pasta) / "pre-push"
     try:
-        if hook.exists() and "cdp-ensaio" not in hook.read_text(encoding="utf-8",
-                                                                  errors="replace"):
+        if hook.exists() and "cdp-ensaio" not in ler_texto(hook, encoding='utf-8', errors='replace'):
             return {"instalado": False, "motivo": f"gancho pre-push alheio em {hook}"}
         hook.parent.mkdir(parents=True, exist_ok=True)
         hook.write_text(ENSAIO_HOOK, encoding="utf-8", newline="\n")
@@ -641,7 +658,11 @@ def sincronizar(raiz: Path | str, *, executar: bool = False, env: Mapping[str, s
                     "motivo": "clone com código ou configuração alterados (desenvolvimento): as "
                               "rotinas precisam de um clone limpo"})
         return out
-    locais = _linhas(git(["log", "--format=", "--name-only", f"{remoto}..HEAD"], raiz).stdout)
+    try:
+        locais = _arquivos_pendentes(Path(raiz), remoto)
+    except ErroExecutor as exc:
+        out.update({"acao": "seguir_sem_push", "motivo": str(exc)})
+        return out
     fora = sorted({p for p in locais if not _no_livro(p, livro)})
     if fora:
         out.update({"acao": "parar", "arquivos": fora,
@@ -751,6 +772,58 @@ def _confirmar_trava(raiz: Path, trava_id: str | None, env: Mapping[str, str]
     return trava_renovar(raiz, trava_id, env=env)
 
 
+def _diff_pendente(raiz: Path, commit: str, pai: str | None) -> set[str]:
+    # Sem rename: origem e destino são dois caminhos, não só o destino de um par R/C.
+    args = ["diff-tree", "--no-commit-id", "--name-only", "--no-renames", "-r", "-z"]
+    args += [pai, commit] if pai is not None else ["--root", commit]
+    r = git(args, raiz)
+    if r.returncode:
+        raise ErroExecutor("não foi possível conferir um diff pendente: " + r.stderr)
+    return {p for p in r.stdout.split("\0") if p}
+
+
+def _arquivos_pendentes(raiz: Path, remoto: str, head: str = "HEAD") -> list[str]:
+    """Inventário por cada pai, sem rename nem omissões de diff combinado.
+
+    Um merge pode trazer código autorizado do remoto. Só exclui essa entrada fora do livro
+    quando há pai ancestral do remoto E o resultado é idêntico ao remoto pinado (inclusive
+    modo/tipo/ausência). Resolução diferente e história ordinária nunca recebem a exceção.
+    """
+    remoto_sha = _ok(git(["rev-parse", "--verify", remoto + "^{commit}"], raiz))
+    head_sha = _ok(git(["rev-parse", "--verify", head + "^{commit}"], raiz))
+    if not remoto_sha or not head_sha:
+        raise ErroExecutor("não foi possível receber as versões do inventário pendente")
+    r = git(["rev-list", "--parents", f"{remoto_sha}..{head_sha}"], raiz)
+    if r.returncode:
+        raise ErroExecutor("não foi possível conferir os commits pendentes: " + r.stderr)
+    caminhos: set[str] = set()
+    for linha in r.stdout.splitlines():
+        commit, *pais = linha.split()
+        locais: set[str] = set()
+        for pai in pais or [None]:
+            locais.update(_diff_pendente(raiz, commit, pai))
+        if len(pais) > 1:
+            ancestral_remoto = False
+            for pai in pais:
+                relacao = git(["merge-base", "--is-ancestor", pai, remoto_sha], raiz)
+                if relacao.returncode not in (0, 1):
+                    raise ErroExecutor("não foi possível conferir os pais do merge pendente")
+                ancestral_remoto |= relacao.returncode == 0
+            if ancestral_remoto:
+                diferente_remoto = _diff_pendente(raiz, commit, remoto_sha)
+                locais = {p for p in locais if _no_livro(p, _caminhos_livro())
+                          or p in diferente_remoto}
+        caminhos.update(locais)
+    return sorted(caminhos)
+
+
+def _exige_trava(path: str, tarefa: Tarefa) -> bool:
+    # Um commit já gravado por outra tarefa também sai no push. Apenas as pastas de
+    # relatórios novos compartilhados dispensam trava; o restante do livro é exclusivo.
+    return (tarefa.exclusiva or _no_livro(path, tarefa.caminhos_exclusivos)
+            or not _no_livro(path, LIVRO_MESCLAVEL))
+
+
 def publicar(raiz: Path | str, tarefa: Tarefa, mensagem: str, *, rt: Any = None,
              env: Mapping[str, str] | None = None, sem_push: bool = False,
              execucao: str | None = None, ramo: str = "main",
@@ -773,6 +846,7 @@ def publicar(raiz: Path | str, tarefa: Tarefa, mensagem: str, *, rt: Any = None,
       publica só os arquivos mescláveis e retém os demais (``PARCIAL``).
 
     Devolve ``(código, saída)``."""
+    recusar_escrita()
     env = os.environ if env is None else env
     raiz = Path(raiz)
     out: dict[str, Any] = {"tarefa": tarefa.id, "commit": None, "push": False, "motivo": "",
@@ -833,8 +907,21 @@ def publicar(raiz: Path | str, tarefa: Tarefa, mensagem: str, *, rt: Any = None,
     else:
         delta = sorted(atual)
         out["base"] = "tudo o que difere da versão local nos caminhos da tarefa"
-    # 2) trava distribuída
-    exige = [p for p in delta if tarefa.exclusiva or _no_livro(p, tarefa.caminhos_exclusivos)]
+    # O push envia a história inteira, mesmo com checkout limpo; conferir antes do commit.
+    pendentes: list[str] = []
+    if not sem_push:
+        try:
+            pendentes = _arquivos_pendentes(raiz, f"{REMOTO}/{ramo}")
+        except ErroExecutor as exc:
+            out["motivo"] = str(exc)
+            return SEM_PUSH, out
+        fora = [p for p in pendentes if not _no_livro(p, _caminhos_livro())]
+        if fora:
+            out.update({"arquivos": fora, "motivo": "commits locais fora do livro: nada gravado"})
+            return FORA_DO_ESCOPO, out
+    # 2) trava distribuída para o delta e TODOS os commits que serão enviados
+    exige_pendentes = [p for p in pendentes if _exige_trava(p, tarefa)]
+    exige = sorted({*exige_pendentes, *(p for p in delta if _exige_trava(p, tarefa))})
     trava_id = trava or env.get("CDP_TRAVA_ID") or (reg or {}).get("trava") or None
     propria = False
     if exige and not sem_trava:
@@ -849,9 +936,9 @@ def publicar(raiz: Path | str, tarefa: Tarefa, mensagem: str, *, rt: Any = None,
                 conf = tr
         if not ok_trava:
             motivo = conf.get("motivo") or conf.get("estado") or "sem trava"
-            if tarefa.exclusiva:
+            if tarefa.exclusiva or exige_pendentes:
                 out.update({"arquivos": exige, "motivo": (
-                    f"escritor exclusivo sem a trava distribuída ({motivo}): nada foi publicado. "
+                    f"gravações exclusivas sem a trava distribuída ({motivo}): nada foi publicado. "
                     "A trava vem do gate (`cdp rotinas gate --tarefa ... --adquirir`) e entra "
                     "em `cdp publicar --trava <id>`")})
                 return TRAVA_AUSENTE, out
@@ -920,24 +1007,35 @@ def _publicar_delta(raiz: Path, tarefa: Tarefa, mensagem: str, out: dict[str, An
         if s["acao"] in ("parar", "seguir_sem_push"):
             out["motivo"] = f"sem push: {s['motivo']}"
             return SEM_PUSH, out
-        locais = _linhas(git(["log", "--format=", "--name-only", f"{remoto}..HEAD"], raiz).stdout)
-        if not locais and not _ok(git(["rev-list", f"{remoto}..HEAD"], raiz)):
+        head = git_head(raiz)
+        if head is None:
+            out["motivo"] = "não foi possível receber a versão local: sem push"
+            return SEM_PUSH, out
+        try:
+            locais = _arquivos_pendentes(raiz, remoto, head)
+        except ErroExecutor as exc:
+            out["motivo"] = str(exc)
+            return SEM_PUSH, out
+        if not locais and not _ok(git(["rev-list", f"{remoto}..{head}"], raiz)):
             out["motivo"] = "nada a publicar" if not delta else "já publicado"
             return parcial, out
         escopo = [p for p in locais if not _no_livro(p, _caminhos_livro())]
         if escopo:
             out.update({"motivo": "commits locais fora do livro: sem push", "arquivos": escopo})
             return FORA_DO_ESCOPO, out
-        if exige and not sem_trava:
+        exige_agora = exige or any(_exige_trava(p, tarefa) for p in locais)
+        if exige_agora and not sem_trava:
             conf = _confirmar_trava(raiz, trava_id, env)
             if conf.get("estado") != "renovada":
                 out["motivo"] = ("trava perdida antes do push: commit local retido, sem push ("
                                  + str(conf.get("motivo") or conf.get("estado")) + ")")
                 return SEM_PUSH, out
-        p = git(["push", "--quiet", REMOTO, f"HEAD:refs/heads/{ramo}"], raiz, env=env, rede=True,
+        out["trava"] = trava_id if exige_agora else None
+        # A referência de origem é imutável: um HEAD alterado depois da conferência fica local.
+        p = git(["push", "--quiet", REMOTO, f"{head}:refs/heads/{ramo}"], raiz, env=env, rede=True,
                 timeout=300)
         if p.returncode == 0:
-            out.update({"push": True, "motivo": "publicado em " + remoto})
+            out.update({"push": True, "head_enviado": head, "motivo": "publicado em " + remoto})
             return parcial, out
         out["motivo"] = "push recusado: " + " ".join(p.stderr.split())[:200]
         if tentativa == 0 and ("non-fast-forward" in p.stderr or "fetch first" in p.stderr
@@ -957,6 +1055,7 @@ LIMITE_ENTREGA = 512 * 1024 * 1024
 def entrega_exportar(raiz: Path | str, tarefa: Tarefa, saida: Path | str) -> dict[str, Any]:
     """Empacota (tar) o que a mente gravou nos caminhos da tarefa: arquivos novos ou alterados
     e a lista dos apagados. Nada fora dos caminhos entra."""
+    recusar_escrita()
     import tarfile
 
     raiz = Path(raiz)
@@ -983,64 +1082,159 @@ def entrega_exportar(raiz: Path | str, tarefa: Tarefa, saida: Path | str) -> dic
 def _rel_seguro(rel: str, caminhos: Sequence[str]) -> bool:
     partes = Path(rel).parts
     return (bool(rel) and not rel.startswith(("/", "\\")) and ".." not in partes
+            and "\0" not in rel and rel == "/".join(partes)
             and "\\" not in rel and ":" not in rel and ".git" not in partes
             and _no_livro(rel, caminhos))
+
+
+@contextmanager
+def _pai_entrega(root_fd: int, rel: str, *, criar: bool = False):
+    """Percorre pais por descritores, sem seguir links, inclusive na aplicação."""
+    fd = os.dup(root_fd)
+    try:
+        for parte in Path(rel).parts[:-1]:
+            try:
+                filho = os.open(parte, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=fd)
+            except FileNotFoundError:
+                if not criar:
+                    yield None
+                    return
+                try:
+                    os.mkdir(parte, dir_fd=fd)
+                except FileExistsError:
+                    pass  # a abertura abaixo ainda exige diretório e recusa links
+                filho = os.open(parte, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW, dir_fd=fd)
+            os.close(fd)
+            fd = filho
+        yield fd
+    finally:
+        os.close(fd)
+
+
+def _alvo_entrega(parent_fd: int, nome: str) -> os.stat_result | None:
+    try:
+        info = os.stat(nome, dir_fd=parent_fd, follow_symlinks=False)
+    except FileNotFoundError:
+        return None
+    if not stat.S_ISREG(info.st_mode):
+        raise ValueError("destino existente não é arquivo comum: " + nome)
+    return info
+
+
+def _gravar_entrega(parent_fd: int, nome: str, dados: bytes) -> None:
+    info = _alvo_entrega(parent_fd, nome)
+    temporario = ".cdp-entrega-" + uuid.uuid4().hex
+    fd = os.open(temporario, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW,
+                 0o666, dir_fd=parent_fd)
+    try:
+        with os.fdopen(fd, "wb") as stream:
+            if info is not None:
+                os.fchmod(stream.fileno(), stat.S_IMODE(info.st_mode))
+            stream.write(dados)
+        # Troca a entrada, não escreve através de link/hardlink preexistente.
+        os.replace(temporario, nome, src_dir_fd=parent_fd, dst_dir_fd=parent_fd)
+    finally:
+        try:
+            os.unlink(temporario, dir_fd=parent_fd)
+        except FileNotFoundError:
+            pass
 
 
 def entrega_importar(raiz: Path | str, tarefa: Tarefa, pacote: Path | str
                      ) -> tuple[int, dict[str, Any]]:
     """Aplica um pacote de :func:`entrega_exportar` no clone limpo do publicador. Recusa
     tudo o que não for arquivo comum dentro dos caminhos da tarefa (sem ligações simbólicas,
-    sem ``..``, sem ``.git``); nada é executado."""
+    sem ``..``, sem ``.git``); nada é executado. Valida o pacote e TODOS os destinos antes de
+    aplicar; a aplicação reabre pais com no-follow/dirfd. Não é transação multi-arquivo."""
+    recusar_escrita()
     import tarfile
 
+    if os.name != "posix" or not hasattr(os, "O_NOFOLLOW"):
+        return CONFIG, {"motivo": "importação exige diretórios por descritor e no-follow"}
     raiz = Path(raiz).resolve()
     caminhos = tuple(tarefa.caminhos) + tuple(tarefa.caminhos_exclusivos)
     try:
         tar = tarfile.open(pacote, "r")
     except (OSError, tarfile.TarError) as exc:
         return CONFIG, {"motivo": f"pacote ilegível: {exc}"}
-    with tar:
-        membros = tar.getmembers()
-        try:
-            man = json.loads(tar.extractfile("manifesto.json").read().decode("utf-8"))
-        except (KeyError, AttributeError, ValueError) as exc:
-            return CONFIG, {"motivo": f"pacote sem manifesto válido: {exc}"}
-        if man.get("tarefa") != tarefa.id:
-            return CONFIG, {"motivo": f"pacote de outra tarefa: {man.get('tarefa')!r}"}
-        recusados, aplicar, total = [], [], 0
-        for m in membros:
-            if m.name == "manifesto.json":
-                continue
-            rel = m.name.removeprefix("arquivos/")
-            if (not m.name.startswith("arquivos/") or not m.isfile()
-                    or not _rel_seguro(rel, caminhos)):
-                recusados.append(m.name)
-                continue
-            total += m.size
-            aplicar.append((rel, m))
-        apagados = [str(x) for x in man.get("apagados") or []]
-        recusados += [a for a in apagados if not _rel_seguro(a, caminhos)]
-        if recusados or total > LIMITE_ENTREGA:
-            return FORA_DO_ESCOPO, {"motivo": "pacote recusado: itens fora dos caminhos da tarefa "
-                                              "ou que não são arquivos comuns",
-                                    "recusados": recusados[:20], "bytes": total}
-        for rel, m in aplicar:
-            destino = raiz / rel
-            for pai in [destino, *destino.parents]:
-                if pai == raiz:
+    try:
+        with tar:
+            membros = tar.getmembers()
+            manifests = [m for m in membros if m.name == "manifesto.json"]
+            if (len(manifests) != 1 or not manifests[0].isfile()
+                    or not 0 <= manifests[0].size <= LIMITE_ENTREGA):
+                return CONFIG, {"motivo": "pacote sem manifesto comum único válido"}
+            stream = tar.extractfile(manifests[0])
+            if stream is None:
+                return CONFIG, {"motivo": "manifesto ilegível"}
+            man = json.loads(stream.read().decode("utf-8"))
+            if type(man) is not dict or type(man.get("versao")) is not int or man["versao"] != 1:
+                return CONFIG, {"motivo": "manifesto inválido: esperado mapa versão 1"}
+            if man.get("tarefa") != tarefa.id:
+                return CONFIG, {"motivo": f"pacote de outra tarefa: {man.get('tarefa')!r}"}
+            declarados, apagados = man.get("arquivos", []), man.get("apagados", [])
+            if (type(declarados) is not list or type(apagados) is not list
+                    or any(type(p) is not str for p in [*declarados, *apagados])
+                    or (man.get("head") is not None and type(man["head"]) is not str)):
+                return CONFIG, {"motivo": "manifesto inválido: listas de caminhos literais"}
+            if (len(set(declarados)) != len(declarados) or len(set(apagados)) != len(apagados)
+                    or set(declarados) & set(apagados)):
+                return CONFIG, {"motivo": "manifesto com caminhos duplicados ou sobrepostos"}
+            recusados = [p for p in [*declarados, *apagados] if not _rel_seguro(p, caminhos)]
+            aplicar: list[tuple[str, bytes]] = []
+            vistos: set[str] = set()
+            total = manifests[0].size
+            for membro in membros:
+                if membro.name == "manifesto.json":
+                    continue
+                rel = membro.name.removeprefix("arquivos/")
+                if (not membro.name.startswith("arquivos/") or not membro.isfile()
+                        or membro.size < 0 or not _rel_seguro(rel, caminhos)
+                        or rel not in declarados or rel in vistos):
+                    recusados.append(membro.name)
+                    continue
+                vistos.add(rel)
+                total += membro.size
+                if total > LIMITE_ENTREGA:
                     break
-                if pai.is_symlink():
-                    return FORA_DO_ESCOPO, {"motivo": f"ligação simbólica no caminho: {rel}"}
-            destino.parent.mkdir(parents=True, exist_ok=True)
-            dados = tar.extractfile(m)
-            if dados is None:
-                return FORA_DO_ESCOPO, {"motivo": f"membro ilegível: {rel}"}
-            destino.write_bytes(dados.read())
+                dados = tar.extractfile(membro)
+                if dados is None:
+                    recusados.append(membro.name)
+                    continue
+                body = dados.read()
+                if len(body) != membro.size:
+                    recusados.append(membro.name)
+                aplicar.append((rel, body))
+            recusados += sorted(set(declarados) - vistos)
+            todos = set(declarados) | set(apagados)
+            recusados += [p for p in todos if any(a.as_posix() in todos
+                                                for a in Path(p).parents)]
+            if recusados or total > LIMITE_ENTREGA:
+                return FORA_DO_ESCOPO, {"motivo": "pacote recusado: caminhos, declarações ou bytes",
+                                        "recusados": recusados[:20], "bytes": total}
+    except (OSError, tarfile.TarError, ValueError, UnicodeError) as exc:
+        return CONFIG, {"motivo": f"pacote ilegível ou manifesto inválido: {exc}"}
+    try:
+        root_fd = os.open(raiz, os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW)
+    except OSError as exc:
+        return CONFIG, {"motivo": f"clone de destino indisponível: {exc}"}
+    try:
+        # Nenhum mkdir, escrita ou unlink até TODOS os destinos existentes serem conferidos.
+        for rel in [*declarados, *apagados]:
+            with _pai_entrega(root_fd, rel) as parent_fd:
+                if parent_fd is not None:
+                    _alvo_entrega(parent_fd, Path(rel).name)
+        for rel, body in aplicar:
+            with _pai_entrega(root_fd, rel, criar=True) as parent_fd:
+                _gravar_entrega(parent_fd, Path(rel).name, body)
         for rel in apagados:
-            alvo = raiz / rel
-            if alvo.is_file() and not alvo.is_symlink():
-                alvo.unlink()
+            with _pai_entrega(root_fd, rel) as parent_fd:
+                if parent_fd is not None and _alvo_entrega(parent_fd, Path(rel).name) is not None:
+                    os.unlink(Path(rel).name, dir_fd=parent_fd)
+    except (OSError, ValueError) as exc:
+        return FORA_DO_ESCOPO, {"motivo": f"destino recusado ou indisponível: {exc}"}
+    finally:
+        os.close(root_fd)
     return OK, {"tarefa": tarefa.id, "head_da_mente": man.get("head"), "arquivos": len(aplicar),
                 "apagados": len(apagados)}
 
@@ -1058,6 +1252,7 @@ def _em_worktree(raiz: Path | str) -> bool:
 
 def registrar_local(raiz: Path | str, como: str, harness: str | None = None, *,
                     forcar: bool = False) -> tuple[int, dict[str, Any]]:
+    recusar_escrita()
     if como not in EXECUTORES or como == "nenhum":
         return CONFIG, {"motivo": f"executor inválido: {como!r}"}
     ramo = _ok(git(["branch", "--show-current"], raiz))
@@ -1089,6 +1284,7 @@ def transferir(raiz: Path | str, para: str, por: str, motivo: str, *,
                env: Mapping[str, str] | None = None, checar_trava: bool = True
                ) -> tuple[int, dict[str, Any]]:
     """Reescreve ``executor.yaml`` para ``para`` (o commit e o push ficam com o humano)."""
+    recusar_escrita()
     env = os.environ if env is None else env
     if para not in EXECUTORES:
         return CONFIG, {"motivo": f"executor inválido: {para!r}"}
@@ -1105,7 +1301,7 @@ def transferir(raiz: Path | str, para: str, por: str, motivo: str, *,
                                       f"{_hhmm(estado.get('expira'))}: espere ou escolha outra "
                                       "janela (`cdp executor janela`)"}
     path = Path(raiz) / EXECUTOR_PADRAO
-    texto = path.read_text(encoding="utf-8")
+    texto = ler_texto(path, encoding='utf-8')
     atual = ler_executor(texto)
     novo = {"versao": 1, "executor": para,
             "harness": harness or atual.get("harness") or "claude-code",

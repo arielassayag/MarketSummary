@@ -389,10 +389,16 @@ def test_routines_playbooks_and_skills_are_consistent():
     for r in sorted(roteiros - usados):  # roteiros de sessão: mapeados no AGENTS.md
         assert r in agents, f"roteiro {r} sem tarefa e fora do mapa do AGENTS.md"
     nomes = {p.name for p in neutras.iterdir() if p.is_dir()}
-    assert nomes == skills_das_tarefas | {"cdp-retomar"}, nomes
+    from cdp.tecnicas.adaptadores import SKILLS as SKILLS_TECNICAS
+
+    # Rotinas e técnicas possuem catálogos fechados distintos; nenhuma sobra livre.
+    assert nomes == skills_das_tarefas | {"cdp-retomar"} | set(SKILLS_TECNICAS), nomes
     for sk in sorted((ROOT / ".claude" / "skills").glob("*/SKILL.md")):
         nome = sk.parent.name
         assert nome in nomes, f".claude/skills/{nome} sem skill neutra correspondente"
+        if nome in SKILLS_TECNICAS:
+            assert sk.read_bytes() == (neutras / nome / "SKILL.md").read_bytes()
+            continue
         if nome != "cdp-retomar":
             playbook = next(t.playbook for t in ROT.tarefas.values() if t.skill == nome)
             assert playbook in sk.read_text(encoding="utf-8"), (nome, playbook)

@@ -111,21 +111,22 @@ Para validar os manifestos: `claude plugin validate .`
 
 O `.claude/settings.json` versionado define o que as rotinas fazem sem perguntar:
 
-- **Permitido**: `uv sync`, os subcomandos da CLI do CDP via `uv run` (exceto os da lista
-  abaixo), `uv run pytest`, `uv run ruff check`, o git só de leitura (`git status`, `git log`,
+- **Permitido**: `uv sync`, as folhas e tarefas da CLI CDP no catálogo gerado de
+  `src/cdp/permissoes.py`, `uv run pytest`, `uv run ruff check`, o git só de leitura (`git status`, `git log`,
   `git diff`, `git fetch`, `git rev-parse`), WebSearch, WebFetch, as skills do CDP
   (`Skill(cdp-diario)`, `Skill(cdp-diario *)`, `Skill(cdp:diario *)` e assim por diante) e
   escrever só os arquivos da mente (`research_pack.json`, `pm_decision.json`, `tese.json`,
   `comentario.json` do dia e da semana, `nota.json`, `reports/backtest/**`, `outputs/**`).
 - **Sempre pergunta**: editar `configs/` e `data/`; `cdp executor transferir`,
   `cdp executor registrar` e `cdp trava adquirir` (decisões humanas) e qualquer comando do CDP com
-  `--sem-trava` (só operador), nas duas formas (`uv run python -m cdp …` e `uv run cdp …`); o git
+  `--sem-trava` ou `--manual` (só operador), `cdp reinicio` e gate com `--agora` ou `--ensaio`,
+  nas duas formas (`uv run python -m cdp …` e `uv run cdp …`); o git
   que grava — `git add`, `git commit`, `git push`, `git pull`, `git merge` — e `git reset --hard`,
   `rebase`, `clean`, `restore`. Quem sincroniza e publica é o código (`cdp sincronizar` e
   `cdp publicar` rodam o git por dentro, com executor, trava, `verify` e escopo conferidos): numa
   rotina, um desses comandos deixa a tarefa parada no app ou é negado no `claude -p`; numa sessão
   de desenvolvimento, você aprova à mão.
-- **Nunca**: `git push --force` em qualquer forma, `git push --no-verify`,
+- **Nunca**: CDP com `--force` ou `--forcar`, `git push --force` em qualquer forma, `git push --no-verify`,
   `git commit --no-verify`, `rm -rf`, **desligar o kill switch**, editar
   `configs/cdp/executor.yaml` ou `.cdp/**` e editar arquivos gravados pelo código (trilha, track
   record, decisões, briefing, base de mercado, dados públicos arquivados, relatórios
@@ -135,6 +136,18 @@ O `.claude/settings.json` versionado define o que as rotinas fazem sem perguntar
   iguais no app, no CLI e na nuvem: `BASH_DEFAULT_TIMEOUT_MS=600000` (10 minutos por comando, em
   vez de 2) e `BASH_MAX_TIMEOUT_MS=1800000` (até 30 minutos quando o roteiro pede um limite maior,
   como o `cdp publicar` do risco, que espera a trava por até 10 minutos).
+
+No checkout de desenvolvimento, `uv run python -m cdp skills sincronizar --claude --permissoes`
+gera as neutras, o espelho Claude e apenas os blocos CDP do plugin/settings; conserva os demais
+grants e todas as regras ASK/DENY anteriores. Acrescente `--verificar` para somente conferir.
+As folhas têm regra exata e regra com espaço antes dos argumentos; cada gate/publicação inclui
+o ID literal da tarefa. A CLI exige flags completas, sem abreviações. Reinício continua no
+roteiro sob ASK explícito; pedido operacional autorizado não ganha grant genérico.
+
+A união global não isola famílias e permissões do host não provam exclusividade do SO,
+sandbox, shell composto ou enforcement real. Gates, executor e trava continuam obrigatórios.
+O exportador de rotinas da nuvem ainda declara Bash inteiro: esse canal tem contrato separado
+e não é certificado pela redução das permissões locais.
 
 **O que ainda pode parar uma tarefa.** "Aceitar edições" só aprova edições de arquivos e
 comandos simples de sistema de arquivos; qualquer outro comando fora das regras pede aprovação e,

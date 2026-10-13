@@ -61,6 +61,8 @@ import numpy as np
 import pandas as pd
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
+from cdp.leitura_arquivos import ler_texto, recusar_escrita, validar_modo
+
 try:  # lock de arquivo (POSIX); sem fcntl o lock vira no-op documentado
     import fcntl
 except ImportError:  # pragma: no cover - Windows
@@ -216,7 +218,7 @@ def _read_increment_manifest(path: Path) -> IncrementManifest:
     p = Path(path) / FILE_MANIFEST
     if not p.exists():
         raise SnapshotIntegrityError(f"Manifesto do incremento ausente: {p}")
-    return IncrementManifest.model_validate_json(p.read_text(encoding="utf-8"))
+    return IncrementManifest.model_validate_json(ler_texto(p, encoding='utf-8'))
 
 
 def _verify_increment_files(path: Path, m: IncrementManifest) -> list[str]:
@@ -310,7 +312,11 @@ class MarketStore:
                  benchmarks: Sequence[str] | None = None,
                  calendar: Callable[[date, str], bool | None] | None = None,
                  incomplete_grace: timedelta | None = DEFAULT_INCOMPLETE_GRACE,
-                 lock_timeout: float = DEFAULT_LOCK_TIMEOUT) -> None:
+                 lock_timeout: float = DEFAULT_LOCK_TIMEOUT,
+                 somente_leitura: bool = False) -> None:
+        self.somente_leitura = validar_modo(somente_leitura)
+        if self.somente_leitura and (fetchers is not None or calendar is not None):
+            raise ValueError("MarketStore readonly recusa callbacks/provedores substitutos")
         self.root = Path(root)
         self.incomplete_grace = incomplete_grace
         self.lock_timeout = float(lock_timeout)
@@ -333,6 +339,7 @@ class MarketStore:
         Espera até ``lock_timeout`` segundos e então levanta :class:`StoreLockedError`. O lock do
         sistema operacional é liberado automaticamente se o processo morrer (sem lock órfão).
         """
+        recusar_escrita(self.somente_leitura)
         if self._lock_depth > 0 or fcntl is None:
             self._lock_depth += 1
             try:
@@ -394,6 +401,7 @@ class MarketStore:
 
     def init_base(self, snapshot_dir: Path) -> Path:
         """Copia um snapshot VERIFICADO para ``root/base/<as_of>`` (nunca sobrescreve)."""
+        recusar_escrita(self.somente_leitura)
         src = Path(snapshot_dir)
         m = read_manifest(src)
         verify_files(src, m)
@@ -418,6 +426,7 @@ class MarketStore:
     def build_base(self, universe_path: Path, as_of: date, **kwargs: Any) -> SnapshotManifest:
         """Coleta e grava uma base diretamente em ``root/base/<as_of>`` (sob o lock de escrita;
         barras sintéticas de feriado descartadas pelo calendário oficial do repositório)."""
+        recusar_escrita(self.somente_leitura)
         kwargs.setdefault("fetchers", self.fetchers)
         kwargs.setdefault("cfg", self.cfg)
         kwargs.setdefault("benchmarks", self.benchmark_symbols)
@@ -554,8 +563,14 @@ class MarketStore:
             lh = pd.concat([lh, extra], ignore_index=True) if not extra.empty else lh
         return normalize_lending_history(lh)
 
-    def load(self, as_of: date | None = None, verify: bool = True) -> MarketData:
+    def load(self, as_of: date | None = None, verify: bool = True, *,
+             recepcao_bancaria: bool = False, conhecimento_ate: datetime | None = None) -> MarketData:
         """Base + incrementos com data <= ``as_of`` como ``MarketData`` verificado."""
+        from .recepcao_bancaria import instante, opcao
+        if opcao(recepcao_bancaria):
+            if type(self) is not MarketStore or verify is not True:
+                raise ValueError("Recepção bancária exige MarketStore nativo e verify=True")
+            instante(conhecimento_ate)
         bases = self.bases()
         if not bases:
             raise FileNotFoundError(f"Nenhuma base em {self.base_root}.")
@@ -566,6 +581,8 @@ class MarketStore:
             eligible = [b for b in bases if read_manifest(b).as_of <= as_of]
             base = eligible[-1] if eligible else bases[0]
         bt = read_tables(base, verify=False)  # já verificada em _require_chain quando verify
+        if recepcao_bancaria and bt.manifest.is_synthetic:
+            raise ValueError("Recepção bancária não autentica produto sintético")
         incs = [i for i in self.increments(base) if as_of is None or i.session_date <= as_of]
         tabs = [self._read_increment(i) for i in incs]
         base_as_of = bt.manifest.as_of
@@ -636,8 +653,12 @@ class MarketStore:
                                if bt.manifest.provisional_dates
                                and all(d <= eff for d in bt.manifest.provisional_dates)
                                else None))
-        return assemble_market_data(manifest, bt.universe, prices, fx, bench, rates, fundamentals,
-                                    short_interest, lending, items)
+        md = assemble_market_data(manifest, bt.universe, prices, fx, bench, rates, fundamentals,
+                                  short_interest, lending, items)
+        if recepcao_bancaria:
+            from .recepcao_bancaria import _novo_mercado
+            object.__setattr__(md, "contexto_bancario", _novo_mercado(md, self, base, bt, tabs))
+        return md
 
     # --------------------------------------------------------------- escrita
     def session_closed(self, session_date: date) -> bool:
@@ -736,6 +757,7 @@ class MarketStore:
     def _append_daily(self, session_date: date, fetchers: Fetchers | None,
                       refresh_slow: bool, *, include_news: bool, allow_gap: bool,
                       allow_incomplete: bool) -> IncrementManifest:
+        recusar_escrita()
         f = fetchers or self.fetchers
         cfg = _cfg_or_default(self.cfg)
         base = self.base_dir
@@ -1013,6 +1035,7 @@ class MarketStore:
         lend_dates = sorted({d.date() for d in lend_new["date"]}) if not lend_new.empty else []
 
         def writer(root: Path) -> IncrementManifest:
+            recusar_escrita()
             files: list[SnapshotFile] = []
 
             def add(name: str, rows: int | None) -> None:

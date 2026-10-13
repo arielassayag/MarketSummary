@@ -47,6 +47,8 @@ from datetime import date
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
+from cdp.leitura_arquivos import ler_texto, recusar_escrita
+
 from ..hashing import sha256_file, sha256_obj
 from .book import GENESIS_EVENT, GENESIS_FILE
 
@@ -134,7 +136,7 @@ def _genese_registrada(rt: Runtime) -> dict[str, Any] | None:
     path = root / GENESIS_FILE
     if path.exists():
         try:
-            return json.loads(path.read_text(encoding="utf-8"))
+            return json.loads(ler_texto(path, encoding='utf-8'))
         except ValueError:
             return {"ilegivel": True}
     audit = root / AUDIT_NAME
@@ -308,16 +310,22 @@ def _rollback(staging: Path, alvos: list[Path], novos: list[Path]) -> list[str]:
     (``<i>_<nome>`` ⇒ ``alvos[i]``; pelo conteúdo da área, não por uma lista em memória, para
     não perder um caminho movido no instante de uma interrupção). Nunca apaga a área com
     conteúdo: o que não voltar fica nela (e a guarda da próxima execução denuncia)."""
+    recusar_escrita()
     erros: list[str] = []
-    for p in novos:
+    for p in reversed(novos):
         try:
-            p.unlink(missing_ok=True)
+            if p.is_dir() and not p.is_symlink():
+                p.rmdir()  # só diretórios vazios criados por esta tentativa
+            else:
+                p.unlink(missing_ok=True)
         except OSError as exc:
             erros.append(f"{p}: {exc}")
     for destino in sorted(staging.iterdir(), reverse=True) if staging.is_dir() else []:
         try:
             origem = alvos[int(destino.name[:4])]
             origem.parent.mkdir(parents=True, exist_ok=True)
+            if origem.exists() or origem.is_symlink():
+                raise FileExistsError(f"Destino da restauração já existe: {origem}")
             shutil.move(str(destino), str(origem))
         except (OSError, ValueError, IndexError) as exc:
             erros.append(f"{destino}: {exc}")
@@ -331,6 +339,7 @@ def _rollback(staging: Path, alvos: list[Path], novos: list[Path]) -> list[str]:
 
 def executar(rt: Runtime, pesquisa: Path | str = DEFAULT_PESQUISA) -> tuple[int, dict[str, Any]]:
     """Executa o pré-início (ver docstring do módulo). Devolve ``(código, relatório)``."""
+    recusar_escrita()
     p = plano(rt, pesquisa)
     out = _relatorio(p, executado=False)
     if p.estado in ("iniciado", "nada"):
@@ -356,9 +365,14 @@ def executar(rt: Runtime, pesquisa: Path | str = DEFAULT_PESQUISA) -> tuple[int,
     # comando e no commit da rotina).
     genese = {"inception_date": p.inicio, "config_hash": rt.cfg.config_hash(),
               "codigo": git_head, "ancora_sha256": ancora}
+    from .net_moc import CONFIG_FOLDER, archive_config, economic_genesis, stamp
+
+    genese["economic"] = economic_genesis(rt.cfg)
 
     staging.mkdir(parents=True, exist_ok=False)
     novos: list[Path] = []
+    net_dir = book / CONFIG_FOLDER
+    net_path = book / stamp(rt.cfg)["config_path"]
     try:
         for i, alvo in enumerate(p.alvos):
             shutil.move(str(alvo), str(staging / f"{i:04d}_{alvo.name}"))
@@ -366,6 +380,13 @@ def executar(rt: Runtime, pesquisa: Path | str = DEFAULT_PESQUISA) -> tuple[int,
         from .book import dump_json as _dump
 
         book.mkdir(parents=True, exist_ok=True)
+        # Os corpos anteriores já estão no staging. Custódia de criação é medida
+        # agora, antes de archive_config, inclusive para falha no meio da gravação.
+        if not net_dir.exists():
+            novos.append(net_dir)
+        if not net_path.exists():
+            novos.append(net_path)
+        archive_config(book, rt.cfg)
         gpath = book / GENESIS_FILE
         payload = json.loads(json.dumps(genese, default=str))
         novos.append(gpath)
@@ -383,9 +404,9 @@ def executar(rt: Runtime, pesquisa: Path | str = DEFAULT_PESQUISA) -> tuple[int,
         erros = _rollback(staging, p.alvos, novos)
         if not isinstance(exc, Exception):  # Ctrl-C, SystemExit: desfeito; propaga
             raise
-        out["motivo"] = f"falha ({type(exc).__name__}: {exc}); estado anterior restaurado"
-        if erros:
-            out["motivo"] += f"; ATENÇÃO, restauração incompleta: {'; '.join(erros)}"
+        resultado = (f"restauração incompleta: {'; '.join(erros)}" if erros
+                     else "estado anterior restaurado")
+        out["motivo"] = f"falha ({type(exc).__name__}: {exc}); {resultado}"
         return RECUSADO, out
     shutil.rmtree(staging, ignore_errors=True)
     out.update({"executado": True, "estado": "iniciado",

@@ -7,7 +7,7 @@ parâmetros nem funções de produção. O único contrafactual é a data inaugu
 from __future__ import annotations
 
 from dataclasses import replace
-from datetime import date, datetime, time
+from datetime import UTC, date, datetime, time
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -24,6 +24,8 @@ from cdp.data.snapshot import write_snapshot
 from cdp.data.synthetic import make_synthetic_market
 from cdp.hashing import sha256_file, sha256_obj
 from cdp.risk.limites import episodios_de_squeeze
+from cdp.workflow.book import dump_json
+from cdp.workflow.origem import ReplayOrigin, install_replay_origin
 from cdp.workflow.risk_monitor import KILL_SWITCH_PREFIX, run_risk_monitor, write_risk_report
 from cdp.workflow.runtime import KILL_SWITCH_REQUEST_EVENT, Runtime
 
@@ -80,12 +82,42 @@ def operational(tmp_path):
         teses_root=None,
         expected_mind="codex",
     )
+    # Origem retrospectiva somente deste corpus DADOS SIMULADOS, antes das operações.
+    # O produtor nativo deriva a gênese monetária do cfg integral; não há livro manual.
+    source_manifest = market / "base" / str(FIRST) / "manifest.json"
+    origin_manifest = tmp_path / "replay_boundaries_test_manifest.json"
+    origin_manifest.write_text(
+        dump_json({
+            "aviso": "DADOS SIMULADOS: limites de dados/risco via APIs nativas em tmp.",
+            "config_hash": cfg.config_hash(),
+            "source_manifest_sha256": sha256_file(source_manifest),
+            "generator_sha256": sha256_file(
+                Path(__file__).parents[2] / "src/cdp/data/synthetic.py"
+            ),
+            "test_sha256": sha256_file(Path(__file__)),
+        }),
+        encoding="utf-8",
+    )
+    install_replay_origin(
+        rt.book,
+        ReplayOrigin(
+            mode="simulado",
+            actual_started_at=datetime.now(UTC),
+            run_manifest_sha256=sha256_file(origin_manifest),
+            source_manifest_sha256=sha256_file(source_manifest),
+        ),
+    )
     rt.weekly_prepare(FIRST, mind="codex", live=False)
     clock.set(FIRST, 13, 7)
     decided = rt.weekly_decide(FIRST, mind="codex")
     assert decided["n_short"] > 0
     clock.set(FIRST, 19, 22)
-    assert rt.daily_close(FIRST, live=False, mind="codex")["efetivacao"]
+    closed = rt.daily_close(FIRST, live=False, mind="codex")
+    (tmp_path / "diagnostico_inaugural.json").write_text(
+        dump_json({**closed, "data": closed["data"].isoformat()}), encoding="utf-8"
+    )
+    assert closed["status"] == "registrado", closed
+    assert closed["efetivacao"], closed
     assert rt.track().last().positions
     return rt, clock, md
 
@@ -186,7 +218,7 @@ def test_hard_request_after_decision_lapses_moc_and_never_fills_next_session(ope
     assert ok, errors
 
 
-def test_actual_closed_squeeze_cuts_once_and_keeps_long_veto(operational):
+def test_squeeze_net_refusal_keeps_cut_pending_and_long_veto(operational):
     rt, clock, md = operational
     entry = rt.track().get(FIRST)
     target = min(
@@ -217,23 +249,42 @@ def test_actual_closed_squeeze_cuts_once_and_keeps_long_veto(operational):
     prepare_second(rt, clock, shocked)
     proposal = rt.book.load_proposal(SECOND)
     assert not any(p.weight > 0 and p.issuer_id == target.issuer_id for p in proposal.positions)
+    prior = rt.track().last()
+    held = {(p.issuer_id, p.ticker): p.shares for p in prior.positions if p.shares != 0}
+    proposal_path = rt.week_dir(SECOND) / f"proposal_v{proposal.version}.json"
+    decision_path = rt.week_dir(SECOND) / f"decision_v{proposal.version}.json"
+    proposal_sha, decision_sha = sha256_file(proposal_path), sha256_file(decision_path)
+    proposal_hash = proposal.proposal_hash()
+    approval_hash = rt.book.load_decision(SECOND).approval_hash
     clock.set(SECOND, 19, 22)
-    assert rt.daily_close(SECOND, live=False, mind="codex")["efetivacao"]
-    actual = sum(
-        abs(p.shares)
-        for p in rt.track().get(SECOND).positions
-        if p.issuer_id == target.issuer_id and p.shares < 0
-    )
-    assert actual <= shares_at_stop / 2 + 1e-9
+    closed = rt.daily_close(SECOND, live=False, mind="codex")
+    assert closed["status"] == "registrado", closed
+    assert closed["efetivacao"] is None
+    refused = closed["efetivacao_recusada"]
+    assert refused["decisao_caducada"] is True
+    assert refused["motivo"] == "NET FAIL: exposição resultante excede o limite após custos"
+    assert "kill switch" not in rt.book.efetivacao_recusada(SECOND)["regra"]
+    assert rt.book.load_booked(SECOND) is None and not rt.kill_switch_active()
+    record = rt.track().get(SECOND)
+    assert record.live_book_week == FIRST and record.approval_hash == prior.approval_hash
+    actual = {(p.issuer_id, p.ticker): p.shares for p in record.positions if p.shares != 0}
+    assert actual == held and record.pnl_components["costs"] == 0.0
+    assert sha256_file(proposal_path) == proposal_sha
+    assert sha256_file(decision_path) == decision_sha
+    assert rt.book.load_proposal(SECOND).proposal_hash() == proposal_hash
+    assert rt.book.load_decision(SECOND).approval_hash == approval_hash
     episode_after = [
         e
         for e in episodios_de_squeeze(rt.track().records(), rt.cfg)
         if e.emissor == target.issuer_id
     ]
-    assert len(episode_after) == 1 and not episode_after[0].corte_pendente
-    # No próximo preparo o mesmo episódio não pede outra metade, mesmo ainda em stop.
+    # Recusa NET não prova nem consome o corte: o episódio original segue pendente.
+    assert len(episode_after) == 1 and episode_after[0].corte_pendente
+    assert episode_after[0].cortado_em is None
+    assert episode_after[0].acoes_no_stop == shares_at_stop
     next_bound = rt.squeeze_stops(date(2024, 3, 22))[target.issuer_id]
-    assert next_bound["veto_compra"] and next_bound["fracao_maxima_short"] is None
+    assert next_bound["veto_compra"]
+    assert next_bound["fracao_maxima_short"] == pytest.approx(bound["fracao_maxima_short"])
     before = {str(p): sha256_file(p) for p in rt.book_root.rglob("*") if p.is_file()}
     assert rt.daily_close(SECOND, live=False, mind="codex")["status"] == "já registrado"
     assert before == {str(p): sha256_file(p) for p in rt.book_root.rglob("*") if p.is_file()}

@@ -33,20 +33,22 @@ from cdp.workflow.avaliacao import (
 from cdp.workflow.demo import run_demo
 from cdp.workflow.runtime import Runtime
 
-LEGACY = Path(__file__).parent / "fixtures/fund_legado.yaml"
-FIRST, END = date(2024, 3, 4), date(2024, 3, 11)
-NOW = datetime(2024, 3, 12, 23, tzinfo=UTC)
+CONFIG = Path(__file__).resolve().parents[2] / "configs/cdp/fund.yaml"
+FIRST, END = date(2026, 11, 13), date(2026, 11, 20)
+NOW = datetime(2026, 11, 21, 23, tzinfo=UTC)
 
 
 @pytest.fixture(scope="module")
 def evaluated(tmp_path_factory):
     root = tmp_path_factory.mktemp("avaliacao-prospectiva")
-    run_demo(root, days=6, cfg=load_config(LEGACY))
+    # Fixture nativa declarada antes de executar: seed7, datas e mandato integral.
+    run_demo(root, days=6, first_week=FIRST, cfg=load_config(CONFIG))
+    assert _runtime(root).track().get(FIRST)
     return root
 
 
 def _runtime(root):
-    return Runtime(load_config(LEGACY), root / "book", root / "market", root / "reports",
+    return Runtime(load_config(CONFIG), root / "book", root / "market", root / "reports",
                    clock=lambda: NOW, teses_root=None)
 
 
@@ -61,7 +63,7 @@ def context(evaluated):
     from cdp.research.pm_agent import load_week_inputs, pm_factbook, to_bundle
 
     rt = _runtime(evaluated)
-    now = datetime(2024, 3, 4, 17, tzinfo=UTC)
+    now = datetime(2026, 11, 13, 17, tzinfo=UTC)
     _, _, ctx, _, pmctx = rt._week_state(FIRST)
     pack, out, _, pmctx = load_week_inputs(rt.week_dir(FIRST), pmctx, now=now)
     pm = to_bundle(out, rt.cfg, pmctx.drawdown, factbook=pm_factbook(pmctx))
@@ -203,7 +205,7 @@ def test_reader_with_context_rejects_outcome_market_mismatch(evaluated, tmp_path
     # Simula um anexo criado por código com fonte incompatível, não só arquivo sem hash.
     events = rt.book.audit.events()
     cut = next(e.seq for e in events if e.event_type == OUTCOME_EVENT and e.week == FIRST)
-    rt.book.audit.path.write_text("".join(json.dumps(e.model_dump(mode="json")) + "\n" for e in events[:cut]))
+    rt.book.audit.path.write_bytes(b"".join(rt.book.audit.path.read_bytes().splitlines(keepends=True)[:cut]))
     p.unlink()
     _write(p, o)
     _anchor(rt.book, p, o, OUTCOME_EVENT, FIRST, NOW)
@@ -215,7 +217,7 @@ def test_mature_pending_outcome_is_explicit_and_reconciles_without_changing_reco
     _, rt = _copy(evaluated, tmp_path)
     events = rt.book.audit.events()
     cut = next(e.seq for e in events if e.event_type == OUTCOME_EVENT and e.week == FIRST)
-    rt.book.audit.path.write_text("".join(json.dumps(e.model_dump(mode="json")) + "\n" for e in events[:cut]))
+    rt.book.audit.path.write_bytes(b"".join(rt.book.audit.path.read_bytes().splitlines(keepends=True)[:cut]))
     (rt.week_dir(FIRST) / FOLDER / OUTCOME_FILE).unlink()
     # Livro parcial legítimo entre fechamento selado e resolução; ainda não há evento outcome.
     pending = rt.evaluation_status()
@@ -270,12 +272,11 @@ def test_crash_after_immutable_file_before_event_is_reconciled_without_orders(ev
     # depois do arquivo. Mantém a sequência prefixo íntegra; não cria forecast depois de outcome.
     events = rt.book.audit.events()
     cut = next(e.seq for e in events if e.event_type == event and e.week == FIRST)
-    rt.book.audit.path.write_text("".join(json.dumps(e.model_dump(mode="json")) + "\n"
-                                        for e in events[:cut]))
+    rt.book.audit.path.write_bytes(b"".join(rt.book.audit.path.read_bytes().splitlines(keepends=True)[:cut]))
     if file == BINDING_FILE:
         # No instante dessa queda ainda não existiriam outcomes, outra semana ou track record.
         for path in rt.book_root.iterdir():
-            if path.is_dir() and path.name != str(FIRST):
+            if path.is_dir() and path.name not in {str(FIRST), "net_config"}:
                 shutil.rmtree(path)
         (rt.week_dir(FIRST) / FOLDER / OUTCOME_FILE).unlink()
         rt.weekly_decide(FIRST, mind="demo")
@@ -315,7 +316,8 @@ def test_frozen_macro_residual_identity_and_missing_days_never_become_zero(evalu
     data = c.model_dump()
     data.update(exposures=Frame(index=ids, columns=list(B), values=B.values.tolist()),
                 specific_var=dict.fromkeys(ids, 0.04), sessions={i: [str(END)] for i in ids},
-                primary_lines={i: {"ticker": i, "mic": "XNYS", "currency": "USD"} for i in ids})
+                primary_lines={i: {"ticker": i, "mic": "XNYS", "currency": "USD"} for i in ids},
+                required_macro=["macro:SIM"])
     frozen = Cohort.model_validate(data)
     expected = np.array([(-1 if i % 2 else 1) * .001 for i in range(len(ids))])
     returns = pd.DataFrame([.01 + B["macro:SIM"].values * .02 + expected],

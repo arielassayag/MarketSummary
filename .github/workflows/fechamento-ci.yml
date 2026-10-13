@@ -1,0 +1,59 @@
+name: fechamento-ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+    paths:
+      - "src/fechamento/**"
+      - "tests/test_*.py"
+      - "tests/conftest.py"
+      - "tests/fixtures/**"
+      - "app.py"
+      - "README.md"
+      - "docs/guia_brasilapi_mercado.md"
+      - "pyproject.toml"
+      - "uv.lock"
+      - ".github/workflows/fechamento-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fechamento-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  qualidade:
+    name: Fechamento offline — lint e testes
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Instalar uv e Python
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7
+        with:
+          enable-cache: true
+          python-version: "3.12"
+      - name: Dependências congeladas
+        run: uv sync --frozen --extra dev --extra ai
+      - name: Lint
+        run: uv run --frozen ruff check src/fechamento tests/test_*.py app.py
+      - name: Testes offline
+        env:
+          TZ: America/Sao_Paulo
+          PYTHONUTF8: "1"
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: uv run --frozen python -B -m pytest tests --ignore=tests/cdp -q -x -p no:cacheprovider --junitxml=.cdp/validacoes/fechamento-ci-junit.xml
+      - name: Guardar relatório dos testes
+        if: ${{ always() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: testes-fechamento
+          path: .cdp/validacoes/fechamento-ci-junit.xml
+          retention-days: 7
+          if-no-files-found: warn

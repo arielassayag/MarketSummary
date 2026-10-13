@@ -69,6 +69,18 @@ from cdp.workflow.painel_publicacao import (
 from cdp.workflow.runtime import Runtime
 
 NOW = datetime(2024, 3, 5, 22, 30, tzinfo=UTC)
+
+
+@pytest.mark.parametrize("missing", ["cobertura", "modelo"])
+def test_modulo_obrigatorio_ausente_recusa_pagina(tmp_path, monkeypatch, missing):
+    from cdp.workflow import painel
+
+    for name, filename in painel.MODULOS.items():
+        if name != missing:
+            (tmp_path / filename).write_bytes((painel.MODULOS_DIR / filename).read_bytes())
+    monkeypatch.setattr(painel, "MODULOS_DIR", tmp_path)
+    with pytest.raises(FileNotFoundError, match=painel.MODULOS[missing]):
+        painel.modulos()
 # Livros de demonstração com a regra semanal legada (primeiro pregão da semana na B3): os testes
 # de renderização usam datas fixas (semana 2024-03-04); o cronograma de sexta (NYSE) é testado em
 # test_calendar.py, test_execucao.py, test_relatorio_semanal.py e test_reinicio.py.
@@ -91,7 +103,7 @@ def _rt(root: Path, reports: Path | None = None, cfg: FundConfig | None = None) 
 
 @pytest.fixture(scope="module")
 def demo(tmp_path_factory):
-    from cdp.workflow.demo import run_demo
+    from demo_historica import run_historical_demo as run_demo
 
     out = tmp_path_factory.mktemp("painel_demo")
     with warnings.catch_warnings():
@@ -861,7 +873,7 @@ NOW6 = datetime(2024, 3, 12, 22, 30, tzinfo=UTC)
 @pytest.fixture(scope="module")
 def demo6(tmp_path_factory):
     """Livro sintético com duas semanas e seis pregões (o orçamento vale num livro "real")."""
-    from cdp.workflow.demo import run_demo
+    from demo_historica import run_historical_demo as run_demo
 
     out = tmp_path_factory.mktemp("painel_demo6")
     with warnings.catch_warnings():

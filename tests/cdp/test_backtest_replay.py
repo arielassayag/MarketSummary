@@ -27,12 +27,15 @@ from cdp.backtest.replay import (
     verify_replay,
 )
 from cdp.calendar import is_rebalance_day
-from cdp.config import load_config
+from cdp.config import config_json, load_config
 from cdp.data.snapshot import load_snapshot, write_snapshot
 from cdp.data.synthetic import make_synthetic_market
-from cdp.hashing import sha256_file
+from cdp.hashing import sha256_file, sha256_obj
 from cdp.research.evaluation import AuthenticatedViewTracker
+from cdp.workflow.daily import DailyRunner, PendingExecution, _Plan
+from cdp.workflow.net_moc import NetLimitExceeded, exact_net
 from cdp.workflow.runtime import Runtime
+from cdp.workflow.track_record import TrackRecord
 
 FIRST, END = date(2024, 3, 8), date(2024, 3, 12)
 
@@ -262,7 +265,8 @@ def test_one_second_after_deadline_produces_no_decision(inputs):
     assert datetime.fromisoformat(step["actual_started_at"]).tzinfo is not None
 
 
-def test_realized_capacity_fills_fixed_shares_and_next_decision_uses_them(inputs):
+@pytest.fixture(scope="module")
+def capacity_shock_replay(inputs):
     root, _source, cfg = inputs
     last = date(2024, 3, 15)
     md = make_synthetic_market(seed=7, start=date(2023, 1, 2), as_of=last)
@@ -278,20 +282,90 @@ def test_realized_capacity_fills_fixed_shares_and_next_decision_uses_them(inputs
     original = _inventory(source)
     out = root / ".cdp" / "ensaios" / "partial"
     result = run_replay(source, out, start=FIRST, end=last, mode="simulado", cfg=cfg, workspace=root)
+    assert _inventory(source) == original
+    return out, result, source, cfg
+
+
+def test_capacity_shock_net_refusal_lapses_without_residual_orders(capacity_shock_replay):
+    out, result, _source, cfg = capacity_shock_replay
+    last = date(2024, 3, 15)
     effective = _execution_config(cfg, FIRST)
     rt = Runtime(effective, out / "book", out / "market", out / "reports",
                  store_override=ReplayStore(out / "market", cfg=effective), teses_root=None)
     first, second = rt.book.load_proposal(FIRST), rt.book.load_proposal(last)
-    booked = rt.book.load_booked(FIRST)
-    assert first is not None and second is not None and booked is not None
-    filled = {(p.issuer_id, p.ticker): p.shares for p in booked.positions}
+    assert first is not None and second is not None
+    assert rt.book.load_booked(FIRST) is None
+    lapsed = rt.book.efetivacao_recusada(FIRST)
+    assert lapsed["semana"] == lapsed["sessao"] == str(FIRST)
+    assert lapsed["proposal_id"] == first.proposal_id
+    assert lapsed["motivo"] == "NET FAIL: exposição resultante excede o limite após custos"
+    events = rt.book.audit.events()
+    assert [e.payload_hash for e in events if e.week == FIRST
+            and e.event_type == "BOOKING_LAPSED"] == [sha256_obj(lapsed)]
+    assert not any(e.week == FIRST and e.event_type in {
+        "BOOKED", "BOOKED_SHADOW", "NET_MOC_PREPARED", "NET_MOC_BOUND"} for e in events)
+    for side in ("main", "shadow"):
+        assert not (out / "book/net_moc/v1" / side / str(FIRST)).exists()
+    # A recusa conserva caixa e não cobra custos de ordens hipotéticas não efetivadas.
+    first_record = rt.track().get(FIRST)
+    assert first_record.nav_end_usd == effective.fund.inception_nav_usd
+    for record in rt.track().records():
+        if record.date < last:
+            assert record.positions == [] and record.live_book_week is None
+            assert record.pnl_components["costs"] == 0
+            assert record.pnl_components["borrow"] == 0
+            assert record.pnl_components["equity"] == 0
+    decision = rt.book.load_decision(FIRST)
+    assert lapsed["approval_hash"] == decision.approval_hash
+    before = _inventory(out)
+    with pytest.raises(ValueError, match="caducou"):
+        rt._runner()._plan_from_pending(FIRST, None, PendingExecution(first, decision))
+    assert _inventory(out) == before
+    before_second = rt.track().get(date(2024, 3, 14))
+    actual_before = {(p.issuer_id, p.ticker): int(p.shares) for p in before_second.positions if p.shares}
+    assert rt.book.holdings_before(last) == actual_before == {}
+    # A decisão seguinte recebe o NAV e as posições efetivos, sem ordens residuais.
+    assert second.nav_usd == before_second.nav_end_usd
+    booked = rt.book.load_booked(last)
+    assert booked is not None and booked.positions
+    assert booked.proposal_id == second.proposal_id
+    assert {(p.issuer_id, p.ticker): p.shares for p in rt.track().get(last).positions} == {
+        (p.issuer_id, p.ticker): p.shares for p in booked.positions}
+    usd_targets = {(p.issuer_id, p.execution_ticker): p.shares for p in second.positions
+                   if p.currency == "USD" and p.shares}
+    assert usd_targets
+    assert {k: v for k, v in {(p.issuer_id, p.ticker): p.shares for p in booked.positions}.items()
+            if k in usd_targets} == usd_targets
+    assert [d["efetivada"] for d in result["decisoes"]] == [False, True]
+    assert verify_replay(out)["concluido"]
+
+
+def test_capacity_kernel_fills_fixed_shares_before_net_refusal(capacity_shock_replay):
+    out, _result, source, cfg = capacity_shock_replay
+    effective = _execution_config(cfg, FIRST)
+    store = ReplayStore(out / "market", cfg=effective)
+    rt = Runtime(effective, out / "book", out / "market", out / "reports",
+                 store_override=store, teses_root=None)
+    first, decision = rt.book.load_proposal(FIRST), rt.book.load_decision(FIRST)
+    before, source_before = _inventory(out), _inventory(source)
+    # Receita kernel em memória, sem preflight/callback/autoridade de escritor.
+    # A trilha vazia evita usar registros posteriores neste cálculo inaugural.
+    runner = DailyRunner(effective, store, rt.book,
+                         TrackRecord(out.parent / "partial-kernel/book/track_record"))
+    context = runner.context(FIRST, need_models=False)
+    plan = _Plan(week=FIRST, proposal=first, decision=decision, entry=None, hold=False,
+                 approval_hash=decision.approval_hash, proposal_id=first.proposal_id,
+                 source="DADOS SIMULADOS: oráculo kernel sem efetivação")
+    candidate = runner._prepare_side(runner.main, context, None, plan)
+    assert candidate.commit is None
+    filled = {(p.issuer_id, p.ticker): p.shares for p in candidate.entry.positions}
     raw = load_snapshot(source)
     cap = effective.execution.capacity
     partial = 0
     checked = 0
     # Oráculo independente: em USD, preço cancela cap/preço; calendário normal, lote unitário.
     for p in first.positions:
-        if p.currency != "USD" or not p.shares or not filled.get((p.issuer_id, p.execution_ticker)):
+        if p.currency != "USD" or not p.shares:
             continue
         line = raw.universe.lines.loc[p.execution_ticker]
         category = "ADR" if line["line_type"] == "ADR" else "US_STOCK"
@@ -300,18 +374,17 @@ def test_realized_capacity_fills_fixed_shares_and_next_decision_uses_them(inputs
         multiplier = cap.short_multiplier if p.shares < 0 else 1.
         limit = math.floor(float(raw.volume.loc[str(FIRST), p.execution_ticker]) * fraction * multiplier + 1e-9)
         expected = (1 if p.shares > 0 else -1) * min(abs(p.shares), limit)
-        actual = filled[(p.issuer_id, p.execution_ticker)]
+        actual = filled.get((p.issuer_id, p.execution_ticker), 0)
         assert actual == expected
         partial += abs(actual) < abs(p.shares)
         checked += 1
     assert checked > 0 and partial > 0
-    before_second = rt.track().get(date(2024, 3, 14))
-    actual_before = {(p.issuer_id, p.ticker): int(p.shares) for p in before_second.positions if p.shares}
-    assert rt.book.holdings_before(last) == actual_before
-    # Contexto da próxima decisão usa NAV/carteira efetivos; ordens residuais não migram.
-    assert second.nav_usd == before_second.nav_end_usd
-    assert _inventory(source) == original
-    assert len(result["decisoes"]) == 2 and verify_replay(out)["concluido"]
+    assert candidate.record.pnl_components["costs"] < 0
+    # Quantidades calculadas não autorizam efetivar a carteira resultante fora do mandato.
+    with pytest.raises(NetLimitExceeded, match="NET FAIL"):
+        exact_net(candidate.record, config_json(effective))
+    assert _inventory(out) == before and _inventory(source) == source_before
+    assert not runner.track.root.exists()
 
 
 @pytest.mark.parametrize("forged", [False, True])

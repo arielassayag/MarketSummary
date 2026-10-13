@@ -32,7 +32,6 @@ import re
 import shutil
 import sys
 import tempfile
-import warnings
 from collections.abc import Iterable, Mapping
 from dataclasses import dataclass
 from datetime import UTC, date, datetime
@@ -1022,17 +1021,21 @@ def construir(rt: Any, op: Opcoes) -> dict[str, Any]:
     if agora.tzinfo is None:
         agora = agora.replace(tzinfo=FUSO)
     tmp: tempfile.TemporaryDirectory[str] | None = None
+    demonstracao: dict[str, Any] | None = None
     try:
         if op.demo:
-            from .config import load_config
             from .workflow.demo import run_demo
             from .workflow.runtime import Runtime
 
             tmp = tempfile.TemporaryDirectory(prefix="cdp_site_demo_")
-            with warnings.catch_warnings():
-                warnings.simplefilter("ignore")
-                run_demo(Path(tmp.name), days=op.demo_dias)
-            rt = Runtime(load_config(), Path(tmp.name) / "book", Path(tmp.name) / "market",
+            cfg_demo = rt.cfg
+            resumo = run_demo(Path(tmp.name), days=op.demo_dias, cfg=cfg_demo)
+            demonstracao = {"origem": "nova_execucao_sintetica",
+                            "integridade": resumo.get("integridade"),
+                            "registros": resumo.get("registros"),
+                            "aviso": resumo.get("aviso"),
+                            "cobertura_qualitativa": "não produzida pela demonstração"}
+            rt = Runtime(cfg_demo, Path(tmp.name) / "book", Path(tmp.name) / "market",
                          Path(tmp.name) / "reports", teses_root=None)
         else:
             from .workflow.reinicio import situacao
@@ -1052,9 +1055,7 @@ def construir(rt: Any, op: Opcoes) -> dict[str, Any]:
                                "quebrada (" + "; ".join(msgs) + ")")
         saida = Path(op.saida)
         _preparar_saida(saida, raiz)
-        with warnings.catch_warnings():
-            warnings.simplefilter("ignore")
-            dados = dados_do_painel(rt, agora, commit=commit)
+        dados = dados_do_painel(rt, agora, commit=commit)
         meta = dados.get("meta") or {}
         # Só o site montado oferece as rotas estáticas; artifacts locais não ganham links mortos.
         from .workflow.painel import data_hash
@@ -1062,6 +1063,8 @@ def construir(rt: Any, op: Opcoes) -> dict[str, Any]:
         meta["teses_url"] = "ativos/"
         meta["cases_url"] = "cases/"
         meta["risco_url"] = "risco/"
+        if demonstracao is not None:
+            meta["demonstracao"] = demonstracao
         meta["data_hash"] = data_hash(dados)
         demo = op.demo or bool(meta.get("is_synthetic"))
         indexar = bool(cfg.get("indexar", True)) and not op.noindex and not demo
@@ -1452,6 +1455,18 @@ def conferir(saida: Path | str) -> list[str]:
     if total > MAX_SITE:
         out.append(f"site com {total} bytes (acima de 900 MB)")
     man = json.loads((saida / "manifest.json").read_text(encoding="utf-8"))
+    # Módulos sob demanda não aparecem como URLs literais no HTML. Sua presença é contrato
+    # da página recebida, inclusive se alguém refizer manifesto/somas após uma omissão.
+    from .workflow.painel import ASSET_PREFIX, MODULOS
+
+    page_sha = man.get("pagina_sha256")
+    if type(page_sha) is not str or not re.fullmatch(r"[0-9a-f]{64}", page_sha):
+        out.append("manifesto sem pagina_sha256 válida para os módulos obrigatórios")
+    else:
+        for nome in MODULOS:
+            rel = f"{ASSET_PREFIX}{page_sha[:16]}-{nome}.js"
+            if not (saida / rel).is_file():
+                out.append(f"módulo obrigatório ausente: {rel}")
     listados = man.get("arquivos") or {}
     presentes = {p.relative_to(saida).as_posix() for p in saida.rglob("*") if p.is_file()}
     for rel in sorted(presentes - set(listados) - {"manifest.json", "SHA256SUMS"}):

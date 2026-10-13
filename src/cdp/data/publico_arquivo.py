@@ -48,6 +48,8 @@ from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
+from cdp.leitura_arquivos import ler_bytes, ler_texto, recusar_escrita
+
 logger = logging.getLogger(__name__)
 
 DEFAULT_RAIZ = Path("data")
@@ -184,7 +186,7 @@ class Arquivo:
                 return self._indice
             idx: dict[str, list[RegistroArquivo]] = {}
             if self.caminho_indice.exists():
-                texto = self.caminho_indice.read_text(encoding="utf-8")
+                texto = ler_texto(self.caminho_indice, encoding='utf-8')
                 linhas = texto.split("\n")
                 # ``split`` deixa por último o que vem depois do último "\n": vazio num índice
                 # íntegro; um fragmento quando a gravação foi interrompida (registro incompleto)
@@ -256,7 +258,7 @@ class Arquivo:
         p = self.base / reg.caminho
         if not p.exists():
             raise ArquivoAdulterado(f"Arquivo do índice ausente em disco: {reg.caminho}")
-        data = p.read_bytes()
+        data = ler_bytes(p)
         if sha256_de(data) != reg.sha256:
             raise ArquivoAdulterado(
                 f"SHA-256 de {reg.caminho} não confere com o índice (arquivo alterado).")
@@ -265,6 +267,7 @@ class Arquivo:
     def gravar(self, chave: str, fonte: str, url: str | None, conteudo: bytes, *,
                data_coleta: datetime | None = None) -> RegistroArquivo:
         """Arquiva ``conteudo`` sob a ``chave`` (bytes intocados) e registra no índice."""
+        recusar_escrita()
         if not _CHAVE_RE.match(chave) or ".." in chave.split("/"):
             raise ValueError(f"Chave de arquivo inválida: {chave!r}")
         if fonte not in FONTES:
@@ -287,7 +290,7 @@ class Arquivo:
             else:
                 caminho = f"{pasta}/{dia}/{nome}"
                 destino = self.base / caminho
-                if destino.exists() and sha256_de(destino.read_bytes()) != sha:
+                if destino.exists() and sha256_de(ler_bytes(destino)) != sha:
                     caminho = f"{pasta}/{dia}/{sha[:12]}_{nome}"
                     destino = self.base / caminho
                 destino.parent.mkdir(parents=True, exist_ok=True)
@@ -309,6 +312,7 @@ class Arquivo:
         """Acrescenta uma linha ao índice (``flush`` + ``fsync``). Um registro incompleto no fim
         do arquivo (gravação interrompida, sem ``\\n`` final) é removido antes: nunca foi um
         registro válido, e anexar depois dele corromperia a linha seguinte."""
+        recusar_escrita()
         p = self.caminho_indice
         tamanho = p.stat().st_size if p.exists() else 0
         if tamanho > 0:

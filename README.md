@@ -54,7 +54,7 @@ A pasta precisa ser nova. Use outro nome para repetir; arquivos anteriores não 
 
 - Ações e índice: Yahoo Finance, com horários da fonte. A referência é a última sessão disponível; o preço atual pode ser intradiário.
 - Câmbio: bid e varBid da AwesomeAPI, cuja referência pode diferir da bolsa.
-- Taxas: BrasilAPI, na data da consulta; o endpoint não informa data de vigência.
+- Taxas: contexto estruturado da BrasilAPI, ligado ao SHA de `sources.json`, com hora da consulta. O endpoint não informa publicação ou vigência; taxas não são extraídas de manchetes.
 - Notícias: Google News RSS, com `pubDate` e link (possivelmente um redirecionamento). Manchetes não são fatos verificados nem prova de causalidade.
 - Carteira: pesos iguais **simulados**. O pacote inteiro é sinalizado como contendo simulação. Preços sem ajuste de dividendos/desdobramentos.
 
@@ -107,6 +107,8 @@ uv run streamlit run app.py --server.address 127.0.0.1
 A interface permite revisar, aprovar e exportar. A aplicação não se autoaprova. A aprovação vincula a versão do texto e os dados por hash.
 
 Na primeira abertura, o Streamlit pode pedir `Email:` no terminal. O cadastro é opcional: deixe em branco e pressione Enter. A interface lê o `.env` da pasta do projeto ao iniciar; reinicie a aplicação se alterar a chave com ela aberta.
+
+O leitor ao vivo consulta notícias pela **GDELT DOC 2.0**, uma API JSON pública e sem chave, com busca por fontes brasileiras em português e Google News RSS como contingência. O registro original, o horário retornado pela fonte e a URL são preservados no `news.jsonl`. Esse horário não confirma a data original de publicação. Nenhuma manchete é criada quando as duas fontes falham.
 
 ### Concluir pela CLI
 

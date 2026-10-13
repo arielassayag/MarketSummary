@@ -76,15 +76,15 @@ def risk_decomposition(w: pd.Series, model: RiskModel) -> RiskDecomposition:
     wa = model.align(check_weights(w))
     B = model.exposures
     F = _factor_cov(model)
-    x = B.T @ wa
+    held = wa[wa != 0].index
+    x = B.loc[held].T @ wa.loc[held]
     fx = F @ x
     factor_var = float(x @ fx)
-    spec_var_i = wa ** 2 * model.specific_var.reindex(B.index)
+    spec_var_i = wa.loc[held] ** 2 * model.specific_var.reindex(held)
     specific_var = float(spec_var_i.sum())
     total_var = factor_var + specific_var
     sigma = float(np.sqrt(max(total_var, 0.0)))
     sigma_w = B @ fx + model.specific_var.reindex(B.index) * wa
-    held = wa[wa != 0].index
     if total_var > 0:
         by_factor = (x * fx) / total_var
         asset_contrib = (wa * sigma_w).loc[held] / total_var

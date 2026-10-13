@@ -67,6 +67,8 @@ from typing import TYPE_CHECKING, Any
 import numpy as np
 import pandas as pd
 
+from cdp.leitura_arquivos import ler_texto, recusar_escrita
+
 from ..contracts import Decision, DecisionType, Proposal, ResearchNote, ResearchPack
 from ..risk.types import TRADING_DAYS
 
@@ -351,7 +353,7 @@ def _briefing_facts(week_dir: Path) -> dict[str, str]:
     if not path.is_file():
         return {}
     try:
-        raw = json.loads(path.read_text(encoding="utf-8"))
+        raw = json.loads(ler_texto(path, encoding='utf-8'))
     except (OSError, ValueError):
         return {}
     facts = raw.get("facts") if isinstance(raw, dict) else None
@@ -387,7 +389,7 @@ def _load_shadow(week_dir: Path) -> Proposal | None:
     if not path.is_file():
         return None
     try:
-        return Proposal.model_validate(json.loads(path.read_text(encoding="utf-8")))
+        return Proposal.model_validate(json.loads(ler_texto(path, encoding='utf-8')))
     except (OSError, ValueError):
         return None
 
@@ -932,6 +934,7 @@ def _binding_label(b: str) -> str:
 
 
 def _sensitivity(ti: ThesisInputs) -> tuple[list[dict[str, Any]], dict[str, Any], list[str]]:
+    recusar_escrita()
     from ..research.factbook import level_returns
     from ..risk.analytics import historical_pnl
 
@@ -995,6 +998,7 @@ def _missing_in_window(ti: ThesisInputs, d0: date, d1: date) -> list[str]:
 
 def _historical_contrib(ti: ThesisInputs, d0: date, d1: date) -> pd.Series | None:
     """Contribuição por emissor de uma réplica histórica (mesma conta do ``stress``)."""
+    recusar_escrita()
     from ..risk.analytics import model_implied_returns
 
     panel, model = ti.ctx.panel, ti.ctx.model

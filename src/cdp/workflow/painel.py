@@ -4157,14 +4157,14 @@ def _template(template_path: Path | str | None) -> str:
 
 
 def modulos() -> dict[str, str]:
-    """Fontes dos módulos da página presentes no código (``{nome: texto}``, ordem fixa). Um
+    """Fontes obrigatórias dos módulos da página (``{nome: texto}``, ordem fixa). Um
     módulo nunca contém o fechamento literal do elemento de script (vai embutido na cópia
     local)."""
     out = {}
     for nome, arq in MODULOS.items():
         path = MODULOS_DIR / arq
         if not path.is_file():
-            continue
+            raise FileNotFoundError(f"Módulo obrigatório ausente do pacote: {arq}")
         texto = path.read_text(encoding="utf-8")
         if "</script" in texto.lower():
             raise ValueError(f"{arq}: o módulo não pode conter o fechamento do elemento de script")

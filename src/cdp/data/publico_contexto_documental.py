@@ -9,9 +9,10 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import re
 from collections.abc import Mapping
 from copy import deepcopy
-from datetime import UTC, datetime, timedelta
+from datetime import UTC, date, datetime, timedelta
 
 import pandas as pd
 
@@ -20,6 +21,33 @@ CAMPOS_CONTEXTO = ("contexto_documental", "contexto_documental_sha256")
 
 class ExtracaoRecusada(ValueError):
     """Contrato documental incompleto, contraditório ou não suportado."""
+
+
+def periodo_civil_nativo(valor):
+    """Compara a data civil sem descartar hora/fuso nem alterar o dado recebido.
+
+    O participante serializa Timestamp com ``isoformat``; meia-noite sem fuso
+    representa a mesma data que o ISO civil da célula. Só essas formas nativas
+    são aceitas, com calendário válido e eventual fração de segundo toda zero.
+    """
+    if type(valor) is str:
+        if re.fullmatch(r"[0-9]{4}-[0-9]{2}-[0-9]{2}(?:T00:00:00(?:\.0{1,9})?)?", valor):
+            try:
+                return date.fromisoformat(valor[:10]).isoformat()
+            except ValueError as exc:
+                raise ExtracaoRecusada("Período nativo exige data civil válida") from exc
+        raise ExtracaoRecusada("Período nativo exige ISO civil ou meia-noite sem fuso")
+    if type(valor) is date:
+        return valor.isoformat()
+    if type(valor) not in (datetime, pd.Timestamp):
+        raise ExtracaoRecusada("Período nativo exige data civil tipada")
+    if (
+        valor.tzinfo is not None
+        or any((valor.hour, valor.minute, valor.second, valor.microsecond))
+        or (type(valor) is pd.Timestamp and valor.nanosecond != 0)
+    ):
+        raise ExtracaoRecusada("Período nativo exige meia-noite sem fuso")
+    return valor.date().isoformat()
 
 
 def _sha(data):
@@ -289,8 +317,8 @@ def contexto_documental(row):
             try:
                 # Os contextos primários comprovam os períodos; não criar início
                 # ou frequência que o seletor/consumidor normal não transmitiu.
-                fim_documental = max(pd.Timestamp(p["period_end"]).date() for p in parts)
-                fim_nativo = pd.Timestamp(row["period_end"]).date()
+                fim_documental = max(periodo_civil_nativo(p["period_end"]) for p in parts)
+                fim_nativo = periodo_civil_nativo(row["period_end"])
                 if fim_nativo != fim_documental:
                     raise ValueError
             except (KeyError, TypeError, ValueError, OverflowError) as exc:
@@ -410,10 +438,7 @@ def conferir_contexto_participantes(row):
                 value = member.get(key)
                 if key == "period_end":
                     try:
-                        end = pd.Timestamp(value)
-                        if pd.isna(end) or end.tzinfo is not None or end != end.normalize():
-                            raise ValueError
-                        value = end.date().isoformat()
+                        value = periodo_civil_nativo(value)
                     except (TypeError, ValueError, OverflowError) as exc:
                         raise ExtracaoRecusada("Fim explícito do componente inválido") from exc
                 values.append(value)

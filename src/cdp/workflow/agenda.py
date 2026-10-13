@@ -35,6 +35,8 @@ from zoneinfo import ZoneInfo
 
 import pandas as pd
 
+from cdp.leitura_arquivos import ler_texto
+
 from ..calendar import _cal, chave_da_semana, is_session, open_markets, proximas_montagens
 
 if TYPE_CHECKING:  # pragma: no cover
@@ -389,7 +391,7 @@ def retrato_info(book: Path, d: date) -> dict[str, Any]:
     out: dict[str, Any] = {"data": d, "parcial": None, "emissores": [], "concluido_em": None,
                            "sintetico": False}
     try:
-        man = json.loads((pasta / "manifest.json").read_text(encoding="utf-8"))
+        man = json.loads(ler_texto(pasta / 'manifest.json', encoding='utf-8'))
     except (OSError, ValueError):
         return out
     out.update({"parcial": bool(man.get("parcial")), "emissores": list(man.get("emissores") or []),
@@ -429,7 +431,7 @@ def carregar_eventos_macro(path: Path | str | None = None) -> dict[str, Any]:
     if path is None and not p.is_file():
         p = Path(__file__).resolve().parents[3] / EVENTOS_MACRO
     try:
-        raw = yaml.safe_load(p.read_text(encoding="utf-8")) or {}
+        raw = yaml.safe_load(ler_texto(p, encoding='utf-8')) or {}
     except (OSError, yaml.YAMLError) as exc:
         return {"eventos": [], "erro": f"calendário macro ilegível ({exc.__class__.__name__})",
                 "publicado_ate": {}}
@@ -484,15 +486,18 @@ def sessao_de_reacao(ev: dict[str, Any]) -> date:
     return d  # pragma: no cover
 
 
-def _fonte_eventos_publica(emissores: list[str], desde: date, ate: date, as_of: date) -> Any:
+def _fonte_eventos_publica(emissores: list[str], desde: date, ate: date, as_of: date, *,
+                          raiz: Path | None = None) -> Any:
     """Datas de resultado do arquivo público local (CVM: entrega do ITR/DFP e calendário do IPE;
     SEC e Yahoo conforme ``eventos_corporativos``), sem rede: a agenda nunca espera a internet."""
     from ..data import publico
     from ..data.publico_arquivo import DEFAULT_RAIZ, INDICE, PASTA_ARQUIVO
 
-    if not (DEFAULT_RAIZ / PASTA_ARQUIVO / INDICE).is_file():
+    root = DEFAULT_RAIZ if raiz is None else raiz
+    if not (root / PASTA_ARQUIVO / INDICE).is_file():
         raise FileNotFoundError("arquivo público local ausente neste clone")
-    return publico.eventos_corporativos(emissores, desde, ate, offline=True, as_of=as_of)
+    return publico.eventos_corporativos(emissores, desde, ate, offline=True, as_of=as_of,
+                                       root=root)
 
 
 def resultados_desde_o_modelo(vigentes: dict[str, dict[str, Any]], ate: date, hoje: date,
@@ -606,14 +611,15 @@ def coverage_status(rt: Runtime, local: datetime, *, fonte_eventos: FonteEventos
         datas = []
     from ..cobertura.parametros import carregar_parametros
     from ..cobertura.temporal import ativo as temporal_ativo
-    temporal = temporal_ativo(carregar_parametros())
+    temporal = temporal_ativo(rt.leitura_parametros if rt.somente_leitura
+                             else carregar_parametros())
     bases_precos = {}
     if temporal:
         from ..cobertura.livro import CortePosterior, conferir_corte, snapshot
         validas = []
         for data in datas:
             arquivo = book / "cobertura" / data.isoformat() / "manifest.json"
-            man = json.loads(arquivo.read_text())
+            man = json.loads(ler_texto(arquivo))
             if man.get("corte_temporal") is not None:
                 try:
                     conferir_corte(snapshot(book, data), local)
@@ -686,7 +692,8 @@ def coverage_status(rt: Runtime, local: datetime, *, fonte_eventos: FonteEventos
     # --------------------------------------------------- 2. rotina diária: o retrato desta noite
     noite = ultimo_pregao_encerrado(rt, local)
     out["pregao_de_referencia"] = noite
-    macro = eventos_macro if eventos_macro is not None else carregar_eventos_macro()
+    macro = (eventos_macro if eventos_macro is not None else rt.leitura_eventos_macro
+             if rt.somente_leitura else carregar_eventos_macro())
     if macro.get("erro"):
         out["macro_erro"] = macro["erro"]
     mac_pend: list[dict[str, Any]] = []
@@ -710,6 +717,13 @@ def coverage_status(rt: Runtime, local: datetime, *, fonte_eventos: FonteEventos
         res = {"pendentes": [], "recentes": [], "falha": None,
                "motivo": "DADOS SIMULADOS: sem calendário público de resultados", "fontes": []}
     elif noite is not None and vigentes:
+        if rt.somente_leitura:
+            if fonte_eventos is not None or rt.leitura_publico_root is None:
+                raise ValueError("Agenda readonly exige raiz pública própria sem callback")
+            def fonte_recebida(emissores, desde, ate, as_of):
+                return _fonte_eventos_publica(emissores, desde, ate, as_of,
+                                             raiz=rt.leitura_publico_root)
+            fonte_eventos = fonte_recebida
         res = resultados_desde_o_modelo(vigentes, noite, today, tz, fonte_eventos)
     else:
         res = {"pendentes": [], "recentes": [], "falha": None, "fontes": []}
@@ -864,7 +878,9 @@ def agenda(rt: Runtime, now: datetime | None = None) -> dict[str, Any]:
     tz = ZoneInfo(cfg.fund.timezone)
     moment = now if now is not None else rt.now()
     local = moment.astimezone(tz)
-    pc = datetime.now().astimezone()
+    pc = rt.leitura_pc if rt.somente_leitura else datetime.now().astimezone()
+    if rt.somente_leitura and pc is None:
+        raise ValueError("Agenda readonly exige observação explícita do PC")
     pc_off = pc.utcoffset() or timedelta(0)
     brt_off = pc.astimezone(tz).utcoffset() or timedelta(0)
     from .reinicio import situacao

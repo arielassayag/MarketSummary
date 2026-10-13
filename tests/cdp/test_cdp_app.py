@@ -143,9 +143,22 @@ def build_fixture_book(root: Path) -> SimpleNamespace:
     pfb = pm_factbook(pmctx)
     bundle = to_bundle(out, cfg, 0.0, factbook=pfb)
     outcome = run_weekly_decision(ctx, pack, bundle, version=book.next_version(W1))
-    # Carimbos fixos (fixture determinística): proposta antes da decisão, decisão antes do prazo.
-    final = outcome.final.model_copy(update={"created_at": T_CREATED})
-    shadow = outcome.shadow_quant.model_copy(update={"created_at": T_CREATED})
+    # Corpus criado hoje, formato pre-NET, sem PIT: DADOS SIMULADOS.
+    # A cópia nasce antes da primeira aprovação persistida do novo corpus.
+    # A fixture só recebe fatos encerrados; não autoriza escritor prospectivo.
+    from cdp.workflow.net_moc import PROPOSAL_KEY as NET_KEY
+
+    def historical_proposal(proposal):
+        assert cfg.execution is None and proposal.is_synthetic
+        original = proposal.model_dump_json()
+        metadata = dict(proposal.overrides)
+        metadata.pop(NET_KEY, None)
+        result = proposal.model_copy(update={"created_at": T_CREATED, "overrides": metadata})
+        assert proposal.model_dump_json() == original
+        return result
+
+    final = historical_proposal(outcome.final)
+    shadow = historical_proposal(outcome.shadow_quant)
     book.save_research_pack(pack, actor=MIND)
     book.save_proposal(final)
     shadow_path = week_dir / "shadow_quant.json"
@@ -174,7 +187,12 @@ def build_fixture_book(root: Path) -> SimpleNamespace:
     history: list[DailyRecord] = []
     for i, d in enumerate(SESSIONS):
         pending = PendingExecution(final, decision, shadow) if i == 0 else None
-        rec = runner.run_session(d, pending=pending).record
+        if pending is not None:
+            from historico_simulado import historical_session
+
+            rec = historical_session(runner, d, pending).record
+        else:
+            rec = runner.run_session(d).record
         fbd = build_daily_factbook(rec, history, cfg=cfg)
         ddir = reports / "daily" / d.isoformat()
         ddir.mkdir(parents=True, exist_ok=True)

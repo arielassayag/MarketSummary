@@ -1,0 +1,17 @@
+{
+  "schema": "cdp.tecnicas.exemplo/v1",
+  "papel": "EXEMPLO",
+  "nome": "latam_simulado_v1",
+  "aviso": "DADOS SIMULADOS",
+  "membros": {
+    "fund.yaml": "e23c58d98ae3d1d3716c019b379b54f0d667050cd79eaf6e398c71006b1b6380",
+    "valuation.yaml": "119c11da3ac0237a76140fb3eedd61dc5181b95ca313d8a0ac5e9bda8a1114b6",
+    "nomes.yaml": "cd4bdf2b86f34a1719c17d2dd653aad456bc69de630f552b20e9f862dbd1e61b",
+    "universo.csv": "fffa21d08e3acfa556f5dd7ba01407dedbf125b172bc13a00a3eeb30511eb49c",
+    "cobertura/arquetipos.csv": "7d2cd785a4e8fce5640873ccf14b657bda0743ed988b1e3670a3a5130cc014bf",
+    "cobertura/betas_setor.csv": "1e47c8b435cb6fd8e0f212a5f2d6f3a1914aca27068552b53d3c9f89de9ac663",
+    "cobertura/unidades.csv": "b46e1e144f0893e7a970281bbd32614feed87d2edce17891a8dfbbd1bc6d02e2",
+    "cobertura/sotp.yaml": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356",
+    "cobertura/etfs.yaml": "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356"
+  }
+}

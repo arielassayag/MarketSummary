@@ -16,10 +16,11 @@ from zoneinfo import ZoneInfo
 import numpy as np
 import pandas as pd
 import pytest
+from demo_historica import run_historical_demo as run_demo
 
 from cdp.config import load_config
 from cdp.workflow.agenda import agenda, pending_closes, validate_daily_commentary
-from cdp.workflow.demo import DEMO_HISTORY_START, DEMO_SEED, DemoStore, run_demo
+from cdp.workflow.demo import DEMO_HISTORY_START, DEMO_SEED, DemoStore
 from cdp.workflow.risk_monitor import (
     KILL_SWITCH_PREFIX,
     drawdown_stage,

@@ -20,6 +20,7 @@ from .publico_contexto_documental import (
     _instante,
     contexto_documental,
     dependencia,
+    periodo_civil_nativo,
 )
 from .publico_supervielle_documento import POLICY, decimal_lexeme, extrair_doc
 
@@ -259,7 +260,7 @@ def validar_celula(ctx, row, roles, presente):
             )
     for k in ("period_start", "period_end"):
         if k in row and row[k] is not None:
-            native = row[k].date().isoformat() if hasattr(row[k], "date") else str(row[k])
+            native = periodo_civil_nativo(row[k])
             _exigir(native == cell[k], "Período nativo contradiz célula documental")
     for k in ("value", "valor"):
         if k in row:

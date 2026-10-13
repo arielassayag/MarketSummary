@@ -60,6 +60,10 @@ def sha256_obj(obj: Any) -> str:
 
 
 def sha256_file(path: str | Path) -> str:
+    from .leitura_arquivos import em_leitura, ler_bytes
+
+    if em_leitura():
+        return hashlib.sha256(ler_bytes(path)).hexdigest()
     h = hashlib.sha256()
     with open(path, "rb") as f:
         while chunk := f.read(1 << 16):

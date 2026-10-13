@@ -16,6 +16,8 @@ import yaml
 
 from cdp import executor as ex
 from cdp.rotinas import carregar
+from cdp.workflow.book import GENESIS_FILE
+from cdp.workflow.origem import ECONOMIC_FILE
 
 ROOT = Path(__file__).resolve().parents[2]
 ROT = carregar(ROOT / "configs" / "cdp" / "rotinas.yaml")
@@ -276,7 +278,7 @@ def test_publish_commits_only_task_paths_with_trailers_and_pushes_main(repos, mo
                                                                             "--porcelain")
     pushes = [c for c in chamadas if c and c[0] == "push"]
     assert pushes and all("--force" not in c and "-f" not in c for c in pushes)
-    assert any(c[-1] == "HEAD:refs/heads/main" for c in pushes)
+    assert any(c[-1] == out["commit"] + ":refs/heads/main" for c in pushes)
     code, out = ex.publicar(a, DIARIO, "CDP: de novo", rt=_RT(), env=ENV_PC, trava=trava)
     assert code == ex.OK and out["motivo"] == "nada a publicar"
 
@@ -431,6 +433,34 @@ def _gate(repo: Path, tarefa, exec_id: str, trava: str | None = None) -> None:
         "tarefa": tarefa.id, "inicio": "2026-10-09T13:30:00-03:00", "trava": trava,
         "instantaneo": ex.estado_dos_caminhos(repo, (*tarefa.caminhos,
                                                      *tarefa.caminhos_exclusivos))})
+
+
+@pytest.mark.parametrize("tarefa", [SEMANAL, DIARIO])
+def test_net_outputs_entram_no_delta_canonico_com_trava(repos, monkeypatch, tarefa):
+    """A classificação canônica inclui a prova inteira; o teste intercepta antes do commit."""
+    _, a, _ = repos
+    paths = ["book/net_config/" + "a"*64 + ".json", f"book/{GENESIS_FILE}",
+             f"book/{ECONOMIC_FILE}"]
+    paths.extend(f"book/net_moc/v1/{side}/2026-11-13/2026-11-13/{name}.json"
+                 for side in ("main", "shadow") for name in ("base", "candidate", "binding"))
+    _gate(a, tarefa, "net-outputs", "trava-net")
+    for name in paths:
+        p = a / name
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text('{"aviso":"DADOS SIMULADOS"}\n')
+    captured = {}
+    monkeypatch.setattr(ex, "_confirmar_trava", lambda *a, **k: {"estado": "renovada"})
+
+    def before_commit(*args, **kwargs):
+        captured.update(kwargs)
+        return ex.OK, args[3]
+
+    monkeypatch.setattr(ex, "_publicar_delta", before_commit)
+    code, output = ex.publicar(a, tarefa, "CDP: prova NET simulada", rt=_RT(), env=ENV_PC,
+                               execucao="net-outputs", trava="trava-net")
+    assert code == ex.OK and output["commit"] is None and not output["push"]
+    assert captured["delta"] == sorted(paths)
+    assert captured["exige"] and captured["trava_id"] == "trava-net"
 
 
 def test_publish_refuses_an_exclusive_writer_without_the_lock(repos):

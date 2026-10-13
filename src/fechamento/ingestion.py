@@ -14,11 +14,13 @@ from datetime import datetime
 from pathlib import Path
 
 from .contracts import (
+    ContextoTaxasBrasilAPI,
     InstrumentType,
     Manifest,
     NewsItem,
     Position,
     Quote,
+    TaxasRecebidas,
 )
 
 
@@ -31,6 +33,7 @@ class IngestionResult:
     excluded_news: list[tuple[NewsItem, str]] = field(default_factory=list)
     alerts: list[str] = field(default_factory=list)
     blocking_errors: list[str] = field(default_factory=list)
+    taxas_contexto: TaxasRecebidas | None = None
 
     @property
     def is_blocked(self) -> bool:
@@ -78,6 +81,33 @@ def load_and_validate_package(package_dir: str | Path) -> IngestionResult:
 
     if result.is_blocked:
         return result
+
+    # Contexto opcional: apenas bytes declarados e reconferidos; notícias não são sua origem.
+    sources = [entry for entry in manifest.files if entry.filename == "sources.json"]
+    if len(sources) > 1:
+        result.blocking_errors.append("sources.json duplicado no manifesto.")
+        return result
+    if sources:
+        entry = sources[0]
+        try:
+            if entry.path != "sources.json":
+                raise ValueError("Caminho do contexto deve ser sources.json.")
+            raw = (pdir / entry.path).read_bytes()
+            digest = hashlib.sha256(raw).hexdigest()
+            if digest != entry.sha256:
+                raise ValueError("Hash do contexto mudou durante a recepção.")
+            body = json.loads(raw)
+            if type(body) is not dict:
+                raise ValueError("sources.json deve ser objeto JSON.")
+            if body.get("taxas_contexto") is not None:
+                contexto = ContextoTaxasBrasilAPI.model_validate(body["taxas_contexto"])
+                if contexto.consultado_em > manifest.cutoff_time:
+                    result.alerts.append("Contexto de taxas excluído: consulta posterior ao corte; publicação e vigência não informadas.")
+                else:
+                    result.taxas_contexto = TaxasRecebidas(contexto, digest)
+        except Exception as exc:
+            result.blocking_errors.append(f"Contexto de taxas inválido: {exc}")
+            return result
 
     # 2. Ingestão e validação de Cotações (quotes.csv)
     quotes_path = pdir / "quotes.csv"
@@ -232,10 +262,10 @@ def load_and_validate_package(package_dir: str | Path) -> IngestionResult:
                     news_item = NewsItem.model_validate(item_raw)
 
                     # Verificar horário de corte (Cutoff Time)
-                    if manifest and news_item.published_at > manifest.cutoff_time:
+                    if manifest and news_item.evidence_time > manifest.cutoff_time:
                         result.excluded_news.append((
                             news_item,
-                            f"Publicada em {news_item.published_at.isoformat()}, posterior ao horário de corte {manifest.cutoff_time.isoformat()}"
+                            f"{news_item.time_label}: {news_item.evidence_time.isoformat()}, posterior ao horário de corte {manifest.cutoff_time.isoformat()}"
                         ))
                     else:
                         result.eligible_news.append(news_item)

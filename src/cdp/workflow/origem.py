@@ -11,6 +11,8 @@ from typing import TYPE_CHECKING, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
+from cdp.leitura_arquivos import ler_texto
+
 from ..hashing import sha256_file, sha256_obj
 
 if TYPE_CHECKING:
@@ -18,6 +20,7 @@ if TYPE_CHECKING:
 
 ORIGIN_FILE = "replay_origin.json"
 ORIGIN_EVENT = "REPLAY_ORIGIN"
+ECONOMIC_FILE = "replay_economic_genesis.json"
 SCHEMA = "cdp.replay.origin/v1"
 
 
@@ -55,8 +58,13 @@ def read_replay_origin(book: Book) -> ReplayOrigin | None:
         raise ValueError("Origem do replay ausente ou redirecionada.")
     if len(seals) != 1 or seals[0].seq != 0:
         raise ValueError("Origem do replay exige uma única âncora antes das operações.")
-    origin = ReplayOrigin.model_validate_json(path.read_text(encoding="utf-8"))
+    origin = ReplayOrigin.model_validate_json(ler_texto(path, encoding='utf-8'))
     payload = {"arquivo": ORIGIN_FILE, "sha256": sha256_file(path)}
+    monetary = book.root / ECONOMIC_FILE
+    if monetary.exists() or monetary.is_symlink():
+        if monetary.is_symlink() or not monetary.is_file():
+            raise ValueError("Gênese monetária do replay redirecionada/inválida.")
+        payload["economic_sha256"] = sha256_file(monetary)
     if seals[0].payload_hash != sha256_obj(payload):
         raise ValueError("Origem do replay diverge da âncora de auditoria.")
     if seals[0].ts != origin.actual_started_at:
@@ -77,12 +85,30 @@ def install_replay_origin(book: Book, origin: ReplayOrigin) -> ReplayOrigin:
     # A janela arquivo→evento pode ser retomada somente com bytes idênticos.
     text = dump_json(origin)
     if path.exists() or path.is_symlink():
-        if path.is_symlink() or path.read_text(encoding="utf-8") != text:
+        if path.is_symlink() or ler_texto(path, encoding='utf-8') != text:
             raise ValueError("Marca de origem preexistente diverge da execução.")
     else:
         _write_exclusive(path, text)
-    book.audit.append(ORIGIN_EVENT, "sistema", {"arquivo": ORIGIN_FILE,
-                      "sha256": sha256_file(path)},
+    payload = {"arquivo": ORIGIN_FILE, "sha256": sha256_file(path)}
+    if book.config is not None:
+        from .net_moc import archive_config, economic_genesis
+        from .track_record import TrackRecord
+
+        if (book.list_weeks() or TrackRecord(book.root / "track_record").records()
+                or TrackRecord(book.root / "track_record_shadow").records()):
+            raise ValueError("Gênese monetária exige ensaio realmente vazio.")
+        archive_config(book.root, book.config)
+        money = {**economic_genesis(book.config), "config_hash": book.config.config_hash(),
+                 "inception_date": str(book.config.fund.inception_date)}
+        monetary = book.root / ECONOMIC_FILE
+        money_raw = dump_json(money)
+        if monetary.exists():
+            if monetary.is_symlink() or ler_texto(monetary) != money_raw:
+                raise ValueError("Gênese monetária preexistente diverge do ensaio.")
+        else:
+            _write_exclusive(monetary, money_raw)
+        payload["economic_sha256"] = sha256_file(monetary)
+    book.audit.append(ORIGIN_EVENT, "sistema", payload,
                       summary="Ensaio retrospectivo; fora do IC prospectivo.",
                       ts=origin.actual_started_at)
     return read_replay_origin(book)

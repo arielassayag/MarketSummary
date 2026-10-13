@@ -39,6 +39,8 @@ from pydantic import (
     model_validator,
 )
 
+from cdp.leitura_arquivos import ler_texto
+
 from .hashing import sha256_obj
 
 DEFAULT_CONFIG_PATH = Path("configs/cdp/fund.yaml")
@@ -594,12 +596,19 @@ class FundConfig(_Frozen):
         return FundConfig.model_validate(base)
 
 
+def config_from_text(texto: str) -> FundConfig:
+    """Mesmo schema do mandato nativo, a partir de um corpo declarado pelo chamador."""
+    raw = yaml.safe_load(texto) or {}
+    return FundConfig.model_validate(raw)
+
+
 def load_config(path: str | Path | None = None) -> FundConfig:
-    p = Path(path) if path else DEFAULT_CONFIG_PATH
+    if path == "":
+        raise ValueError("Caminho de configuração explícito vazio")
+    p = DEFAULT_CONFIG_PATH if path is None else Path(path)
     if not p.exists():
         raise FileNotFoundError(f"Arquivo de configuração não encontrado: {p}")
-    raw = yaml.safe_load(p.read_text(encoding="utf-8")) or {}
-    return FundConfig.model_validate(raw)
+    return config_from_text(ler_texto(p, encoding='utf-8'))
 
 
 # ----------------------------------------------------------------------------- arquivo
@@ -633,7 +642,7 @@ def load_archived_config(path: str | Path, config_hash: str) -> ConfigDecisao | 
     if not _HASH_RE.fullmatch(config_hash or ""):
         return None
     try:
-        raw = json.loads(p.read_text(encoding="utf-8"))
+        raw = json.loads(ler_texto(p, encoding='utf-8'))
     except (OSError, ValueError):
         return None
     if not isinstance(raw, dict) or sha256_obj(raw) != config_hash:

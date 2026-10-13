@@ -52,6 +52,8 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 from pydantic import BaseModel
 
+from cdp.leitura_arquivos import em_leitura, ler_texto, recusar_escrita, validar_modo
+
 from .. import SIMULATED_DATA_NOTICE
 from ..audit import GENESIS_HASH, AuditLog
 from ..config import FundConfig
@@ -95,7 +97,7 @@ LAPSE_EVENT = "BOOKING_LAPSED"
 """Evento da trilha: a efetivação foi recusada no leilão do dia de montagem e a decisão caducou."""
 REGRA_CADUCIDADE = (
     "A decisão vale só para o leilão de fechamento do seu dia de montagem. Efetivação recusada "
-    "nesse leilão pelo kill switch é registrada no próprio dia e a decisão caduca: nunca é "
+    "nesse leilão é registrada no próprio dia e a decisão caduca: nunca é "
     "efetivada depois (sem efetivação retroativa); o fundo segue com a carteira vigente (em "
     "caixa, se for a carteira inaugural) e a próxima data de montagem decide de novo.")
 _RESEARCH_EVENTS = ("RESEARCH_SAVED", "RESEARCH_SELECTED")
@@ -132,6 +134,7 @@ def _tmp_in(directory: Path, text: str) -> Path:
 
 def _write_exclusive(path: Path, text: str) -> None:
     """Cria ``path`` atomicamente; ``FileExistsError`` se já existir (nunca sobrescreve)."""
+    recusar_escrita()
     path.parent.mkdir(parents=True, exist_ok=True)
     if path.exists():
         raise FileExistsError(f"Arquivo imutável já existe: {path}")
@@ -150,6 +153,7 @@ def _write_exclusive(path: Path, text: str) -> None:
 
 def _write_replace(path: Path, text: str) -> None:
     """Grava (ou regrava) ``path`` atomicamente — apenas para ponteiros e derivados."""
+    recusar_escrita()
     path.parent.mkdir(parents=True, exist_ok=True)
     tmp = _tmp_in(path.parent, text)
     try:
@@ -159,7 +163,7 @@ def _write_replace(path: Path, text: str) -> None:
 
 
 def _read_json(path: Path) -> dict:
-    return json.loads(path.read_text(encoding="utf-8"))
+    return json.loads(ler_texto(path, encoding='utf-8'))
 
 
 def _models_csv(models: list[BaseModel], model_cls: type[BaseModel], notice: str) -> str:
@@ -352,13 +356,17 @@ class Book:
     """
 
     def __init__(self, root: Path | str = "book", config: FundConfig | None = None,
-                 mercado: Callable[[date], Any] | None = None) -> None:
+                 mercado: Callable[[date], Any] | None = None, *, market_store=None,
+                 somente_leitura: bool = False) -> None:
+        self.somente_leitura = validar_modo(somente_leitura)
         self.root = Path(root)
         self.config = config
+        self.market_store = market_store
         self.mercado = mercado
-        self.root.mkdir(parents=True, exist_ok=True)
-        self.audit = AuditLog(self.root / "audit_log.jsonl")
-        self.ledger = Ledger(self.root / "ledger.csv")
+        if not em_leitura(self.somente_leitura):
+            self.root.mkdir(parents=True, exist_ok=True)
+        self.audit = AuditLog(self.root / "audit_log.jsonl", somente_leitura=self.somente_leitura)
+        self.ledger = Ledger(self.root / "ledger.csv", somente_leitura=self.somente_leitura)
 
     # ---------------------------------------------- semanas
     def week_dir(self, week: date) -> Path:
@@ -397,6 +405,7 @@ class Book:
 
     def save_research_pack(self, pack: ResearchPack, actor: str | None = None) -> Path:
         """Grava o pacote (imutável por hash) e aponta ``research_pack.json`` para ele."""
+        recusar_escrita(self.somente_leitura)
         self.check_key(pack.week)
         h = pack.research_hash()
         path = self._research_file(pack.week, h)
@@ -466,6 +475,7 @@ class Book:
         Os derivados (memo e CSVs) de propostas com dados sintéticos sempre carregam o aviso
         "DADOS SIMULADOS", inclusive quando o memo vem pronto em ``memo_markdown``.
         """
+        recusar_escrita(self.somente_leitura)
         week, k = proposal.week, proposal.version
         self.check_key(week)
         path = self._proposal_path(week, k)
@@ -519,6 +529,9 @@ class Book:
         if not path.exists():
             return None
         proposal = Proposal.model_validate(_read_json(path))
+        from .net_moc import descriptor
+
+        descriptor(proposal)  # ausência literal conserva leitura histórica; presença é tipada
         if proposal.version != version or proposal.week != week:
             raise ValueError(f"{path.name} inconsistente com o local (versão/semana divergentes).")
         return proposal
@@ -572,6 +585,7 @@ class Book:
         determinísticos substituem a co-assinatura. Audita ``DECISION_<tipo>`` com a decisão
         completa como payload.
         """
+        recusar_escrita(self.somente_leitura)
         week = decision.week
         proposal = self._find_proposal(week, decision.proposal_id)
         k = proposal.version
@@ -704,6 +718,21 @@ class Book:
             raise ValueError(f"Trilha de auditoria comprometida ({msg}); booking recusado.")
         events, index = self._audit_state()
         problems = self._week_problems(week, events, index)
+        orphan = f"{week}: booking não confere com a trilha de auditoria."
+        if orphan in problems:
+            from .net_moc import compose
+            from .net_moc_prova import recover, validate_booking
+
+            sealed = recover(self.root, week)
+            if sealed is not None and sealed.state == "booked_pending_event" and sealed.entry == entry:
+                candidate = compose(self, entry)
+                try:
+                    validate_booking(candidate)
+                finally:
+                    candidate.sources.close()
+                # Único estado intermediário admitido: os bytes e a origem inteiros já
+                # preparados, com arquivo BOOKED idêntico e só seu evento ainda ausente.
+                problems.remove(orphan)
         if problems:
             raise ValueError("Integridade da semana comprometida; booking recusado: "
                              + " ".join(problems))
@@ -744,7 +773,23 @@ class Book:
             if bad:
                 raise ValueError(f"{KILL_SWITCH_FILE} ativo: apenas reduções de posições já "
                                  f"efetivadas são permitidas; novas/aumentadas: {bad}.")
+        from .net_moc import compose
+
+        candidate = compose(self, entry)
+        try:
+            candidate.sources.recheck()
+        finally:
+            candidate.sources.close()
         return k
+
+    def _registrar_booking_recusado(self, week: date, proposal_id: str,
+                                    approval_hash: str, motivo: str, actor: str) -> None:
+        """Evento padronizado de recusa; chamado somente por coordenadores escritores."""
+        recusar_escrita(self.somente_leitura)
+        self.audit.append(
+            "BOOKING_REFUSED", actor,
+            {"proposal_id": proposal_id, "approval_hash": approval_hash, "reason": motivo},
+            summary=f"Booking recusado ({proposal_id}): {motivo[:300]}", week=week)
 
     def save_booked(self, entry: BookEntry, snapshot_hash_now: str, config_hash_now: str,
                     research_hash_now: str, actor: str = SYSTEM_ACTOR) -> Path:
@@ -752,6 +797,7 @@ class Book:
 
         Toda recusa por validação gera o evento ``BOOKING_REFUSED`` na trilha (§6.2).
         """
+        recusar_escrita(self.somente_leitura)
         week = entry.week
         path = self.week_dir(week) / _BOOKED
         if path.exists():
@@ -760,12 +806,20 @@ class Book:
             k = self._validate_booking(entry, snapshot_hash_now, config_hash_now,
                                        research_hash_now)
         except ValueError as exc:
-            self.audit.append(
-                "BOOKING_REFUSED", actor,
-                {"proposal_id": entry.proposal_id, "approval_hash": entry.approval_hash,
-                 "reason": str(exc)},
-                summary=f"Booking recusado ({entry.proposal_id}): {str(exc)[:300]}", week=week)
+            self._registrar_booking_recusado(
+                week, entry.proposal_id, entry.approval_hash, str(exc), actor)
             raise
+        from .net_moc import compose
+        from .net_moc_prova import prepare
+
+        candidate = compose(self, entry)
+        try:
+            prepare(candidate)
+            candidate.sources.recheck()
+            # Repetir as guardas de versão, kill e aprovação após a preparação.
+            self._validate_booking(entry, snapshot_hash_now, config_hash_now, research_hash_now)
+        finally:
+            candidate.sources.close()
         _write_exclusive(path, dump_json(entry))
         self.audit.append(
             "BOOKED", actor, entry,
@@ -774,14 +828,42 @@ class Book:
             week=week)
         return path
 
+    def recover_booking(self, week: date) -> None:
+        """Completa somente o evento de um BOOKED literal previamente preparado."""
+        recusar_escrita(self.somente_leitura)
+        from .net_moc import receive_config
+        from .net_moc_prova import recover
+
+        sealed = recover(self.root, week)
+        if sealed is None or sealed.state != "booked_pending_event":
+            return
+        proposal = self._find_proposal(week, sealed.entry.proposal_id)
+        decision = self.load_decision(week, proposal.version)
+        if decision is None or self.config is None:
+            raise ValueError("retomada NET sem decisão/configuração própria")
+        own_cfg, _ = receive_config(self.root, proposal)
+        valid, reasons = verify_decision(decision, proposal, proposal.snapshot_hash,
+                                         own_cfg.config_hash(), decision.research_hash)
+        events, index = self._audit_state()
+        problems = self._week_problems(week, events, index)
+        orphan = f"{week}: booking não confere com a trilha de auditoria."
+        if not valid or problems != [orphan]:
+            raise ValueError("retomada factual NET recusada: " + "; ".join([*reasons, *problems]))
+        # O arquivo já existe e a prova reteve todos os corpos e origens antes
+        # dele. Fecha só o evento factual; não dimensiona ordens ou NAV novamente.
+        self.audit.append("BOOKED", SYSTEM_ACTOR, sealed.entry,
+                          summary="Retomada do evento da efetivação NET previamente preparada.",
+                          week=week)
+
     def registrar_efetivacao_recusada(self, week: date, sessao: date, motivo: str,
                                       proposal_id: str, approval_hash: str,
                                       actor: str = SYSTEM_ACTOR) -> dict[str, Any]:
         """Registra que a decisão da semana CADUCOU: a efetivação foi recusada no leilão de
-        fechamento do dia de montagem (ex.: kill switch ligado). Regra (``REGRA_CADUCIDADE``): a
+        fechamento do dia de montagem (ex.: kill switch ligado ou recusa NET). Regra (``REGRA_CADUCIDADE``): a
         ordem vale só para aquele leilão; não há efetivação retroativa e a próxima data de
         montagem decide de novo. Arquivo imutável ``<semana>/efetivacao_recusada.json`` e evento
         ``BOOKING_LAPSED`` na trilha; idempotente (a primeira recusa vale)."""
+        recusar_escrita(self.somente_leitura)
         atual = self.efetivacao_recusada(week)
         if atual is not None:
             return atual
@@ -847,6 +929,7 @@ class Book:
     def record_ledger(self, rows: list[LedgerRow], actor: str = SYSTEM_ACTOR,
                       week: date | None = None) -> int:
         """Anexa linhas de MTM ao ledger e registra o evento ``LEDGER_APPENDED``."""
+        recusar_escrita(self.somente_leitura)
         rows = list(rows)
         n = self.ledger.append(rows)
         if n:

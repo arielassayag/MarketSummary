@@ -8,11 +8,10 @@ fórmula e rastreabilidade aos dados de entrada.
 from __future__ import annotations
 
 import hashlib
-import re
 import unicodedata
 from dataclasses import dataclass, field
 
-from .contracts import Fact, FactBook, Manifest, NewsItem, Unit
+from .contracts import Fact, FactBook, Manifest, NewsItem, TaxasRecebidas, Unit
 from .metrics import CalculatedMetrics
 
 
@@ -47,6 +46,8 @@ def build_factbook(
     metrics: CalculatedMetrics,
     manifest: Manifest,
     eligible_news: list[NewsItem] | None = None,
+    *,
+    taxas_contexto: TaxasRecebidas | None = None,
 ) -> FactBook:
     """Constrói o FactBook estruturado com identificadores determinísticos."""
     facts: dict[str, Fact] = {}
@@ -85,47 +86,25 @@ def build_factbook(
         input_refs=["quotes.csv:USD/BRL"],
     )
 
-    # Extrai taxas oficiais se presentes nas notícias (BrasilAPI)
-    if eligible_news:
-        for n in eligible_news:
-            combined = f"{n.title} {n.body}"
-            if "Selic" in combined and "macro.selic.rate" not in facts:
-                selic_m = re.search(r"Selic\s+(?:em|a)\s+([\d,\.]+)%", combined, re.IGNORECASE)
-                if selic_m:
-                    val_str = selic_m.group(1).replace(",", ".")
-                    try:
-                        v_fl = float(val_str) / 100.0
-                        facts["macro.selic.rate"] = Fact(
-                            fact_id="macro.selic.rate",
-                            name="Taxa Selic oficial (ao ano)",
-                            value=v_fl,
-                            formatted_value=f"{float(val_str):.2f}%",
-                            unit=Unit.PCT,
-                            period="anual",
-                            formula="Taxa Meta Selic Anual",
-                            input_refs=[f"news:{n.news_id}"],
-                        )
-                    except Exception:
-                        pass
-
-            if "CDI" in combined and "macro.cdi.rate" not in facts:
-                cdi_m = re.search(r"CDI\s+(?:em|a)\s+([\d,\.]+)%", combined, re.IGNORECASE)
-                if cdi_m:
-                    val_str = cdi_m.group(1).replace(",", ".")
-                    try:
-                        v_fl = float(val_str) / 100.0
-                        facts["macro.cdi.rate"] = Fact(
-                            fact_id="macro.cdi.rate",
-                            name="Taxa CDI oficial (ao ano)",
-                            value=v_fl,
-                            formatted_value=f"{float(val_str):.2f}%",
-                            unit=Unit.PCT,
-                            period="anual",
-                            formula="Taxa CDI Anual",
-                            input_refs=[f"news:{n.news_id}"],
-                        )
-                    except Exception:
-                        pass
+    # Somente contexto estruturado ligado ao arquivo recebido; manchetes são não confiáveis.
+    if taxas_contexto is not None:
+        if type(taxas_contexto) is not TaxasRecebidas:
+            raise TypeError("Contexto de taxas deve ser recebido pela ingestão nativa.")
+        contexto = taxas_contexto.contexto
+        if contexto.consultado_em > manifest.cutoff_time:
+            raise ValueError("Consulta das taxas posterior ao corte.")
+        for nome, valor in contexto.taxas().items():
+            fact_id = f"macro.{nome.lower()}.rate"
+            facts[fact_id] = Fact(
+                fact_id=fact_id,
+                name=f"Taxa {nome} informada pela BrasilAPI (ao ano; vigência não informada)",
+                value=valor / 100.0,
+                formatted_value=f"{valor:.2f}%",
+                unit=Unit.PCT,
+                period="anual",
+                formula="Taxa Meta Selic Anual" if nome == "SELIC" else "Taxa CDI Anual",
+                input_refs=[f"sources.json@sha256:{taxas_contexto.arquivo_sha256}", contexto.endpoint],
+            )
 
     # 2. Fatos da Carteira Fictícia
     facts["portfolio.return_pct"] = Fact(
@@ -223,9 +202,11 @@ def organize_evidence(
     manifest: Manifest,
     eligible_news: list[NewsItem],
     excluded_news: list[tuple[NewsItem, str]],
+    *,
+    taxas_contexto: TaxasRecebidas | None = None,
 ) -> EvidencePackage:
     """Organiza o FactBook e mapeia as notícias elegíveis aos tickers da carteira."""
-    factbook = build_factbook(metrics, manifest, eligible_news)
+    factbook = build_factbook(metrics, manifest, eligible_news, taxas_contexto=taxas_contexto)
 
     news_by_ticker: dict[str, list[NewsItem]] = {}
     for item in eligible_news:

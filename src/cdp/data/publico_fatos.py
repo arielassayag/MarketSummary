@@ -174,6 +174,8 @@ def _meta(row) -> dict:
         out['data_publicacao'] = getattr(row, 'data_publicacao_primaria', None)
         out.update({k: getattr(row, k, None) for k in METADADOS_OBSERVADOS})
         out['received_date'] = getattr(row, 'received_date_original', row.received_date)
+    from .recepcao_bancaria import CAMPOS as CAMPOS_RECEPCAO
+    out.update({k: getattr(row, k) for k in CAMPOS_RECEPCAO if k in row._fields})
     out.update(dimensoes(row._asdict()))
     out.update(contexto_documental(row._asdict()))
     if 'semantica_capital' in row._fields and _texto(getattr(row, 'semantica_capital', None)) is not None:
@@ -300,6 +302,8 @@ def selecionar_pit(fatos: pd.DataFrame, as_of: date, *, conhecimento_ate: dateti
         out["nota"] = None
     out["value"] = out["value"].astype(float) + 0.0  # -0.0 ⇒ 0.0
     extras = [k for k in METADADOS_OBSERVADOS if k in out] if observed.any() else []
+    from .recepcao_bancaria import CAMPOS as CAMPOS_RECEPCAO
+    extras += [k for k in CAMPOS_RECEPCAO if k in out]
     extras += [k for k in (*CAMPOS, *CAMPOS_CONTEXTO) if k in out]
     extras += ['semantica_capital'] if 'semantica_capital' in out else []
     out = (out[SAIDA_COLUNAS + extras]

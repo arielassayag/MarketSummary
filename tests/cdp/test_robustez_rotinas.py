@@ -262,12 +262,63 @@ def _decidida_com_kill_switch(rt, clock):
 
 
 def test_kill_switch_at_the_inaugural_close_records_the_refusal_and_the_decision_lapses(
-        market, tmp_path):
+        market, tmp_path, monkeypatch):
     """Regra de caducidade: a ordem vale só para o leilão do dia de montagem. Recusada pelo kill
     switch, o dia é registrado ("efetivação recusada", fundo em caixa) e a decisão nunca é
     efetivada depois — nem quando um humano desliga o kill switch."""
-    from cdp.workflow.book import LAPSE_EVENT
+    import inspect
 
+    import cdp.workflow.weekly as weekly_mod
+    from cdp.workflow.book import LAPSE_EVENT
+    from cdp.workflow.leitura_serializacao import bytes_resultado, serializar_valor
+
+    original_build_positions = weekly_mod.build_positions
+
+    def registrar_argumentos_na_recusa(*args, **kwargs):
+        try:
+            return original_build_positions(*args, **kwargs)
+        except ValueError as original_error:
+            # Apenas recebe operandos já produzidos; não recalcula nem muda a chamada.
+            caller = None
+            try:
+                caller = inspect.currentframe().f_back
+                assert caller.f_code is weekly_mod.build_proposal.__code__
+                bound = inspect.signature(original_build_positions).bind(*args, **kwargs)
+                result = caller.f_locals["result"]
+                payload = {
+                    "aviso": "DADOS SIMULADOS — diagnóstico, sem ajuste de limites/solver",
+                    "erro_original": str(original_error),
+                    "produtor": {
+                        "modulo": original_build_positions.__module__,
+                        "nome": original_build_positions.__qualname__,
+                        "arquivo": original_build_positions.__code__.co_filename,
+                    },
+                    "argumentos_passados": {
+                        name: serializar_valor(value)
+                        for name, value in bound.arguments.items()
+                    },
+                    "constraints": serializar_valor(caller.f_locals["constraints"]),
+                    "constraint_info": serializar_valor(caller.f_locals["cinfo"]),
+                    "optimizer_weights": serializar_valor(result.weights),
+                    "optimizer_diagnostics": serializar_valor(result.diagnostics),
+                    "optimizer_relaxations": serializar_valor(result.relaxations),
+                    "optimizer_formulacao": serializar_valor(result.formulacao),
+                    "metodologia_ativa": caller.f_locals["extended"],
+                    "config_hash": caller.f_locals["cfg"].config_hash(),
+                }
+                body = bytes_resultado(payload)
+                with (tmp_path / "BUILD_POSITIONS_RECUSA_NATIVE.json").open("xb") as target:
+                    target.write(body)
+                print("BUILD_POSITIONS_RECUSA_NATIVE_JSON=" + body.decode("utf-8"), flush=True)
+            except Exception as capture_error:
+                print("BUILD_POSITIONS_CAPTURA_FALHOU=" + json.dumps({
+                    "tipo": type(capture_error).__name__, "mensagem": str(capture_error),
+                }, ensure_ascii=False), flush=True)
+            finally:
+                del caller
+            raise  # mesma exceção nativa; nenhum fallback ou aprovação por captura
+
+    monkeypatch.setattr(weekly_mod, "build_positions", registrar_argumentos_na_recusa)
     rt, clock = _rt(tmp_path, market)
     _decidida_com_kill_switch(rt, clock)
     clock.set(WEEK, dtime(19, 30))

@@ -1,0 +1,20 @@
+{
+  "mind": "codex",
+  "headline": "DADOS SIMULADOS — CDP avança {{fact:day.ret}}; lado vendido sustenta o resultado",
+  "paragraphs": [
+    "DADOS SIMULADOS — carteira simulada com preços reais e execução hipotética. No fechamento de 13/10/2026, o CDP apresentou retorno de {{fact:day.ret}} e P&L de {{fact:day.pnl_usd}}, encerrando com NAV de {{fact:nav}}. Desde o início do mandato, o retorno acumulado é de {{fact:itd.ret}}.",
+    "O lado vendido contribuiu {{fact:attr.short}}, enquanto o comprado respondeu por {{fact:attr.long}}. Na decomposição estimada, a parcela específica respondeu por {{fact:attr.specific}} e a fatorial por {{fact:attr.factor}}; essa separação não constitui evidência isolada de habilidade de seleção. Sanepar, Inter e Pátria foram os maiores contribuidores, com {{fact:top.contrib.1.contrib}}, {{fact:top.contrib.2.contrib}} e {{fact:top.contrib.3.contrib}}. Riachuelo, Tenda e Alpargatas foram os principais detratores, com {{fact:top.detract.1.contrib}}, {{fact:top.detract.2.contrib}} e {{fact:top.detract.3.contrib}}. O Brasil contribuiu {{fact:attr.country.BR}}; por setor, utilidades públicas respondeu por {{fact:attr.sector.Utilities}} e consumo discricionário por {{fact:attr.sector.Consumer_Discretionary}}.",
+    "A B3 retomou as atividades em 13/10/2026 após o feriado, conforme comunicado de 08/10/2026. O Ibovespa recuou {{fact:mkt.BVSP.ret_1d}} em moeda local. O contexto macro incluiu a divulgação do IPC argentino pelo INDEC em 13/10/2026 e antecede o CPI dos EUA previsto pelo BLS para 14/10/2026. Esses eventos não estabelecem, por si, causalidade para as contribuições da carteira.",
+    "Na base em dólar, o ETF regional ILF variou {{fact:mkt.ILF.ret_1d}}. Os futuros de petróleo WTI e de cobre variaram {{fact:mkt.CL_F.ret_1d}} e {{fact:mkt.HG_F.ret_1d}}, respectivamente. No câmbio, o real variou {{fact:fx.BRL.ret_1d}} e o peso mexicano {{fact:fx.MXN.ret_1d}} na convenção dólar por unidade de moeda local. As barras cambiais diárias utilizadas não correspondem ao fixing oficial.",
+    "A vol ex-ante ficou em {{fact:risk.ex_ante_vol}}, dentro da banda de {{fact:mandate.vol_band_min}} a {{fact:mandate.vol_band_max}}, com beta de {{fact:risk.beta}} e VaR de {{fact:risk.var_1d}}. A exposição bruta é de {{fact:risk.gross}}, e a líquida de {{fact:risk.net}} permanece fora do limite de neutralidade. Inter, Alpargatas e dLocal apresentam risco alto de squeeze nas posições vendidas. A janela eleitoral brasileira permanece ativa; defasagens no aluguel e limitações dos dados públicos exigem cautela na interpretação do risco e do resultado."
+  ],
+  "risk_flags": [
+    "Exposição líquida de {{fact:risk.net}} fora do limite de neutralidade indicado no relatório.",
+    "Risco alto de squeeze nas posições vendidas em Inter, Alpargatas e dLocal; total de {{fact:risk.squeeze_high_shorts}} shorts nessa condição.",
+    "Janela eleitoral brasileira ativa, com ajuste de risco nas exposições brasileiras.",
+    "Aluguel B3 sem publicação nova no intervalo indicado no relatório; notícias ausentes e desvios de paridade de ADR limitam a leitura dos insumos.",
+    "Fundamentos sem reconstrução histórica e universo sujeito a viés de sobrevivência; revisões anteriores de preços e volumes não aplicadas.",
+    "Câmbio diário de fonte pública não corresponde ao fixing oficial; atribuição fatorial estimada por regressão.",
+    "Alertas registrados no dia: {{fact:day.n_alerts}}."
+  ]
+}

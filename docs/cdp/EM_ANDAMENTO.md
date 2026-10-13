@@ -5,6 +5,74 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## Entrega integrada — 13/10/2026
+
+A consolidação foi integrada pelo PR #7 em `main`: commit
+`d613678e18545f76067c9d9172ab94ee9574789f`, árvore
+`e81be00c65862268ffad815512ba32ab82c4d3b2`, idêntica à cabeça qualificada
+`c77090b`. Os relatos de 12/10 abaixo são histórico preservado; suas menções a
+integração e CI pendentes não descrevem o estado desta entrega.
+
+A CI CDP da cabeça qualificada (`38327721173`) concluiu 6068 casos únicos:
+6051 aprovados e dezessete ignorados, sem falha ou erro. Os seis controles
+dirigidos foram aprovados em etapa separada e não são somados à suíte. A CI
+Fechamento (`38327721238`) recebeu 111 casos aprovados separadamente. Checkout,
+árvore, JUnit, logs e artefatos foram recebidos. O full local interrompido continua
+histórico; não foi convertido numa nova suíte integral Mac aprovada. O sucesso
+Linux final não explica a negativa anterior de SIM015 nem certifica portabilidade
+numérica universal. Os 276 corpos do pacote instalado em `ad0b03f` coincidem com
+`c77090b` e `d613678`; essa ponte física não é nova execução instalada.
+
+O Pages da integração (`38339851789`) concluiu montagem, publicação e conferência
+no ar. Seu artefato foi recebido por dois caminhos e conserva 241 narrativas
+publicadas: 233 empresas e oito ETFs. A navegação pública recebeu início, busca
+JHSF, comparáveis locais e regionais, tese e risco em computador e tela de
+390 × 844. A data no rodapé é ligada ao commit; não é a hora real do deploy.
+A primeira varredura HTTP foi interrompida por resposta 503 depois de 1580
+arquivos recebidos; sua negativa foi preservada. O sucessor com um worker
+concluiu: os 3675 arquivos declarados responderam HTTP 200 e coincidiram em
+tamanho e SHA com o artefato nativo. Manifestos públicos antes e depois foram
+literais ao recebido e mantiveram a origem `d613678` (recibo de 03:42 UTC).
+Essa identidade datada não atualiza preços nem certifica a qualidade de cada tese.
+
+O roteiro dos AI Notes foi exercitado numa cópia nova da fonte pública integrada,
+com ambiente próprio: instalação frozen, duas demonstrações de dois dias,
+construção e conferência de portal local terminaram com saída zero. Os resumos
+da demo coincidiram após normalização somente dos nomes das pastas. Cinco avisos
+do solucionador em cada demo ficaram preservados. Busca, comparáveis, tese e risco
+foram abertos no navegador local; o documento baixado coincidiu em bytes com o
+arquivo servido. A demo usa DADOS SIMULADOS; a cópia do portal lê o livro público
+baixado, com preços reais e execução hipotética. Não confundir essas bases.
+O servidor próprio foi encerrado depois da visita.
+
+As leituras dos exercícios #11/#13/#14 e os controles focais #15 (dois casos)
+e #17 (três casos) concluíram sem alterar os arquivos protegidos. Isso é um ensaio
+por agentes num Mac com Git, uv e aplicativo existentes: não houve participante
+humano iniciante, instalação num sistema virgem ou prova Windows. A fonte pública
+consultada mantém as limitações de data e PIT. No exercício #16, um agente novo, sem histórico ou memória, leu os arquivos
+físicos, reconheceu o que estava pronto e propôs o próximo passo correto. Essa
+prova de leitura e planejamento não equivale a um estudo com participante humano.
+A conferência final dos rascunhos recebeu o salvamento e a reabertura descritos
+abaixo.
+
+O #11 do Substack foi reescrito e agendado pelo humano; seu corpo e agendamento
+foram preservados. Há sete rascunhos #12–#18. As versões recebidas foram
+confrontadas integralmente, incluindo títulos, blocos, links e ênfases. As notas
+curtas do ensaio final em #12/#18 foram salvas e reabertas; todos os oito campos
+semânticos coincidiram em cada artigo. Os cinco rascunhos #13–#17 foram relidos
+integralmente e conservaram as versões recebidas. O objeto completo do #11
+continuou igual à leitura humana, com o SHA do HTML preservado. A lista final
+mostrou sete rascunhos e um agendado; as capturas foram examinadas. Nenhum post
+foi publicado ou agendado pelo agente.
+
+A operação mantém seu executor e gates; esta sessão não mudou a carteira nem
+repetiu as 85 teses. Integridade não remove os alertas NET e squeeze do retrato
+diário. Continuam sem prova nesta entrega: corte positivo de squeeze por MOC sob
+gate NET, atomicidade entre eventos e corrida após prepare; importação POSIX não
+certifica Windows nem transação multi-arquivo. UVtool/UVx da composição nova
+continuam preparados, sem nova execução. Não repetir merge, notas ou operação
+para suprir essas limitações de evidência.
+
 ## Consolidação do projeto — desenvolvimento em 12/10/2026
 
 Pedido humano: integrar o projeto e publicar, com revisão ROOT antes de main.

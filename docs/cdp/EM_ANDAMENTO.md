@@ -56,12 +56,16 @@ cliente; o ramo discover/adopt versus initialize não foi registrado. Isso quali
 esta instalação e o corpus DADOS SIMULADOS, sem autoridade financeira, PIT ou prova
 universal de ausência de rede. UVtool/UVx da nova composição permanecem apenas
 preparados; a qualificação histórica não é atribuída a esta fonte.
-A instalação recebida acima pertence à fonte `836c783`. A revisão posterior altera
-o produtor de recusa em Book/Daily e os pins do catálogo; esses corpos já não são
-iguais aos daquele wheel. Um pacote novo em prefixo isolado precisa concluir a
-qualificação real de SDK/STDIO. A prova anterior permanece histórica e intacta.
-Os testes também têm deltas explícitos: o sdist anterior conserva seus testes
-históricos e não é atribuído às fixtures novas.
+A primeira instalação recebida acima pertence à fonte `836c783` e permanece
+histórica. Depois do reparo em Book/Daily e nos pins do catálogo, a fonte `ad0b03f`
+concluiu uma nova instalação em prefixo próprio: 276 corpos do pacote iguais à
+fonte, SDK MCP 2.3.0 físico, três kernels, onze recursos e nove consultas nativas
+pelo STDIO com os controles declarados. As seis etapas concluíram com saída zero,
+sem rebuild ou retry posterior. O corpus de adulteração final é privado e foi
+preservado nesse estado. Os três reparos posteriores são exclusivos de testes;
+produto, recursos, helper, configuração e lock permanecem iguais aos corpos
+instalados. A ponte corporal não é uma nova execução e não atribui ao sdist
+anterior os testes CDP alterados, que nem integram esse arquivo.
 
 A primeira suíte integral local de `836c783` encerrou na primeira falha documental:
 faltava o histórico preservado no mapa de AGENTS. Foram 2170 casos únicos executados,
@@ -126,16 +130,51 @@ registros anteriores continuam autenticados pelos próprios bytes e hashes.
 O controle de legado é um corpus simulado criado hoje, sem alegação de PIT.
 Não há nova prova de atomicidade entre os eventos ou de corrida após o prepare.
 
-A CI de `6b4caff` permanece uma execução própria, sem atribuição ao produtor reparado.
-A fonte final precisa da CI integral CDP e de Fechamento separadas, dos restantes
-locais por IDs e da instalação nova; nenhum desses estados pendentes é promovido
-a conclusão de integração ou publicação.
+A CI de `6b4caff` foi cancelada automaticamente pela concorrência e permanece
+uma execução própria, sem JUnit integral ou atribuição ao produtor reparado.
+Fechamento Linux de `ad0b03f` concluiu 111 casos únicos aprovados, sem skip,
+falha ou erro. A CI CDP dessa cabeça recebeu 669 casos únicos: 668 PASS e uma
+falha, sem erro ou skip. A preparação do controle novo falhou em
+`weekly_decide`/`build_positions`, com short em SIM015 sem linha de aluguel,
+antes de ativar o kill switch ou chegar ao preflight-alvo. O vetor completo não
+consta do log; magnitude e causa numérica continuam desconhecidas. Os jobs de
+pacote instalado/SDK/STDIO e livro/rotinas/skills/portal concluíram. Esse relatório
+é recebido separadamente e não qualifica os testes corrigidos depois do envio.
+
+Os quatro controles novos de recusa/auditoria passaram a receber a proposta
+unitária nativa do corpus diário, com configuração/NAV, semana, snapshot e
+aprovação por hash coerentes. O diagnóstico declara `fixture_sem_solver`, sem
+chamar uma otimização; RiskSummary e compliance são insumos DADOS SIMULADOS,
+não aprovação econômica. Plan/context/preparação e os produtores do livro
+continuam reais; as três recusas também exigem o motivo KILL_SWITCH.
+O módulo concluiu cinco PASS no Mac. O original end-to-end de robustez permaneceu
+literal e concluiu um PASS em execução separada no Mac, sem explicar a diferença
+Linux. A CI final terá esses seis controles em etapa dirigida, com JUnit próprio
+antes da suíte integral obrigatória. O full CDP de 6068 casos, com prazo de
+150 minutos, e Fechamento continuam necessários na cabeça final; os dois
+relatórios CDP não serão somados.
+
+Os restantes locais foram percorridos por listas exatas, com as primeiras
+negativas preservadas. O primeiro recorte de 669 recebeu 51 PASS e uma falha:
+o teste contava permissões no frontmatter como chamadas do gate. O oráculo agora
+separa metadata e corpo, conserva as permissões e exige uma única chamada entre
+as duas formas CLI; o controle isolado passou. A continuação de 617 recebeu
+184 PASS e uma falha no proxy de demo, que copiava o corpus mas devolvia `None`.
+O proxy passou a devolver o resumo nativo já persistido e a conferir metadata e
+preservação do corpus. A continuação de 433 recebeu 107 PASS e uma falha na
+whitelist antiga de três exports; a API documentada possui nove nomes. O teste
+agora exige nove nomes fixos, seis identidades nativas/callable e as quatro
+proibições de escritores, sem invocar os cálculos. O último recorte de 326
+concluiu 326 PASS, sem skip, falha ou erro, incluindo esse controle corrigido.
+Todos os restantes planejados encerraram; essas parcelas e focais têm fontes e
+manifestos próprios e não são apresentados como uma nova suíte integral Mac.
 
 A composição CDP recebe a fonte privada 0594f14, incluindo escritores NET,
 recepção bancária opt-in, diagnósticos P1 em sombra, técnicas e MCP 1.7.
 São candidatos de fonte recebidos; a instalação/STDIO acima foi qualificada no
-recorte declarado. Os checks locais restantes e a CI final ainda precisam concluir. Não
-atribuir resultados de fontes anteriores ao novo pai. Os contratos/hard gates/configuração continuam preservados,
+recorte declarado e os restantes locais encerraram. A CI integral da cabeça
+final ainda precisa concluir. Não atribuir resultados de fontes anteriores ao
+novo pai. Os contratos/hard gates/configuração continuam preservados,
 sem integração financeira automática dos protótipos ou nova operação de 09/10.
 O [registro privado histórico](HISTORICO_PRIVADO_2026-10-10_CONSOLIDACAO.md)
 conserva integralmente o corpo da passagem dessa frente e seus limites originais.

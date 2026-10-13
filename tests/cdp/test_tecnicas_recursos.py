@@ -106,6 +106,25 @@ def test_integridade_e_conjunto_do_exemplo(declarado, tmp_path, monkeypatch, alt
 
 def test_fachada_nao_exporta_escritores():
     import cdp.tecnicas as tecnicas
+    from cdp.portfolio.compliance import run_compliance
+    from cdp.portfolio.optimizer import optimize
+    from cdp.risk.analytics import risk_decomposition
+    from cdp.risk.model import estimate_risk_model
+    from cdp.ui.data import attribution_table, components_table
 
-    assert set(tecnicas.__all__) == {"calcular_ke", "avaliar_pb_justificado", "estimar_preenchimento"}
+    expected = {
+        "calcular_ke", "avaliar_pb_justificado", "estimar_preenchimento",
+        "decompor_risco", "estimar_modelo_risco", "construir_candidata",
+        "conferir_limites", "somar_atribuicao", "somar_componentes",
+    }
+    assert set(tecnicas.__all__) == expected
+    assert len(tecnicas.__all__) == len(expected)
+    native = {
+        "decompor_risco": risk_decomposition, "estimar_modelo_risco": estimate_risk_model,
+        "construir_candidata": optimize, "conferir_limites": run_compliance,
+        "somar_atribuicao": attribution_table, "somar_componentes": components_table,
+    }
+    for name, function in native.items():
+        assert callable(getattr(tecnicas, name))
+        assert getattr(tecnicas, name) is function
     assert all(not hasattr(tecnicas, n) for n in ["publish", "decide", "reinicio", "kill_switch"])

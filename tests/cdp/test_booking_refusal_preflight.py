@@ -2,19 +2,19 @@
 from __future__ import annotations
 
 import hashlib
+from datetime import time as dtime
 
 import pytest
-from test_robustez_rotinas import (
-    WEEK,
-    _decidida_com_kill_switch,
-    _rt,
-)
+from test_daily_track_record import NAV0, make_proposal, week1
+from test_robustez_rotinas import WEEK, _rt
 from test_robustez_rotinas import (
     market as market,
 )
 
 import cdp.workflow.book as book_module
+from cdp.contracts import OptimizerDiagnostics
 from cdp.hashing import sha256_obj
+from cdp.workflow.autonomy import make_autonomous_decision
 from cdp.workflow.book import LAPSE_EVENT, Book
 from cdp.workflow.daily import (
     ExecutionRefused,
@@ -34,10 +34,26 @@ def _tree(root):
 
 def _native_case(root, market):
     rt, clock = _rt(root, market)
-    _decidida_com_kill_switch(rt, clock)
+    assert rt.cfg.execution is None and rt.cfg.fund.inception_nav_usd == NAV0
+    runner = rt._runner()
+    md = runner.store.load(as_of=WEEK).truncate(WEEK)
+    # Proposta unitária recebida do corpus simulado: não é resultado de um solver.
+    proposal = make_proposal(WEEK, week1(md), cfg=rt.cfg).model_copy(update={
+        "snapshot_id": md.manifest.snapshot_id,
+        "snapshot_hash": md.manifest.content_hash(),
+        "optimizer": OptimizerDiagnostics(
+            status="fixture_sem_solver", solver="nenhum", solve_seconds=0.0),
+    })
+    clock.set(WEEK, dtime(15, 0))
+    decision = make_autonomous_decision(
+        proposal, research_hash=proposal.research_hash, pm_decision_hash="f" * 64,
+        rationale="DADOS SIMULADOS: controle unitário de recusa e auditoria.",
+        decided_at=clock())
+    rt.book.save_proposal(proposal)
+    rt.book.save_decision(decision)
+    rt.set_kill_switch(True, "gatilho HARD (teste)", "CDP — rotina de risco")
     proposal = rt.book.load_proposal(WEEK)
     decision = rt.book.load_decision(WEEK)
-    runner = rt._runner()
     plan = runner._plan_from_pending(WEEK, None, PendingExecution(proposal, decision))
     context = runner.context(WEEK, runner.store.load(WEEK), None)
     result = runner._prepare_side(runner.main, context, None, plan)
@@ -71,6 +87,7 @@ def test_preflight_native_refusal_is_typed_and_never_writes(market, tmp_path):
     assert type(info.value) is _BookingPreflightRefused
     assert type(info.value.__cause__) is ValueError
     assert str(info.value) == str(info.value.__cause__)
+    assert "KILL_SWITCH" in str(info.value)
     assert _tree(rt.book.root) == before
     assert not any(e.event_type == "BOOKING_REFUSED" for e in rt.book.audit.events())
 
@@ -80,6 +97,7 @@ def test_execute_decision_audits_refusal_and_does_not_lapse(market, tmp_path):
     with pytest.raises(ExecutionRefused) as info:
         runner.execute_decision(WEEK, proposal, decision)
     assert any(type(c) is _BookingPreflightRefused for c in _causes(info.value))
+    assert "KILL_SWITCH" in str(info.value)
     events = rt.book.audit.events()
     refusals = [e for e in events if e.event_type == "BOOKING_REFUSED"]
     assert len(refusals) == 1
@@ -99,6 +117,7 @@ def test_persist_native_refusal_already_audited_is_not_duplicated(market, tmp_pa
     with pytest.raises(ExecutionRefused) as info:
         _guarded(persist, entry)
     assert not any(type(c) is _BookingPreflightRefused for c in _causes(info.value))
+    assert "KILL_SWITCH" in str(info.value)
     events = [e for e in rt.book.audit.events() if e.event_type == "BOOKING_REFUSED"]
     assert len(events) == 1
     _assert_refusal(events[0], plan, str(info.value), runner.actor)

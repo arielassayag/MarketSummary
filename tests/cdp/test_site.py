@@ -268,14 +268,25 @@ def test_real_build_has_no_simulated_band_and_carries_the_legal_notice(tmp_path)
 def test_demo_option_builds_from_the_offline_demonstration(demo, tmp_path, monkeypatch):
     import cdp.workflow.demo as dm
 
+    original = _arvore(demo)
+    resumo_nativo = json.loads((demo / "demo_summary.json").read_text(encoding="utf-8"))
+
     def copia(out, days=6, **kw):
         shutil.copytree(demo, out, dirs_exist_ok=True)
+        return json.loads((out / "demo_summary.json").read_text(encoding="utf-8"))
 
     monkeypatch.setattr(dm, "run_demo", copia)
     out = _build(_rt(tmp_path), tmp_path / "_demo", demo=True)
     assert out["dados_simulados"] and not out["indexado"]
     man = json.loads((tmp_path / "_demo/manifest.json").read_text(encoding="utf-8"))
     assert man["perfil"] == "demo"
+    demonstracao = json.loads((tmp_path / "_demo/data.json").read_text(encoding="utf-8"))["meta"]["demonstracao"]
+    assert demonstracao == {
+        "origem": "nova_execucao_sintetica", "integridade": resumo_nativo["integridade"],
+        "registros": resumo_nativo["registros"], "aviso": resumo_nativo["aviso"],
+        "cobertura_qualitativa": "não produzida pela demonstração",
+    }
+    assert _arvore(demo) == original
     assert st.conferir(tmp_path / "_demo") == []
     idx = (tmp_path / "_demo/index.html").read_text(encoding="utf-8")
     assert "<title>DADOS SIMULADOS — " in idx and 'class="site-sim"' in idx

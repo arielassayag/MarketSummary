@@ -57,6 +57,25 @@ jobs:
         run: uv sync --frozen --extra dev --extra ai --extra mcp
       - name: Lint
         run: uv run ruff check .
+      - name: Controles de recusa de booking e preparação inaugural
+        env:
+          CDP_HARNESS: codex
+          TZ: America/Sao_Paulo
+          PYTHONUTF8: "1"
+        # Feedback dirigido: não substitui a suíte integral do passo seguinte.
+        run: >-
+          uv run pytest tests/cdp/test_booking_refusal_preflight.py
+          tests/cdp/test_robustez_rotinas.py::test_kill_switch_at_the_inaugural_close_records_the_refusal_and_the_decision_lapses
+          -q -x -p no:cacheprovider
+          --junitxml=.cdp/validacoes/ci-preflight-junit.xml --durations=10
+      - name: Guardar relatório dirigido de preflight
+        if: ${{ always() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: testes-cdp-preflight
+          path: .cdp/validacoes/ci-preflight-junit.xml
+          retention-days: 7
+          if-no-files-found: warn
       - name: Testes
         env:
           CDP_HARNESS: codex

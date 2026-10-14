@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 5.38,
+  "high": 9.0,
+  "low": 4.0,
+  "mean": 5.96111,
+  "median": 5.9
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.14266,
+   "currency": "BRL",
+   "growth": -0.048899997,
+   "high": 0.14266,
+   "low": 0.14266,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.15
+  },
+  "+1y": {
+   "avg": 0.89,
+   "currency": "BRL",
+   "growth": 0.1711,
+   "high": 0.93,
+   "low": 0.85,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.76
+  },
+  "0q": {
+   "avg": 0.13704,
+   "currency": "BRL",
+   "growth": -0.6394,
+   "high": 0.13704,
+   "low": 0.13704,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.38
+  },
+  "0y": {
+   "avg": 0.76,
+   "currency": "BRL",
+   "growth": 0.024400001,
+   "high": 0.79,
+   "low": 0.73,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.7419
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 46299696740,
+   "currency": "BRL",
+   "growth": 0.0935,
+   "high": 51541000000,
+   "low": 42618000000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 42341434140.0
+  },
+  "0q": {
+   "avg": 10632000000,
+   "currency": "BRL",
+   "growth": -0.012200001,
+   "high": 10632000000,
+   "low": 10632000000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 10763538000.0
+  },
+  "0y": {
+   "avg": 42341434140,
+   "currency": "BRL",
+   "growth": 0.1019,
+   "high": 46468000000,
+   "low": 39940000000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 38424403000.0
+  }
+ },
+ "ticker": "GMAT3.SA",
+ "url": "https://finance.yahoo.com/quote/GMAT3.SA"
+}

@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 5.59,
+  "high": 8.1,
+  "low": 6.0,
+  "mean": 6.76667,
+  "median": 6.2
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.195,
+   "currency": "USD",
+   "growth": -0.0647,
+   "high": 0.2,
+   "low": 0.19,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.2085
+  },
+  "+1y": {
+   "avg": 0.83333,
+   "currency": "USD",
+   "growth": 0.1848,
+   "high": 0.92,
+   "low": 0.77,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.70333
+  },
+  "0q": {
+   "avg": 0.175,
+   "currency": "USD",
+   "growth": null,
+   "high": 0.18,
+   "low": 0.17,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 0.70333,
+   "currency": "USD",
+   "growth": -0.1163,
+   "high": 0.73,
+   "low": 0.68,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.7959
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 21908731500,
+   "currency": "BRL",
+   "growth": 0.039,
+   "high": 22061000000,
+   "low": 21756463000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 21086000000
+  },
+  "+1y": {
+   "avg": 92193168260,
+   "currency": "BRL",
+   "growth": 0.083900005,
+   "high": 94982386220,
+   "low": 87609000000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 85059976660
+  },
+  "0q": {
+   "avg": 21062292800,
+   "currency": "BRL",
+   "growth": 0.0146,
+   "high": 21282480180,
+   "low": 20680000000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 20760000000
+  },
+  "0y": {
+   "avg": 85059976660,
+   "currency": "BRL",
+   "growth": 0.0186,
+   "high": 86131789370,
+   "low": 83800000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 83505000000
+  }
+ },
+ "ticker": "BSBR",
+ "url": "https://finance.yahoo.com/quote/BSBR"
+}

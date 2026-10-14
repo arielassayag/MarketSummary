@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 66000.0,
+  "high": 77000.0,
+  "low": 51620.0,
+  "mean": 68402.22,
+  "median": 70000.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1269.8711,
+   "currency": "CLP",
+   "growth": 0.21290001,
+   "high": 1380.6367,
+   "low": 1211.2467,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 1047.0
+  },
+  "+1y": {
+   "avg": 5640.7427,
+   "currency": "CLP",
+   "growth": 0.0596,
+   "high": 6103.633,
+   "low": 5188.325,
+   "numberOfAnalysts": 8,
+   "yearAgoEps": 5323.618
+  },
+  "0q": {
+   "avg": 1136.2394,
+   "currency": "CLP",
+   "growth": 0.059899997,
+   "high": 1347.7186,
+   "low": 1043.229,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 1072.0
+  },
+  "0y": {
+   "avg": 5323.618,
+   "currency": "CLP",
+   "growth": 0.1685,
+   "high": 5436.757,
+   "low": 5211.5,
+   "numberOfAnalysts": 8,
+   "yearAgoEps": 4556.0
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 899818508330,
+   "currency": "CLP",
+   "growth": 0.18200001,
+   "high": 914937461410,
+   "low": 878681039000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 761239000000
+  },
+  "+1y": {
+   "avg": 3577400501240,
+   "currency": "CLP",
+   "growth": 0.070700005,
+   "high": 3709587894980,
+   "low": 3445882607080,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 3341080811210
+  },
+  "0q": {
+   "avg": 813250160360,
+   "currency": "CLP",
+   "growth": 0.1099,
+   "high": 862119758910,
+   "low": 759904000000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 732754000000
+  },
+  "0y": {
+   "avg": 3341080811210,
+   "currency": "CLP",
+   "growth": 0.115,
+   "high": 3412000000000,
+   "low": 3254735098530,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 2996618000000
+  }
+ },
+ "ticker": "BCI.SN",
+ "url": "https://finance.yahoo.com/quote/BCI.SN"
+}

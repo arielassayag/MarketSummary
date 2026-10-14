@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 12.65,
+  "high": 16.0,
+  "low": 13.0,
+  "mean": 14.44,
+  "median": 14.2
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.48,
+   "currency": "USD",
+   "growth": -0.2,
+   "high": 0.48,
+   "low": 0.48,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.6
+  },
+  "+1y": {
+   "avg": 3.33333,
+   "currency": "USD",
+   "growth": 0.18620001,
+   "high": 4.1,
+   "low": 2.38,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 2.81
+  },
+  "0q": {
+   "avg": 0.73,
+   "currency": "USD",
+   "growth": 25.333302,
+   "high": 0.82,
+   "low": 0.64,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": -0.03
+  },
+  "0y": {
+   "avg": 2.81,
+   "currency": "USD",
+   "growth": 2.3058999,
+   "high": 3.06,
+   "low": 2.43,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.85
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 918417450,
+   "currency": "USD",
+   "growth": 0.017,
+   "high": 959255540,
+   "low": 877579360,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 903025000
+  },
+  "+1y": {
+   "avg": 3601678100,
+   "currency": "USD",
+   "growth": -0.0257,
+   "high": 4059195940,
+   "low": 3038610160,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 3696572610
+  },
+  "0q": {
+   "avg": 950279060,
+   "currency": "USD",
+   "growth": 0.2446,
+   "high": 953399120,
+   "low": 947158990,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 763515000
+  },
+  "0y": {
+   "avg": 3696572610,
+   "currency": "USD",
+   "growth": 0.2313,
+   "high": 3849258160,
+   "low": 3607148270,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 3002055000
+  }
+ },
+ "ticker": "NEXA",
+ "url": "https://finance.yahoo.com/quote/NEXA"
+}

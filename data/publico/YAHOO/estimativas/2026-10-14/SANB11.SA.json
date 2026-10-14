@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 28.28,
+  "high": 44.0,
+  "low": 27.0,
+  "mean": 31.17778,
+  "median": 30.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.975,
+   "currency": "BRL",
+   "growth": -0.1096,
+   "high": 0.99,
+   "low": 0.96,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 1.095
+  },
+  "+1y": {
+   "avg": 4.33126,
+   "currency": "BRL",
+   "growth": 0.172,
+   "high": 5.0,
+   "low": 3.9,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 3.69562
+  },
+  "0q": {
+   "avg": 0.85255,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0.91,
+   "low": 0.78765,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 3.69562,
+   "currency": "BRL",
+   "growth": -0.1159,
+   "high": 3.89699,
+   "low": 3.51113,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 4.18
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 21908731500,
+   "currency": "BRL",
+   "growth": 0.039,
+   "high": 22061000000,
+   "low": 21756463000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 21086000000
+  },
+  "+1y": {
+   "avg": 92193168260,
+   "currency": "BRL",
+   "growth": 0.083900005,
+   "high": 94982386220,
+   "low": 87609000000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 85059976660
+  },
+  "0q": {
+   "avg": 21062292800,
+   "currency": "BRL",
+   "growth": 0.0146,
+   "high": 21282480180,
+   "low": 20680000000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 20760000000
+  },
+  "0y": {
+   "avg": 85059976660,
+   "currency": "BRL",
+   "growth": 0.0186,
+   "high": 86131789370,
+   "low": 83800000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 83505000000
+  }
+ },
+ "ticker": "SANB11.SA",
+ "url": "https://finance.yahoo.com/quote/SANB11.SA"
+}

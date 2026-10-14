@@ -1,0 +1,37 @@
+{
+ "demonstracoes": {
+  "balance_sheet": null,
+  "cashflow": null,
+  "income_stmt": {
+   "colunas": [
+    "2022-12-31",
+    "2021-12-31"
+   ],
+   "linhas": {
+    "Basic Average Shares": [
+     1551431555.0,
+     969974606.0
+    ],
+    "Basic EPS": [
+     0.631848,
+     0.744349
+    ],
+    "Diluted Average Shares": [
+     1551431555.0,
+     969974606.0
+    ],
+    "Diluted EPS": [
+     0.631848,
+     0.744349
+    ]
+   }
+  },
+  "quarterly_balance_sheet": null,
+  "quarterly_cashflow": null,
+  "quarterly_income_stmt": null
+ },
+ "fonte": "YAHOO",
+ "parte": "demonstracoes",
+ "ticker": "FMTY14.MX",
+ "url": "https://finance.yahoo.com/quote/FMTY14.MX"
+}

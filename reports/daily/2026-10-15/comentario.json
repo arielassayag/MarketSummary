@@ -1,0 +1,17 @@
+{
+  "mind": "codex",
+  "headline": "CDP registra {{fact:day.ret}}; contribuição vendida amortece perdas do lado comprado",
+  "paragraphs": [
+    "A carteira simulada do CDP encerrou o pregão de 15/10/2026 com retorno de {{fact:day.ret}} e P&L de {{fact:day.pnl_usd}}, em dólar. O NAV ficou em {{fact:nav}}, com retorno acumulado desde o início de {{fact:itd.ret}}. DADOS SIMULADOS: preços reais e execução hipotética no fechamento.",
+    "O lado comprado contribuiu {{fact:attr.long}} e o vendido {{fact:attr.short}}. Inter, PagSeguro e Ultrapar foram os principais contribuidores, com {{fact:top.contrib.1.contrib}}, {{fact:top.contrib.2.contrib}} e {{fact:top.contrib.3.contrib}}; Petrobras, Cemex e Riachuelo foram os maiores detratores, com {{fact:top.detract.1.contrib}}, {{fact:top.detract.2.contrib}} e {{fact:top.detract.3.contrib}}. Argentina contribuiu {{fact:attr.country.AR}}, enquanto México e Brasil responderam por {{fact:attr.country.MX}} e {{fact:attr.country.BR}}. A atribuição fatorial foi {{fact:attr.factor}} e a específica {{fact:attr.specific}}, com retornos fatoriais estimados por regressão e componente macro observado descontado previamente.",
+    "O BLS divulgou os preços ao produtor de setembro em 15/10/2026, com aceleração do índice de demanda final e pressão de energia. No fechamento em dólar, o ETF regional ILF variou {{fact:mkt.ILF.ret_1d}}, o EWZ {{fact:mkt.EWZ.ret_1d}}, o EWW {{fact:mkt.EWW.ret_1d}} e o SPY {{fact:mkt.SPY.ret_1d}}. O real variou {{fact:fx.BRL.ret_1d}} e o peso mexicano {{fact:fx.MXN.ret_1d}}, medidos em dólar por unidade de moeda. A divulgação macroeconômica compõe o contexto; a atribuição calculada descreve o resultado sem estabelecer causalidade para cada posição.",
+    "A vol ex-ante ficou em {{fact:risk.ex_ante_vol}}, na banda de {{fact:mandate.vol_band_min}} a {{fact:mandate.vol_band_max}}, com beta de {{fact:risk.beta}}. A exposição bruta foi {{fact:risk.gross}} e a líquida {{fact:risk.net}}, acima do limite de neutralidade indicado pelos controles. O VaR de um dia ficou em {{fact:risk.var_1d}} e o expected shortfall em {{fact:risk.es_1d}}. Alpargatas e dLocal permaneceram com risco alto de squeeze nas posições vendidas; a janela eleitoral brasileira segue ativa.",
+    "As fontes públicas mantêm limitações de fundamentos sem reconstrução histórica, viés de sobrevivência, defasagem de aluguel e short interest e câmbio sem fixing oficial. Há notícias indisponíveis, ressalvas de paridade entre ADR e ação local e diferenças entre câmbio implícito e oficial na Argentina. Revisões históricas de preços e volumes foram preservadas sem aplicação aos registros anteriores. Esses limites exigem cautela na interpretação da atribuição estimada e dos indicadores de liquidez."
+  ],
+  "risk_flags": [
+    "Exposição líquida de {{fact:risk.net}} fora do limite de neutralidade indicado pelos controles.",
+    "Alpargatas e dLocal com risco alto de squeeze nas posições vendidas; total de {{fact:risk.squeeze_high_shorts}} shorts nessa condição.",
+    "Janela eleitoral brasileira ativa; risco de evento incorporado ao modelo.",
+    "Atribuição fatorial estimada e limitações de fundamentos, câmbio, aluguel, notícias e paridade ADR declaradas."
+  ]
+}

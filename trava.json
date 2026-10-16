@@ -1,11 +1,12 @@
 {
- "estado": "livre",
- "id": null,
- "liberada": "2026-10-15T22:29:01+00:00",
- "ultima": {
-  "executor": "local-pc",
-  "inicio": "2026-10-15T22:23:01+00:00",
-  "tarefa": "cdp-diario"
- },
+ "estado": "ocupada",
+ "executor": "local-pc",
+ "expira": "2026-10-16T15:01:14+00:00",
+ "harness": "codex",
+ "id": "8f85f10b-baaa-4841-a8da-b156b8a8857b",
+ "inicio": "2026-10-16T14:11:14+00:00",
+ "renovada": "2026-10-16T14:11:14+00:00",
+ "sessao": "codex:01a1450b-7d5a-7333-97cd-8e08acfa7df5",
+ "tarefa": "cdp-semanal",
  "versao": 1
 }

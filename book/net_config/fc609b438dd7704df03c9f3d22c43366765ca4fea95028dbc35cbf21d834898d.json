@@ -1,0 +1,378 @@
+{
+  "fund": {
+    "name": "CDP — Cabra da Peste",
+    "base_currency": "USD",
+    "inception_date": "2026-10-09",
+    "inception_nav_usd": 1000000.0,
+    "rebalance_weekday": "LAST_US_SESSION",
+    "manager_role": "Gestor (PM)",
+    "manager_name": "CDP — Cabra da Peste",
+    "track_record_type": "paper trading com preços reais (execução hipotética no fechamento)",
+    "timezone": "America/Sao_Paulo",
+    "weekly_research_start_local": "11:00",
+    "decision_deadline_local": "15:00",
+    "execution_convention": "Decisão antes do fechamento do dia de montagem, com todos os dados disponíveis até o momento da análise; ordens em quantidade de ações; execução ao preço oficial de fechamento de cada linha (MOC), limitada à capacidade do leilão e da janela pré-fechamento; linha sem pregão no dia não negocia e o emissor mantém a posição",
+    "daily_close_run_local": "19:20",
+    "primary_calendar": "BVMF",
+    "rebalance_rule": "último pregão da semana na NYSE (sexta-feira ou, com feriado nos EUA, o pregão anterior)",
+    "minds": [
+      "claude-code",
+      "codex"
+    ],
+    "use_all_available_data": true
+  },
+  "risk": {
+    "vol_target_annual": 0.05,
+    "vol_band_min": 0.03,
+    "vol_band_max": 0.07,
+    "net_exposure_max_abs": 0.01,
+    "beta_max_abs": 0.05,
+    "gross_max": 2.5,
+    "gross_min": 0.5,
+    "country_net_max_abs": 0.02,
+    "sector_net_max_abs": 0.025,
+    "style_exposure_max_abs": 0.1,
+    "max_long_weight": 0.04,
+    "max_short_weight": 0.025,
+    "min_position_weight": 0.002,
+    "max_single_name_risk_share": 0.08,
+    "max_factor_risk_share": 0.1,
+    "risk_aversion": 1.0,
+    "risk_target_mode": "match",
+    "var_confidence": 0.99,
+    "theme_net_max_abs": {
+      "state_owned": 0.01
+    },
+    "country_gross_share_max": {
+      "BR": 0.7,
+      "MX": 0.35,
+      "CL": 0.15,
+      "PE": 0.12,
+      "CO": 0.1,
+      "AR": 0.1,
+      "LATAM": 0.1,
+      "PA": 0.05,
+      "UY": 0.05
+    },
+    "commodity_proxies": {
+      "oil": "BZ=F",
+      "copper": "HG=F",
+      "gold": "GC=F"
+    },
+    "commodity_beta_max_abs": 0.03,
+    "event_windows": [
+      {
+        "name": "Eleição Brasil 2026 (2º turno 25/out)",
+        "country": "BR",
+        "start": "2026-10-05",
+        "end": "2026-10-26",
+        "vol_multiplier": 1.5,
+        "reaction_date": "2026-10-05",
+        "reaction_exposure_max_abs": 0.0015
+      }
+    ],
+    "bias_prior": 1.1,
+    "bias_prior_weeks": 26,
+    "var_1d_max": 0.01,
+    "es_1d_max": 0.0125,
+    "country_stress_max_loss": 0.015,
+    "country_gap_scenarios": {
+      "BR": [
+        -0.1,
+        0.1
+      ],
+      "MX": [
+        -0.13
+      ],
+      "CL": [
+        -0.15
+      ],
+      "PE": [
+        -0.1
+      ],
+      "CO": [
+        -0.11
+      ],
+      "AR": [
+        -0.56,
+        0.41
+      ]
+    },
+    "idio_share_goal": 0.9,
+    "idio_share_floor": 0.85,
+    "factor_risk_basis": "achieved",
+    "factor_risk_aversion_multiplier": 5.0,
+    "second_order_inflation": 1.45,
+    "idio_gate_models": [
+      "decisao",
+      "base"
+    ],
+    "operational": {
+      "beta": 0.02,
+      "style": 0.05,
+      "sector_net": 0.015,
+      "country_net": {
+        "BR": 0.01,
+        "MX": 0.01,
+        "*": 0.005
+      },
+      "commodity_beta": 0.01
+    },
+    "vol_floor_alpha_scaling": false
+  },
+  "liquidity": {
+    "min_adtv_usd": 1000000.0,
+    "adv_window_days": 63,
+    "participation_rate": 0.2,
+    "max_days_to_liquidate_long": 3.0,
+    "max_days_to_liquidate_short": 2.0,
+    "max_trade_days_inception": 5.0,
+    "max_trade_days_weekly": 2.0,
+    "max_weekly_turnover": 0.3,
+    "min_adtv_long_usd": 2000000.0,
+    "min_adtv_short_usd": 5000000.0,
+    "short_participation_rate": 0.15,
+    "min_gross_liquid_3d": 0.8,
+    "min_gross_liquid_5d": 0.95
+  },
+  "shorting": {
+    "shortable_line_types": [
+      "ADR",
+      "US_LISTED",
+      "LOCAL_BR"
+    ],
+    "gc_borrow_fee_us": 0.003,
+    "gc_borrow_fee_br": 0.008,
+    "max_borrow_fee": 0.05,
+    "min_market_cap_short_usd": 500000000.0
+  },
+  "squeeze": {
+    "si_pct_float_medium": 0.1,
+    "si_pct_float_high": 0.2,
+    "days_to_cover_medium": 5.0,
+    "days_to_cover_high": 10.0,
+    "borrow_fee_medium": 0.03,
+    "borrow_fee_high": 0.08,
+    "ret_1m_medium": 0.15,
+    "ret_1m_high": 0.3,
+    "free_float_mcap_low_usd": 1000000000.0,
+    "br_borrow_fee_medium": 0.05,
+    "br_borrow_fee_high": 0.15,
+    "br_btc_pct_float_medium": 0.15,
+    "br_btc_pct_float_high": 0.25,
+    "br_btc_dtc_medium": 10.0,
+    "br_btc_dtc_high": 20.0,
+    "adr_parity_tolerance": 0.03,
+    "free_float_min_pct": 0.2,
+    "controller_max_pct": 0.7,
+    "catalyst_block_sessions": 5,
+    "stop_short_position_loss": 0.25,
+    "stop_short_nav_loss": 0.01,
+    "score_medium": 40.0,
+    "score_high": 70.0,
+    "medium_short_cap_multiplier": 0.5,
+    "enforce_entry_blocks": true,
+    "stop_scope": "name"
+  },
+  "costs": {
+    "commission_bps": {
+      "US": 1.0,
+      "BR": 3.0,
+      "MX": 8.0,
+      "CL": 10.0,
+      "CO": 15.0,
+      "PE": 15.0,
+      "AR": 15.0
+    },
+    "half_spread_bps_by_tier": {
+      "T1": 4.0,
+      "T2": 8.0,
+      "T3": 15.0,
+      "T4": 25.0
+    },
+    "tier_adtv_breaks_usd": [
+      50000000.0,
+      15000000.0,
+      5000000.0
+    ],
+    "impact_coefficient": 0.6,
+    "fx_cost_bps": 3.0,
+    "amortization_weeks": 8.0,
+    "min_order_cost_usd": {
+      "US": 1.0,
+      "BR": 0.0,
+      "MX": 3.5,
+      "CL": 28.0,
+      "CO": 22.0,
+      "PE": 25.0,
+      "AR": 25.0
+    }
+  },
+  "alpha": {
+    "signal_weights": {
+      "residual_momentum": 0.25,
+      "short_term_reversal": 0.0,
+      "value": 0.2,
+      "quality": 0.15,
+      "low_risk": 0.1,
+      "analyst_revision": 0.15
+    },
+    "information_coefficient": 0.04,
+    "winsor_z": 3.0,
+    "horizon_weeks": 8.0,
+    "orthogonalize_to_factors": true,
+    "view_information_coefficient": 0.03,
+    "max_view_tilt_z": 1.5,
+    "view_sign_coherence": true,
+    "reresidualize_after_views": true
+  },
+  "drawdown": {
+    "soft_stop": -0.025,
+    "soft_degross_multiplier": 0.75,
+    "hard_stop": -0.05,
+    "degross_multiplier": 0.5,
+    "stop_out": -0.075,
+    "stop_out_gross": 0.5,
+    "risk_reference": "normal_book_vol"
+  },
+  "risk_model": {
+    "history_days": 2000,
+    "min_obs_days": 126,
+    "halflife_factor_vol": 84,
+    "halflife_factor_corr": 252,
+    "halflife_specific": 84,
+    "newey_west_lags": 3,
+    "specific_shrinkage": 0.3,
+    "min_names_per_sector": 5,
+    "market_proxy": "ILF",
+    "macro_factors": [
+      "BZ=F",
+      "HG=F",
+      "GC=F",
+      "DX-Y.NYB"
+    ],
+    "linked_groups": {
+      "gerdau": [
+        "BR_GOAU",
+        "BR_GERDAU"
+      ],
+      "itau": [
+        "BR_ITAUSA",
+        "BR_ITAU"
+      ],
+      "csn": [
+        "BR_CSN",
+        "BR_CMIN"
+      ],
+      "vale": [
+        "BR_BRADESPAR",
+        "BR_VALE"
+      ]
+    }
+  },
+  "research": {
+    "provider": "imported",
+    "top_n_candidates": 40,
+    "news_lookback_days": 14,
+    "llm_can_only_tighten": true,
+    "llm_phase": "S1",
+    "llm_view_ic_by_phase": {
+      "S0": 0.0,
+      "S1": 0.01,
+      "S2": 0.02,
+      "S3": 0.03
+    },
+    "samples_per_judgment": 5,
+    "min_sign_agreement": 0.8
+  },
+  "execution": {
+    "rebalance_calendar": "XNYS",
+    "decision_deadline_cap_local": "15:00",
+    "decision_buffer_minutes": 45,
+    "close_times": {
+      "XNYS": {
+        "tz": "America/New_York",
+        "close": "16:00",
+        "moc_cutoff": "15:50"
+      },
+      "XNAS": {
+        "tz": "America/New_York",
+        "close": "16:00",
+        "moc_cutoff": "15:55"
+      },
+      "ARCX": {
+        "tz": "America/New_York",
+        "close": "16:00",
+        "moc_cutoff": "15:59"
+      },
+      "BVMF": {
+        "tz": "America/New_York",
+        "close": "16:00",
+        "moc_cutoff": "15:55"
+      },
+      "XMEX": {
+        "tz": "America/New_York",
+        "close": "16:00",
+        "moc_cutoff": "15:40"
+      },
+      "XSGO": {
+        "tz": "America/Santiago",
+        "close": "16:00",
+        "moc_cutoff": "15:45"
+      },
+      "XBOG": {
+        "tz": "America/New_York",
+        "close": "16:00",
+        "moc_cutoff": "15:55"
+      },
+      "XLIM": {
+        "tz": "America/New_York",
+        "close": "16:00",
+        "moc_cutoff": "15:52"
+      },
+      "XBUE": {
+        "tz": "America/Argentina/Buenos_Aires",
+        "close": "17:00",
+        "moc_cutoff": "16:57"
+      }
+    },
+    "capacity": {
+      "adv_statistic": "p25",
+      "adv_window_days": 20,
+      "auction_participation": 0.1,
+      "preclose_participation": 0.1,
+      "preclose_volume_share": 0.25,
+      "auction_share": {
+        "US_STOCK": 0.1,
+        "ADR": 0.06,
+        "ETF_US": 0.01,
+        "BR": 0.08,
+        "MX": 0.1,
+        "CL": 0.1,
+        "CO": 0.05,
+        "PE": 0.05,
+        "AR": 0.05
+      },
+      "short_multiplier": 0.75,
+      "early_close_multiplier": 0.5
+    },
+    "min_trade_weight": 0.001,
+    "local_closed_policy": "adr_if_eligible_else_freeze",
+    "early_close_mode": "capacity_half",
+    "max_closes": 1,
+    "fill_volume_source": "realized_daily",
+    "close_impact_discount": {
+      "US_STOCK": 0.6,
+      "ADR": 0.6,
+      "BR": 0.6,
+      "MX": 0.6,
+      "CL": 0.6,
+      "ETF_US": 1.0,
+      "CO": 1.0,
+      "PE": 1.0,
+      "AR": 1.0
+    },
+    "closed_home_market_spread_mult": 1.5,
+    "max_fixed_cost_bps": 10.0
+  }
+}

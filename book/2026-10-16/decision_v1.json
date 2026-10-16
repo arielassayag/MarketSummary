@@ -1,0 +1,131 @@
+{
+  "acknowledged_soft_checks": [],
+  "approval_hash": "341335e4f8aee21eee932b822f681501e0c529ecee5f648f3bb61420fcdd1e5f",
+  "approver": "CDP — Cabra da Peste (PM autônomo)",
+  "audit_head_hash": "8a76e43f0dfea421a748af78d37c0df68b1af2ed6983e29bcc9c2194f65b8fb0",
+  "co_sign_reasons": [],
+  "co_signed_at": null,
+  "co_signer": null,
+  "config_hash": "2ddf7d89ac769dea9781ac51fb825fa55931bf19250fa64e2f7447aa91f34ff0",
+  "conviction": null,
+  "decided_at": "2026-10-16T14:44:53.354359Z",
+  "decision": "APPROVE",
+  "journal": {
+    "ai_vs_quant_vs_pm": "Abstenção do agente PM: carteira só-quant com as restrições vigentes.",
+    "alternatives_considered": "O que mudou na visão: As notas publicadas depois da montagem anterior mantêm visão qualitativa neutra e lacunas de caixa, capital e direitos por ação. Encerro as inclinações anteriores sem convertê-las em recomendações opostas; preservo o veto de compra de Hudbay pela revisão atual. Os demais vetos decorrem de squeeze, eventos e documentação específica. A revisão pré-trade também exclui compras em Copel e vendas em Grupo GPS diante da divergência com a avaliação e da ausência de confirmação independente. A coleta B3 incompleta limita a atualidade da análise.",
+    "bias_checklist": {},
+    "catalysts": [],
+    "horizon_weeks": 8,
+    "key_variables": [
+      "Regime: neutro",
+      "Postura: defensiva → defensiva",
+      "Escada de drawdown: normal"
+    ],
+    "mental_state": "Mente: codex",
+    "positions": [
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Caixa após obrigações não remunera capital ou decisões de comercialização e investimento reduzem retorno atribuível.",
+        "issuer_id": "BR_PETROBRAS",
+        "premortem": "Petróleo e produção melhoram o lucro antes de capital e obrigações absorverem os recursos do acionista.",
+        "probability_correct": null,
+        "thesis": "A produção e a eficiência precisam remunerar reinvestimento, arrendamentos e obrigações sob controle estatal. O alvo em revisão não é convicção adicional da gestão.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Estoque e recebíveis crescem sem retorno suficiente ou lucro financeiro mascara deterioração operacional.",
+        "issuer_id": "MX_GENOMMA",
+        "premortem": "A recuperação aparente financiaria o canal e a fábrica sem converter vendas em caixa.",
+        "probability_correct": null,
+        "thesis": "A leitura depende de demanda final e recebimento depois de promoção e fabricação; neutralidade qualitativa preservada.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Expansão de crédito reduz retorno ajustado ao risco ou consumo de capital supera geração econômica.",
+        "issuer_id": "BR_PAGS",
+        "premortem": "A convergência dos métodos refletiria premissas compartilhadas antes de perdas e diluição aparecerem.",
+        "probability_correct": null,
+        "thesis": "O rating quantitativo é Compra, mas as lacunas de perdas, captação, classes e retorno por cliente impedem inclinação fundamental adicional.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Reavaliar depois da publicação e da conciliação de capital, crédito e proventos.",
+        "issuer_id": "BR_BRADESCO",
+        "premortem": "Recuperação de resultado ou ajuste de base tornaria a recompra mais onerosa.",
+        "probability_correct": null,
+        "thesis": "O calendário primário confirma divulgação em 2026-10-22. O evento de capital recente e o alerta de preço ajustado exigem reconciliação; veto ao lado vendido antes do resultado.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Termos, condições de fechamento e direitos do minoritário reconciliados alteram a assimetria do evento.",
+        "issuer_id": "BR_CBA",
+        "premortem": "A alienação de controle criaria uma dinâmica de preço distinta da margem normalizada do alumínio.",
+        "probability_correct": null,
+        "thesis": "A nota publicada identifica alienação condicional de controle e direitos ainda a reconciliar. O rating negativo não comprova a segurança do short diante desse evento; veto ao lado vendido.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Normalização comprovada do squeeze, disponibilidade de aluguel e nova revisão de caixa e concentração.",
+        "issuer_id": "LA_DLOCAL",
+        "premortem": "A pressão de recompra dominaria a diferença de valuation antes da convergência fundamental.",
+        "probability_correct": null,
+        "thesis": "O último fechamento classificou o short com risco alto de squeeze. Crescimento de processamento, pressão de preço e caixa de lojistas não oferecem proteção contra recompra; veto ao lado vendido.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Normalização comprovada do squeeze e revisão de canais, estoque e caixa.",
+        "issuer_id": "BR_ALPARGATAS",
+        "premortem": "Recuperação de demanda ou aperto do aluguel imporia recompra em condições adversas.",
+        "probability_correct": null,
+        "thesis": "O último fechamento classificou o short com risco alto de squeeze; a recuperação operacional e as lacunas de canal e caixa elevam o risco de recompra. Veto ao lado vendido.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Reconciliar caixa, capital e avaliação com nova evidência pública suficiente para resolver a divergência.",
+        "issuer_id": "BR_COPEL",
+        "premortem": "A seleção dependeria de uma assimetria ainda não comprovada e o lado proposto perderia antes da revisão das premissas.",
+        "probability_correct": null,
+        "thesis": "A revisão pré-trade encontrou divergência entre compra proposta e avaliação atual. Receita regulada, financiamento e caixa não foram integralmente reconciliados na nota; sem confirmação independente, não endosso abertura comprada.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Reconciliar caixa, capital e avaliação com nova evidência pública suficiente para resolver a divergência.",
+        "issuer_id": "PE_HUDBAY",
+        "premortem": "A seleção dependeria de uma assimetria ainda não comprovada e o lado proposto perderia antes da revisão das premissas.",
+        "probability_correct": null,
+        "thesis": "A avaliação atual e a compra proposta divergem, enquanto crédito do ouro, recursos restritos e financiamento dos projetos permanecem a reconciliar. Sem confirmação adicional, preservo o veto à compra, sem recomendar posição vendida.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Reconciliar caixa, capital e avaliação com nova evidência pública suficiente para resolver a divergência.",
+        "issuer_id": "BR_GPS",
+        "premortem": "A seleção dependeria de uma assimetria ainda não comprovada e o lado proposto perderia antes da revisão das premissas.",
+        "probability_correct": null,
+        "thesis": "A revisão pré-trade encontrou divergência entre venda proposta e avaliação atual. As lacunas de caixa, reversões e contratos não oferecem evidência independente suficiente para sustentar esse short; veto ao lado vendido.",
+        "variant_perception": ""
+      }
+    ],
+    "premortem": "BR_PETROBRAS: Petróleo e produção melhoram o lucro antes de capital e obrigações absorverem os recursos do acionista. | MX_GENOMMA: A recuperação aparente financiaria o canal e a fábrica sem converter vendas em caixa. | BR_PAGS: A convergência dos métodos refletiria premissas compartilhadas antes de perdas e diluição aparecerem. | BR_BRADESCO: Recuperação de resultado ou ajuste de base tornaria a recompra mais onerosa. | BR_CBA: A alienação de controle criaria uma dinâmica de preço distinta da margem normalizada do alumínio.",
+    "situation": "A janela eleitoral brasileira e a incerteza de juros e financiamento recomendam postura defensiva. O drawdown é -0,01%; a volatilidade realizada permanece n/d. A pesquisa revisa a cobertura publicada e os modelos atualizados, mas não comprova retorno residual suficiente para novas inclinações fundamentais. Abstenho-me dessas inclinações e preservo as restrições de risco; seleção, neutralidade e dimensionamento dependem do modelo quantitativo e dos gates.",
+    "sizing_rationale": "Postura solicitada defensiva; efetiva defensiva (escada de drawdown: normal); vol-alvo 4,00% e gross máximo 2,00x (calculados por código). "
+  },
+  "mind": "codex",
+  "mode": "AUTONOMOUS",
+  "pm_decision_hash": "a7cf482ddc6d77e555166d961f6de9b78def88c5e7a3afc5fcb970d2f384f614",
+  "proposal_hash": "6356883ad3cf2f36bc8bfc8da0b427be4311c8ce883e5b756f16420c0eeee270",
+  "proposal_id": "CDP-2026-10-16-cdp-restricoes",
+  "rationale": "Postura defensiva; regime neutro. A janela eleitoral brasileira e a incerteza de juros e financiamento recomendam postura defensiva. O drawdown é -0,01%; a volatilidade realizada permanece n/d. A pesquisa revisa a cobertura publicada e os modelos atualizados, mas não comprova retorno residual suficiente para novas inclinações fundamentais. Abstenho-me dessas inclinações e preservo as restrições de risco; seleção, neutralidade e dimensionamento dependem do modelo quantitativo e dos gates. Caminho: cdp-restricoes.",
+  "research_hash": "e783a1d4715fc8b179108a69b47d5ec4d05f0d4eb9ec267c8e54c2bf0ec5dc7a",
+  "risk_gate_hash": "c2179ed81755486ad7dbba63b2dc53c3b873abb1d8a4e3650fcfcf1a805a8335",
+  "snapshot_hash": "c03aa00d1dcb6f6618f0d6d00ca3dd23cec6a39979ee2b9c442bb301552d060e",
+  "week": "2026-10-16"
+}

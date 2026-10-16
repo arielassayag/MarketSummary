@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 85.99,
+  "high": 100.0,
+  "low": 83.0,
+  "mean": 88.375,
+  "median": 87.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 2.109,
+   "currency": "CLP",
+   "growth": -0.1047,
+   "high": 2.109,
+   "low": 2.109,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 2.35551
+  },
+  "+1y": {
+   "avg": 8.25325,
+   "currency": "CLP",
+   "growth": -0.14130001,
+   "high": 9.868,
+   "low": 6.65,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 9.611
+  },
+  "0q": {
+   "avg": 1.813,
+   "currency": "CLP",
+   "growth": 0.24700001,
+   "high": 1.813,
+   "low": 1.813,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 1.45384
+  },
+  "0y": {
+   "avg": 9.611,
+   "currency": "CLP",
+   "growth": 0.28100002,
+   "high": 9.868,
+   "low": 9.354,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 7.50273
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1046889322000,
+   "currency": "CLP",
+   "growth": 0.014400001,
+   "high": 1046889322000,
+   "low": 1046889322000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 1032061030000
+  },
+  "+1y": {
+   "avg": 4257038609039,
+   "currency": "CLP",
+   "growth": -0.020299999,
+   "high": 4619443525000,
+   "low": 3868458000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 4345041798089
+  },
+  "0q": {
+   "avg": 1068585316000,
+   "currency": "CLP",
+   "growth": -0.0571,
+   "high": 1068585316000,
+   "low": 1068585316000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 1133254612900
+  },
+  "0y": {
+   "avg": 4345041798089,
+   "currency": "CLP",
+   "growth": 0.0681,
+   "high": 4470917540000,
+   "low": 4238774909550,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 4068047830000
+  }
+ },
+ "ticker": "ENELCHILE.SN",
+ "url": "https://finance.yahoo.com/quote/ENELCHILE.SN"
+}

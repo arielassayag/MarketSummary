@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 38.84,
+  "high": 51.0,
+  "low": 21.0,
+  "mean": 40.94267,
+  "median": 43.6
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.70667,
+   "currency": "USD",
+   "growth": 0.19950001,
+   "high": 0.79,
+   "low": 0.58,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.58914
+  },
+  "+1y": {
+   "avg": 3.10464,
+   "currency": "USD",
+   "growth": 0.24190001,
+   "high": 3.3,
+   "low": 2.83,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 2.5
+  },
+  "0q": {
+   "avg": 0.48,
+   "currency": "USD",
+   "growth": -0.20950001,
+   "high": 0.48,
+   "low": 0.48,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.60722
+  },
+  "0y": {
+   "avg": 2.5,
+   "currency": "USD",
+   "growth": -0.09020001,
+   "high": 2.5,
+   "low": 2.5,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 2.74786
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 806108595000,
+   "currency": "CLP",
+   "growth": 0.0764,
+   "high": 806108595000,
+   "low": 806108595000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 748885000000
+  },
+  "+1y": {
+   "avg": 3481752731550,
+   "currency": "CLP",
+   "growth": 0.0753,
+   "high": 3788753951000,
+   "low": 3235701000000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 3237978323490
+  },
+  "0q": {
+   "avg": 808976588000,
+   "currency": "CLP",
+   "growth": 0.080699995,
+   "high": 824000000000,
+   "low": 793953176000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 748580000000
+  },
+  "0y": {
+   "avg": 3237978323490,
+   "currency": "CLP",
+   "growth": 0.07,
+   "high": 3251387576980,
+   "low": 3224569070000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 3026043000000
+  }
+ },
+ "ticker": "BCH",
+ "url": "https://finance.yahoo.com/quote/BCH"
+}

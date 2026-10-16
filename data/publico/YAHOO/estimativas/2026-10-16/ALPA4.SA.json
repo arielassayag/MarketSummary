@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 18.16,
+  "high": 21.0,
+  "low": 13.5,
+  "mean": 16.875,
+  "median": 16.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.34401,
+   "currency": "BRL",
+   "growth": -0.1018,
+   "high": 0.37475,
+   "low": 0.28253,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.38299
+  },
+  "+1y": {
+   "avg": 1.2605,
+   "currency": "BRL",
+   "growth": 0.1958,
+   "high": 1.37034,
+   "low": 1.1237,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 1.05414
+  },
+  "0q": {
+   "avg": 0.24387,
+   "currency": "BRL",
+   "growth": -0.0752,
+   "high": 0.25389,
+   "low": 0.23799,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.2637
+  },
+  "0y": {
+   "avg": 1.05414,
+   "currency": "BRL",
+   "growth": -0.4021,
+   "high": 1.12635,
+   "low": 1.0,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 1.76309
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1351223140,
+   "currency": "BRL",
+   "growth": 0.0765,
+   "high": 1371922830,
+   "low": 1330523460,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 1255200000
+  },
+  "+1y": {
+   "avg": 5358985300,
+   "currency": "BRL",
+   "growth": 0.0763,
+   "high": 5417100000,
+   "low": 5236000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 4979213640
+  },
+  "0q": {
+   "avg": 1176122460,
+   "currency": "BRL",
+   "growth": 0.0541,
+   "high": 1178824110,
+   "low": 1173420810,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 1115800000
+  },
+  "0y": {
+   "avg": 4979213640,
+   "currency": "BRL",
+   "growth": 0.0908,
+   "high": 5025200000,
+   "low": 4954036910,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 4564900000
+  }
+ },
+ "ticker": "ALPA4.SA",
+ "url": "https://finance.yahoo.com/quote/ALPA4.SA"
+}

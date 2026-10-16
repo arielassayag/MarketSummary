@@ -1,0 +1,146 @@
+{
+  "mind": "codex",
+  "regime": "neutral",
+  "risk_posture": "defensiva",
+  "abstain": true,
+  "views": [],
+  "market_view": "A janela eleitoral brasileira e a incerteza de juros e financiamento recomendam postura defensiva. O drawdown é {{fact:cdp.drawdown}}; a volatilidade realizada permanece {{fact:cdp.realized_vol_21d}}. A pesquisa revisa a cobertura publicada e os modelos atualizados, mas não comprova retorno residual suficiente para novas inclinações fundamentais. Abstenho-me dessas inclinações e preservo as restrições de risco; seleção, neutralidade e dimensionamento dependem do modelo quantitativo e dos gates.",
+  "what_changed": "As notas publicadas depois da montagem anterior mantêm visão qualitativa neutra e lacunas de caixa, capital e direitos por ação. Encerro as inclinações anteriores sem convertê-las em recomendações opostas; preservo o veto de compra de Hudbay pela revisão atual. Os demais vetos decorrem de squeeze, eventos e documentação específica. A revisão pré-trade também exclui compras em Copel e vendas em Grupo GPS diante da divergência com a avaliação e da ausência de confirmação independente. A coleta B3 incompleta limita a atualidade da análise.",
+  "evaluation_last_week": "A avaliação determinística registra taxa de acerto de {{fact:eval.hit_rate}} em {{fact:eval.n_views}} visões, com {{fact:eval.n_hits}} acertos. PagSeguro teve resíduo de {{fact:eval.BR_PAGS.resid_ret_1w}}, Mills {{fact:eval.BR_MILLS.resid_ret_1w}} e CBA {{fact:eval.BR_CBA.resid_ret_1w}} no sentido das visões. ISA Energia Brasil apresentou {{fact:eval.BR_ISAENERGIA.resid_ret_1w}}, XP {{fact:eval.BR_XP.resid_ret_1w}} e Hudbay {{fact:eval.PE_HUDBAY.resid_ret_1w}} em sentido contrário. Esses resíduos não equivalem ao P&L realizado das posições nem demonstram causalidade ou habilidade persistente.",
+  "exclusions": [
+    {
+      "issuer_id": "BR_ALPARGATAS",
+      "no_short": true,
+      "no_long": false,
+      "reason": "O último fechamento classificou o short com risco alto de squeeze; a recuperação operacional e as lacunas de canal e caixa elevam o risco de recompra. Veto ao lado vendido."
+    },
+    {
+      "issuer_id": "LA_DLOCAL",
+      "no_short": true,
+      "no_long": false,
+      "reason": "O último fechamento classificou o short com risco alto de squeeze. Crescimento de processamento, pressão de preço e caixa de lojistas não oferecem proteção contra recompra; veto ao lado vendido."
+    },
+    {
+      "issuer_id": "BR_BRADESCO",
+      "no_short": true,
+      "no_long": false,
+      "reason": "O calendário primário confirma divulgação em 2026-10-22. O evento de capital recente e o alerta de preço ajustado exigem reconciliação; veto ao lado vendido antes do resultado."
+    },
+    {
+      "issuer_id": "MX_AEROMEXICO",
+      "no_short": true,
+      "no_long": false,
+      "reason": "O emissor confirma resultado após o fechamento de 2026-10-19 e conferência em 2026-10-20. Veto ao lado vendido diante do catalisador próximo."
+    },
+    {
+      "issuer_id": "AR_CRESUD",
+      "no_short": true,
+      "no_long": false,
+      "reason": "A convocação primária confirma assembleia em 2026-10-22, com proposta de distribuição sujeita a deliberação. Veto ao lado vendido antes do evento, sem presumir pagamento."
+    },
+    {
+      "issuer_id": "BR_INTER",
+      "no_short": true,
+      "no_long": false,
+      "reason": "A nota publicada registra encerramento da janela de escolha dos recibos em 2026-10-16. O RI identifica o comunicado de 2026-10-13 como evolução da liderança, sem divulgação trimestral. Incerteza societária recomenda veto ao lado vendido."
+    },
+    {
+      "issuer_id": "BR_CBA",
+      "no_short": true,
+      "no_long": false,
+      "reason": "A nota publicada identifica alienação condicional de controle e direitos ainda a reconciliar. O rating negativo não comprova a segurança do short diante desse evento; veto ao lado vendido."
+    },
+    {
+      "issuer_id": "CO_GEOPARK",
+      "no_short": true,
+      "no_long": false,
+      "reason": "O noticiário da manhã descreve emissão proposta e oferta de recompra sujeitas a condições; o RI lista atualização operacional recente. Sem reconciliação completa do financiamento, veto ao lado vendido."
+    },
+    {
+      "issuer_id": "BR_BRASKEM",
+      "no_short": true,
+      "no_long": true,
+      "reason": "Continuidade, reestruturação e leilão de OPA previsto para 2026-10-16 na nota publicada exigem termos e direitos reconciliados. Sem alvo citável e sem confirmação integral da liquidação, abstenção de ambos os lados."
+    },
+    {
+      "issuer_id": "BR_COPEL",
+      "no_long": true,
+      "no_short": false,
+      "reason": "A revisão pré-trade encontrou divergência entre compra proposta e avaliação atual. Receita regulada, financiamento e caixa não foram integralmente reconciliados na nota; sem confirmação independente, não endosso abertura comprada."
+    },
+    {
+      "issuer_id": "PE_HUDBAY",
+      "no_long": true,
+      "no_short": false,
+      "reason": "A avaliação atual e a compra proposta divergem, enquanto crédito do ouro, recursos restritos e financiamento dos projetos permanecem a reconciliar. Sem confirmação adicional, preservo o veto à compra, sem recomendar posição vendida."
+    },
+    {
+      "issuer_id": "BR_GPS",
+      "no_long": false,
+      "no_short": true,
+      "reason": "A revisão pré-trade encontrou divergência entre venda proposta e avaliação atual. As lacunas de caixa, reversões e contratos não oferecem evidência independente suficiente para sustentar esse short; veto ao lado vendido."
+    }
+  ],
+  "position_journal": [
+    {
+      "issuer_id": "BR_PETROBRAS",
+      "thesis": "A produção e a eficiência precisam remunerar reinvestimento, arrendamentos e obrigações sob controle estatal. O alvo em revisão não é convicção adicional da gestão.",
+      "invalidation_criteria": "Caixa após obrigações não remunera capital ou decisões de comercialização e investimento reduzem retorno atribuível.",
+      "premortem": "Petróleo e produção melhoram o lucro antes de capital e obrigações absorverem os recursos do acionista."
+    },
+    {
+      "issuer_id": "MX_GENOMMA",
+      "thesis": "A leitura depende de demanda final e recebimento depois de promoção e fabricação; neutralidade qualitativa preservada.",
+      "invalidation_criteria": "Estoque e recebíveis crescem sem retorno suficiente ou lucro financeiro mascara deterioração operacional.",
+      "premortem": "A recuperação aparente financiaria o canal e a fábrica sem converter vendas em caixa."
+    },
+    {
+      "issuer_id": "BR_PAGS",
+      "thesis": "O rating quantitativo é {{fact:val.BR_PAGS.rating_codigo}}, mas as lacunas de perdas, captação, classes e retorno por cliente impedem inclinação fundamental adicional.",
+      "invalidation_criteria": "Expansão de crédito reduz retorno ajustado ao risco ou consumo de capital supera geração econômica.",
+      "premortem": "A convergência dos métodos refletiria premissas compartilhadas antes de perdas e diluição aparecerem."
+    },
+    {
+      "issuer_id": "BR_BRADESCO",
+      "thesis": "O calendário primário confirma divulgação em 2026-10-22. O evento de capital recente e o alerta de preço ajustado exigem reconciliação; veto ao lado vendido antes do resultado.",
+      "invalidation_criteria": "Reavaliar depois da publicação e da conciliação de capital, crédito e proventos.",
+      "premortem": "Recuperação de resultado ou ajuste de base tornaria a recompra mais onerosa."
+    },
+    {
+      "issuer_id": "BR_CBA",
+      "thesis": "A nota publicada identifica alienação condicional de controle e direitos ainda a reconciliar. O rating negativo não comprova a segurança do short diante desse evento; veto ao lado vendido.",
+      "invalidation_criteria": "Termos, condições de fechamento e direitos do minoritário reconciliados alteram a assimetria do evento.",
+      "premortem": "A alienação de controle criaria uma dinâmica de preço distinta da margem normalizada do alumínio."
+    },
+    {
+      "issuer_id": "LA_DLOCAL",
+      "thesis": "O último fechamento classificou o short com risco alto de squeeze. Crescimento de processamento, pressão de preço e caixa de lojistas não oferecem proteção contra recompra; veto ao lado vendido.",
+      "invalidation_criteria": "Normalização comprovada do squeeze, disponibilidade de aluguel e nova revisão de caixa e concentração.",
+      "premortem": "A pressão de recompra dominaria a diferença de valuation antes da convergência fundamental."
+    },
+    {
+      "issuer_id": "BR_ALPARGATAS",
+      "thesis": "O último fechamento classificou o short com risco alto de squeeze; a recuperação operacional e as lacunas de canal e caixa elevam o risco de recompra. Veto ao lado vendido.",
+      "invalidation_criteria": "Normalização comprovada do squeeze e revisão de canais, estoque e caixa.",
+      "premortem": "Recuperação de demanda ou aperto do aluguel imporia recompra em condições adversas."
+    },
+    {
+      "issuer_id": "BR_COPEL",
+      "thesis": "A revisão pré-trade encontrou divergência entre compra proposta e avaliação atual. Receita regulada, financiamento e caixa não foram integralmente reconciliados na nota; sem confirmação independente, não endosso abertura comprada.",
+      "invalidation_criteria": "Reconciliar caixa, capital e avaliação com nova evidência pública suficiente para resolver a divergência.",
+      "premortem": "A seleção dependeria de uma assimetria ainda não comprovada e o lado proposto perderia antes da revisão das premissas."
+    },
+    {
+      "issuer_id": "PE_HUDBAY",
+      "thesis": "A avaliação atual e a compra proposta divergem, enquanto crédito do ouro, recursos restritos e financiamento dos projetos permanecem a reconciliar. Sem confirmação adicional, preservo o veto à compra, sem recomendar posição vendida.",
+      "invalidation_criteria": "Reconciliar caixa, capital e avaliação com nova evidência pública suficiente para resolver a divergência.",
+      "premortem": "A seleção dependeria de uma assimetria ainda não comprovada e o lado proposto perderia antes da revisão das premissas."
+    },
+    {
+      "issuer_id": "BR_GPS",
+      "thesis": "A revisão pré-trade encontrou divergência entre venda proposta e avaliação atual. As lacunas de caixa, reversões e contratos não oferecem evidência independente suficiente para sustentar esse short; veto ao lado vendido.",
+      "invalidation_criteria": "Reconciliar caixa, capital e avaliação com nova evidência pública suficiente para resolver a divergência.",
+      "premortem": "A seleção dependeria de uma assimetria ainda não comprovada e o lado proposto perderia antes da revisão das premissas."
+    }
+  ]
+}

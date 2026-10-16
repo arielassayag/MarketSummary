@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 12.34,
+  "high": 19.0,
+  "low": 13.5,
+  "mean": 16.5,
+  "median": 16.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.95075,
+   "currency": "BRL",
+   "growth": 0.0958,
+   "high": 0.96,
+   "low": 0.9415,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.8676
+  },
+  "+1y": {
+   "avg": 1.85321,
+   "currency": "BRL",
+   "growth": 0.120900005,
+   "high": 2.19,
+   "low": 1.53,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 1.65326
+  },
+  "0q": {
+   "avg": 0.1417,
+   "currency": "BRL",
+   "growth": -0.4034,
+   "high": 0.17339,
+   "low": 0.11,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.2375
+  },
+  "0y": {
+   "avg": 1.65326,
+   "currency": "BRL",
+   "growth": 0.090299994,
+   "high": 1.74,
+   "low": 1.56303,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 1.5164
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 2670544050,
+   "currency": "BRL",
+   "growth": 0.0805,
+   "high": 2702017000,
+   "low": 2624322930,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 2471552000
+  },
+  "+1y": {
+   "avg": 9009998230,
+   "currency": "BRL",
+   "growth": 0.0771,
+   "high": 9450000000,
+   "low": 8329600000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 8365125430
+  },
+  "0q": {
+   "avg": 1875304540,
+   "currency": "BRL",
+   "growth": 0.0187,
+   "high": 1934746050,
+   "low": 1841000000,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 1840900000
+  },
+  "0y": {
+   "avg": 8365125430,
+   "currency": "BRL",
+   "growth": 0.0479,
+   "high": 8613000000,
+   "low": 8193859940,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 7982958000
+  }
+ },
+ "ticker": "CEAB3.SA",
+ "url": "https://finance.yahoo.com/quote/CEAB3.SA"
+}

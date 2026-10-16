@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 2.97,
+  "high": 5.0,
+  "low": 2.5,
+  "mean": 3.66154,
+  "median": 3.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.16234,
+   "currency": "BRL",
+   "growth": -0.0167,
+   "high": 0.19,
+   "low": 0.13064,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.1651
+  },
+  "+1y": {
+   "avg": 0.48724,
+   "currency": "BRL",
+   "growth": 0.19049999,
+   "high": 0.57,
+   "low": 0.3889,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 0.40927
+  },
+  "0q": {
+   "avg": 0.02938,
+   "currency": "BRL",
+   "growth": -0.7531,
+   "high": 0.04,
+   "low": 0.01889,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.119
+  },
+  "0y": {
+   "avg": 0.40927,
+   "currency": "BRL",
+   "growth": -0.1272,
+   "high": 0.43,
+   "low": 0.38966,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 0.4689
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 2291956790,
+   "currency": "BRL",
+   "growth": 0.041300002,
+   "high": 2383470000,
+   "low": 2215634230,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 2201066000
+  },
+  "+1y": {
+   "avg": 8427179230,
+   "currency": "BRL",
+   "growth": 0.052199997,
+   "high": 8808000000,
+   "low": 8114000000,
+   "numberOfAnalysts": 13,
+   "yearAgoRevenue": 8009318120
+  },
+  "0q": {
+   "avg": 1595730710,
+   "currency": "BRL",
+   "growth": 0.0475,
+   "high": 1636397450,
+   "low": 1552000000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 1523369000
+  },
+  "0y": {
+   "avg": 8009318120,
+   "currency": "BRL",
+   "growth": 0.1415,
+   "high": 8081371000,
+   "low": 7917000000,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 7016663000
+  }
+ },
+ "ticker": "COGN3.SA",
+ "url": "https://finance.yahoo.com/quote/COGN3.SA"
+}

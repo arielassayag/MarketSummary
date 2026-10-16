@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 9.94,
+  "high": 14.0,
+  "low": 9.5,
+  "mean": 12.475,
+  "median": 12.75
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.4966,
+   "currency": "BRL",
+   "growth": -0.8068,
+   "high": 0.49777,
+   "low": 0.49544,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 2.57
+  },
+  "+1y": {
+   "avg": 1.37667,
+   "currency": "BRL",
+   "growth": 0.1936,
+   "high": 1.46,
+   "low": 1.33,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 1.15333
+  },
+  "0q": {
+   "avg": 0.13188,
+   "currency": "BRL",
+   "growth": -0.105299994,
+   "high": 0.14754,
+   "low": 0.11622,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.1474
+  },
+  "0y": {
+   "avg": 1.15333,
+   "currency": "BRL",
+   "growth": 0.1261,
+   "high": 1.22,
+   "low": 1.08,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 1.0242
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 3290657720,
+   "currency": "BRL",
+   "growth": 0.0269,
+   "high": 3290657720,
+   "low": 3290657720,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 3204498000
+  },
+  "+1y": {
+   "avg": 12062002550,
+   "currency": "BRL",
+   "growth": 0.083000004,
+   "high": 12414500000,
+   "low": 11459569230,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 11137359320
+  },
+  "0q": {
+   "avg": 2477749400,
+   "currency": "BRL",
+   "growth": 0.0104,
+   "high": 2484000000,
+   "low": 2471498810,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 2452191000
+  },
+  "0y": {
+   "avg": 11137359320,
+   "currency": "BRL",
+   "growth": 0.061,
+   "high": 11409000000,
+   "low": 10775831580,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 10497046000
+  }
+ },
+ "ticker": "RIAA3.SA",
+ "url": "https://finance.yahoo.com/quote/RIAA3.SA"
+}

@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 6.82,
+  "high": 12.0,
+  "low": 5.0,
+  "mean": 8.42143,
+  "median": 8.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.33595,
+   "currency": "BRL",
+   "growth": 20.1289,
+   "high": 0.3919,
+   "low": 0.28,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.0159
+  },
+  "+1y": {
+   "avg": 1.23024,
+   "currency": "BRL",
+   "growth": -0.1292,
+   "high": 1.94666,
+   "low": 0.69486,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 1.41278
+  },
+  "0q": {
+   "avg": 0.25633,
+   "currency": "BRL",
+   "growth": 1.2415,
+   "high": 0.3571,
+   "low": 0.18821,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": -1.0613
+  },
+  "0y": {
+   "avg": 1.41278,
+   "currency": "BRL",
+   "growth": 3.0134,
+   "high": 1.62859,
+   "low": 1.20835,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": -0.7017
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 6378290190,
+   "currency": "BRL",
+   "growth": 0.032899998,
+   "high": 6727193430,
+   "low": 5785115150,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 6175087000
+  },
+  "+1y": {
+   "avg": 25755337820,
+   "currency": "BRL",
+   "growth": 0.0361,
+   "high": 27928000000,
+   "low": 22948306340,
+   "numberOfAnalysts": 13,
+   "yearAgoRevenue": 24856838630
+  },
+  "0q": {
+   "avg": 6310491150,
+   "currency": "BRL",
+   "growth": -0.044499997,
+   "high": 6531800860,
+   "low": 5961000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 6604238000
+  },
+  "0y": {
+   "avg": 24856838630,
+   "currency": "BRL",
+   "growth": -0.053600002,
+   "high": 27052000000,
+   "low": 23893677410,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 26263450000
+  }
+ },
+ "ticker": "USIM5.SA",
+ "url": "https://finance.yahoo.com/quote/USIM5.SA"
+}

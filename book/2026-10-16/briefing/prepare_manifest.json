@@ -1,0 +1,34 @@
+{
+  "captured_at": "2026-10-16 14:24:41.639072+00:00",
+  "cobertura": {
+    "as_of": "2026-10-16",
+    "corte_temporal": {
+      "base_preco": "2026-10-15",
+      "coleta_fim": "2026-10-16T14:18:21.021493+00:00",
+      "coleta_inicio": "2026-10-16T14:11:59.591607+00:00",
+      "conhecimento_ate": "2026-10-16T14:18:21.021493+00:00",
+      "data_modelo": "2026-10-16",
+      "metodo": "base_preco_conhecimento_explicitos"
+    },
+    "manifest_sha256": "e84404ab936a6f766ff278114cc997fa37562c9e72fbefc3c2cf2cca0d2f37e2"
+  },
+  "cobertura_metodo": "base_preco_conhecimento_explicitos",
+  "config_hash": "2ddf7d89ac769dea9781ac51fb825fa55931bf19250fa64e2f7447aa91f34ff0",
+  "intraday": true,
+  "intraday_sha256": "723dd7b429fc10f0115dee33d7d6325710d3453b33a2303c4d6b139dbcb01029",
+  "live": true,
+  "n_quotes": 292,
+  "prepared_at": "2026-10-16 14:24:41.639065+00:00",
+  "previous_session": "2026-10-15",
+  "slow_failures": [
+    "aluguel B3: Fonte de aluguel B3 (BDI) indisponível: 2026-10-06: Falha de rede em POST https://arquivos.b3.com.br/bdi/table/BTBLoanBalance/2026-10-06/2026-10-06/1/1000: ReadTimeout(ReadTimeoutError(\"HTTPSConnectionPool(host='arquivos.b3.com.br', port=443): Read timed out. (read timeout=20.0)\")); 2026-10-07: Falha de rede em POST https://arquivos.b3.com.br/bdi/table/BTBLendingOpenPosition/2026-10-07/2026-10-07/2/1000: ReadTimeout(ReadTimeoutError(\"HTTPSConnectionPool(host='arquivos.b3.com.br', port=443): Read timed out. (read timeout=20.0)\")); 2026-10-08: Falha de rede em POST https://arquivos.b3.com.br/bdi/table/BTBLendingOpenPosition/2026-10-08/2026-10-08/1/1000: ReadTimeout(ReadTimeoutError(\"HTTPSConnectionPool(host='arquivos.b3.com.br', port=443): Read timed out. (read timeout=20.0)\"))"
+  ],
+  "slow_hashes": {
+    "fundamentals.parquet": "20e14696b61adec9dc21e0dbaa6aec1e58a37ccdd47b323fff8a31ccf79bf94a",
+    "news.jsonl": "d47e4cb4895140224da43d42533271875b0253ee6879f238f96530279b0906c6",
+    "short_interest.parquet": "e5b1a4f366e7bc008eaeb0655f46ee6ef570b1ff4a42ee01e91195727152960e"
+  },
+  "snapshot_hash": "c03aa00d1dcb6f6618f0d6d00ca3dd23cec6a39979ee2b9c442bb301552d060e",
+  "store_content_hash": "e63cbfa205551f7511d0b8438473d5f3d271b1b9cf5c2dd1dbef82747713b89f",
+  "week": "2026-10-16"
+}

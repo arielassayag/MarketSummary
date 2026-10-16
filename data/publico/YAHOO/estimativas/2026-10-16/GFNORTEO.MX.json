@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 200.31,
+  "high": 252.0,
+  "low": 163.0,
+  "mean": 222.8125,
+  "median": 229.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 5.67887,
+   "currency": "MXN",
+   "growth": -0.0011,
+   "high": 5.8,
+   "low": 5.39,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 5.685
+  },
+  "+1y": {
+   "avg": 23.77943,
+   "currency": "MXN",
+   "growth": 0.0759,
+   "high": 24.65876,
+   "low": 20.9,
+   "numberOfAnalysts": 10,
+   "yearAgoEps": 22.10255
+  },
+  "0q": {
+   "avg": 5.56938,
+   "currency": "MXN",
+   "growth": 0.2043,
+   "high": 5.65191,
+   "low": 5.52,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 4.6247
+  },
+  "0y": {
+   "avg": 22.10255,
+   "currency": "MXN",
+   "growth": 0.0252,
+   "high": 22.62,
+   "low": 20.3,
+   "numberOfAnalysts": 10,
+   "yearAgoEps": 21.5602
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 45171619560,
+   "currency": "MXN",
+   "growth": 0.0719,
+   "high": 46075239130,
+   "low": 44268000000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 42142000000
+  },
+  "+1y": {
+   "avg": 188218271740,
+   "currency": "MXN",
+   "growth": 0.076,
+   "high": 195924781450,
+   "low": 178308000000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 174919079920
+  },
+  "0q": {
+   "avg": 43609318570,
+   "currency": "MXN",
+   "growth": 0.0683,
+   "high": 45122374010,
+   "low": 41696000000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 40822382350
+  },
+  "0y": {
+   "avg": 174919079920,
+   "currency": "MXN",
+   "growth": 0.0847,
+   "high": 179392000000,
+   "low": 167658259410,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 161262000000
+  }
+ },
+ "ticker": "GFNORTEO.MX",
+ "url": "https://finance.yahoo.com/quote/GFNORTEO.MX"
+}

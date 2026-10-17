@@ -1,12 +1,11 @@
 {
- "estado": "ocupada",
- "executor": "local-pc",
- "expira": "2026-10-17T00:57:35+00:00",
- "harness": "codex",
- "id": "928a2842-7c20-46dd-ac42-b554a39e8f93",
- "inicio": "2026-10-17T00:12:35+00:00",
- "renovada": "2026-10-17T00:12:35+00:00",
- "sessao": "codex:01a14733-9960-7143-b8e5-04d2b0d9e8db",
- "tarefa": "cdp-diario-reforco",
+ "estado": "livre",
+ "id": null,
+ "liberada": "2026-10-17T00:17:43+00:00",
+ "ultima": {
+  "executor": "local-pc",
+  "inicio": "2026-10-17T00:12:35+00:00",
+  "tarefa": "cdp-diario-reforco"
+ },
  "versao": 1
 }

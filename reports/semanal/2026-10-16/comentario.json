@@ -1,0 +1,43 @@
+{
+  "mind": "codex",
+  "resumo": "A carteira simulada encerrou a semana com retorno de {{fact:semana.ret}} e resultado de {{fact:semana.pnl_usd}}; desde o início, {{fact:itd.ret}}, com NAV de {{fact:nav}}. O fechamento registrou {{fact:mudancas.entrada}} entradas, {{fact:mudancas.saida}} saídas, {{fact:mudancas.aumento}} aumentos e {{fact:mudancas.reducao}} reduções. DADOS SIMULADOS.",
+  "desempenho_semana": [
+    "Entre 12/10/2026 e 16/10/2026, o resultado foi de {{fact:semana.pnl_usd}}, com retorno de {{fact:semana.ret}} em {{fact:semana.pregoes}} pregões. As ações contribuíram {{fact:semana.attr.equity}}, com parcela específica de {{fact:semana.attr.specific}} e fatorial de {{fact:semana.attr.factor}}. O financiamento contribuiu {{fact:semana.attr.financing}} e os custos de transação, {{fact:semana.attr.costs}}.",
+    "No contexto do encerramento da semana, a B3, em 16/10/2026, destacou o petróleo e a divulgação do IBC-Br no pregão brasileiro. A NYSE, em comentário da mesma data, ressaltou a temporada de resultados e a rotação para setores defensivos. A atribuição da carteira apresentada neste relatório permanece vinculada aos resultados calculados das posições."
+  ],
+  "desempenho_desde_inicio": [
+    "Desde 09/10/2026, o retorno acumulado foi de {{fact:itd.ret}}, com resultado de {{fact:itd.pnl_usd}}. A contribuição específica acumulada foi de {{fact:itd.attr.specific}}, a fatorial, de {{fact:itd.attr.factor}}, e os custos de transação, de {{fact:itd.attr.costs}}. O NAV de fechamento ficou em {{fact:nav}}."
+  ],
+  "atribuicao": [
+    "Na semana, a ponta comprada contribuiu {{fact:semana.attr.lado.long}} e a vendida, {{fact:semana.attr.lado.short}}. Inter&Co, Genomma Lab e Sanepar contribuíram {{fact:semana.top.contrib.1.contrib}}, {{fact:semana.top.contrib.2.contrib}} e {{fact:semana.top.contrib.3.contrib}}, respectivamente. Tenda, Riachuelo e Cemex foram os principais detratores, com {{fact:semana.top.detrator.1.contrib}}, {{fact:semana.top.detrator.2.contrib}} e {{fact:semana.top.detrator.3.contrib}}.",
+    "Por país, Brasil contribuiu {{fact:semana.attr.pais.BR}}, Argentina, {{fact:semana.attr.pais.AR}}, México, {{fact:semana.attr.pais.MX}}, e Chile, {{fact:semana.attr.pais.CL}}. Por setor, financeiro contribuiu {{fact:semana.attr.setor.Financials}}, utilidades públicas, {{fact:semana.attr.setor.Utilities}}, e consumo discricionário, {{fact:semana.attr.setor.Consumer_Discretionary}}."
+  ],
+  "mudancas_carteira": [
+    {"emissor":"BR_PRIO","tipo":"entrada","lado_depois":"comprada","racional":"PRIO passou de {{fact:mud.BR_PRIO.antes}} para {{fact:mud.BR_PRIO.depois}}, com alpha composto de {{fact:mud.BR_PRIO.alpha_z}} e contribuição ao risco de {{fact:mud.BR_PRIO.risco}}."},
+    {"emissor":"BR_ENERGISA","tipo":"entrada","lado_depois":"vendida","racional":"Energisa passou de {{fact:mud.BR_ENERGISA.antes}} para {{fact:mud.BR_ENERGISA.depois}}, com alpha composto de {{fact:mud.BR_ENERGISA.alpha_z}} e contribuição ao risco de {{fact:mud.BR_ENERGISA.risco}}."},
+    {"emissor":"BR_FLEURY","tipo":"entrada","lado_depois":"vendida","racional":"Fleury passou de {{fact:mud.BR_FLEURY.antes}} para {{fact:mud.BR_FLEURY.depois}} na construção da carteira. O alpha composto registrado é de {{fact:mud.BR_FLEURY.alpha_z}}, com contribuição ao risco de {{fact:mud.BR_FLEURY.risco}}."},
+    {"emissor":"BR_AUREN","tipo":"entrada","lado_depois":"vendida","racional":"Auren Energia passou de {{fact:mud.BR_AUREN.antes}} para {{fact:mud.BR_AUREN.depois}}, com alpha composto de {{fact:mud.BR_AUREN.alpha_z}} e contribuição ao risco de {{fact:mud.BR_AUREN.risco}}."},
+    {"emissor":"BR_NU","tipo":"entrada","lado_depois":"vendida","racional":"Nu Holdings passou de {{fact:mud.BR_NU.antes}} para {{fact:mud.BR_NU.depois}}, com alpha composto de {{fact:mud.BR_NU.alpha_z}} e contribuição ao risco de {{fact:mud.BR_NU.risco}}."},
+    {"emissor":"BR_AXIA","tipo":"aumento","lado_depois":"comprada","racional":"Axia Energia passou de {{fact:mud.BR_AXIA.antes}} para {{fact:mud.BR_AXIA.depois}}, com alpha composto de {{fact:mud.BR_AXIA.alpha_z}} e contribuição ao risco de {{fact:mud.BR_AXIA.risco}}."},
+    {"emissor":"BR_HYPERA","tipo":"aumento","lado_depois":"comprada","racional":"Hypera passou de {{fact:mud.BR_HYPERA.antes}} para {{fact:mud.BR_HYPERA.depois}}, com alpha composto de {{fact:mud.BR_HYPERA.alpha_z}} e contribuição ao risco de {{fact:mud.BR_HYPERA.risco}}."},
+    {"emissor":"MX_AEROMEXICO","tipo":"aumento","lado_depois":"comprada","racional":"Grupo Aeroméxico passou de {{fact:mud.MX_AEROMEXICO.antes}} para {{fact:mud.MX_AEROMEXICO.depois}}, com alpha composto de {{fact:mud.MX_AEROMEXICO.alpha_z}} e contribuição ao risco de {{fact:mud.MX_AEROMEXICO.risco}}."},
+    {"emissor":"BR_PETROBRAS","tipo":"reducao","lado_depois":"comprada","racional":"A posição em Petrobras passou de {{fact:mud.BR_PETROBRAS.antes}} para {{fact:mud.BR_PETROBRAS.depois}}. O alpha composto é de {{fact:mud.BR_PETROBRAS.alpha_z}} e a contribuição ao risco da posição final, de {{fact:mud.BR_PETROBRAS.risco}}."},
+    {"emissor":"MX_GENOMMA","tipo":"reducao","lado_depois":"comprada","racional":"A posição em Genomma Lab passou de {{fact:mud.MX_GENOMMA.antes}} para {{fact:mud.MX_GENOMMA.depois}}, com alpha composto de {{fact:mud.MX_GENOMMA.alpha_z}} e contribuição ao risco de {{fact:mud.MX_GENOMMA.risco}}."},
+    {"emissor":"BR_PAGS","tipo":"reducao","lado_depois":"comprada","racional":"PagSeguro Digital passou de {{fact:mud.BR_PAGS.antes}} para {{fact:mud.BR_PAGS.depois}}, com alpha composto de {{fact:mud.BR_PAGS.alpha_z}} e contribuição ao risco de {{fact:mud.BR_PAGS.risco}}."},
+    {"emissor":"BR_ULTRAPAR","tipo":"reducao","lado_depois":"vendida","racional":"A posição vendida em Ultrapar foi reduzida de {{fact:mud.BR_ULTRAPAR.antes}} para {{fact:mud.BR_ULTRAPAR.depois}}, com alpha composto de {{fact:mud.BR_ULTRAPAR.alpha_z}} e contribuição ao risco de {{fact:mud.BR_ULTRAPAR.risco}}."},
+    {"emissor":"BR_INTER","tipo":"saida","lado_depois":"zerada","racional":"A posição vendida em Inter&Co passou de {{fact:mud.BR_INTER.antes}} para {{fact:mud.BR_INTER.depois}}, encerrada no leilão de fechamento."},
+    {"emissor":"BR_BRADESCO","tipo":"saida","lado_depois":"zerada","racional":"Banco Bradesco passou de {{fact:mud.BR_BRADESCO.antes}} para {{fact:mud.BR_BRADESCO.depois}}, encerrando a posição vendida."},
+    {"emissor":"BR_ALPARGATAS","tipo":"saida","lado_depois":"zerada","racional":"Alpargatas passou de {{fact:mud.BR_ALPARGATAS.antes}} para {{fact:mud.BR_ALPARGATAS.depois}}, encerrando a posição vendida."}
+  ],
+  "risco_nova_carteira": [
+    "A carteira efetiva apresentou vol ex-ante de {{fact:risco.efetiva.vol}}, frente à meta de {{fact:risco.meta}}, com beta de {{fact:risco.efetiva.beta}}, exposição bruta de {{fact:risco.efetiva.gross}} e líquida de {{fact:risco.efetiva.net}}. A fatia idiossincrática na base do limite do mandato foi de {{fact:risco.efetiva.idio_kf}}. A carteira decidida tinha vol ex-ante de {{fact:risco.alvo.vol}} e exposição líquida de {{fact:risco.alvo.net}}.",
+    "No cenário de liquidação em estresse do modelo, {{fact:liquidez.frac_1}} da exposição bruta é liquidável no fechamento, com custo estimado de {{fact:liquidez.custo_nav}} do NAV. As estimativas permanecem condicionadas aos volumes e custos públicos disponíveis."
+  ],
+  "execucao": [
+    "O giro foi de {{fact:exec.giro}}, com custos de {{fact:exec.custos_usd}}, equivalentes a {{fact:exec.custos_bps_negociado}} do valor negociado. A taxa de execução nocional ficou em {{fact:exec.taxa_execucao}}, com participação mediana de {{fact:exec.participacao_janela}} na janela de fechamento. Ordens abaixo da banda de não-negociação permaneceram sujeitas aos filtros do mandato.",
+    "A deriva entre decisão e fechamento foi de {{fact:exec.deriva_bps}}, com custo modelado de {{fact:exec.custo_modelo_bps}} e implementation shortfall de {{fact:exec.shortfall_bps}}. O custo de oportunidade da parcela não executada foi de {{fact:exec.oportunidade_bps}}. A execução é hipotética, com preços reais e custos do modelo."
+  ],
+  "perspectivas": [
+    "A gestão acompanha a exposição líquida, a liquidez e o risco de evento da carteira. A referência só-quant não foi processada no fechamento de 16/10/2026 porque sua exposição líquida resultante excederia o limite após custos; a ausência restringe a comparação contemporânea com a carteira-sombra. Fundamentos sem histórico point-in-time e dados públicos defasados permanecem limitações da análise."
+  ]
+}

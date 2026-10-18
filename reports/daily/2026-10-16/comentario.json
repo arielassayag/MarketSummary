@@ -1,0 +1,16 @@
+{
+  "mind": "codex",
+  "headline": "CDP avança {{fact:day.ret}}; resultado desde o início em {{fact:itd.ret}}",
+  "paragraphs": [
+    "No fechamento de 16/10/2026, a carteira simulada apresentou retorno de {{fact:day.ret}} e resultado de {{fact:day.pnl_usd}}, com NAV de {{fact:nav}}. O acumulado desde o início ficou em {{fact:itd.ret}}. A carteira encerrou o pregão com {{fact:risk.n_long}} posições compradas e {{fact:risk.n_short}} vendidas, após a execução hipotética da decisão semanal no leilão de fechamento.",
+    "O lado comprado contribuiu {{fact:attr.long}} e o vendido, {{fact:attr.short}}. Petrobras, Genomma e Suzano contribuíram {{fact:top.contrib.1.contrib}}, {{fact:top.contrib.2.contrib}} e {{fact:top.contrib.3.contrib}}, respectivamente; Femsa, Ultrapar e Aeroméxico responderam por {{fact:top.detract.1.contrib}}, {{fact:top.detract.2.contrib}} e {{fact:top.detract.3.contrib}}. Na decomposição do resultado das ações, a parcela específica contribuiu {{fact:attr.specific}} e a fatorial, {{fact:attr.factor}}. Brasil contribuiu {{fact:attr.country.BR}} e México, {{fact:attr.country.MX}}; os custos de execução consumiram {{fact:attr.costs}}.",
+    "O Ibovespa avançou {{fact:mkt.BVSP.ret_1d}} em reais. A B3, em 16/10/2026, destacou a valorização do petróleo e a divulgação do IBC-Br no contexto do pregão brasileiro.",
+    "No mercado internacional, o futuro do Brent variou {{fact:mkt.BZ_F.ret_1d}}, cotado em dólares. A NYSE, em comentário de 16/10/2026, ressaltou a temporada de resultados e a rotação para setores defensivos. Os retornos da carteira permanecem expressos em dólares.",
+    "A vol ex-ante ficou em {{fact:risk.ex_ante_vol}}, na banda de {{fact:mandate.vol_band_min}} a {{fact:mandate.vol_band_max}}, com beta de {{fact:risk.beta}}. A exposição bruta foi de {{fact:risk.gross}} e a líquida, de {{fact:risk.net}}; o VaR de um dia ficou em {{fact:risk.var_1d}}. A carteira-sombra só-quant não foi processada porque a exposição líquida resultante excederia o limite do mandato após custos; essa ausência limita a comparação do dia com a referência quantitativa."
+  ],
+  "risk_flags": [
+    "Carteira simulada com preços reais e execução hipotética. DADOS SIMULADOS.",
+    "Carteira-sombra só-quant não processada: exposição líquida resultante acima do limite do mandato após custos.",
+    "Retornos fatoriais estimados; fundamentos sem histórico point-in-time e câmbio diário sem equivalência a fixing oficial. As limitações das fontes públicas permanecem aplicáveis."
+  ]
+}

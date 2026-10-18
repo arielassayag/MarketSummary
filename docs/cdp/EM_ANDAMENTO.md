@@ -5,6 +5,51 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## Recuperação de descritores NET — 17/10/2026
+
+O operador autorizou corrigir a falha de arquivos abertos, testar e retomar o
+fechamento de 16/10 pelo gate manual. O diagnóstico somente de leitura abriu
+4.282 descritores por `PhysicalSources`: duas instâncias cabiam no Mac e a
+terceira falhava no limite de 10.240 descritores por processo, apesar do limite
+maior informado por `ulimit`. `save_booked` mantém a composição preparada aberta
+durante outra validação que também compõe a sombra.
+
+A correção em ramo próprio compartilha descritores dos mesmos caminhos apenas
+entre contextos da mesma thread e processo, com contagem de referências e liberação no
+último encerramento. Cada contexto conserva recibos, namespace, prefixo da
+trilha e rechecagem independentes. Nenhum parâmetro financeiro, limite do
+mandato, configuração ou dado de entrada foi alterado. O novo teste reproduziu
+a falha antes do reparo num subprocesso com limite de 128 descritores; os
+controles incluem três ordens de encerramento, encerramento repetido, corpo
+adulterado, substituição do arquivo, link, namespace extra e falha da recepção
+interna sem perda da custódia externa.
+O controle adicional de `fork` recusou o compartilhamento da posição de leitura
+entre pai e filho; o acervo por thread é reiniciado quando muda o processo.
+
+O consumo continua proporcional ao número de arquivos únicos recebidos por
+thread. A correção elimina a duplicação entre validações sobrepostas, sem
+elevar limites do sistema nem tornar ilimitada a leitura de um livro crescente.
+
+Os 115 testes focais finais de descritores, provas e escritores NET passaram;
+outro recorte de relatórios e origem recebeu 54 aprovações. Ruff passou.
+A reprodução somente de leitura do livro real recebeu três contextos
+com 4.282 recibos cada, rechecados e encerrados sem erro. A tentativa da suíte
+ampla paralela foi interrompida após 5.753 aprovações, dezenove casos ignorados e
+56 erros de preparação, sem falha de assertion de caso executado. Os erros estão
+em `test_recepcao_bancaria`: a preparação espera um SHA antigo de Yahoo/info,
+enquanto o índice público já recebeu outro corpo. O mesmo erro foi reproduzido
+no clone original sem esta correção, antes de qualquer chamada ao componente
+alterado. Os últimos cenários de replay ainda estavam em processamento no Clarabel;
+essa tentativa não constitui aprovação integral da suíte. Os dados e os
+oráculos históricos foram preservados; a correção dessa preparação e a
+qualificação integral continuam como pendências técnicas separadas.
+
+Este desenvolvimento não gravou o livro, não gerou relatório financeiro nem
+efetuou envio de e-mail. O executor deve receber a fonte por `cdp sincronizar`,
+retomar pelo roteiro diário autorizado e liberar a trava. O resultado financeiro
+e a entrega só se confirmam pelos registros dessa nova execução; o PDF e o
+e-mail devem usar exclusivamente o relatório selado de 16/10.
+
 ## Entrega integrada — 13/10/2026
 
 A consolidação foi integrada pelo PR #7 em `main`: commit

@@ -15,6 +15,7 @@ from dataclasses import dataclass
 from decimal import Decimal
 from fractions import Fraction
 from pathlib import Path
+from threading import local
 from zoneinfo import ZoneInfo
 
 from cdp.leitura_arquivos import ler_bytes, ler_texto
@@ -29,6 +30,7 @@ RECORD_MARKER = "net_moc_v1"
 SCHEMA = "cdp.net_moc/v1"
 CONFIG_FOLDER = "net_config"
 _SHA = re.compile(r"[0-9a-f]{64}")
+_PHYSICAL_FDS = local()
 
 
 class NetUnverifiable(ValueError):
@@ -158,10 +160,12 @@ def _receive_archived(root: Path, desc: dict, config_hash: str) -> tuple[FundCon
 
 
 class PhysicalSources:
-    """FDs próprios e namespace fechado, sob o escritor único cooperativo.
+    """Custódia dos FDs e namespace fechado, sob o escritor único cooperativo.
 
     A trilha conserva o prefixo integral recebido; a autoridade dos eventos acrescidos
     pertence às validações nativas de Book e da prova preparatória, nunca a este hash.
+    Contextos sobrepostos da mesma thread e processo compartilham cada FD até
+    o último close; cada contexto conserva seus próprios recibos e rechecagens.
     """
 
     def __init__(self, roots: dict[str, Path], audit: AuditLog, *,
@@ -170,6 +174,11 @@ class PhysicalSources:
         self.audit = audit
         self.excluded = {p.absolute() for p in (excluded or set())}
         self._fds: dict[str, int] = {}
+        pid = os.getpid()
+        if getattr(_PHYSICAL_FDS, "pid", None) != pid:
+            _PHYSICAL_FDS.pool = {}
+            _PHYSICAL_FDS.pid = pid
+        self._pool: dict[Path, tuple[int, int]] = _PHYSICAL_FDS.pool
         self.receipts: dict[str, dict] = {}
         self.namespace: dict[str, list[str]] = {}
         self.directories: dict[str, dict] = {}
@@ -198,7 +207,13 @@ class PhysicalSources:
                     if p.absolute() == audit.path.absolute():
                         continue
                     key = f"{name}/{p.relative_to(root)}"
-                    fd = os.open(p, os.O_RDONLY | os.O_NOFOLLOW)
+                    shared = self._pool.get(p)
+                    if shared is None:
+                        fd = os.open(p, os.O_RDONLY | os.O_NOFOLLOW)
+                        self._pool[p] = (fd, 1)
+                    else:
+                        fd, references = shared
+                        self._pool[p] = (fd, references + 1)
                     self._fds[key] = fd
                     self.receipts[key] = self._receipt(fd, p)
         except BaseException:
@@ -280,8 +295,15 @@ class PhysicalSources:
             raise NetUnverifiable("NET UNVERIFIABLE: prefixo/trilha mudou antes da escrita")
 
     def close(self) -> None:
-        for fd in self._fds.values():
-            os.close(fd)
+        for key, fd in self._fds.items():
+            name, rel = key.split("/", 1)
+            p = self.roots[name] / rel
+            _, references = self._pool[p]
+            if references == 1:
+                os.close(fd)
+                del self._pool[p]
+            else:
+                self._pool[p] = (fd, references - 1)
         self._fds.clear()
 
 

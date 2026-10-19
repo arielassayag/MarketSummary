@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 177.85,
+  "high": 302.53207,
+  "low": 214.12088,
+  "mean": 257.1108,
+  "median": 253.90591
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.27253,
+   "currency": "USD",
+   "growth": 0.0482,
+   "high": 0.27253,
+   "low": 0.27253,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.26
+  },
+  "+1y": {
+   "avg": 1.07512,
+   "currency": "USD",
+   "growth": 0.14739999,
+   "high": 1.12,
+   "low": 1.04047,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.93704
+  },
+  "0q": {
+   "avg": 0.28757,
+   "currency": "USD",
+   "growth": -0.072399996,
+   "high": 0.33,
+   "low": 0.2627,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.31
+  },
+  "0y": {
+   "avg": 0.93704,
+   "currency": "USD",
+   "growth": 0.0297,
+   "high": 0.98,
+   "low": 0.89815,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.91
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 383185110,
+   "currency": "USD",
+   "growth": 0.065,
+   "high": 400370220,
+   "low": 366000000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 359800000
+  },
+  "+1y": {
+   "avg": 1646946510,
+   "currency": "USD",
+   "growth": 0.0722,
+   "high": 1758445240,
+   "low": 1542000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 1536008230
+  },
+  "0q": {
+   "avg": 440888900,
+   "currency": "USD",
+   "growth": 0.0054,
+   "high": 473444490,
+   "low": 431000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 438505000
+  },
+  "0y": {
+   "avg": 1536008230,
+   "currency": "USD",
+   "growth": 0.0904,
+   "high": 1597776600,
+   "low": 1448000000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 1408700000
+  }
+ },
+ "ticker": "GCC.MX",
+ "url": "https://finance.yahoo.com/quote/GCC.MX"
+}

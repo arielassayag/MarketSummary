@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 66.36,
+  "high": 111.00537,
+  "low": 64.97322,
+  "mean": 85.18039,
+  "median": 83.853806
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.42938,
+   "currency": "USD",
+   "growth": 1.4771,
+   "high": 0.47984,
+   "low": 0.37892,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": -0.9
+  },
+  "+1y": {
+   "avg": 1.87,
+   "currency": "USD",
+   "growth": -0.101,
+   "high": 1.87,
+   "low": 1.87,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 2.08
+  },
+  "0q": {
+   "avg": 0.34094,
+   "currency": "USD",
+   "growth": -0.45880002,
+   "high": 0.39367,
+   "low": 0.2882,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.63
+  },
+  "0y": {
+   "avg": 2.08,
+   "currency": "USD",
+   "growth": 0.141,
+   "high": 2.08,
+   "low": 2.08,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 1.823
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 10980466640,
+   "currency": "USD",
+   "growth": -0.0072000003,
+   "high": 11588000000,
+   "low": 10364331300,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 11060000000
+  },
+  "+1y": {
+   "avg": 41267140260,
+   "currency": "USD",
+   "growth": 0.0037,
+   "high": 43931000000,
+   "low": 39028000000,
+   "numberOfAnalysts": 22,
+   "yearAgoRevenue": 41116789180
+  },
+  "0q": {
+   "avg": 10459126480,
+   "currency": "USD",
+   "growth": 0.0038,
+   "high": 11740000000,
+   "low": 9973000000,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 10420000000
+  },
+  "0y": {
+   "avg": 41116789180,
+   "currency": "USD",
+   "growth": 0.070700005,
+   "high": 42900000000,
+   "low": 40100000000,
+   "numberOfAnalysts": 21,
+   "yearAgoRevenue": 38403000000
+  }
+ },
+ "ticker": "VALE3.SA",
+ "url": "https://finance.yahoo.com/quote/VALE3.SA"
+}

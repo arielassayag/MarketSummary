@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 86.03,
+  "high": 122.0,
+  "low": 83.0,
+  "mean": 102.96,
+  "median": 101.95
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 2.11714,
+   "currency": "USD",
+   "growth": 1.3605,
+   "high": 2.11714,
+   "low": 2.11714,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.8969
+  },
+  "+1y": {
+   "avg": 7.87656,
+   "currency": "USD",
+   "growth": 0.27989998,
+   "high": 8.94967,
+   "low": 6.74,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 6.15395
+  },
+  "0q": {
+   "avg": 1.58895,
+   "currency": "USD",
+   "growth": null,
+   "high": 1.58895,
+   "low": 1.58895,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 6.15395,
+   "currency": "USD",
+   "growth": 1.3412,
+   "high": 7.22,
+   "low": 5.32,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 2.6285
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 624173330,
+   "currency": "CAD",
+   "growth": 0.4184,
+   "high": 647173000,
+   "low": 579379000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 440061200
+  },
+  "+1y": {
+   "avg": 2604090110,
+   "currency": "CAD",
+   "growth": 0.1857,
+   "high": 2929282000,
+   "low": 2263199000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 2196333440
+  },
+  "0q": {
+   "avg": 536867380,
+   "currency": "CAD",
+   "growth": 0.53830004,
+   "high": 563625000,
+   "low": 513004000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 348994540
+  },
+  "0y": {
+   "avg": 2196333440,
+   "currency": "CAD",
+   "growth": 0.7417,
+   "high": 2512648000,
+   "low": 2095268000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 1261013700
+  }
+ },
+ "ticker": "AUGO",
+ "url": "https://finance.yahoo.com/quote/AUGO"
+}

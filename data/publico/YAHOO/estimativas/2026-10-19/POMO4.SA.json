@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 4.67,
+  "high": 9.1,
+  "low": 5.0,
+  "mean": 7.33,
+  "median": 7.25
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.20032,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0.20032,
+   "low": 0.20032,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 0.92734,
+   "currency": "BRL",
+   "growth": 0.067600004,
+   "high": 0.99,
+   "low": 0.84659,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 0.86864
+  },
+  "0q": {
+   "avg": 0.1756,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0.1756,
+   "low": 0.1756,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 0.86864,
+   "currency": "BRL",
+   "growth": -0.11270001,
+   "high": 0.92,
+   "low": 0.80807,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.97892
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 2446044560,
+   "currency": "BRL",
+   "growth": -0.0481,
+   "high": 2548857720,
+   "low": 2343231390,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 2569578000
+  },
+  "+1y": {
+   "avg": 9724446870,
+   "currency": "BRL",
+   "growth": 0.0848,
+   "high": 10975000000,
+   "low": 9024000000,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 8964075650
+  },
+  "0q": {
+   "avg": 2355013400,
+   "currency": "BRL",
+   "growth": -0.06,
+   "high": 2425000000,
+   "low": 2293757700,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 2505449000
+  },
+  "0y": {
+   "avg": 8964075650,
+   "currency": "BRL",
+   "growth": -0.010299999,
+   "high": 9432000000,
+   "low": 8665503100,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 9057548000
+  }
+ },
+ "ticker": "POMO4.SA",
+ "url": "https://finance.yahoo.com/quote/POMO4.SA"
+}

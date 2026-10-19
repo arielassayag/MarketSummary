@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 234.3,
+  "high": 316.0,
+  "low": 225.0,
+  "mean": 256.66666,
+  "median": 256.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 3.09606,
+   "currency": "MXN",
+   "growth": 0.7506,
+   "high": 3.32153,
+   "low": 2.87059,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 1.7686
+  },
+  "+1y": {
+   "avg": 9.3273,
+   "currency": "MXN",
+   "growth": -0.1347,
+   "high": 10.61169,
+   "low": 8.72481,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 10.77944
+  },
+  "0q": {
+   "avg": 1.98626,
+   "currency": "MXN",
+   "growth": 0.2322,
+   "high": 2.04554,
+   "low": 1.92699,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 1.6119
+  },
+  "0y": {
+   "avg": 10.77944,
+   "currency": "MXN",
+   "growth": 1.0944,
+   "high": 11.3336,
+   "low": 10.39,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 5.1469
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 237749276540,
+   "currency": "MXN",
+   "growth": 0.0802,
+   "high": 239621997000,
+   "low": 234197718270,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 220091000000
+  },
+  "+1y": {
+   "avg": 973893359740,
+   "currency": "MXN",
+   "growth": 0.0762,
+   "high": 988666000000,
+   "low": 937413902140,
+   "numberOfAnalysts": 15,
+   "yearAgoRevenue": 904897905370
+  },
+  "0q": {
+   "avg": 229961316840,
+   "currency": "MXN",
+   "growth": 0.0714,
+   "high": 234865000000,
+   "low": 222314000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 214638000000
+  },
+  "0y": {
+   "avg": 904897905370,
+   "currency": "MXN",
+   "growth": 0.076,
+   "high": 919429000000,
+   "low": 891375000000,
+   "numberOfAnalysts": 16,
+   "yearAgoRevenue": 840954000000
+  }
+ },
+ "ticker": "FEMSAUBD.MX",
+ "url": "https://finance.yahoo.com/quote/FEMSAUBD.MX"
+}

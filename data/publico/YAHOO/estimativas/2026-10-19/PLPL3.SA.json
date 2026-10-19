@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 7.65,
+  "high": 20.0,
+  "low": 7.5,
+  "mean": 13.94444,
+  "median": 13.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.55024,
+   "currency": "BRL",
+   "growth": -0.1696,
+   "high": 0.57047,
+   "low": 0.53,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.6626
+  },
+  "+1y": {
+   "avg": 2.12885,
+   "currency": "BRL",
+   "growth": 0.45130002,
+   "high": 2.53,
+   "low": 1.27,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 1.46682
+  },
+  "0q": {
+   "avg": 0.49682,
+   "currency": "BRL",
+   "growth": 0.2795,
+   "high": 0.56,
+   "low": 0.43363,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.3883
+  },
+  "0y": {
+   "avg": 1.46682,
+   "currency": "BRL",
+   "growth": -0.1846,
+   "high": 1.95,
+   "low": 1.02,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 1.7989
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1057186220,
+   "currency": "BRL",
+   "growth": -0.0168,
+   "high": 1093309260,
+   "low": 1021063180,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 1075200000
+  },
+  "+1y": {
+   "avg": 4362031200,
+   "currency": "BRL",
+   "growth": 0.1462,
+   "high": 4791579750,
+   "low": 3823000000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 3805490570
+  },
+  "0q": {
+   "avg": 968818630,
+   "currency": "BRL",
+   "growth": 0.18959999,
+   "high": 1123346300,
+   "low": 773000000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 814415000
+  },
+  "0y": {
+   "avg": 3805490570,
+   "currency": "BRL",
+   "growth": 0.1596,
+   "high": 4069000000,
+   "low": 3675868260,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 3281707000
+  }
+ },
+ "ticker": "PLPL3.SA",
+ "url": "https://finance.yahoo.com/quote/PLPL3.SA"
+}

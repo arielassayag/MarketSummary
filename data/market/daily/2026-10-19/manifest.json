@@ -1,0 +1,168 @@
+{
+  "kind": "daily_increment",
+  "session_date": "2026-10-19",
+  "created_at": "2026-10-19T22:29:28.527225Z",
+  "base_as_of": "2026-10-02",
+  "base_content_hash": "ec1e53241d99de22f2f6deb06749e9d80b3d43864de3a1d931eb3e94c8d40455",
+  "base_manifest_sha256": "6bf7cc5b57e0a1eb5bd73080fb213eab399c7b04359ae68b2f75dc93a185d263",
+  "prev_manifest_hash": "ba18508775d06e77e56c24f3015aa81a79fca0c5fb56fab757bfb236b3487bd3",
+  "universe_sha256": "a8f28ee5d20395a6e245c50ebb635eb56ada88922c01876351278cb99f5a29db",
+  "files": [
+    {
+      "path": "benchmarks.parquet",
+      "sha256": "2551652510936ca4f9b48ac1c299739be8e5a045500be13df61a8227c89bf517",
+      "rows": 19,
+      "description": "Benchmarks do pregão"
+    },
+    {
+      "path": "fundamentals.parquet",
+      "sha256": "2cb7d2ed535c1b4a1433f7aed6d9ab6057f6d8b6eb2002d3f482ad10e95442b0",
+      "rows": 281,
+      "description": "Fundamentos atualizados (retrato atual, não PIT)"
+    },
+    {
+      "path": "fx.parquet",
+      "sha256": "adc75fea021e9576e4d086162d5b89a6456dbb4a27abd3c7b9f9b987200a2c9f",
+      "rows": 8,
+      "description": "Câmbio do pregão (USD por unidade)"
+    },
+    {
+      "path": "lending.parquet",
+      "sha256": "50b4c4bbc527994e9442dd64056779634ed522606bf850a26880741d136a4cf7",
+      "rows": 125,
+      "description": "Aluguel B3/BTC (longo) dos pregões ainda não gravados"
+    },
+    {
+      "path": "news.jsonl",
+      "sha256": "91a03674ce6e1421a94aa58b96e8e98e97d9574472778cdeb37de6added0b18c",
+      "rows": 2675,
+      "description": "Manchetes atualizadas — conteúdo NÃO confiável"
+    },
+    {
+      "path": "prices.parquet",
+      "sha256": "7e281bd2a9c72a98808b1ecc3ebde1c61f1b0f3b594c648d778cf890303aa2f8",
+      "rows": 280,
+      "description": "Preços do pregão (+ barra anterior da mesma coleta para encadear retorno total)"
+    },
+    {
+      "path": "qa.json",
+      "sha256": "5c6657227dffb2c92af966bca4bf89286637866dd81086b992ae17f286136fb6",
+      "rows": null,
+      "description": "QA do incremento: revisões, paridade ADR, mercados fechados"
+    },
+    {
+      "path": "rates.parquet",
+      "sha256": "2d496cd293dc8bbcdad19a6077586a8c2b0f2819ebdaf468c371f5eaecd11779",
+      "rows": 2,
+      "description": "Taxas do pregão (decimal anual)"
+    },
+    {
+      "path": "short_interest.parquet",
+      "sha256": "31316ef34e108ad355e12b97c55732837771bea25ee1aaa4641a6f228ec743bf",
+      "rows": 88,
+      "description": "Short interest atualizado (FINRA/Yahoo)"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "yahoo_prices",
+      "name": "Yahoo Finance — barras diárias (janela)",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-10-19T22:26:57.984675Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "yahoo_fx",
+      "name": "Yahoo Finance — câmbio",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-10-19T22:26:59.334330Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "yahoo_benchmarks",
+      "name": "Yahoo Finance — benchmarks",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-10-19T22:27:00.576405Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "rates",
+      "name": "BCB SGS 432 + Yahoo ^IRX",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-10-19T22:27:01.186248Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "b3_bdi_lending",
+      "name": "B3 BDI — aluguel (BTC)",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-10-19T22:27:08.652732Z",
+      "point_in_time": false,
+      "notes": ""
+    },
+    {
+      "source_id": "yahoo_fundamentals",
+      "name": "Yahoo — Ticker.info",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-10-19T22:28:39.858834Z",
+      "point_in_time": false,
+      "notes": ""
+    },
+    {
+      "source_id": "finra_yahoo_short_interest",
+      "name": "FINRA + Yahoo",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-10-19T22:28:48.936770Z",
+      "point_in_time": false,
+      "notes": ""
+    },
+    {
+      "source_id": "google_news_rss",
+      "name": "Google News RSS (NÃO confiável)",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-10-19T22:29:28.340617Z",
+      "point_in_time": false,
+      "notes": ""
+    }
+  ],
+  "limitations": [
+    "Retorno total por preço (sem barra anterior na janela) para: CEMARGOS.CL, CIBEST.CL, ECOPETROL.CL, GRUPOARGOS.CL, GRUPOSURA.CL, ISA.CL, PFCIBEST.CL, PFGRUPOARG.CL, PFGRUPSURA.CL.",
+    "Revisões de fechamento do Yahoo em datas anteriores NÃO aplicadas (296): AC.MX@2026-10-09 (0.9996), ALPEKA.MX@2026-10-09 (1.0078), ALSEA.MX@2026-10-09 (0.9998), AMXB.MX@2026-10-09 (0.9985), ANDINA-B.SN@2026-10-09 (0.9895), ASURB.MX@2026-10-09 (1.0000), BBAJIOO.MX@2026-10-09 (1.0009), BCI.SN@2026-10-09 (1.0380), BIMBOA.MX@2026-10-09 (1.0030), BOLSAA.MX@2026-10-09 (1.0031), BSANTANDER.SN@2026-10-09 (1.0410), CEMEXCPO.MX@2026-10-09 (1.0028), CENCOMALLS.SN@2026-10-09 (0.9956), CENCOSUD.SN@2026-10-09 (1.0885), CHDRAUIB.MX@2026-10-09 (1.0005), CHILE.SN@2026-10-09 (1.0433), CMPC.SN@2026-10-09 (1.0009), COLBUN.SN@2026-10-09 (0.9737), COPEC.SN@2026-10-09 (0.9428), ECL.SN@20.",
+    "Revisões de volume em datas anteriores NÃO aplicadas: 1426.",
+    "Benchmarks sem barra no pregão: ^MERV.",
+    "QA paridade ADR: SID vs CSNA3.SA desvio -4.4% no pregão (mediana -3.5%; tolerância 3%)."
+  ],
+  "notes": [],
+  "markets_traded": [
+    "AR",
+    "BR",
+    "CL",
+    "CO",
+    "MX",
+    "US"
+  ],
+  "markets_closed": [],
+  "slow_refreshed": [
+    "fundamentals",
+    "short_interest",
+    "news"
+  ],
+  "lending_dates": [
+    "2026-10-16"
+  ],
+  "is_synthetic": false,
+  "data_notice": "Dados reais de fontes públicas gratuitas (Yahoo, FINRA, B3/BDI, BCB, Google News); uso de pesquisa — não é feed licenciado.",
+  "manifest_hash": "6c9827443cc4c7545145af77e814d555fddda7dac6c2a8265193bb3d0633b29d"
+}

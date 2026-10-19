@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 50.09,
+  "high": 81.0,
+  "low": 42.0,
+  "mean": 56.76111,
+  "median": 55.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.93649,
+   "currency": "MXN",
+   "growth": 0.1096,
+   "high": 0.93698,
+   "low": 0.936,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.844
+  },
+  "+1y": {
+   "avg": 3.16607,
+   "currency": "MXN",
+   "growth": 0.0555,
+   "high": 3.232,
+   "low": 3.06,
+   "numberOfAnalysts": 11,
+   "yearAgoEps": 2.9996
+  },
+  "0q": {
+   "avg": 0.70294,
+   "currency": "MXN",
+   "growth": 0.0368,
+   "high": 0.73,
+   "low": 0.67,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 0.678
+  },
+  "0y": {
+   "avg": 2.9996,
+   "currency": "MXN",
+   "growth": 0.044099998,
+   "high": 3.05,
+   "low": 2.93,
+   "numberOfAnalysts": 12,
+   "yearAgoEps": 2.873
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 296433489980,
+   "currency": "MXN",
+   "growth": 0.048,
+   "high": 298158332000,
+   "low": 295130020340,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 282849000000
+  },
+  "+1y": {
+   "avg": 1111798981510,
+   "currency": "MXN",
+   "growth": 0.0629,
+   "high": 1181515000000,
+   "low": 1089049225000,
+   "numberOfAnalysts": 15,
+   "yearAgoRevenue": 1045980322460
+  },
+  "0q": {
+   "avg": 249885811310,
+   "currency": "MXN",
+   "growth": 0.0346,
+   "high": 251116939980,
+   "low": 245585000000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 241520000000
+  },
+  "0y": {
+   "avg": 1045980322460,
+   "currency": "MXN",
+   "growth": 0.034,
+   "high": 1092141000000,
+   "low": 1037000000000,
+   "numberOfAnalysts": 16,
+   "yearAgoRevenue": 1011597884000
+  }
+ },
+ "ticker": "WALMEX.MX",
+ "url": "https://finance.yahoo.com/quote/WALMEX.MX"
+}

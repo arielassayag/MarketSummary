@@ -1,0 +1,17 @@
+{
+  "mind": "codex",
+  "headline": "CDP avança {{fact:day.ret}}; Riachuelo lidera as contribuições",
+  "paragraphs": [
+    "A carteira simulada encerrou 19/10/2026 com retorno de {{fact:day.ret}} e P&L de {{fact:day.pnl_usd}}, levando o acumulado desde o início a {{fact:itd.ret}} e o NAV a {{fact:nav}}. DADOS SIMULADOS: execução hipotética com preços reais.",
+    "O lado comprado contribuiu {{fact:attr.long}}, enquanto o vendido respondeu por {{fact:attr.short}}. Riachuelo, Adecoagro e Tenda contribuíram, respectivamente, {{fact:top.contrib.1.contrib}}, {{fact:top.contrib.2.contrib}} e {{fact:top.contrib.3.contrib}}. Central Puerto, Fleury e Petrobras foram os principais detratores, com {{fact:top.detract.1.contrib}}, {{fact:top.detract.2.contrib}} e {{fact:top.detract.3.contrib}}. A atribuição estimada separa {{fact:attr.factor}} de efeito fatorial e {{fact:attr.specific}} de efeito específico; o financiamento acrescentou {{fact:attr.financing}}.",
+    "A B3 descreveu o pregão de 19/10/2026 sob cautela eleitoral e queda do petróleo. Nos dados de fechamento, o Ibovespa variou {{fact:mkt.BVSP.ret_1d}} em reais. Esse contexto não estabelece causalidade para as contribuições individuais da carteira.",
+    "Nos futuros cotados em dólares, o Brent variou {{fact:mkt.BZ_F.ret_1d}} e o WTI {{fact:mkt.CL_F.ret_1d}}. O real apresentou variação de {{fact:fx.BRL.ret_1d}} em dólares por unidade. A Aeroméxico mantinha em seu calendário público a teleconferência de resultados de 3T26 para 20/10/2026, conforme consulta às relações com investidores em 19/10/2026; a leitura dos fundamentos permanece condicionada à documentação pública disponível.",
+    "A vol ex-ante encerrou em {{fact:risk.ex_ante_vol}}, dentro da banda de {{fact:mandate.vol_band_min}} a {{fact:mandate.vol_band_max}}, com beta {{fact:risk.beta}}, exposição bruta {{fact:risk.gross}} e líquida {{fact:risk.net}}. O VaR diário ficou em {{fact:risk.var_1d}} e o expected shortfall em {{fact:risk.es_1d}}. O risco de squeeze no short de Fleury exige acompanhamento; a janela eleitoral brasileira permanece ativa."
+  ],
+  "risk_flags": [
+    "Fleury apresenta risco de squeeze alto na posição vendida; shorts nessa condição: {{fact:risk.squeeze_high_shorts}}.",
+    "Janela eleitoral brasileira ativa; acompanhar risco de evento e liquidez.",
+    "Atribuição fatorial estimada; fundamentos atuais, câmbio sem fixing oficial e limitações de paridade entre ADRs e ações locais restringem a leitura.",
+    "Benchmark argentino sem barra no pregão; revisões históricas de preços e volumes preservadas sem aplicação. Alertas totais: {{fact:day.n_alerts}}."
+  ]
+}

@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 10.8,
+  "high": 22.0,
+  "low": 15.0,
+  "mean": 18.45833,
+  "median": 18.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.46,
+   "currency": "BRL",
+   "growth": 0.15,
+   "high": 0.46,
+   "low": 0.46,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.4
+  },
+  "+1y": {
+   "avg": 2.13667,
+   "currency": "BRL",
+   "growth": 0.2315,
+   "high": 2.3,
+   "low": 2.02,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 1.735
+  },
+  "0q": {
+   "avg": 0.5,
+   "currency": "BRL",
+   "growth": 0.2749,
+   "high": 0.5,
+   "low": 0.5,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.3922
+  },
+  "0y": {
+   "avg": 1.735,
+   "currency": "BRL",
+   "growth": 0.1999,
+   "high": 1.75,
+   "low": 1.72,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 1.4459
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1456091020,
+   "currency": "BRL",
+   "growth": 0.1878,
+   "high": 1485783840,
+   "low": 1427316000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 1225843000
+  },
+  "+1y": {
+   "avg": 6236381620,
+   "currency": "BRL",
+   "growth": 0.1817,
+   "high": 6674000000,
+   "low": 5857000000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 5277641380
+  },
+  "0q": {
+   "avg": 1398777470,
+   "currency": "BRL",
+   "growth": 0.20809999,
+   "high": 1414685150,
+   "low": 1366879000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 1157823000
+  },
+  "0y": {
+   "avg": 5277641380,
+   "currency": "BRL",
+   "growth": 0.2152,
+   "high": 5361451510,
+   "low": 5202000000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 4343008000
+  }
+ },
+ "ticker": "DIRR3.SA",
+ "url": "https://finance.yahoo.com/quote/DIRR3.SA"
+}

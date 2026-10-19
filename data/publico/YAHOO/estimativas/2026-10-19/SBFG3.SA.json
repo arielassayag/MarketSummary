@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 10.83,
+  "high": 23.0,
+  "low": 14.0,
+  "mean": 16.125,
+  "median": 15.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.46686,
+   "currency": "BRL",
+   "growth": -0.29479998,
+   "high": 0.66371,
+   "low": 0.27,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.662
+  },
+  "+1y": {
+   "avg": 2.23484,
+   "currency": "BRL",
+   "growth": 0.1181,
+   "high": 2.47,
+   "low": 1.93935,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 1.9987
+  },
+  "0q": {
+   "avg": 0.52096,
+   "currency": "BRL",
+   "growth": 0.25030002,
+   "high": 0.79,
+   "low": 0.25191,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.41666
+  },
+  "0y": {
+   "avg": 1.9987,
+   "currency": "BRL",
+   "growth": 0.14930001,
+   "high": 2.17,
+   "low": 1.8048,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 1.739
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 2600742000,
+   "currency": "BRL",
+   "growth": 0.0712,
+   "high": 2643672000,
+   "low": 2557812010,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 2427832000
+  },
+  "+1y": {
+   "avg": 9366129780,
+   "currency": "BRL",
+   "growth": 0.0638,
+   "high": 9860000000,
+   "low": 8599876450,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 8804313670
+  },
+  "0q": {
+   "avg": 2031450680,
+   "currency": "BRL",
+   "growth": 0.049000002,
+   "high": 2064031000,
+   "low": 1994000000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 1936522000
+  },
+  "0y": {
+   "avg": 8804313670,
+   "currency": "BRL",
+   "growth": 0.138,
+   "high": 9214000000,
+   "low": 8494000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 7736413000
+  }
+ },
+ "ticker": "SBFG3.SA",
+ "url": "https://finance.yahoo.com/quote/SBFG3.SA"
+}

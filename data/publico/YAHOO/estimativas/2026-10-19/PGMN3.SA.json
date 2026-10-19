@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 5.34,
+  "high": 9.0,
+  "low": 5.0,
+  "mean": 6.71111,
+  "median": 6.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.20766,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0.20766,
+   "low": 0.20766,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 0.6844,
+   "currency": "BRL",
+   "growth": 0.2917,
+   "high": 0.76,
+   "low": 0.58,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 0.52984
+  },
+  "0q": {
+   "avg": 0.12394,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0.12394,
+   "low": 0.12394,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 0.52984,
+   "currency": "BRL",
+   "growth": 0.1463,
+   "high": 0.55,
+   "low": 0.50918,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 0.4622
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 4278600580,
+   "currency": "BRL",
+   "growth": -0.0064,
+   "high": 4278600580,
+   "low": 4278600580,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 4306100000
+  },
+  "+1y": {
+   "avg": 18833866620,
+   "currency": "BRL",
+   "growth": 0.1171,
+   "high": 20877000000,
+   "low": 17442519840,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 16859336790
+  },
+  "0q": {
+   "avg": 4385571750,
+   "currency": "BRL",
+   "growth": 0.0582,
+   "high": 4485000000,
+   "low": 4147287010,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 4144562000
+  },
+  "0y": {
+   "avg": 16859336790,
+   "currency": "BRL",
+   "growth": 0.0505,
+   "high": 17896000000,
+   "low": 16179480890,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 16049100000
+  }
+ },
+ "ticker": "PGMN3.SA",
+ "url": "https://finance.yahoo.com/quote/PGMN3.SA"
+}

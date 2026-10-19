@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 145.76,
+  "high": 194.60718,
+  "low": 47.458527,
+  "mean": 149.59229,
+  "median": 169.00043
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.562,
+   "currency": "USD",
+   "growth": 0.8796,
+   "high": 0.562,
+   "low": 0.562,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.299
+  },
+  "+1y": {
+   "avg": 3.198,
+   "currency": "USD",
+   "growth": 0.7315,
+   "high": 3.198,
+   "low": 3.198,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 1.847
+  },
+  "0q": {
+   "avg": 0.497,
+   "currency": "USD",
+   "growth": null,
+   "high": 0.497,
+   "low": 0.497,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 1.847,
+   "currency": "USD",
+   "growth": 1.108,
+   "high": 1.847,
+   "low": 1.847,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.8762
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 624173330,
+   "currency": "CAD",
+   "growth": 0.4184,
+   "high": 647173000,
+   "low": 579379000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 440061200
+  },
+  "+1y": {
+   "avg": 2604090110,
+   "currency": "CAD",
+   "growth": 0.1857,
+   "high": 2929282000,
+   "low": 2263199000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 2196333440
+  },
+  "0q": {
+   "avg": 536867380,
+   "currency": "CAD",
+   "growth": 0.53830004,
+   "high": 563625000,
+   "low": 513004000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 348994540
+  },
+  "0y": {
+   "avg": 2196333440,
+   "currency": "CAD",
+   "growth": 0.7417,
+   "high": 2512648000,
+   "low": 2095268000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 1261013700
+  }
+ },
+ "ticker": "AURA33.SA",
+ "url": "https://finance.yahoo.com/quote/AURA33.SA"
+}

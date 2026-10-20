@@ -1,0 +1,327 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-19",
+    "manifest_sha256": "164979b8a7edd3737547472d2565a0f267bbc6ec5d456b80710ce43a0f4700c0",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-19",
+  "hashes": {
+    "contexto": "05ceddc27de1191db77bf40d3ac1fbb2bca1c52ea96ac1cfe88cf43eb2e1ee11",
+    "factbook": "f2d35941424754339e24cee3a04a473e221a782d5a9caa21894376a6b525a7ea",
+    "nota_json": "07c02f917e286a72597efc1b35aa39a4ba53969bff1d1b9689057f49145c49f7"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_VALE",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-29",
+  "published_at": "2026-10-20T01:47:22.163835+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Avaliar novos projetos pelo retorno incremental, preservando recursos para reparação. Capacidade anunciada não comprova produção comercial nem retorno realizado.",
+        "titulo": "Reposição e obrigações"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-29",
+        "descricao": "Resultado indicado pela cobertura; conferir realização, custo e caixa após obrigações.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "evento.BR_VALE.proximo_resultado",
+            "nome": "Próxima divulgação de resultado",
+            "valor": "2026-10-29"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Retorno depende de custo completo e reposição; alvo R$ 67,61.",
+      "otimista": "Qualidade e produtividade preservam caixa após obrigações; alvo R$ 102,04.",
+      "pessimista": "Preço e custos deterioram com desembolsos obrigatórios; alvo R$ 35,56."
+    },
+    "comentario_valuation": "Preço R$ 66,42, consenso R$ 83,12 e diferença -18,66%. Dispersão 5,57% não mede risco de reparação. Pares incluem holdings, siderurgia e celulose, cujas exposições diferem; não interpretamos alpha relativo como superioridade operacional comprovada.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese perde força se preços e subprodutos sustentarem o resultado sem produtividade durável, ou se reposição e reparação absorverem os recursos atribuíveis.",
+        "titulo": "Condição de invalidação"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-19",
+    "dados_simulados": false,
+    "data": "2026-10-19",
+    "ficha": [
+      {
+        "fato": "val.BR_VALE.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 66,42"
+      },
+      {
+        "fato": "val.BR_VALE.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 67,61"
+      },
+      {
+        "fato": "val.BR_VALE.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+1,79%"
+      },
+      {
+        "fato": "val.BR_VALE.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_VALE.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_VALE.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 102,04"
+      },
+      {
+        "fato": "val.BR_VALE.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "5,27%"
+      },
+      {
+        "fato": "val.BR_VALE.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 35,56"
+      },
+      {
+        "fato": "val.BR_VALE.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "1,04%"
+      },
+      {
+        "fato": "val.BR_VALE.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,88%"
+      },
+      {
+        "fato": "val.BR_VALE.wacc",
+        "rotulo": "WACC",
+        "valor": "10,99%"
+      },
+      {
+        "fato": "val.BR_VALE.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_VALE.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+11,55%"
+      },
+      {
+        "fato": "val.BR_VALE.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+0,18%"
+      },
+      {
+        "fato": "val.BR_VALE.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "7,1x"
+      },
+      {
+        "fato": "val.BR_VALE.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,4x"
+      },
+      {
+        "fato": "val.BR_VALE.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 83,12"
+      },
+      {
+        "fato": "val.BR_VALE.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-18,66%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-19",
+        "id": "F1",
+        "instituicao": "Vale",
+        "publicado_em": "2026-07-30",
+        "tipo": "Relações com investidores",
+        "titulo": "Desempenho financeiro, custos e obrigações de reparação",
+        "url": "https://www.vale.com/ca/confira-os-resultados-financeiros-do-2t26"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Custo completo e realização deixam de sustentar retorno.",
+      "Reparação ou projetos alteram caixa atribuível.",
+      "Novos resultados modificam premissas da cobertura."
+    ],
+    "governanca": "Brumadinho, Mariana e descaracterização têm compromissos próprios. Autorização de recompra não é execução; recursos destinados a obrigações não são distribuição livre.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar qualidade, disponibilidade, frete, custo completo, subprodutos, investimento e pagamentos de reparação.",
+        "titulo": "Realização e caixa após obrigações"
+      }
+    ],
+    "issuer_id": "BR_VALE",
+    "lacunas_de_dados": [
+      "Reconciliação integral do caixa e das obrigações por entidade pendente.",
+      "Reservas, custo final e retorno de projetos não requalificados.",
+      "Execução posterior de recompra e percepção do mercado não comprovadas.",
+      "Guidance agregado não classificado diante de direções distintas por mineral."
+    ],
+    "modelo_de_cobertura": "2026-10-19",
+    "negocio": "Mineradora de minério de ferro, cobre e níquel, com infraestrutura logística. Qualidade, frete e preço realizado condicionam margem; reservas, manutenção e reparação condicionam o retorno econômico.",
+    "nome": "Vale",
+    "o_que_mudou": "Desde 2026-10-11, o retrato atualiza alvo e retorno esperado; a nota reconfirma as condições de custo e reinvestimento. Mantemos neutralidade sem atribuir a dados quantitativos completos a conclusão da diligência qualitativa.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CBA",
+        "nome": "Companhia Brasileira de Alumínio"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_SUZANO",
+        "nome": "Suzano"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Vale, 2026-07-30: vendas e EBITDA proforma cresceram, enquanto câmbio e frete pressionaram minério. Testar qualidade e confiabilidade depois de transporte, compras e reinvestimento.",
+        "titulo": "Volume e custo completo"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_VALE.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "+0,18%"
+          },
+          {
+            "fato": "val.BR_VALE.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,88%"
+          }
+        ],
+        "texto": "O alpha relativo é +0,18%, com ke 12,88%. A leitura neutra exige preservar caixa após compromissos e evitar extrapolar o ciclo mineral.",
+        "titulo": "Retorno atribuível"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Testar se realização e confiabilidade remuneram custo completo. A contribuição de subprodutos não demonstra, por si, extração estruturalmente mais eficiente.",
+        "titulo": "Qualidade e logística"
+      }
+    ],
+    "publicada_em": "2026-10-20T01:47:22.163835+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Reconciliar medidas proforma e recorrentes com caixa após reparação e reposição. Benefícios de derivativos devem permanecer separados da operação mineral.",
+        "titulo": "Proforma e caixa econômico"
+      }
+    ],
+    "resumo": "Mantemos neutralidade e baixa convicção. Produção e logística precisam sustentar caixa após reposição, expansão e reparação. O alvo é R$ 67,61, com potencial +1,79% e retorno esperado +11,55%. Ausência de lacuna quantitativa não encerra diligência sobre custo completo e obrigações.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Ciclo mineral, frete e reinvestimento podem absorver geração; reparação exige caixa além de medidas recorrentes."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Vale — custo completo e reparação condicionam retorno da produção",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "No desempenho de 2T26 reconferido, a companhia elevou projeções de custos do minério e reduziu as de metais básicos, beneficiadas por subprodutos. Investimento e reparação continuam relevantes. Não agregamos essas direções distintas em uma classificação única de guidance.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Custos de minério e metais básicos receberam revisões de direção distinta. Subprodutos e proteção financeira exigem tratamento separado da eficiência operacional.",
+        "vetor": "Minério e metais básicos"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

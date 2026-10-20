@@ -1,0 +1,340 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-19",
+    "manifest_sha256": "164979b8a7edd3737547472d2565a0f267bbc6ec5d456b80710ce43a0f4700c0",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-19",
+  "hashes": {
+    "contexto": "1295dabd61c7aea3a434f4413d8a26a70f76fae6241e96043dcbf56ac76fb9c8",
+    "factbook": "a22bfb6a255a421375ca94804be3935c7d91eacb67a58e0623ae8526357d7cf3",
+    "nota_json": "0216edff4dfd20af072ec1366665d1443abbfd29ca1422af579931082eb46913"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_PETROBRAS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-10",
+  "published_at": "2026-10-20T01:43:17.247211+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Investimentos e trajetória de dívida orientam a diligência sobre capacidade de distribuir. Metas de projetos não equivalem a retorno já realizado.",
+        "titulo": "Projetos e dívida"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-28",
+        "descricao": "Relatório de produção e vendas de 3T26, após o fechamento.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": "2026-11-10",
+        "descricao": "Resultado financeiro de 3T26, após o fechamento; conferir caixa e compromissos.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "A capacidade de distribuição depende do reinvestimento; alvo Em revisão.",
+      "otimista": "Produção e disciplina de capital sustentam caixa; alvo Em revisão.",
+      "pessimista": "Margens e obrigações comprimem retorno ao acionista; alvo Em revisão."
+    },
+    "comentario_valuation": "P/L à frente 5,1x, consenso público R$ 63,14 e dispersão 21,04%. O alvo próprio está em revisão. Refino, política comercial e arrendamentos distinguem a Petrobras dos pares produtores e distribuidores; comparação de múltiplos exige bases econômicas compatíveis.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Caixa após reinvestimento e arrendamentos, preservado em condições menos favoráveis de petróleo, sustentaria maior convicção. Deterioração dessa transmissão enfraqueceria a hipótese favorável.",
+        "titulo": "O que modifica a neutralidade"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-19",
+    "dados_simulados": false,
+    "data": "2026-10-19",
+    "ficha": [
+      {
+        "fato": "val.BR_PETROBRAS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 57,36"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,47%"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.wacc",
+        "rotulo": "WACC",
+        "valor": "9,55%"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "5,1x"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,5x"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 63,14"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-19",
+        "id": "F1",
+        "instituicao": "Petrobras",
+        "publicado_em": "2026-08-06",
+        "tipo": "Relações com investidores",
+        "titulo": "Desempenho trimestral, produção e investimentos",
+        "url": "https://agencia.petrobras.com.br/w/negocio/petrobras-lucra-r-52-4-bilh%C3%B5es-no-segundo-trimestre-de-2026"
+      },
+      {
+        "consultado_em": "2026-10-19",
+        "id": "F2",
+        "instituicao": "SEC / Petrobras",
+        "publicado_em": "2026-10-13",
+        "tipo": "Regulador",
+        "titulo": "Calendário de divulgações operacionais e financeiras",
+        "url": "https://www.sec.gov/Archives/edgar/data/1119639/000129281426004918/pbr20261013_6k1.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Caixa após obrigações confirma ou invalida o retorno do investimento.",
+      "Divulgações operacionais e financeiras alteram premissas da cobertura.",
+      "Direitos por classe e política comercial alteram transmissão ao minoritário."
+    ],
+    "governanca": "Mantemos como diligência o efeito do controle estatal sobre investimento, comercialização e distribuição por classe. Não requalificamos direitos de classe nem composição atual neste estudo.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Conferir disponibilidade, declínio, margem de refino, investimento, arrendamentos e capital de giro nas próximas divulgações.",
+        "titulo": "Produção, custo e caixa atribuível"
+      }
+    ],
+    "issuer_id": "BR_PETROBRAS",
+    "lacunas_de_dados": [
+      "Alvo, cenários e retorno esperado em revisão.",
+      "Demonstrações completas e caixa após arrendamentos não reconciliados nesta atualização.",
+      "Guidance agregado e tom não reclassificados.",
+      "Controle, classes e reservas exigem diligência adicional."
+    ],
+    "modelo_de_cobertura": "2026-10-19",
+    "negocio": "Companhia integrada de petróleo, gás e refino. Nossa hipótese é que a escala e a produtividade do pré-sal remunerem o capital ao longo do ciclo; Brent favorável não comprova retorno dos novos projetos.",
+    "nome": "Petrobras",
+    "o_que_mudou": "Desde 2026-10-11, o alvo citável passou a em revisão no retrato recebido. Incorporamos o calendário oficial de 2026-10-13 e preservamos a distinção entre produção e resultado financeiro. A visão qualitativa continua neutra.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRAVA",
+        "nome": "Brava Energia"
+      },
+      {
+        "issuer_id": "BR_COSAN",
+        "nome": "Cosan"
+      },
+      {
+        "issuer_id": "BR_PRIO",
+        "nome": "PRIO"
+      },
+      {
+        "issuer_id": "BR_RECV",
+        "nome": "PetroRecôncavo"
+      },
+      {
+        "issuer_id": "BR_ULTRAPAR",
+        "nome": "Ultrapar"
+      },
+      {
+        "issuer_id": "BR_VIBRA",
+        "nome": "Vibra Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Petrobras, 2026-08-06, relata produção maior, refino elevado e fortalecimento do caixa operacional. Nossa avaliação exige confrontar esse desempenho com desembolsos e obrigações de uso dos ativos.",
+        "titulo": "Produção precisa remunerar capital"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_PETROBRAS.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 57,36"
+          },
+          {
+            "fato": "val.BR_PETROBRAS.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,47%"
+          }
+        ],
+        "texto": "O preço é R$ 57,36 e o ke 11,47%. Sem alvo citável, o múltiplo não autoriza conclusão sobre retorno relativo.",
+        "titulo": "Avaliação em revisão"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O ganho de eficiência descrito pela companhia sustenta a hipótese operacional. A vantagem só se confirma se o custo completo e a reposição de reservas preservarem retorno no ciclo.",
+        "titulo": "Produtividade do pré-sal"
+      }
+    ],
+    "publicada_em": "2026-10-20T01:43:17.247211+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar Brent e eventos exclusivos de produtividade recorrente; exigir conversão do resultado em caixa após obrigações.",
+        "titulo": "Ciclo e recorrência"
+      }
+    ],
+    "resumo": "Mantemos neutralidade e convicção baixa. A condição decisiva é converter produção e refino em caixa atribuível após investimento, arrendamentos e dívida. O alvo está Em revisão; os números citáveis anteriores não devem ser extrapolados. A divulgação operacional de 3T26 e o resultado financeiro serão eventos distintos.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Ciclo do petróleo e investimento podem absorver caixa e tornar distribuição passada pouco representativa da capacidade futura."
+      }
+    ],
+    "setor": "Energia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Petrobras — produção, retorno após reinvestimento e calendário confirmado",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O comunicado de 2026-08-06 atribui a melhora de 2T26 à produção, refino e Brent. Apresenta resultado com e sem eventos exclusivos e investimentos em projetos. O resultado financeiro de 3T26 ainda é futuro conforme calendário da SEC de 2026-10-13.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar disponibilidade das plataformas, custo completo e margens de refino. Crescimento exige caixa depois da reposição e expansão.",
+        "vetor": "Produção e margens realizadas"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,331 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-19",
+    "manifest_sha256": "164979b8a7edd3737547472d2565a0f267bbc6ec5d456b80710ce43a0f4700c0",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-19",
+  "hashes": {
+    "contexto": "57fd9445fe604bbdcbf243c79ebe705e1b811d35dc57f2e488f6b22de73c914c",
+    "factbook": "a40a2ffd6742ceed9ac6a944eccecdf112197f76c36f88d44109e2dcce7f7b5e",
+    "nota_json": "c526b6b0d8a21914592c7a5acb55528268109805c447c71ba25a585c4f868b98"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_AMBEV",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-29",
+  "published_at": "2026-10-20T01:54:53.730287+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Confrontar recompras e remuneração com investimento de manutenção, expansão e necessidade de giro. A hipótese de distribuição sustentável depende de caixa após essas obrigações.",
+        "titulo": "Caixa após manutenção"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-29",
+        "descricao": "Divulgação trimestral prevista pelo RI: examinar volume, preço e caixa após despesas comerciais.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fato": "evento.BR_AMBEV.proximo_resultado",
+            "nome": "Próxima divulgação de resultado",
+            "valor": "2026-10-29"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Execução desigual por mercado exige disciplina de gastos e capital de giro; alvo R$ 15,24.",
+      "otimista": "Preço e eficiência sustentam volume e geração após reinvestimento; alvo R$ 17,70.",
+      "pessimista": "Elasticidade e despesas reduzem caixa recorrente; alvo R$ 13,06."
+    },
+    "comentario_valuation": "Preço R$ 16,69, rating quantitativo Venda, ke 10,59% e consenso público R$ 16,30. A visão qualitativa neutra preserva a incerteza operacional; não substitui o rating calculado. Pares de varejo, alimentos e açúcar exigem ajuste por estrutura de margem e capital antes de comparação direta.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Se preço depender de campanhas que absorvam margem ou o caixa depender de liberação transitória de giro, marcas e escala não bastarão para sustentar retorno por ação.",
+        "titulo": "Condição de invalidação"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-19",
+    "dados_simulados": false,
+    "data": "2026-10-19",
+    "ficha": [
+      {
+        "fato": "val.BR_AMBEV.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 16,69"
+      },
+      {
+        "fato": "val.BR_AMBEV.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 15,24"
+      },
+      {
+        "fato": "val.BR_AMBEV.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-8,70%"
+      },
+      {
+        "fato": "val.BR_AMBEV.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_AMBEV.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_AMBEV.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 17,70"
+      },
+      {
+        "fato": "val.BR_AMBEV.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "44,28%"
+      },
+      {
+        "fato": "val.BR_AMBEV.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 13,06"
+      },
+      {
+        "fato": "val.BR_AMBEV.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "14,32%"
+      },
+      {
+        "fato": "val.BR_AMBEV.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,59%"
+      },
+      {
+        "fato": "val.BR_AMBEV.wacc",
+        "rotulo": "WACC",
+        "valor": "10,54%"
+      },
+      {
+        "fato": "val.BR_AMBEV.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_AMBEV.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-3,54%"
+      },
+      {
+        "fato": "val.BR_AMBEV.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-38,57%"
+      },
+      {
+        "fato": "val.BR_AMBEV.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "15,1x"
+      },
+      {
+        "fato": "val.BR_AMBEV.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,9x"
+      },
+      {
+        "fato": "val.BR_AMBEV.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 16,30"
+      },
+      {
+        "fato": "val.BR_AMBEV.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-6,54%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-19",
+        "id": "F1",
+        "instituicao": "SEC / Ambev",
+        "publicado_em": "2026-07-30",
+        "tipo": "Regulador",
+        "titulo": "Resultado trimestral e projeção de custos",
+        "url": "https://www.sec.gov/Archives/edgar/data/1565025/000129281426003970/abevpr2q26_6k.htm"
+      },
+      {
+        "consultado_em": "2026-10-19",
+        "id": "F2",
+        "instituicao": "Ambev",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Agenda de resultados e relações com investidores",
+        "url": "https://ri.ambev.com.br/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Próximo resultado altera composição entre preço e volume.",
+      "Custos e despesas comerciais mudam geração após investimento.",
+      "Reconciliação do capital de giro modifica a leitura de recorrência."
+    ],
+    "governanca": "Confrontar remuneração, recompras e reinvestimento com os documentos societários e a geração disponível. Aprovação ou anúncio de pagamento não comprova liquidação; a avaliação deve observar direitos dos acionistas e operações entre partes relacionadas.",
+    "guidance": "mantido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Monitorar volume por mercado, receita por unidade, custo caixa, despesa comercial, giro e caixa após investimento.",
+        "titulo": "Preço, custo e caixa"
+      }
+    ],
+    "issuer_id": "BR_AMBEV",
+    "lacunas_de_dados": [
+      "Reconciliação integral do caixa após investimento não concluída nesta atualização.",
+      "Eficácia recorrente das campanhas e participação de mercado não demonstradas independentemente.",
+      "Percepção de mercado e documentos societários completos não examinados."
+    ],
+    "modelo_de_cobertura": "2026-10-19",
+    "negocio": "Produtora e distribuidora de cervejas e bebidas não alcoólicas nas Américas. Marcas, canais, capacidade industrial e execução comercial influenciam volume e receita por unidade.",
+    "nome": "Ambev",
+    "o_que_mudou": "Desde 2026-10-11, atualizamos os fatos de avaliação e acrescentamos leitura do resultado público de 2T26 e da agenda de RI. A análise passa a distinguir a projeção específica de custos da margem consolidada; mantém neutralidade e convicção baixa.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ASSAI",
+        "nome": "Assaí Atacadista"
+      },
+      {
+        "issuer_id": "BR_MATEUS",
+        "nome": "Grupo Mateus"
+      },
+      {
+        "issuer_id": "BR_MBRF",
+        "nome": "MBRF (Marfrig+BRF)"
+      },
+      {
+        "issuer_id": "BR_MDIAS",
+        "nome": "M. Dias Branco"
+      },
+      {
+        "issuer_id": "BR_NATURA",
+        "nome": "Natura Cosméticos"
+      },
+      {
+        "issuer_id": "BR_PAGUEMENOS",
+        "nome": "Pague Menos"
+      },
+      {
+        "issuer_id": "BR_RAIADROGASIL",
+        "nome": "Raia Drogasil"
+      },
+      {
+        "issuer_id": "BR_SAOMARTINHO",
+        "nome": "São Martinho"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Ambev, 2026-07-30: expansão em cerveja Brasil e América Central e Caribe compensou recuos em outras operações no 2T26. A hipótese de valorização exige separar preço, composição e volume por mercado.",
+        "titulo": "Crescimento e composição"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A companhia manteve a projeção anual de custo caixa por volume de cerveja no Brasil e ampliou despesas comerciais ligadas à Copa. O teste é preservar rentabilidade depois do esforço de vendas.",
+        "titulo": "Custos e reinvestimento comercial"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Testar se distribuição e portfólio preservam demanda com preço remunerador. Participação e preferência do consumidor precisam de confirmação além da comunicação da administração.",
+        "titulo": "Marcas e distribuição"
+      }
+    ],
+    "publicada_em": "2026-10-20T01:54:53.730287+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Reconciliar resultado normalizado ao reportado e decompor capital de giro antes de anualizar caixa. Conferir também efeito cambial e comparabilidade por mercado.",
+        "titulo": "Normalizado e recebido"
+      }
+    ],
+    "resumo": "Mantemos neutralidade e baixa convicção. O resultado consultado mostra crescimento consolidado, mas a sustentação do valor exige distinguir volume, preço, despesas comerciais e capital de giro. Alvo R$ 15,24, potencial -8,70% e retorno esperado -3,54% mantêm a disciplina de avaliação.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Custo industrial, distribuição e competição podem limitar a captura de preço. Câmbio e composição geográfica dificultam extrapolar o consolidado."
+      }
+    ],
+    "setor": "Consumo básico",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Ambev — preço, volume e conversão de caixa após despesas comerciais",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "No release de 2026-07-30, receita e EBITDA normalizado cresceram no 2T26; a companhia atribuiu avanço do caixa operacional a EBITDA e capital de giro. A projeção mantida refere-se especificamente ao custo caixa por volume de cerveja Brasil, excluindo produtos de terceiros. Não é promessa de margem consolidada.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Avaliar recorrência da demanda e elasticidade após campanhas. Crescimento agregado não garante melhora em todos os mercados.",
+        "vetor": "Preço e volume após campanhas"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

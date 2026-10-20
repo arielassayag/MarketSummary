@@ -1,0 +1,338 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-19",
+    "manifest_sha256": "164979b8a7edd3737547472d2565a0f267bbc6ec5d456b80710ce43a0f4700c0",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-19",
+  "hashes": {
+    "contexto": "26d93113e42a8812515e7135efb559a4987efbed16c244eecec0af04989f9b6d",
+    "factbook": "9044079154eea3265df5f6ee73c78771ca3bc8a67852edf266d26a36d8abf879",
+    "nota_json": "8589dba40f48b11a84d5d104577510a13e51dada0bcba46a553635e53435c00a"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_EMBRAER",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-10",
+  "published_at": "2026-10-20T01:49:32.470665+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Avaliar desenvolvimento, suporte e Eve em bases próprias. A medida ajustada sem Eve não representa automaticamente recursos distribuíveis do grupo.",
+        "titulo": "Desenvolvimento e Eve"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-10",
+        "descricao": "Resultado indicado pela cobertura: conciliar entregas, margem e geração de caixa.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "evento.BR_EMBRAER.proximo_resultado",
+            "nome": "Próxima divulgação de resultado",
+            "valor": "2026-11-10"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Conversão da carteira exige giro e investimento; alvo R$ 65,90.",
+      "otimista": "Entregas e serviços remuneram desenvolvimento; alvo R$ 98,33.",
+      "pessimista": "Atrasos e custos absorvem recursos; alvo R$ 35,21."
+    },
+    "comentario_valuation": "Preço R$ 92,30, potencial -28,60%, ke 10,17%, consenso R$ 120,76 e dispersão 37,41%. A divergência com consenso não comprova percepção do mercado. Pares industriais têm contratos e capital distintos; carteira de pedidos não é múltiplo de caixa garantido.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese perde força se novos pedidos exigirem capital de giro e desenvolvimento sem margem recorrente. Caixa sustentado após esses compromissos permitiria elevar convicção.",
+        "titulo": "Teste da hipótese favorável"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-19",
+    "dados_simulados": false,
+    "data": "2026-10-19",
+    "ficha": [
+      {
+        "fato": "val.BR_EMBRAER.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 92,30"
+      },
+      {
+        "fato": "val.BR_EMBRAER.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 65,90"
+      },
+      {
+        "fato": "val.BR_EMBRAER.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-28,60%"
+      },
+      {
+        "fato": "val.BR_EMBRAER.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_EMBRAER.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_EMBRAER.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 98,33"
+      },
+      {
+        "fato": "val.BR_EMBRAER.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "45,94%"
+      },
+      {
+        "fato": "val.BR_EMBRAER.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 35,21"
+      },
+      {
+        "fato": "val.BR_EMBRAER.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "0,48%"
+      },
+      {
+        "fato": "val.BR_EMBRAER.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,17%"
+      },
+      {
+        "fato": "val.BR_EMBRAER.wacc",
+        "rotulo": "WACC",
+        "valor": "9,43%"
+      },
+      {
+        "fato": "val.BR_EMBRAER.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_EMBRAER.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-28,15%"
+      },
+      {
+        "fato": "val.BR_EMBRAER.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-47,62%"
+      },
+      {
+        "fato": "val.BR_EMBRAER.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "18,9x"
+      },
+      {
+        "fato": "val.BR_EMBRAER.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "3,7x"
+      },
+      {
+        "fato": "val.BR_EMBRAER.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 120,76"
+      },
+      {
+        "fato": "val.BR_EMBRAER.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-45,43%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-19",
+        "id": "F1",
+        "instituicao": "SEC / Embraer",
+        "publicado_em": "2026-10-02",
+        "tipo": "Regulador",
+        "titulo": "Entregas trimestrais e metas operacionais",
+        "url": "https://www.sec.gov/Archives/edgar/data/1355444/000129281426004832/embj20261002_6k.htm"
+      },
+      {
+        "consultado_em": "2026-10-19",
+        "id": "F2",
+        "instituicao": "Embraer",
+        "publicado_em": "2026-08-10",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado financeiro e revisão de perspectivas",
+        "url": "https://www.embraer.com/media-center/en?detail=28090&mediatype=NEWS&page=1"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Conversão das entregas altera caixa após desenvolvimento.",
+      "Fornecedores ou certificação modificam execução.",
+      "Resultado financeiro esclarece recorrência e perímetro."
+    ],
+    "governanca": "A classificação de guidance refere-se às entregas reconfirmadas em outubro. Não substitui a elevação financeira de agosto. Conciliar Eve, consolidado, ações e recibos antes de atribuir retorno ao acionista.",
+    "guidance": "mantido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Monitorar mix, serviços, margem sem efeitos extraordinários, estoques, adiantamentos, desenvolvimento e financiamento por perímetro.",
+        "titulo": "Entregas e recorrência"
+      }
+    ],
+    "issuer_id": "BR_EMBRAER",
+    "lacunas_de_dados": [
+      "Caixa recorrente, adiantamentos e notas completas sem conciliação integral.",
+      "Unidade por recibo e direitos de Eve não requalificados.",
+      "Pagamento de JCP e execução de programas futuros não reconfirmados.",
+      "Percepção de mercado sem evidência independente."
+    ],
+    "modelo_de_cobertura": "2026-10-19",
+    "negocio": "Fabricante de aeronaves comerciais, executivas e de defesa, com serviços de suporte. Carteira, entrega e recebimento têm momentos distintos; a operação sem Eve e o consolidado têm perímetros próprios.",
+    "nome": "Embraer",
+    "o_que_mudou": "Desde 2026-10-11, o retrato atualiza preço, alvo e retorno. Reconferimos entregas de 3T26 e metas mantidas; preservamos a distinção em relação ao resultado financeiro ainda futuro. A neutralidade qualitativa continua.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_SIMPAR",
+        "nome": "Simpar"
+      },
+      {
+        "issuer_id": "BR_TUPY",
+        "nome": "Tupy"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Embraer, 2026-10-02: entregas de 3T26 cresceram e metas comerciais e executivas foram mantidas. A condição é preservar margem e suporte durante a conversão da carteira.",
+        "titulo": "Entregas e execução"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O resultado de 2T26 relata caixa ajustado sem Eve apoiado por adiantamentos e crédito tributário extraordinário. Exigimos geração recorrente depois do desenvolvimento.",
+        "titulo": "Qualidade do caixa"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Testar se serviços e regularidade de entrega preservam relacionamento e retorno. A carteira indica demanda, sem eliminar atrasos ou cancelamentos.",
+        "titulo": "Produto e suporte"
+      }
+    ],
+    "publicada_em": "2026-10-20T01:49:32.470665+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Separar benefício fiscal e recebimentos antecipados da rentabilidade recorrente. Entrega posterior não resolve, isoladamente, a conciliação do caixa.",
+        "titulo": "Caixa depois dos adiantamentos"
+      }
+    ],
+    "resumo": "Mantemos neutralidade qualitativa e baixa convicção. Entregas sustentam a execução, mas pedidos precisam converter-se em caixa após desenvolvimento e financiamento. O modelo indica Venda, alvo R$ 65,90 e retorno esperado -28,15%. A leitura operacional não elimina o risco de avaliação.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Fornecedores, certificação e desenvolvimento podem impedir conversão rentável da carteira; benefício fiscal e adiantamentos limitam extrapolação do caixa."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Embraer — entregas preservam metas, caixa recorrente continua decisivo",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "As metas financeiras foram elevadas no resultado de 2T26, com benefício tributário, isenção tarifária e melhora da perspectiva operacional. A divulgação de 2026-10-02 mantém metas de entregas; não representa resultado financeiro completo de 3T26.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar conversão de pedidos, estoques e recebimentos. Adiantamentos podem antecipar caixa de entregas futuras sem comprovar margem recorrente.",
+        "vetor": "Carteira e capital de giro"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

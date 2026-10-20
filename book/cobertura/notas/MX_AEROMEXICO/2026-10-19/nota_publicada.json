@@ -1,0 +1,375 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-19",
+    "manifest_sha256": "164979b8a7edd3737547472d2565a0f267bbc6ec5d456b80710ce43a0f4700c0",
+    "modelo_as_of": "2026-10-19"
+  },
+  "conviccao": 1,
+  "data": "2026-10-19",
+  "hashes": {
+    "contexto": "0f8d3b4fcdc7f94c7a869c41d9456423e6ecc3b8be92b6491481052980eaf1c5",
+    "factbook": "44600bf848a27dbd2b0ac91460520cc5d2655bf3b05d11f2c5d6f849b47df843",
+    "nota_json": "fa9cada1c1d5f730c0f60caa7e9795af7de87c2d482db3f2d0330279eac8f1a2"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_AEROMEXICO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-19",
+  "published_at": "2026-10-20T01:40:07.596191+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A prioridade analítica é remunerar o capital depois de manutenção e obrigações da frota. O comunicado distingue caixa de liquidez com crédito disponível; ambos devem permanecer separados na avaliação de capacidade financeira.",
+        "titulo": "Frota e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-20",
+        "descricao": "Conferência de resultados: esclarecer recorrência da fidelidade, combustível e recuperação de margens.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Conectividade sustenta receita, mas custos e reinvestimento restringem a conversão; alvo Em revisão.",
+      "otimista": "Disciplina comercial e utilização da frota sustentam caixa após obrigações; alvo otimista Em revisão.",
+      "pessimista": "Pressão de combustível persiste e a receita recorrente não remunera a frota; alvo pessimista Em revisão."
+    },
+    "comentario_valuation": "Preço de referência US$ 15,89, P/L à frente 9,6x e consenso público US$ 26,38. Alvo, cenários e retorno esperado permanecem em revisão. O consenso não substitui a avaliação própria nem evidencia o que está precificado. Os pares industriais da cobertura têm estruturas de capital e exposição econômica distintas; comparação mecânica de múltiplos seria insuficiente.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Geração recorrente de caixa após obrigações, acompanhada de recuperação de margem sem depender do reconhecimento extraordinário na fidelidade, enfraqueceria a visão cautelosa. Até essa confirmação, receita forte não basta.",
+        "titulo": "Condição que invalida a cautela"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-19",
+    "dados_simulados": false,
+    "data": "2026-10-19",
+    "ficha": [
+      {
+        "fato": "val.MX_AEROMEXICO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 15,89"
+      },
+      {
+        "fato": "val.MX_AEROMEXICO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_AEROMEXICO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_AEROMEXICO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_AEROMEXICO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.MX_AEROMEXICO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_AEROMEXICO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_AEROMEXICO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_AEROMEXICO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_AEROMEXICO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,32%"
+      },
+      {
+        "fato": "val.MX_AEROMEXICO.wacc",
+        "rotulo": "WACC",
+        "valor": "8,24%"
+      },
+      {
+        "fato": "val.MX_AEROMEXICO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.MX_AEROMEXICO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_AEROMEXICO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_AEROMEXICO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "9,6x"
+      },
+      {
+        "fato": "val.MX_AEROMEXICO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_AEROMEXICO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 26,38"
+      },
+      {
+        "fato": "val.MX_AEROMEXICO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-19",
+        "id": "F1",
+        "instituicao": "Grupo Aeroméxico",
+        "publicado_em": "2026-10-19",
+        "tipo": "Relações com investidores",
+        "titulo": "Comunicado de resultado trimestral e perspectivas",
+        "url": "https://www.globenewswire.com/fr/news-release/2026/10/19/3383928/0/en/aerom%C3%A9xico-reports-unaudited-third-quarter-2026-results.html"
+      },
+      {
+        "consultado_em": "2026-10-19",
+        "id": "F2",
+        "instituicao": "SEC / Grupo Aeroméxico",
+        "publicado_em": "2026-07-13",
+        "tipo": "Regulador",
+        "titulo": "Resultado anterior e perspectivas para comparação",
+        "url": "https://www.sec.gov/Archives/edgar/data/1561861/000119312526302103/d112634dex991.htm"
+      },
+      {
+        "consultado_em": "2026-10-19",
+        "id": "F3",
+        "instituicao": "Grupo Aeroméxico",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário da conferência de resultados",
+        "url": "https://ir.aeromexico.com/events/event-details/aeromexico-3q26-earnings-conference-call"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Conferência esclarece recorrência da fidelidade e premissas de combustível.",
+      "Caixa após manutenção e arrendamentos confirma ou invalida a recuperação operacional.",
+      "Modelo disponibiliza alvo e cenários citáveis."
+    ],
+    "governanca": "A segregação entre caixa e crédito disponível e entre resultado trimestral e fluxo acumulado é central à leitura. Direitos por instrumento, partes relacionadas e execução da recompra exigem diligência adicional; a disponibilidade de crédito não comprova recursos distribuíveis.",
+    "guidance": "reduzido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar realização internacional, custo sem combustível, premissas de querosene, passivos de fidelidade e passagens, manutenção e principal de arrendamentos. Invalida a hipótese favorável a deterioração conjunta de margem e caixa atribuível.",
+        "titulo": "Realização, custo e caixa"
+      }
+    ],
+    "issuer_id": "MX_AEROMEXICO",
+    "lacunas_de_dados": [
+      "Preço-alvo, cenários e retorno esperado seguem em revisão.",
+      "Conferência de resultados ainda não realizada na data da nota.",
+      "Reconciliação integral da recorrência da fidelidade e do caixa atribuível pendente.",
+      "Calendário estimado do retrato diverge do evento oficial confirmado.",
+      "Direitos por instrumento e execução de recompra não requalificados."
+    ],
+    "modelo_de_cobertura": "2026-10-19",
+    "negocio": "Holding mexicana de aviação comercial e fidelidade, com conexões domésticas e internacionais. A hipótese competitiva combina rede, oferta premium e receitas complementares; sua validade depende do retorno econômico após o custo completo da frota.",
+    "nome": "Grupo Aeroméxico",
+    "o_que_mudou": "Desde 2026-10-11, incorporamos o comunicado de 3T26: reconhecimento de receita de fidelidade e novas perspectivas de margem. A conferência ainda ocorrerá. Mantemos neutralidade e baixa convicção diante do alvo em revisão. A estimativa de próximo resultado no retrato diverge do calendário oficial; utilizamos a conferência confirmada pela companhia.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MARCOPOLO",
+        "nome": "Marcopolo"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O comunicado da Aeroméxico de 2026-10-19 atribui expansão da receita à operação internacional e informa reconhecimento de receita por revisão das estimativas de resgate na fidelidade. Nossa leitura exige separar esse efeito da demanda recorrente.",
+        "titulo": "Receita e recorrência"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fato": "val.MX_AEROMEXICO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,32%"
+          }
+        ],
+        "texto": "As perspectivas anuais de margem foram reduzidas frente ao comunicado de 2026-07-13, embora a expectativa de receita continue favorável. O ke é 12,32%; a ausência de alvo citável impede concluir atratividade relativa pelo múltiplo.",
+        "titulo": "Perspectivas e custo de capital"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese é que conectividade e oferta premium sustentem realização. O comunicado atribui a expansão comercial sobretudo à operação internacional; falta comparação independente que comprove vantagem persistente.",
+        "titulo": "Rede e disciplina de capacidade"
+      }
+    ],
+    "publicada_em": "2026-10-20T01:40:07.596191+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Rever a recorrência do reconhecimento ligado a estimativas de resgate e sua relação com o passivo do programa. Avaliar caixa após manutenção, juros e arrendamentos antes de extrapolar o lucro.",
+        "titulo": "Ajuste da fidelidade"
+      }
+    ],
+    "resumo": "O resultado de 3T26 reforça a necessidade de distinguir monetização da rede de geração recorrente. A receita cresceu, mas combustível e custos pressionaram rentabilidade. A revisão do reconhecimento de receita de fidelidade limita a extrapolação da receita reportada. Mantemos visão neutra e convicção baixa: o preço-alvo segue Em revisão e o retorno esperado Em revisão. A condição para elevar a convicção é caixa após manutenção e arrendamentos, com perspectivas de margem compatíveis com o combustível.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "alta",
+        "texto": "Combustível elevado e custos em moeda local podem impedir que a realização comercial preserve rentabilidade."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "EBITDAR e liquidez incluindo crédito disponível podem superestimar a capacidade de remunerar o acionista após frota e financiamento."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Aeroméxico — fidelidade, combustível e redução das perspectivas de margem",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "Aeroméxico, 2026-10-19: receita maior coexistiu com queda anual do resultado operacional e do lucro líquido. A revisão de estimativas de fidelidade contribuiu para a receita; combustível pressionou custos. O fluxo de caixa divulgado é acumulado, enquanto o lucro é trimestral. A comparação das perspectivas com o comunicado de 2026-07-13 indica redução de margens, com receita anual revisada para cima.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Testar se preços e composição comercial absorvem combustível sem enfraquecer demanda. A pressão de custos relatada recomenda cautela com a recuperação de margem.",
+        "vetor": "Combustível e realização"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Exigir reconciliação entre receita reconhecida, passivo de fidelidade e caixa recebido. Mudança de estimativa não equivale a entrada contemporânea de caixa.",
+        "vetor": "Fidelidade e conversão em caixa"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

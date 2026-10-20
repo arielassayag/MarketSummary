@@ -1,0 +1,348 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-19",
+    "manifest_sha256": "164979b8a7edd3737547472d2565a0f267bbc6ec5d456b80710ce43a0f4700c0",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-19",
+  "hashes": {
+    "contexto": "4b7630798f854db4e25663f10c82c9a1cfc930ce4cd492e1ebca2ea4a5bf71c5",
+    "factbook": "f1cbb9c7ebc4bbd7181776f703e2817cd931ddfc11750f3e86662432cf415363",
+    "nota_json": "765f878b35cd59f5af695e1a3f95a0170566896753d0ab6bab034d5d0a2c8022"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_GAP",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-20",
+  "published_at": "2026-10-20T01:41:54.745969+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Verificar se o retorno do investimento resiste ao custo variável e à renovação das linhas anunciadas. Contratação não comprova desembolso integral.",
+        "titulo": "Compatibilidade de prazos"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Conclusão da alocação do preço de aquisição e conciliação dos ativos integrados; sem data confirmada.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "capital"
+      }
+    ],
+    "cenarios": {
+      "base": "Operação preserva retorno, com caixa condicionado aos investimentos; alvo Em revisão.",
+      "otimista": "Integração remunera capital e financiamento; alvo Em revisão.",
+      "pessimista": "Tráfego e refinanciamento limitam distribuição; alvo Em revisão."
+    },
+    "comentario_valuation": "Preço MXN 373,39, P/L à frente 16,2x, ke 11,84% e consenso MXN 456,88. A comparação com pares industriais exige ajustar concessões e perímetro; não inferimos desconto nem probabilidades onde o alvo está em revisão.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Melhoria comprovada do caixa recorrente por ação, com tráfego estabilizado e financiamento duradouro, enfraqueceria a neutralidade.",
+        "titulo": "O que invalida a cautela"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-19",
+    "dados_simulados": false,
+    "data": "2026-10-19",
+    "ficha": [
+      {
+        "fato": "val.MX_GAP.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 373,39"
+      },
+      {
+        "fato": "val.MX_GAP.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_GAP.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_GAP.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_GAP.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_GAP.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_GAP.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_GAP.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_GAP.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_GAP.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,84%"
+      },
+      {
+        "fato": "val.MX_GAP.wacc",
+        "rotulo": "WACC",
+        "valor": "10,50%"
+      },
+      {
+        "fato": "val.MX_GAP.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_GAP.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_GAP.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_GAP.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "16,2x"
+      },
+      {
+        "fato": "val.MX_GAP.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "4,2x"
+      },
+      {
+        "fato": "val.MX_GAP.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 456,88"
+      },
+      {
+        "fato": "val.MX_GAP.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-19",
+        "id": "F1",
+        "instituicao": "Grupo Aeroportuario del Pacífico",
+        "publicado_em": "2026-10-19",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado trimestral consolidado e combinação de negócios",
+        "url": "https://aeropuertosgap.com.mx/files/PR_3Q26_ENG_19Oct26_VF_DEF.pdf"
+      },
+      {
+        "consultado_em": "2026-10-19",
+        "id": "F2",
+        "instituicao": "Grupo Aeroportuario del Pacífico",
+        "publicado_em": "2026-09-11",
+        "tipo": "Relações com investidores",
+        "titulo": "Contratação de linhas bancárias e destinação dos recursos",
+        "url": "https://aeropuertosgap.com.mx/files/11_09_2026_PR_CREDIT_LINES_ENG.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Caixa recorrente por ação confirma remuneração do investimento.",
+      "Alocação final da aquisição altera capital e retorno.",
+      "Refinanciamento ou tráfego deteriora a capacidade financeira."
+    ],
+    "governanca": "A combinação e o denominador por ação precisam permanecer conciliados. A conclusão de valor justo ainda é preliminar. Não tratamos margem sem receita de construção como caixa distribuível.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar tráfego por aeroporto, receita comercial comparável, investimento contratado, juros e base acionária diluída.",
+        "titulo": "Caixa por ação e investimento"
+      }
+    ],
+    "issuer_id": "MX_GAP",
+    "lacunas_de_dados": [
+      "Alvo e cenários permanecem em revisão.",
+      "Alocação definitiva da combinação pendente.",
+      "Novo guidance não identificado no comunicado consultado.",
+      "Percepção de mercado e retorno integral por ação não demonstrados.",
+      "Conclusão do veículo de infraestrutura não requalificada."
+    ],
+    "modelo_de_cobertura": "2026-10-19",
+    "negocio": "Operadora de aeroportos mexicanos e jamaicanos, com receitas aeronáuticas, comerciais e CBX. Concessões oferecem exposição a fluxos regionais; reinvestimento contratado e regulação condicionam o retorno ao acionista.",
+    "nome": "Grupo Aeroportuario del Pacífico",
+    "o_que_mudou": "Desde 2026-10-11, incorporamos 3T26 e financiamento anunciado. Mantemos neutralidade, com foco na contribuição do CBX diante do tráfego menor. A divulgação oficial ocorreu em 2026-10-19, apesar de divergência no calendário de contexto.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_SIMPAR",
+        "nome": "Simpar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "GAP, 2026-10-19: o crescimento de receita e EBITDA inclui CBX, enquanto o tráfego consolidado recuou. A hipótese de criação de valor exige reconciliar o perímetro comparável e o capital empregado.",
+        "titulo": "Separar integração e crescimento orgânico"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "As linhas anunciadas em 2026-09-11 destinam-se a refinanciar vencimentos e financiar o programa de investimentos. Nossa avaliação exige caixa após esses compromissos e risco de renovação compatível com a duração das concessões.",
+        "titulo": "Financiamento do investimento"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Testar demanda por aeroporto e captura de receitas comerciais. A integração do CBX pode ampliar monetização; sua vantagem deve remunerar o capital investido.",
+        "titulo": "Concessões e monetização"
+      }
+    ],
+    "publicada_em": "2026-10-20T01:41:54.745969+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar CBX, efeitos de construção e valores preliminares da combinação antes de projetar recorrência.",
+        "titulo": "Perímetro comparável"
+      }
+    ],
+    "resumo": "Mantemos visão neutra e convicção baixa. O resultado de 3T26 combina integração do CBX, tarifas e receitas comerciais com queda do tráfego. Nossa condição para uma leitura favorável é geração recorrente por ação após investimento e financiamento. Alvo Em revisão e retorno esperado Em revisão impedem concluir desconto econômico pelo consenso.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Tráfego fraco e obrigações de investimento podem reduzir caixa disponível apesar da contribuição do CBX."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "GAP — integração sustenta resultado, tráfego e retorno por ação exigem cautela",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "GAP, 2026-10-19: EBITDA e lucro cresceram, mas integração e receita de construção afetam comparabilidade. A alocação do preço da combinação permanece preliminar. Não identificamos novas faixas de guidance no comunicado consultado; sem_guidance refere-se a esse documento.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Testar a sustentação de tarifas e receitas comerciais em perímetro comparável; receita consolidada não basta para comprovar produtividade dos ativos.",
+        "vetor": "Tráfego e receita por passageiro"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "As linhas têm taxa variável e prazo curto relativamente à maturação do investimento. Exigir liquidez para renovação sem comprometer retorno por ação.",
+        "vetor": "Custo de financiamento"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

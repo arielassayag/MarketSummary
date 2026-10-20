@@ -1,0 +1,319 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-19",
+    "manifest_sha256": "164979b8a7edd3737547472d2565a0f267bbc6ec5d456b80710ce43a0f4700c0",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-19",
+  "hashes": {
+    "contexto": "d6b79f8d11cb7b70a82e7938d6bea757737a69c62b91faeff8d6747f1ae1e42e",
+    "factbook": "03270f20df07e6e72e22a16e1a05bea893756f48e5eef1b4cf3a7e09069c687b",
+    "nota_json": "e1e78e439f8a99fca90af3cf000e0017c5b4072ec7636ca62ab2a8698eed98e2"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_SABESP",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-05",
+  "published_at": "2026-10-20T01:52:05.016979+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Avaliar prazo entre desembolso, operação e reconhecimento regulatório. Endividamento e custo financeiro são centrais ao teste de retorno do plano.",
+        "titulo": "Remuneração depois das obras"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-05",
+        "descricao": "Resultado indicado pela cobertura: conferir custos, dívida e avanço das obrigações.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "evento.BR_SABESP.proximo_resultado",
+            "nome": "Próxima divulgação de resultado",
+            "valor": "2026-11-05"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Retorno depende de prazo, custos e financiamento; alvo R$ 30,33.",
+      "otimista": "Execução e reconhecimento regulatório remuneram obras; alvo R$ 35,87.",
+      "pessimista": "Atrasos e custos comprimem remuneração; alvo R$ 25,57."
+    },
+    "comentario_valuation": "Preço R$ 31,87, ke 10,45%, consenso R$ 34,23 e dispersão 45,60%. Comparar saneamento com energia e gás exige ajustar obrigações e estágio de investimento; confiança quantitativa não resolve o reconhecimento contratual nem comprova consenso sobre retorno.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Se investimento ampliar atendimento sem remuneração após juros e custos, a mudança operacional não sustentará criação de valor por ação.",
+        "titulo": "Condição de invalidação"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-19",
+    "dados_simulados": false,
+    "data": "2026-10-19",
+    "ficha": [
+      {
+        "fato": "val.BR_SABESP.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 31,87"
+      },
+      {
+        "fato": "val.BR_SABESP.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 30,33"
+      },
+      {
+        "fato": "val.BR_SABESP.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-4,82%"
+      },
+      {
+        "fato": "val.BR_SABESP.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_SABESP.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_SABESP.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 35,87"
+      },
+      {
+        "fato": "val.BR_SABESP.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "39,95%"
+      },
+      {
+        "fato": "val.BR_SABESP.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 25,57"
+      },
+      {
+        "fato": "val.BR_SABESP.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "18,87%"
+      },
+      {
+        "fato": "val.BR_SABESP.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,45%"
+      },
+      {
+        "fato": "val.BR_SABESP.wacc",
+        "rotulo": "WACC",
+        "valor": "9,03%"
+      },
+      {
+        "fato": "val.BR_SABESP.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_SABESP.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-3,05%"
+      },
+      {
+        "fato": "val.BR_SABESP.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "0,00%"
+      },
+      {
+        "fato": "val.BR_SABESP.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "14,0x"
+      },
+      {
+        "fato": "val.BR_SABESP.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,5x"
+      },
+      {
+        "fato": "val.BR_SABESP.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 34,23"
+      },
+      {
+        "fato": "val.BR_SABESP.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-11,38%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-19",
+        "id": "F1",
+        "instituicao": "CVM / Sabesp",
+        "publicado_em": "2026-08-12",
+        "tipo": "Regulador",
+        "titulo": "Resultado trimestral, ajustes e plano de investimento",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1556532&numSequencia=1081238&numVersao=1"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Obras e qualidade alteram cumprimento de metas.",
+      "Reconhecimento de ativos modifica retorno após financiamento.",
+      "Custos e cobrança mudam a conversão do resultado em caixa."
+    ],
+    "governanca": "Confrontar contratos, metas e atos regulatórios com investimento reconhecido e atendimento. Mudança de controle não comprova liberdade de distribuição; base por ação e perímetro precisam de conciliação.",
+    "guidance": "mantido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Monitorar entregas, qualidade, perdas, volume faturado, cobrança, ativo reconhecido e dívida após investimento.",
+        "titulo": "Obras, perdas e financiamento"
+      }
+    ],
+    "issuer_id": "BR_SABESP",
+    "lacunas_de_dados": [
+      "Contrato e atos regulatórios completos não examinados integralmente.",
+      "Caixa após investimento e base por ação sem conciliação integral nesta atualização.",
+      "Retorno reconhecido das obras e percepção de mercado não demonstrados."
+    ],
+    "modelo_de_cobertura": "2026-10-19",
+    "negocio": "Prestadora de água e esgoto em São Paulo. Tarifas, volume, composição de clientes, perdas e reconhecimento dos investimentos determinam a economia da concessão.",
+    "nome": "Sabesp",
+    "o_que_mudou": "Desde 2026-10-11, o retrato atualiza avaliação e a leitura reconfirma pressão de custos e financiamento em 2T26. Mantemos metas anuais como expectativa da administração e neutralidade qualitativa; não presumimos conclusão das conciliações.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      },
+      {
+        "issuer_id": "BR_CPFL",
+        "nome": "CPFL Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Sabesp, 2026-08-12: manteve expectativa anual de investimento e confiança nas metas de universalização. A hipótese exige demonstrar retorno depois da entrada em operação e do financiamento.",
+        "titulo": "Investimento e retorno"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O resultado de 2T26 relata menor consumo por habitante, mudança do mix, custos maiores e despesa financeira mais alta. Nossa leitura exige separar efeito transitório de deterioração recorrente.",
+        "titulo": "Pressão operacional"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Testar qualidade e execução por concessão. Abrangência da rede só sustenta valor se custos e obrigações preservarem remuneração econômica.",
+        "titulo": "Contrato e serviço"
+      }
+    ],
+    "publicada_em": "2026-10-20T01:52:05.016979+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar indenização financeira, construção e participações da operação de saneamento. EBITDA ajustado não representa recebimento nem caixa após obras.",
+        "titulo": "Bases ajustadas e caixa"
+      }
+    ],
+    "resumo": "Mantemos neutralidade e baixa convicção. A universalização precisa converter investimento em serviço e remuneração contratual depois do financiamento. Alvo R$ 30,33, potencial -4,82% e retorno esperado -3,05% recomendam cautela com a transmissão do crescimento ao acionista.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Obras e despesas financeiras podem absorver geração antes da remuneração; clima, perdas e cobrança podem limitar receita."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Sabesp — execução das obras e remuneração após custos e financiamento",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "No release de 2026-08-12, EBITDA e lucro ajustados recuaram na comparação anual. A companhia distingue construção, ativo financeiro, incidente de Jaguaré e EMAE nas bases ajustadas. Investimento anual foi mantido. A análise por ação deve preservar o desdobramento informado pelo emissor.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Testar remuneração dos ativos e recebimento junto da qualidade do serviço. Aumento de investimento não comprova retorno por ação.",
+        "vetor": "Tarifa, cobrança e obras"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

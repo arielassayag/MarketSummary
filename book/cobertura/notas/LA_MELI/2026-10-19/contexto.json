@@ -1,0 +1,130 @@
+{
+  "avisos_tecnicos": [],
+  "dados_ate": "2026-10-19",
+  "data": "2026-10-19",
+  "fontes_sugeridas": [
+    {
+      "instituicao": "CVM — RAD (fatos relevantes, ITR, DFP, formulário de referência)",
+      "tipo": "regulatorio",
+      "url": "https://www.rad.cvm.gov.br/ENET/frmConsultaExternaCVM.aspx"
+    },
+    {
+      "instituicao": "CVM — dados abertos (DFP, ITR, FRE, IPE)",
+      "tipo": "regulatorio",
+      "url": "https://dados.cvm.gov.br/"
+    },
+    {
+      "instituicao": "B3 — empresas listadas",
+      "tipo": "bolsa",
+      "url": "https://www.b3.com.br/"
+    },
+    {
+      "instituicao": "Banco Central do Brasil (Focus, SGS)",
+      "tipo": "banco_central",
+      "url": "https://www.bcb.gov.br/"
+    },
+    {
+      "instituicao": "IBGE",
+      "tipo": "estatistica_oficial",
+      "url": "https://www.ibge.gov.br/"
+    },
+    {
+      "instituicao": "SEC EDGAR — busca de documentos (20-F, 6-K, 10-K, 8-K)",
+      "tipo": "regulatorio",
+      "url": "https://www.sec.gov/edgar/search/"
+    },
+    {
+      "instituicao": "SEC EDGAR — dados XBRL por empresa (companyfacts)",
+      "tipo": "regulatorio",
+      "url": "https://www.sec.gov/search-filings/edgar-application-programming-interfaces"
+    },
+    {
+      "instituicao": "Damodaran Online (NYU Stern) — prêmios de risco, betas e múltiplos setoriais",
+      "tipo": "dados_publicos",
+      "url": "https://pages.stern.nyu.edu/~adamodar/"
+    },
+    {
+      "instituicao": "FRED (Federal Reserve Bank of St. Louis) — juros e indicadores dos EUA",
+      "tipo": "dados_publicos",
+      "url": "https://fred.stlouisfed.org/"
+    }
+  ],
+  "is_synthetic": false,
+  "issuer_id": "LA_MELI",
+  "lacunas": [
+    "Preço-alvo de 12 meses: sem dado na data.",
+    "Potencial até o alvo: sem dado na data.",
+    "Rating da cobertura: sem dado na data.",
+    "Cenário otimista: sem dado na data.",
+    "Probabilidade implícita do otimista: sem dado na data.",
+    "Cenário pessimista: sem dado na data.",
+    "Probabilidade implícita do pessimista: sem dado na data.",
+    "Retorno total esperado: sem dado na data.",
+    "Alpha relativo aos pares: sem dado na data.",
+    "Alvo da casa contra o consenso: sem dado na data."
+  ],
+  "nome": "MercadoLibre",
+  "nomes": {
+    "BR_AFYA": "Afya",
+    "BR_ALPARGATAS": "Alpargatas",
+    "BR_AZZAS": "Azzas 2154",
+    "BR_CEA": "C&A Modas",
+    "BR_COGNA": "Cogna",
+    "BR_CURY": "Cury",
+    "BR_CYRELA": "Cyrela",
+    "BR_DIRECIONAL": "Direcional",
+    "LA_MELI": "MercadoLibre"
+  },
+  "nota_anterior": {
+    "autoria": "mente",
+    "conviccao": 1,
+    "data": "2026-10-11",
+    "proximo_resultado": "2026-11-04",
+    "stance": 0,
+    "tipo": "iniciacao",
+    "titulo": "MercadoLibre: retorno do ecossistema e disciplina de reinvestimento"
+  },
+  "pais": "BR",
+  "pais_pt": "Brasil",
+  "pares": [
+    "BR_AFYA",
+    "BR_ALPARGATAS",
+    "BR_AZZAS",
+    "BR_CEA",
+    "BR_COGNA",
+    "BR_CURY",
+    "BR_CYRELA",
+    "BR_DIRECIONAL"
+  ],
+  "proximo_resultado": "2026-11-04",
+  "schema": "cdp.nota.contexto/v1",
+  "setor": "Consumer Discretionary",
+  "setor_pt": "Consumo discricionário",
+  "snapshot": {
+    "as_of": "2026-10-19",
+    "manifest_sha256": "164979b8a7edd3737547472d2565a0f267bbc6ec5d456b80710ce43a0f4700c0",
+    "modelo_as_of": "2026-10-16"
+  },
+  "tem_linha_eua": true,
+  "termos": [
+    "ALPA4",
+    "ALPA4.SA",
+    "AZZA3",
+    "AZZA3.SA",
+    "Azzas 2154",
+    "CEAB3",
+    "CEAB3.SA",
+    "COGN3",
+    "COGN3.SA",
+    "CURY3",
+    "CURY3.SA",
+    "CYRE3",
+    "CYRE3.SA",
+    "DIRR3",
+    "DIRR3.SA"
+  ],
+  "tickers": [
+    "MELI"
+  ],
+  "tipo_esperado": "atualizacao"
+}

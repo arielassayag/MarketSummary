@@ -1,0 +1,350 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-19",
+    "manifest_sha256": "164979b8a7edd3737547472d2565a0f267bbc6ec5d456b80710ce43a0f4700c0",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-19",
+  "hashes": {
+    "contexto": "0bcd3d69c139853fc43b41fd884e83086aca093f5df3d8c2c236397d87fe7cc5",
+    "factbook": "32abb8bf78248f2caef339fa96b94d6b4098c03f4160c30d553282be24a24ed5",
+    "nota_json": "ef902cc2a9395169357591cc176353df7a187b95f0ad2966f4994a9ee6b79386"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_EQUATORIAL",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-11",
+  "published_at": "2026-10-20T01:56:36.014796+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Confrontar custo do financiamento de Copasa com dividendos efetivamente recebidos e obrigações futuras. Examinar separadamente caixa nas operacionais e recursos disponíveis à holding.",
+        "titulo": "Participações e juros"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-11",
+        "descricao": "Resultado indicado pela cobertura e calendário público de RI: confrontar operação, financiamento e caixa atribuível.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "evento.BR_EQUATORIAL.proximo_resultado",
+            "nome": "Próxima divulgação de resultado",
+            "valor": "2026-11-11"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Crescimento exige conciliar geração, obras e direitos de terceiros; alvo R$ 25,57.",
+      "otimista": "Eficiência e caixa das investidas remuneram investimento e financiamento; alvo R$ 30,08.",
+      "pessimista": "Custos e juros limitam transmissão da margem ao acionista; alvo R$ 22,02."
+    },
+    "comentario_valuation": "Preço R$ 48,15, potencial -46,89%, rating Venda e ke 10,78%. Dispersão 46,04% e diferença ao consenso -51,63% exigem examinar premissas e perímetro; não demonstram percepção variante. Probabilidades implícitas não disponíveis permanecem ausentes. A visão qualitativa neutra não substitui o rating do modelo.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Se eficiência operacional coexistir com financiamento que absorva recebimentos e obras sem remuneração, a expansão não sustentará criação de valor por ação.",
+        "titulo": "Condição de invalidação"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-19",
+    "dados_simulados": false,
+    "data": "2026-10-19",
+    "ficha": [
+      {
+        "fato": "val.BR_EQUATORIAL.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 48,15"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 25,57"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-46,89%"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 30,08"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 22,02"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,78%"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.wacc",
+        "rotulo": "WACC",
+        "valor": "8,90%"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-46,21%"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-43,88%"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "30,8x"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,3x"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 52,86"
+      },
+      {
+        "fato": "val.BR_EQUATORIAL.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-51,63%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-19",
+        "id": "F1",
+        "instituicao": "Equatorial",
+        "publicado_em": "2026-08-12",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado trimestral e financiamento das participações",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/62b21cba-838c-49a4-aaef-e0fb2350c169/b1f651f0-9cd8-d2e0-87f0-498cd4b24f8b?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-19",
+        "id": "F2",
+        "instituicao": "CVM / Equatorial",
+        "publicado_em": "2026-08-13",
+        "tipo": "Regulador",
+        "titulo": "Apresentação de resultados e indicadores operacionais",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1556897&numSequencia=1081603&numVersao=1"
+      },
+      {
+        "consultado_em": "2026-10-19",
+        "id": "F3",
+        "instituicao": "Equatorial",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário de eventos corporativos",
+        "url": "https://ri.equatorialenergia.com.br/informacoes-ao-mercado/calendario-de-eventos/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Próximo resultado altera operação e conversão em caixa.",
+      "Financiamento e dividendos recebidos modificam retorno das participações.",
+      "Documentos societários e covenants mudam atribuição econômica."
+    ],
+    "governanca": "Conferir direitos de sócios, instrumentos de capital e aprovações das participações antes de atribuir integralmente o consolidado ao acionista da holding. O cumprimento de covenants não substitui avaliação da dívida econômica e de recebimentos.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Monitorar perdas, continuidade, arrecadação, margem regulada, restrição de geração, investimento, juros e dividendos recebidos de investidas.",
+        "titulo": "Operação e capital atribuível"
+      }
+    ],
+    "issuer_id": "BR_EQUATORIAL",
+    "lacunas_de_dados": [
+      "Probabilidades implícitas dos cenários indisponíveis no modelo.",
+      "Caixa por entidade e dívida econômica sem reconciliação integral nesta atualização.",
+      "Direitos de instrumentos preferenciais e demais sócios exigem documentos societários completos.",
+      "Guidance agregado e percepção de mercado não comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-19",
+    "negocio": "Holding com distribuição elétrica, renováveis, saneamento, serviços e participações. Tarifas, perdas, continuidade e investimento influenciam o retorno das concessões; participações exigem avaliar o recebimento efetivo pela holding.",
+    "nome": "Equatorial",
+    "o_que_mudou": "Desde 2026-10-11, atualizamos os fatos de avaliação e reconfirmamos, nas fontes consultadas, a diferença entre execução da distribuição e resultado após financiamento. O calendário indica próxima divulgação em novembro; permanecem as lacunas de caixa e direitos de capital.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      },
+      {
+        "issuer_id": "BR_CPFL",
+        "nome": "CPFL Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Na apresentação de 2026-08-13, a companhia informou avanço de mercado e perdas consolidadas abaixo do nível regulatório no 2T26. A hipótese exige que eficiência e qualidade se sustentem após obras e despesas.",
+        "titulo": "Execução da distribuição"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O release de 2026-08-12 relaciona financiamento à aquisição da participação em Copasa. Retorno da investida precisa remunerar juros e capital empregado; equivalência reconhecida não comprova dividendo recebido.",
+        "titulo": "Participações e financiamento"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar perda e continuidade por concessão. A hipótese depende de execução que preserve remuneração regulatória; alcance geográfico não comprova retorno sobre novo capital.",
+        "titulo": "Eficiência sob obrigações"
+      }
+    ],
+    "publicada_em": "2026-10-20T01:56:36.014796+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar ajuste contábil, equivalência e efeitos de transmissão do caixa recorrente. Reconciliar investimento e capital de giro antes de extrapolar margem ajustada.",
+        "titulo": "Reconhecido e recebido"
+      }
+    ],
+    "resumo": "Mantemos neutralidade e baixa convicção. A hipótese de eficiência regulada precisa resultar em caixa atribuível após obras, financiamento e direitos de terceiros. O alvo R$ 25,57 e o retorno esperado -46,21% reforçam a necessidade de confrontar crescimento e custo de capital.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Juros, perdas, provisões e restrições de geração podem absorver margem. Aquisições acrescentam risco de financiamento e execução antes do recebimento de dividendos."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Equatorial — margem regulada e financiamento das participações",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "No release de 2026-08-12, EBITDA ajustado avançou modestamente, enquanto lucro ajustado recuou e dívida líquida aumentou no 2T26. A definição de covenants agrega equivalência das investidas e o comparativo também depende do ganho anterior de transmissão. Esses critérios não equivalem a caixa livre da holding.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Testar geração por distribuidora e fluxo da holding. Crescimento contábil de participações não substitui recebimento nem elimina necessidade de reinvestimento.",
+        "vetor": "Retorno depois de obras e juros"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

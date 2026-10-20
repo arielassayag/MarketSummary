@@ -1,0 +1,332 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-19",
+    "manifest_sha256": "164979b8a7edd3737547472d2565a0f267bbc6ec5d456b80710ce43a0f4700c0",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-19",
+  "hashes": {
+    "contexto": "1a927b8f4cf8ef601366dd31d8f792692769a3df594bfc2d183bd657bf66cd52",
+    "factbook": "5474c3cca1c62fe4b7ea7e0ac8703fe99a260a0eddfedf6c6db918a3367002c7",
+    "nota_json": "83225e7eaea540ce2aa0f4153b96843348a5033d00fb3893dc988d54bb7fc25c"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_NU",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-12",
+  "published_at": "2026-10-20T01:44:34.538512+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Confrontar expansão do crédito, depósitos e licenças com capital disponível em cada jurisdição. Não presumir distribuição irrestrita do caixa consolidado.",
+        "titulo": "Capital por país"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-12",
+        "descricao": "Próxima divulgação indicada pela cobertura; conferir safras e capital por país.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "evento.BR_NU.proximo_resultado",
+            "nome": "Próxima divulgação de resultado",
+            "valor": "2026-11-12"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Crescimento exige capital e captação; alvo US$ 8,49.",
+      "otimista": "Monetização preserva retorno após perdas; alvo US$ 9,48.",
+      "pessimista": "Perdas e despesas absorvem monetização; alvo US$ 7,59."
+    },
+    "comentario_valuation": "Ke 11,18%, P/L à frente 14,0x e consenso US$ 18,77. A diferença -54,78% não demonstra percepção de mercado. Bancos, seguradoras e infraestrutura de mercado do conjunto de pares têm receitas e capital distintos; o alpha é uma saída quantitativa, sem conclusão causal sobre qualidade relativa.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese favorável perde força se monetização só acompanha risco crescente e maior necessidade de capital. Persistência do retorno após perdas e expansão sustentaria maior convicção.",
+        "titulo": "Teste da hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-19",
+    "dados_simulados": false,
+    "data": "2026-10-19",
+    "ficha": [
+      {
+        "fato": "val.BR_NU.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 14,73"
+      },
+      {
+        "fato": "val.BR_NU.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 8,49"
+      },
+      {
+        "fato": "val.BR_NU.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-42,37%"
+      },
+      {
+        "fato": "val.BR_NU.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_NU.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_NU.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 9,48"
+      },
+      {
+        "fato": "val.BR_NU.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_NU.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 7,59"
+      },
+      {
+        "fato": "val.BR_NU.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_NU.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,18%"
+      },
+      {
+        "fato": "val.BR_NU.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_NU.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.BR_NU.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-39,17%"
+      },
+      {
+        "fato": "val.BR_NU.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-72,00%"
+      },
+      {
+        "fato": "val.BR_NU.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "14,0x"
+      },
+      {
+        "fato": "val.BR_NU.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "5,4x"
+      },
+      {
+        "fato": "val.BR_NU.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 18,77"
+      },
+      {
+        "fato": "val.BR_NU.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-54,78%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-19",
+        "id": "F1",
+        "instituicao": "SEC / Nu Holdings",
+        "publicado_em": "2026-08-13",
+        "tipo": "Regulador",
+        "titulo": "Resultado trimestral e reconciliação gerencial",
+        "url": "https://www.sec.gov/Archives/edgar/data/1691493/000129281426004222/nupr2q26_6k.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Safras maduras confirmam retorno depois das perdas.",
+      "Expansão internacional altera capital ou custo de captação.",
+      "Novos resultados mudam premissas do modelo."
+    ],
+    "governanca": "Diligência sobre classes, remuneração em ações e transferibilidade do capital permanece aberta. Crescimento ajustado ao câmbio e resultado reportado têm bases próprias; a ponte gerencial exige leitura separada.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Monitorar atividade, monetização, atrasos iniciais e longos, margem após perdas, despesas internacionais e capital por país.",
+        "titulo": "Safras e retorno ajustado ao risco"
+      }
+    ],
+    "issuer_id": "BR_NU",
+    "lacunas_de_dados": [
+      "Probabilidades dos cenários e WACC indisponíveis.",
+      "Capital e liquidez por país sem conciliação integral nesta atualização.",
+      "Percepção variante sem evidência independente de mercado.",
+      "Direitos de classe, diluição e licença brasileira não requalificados."
+    ],
+    "modelo_de_cobertura": "2026-10-19",
+    "negocio": "Grupo financeiro digital no Brasil, México e Colômbia, com crédito, depósitos e serviços. A hipótese competitiva é monetizar o relacionamento principal sem deterioração das safras e do retorno ao capital.",
+    "nome": "Nu Holdings",
+    "o_que_mudou": "Desde 2026-10-11, atualizamos a leitura do preço e dos alvos pelo retrato vigente. A fonte de 2T26 foi reconferida; não identificamos novo resultado concluído que resolva as lacunas de safras e capital. Mantemos neutralidade qualitativa.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Nu, 2026-08-13: margem ajustada ao risco melhorou com sazonalidade, enquanto atrasos longos aumentaram. Exigimos confirmação durante o amadurecimento das safras e da expansão em segmentos mais arriscados.",
+        "titulo": "Monetização e risco"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_NU.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "US$ 14,73"
+          },
+          {
+            "fato": "val.BR_NU.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "US$ 8,49"
+          },
+          {
+            "fato": "val.BR_NU.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "-72,00%"
+          }
+        ],
+        "texto": "Preço US$ 14,73, alvo US$ 8,49 e alpha relativo -72,00% recomendam testar quanto da monetização precisa persistir para remunerar o capital.",
+        "titulo": "Preço requer disciplina"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Testar se relacionamento e atividade sustentam monetização com qualidade de crédito. Alegações da companhia sobre liderança não equivalem a comparação independente.",
+        "titulo": "Relacionamento principal"
+      }
+    ],
+    "publicada_em": "2026-10-20T01:44:34.538512+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar melhora sazonal de atrasos iniciais da trajetória das safras longas. Exigir a ponte entre margem contábil e gerencial antes de extrapolar retorno.",
+        "titulo": "Sazonalidade e recorrência"
+      }
+    ],
+    "resumo": "A expansão comercial precisa remunerar perdas de crédito e capital por país. Mantemos visão qualitativa neutra, com baixa convicção; o modelo indica Venda, alvo US$ 8,49 e retorno esperado -39,17%. A melhora sazonal não basta para comprovar vantagem de crédito ao longo do ciclo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Expansão em risco maior pode elevar perdas quando as safras amadurecem; melhora sazonal inicial não comprova recorrência."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Nu — monetização exige retorno após perdas e capital internacional",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O resultado de 2T26, divulgado em 2026-08-13, mostra expansão de receita e lucro, maior atividade e margem ajustada ao risco. A eficiência piorou sequencialmente e os depósitos mexicanos recuaram na estratégia relatada. O lançamento bancário mexicano descrito é posterior ao encerramento do trimestre.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Avaliar margem depois de perdas e despesas internacionais. Depósitos consolidam financiamento, mas não são recursos livres dos acionistas.",
+        "vetor": "Safras e custo de captação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

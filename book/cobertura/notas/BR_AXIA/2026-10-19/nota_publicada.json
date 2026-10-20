@@ -1,0 +1,320 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-19",
+    "manifest_sha256": "164979b8a7edd3737547472d2565a0f267bbc6ec5d456b80710ce43a0f4700c0",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-19",
+  "hashes": {
+    "contexto": "9734beafb40942d7c0eefbe6ec1f97d4f6989a1cb5b2c0e182f167bb0ed9eff0",
+    "factbook": "2879183ab24ea1c13aa1d8117725f6a02157d97e8719d2cc7fd99b82ccc09fd1",
+    "nota_json": "5663688b6911836ec19e500166ef2cee90887fdecd7a8e3f08d566ff53211d1a"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_AXIA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-04",
+  "published_at": "2026-10-20T01:51:01.728233+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Confrontar projetos com custo de financiamento e obrigações históricas. Capital considerado alocável não deve ser tratado como distribuição concluída.",
+        "titulo": "Obras, passivos e classes"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-04",
+        "descricao": "Próximo resultado indicado pela cobertura; reavaliar caixa e compromissos.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "evento.BR_AXIA.proximo_resultado",
+            "nome": "Próxima divulgação de resultado",
+            "valor": "2026-11-04"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Disponibilidade e encargos condicionam retorno; alvo R$ 53,51.",
+      "otimista": "Contratação e projetos remuneram capital após obrigações; alvo R$ 65,11.",
+      "pessimista": "Compras de energia e passivos comprimem caixa; alvo R$ 44,16."
+    },
+    "comentario_valuation": "Preço R$ 59,14, potencial -9,52%, ke 10,85% e consenso R$ 69,46. Dispersão 30,20% limita leitura pontual. A comparação com distribuição, saneamento e gás entre os pares exige considerar regulação e risco comercial próprios.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese perde força se margem comercial maior não sobreviver a hidrologia e compras, ou se investimento e encargos absorverem o retorno por ação.",
+        "titulo": "Invalidação da hipótese favorável"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-19",
+    "dados_simulados": false,
+    "data": "2026-10-19",
+    "ficha": [
+      {
+        "fato": "val.BR_AXIA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 59,14"
+      },
+      {
+        "fato": "val.BR_AXIA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 53,51"
+      },
+      {
+        "fato": "val.BR_AXIA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-9,52%"
+      },
+      {
+        "fato": "val.BR_AXIA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_AXIA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_AXIA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 65,11"
+      },
+      {
+        "fato": "val.BR_AXIA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "40,10%"
+      },
+      {
+        "fato": "val.BR_AXIA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 44,16"
+      },
+      {
+        "fato": "val.BR_AXIA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "23,55%"
+      },
+      {
+        "fato": "val.BR_AXIA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,85%"
+      },
+      {
+        "fato": "val.BR_AXIA.wacc",
+        "rotulo": "WACC",
+        "valor": "9,72%"
+      },
+      {
+        "fato": "val.BR_AXIA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_AXIA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-6,25%"
+      },
+      {
+        "fato": "val.BR_AXIA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-3,49%"
+      },
+      {
+        "fato": "val.BR_AXIA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "10,7x"
+      },
+      {
+        "fato": "val.BR_AXIA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,4x"
+      },
+      {
+        "fato": "val.BR_AXIA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 69,46"
+      },
+      {
+        "fato": "val.BR_AXIA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-22,96%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-19",
+        "id": "F1",
+        "instituicao": "CVM / Axia Energia",
+        "publicado_em": null,
+        "tipo": "Regulador",
+        "titulo": "Relatório trimestral, reorganização e obrigações",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1552885&numSequencia=1077591&numVersao=1"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Contratação e disponibilidade modificam margem após compras.",
+      "Projetos ou passivos alteram retorno atribuível.",
+      "Documentos resolvem direitos por classe e estados societários."
+    ],
+    "governanca": "Conciliar direitos de ordinárias e preferenciais e destinação do capital alocável. Mantemos pendente a resolução documental dos estados de Três Irmãos apontados na nota anterior; não inferimos solução pela descrição de conclusão no corpo do relatório.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Monitorar energia disponível, compras, margem contratada, obras, dívida, passivos históricos e destinação do capital por classe.",
+        "titulo": "Margem e recursos atribuíveis"
+      }
+    ],
+    "issuer_id": "BR_AXIA",
+    "lacunas_de_dados": [
+      "Caixa após obrigações sem conciliação integral nesta atualização.",
+      "Publicação exata do relatório consultado não comprovada; data-base não a substitui.",
+      "Divergência de estados de Três Irmãos permanece pendente.",
+      "Direitos por classe e percepção de mercado não integralmente requalificados."
+    ],
+    "modelo_de_cobertura": "2026-10-19",
+    "negocio": "Grupo de geração e transmissão. A expansão comercial após descotização aumenta a relevância de preços, hidrologia e contratação; transmissão depende de disponibilidade e obrigações de concessão.",
+    "nome": "Axia Energia (ex-Eletrobras)",
+    "o_que_mudou": "Desde 2026-10-11, incorporamos os fatos do retrato vigente e reconferimos o relatório público de 2T26. Mantemos neutralidade e as pendências sobre caixa, direitos e estados societários; a atualização não comprova saneamento dessas lacunas.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      },
+      {
+        "issuer_id": "BR_CPFL",
+        "nome": "CPFL Energia"
+      },
+      {
+        "issuer_id": "BR_ENERGISA",
+        "nome": "Energisa"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O relatório de 2T26 atribui melhora à venda de energia, participações e provisões menores. Nossa avaliação distingue margem operacional de efeitos societários e de passivos.",
+        "titulo": "Margem e recorrência"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Capital alocável aprovado não equivale a dividendo recebido. Exigimos retorno dos projetos e clareza dos direitos na estrutura societária descrita pelo emissor.",
+        "titulo": "Investimento e capital atribuível"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Testar se portfólio e infraestrutura sustentam contratação rentável. A exposição hidrológica e os compromissos de obra impedem presumir proteção apenas pela escala.",
+        "titulo": "Portfólio e disponibilidade"
+      }
+    ],
+    "publicada_em": "2026-10-20T01:51:01.728233+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar preços, participações e reversões da margem recorrente. Avaliar bases regulatória e societária em definições próprias antes de inferir caixa.",
+        "titulo": "Operação e provisões"
+      }
+    ],
+    "resumo": "Mantemos neutralidade e baixa convicção. Margem de geração e disponibilidade de transmissão precisam remunerar investimento, dívida e obrigações históricas. Alvo R$ 53,51 e retorno esperado -6,25% não dispensam conciliação do caixa atribuível por classe.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Hidrologia, preços e financiamento podem absorver margem; provisões menores não comprovam liberação equivalente de caixa."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Axia — margem comercial, compromissos históricos e retorno por classe",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O relatório de 2T26 registra investimento maior, melhora operacional e pressão financeira. Informa conclusão da migração ao Novo Mercado e existência de classe preferencial conversível ou resgatável. Descreve operações societárias e redução de provisões; os efeitos não são automaticamente recorrentes.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Testar margem contratada após compras, hidrologia e disponibilidade. Obras e receita futura permitida precisam converter-se em retorno depois do financiamento.",
+        "vetor": "Energia comercial e investimento"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

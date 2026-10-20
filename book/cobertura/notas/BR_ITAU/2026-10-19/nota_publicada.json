@@ -1,0 +1,318 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-19",
+    "manifest_sha256": "164979b8a7edd3737547472d2565a0f267bbc6ec5d456b80710ce43a0f4700c0",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-19",
+  "hashes": {
+    "contexto": "71c6755798506d07f42132f2a7c37c9a89c5629a23a4be4763e5da690c6ad794",
+    "factbook": "5329f6523e37b0d5d09f5bb9bcd823a03c500687661fd0eb66a13dd9ff957af6",
+    "nota_json": "8981a13a8501eb8393e09efad6cc4a8c04575c399515e7c6a66fa0316b2bd745"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_ITAU",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-20T01:48:24.801007+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Confrontar crescimento, capital principal e distribuição com ativos ponderados pelo risco. Capital bancário não é equivalente ao caixa livre de uma companhia industrial.",
+        "titulo": "Retorno e exigência regulatória"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próximo resultado: testar a recuperação de serviços e o capital. Data exata não requalificada nesta consulta.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Serviços e capital condicionam distribuição; alvo R$ 48,77.",
+      "otimista": "Margem e eficiência preservam retorno após perdas; alvo R$ 56,02.",
+      "pessimista": "Crédito e serviços deterioram com maior capital requerido; alvo R$ 41,94."
+    },
+    "comentario_valuation": "Preço R$ 48,35, potencial +0,86%, ke 12,14% e alpha relativo -27,23%. Consenso R$ 49,08 e dispersão 1,63% não comprovam o que o preço incorpora. Pares financeiros têm mix e capital distintos; a leitura qualitativa não altera o rating quantitativo.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Se menor monetização de serviços e necessidade de capital absorverem ganhos de eficiência, relacionamento e escala não confirmarão remuneração suficiente ao minoritário.",
+        "titulo": "Condição que enfraquece a hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-19",
+    "dados_simulados": false,
+    "data": "2026-10-19",
+    "ficha": [
+      {
+        "fato": "val.BR_ITAU.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 48,35"
+      },
+      {
+        "fato": "val.BR_ITAU.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 48,77"
+      },
+      {
+        "fato": "val.BR_ITAU.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+0,86%"
+      },
+      {
+        "fato": "val.BR_ITAU.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_ITAU.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_ITAU.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 56,02"
+      },
+      {
+        "fato": "val.BR_ITAU.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "32,64%"
+      },
+      {
+        "fato": "val.BR_ITAU.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 41,94"
+      },
+      {
+        "fato": "val.BR_ITAU.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "26,14%"
+      },
+      {
+        "fato": "val.BR_ITAU.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,14%"
+      },
+      {
+        "fato": "val.BR_ITAU.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_ITAU.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_ITAU.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+6,71%"
+      },
+      {
+        "fato": "val.BR_ITAU.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-27,23%"
+      },
+      {
+        "fato": "val.BR_ITAU.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "9,8x"
+      },
+      {
+        "fato": "val.BR_ITAU.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,4x"
+      },
+      {
+        "fato": "val.BR_ITAU.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 49,08"
+      },
+      {
+        "fato": "val.BR_ITAU.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-0,63%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-19",
+        "id": "F1",
+        "instituicao": "SEC / Itaú Unibanco",
+        "publicado_em": "2026-08-04",
+        "tipo": "Regulador",
+        "titulo": "Resultado trimestral, crédito e revisão de perspectivas",
+        "url": "https://www.sec.gov/Archives/edgar/data/1132597/000113259726000215/eng_pressreleasex2t26.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Serviços e perdas modificam retorno ajustado ao risco.",
+      "Capital requerido altera capacidade de distribuição.",
+      "Novo resultado muda premissas da cobertura."
+    ],
+    "governanca": "Conciliar BRGAAP, IFRS, resultado gerencial e capital antes de avaliar distribuição. Depósitos, subordinadas e classes de ação têm direitos próprios; sua reconciliação completa continua pendente.",
+    "guidance": "reduzido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Monitorar margem após perdas, serviços e seguros, renegociação, eficiência, capital principal e distribuição efetiva.",
+        "titulo": "Serviços, perdas e capital"
+      }
+    ],
+    "issuer_id": "BR_ITAU",
+    "lacunas_de_dados": [
+      "WACC indisponível no retrato.",
+      "Conciliação integral entre bases contábeis, capital e direitos pendente.",
+      "Data do próximo resultado diverge entre contexto e fato; não usada como evento confirmado.",
+      "Percepção de mercado e retorno de aquisições não requalificados."
+    ],
+    "modelo_de_cobertura": "2026-10-19",
+    "negocio": "Banco diversificado em crédito, serviços e seguros, com operações no Brasil e exterior. Nossa hipótese exige retorno ajustado ao risco e capital disponível sem tratar depósitos como caixa dos acionistas.",
+    "nome": "Itaú Unibanco",
+    "o_que_mudou": "Desde 2026-10-11, o retrato passa a rating Venda, com alvo e retorno citados na avaliação. O comunicado de 2T26 foi reconferido e mantém a cautela com serviços. A visão qualitativa neutra não equivale a alterar o modelo.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Itaú, 2026-08-04: lucro recorrente e margem com clientes cresceram, com inadimplência longa estável. Exigimos que essa combinação persista durante o ciclo de crédito.",
+        "titulo": "Margem e qualidade"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A companhia reduziu projeções de serviços e seguros, mantendo as demais linhas. O teste é preservar retorno depois de despesas e capital sem depender apenas do crescimento da carteira.",
+        "titulo": "Serviços e capital"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Testar se a base de clientes sustenta serviços e margem após perdas. Investimento em canais não comprova vantagem independente sem retorno econômico persistente.",
+        "titulo": "Relacionamento e diversificação"
+      }
+    ],
+    "publicada_em": "2026-10-20T01:48:24.801007+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A estabilidade agregada e o lucro recorrente são pontos de partida. Exigir separação entre margem com clientes, efeitos de calendário e custo de risco.",
+        "titulo": "Recorrência e safras"
+      }
+    ],
+    "resumo": "Mantemos visão neutra e baixa convicção qualitativa. Relacionamento e eficiência devem sustentar retorno após perdas e capital requerido. O modelo indica Venda, alvo R$ 48,77 e retorno esperado +6,71%. A revisão menor de serviços exige acompanhamento apesar da estabilidade do crédito.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Receitas de serviços menores e perdas de crédito podem pressionar retorno; capital regulatório limita distribuição mesmo com lucro crescente."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Itaú — qualidade do crédito e serviços sob disciplina de capital",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "No comunicado de 2T26, a administração relata crescimento recorrente, estabilidade da inadimplência longa e capital principal maior. Reduziu a projeção anual de serviços e seguros diante de maior volatilidade do mercado de capitais, preservando as demais linhas.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar custo de crédito, renegociação, mix e serviços. A estabilidade da inadimplência agregada não substitui análise das safras.",
+        "vetor": "Margem após perdas e receitas de serviços"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

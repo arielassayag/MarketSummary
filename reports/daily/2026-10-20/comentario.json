@@ -1,0 +1,18 @@
+{
+  "mind": "codex",
+  "headline": "CDP recua {{fact:day.ret}}; pressão do lado vendido supera contribuição comprada",
+  "paragraphs": [
+    "Em 20/10/2026, a carteira simulada recuou {{fact:day.ret}}, com P&L de {{fact:day.pnl_usd}} e NAV de {{fact:nav}}, em dólar. O retorno acumulado desde o início do mandato ficou em {{fact:itd.ret}}. DADOS SIMULADOS: execução hipotética com preços reais.",
+    "Na atribuição em dólar, o lado comprado contribuiu {{fact:attr.long}} e o vendido {{fact:attr.short}}. A parcela específica respondeu por {{fact:attr.specific}} e a fatorial por {{fact:attr.factor}}, em decomposição estimada. Riachuelo contribuiu {{fact:top.contrib.1.contrib}}, PagSeguro {{fact:top.contrib.2.contrib}} e Hypera {{fact:top.contrib.3.contrib}}. Aeroméxico foi o principal detrator, com {{fact:top.detract.1.contrib}}, seguida por Nubank, com {{fact:top.detract.2.contrib}}, e Fleury, com {{fact:top.detract.3.contrib}}. Por país, México respondeu por {{fact:attr.country.MX}} e Brasil por {{fact:attr.country.BR}}; a atribuição não estabelece causalidade entre divulgações corporativas e movimentos individuais.",
+    "A vol ex-ante encerrou em {{fact:risk.ex_ante_vol}}, dentro da banda de {{fact:mandate.vol_band_min}} a {{fact:mandate.vol_band_max}}, com beta de {{fact:risk.beta}}, exposição bruta de {{fact:risk.gross}} e líquida de {{fact:risk.net}}. O VaR de um dia ficou em {{fact:risk.var_1d}}. A carteira manteve {{fact:risk.n_long}} posições compradas e {{fact:risk.n_short}} vendidas; Fleury e Energisa apresentaram risco de squeeze alto, sob a janela eleitoral brasileira.",
+    "No mercado brasileiro em moeda local, o Ibovespa avançou {{fact:mkt.BVSP.ret_1d}} em reais. O fechamento da B3 de 20/10/2026 descreveu ambiente externo favorável às bolsas, recuo do petróleo e atenção às eleições brasileiras. Essa leitura contextual não equivale ao retorno da carteira em dólar.",
+    "Entre as referências cotadas em dólar, EWZ registrou {{fact:mkt.EWZ.ret_1d}}, EWW {{fact:mkt.EWW.ret_1d}} e ILF {{fact:mkt.ILF.ret_1d}}. O real variou {{fact:fx.BRL.ret_1d}}, medido em dólares por unidade de moeda local. A agenda de relações com investidores da América Móvil previa a divulgação do resultado de 3T26 após o fechamento de 20/10/2026 e teleconferência em 21/10/2026; a agenda não permite antecipar o conteúdo do resultado."
+  ],
+  "risk_flags": [
+    "Risco de squeeze alto nos shorts de Fleury e Energisa; o sinal exige acompanhamento conforme os controles do mandato.",
+    "Janela eleitoral brasileira ativa, com ajuste de volatilidade previsto pelo mandato.",
+    "Atribuição fatorial estimada; fundamentos atuais, viés de sobrevivência e câmbio sem fixing oficial limitam a interpretação.",
+    "Benchmark argentino sem barra no pregão, divergências de paridade ADR e revisões históricas não aplicadas permanecem explícitos.",
+    "Carteira simulada com preços reais e execução hipotética. DADOS SIMULADOS."
+  ]
+}

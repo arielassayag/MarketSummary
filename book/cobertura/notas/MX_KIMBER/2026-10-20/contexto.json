@@ -1,0 +1,89 @@
+{
+  "avisos_tecnicos": [],
+  "dados_ate": "2026-10-20",
+  "data": "2026-10-20",
+  "fontes_sugeridas": [
+    {
+      "instituicao": "CNBV",
+      "tipo": "regulatorio",
+      "url": "https://www.gob.mx/cnbv"
+    },
+    {
+      "instituicao": "BMV — emissoras",
+      "tipo": "bolsa",
+      "url": "https://www.bmv.com.mx/"
+    },
+    {
+      "instituicao": "Banxico (SIE)",
+      "tipo": "banco_central",
+      "url": "https://www.banxico.org.mx/"
+    },
+    {
+      "instituicao": "INEGI",
+      "tipo": "estatistica_oficial",
+      "url": "https://www.inegi.org.mx/"
+    },
+    {
+      "instituicao": "Damodaran Online (NYU Stern) — prêmios de risco, betas e múltiplos setoriais",
+      "tipo": "dados_publicos",
+      "url": "https://pages.stern.nyu.edu/~adamodar/"
+    },
+    {
+      "instituicao": "FRED (Federal Reserve Bank of St. Louis) — juros e indicadores dos EUA",
+      "tipo": "dados_publicos",
+      "url": "https://fred.stlouisfed.org/"
+    }
+  ],
+  "is_synthetic": false,
+  "issuer_id": "MX_KIMBER",
+  "lacunas": [],
+  "nome": "Kimberly-Clark de México",
+  "nomes": {
+    "MX_AC": "Arca Continental",
+    "MX_BIMBO": "Grupo Bimbo",
+    "MX_CHEDRAUI": "Grupo Comercial Chedraui",
+    "MX_FEMSA": "FEMSA",
+    "MX_GENOMMA": "Genomma Lab",
+    "MX_GRUMA": "Gruma",
+    "MX_KIMBER": "Kimberly-Clark de México",
+    "MX_KOF": "Coca-Cola FEMSA",
+    "MX_SIGMA": "Sigma Foods (ex-Alfa)"
+  },
+  "nota_anterior": {
+    "autoria": "mente",
+    "conviccao": 1,
+    "data": "2026-10-11",
+    "proximo_resultado": "2026-10-20",
+    "stance": 0,
+    "tipo": "iniciacao",
+    "titulo": "Kimberly-Clark de México — marcas, produtividade e capital distribuível"
+  },
+  "pais": "MX",
+  "pais_pt": "México",
+  "pares": [
+    "MX_AC",
+    "MX_BIMBO",
+    "MX_CHEDRAUI",
+    "MX_FEMSA",
+    "MX_GENOMMA",
+    "MX_GRUMA",
+    "MX_KOF",
+    "MX_SIGMA"
+  ],
+  "proximo_resultado": "2026-10-20",
+  "schema": "cdp.nota.contexto/v1",
+  "setor": "Consumer Staples",
+  "setor_pt": "Consumo básico",
+  "snapshot": {
+    "as_of": "2026-10-20",
+    "manifest_sha256": "b2e2a3ac9f6777ec36a9c32bef661353c52ca2237658372aa88b24768ce95942",
+    "modelo_as_of": "2026-10-20"
+  },
+  "tem_linha_eua": false,
+  "termos": [],
+  "tickers": [
+    "KIMBERA.MX",
+    "KIMBERA"
+  ],
+  "tipo_esperado": "atualizacao"
+}

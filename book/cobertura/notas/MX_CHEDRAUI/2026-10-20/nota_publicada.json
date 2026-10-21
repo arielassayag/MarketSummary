@@ -1,0 +1,345 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-20",
+    "manifest_sha256": "b2e2a3ac9f6777ec36a9c32bef661353c52ca2237658372aa88b24768ce95942",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-20",
+  "hashes": {
+    "contexto": "ff246eec6e7ce93f851caecad6e9774e469bbc373216888e056963cb66ab875e",
+    "factbook": "c2f6291f18c09d58416544b8932da33b07923f0703d772a5dde60dd9bcdc567a",
+    "nota_json": "98d9c6dcd108113e9ce083aab31b8a641584a9a8bef577ac62b35f89d3ae8716"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_CHEDRAUI",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-27",
+  "published_at": "2026-10-21T01:52:16.466376+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A orientação anual inclui expansão orgânica e investimento e explicita limite do indicador bancário diante de eventual crescimento inorgânico. A avaliação deve incorporar arrendamentos e capital de giro antes de concluir excedente.",
+        "titulo": "Crescimento após compromissos completos"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-27",
+        "descricao": "Divulgação prevista do 3T26, sujeita à confirmação de eventual mudança de calendário.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fato": "evento.MX_CHEDRAUI.proximo_resultado",
+            "nome": "Próxima divulgação de resultado",
+            "valor": "2026-10-27"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo MXN 94,57 em pesos mexicanos, dependente de caixa após investimento e imóveis.",
+      "otimista": "Produtividade por território financia expansão e obrigações; alvo otimista MXN 125,99 em pesos mexicanos.",
+      "pessimista": "Pressão de tráfego e custos absorve caixa; alvo pessimista MXN 65,61 em pesos mexicanos, sem garantia de piso."
+    },
+    "comentario_valuation": "Preço MXN 88,72 e alvo MXN 94,57, em pesos mexicanos. Retorno esperado +9,40%, ke 12,12% e dispersão 16,67%. A diferença -22,30% para consenso não demonstra percepção do mercado. Comparar varejistas exige harmonizar arrendamentos, país e maturação das lojas; pares de alimentos têm dinâmica distinta.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se a frequência obtida com preço competitivo não remunera logística, salários, estoque e imóveis.",
+        "titulo": "Preço sem contribuição econômica"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-20",
+    "dados_simulados": false,
+    "data": "2026-10-20",
+    "ficha": [
+      {
+        "fato": "val.MX_CHEDRAUI.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 88,72"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 94,57"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+6,59%"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 125,99"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "10,56%"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 65,61"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "5,16%"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,12%"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.wacc",
+        "rotulo": "WACC",
+        "valor": "9,64%"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+9,40%"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+1,70%"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "11,4x"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,6x"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 121,71"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-22,30%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-20",
+        "id": "F1",
+        "instituicao": "Chedraui / BMV",
+        "publicado_em": "2026-01-12",
+        "tipo": "Bolsa",
+        "titulo": "Orientação anual e calendário de resultados",
+        "url": "https://www.bmv.com.mx/docs-pub/eventemi/eventemi_1522661_1.pdf"
+      },
+      {
+        "consultado_em": "2026-10-20",
+        "id": "F2",
+        "instituicao": "Grupo Comercial Chedraui",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Relatório histórico de resultados trimestrais",
+        "url": "https://inversionistas.grupochedraui.com.mx/wp-content/uploads/2026/04/Reporte-BMV-CHDRAUI-1T-2026.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultado futuro esclarece vendas e contribuição por território.",
+      "Logística e lojas não remuneram capital após obrigações.",
+      "Arrendamentos e giro alteram a leitura da liquidez."
+    ],
+    "governanca": "Revisar controle, relacionadas, arrendamentos e atribuição do resultado. Caixa por território não é disponibilidade irrestrita; dividendos aprovados ou agendados não comprovam pagamento. Séries reformuladas citadas na nota anterior permanecem sujeitas à reconciliação.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar vendas comparáveis, tráfego, compra média e margem após logística; conciliar estoques, fornecedores, investimento e arrendamentos por país.",
+        "titulo": "Caixa por território"
+      }
+    ],
+    "issuer_id": "MX_CHEDRAUI",
+    "lacunas_de_dados": [
+      "Relatório do 2T26 não foi integralmente requalificado nesta consulta.",
+      "Divulgação nova em 2026-10-20 não confirmada; calendário oficial aponta data futura.",
+      "Manutenção ou alteração das metas anuais não confirmada.",
+      "Caixa por país, séries reformuladas e arrendamentos exigem reconciliação.",
+      "Percepção do mercado não comprovada."
+    ],
+    "modelo_de_cobertura": "2026-10-20",
+    "negocio": "Chedraui atua em autosserviço no México e nos Estados Unidos, com formatos e moedas distintos. A comparação exige vendas comparáveis por território e igual tratamento de obrigações de imóveis, capital de giro e expansão.",
+    "nome": "Grupo Comercial Chedraui",
+    "o_que_mudou": "O modelo registra variação de alvo -0,09%. A pesquisa confirmou o calendário futuro de 2026-10-27 e não encontrou novo resultado na data da fila. A nota é atualização; mantém a leitura neutra e as lacunas anteriores de obrigações e retorno da expansão.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_AC",
+        "nome": "Arca Continental"
+      },
+      {
+        "issuer_id": "MX_BIMBO",
+        "nome": "Grupo Bimbo"
+      },
+      {
+        "issuer_id": "MX_GENOMMA",
+        "nome": "Genomma Lab"
+      },
+      {
+        "issuer_id": "MX_GRUMA",
+        "nome": "Gruma"
+      },
+      {
+        "issuer_id": "MX_KIMBER",
+        "nome": "Kimberly-Clark de México"
+      },
+      {
+        "issuer_id": "MX_KOF",
+        "nome": "Coca-Cola FEMSA"
+      },
+      {
+        "issuer_id": "MX_SIGMA",
+        "nome": "Sigma Foods (ex-Alfa)"
+      },
+      {
+        "issuer_id": "MX_WALMEX",
+        "nome": "Walmart de México"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A orientação anual de janeiro prevê eficiência operacional e benefícios logísticos nos Estados Unidos. Nossa hipótese exige que esses objetivos se convertam em produtividade e caixa após todos os compromissos; metas não são realização.",
+        "titulo": "Eficiência precisa financiar crescimento"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O calendário oficial prevê o 3T26 em 2026-10-27. A atualização da nota confronta premissas e calendário, sem atribuir novo trimestre à data sugerida pela fila.",
+        "titulo": "Evento futuro preservado como futuro"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A proposta comercial precisa sustentar giro e retorno das lojas. A orientação identifica logística e eficiência como meios de proteger margem; nossa hipótese exige evidência operacional posterior.",
+        "titulo": "Preço e produtividade da distribuição"
+      }
+    ],
+    "publicada_em": "2026-10-21T01:52:16.466376+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O relatório histórico do 1T26 atribui pressão consolidada às vendas americanas e à conversão. Não extrapolamos essa decomposição para o trimestre novo; a análise exige bases comparáveis por território.",
+        "titulo": "Moeda e geografia"
+      }
+    ],
+    "resumo": "Proposta de preço e logística precisam produzir caixa depois de estoques, lojas e arrendamentos. O alvo MXN 94,57 em pesos mexicanos implica potencial +6,59%. A leitura segue neutra e de baixa convicção. O calendário oficial aponta divulgação em 2026-10-27; não qualificamos a prioridade da fila como resultado novo confirmado.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Consumo mais fraco nos Estados Unidos, custos e investimento podem absorver produtividade. Caixa bancário líquido não inclui necessariamente todos os compromissos de uso e expansão."
+      }
+    ],
+    "setor": "Consumo básico",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Chedraui — calendário futuro e caixa por território orientam a revisão",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O material financeiro recebido nesta consulta é histórico do 1T26, com pressão nas vendas americanas e efeito de conversão cambial. A nota anterior analisou o 2T26; essa reconciliação não foi refeita integralmente agora. Não foi confirmado novo trimestre em 2026-10-20. O calendário primário mantém como prevista a divulgação em 2026-10-27.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar se a proposta de preço preserva tráfego e margem depois de logística e salários; vendas consolidadas sofrem efeitos de moeda.",
+        "vetor": "Tráfego, logística e mão de obra"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,335 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-20",
+    "manifest_sha256": "b2e2a3ac9f6777ec36a9c32bef661353c52ca2237658372aa88b24768ce95942",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-20",
+  "hashes": {
+    "contexto": "4402ea7a9026958e3c35d41295bf972b0582778d200d707c78ce29f6383f462c",
+    "factbook": "edf1519930f766ac4388803f97d4fa97c72e96d6ed3f24acc344ee414c8f10ea",
+    "nota_json": "cba1048ab83ee1dad9ecfceef91a602cd44493cb0df5d3f468218eacaee1cac4"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_GAP",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-20",
+  "published_at": "2026-10-21T01:46:43.167141+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Confrontar investimento contratado, serviço da dívida e base acionária com a geração recorrente. Margem operacional sem construção não é medida suficiente de caixa disponível.",
+        "titulo": "Investimento e retorno atribuível"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Conclusão da alocação do preço da combinação, ainda preliminar no release; sem data confirmada.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "capital"
+      }
+    ],
+    "cenarios": {
+      "base": "Caixa após compromissos sustenta a operação, sem alvo próprio disponível nesta data.",
+      "otimista": "Integração e monetização remuneram o capital; cenário quantitativo indisponível enquanto o modelo está em revisão.",
+      "pessimista": "Tráfego e financiamento comprometem retorno por ação; não atribuímos preço ou probabilidade ausentes."
+    },
+    "comentario_valuation": "Preço MXN 373,39, P/L à frente 16,2x e consenso MXN 456,88, em pesos mexicanos para os preços. Ke 11,84% e dispersão 25,83% não tornam disponível o alvo em revisão. Pares industriais de negócios distintos não permitem concluir desconto sem ajustar concessão, perímetro e investimento.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese enfraquece se a contribuição adquirida elevar resultado sem remunerar o capital ou se tráfego fraco exigir mais financiamento.",
+        "titulo": "Integração sem retorno incremental"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-20",
+    "dados_simulados": false,
+    "data": "2026-10-20",
+    "ficha": [
+      {
+        "fato": "val.MX_GAP.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 373,39"
+      },
+      {
+        "fato": "val.MX_GAP.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_GAP.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_GAP.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_GAP.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_GAP.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_GAP.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_GAP.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_GAP.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_GAP.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,84%"
+      },
+      {
+        "fato": "val.MX_GAP.wacc",
+        "rotulo": "WACC",
+        "valor": "10,50%"
+      },
+      {
+        "fato": "val.MX_GAP.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_GAP.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_GAP.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_GAP.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "16,2x"
+      },
+      {
+        "fato": "val.MX_GAP.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "4,2x"
+      },
+      {
+        "fato": "val.MX_GAP.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 456,88"
+      },
+      {
+        "fato": "val.MX_GAP.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-20",
+        "id": "F1",
+        "instituicao": "GAP / BMV",
+        "publicado_em": "2026-10-19",
+        "tipo": "Bolsa",
+        "titulo": "Resultado trimestral e combinação de negócios",
+        "url": "https://www.bmv.com.mx/docs-pub/eventemi/eventemi_1596277_1.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Caixa recorrente por ação confirma retorno do investimento.",
+      "Alocação final da combinação altera capital e atribuição.",
+      "Tráfego e juros deterioram cobertura dos compromissos."
+    ],
+    "governanca": "A combinação internaliza serviços de assistência técnica e incorpora CBX. A atribuição por ação exige conciliar a base acionária e os valores ainda preliminares; crescimento do lucro consolidado não demonstra ganho equivalente por ação.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar tráfego por aeroporto, receita comercial comparável, investimento, juros e denominador acionário; exigir conciliação da combinação.",
+        "titulo": "Caixa recorrente por ação"
+      }
+    ],
+    "issuer_id": "MX_GAP",
+    "lacunas_de_dados": [
+      "Alvo, cenários, probabilidades, rating e retorno esperado em revisão.",
+      "Alocação final da combinação pendente.",
+      "Novo guidance formal não identificado no documento consultado.",
+      "Percepção de mercado e retorno integral por ação não demonstrados."
+    ],
+    "modelo_de_cobertura": "2026-10-20",
+    "negocio": "GAP opera aeroportos no México e na Jamaica, com receitas aeronáuticas, comerciais e do CBX. Concessões e investimento obrigatório condicionam o caixa; crescimento consolidado precisa remunerar o capital e chegar ao acionista.",
+    "nome": "Grupo Aeroportuario del Pacífico",
+    "o_que_mudou": "Releitura do mesmo release de 2026-10-19 na atualização de 2026-10-20. Não foi confirmada nova divulgação. Mantemos a conclusão anterior e explicitamos que alvo e cenários seguem em revisão, sem atribuir a atualização da fila a novo resultado ou orientação.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_SIMPAR",
+        "nome": "Simpar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O release de 2026-10-19 separa a contribuição do CBX e informa tráfego consolidado menor. A hipótese exige caixa comparável por ação depois de investimento e financiamento.",
+        "titulo": "Integração não equivale a expansão orgânica"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_GAP.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "MXN 373,39"
+          },
+          {
+            "fato": "val.MX_GAP.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.MX_GAP.rating_codigo",
+            "nome": "Rating da cobertura (12 meses)",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.MX_GAP.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          }
+        ],
+        "texto": "O preço de referência é MXN 373,39 em pesos mexicanos. Alvo, rating e retorno esperado permanecem em revisão; não inferimos desconto pelo consenso.",
+        "titulo": "Avaliação própria indisponível"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Concessões e CBX oferecem acesso a fluxos regionais. A hipótese de vantagem depende da capacidade de monetizar esses fluxos com retorno após capital investido, sem presumir expansão do tráfego.",
+        "titulo": "Captura econômica da conectividade"
+      }
+    ],
+    "publicada_em": "2026-10-21T01:46:43.167141+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar receitas de construção, contribuição do CBX e efeito da combinação antes de projetar recorrência. A alocação preliminar impede tratar a base de ativos como definitivamente conciliada.",
+        "titulo": "Construção e perímetro"
+      }
+    ],
+    "resumo": "Mantemos visão neutra e baixa convicção. A releitura do 3T26 confirma que a integração do CBX afeta comparabilidade enquanto o tráfego recua. O alvo e os cenários permanecem em revisão; o consenso público não substitui uma avaliação própria disponível.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Demanda menor e investimento obrigatório podem limitar distribuição mesmo com aumento do resultado consolidado. Ajustes da combinação podem alterar a leitura do capital empregado."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "GAP — revisão preserva a distinção entre integração, tráfego e valor por ação",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "A fonte primária continua sendo o release de 2026-10-19, já analisado na nota anterior. Receita e resultado crescem com a contribuição do CBX, enquanto o tráfego cai; os valores da combinação seguem preliminares. Não foi identificada nova divulgação em 2026-10-20. A classificação pós-resultado reflete a prioridade da fila, sem supor outro evento econômico.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Monitorar tráfego e receita comercial por aeroporto, excluindo efeitos de perímetro ao avaliar produtividade. A receita de construção não equivale a caixa livre.",
+        "vetor": "Receita comparável e obrigações de concessão"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

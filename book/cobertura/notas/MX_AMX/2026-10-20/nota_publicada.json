@@ -1,0 +1,324 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-20",
+    "manifest_sha256": "b2e2a3ac9f6777ec36a9c32bef661353c52ca2237658372aa88b24768ce95942",
+    "modelo_as_of": "2026-10-20"
+  },
+  "conviccao": 1,
+  "data": "2026-10-20",
+  "hashes": {
+    "contexto": "263146eb5ae679657373ca61b3c962dc1c1ea056e4ec7f617fc5f223d1ae869c",
+    "factbook": "01bf427c4b473105fbd046217d75084a57530965a8e781dc729bd0befbf740c8",
+    "nota_json": "04d86eccce62d71cd6496812c730da0a9d06b02fac538590b87e3a61e8b47815"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_AMX",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-20",
+  "published_at": "2026-10-21T01:41:34.947521+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O comunicado da Desktop amplia o foco na presença de fibra no Brasil. A criação de valor depende de preço pago, integração e investimento remanescente; a nota não reconhece sinergias ainda não verificadas.",
+        "titulo": "Rede e aquisição"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-21",
+        "descricao": "Conferência de resultados para esclarecer investimento, bases comparáveis e integração.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "O caso-base é MXN 23,02 em pesos mexicanos, condicionado à conversão de resultado em caixa econômico.",
+      "otimista": "Receita recorrente e retorno incremental sustentam o alvo otimista de MXN 31,12 em pesos mexicanos.",
+      "pessimista": "Pressão comercial e reinvestimento limitam a conversão; alvo pessimista de MXN 15,24 em pesos mexicanos, sem garantia de piso."
+    },
+    "comentario_valuation": "Preço MXN 21,07 e alvo MXN 23,02, em pesos mexicanos. Ke 10,65% e WACC 8,97%. O consenso público de MXN 25,22 e a diferença -8,73% não demonstram o que o mercado precifica. A dispersão 40,24% recomenda prudência na comparação com pares de perímetros distintos.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se a expansão exigir reinvestimento ou financiamento que impeça retorno econômico atribuível ao acionista.",
+        "titulo": "Receita sem caixa distribuível"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-20",
+    "dados_simulados": false,
+    "data": "2026-10-20",
+    "ficha": [
+      {
+        "fato": "val.MX_AMX.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 21,07"
+      },
+      {
+        "fato": "val.MX_AMX.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 23,02"
+      },
+      {
+        "fato": "val.MX_AMX.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+9,24%"
+      },
+      {
+        "fato": "val.MX_AMX.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_AMX.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.MX_AMX.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 31,12"
+      },
+      {
+        "fato": "val.MX_AMX.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "7,84%"
+      },
+      {
+        "fato": "val.MX_AMX.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 15,24"
+      },
+      {
+        "fato": "val.MX_AMX.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "6,75%"
+      },
+      {
+        "fato": "val.MX_AMX.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,65%"
+      },
+      {
+        "fato": "val.MX_AMX.wacc",
+        "rotulo": "WACC",
+        "valor": "8,97%"
+      },
+      {
+        "fato": "val.MX_AMX.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_AMX.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+12,62%"
+      },
+      {
+        "fato": "val.MX_AMX.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-6,21%"
+      },
+      {
+        "fato": "val.MX_AMX.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "11,1x"
+      },
+      {
+        "fato": "val.MX_AMX.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,9x"
+      },
+      {
+        "fato": "val.MX_AMX.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 25,22"
+      },
+      {
+        "fato": "val.MX_AMX.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-8,73%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-20",
+        "id": "F1",
+        "instituicao": "América Móvil / BMV",
+        "publicado_em": "2026-10-20",
+        "tipo": "Bolsa",
+        "titulo": "Relatório financeiro e operacional trimestral",
+        "url": "https://bmv.com.mx/docs-pub/eventemi/eventemi_1596486_1.pdf"
+      },
+      {
+        "consultado_em": "2026-10-20",
+        "id": "F2",
+        "instituicao": "América Móvil / BMV",
+        "publicado_em": "2026-10-01",
+        "tipo": "Bolsa",
+        "titulo": "Comunicado sobre a Desktop no Brasil",
+        "url": "https://bmv.com.mx/docs-pub/eventemi/eventemi_1592736_1.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Caixa após investimento e arrendamentos confirma ou invalida monetização.",
+      "Termos de aquisição e integração alteram a disciplina de capital.",
+      "Nova orientação formal muda o investimento necessário."
+    ],
+    "governanca": "Avaliar a transmissão de caixa entre subsidiárias e controladora, as bases de dívida e os direitos por ação ou recibo. O anúncio da Desktop precisa ser lido com seus termos; não presumimos conclusão de integrações ou sinergias.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Monitorar receita de serviços, retenção, investimento, dívida após arrendamentos e caixa distribuível por entidade em bases comparáveis.",
+        "titulo": "Conversão e alavancagem"
+      }
+    ],
+    "issuer_id": "MX_AMX",
+    "lacunas_de_dados": [
+      "Caixa por entidade e retorno incremental da rede não integralmente reconciliados.",
+      "Não identificada revisão formal de guidance no material consultado.",
+      "Conferência de 2026-10-21 ainda futura na data da nota.",
+      "Sem evidência suficiente de percepção variante do mercado."
+    ],
+    "modelo_de_cobertura": "2026-10-20",
+    "negocio": "A América Móvil opera telecomunicações móveis e fixas na América Latina e na Europa. Sua escala exige reinvestimento contínuo e monetização de conectividade; a comparação entre operações precisa preservar moeda, perímetro e classificação dos acessos.",
+    "nome": "América Móvil",
+    "o_que_mudou": "A nota incorpora o release do 3T26 divulgado em 2026-10-20 e o comunicado da Desktop. A revisão do alvo do modelo é -1,17%; a conclusão qualitativa permanece neutra, sem extrapolar o resultado consolidado para retorno incremental comprovado.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "BR_TIM",
+        "nome": "TIM Brasil"
+      },
+      {
+        "issuer_id": "BR_VIVO",
+        "nome": "Telefônica Brasil (Vivo)"
+      },
+      {
+        "issuer_id": "MX_MEGACABLE",
+        "nome": "Megacable"
+      },
+      {
+        "issuer_id": "MX_TELEVISA",
+        "nome": "Grupo Televisa"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O relatório do 3T26 apresenta expansão de serviços móveis, banda larga e redes corporativas. Nossa hipótese exige que essa receita remunere a renovação da rede e os compromissos econômicos de longo prazo.",
+        "titulo": "Monetização e reinvestimento"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_AMX.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+12,62%"
+          },
+          {
+            "fato": "val.MX_AMX.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "-6,21%"
+          }
+        ],
+        "texto": "O retorno esperado de +12,62% convive com alpha relativo de -6,21%. O modelo não encerra a diligência sobre caixa transferível ao acionista.",
+        "titulo": "Preço e incerteza metodológica"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Pós-pago e banda larga aparecem como motores de expansão dos acessos. A vantagem econômica será confirmada por retenção e retorno do capital incremental, não apenas pela base instalada.",
+        "titulo": "Rede e relacionamento"
+      }
+    ],
+    "publicada_em": "2026-10-21T01:41:34.947521+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O release altera a classificação dos acessos fixos sem fio e ajusta os comparativos. Nossa leitura requer preservar essas bases e separar efeitos de moeda do desempenho operacional.",
+        "titulo": "Bases comparáveis"
+      }
+    ],
+    "resumo": "O release do 3T26 sustenta leitura de expansão operacional, mas a criação de valor depende do caixa após rede e compromissos. O alvo de MXN 23,02 em pesos mexicanos implica +9,24% de potencial. Visão neutra, com baixa convicção, diante da dispersão 40,24% e das lacunas de capital por operação.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Concorrência e renovação da rede podem consumir o ganho operacional. Aquisições acrescentam risco de integração e de disciplina de capital."
+      }
+    ],
+    "setor": "Comunicações",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "América Móvil — serviços e caixa avançam; investimento e integração seguem decisivos",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "No release de 2026-10-20, a América Móvil reporta expansão da receita de serviços e do EBITDA em moeda constante, investimento financiado pelo fluxo e redução da dívida líquida. O resultado financeiro inclui perdas cambiais. A interpretação distingue avanço operacional de efeitos financeiros e exige reconciliação dos arrendamentos.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Testar monetização recorrente depois de investimento, espectro e arrendamentos; crescimento consolidado não garante retorno incremental.",
+        "vetor": "Receita de serviços e custo de rede"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

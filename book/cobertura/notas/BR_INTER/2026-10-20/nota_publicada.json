@@ -1,0 +1,354 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-20",
+    "manifest_sha256": "b2e2a3ac9f6777ec36a9c32bef661353c52ca2237658372aa88b24768ce95942",
+    "modelo_as_of": "2026-10-20"
+  },
+  "conviccao": 1,
+  "data": "2026-10-20",
+  "hashes": {
+    "contexto": "3322ad8838e7719d80fdfa2655060dd3521d481201e354b62e70c61019954f39",
+    "factbook": "186c156b90d667f65243da7bb1463b621b0796ada16711a145f4e2c7c3cf245e",
+    "nota_json": "fbc1febc96970514033412fd931f4c47b70f62ba5cbd7109854c3bf911315897"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_INTER",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-12",
+  "published_at": "2026-10-21T01:39:59.627355+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A gestão declara que o lucro passou a financiar o crescimento. A hipótese deve ser testada com capital do banco, capital da holding e distribuição, sem presumir equivalência entre esses perímetros.",
+        "titulo": "Crescimento financiado pelo resultado"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-12",
+        "descricao": "Próximo resultado indicado pelo calendário do modelo; confirmar a convocação no emissor.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "evento.BR_INTER.proximo_resultado",
+            "nome": "Próxima divulgação de resultado (data estimada)",
+            "valor": "2026-11-12"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "O alvo de US$ 8,99 em dólares exige retorno recorrente após crédito e capital; a nota não acrescenta probabilidades.",
+      "otimista": "Captação e monetização avançam com perdas controladas; alvo otimista do modelo de US$ 10,43 em dólares.",
+      "pessimista": "Perdas e financiamento absorvem monetização. O cenário pessimista quantitativo é US$ 7,59 em dólares; não representa piso de negociação."
+    },
+    "comentario_valuation": "Preço de referência US$ 7,26 e alvo US$ 8,99, ambos em dólares. O retorno esperado é +25,78%, com ke 11,11% e dispersão 6,37%. O consenso público aponta US$ 9,13 em dólares; a diferença -1,54% não demonstra percepção do mercado. A comparação relativa exige cuidado com os diferentes modelos bancários dos pares.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A tese enfraquece se engajamento e receita por cliente avançarem acompanhados por perdas, financiamento ou capital que eliminem o ganho atribuível. A revisão do alvo não resolve essa possibilidade.",
+        "titulo": "Escala sem retorno líquido"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-20",
+    "dados_simulados": false,
+    "data": "2026-10-20",
+    "ficha": [
+      {
+        "fato": "val.BR_INTER.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 7,26"
+      },
+      {
+        "fato": "val.BR_INTER.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 8,99"
+      },
+      {
+        "fato": "val.BR_INTER.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+23,83%"
+      },
+      {
+        "fato": "val.BR_INTER.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_INTER.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_INTER.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 10,43"
+      },
+      {
+        "fato": "val.BR_INTER.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_INTER.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 7,59"
+      },
+      {
+        "fato": "val.BR_INTER.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_INTER.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,11%"
+      },
+      {
+        "fato": "val.BR_INTER.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_INTER.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.BR_INTER.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+25,78%"
+      },
+      {
+        "fato": "val.BR_INTER.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-17,41%"
+      },
+      {
+        "fato": "val.BR_INTER.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,0x"
+      },
+      {
+        "fato": "val.BR_INTER.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,4x"
+      },
+      {
+        "fato": "val.BR_INTER.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 9,13"
+      },
+      {
+        "fato": "val.BR_INTER.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-1,54%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-20",
+        "id": "F1",
+        "instituicao": "Inter&Co / SEC",
+        "publicado_em": null,
+        "tipo": "Regulador",
+        "titulo": "Resultados e definições gerenciais do trimestre",
+        "url": "https://www.sec.gov/Archives/edgar/data/1864163/000186416326000065/interco2q26earningsrelea.htm"
+      },
+      {
+        "consultado_em": "2026-10-20",
+        "id": "F2",
+        "instituicao": "Inter&Co",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Agenda oficial de eventos",
+        "url": "https://investors.inter.co/en/investor-updates/agenda/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Release novo confirmado e reconciliação das perdas por safra.",
+      "Capital requerido ou captação invalidam a monetização atribuível.",
+      "Comunicados esclarecem direitos e conclusão da reorganização dos recibos."
+    ],
+    "governanca": "A análise distingue holding, banco e direitos do instrumento. Os termos e a conclusão da reorganização do programa de recibos brasileiros não foram novamente reconciliados nesta consulta; a passagem da janela anterior não prova conversão ou venda concluída.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar safras, baixas, renegociação, custo de captação e margem após perdas. Exigir conciliação do retorno atribuível com o capital necessário para crescer.",
+        "titulo": "Crédito, depósitos e retorno"
+      }
+    ],
+    "issuer_id": "BR_INTER",
+    "lacunas_de_dados": [
+      "Novo release associado ao evento de outubro não confirmado em fonte primária.",
+      "Guidance novo não identificado; sem_guidance indica ausência na evidência consultada, não retirada formal.",
+      "Probabilidades implícitas e WACC indisponíveis no modelo.",
+      "Capital prudencial, safras maduras e reorganização dos recibos não integralmente reconciliados.",
+      "Sem evidência pública suficiente para atribuir uma percepção ao mercado."
+    ],
+    "modelo_de_cobertura": "2026-10-20",
+    "negocio": "Inter&Co reúne banco, crédito, investimentos, seguros e serviços comerciais em plataforma digital. A receita depende da profundidade do relacionamento e do crédito por cliente; a holding e o banco têm bases de capital distintas. No material do 2T26, o emissor associa monetização a engajamento e captação de clientes.",
+    "nome": "Inter&Co",
+    "o_que_mudou": "O modelo de 2026-10-20 revisou o alvo, com variação de +11,47%. A prioridade pós-resultado decorre da agenda quantitativa; a pesquisa não confirmou novo release em outubro. A leitura segue neutra e de baixa convicção, com separação explícita entre reavaliação e divulgação comprovada.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BANRISUL",
+        "nome": "Banrisul"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O release do 2T26 descreve avanço de receita por cliente e expansão da carteira. Nossa hipótese exige que receitas recorrentes persistam após perdas e custo de capital; engajamento isolado não comprova retorno econômico.",
+        "titulo": "Monetização sujeita ao crédito"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "cob.BR_INTER.variacao_alvo",
+            "nome": "Variação do preço-alvo",
+            "valor": "+11,47%"
+          },
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O alvo recebeu revisão de +11,47%. A pesquisa não confirmou release novo de outubro; o material primário consultado continua sendo o do 2T26.",
+        "titulo": "Revisão não equivale a confirmação de evento"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O emissor atribui vantagem de captação ao relacionamento transacional e ao uso dos produtos. A durabilidade depende de depósitos estáveis e monetização além do crédito, sem confundir atividade com conta principal.",
+        "titulo": "Relacionamento e depósitos"
+      }
+    ],
+    "publicada_em": "2026-10-21T01:39:59.627355+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Indicadores por cliente e de margem têm definições próprias no release. A leitura exige conciliar custo de servir, provisões, perdas efetivas e resultado atribuível antes de concluir expansão sustentável do retorno.",
+        "titulo": "Receita gerencial e resultado atribuível"
+      }
+    ],
+    "resumo": "A monetização do relacionamento digital depende de captação estável e receita após perdas. O modelo aponta alvo de US$ 8,99 em dólares e potencial de +23,83%, mas alpha relativo de -17,41%. Mantemos visão neutra e baixa convicção: a reavaliação quantitativa não substitui a confirmação documental do evento de outubro.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Crescimento das safras pode antecipar receita enquanto perdas e capital aparecem posteriormente. A gestão declara neutralidade de capital; a conclusão exige reconciliação prudencial e atribuível."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "alta",
+        "texto": "A ausência de confirmação do evento de outubro limita a atribuição da revisão do modelo a novos fundamentos."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Inter — revisão do modelo exige confirmação da divulgação e do crédito",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O documento primário localizado é o release do 2T26: descreve expansão de receitas, crédito, captação e rentabilidade. A afirmação da gestão de crescimento financiado pelo lucro precisa ser conferida contra capital regulatório e perdas de safras. Não foi confirmado release associado ao evento de outubro que motivou a revisão quantitativa.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A expansão em crédito e depósitos precisa preservar margem após perdas e capital prudencial. A retenção de clientes deve reduzir dependência de captação marginal cara.",
+        "vetor": "Receita após perdas e captação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

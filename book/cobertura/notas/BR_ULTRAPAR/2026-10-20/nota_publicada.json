@@ -1,0 +1,331 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-20",
+    "manifest_sha256": "b2e2a3ac9f6777ec36a9c32bef661353c52ca2237658372aa88b24768ce95942",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-20",
+  "hashes": {
+    "contexto": "1b9acd22206ef4ba73e6f662e116e32980cb6162fab6680ea02076b853f04ffb",
+    "factbook": "c90f0b18bf6774b9d37465baaf45a297f077d6cfdebba082435f5d6bce398e0f",
+    "nota_json": "d0f52573ea5db6d05b539ea084562a0a003f7c502e2b3fb2d59464fad1fbca4c"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_ULTRAPAR",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-11",
+  "published_at": "2026-10-21T01:53:55.482310+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Testar retorno de expansões e aquisições após manutenção, exclusividade, arrendamentos e financiamento. A indicação de comissionamento futuro não comprova caixa realizado.",
+        "titulo": "Projetos depois de compromissos comerciais"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-11",
+        "descricao": "Resultado futuro indicado pelo modelo para avaliar geração por negócio e projetos; confirmar convocação do emissor.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "evento.BR_ULTRAPAR.proximo_resultado",
+            "nome": "Próxima divulgação de resultado",
+            "valor": "2026-11-11"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo R$ 43,33 em reais, condicionado à geração recorrente atribuível.",
+      "otimista": "Margens e projetos sustentam caixa após obrigações; alvo otimista R$ 56,96 em reais.",
+      "pessimista": "Giro e investimentos absorvem margem; alvo pessimista R$ 30,66 em reais, sem garantia de piso."
+    },
+    "comentario_valuation": "Preço R$ 38,64, alvo R$ 43,33 e consenso R$ 38,83, em reais. Ke 11,44% e dispersão 21,67%. A diferença +11,61% para consenso não prova leitura de mercado. Comparar produtores de petróleo, distribuidoras e holdings exige controle do perímetro; a confiança quantitativa não encerra a diligência de capital.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese enfraquece se margem conjuntural e liberação de giro explicam a geração enquanto reinvestimento e obrigações crescem.",
+        "titulo": "Conjuntura favorável sem recorrência"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-20",
+    "dados_simulados": false,
+    "data": "2026-10-20",
+    "ficha": [
+      {
+        "fato": "val.BR_ULTRAPAR.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 38,64"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 43,33"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+12,14%"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 56,96"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "12,25%"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 30,66"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "17,50%"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,44%"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.wacc",
+        "rotulo": "WACC",
+        "valor": "9,62%"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+14,74%"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-5,02%"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "11,5x"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,3x"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 38,83"
+      },
+      {
+        "fato": "val.BR_ULTRAPAR.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+11,61%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-20",
+        "id": "F1",
+        "instituicao": "Ultrapar",
+        "publicado_em": "2026-08-12",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultados por negócio, giro e capital",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/4282e939-a6dc-401d-a873-e3c28b7e48df/a8ec731a-2a87-ecd0-896c-975c26cd9ef5?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-20",
+        "id": "F2",
+        "instituicao": "Ultrapar",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário de eventos",
+        "url": "https://ri.ultra.com.br/servicos-ao-investidor/calendario-de-eventos/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Caixa recorrente persiste após normalização de margens e giro.",
+      "Projetos e aquisições deixam de remunerar capital.",
+      "Obrigações e minoritários alteram recursos atribuíveis."
+    ],
+    "governanca": "Distinguir resultado consolidado, minoritários e recursos recebidos pela holding. Os quadros por negócio incluem transações entre segmentos; sua soma não substitui o consolidado. Aprovação de recompra ou dividendos não comprova execução ou liquidação.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Monitorar volume, margem, mix e crédito; conciliar giro, exclusividade, arrendamentos, investimento e recursos efetivamente recebidos pela holding.",
+        "titulo": "Caixa por negócio e atribuição"
+      }
+    ],
+    "issuer_id": "BR_ULTRAPAR",
+    "lacunas_de_dados": [
+      "Fluxo livre e recursos por negócio não integralmente reconciliados.",
+      "Entrada e retorno das capacidades previstas não confirmados.",
+      "Liquidação de dividendos e execução da recompra não conciliadas.",
+      "Guidance atual e convocação futura não requalificados integralmente.",
+      "Percepção de mercado não comprovada."
+    ],
+    "modelo_de_cobertura": "2026-10-20",
+    "negocio": "Ultrapar aloca capital em distribuição de combustíveis, GLP, armazenagem e logística por Ipiranga, Ultragaz, Ultracargo e Hidrovias. Contratos, suprimento, giro e utilização têm economias distintas, exigindo controle do perímetro consolidado e de minoritários.",
+    "nome": "Ultrapar",
+    "o_que_mudou": "O modelo atual registra variação de alvo -2,63%. A releitura do 2T26 preserva o foco em geração após giro e compromissos. Não foi confirmado resultado posterior nem o retorno efetivo das capacidades previstas, mantendo neutralidade.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRAVA",
+        "nome": "Brava Energia"
+      },
+      {
+        "issuer_id": "BR_COSAN",
+        "nome": "Cosan"
+      },
+      {
+        "issuer_id": "BR_PRIO",
+        "nome": "PRIO"
+      },
+      {
+        "issuer_id": "BR_RECV",
+        "nome": "PetroRecôncavo"
+      },
+      {
+        "issuer_id": "BR_VIBRA",
+        "nome": "Vibra Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O release do 2T26 atribui parte da geração de caixa à liberação de giro na Ipiranga. Nossa hipótese exige repetição da geração depois de manutenção e compromissos comerciais, sem extrapolar essa liberação.",
+        "titulo": "Operação depois da normalização"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ULTRAPAR.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+14,74%"
+          },
+          {
+            "fato": "val.BR_ULTRAPAR.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "-5,02%"
+          },
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O retorno esperado +14,74% convive com alpha relativo -5,02%. Investimentos e aquisições devem remunerar capital antes de reconhecer diversificação como criação de valor.",
+        "titulo": "Valor atribuível e reinvestimento"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Distribuição e infraestrutura podem favorecer fornecimento confiável. Nossa hipótese exige margem e retenção depois de custo de suprimento, além de utilização rentável dos terminais e condições de navegabilidade.",
+        "titulo": "Confiabilidade e utilização econômica"
+      }
+    ],
+    "publicada_em": "2026-10-21T01:53:55.482310+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O release explicita ajustes por amortização de bonificações e marcação de energia. A análise deve conciliar esses ajustes com desembolsos, fornecedores convênio e liberação de giro, sem converter EBITDA em fluxo livre.",
+        "titulo": "Ajustes e ponte de caixa"
+      }
+    ],
+    "resumo": "A melhora operacional do 2T26 precisa persistir após normalização do suprimento e do capital de giro. O alvo R$ 43,33 em reais implica potencial +12,14%. Mantemos visão neutra e baixa convicção: caixa operacional consolidado não equivale ao recurso livre atribuível à holding.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Normalização das margens, giro e refinanciamento podem absorver recursos. Capacidade nova sem retorno e direitos de minoritários limitam caixa atribuível."
+      }
+    ],
+    "setor": "Energia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Ultrapar — geração recorrente após giro e compromissos sustenta a diligência",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O release primário do 2T26 continua sendo o material financeiro localizado. Destaca Ipiranga, liberação de giro e redução da alavancagem, apresentando também medida com fornecedores convênio. O material prevê operação das novas capacidades da Ultracargo no 3T26; nesta atualização não confirmamos sua entrada e retorno efetivos.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar margem após normalização, crédito e giro; desembolsos de exclusividade conservam natureza econômica mesmo quando amortizações são ajustadas no EBITDA.",
+        "vetor": "Margem comparável, exclusividade e giro"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

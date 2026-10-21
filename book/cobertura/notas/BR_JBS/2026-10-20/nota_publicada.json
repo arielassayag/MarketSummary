@@ -1,0 +1,348 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-20",
+    "manifest_sha256": "b2e2a3ac9f6777ec36a9c32bef661353c52ca2237658372aa88b24768ce95942",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-20",
+  "hashes": {
+    "contexto": "f28ff355e27e25a149ce535b594da3a61530e469fcc89e66e3523573eb99cb43",
+    "factbook": "d57dabf845c7da81985d712e7b32c287c9b6bf88dc3cee00c5f5fa12223434a8",
+    "nota_json": "f2537861998ad76c18bfb3d93846b48f818c09b3faba6b215dd865b230af4c08"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_JBS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-09",
+  "published_at": "2026-10-21T01:59:39.173559+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A informação intermediária distingue investimento, arrendamentos, dívida e provisões legais. Testar recursos atribuíveis depois dessas obrigações antes de reconhecer capacidade de distribuição ou expansão.",
+        "titulo": "Caixa depois de juros e compromissos"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-09",
+        "descricao": "Próximo resultado indicado pelo modelo; confirmar convocação e reconciliar caixa, direitos e bases contábeis.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "evento.BR_JBS.proximo_resultado",
+            "nome": "Próxima divulgação de resultado",
+            "valor": "2026-11-09"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "A hipótese requer caixa recorrente atribuível e direitos conciliados; não há alvo próprio disponível nesta data.",
+      "otimista": "Proteínas e preparados sustentam caixa depois de reinvestimento e juros; cenário quantitativo indisponível enquanto a avaliação permanece em revisão.",
+      "pessimista": "Ciclo, giro e obrigações reduzem distribuição; não atribuímos preço ou probabilidade ausentes."
+    },
+    "comentario_valuation": "Preço de referência R$ 65,05 e consenso R$ 94,70, em reais. Ke 10,43% e dispersão 59,37% não resolvem alvo, rating e cenários em revisão. A moeda e a unidade do recibo exigem conciliação com o capital atual da JBS N.V.; não inferimos desconto ou retorno esperado pelo consenso. Pares de consumo têm ciclos e estruturas diferentes, e o múltiplo isolado não substitui caixa normalizado.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se ciclo bovino, custos e financiamento absorvem os benefícios de diversificação ou se a liquidez depende de antecipações recorrentes.",
+        "titulo": "Receita cresce e o acionista recebe menos caixa"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-20",
+    "dados_simulados": false,
+    "data": "2026-10-20",
+    "ficha": [
+      {
+        "fato": "val.BR_JBS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 65,05"
+      },
+      {
+        "fato": "val.BR_JBS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JBS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JBS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JBS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_JBS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JBS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JBS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JBS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JBS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,43%"
+      },
+      {
+        "fato": "val.BR_JBS.wacc",
+        "rotulo": "WACC",
+        "valor": "8,07%"
+      },
+      {
+        "fato": "val.BR_JBS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_JBS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JBS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_JBS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "10,6x"
+      },
+      {
+        "fato": "val.BR_JBS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,5x"
+      },
+      {
+        "fato": "val.BR_JBS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 94,70"
+      },
+      {
+        "fato": "val.BR_JBS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-20",
+        "id": "F1",
+        "instituicao": "JBS N.V.",
+        "publicado_em": "2026-08-10",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado trimestral, segmentos e financiamento",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/fdb59571-9620-473a-8f8d-a9c27ebf7d44/c77a4d4f-afc4-6bd4-947e-09b4049af5c6?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-20",
+        "id": "F2",
+        "instituicao": "JBS N.V.",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Informação intermediária, caixa e obrigações",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/fdb59571-9620-473a-8f8d-a9c27ebf7d44/7489b5dc-c4eb-2f17-9c08-4f7d33144a7e?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Caixa persiste sem expansão de recebíveis descontados e antecipações.",
+      "Margens e custo de animais invalidam retorno normalizado.",
+      "Direitos, moeda ou capital deixam de corresponder ao instrumento avaliado."
+    ],
+    "governanca": "A atribuição deve distinguir JBS N.V., minoritários e recibo brasileiro. Classes, controle e regras do programa não foram integralmente reconciliados. A existência de linha rotativa não representa dinheiro sacado; eventos posteriores citados na pesquisa anterior conservam seus estados até comprovação atual.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Monitorar margens por proteína, preço de animais, recebíveis descontados, adiantamentos, fornecedores, juros e capex. Conciliar direitos, moeda, minoritários e unidade do recibo.",
+        "titulo": "Margem e caixa atribuível"
+      }
+    ],
+    "issuer_id": "BR_JBS",
+    "lacunas_de_dados": [
+      "Alvo, rating, cenários, probabilidades e retorno esperado em revisão.",
+      "Unidade do recibo, capital e direitos sem ponte documental integral.",
+      "Fluxo trimestral e semestral após juros e obrigações não integralmente reconciliados.",
+      "Conclusão e aportes de eventos societários posteriores não confirmados.",
+      "Guidance agregado atual e percepção de mercado não demonstrados."
+    ],
+    "modelo_de_cobertura": "2026-10-20",
+    "negocio": "JBS N.V. reúne bovinos, aves, suínos e preparados em diferentes geografias, com participações e minoritários. O release distingue IFRS e medidas em USGAAP não auditadas. A ação em Nova York e o recibo brasileiro exigem ponte de moeda, unidade e direitos antes da conclusão por instrumento.",
+    "nome": "JBS N.V.",
+    "o_que_mudou": "A atualização de 2026-10-20 releu o release e a informação intermediária do 2T26. Alvo e cenários continuam em revisão; não foi confirmado novo resultado nem a conclusão dos eventos posteriores anteriormente citados. Mantemos neutralidade e reforçamos a distinção entre caixa recorrente e financiamento comercial.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AMBEV",
+        "nome": "Ambev"
+      },
+      {
+        "issuer_id": "BR_ASSAI",
+        "nome": "Assaí Atacadista"
+      },
+      {
+        "issuer_id": "BR_MATEUS",
+        "nome": "Grupo Mateus"
+      },
+      {
+        "issuer_id": "BR_MBRF",
+        "nome": "MBRF (Marfrig+BRF)"
+      },
+      {
+        "issuer_id": "BR_MDIAS",
+        "nome": "M. Dias Branco"
+      },
+      {
+        "issuer_id": "BR_NATURA",
+        "nome": "Natura Cosméticos"
+      },
+      {
+        "issuer_id": "BR_PAGUEMENOS",
+        "nome": "Pague Menos"
+      },
+      {
+        "issuer_id": "BR_RAIADROGASIL",
+        "nome": "Raia Drogasil"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O release do 2T26 descreve diferenças entre proteínas e regiões e pressão no bovino norte-americano. Nossa hipótese exige margem e caixa atribuível suficientes depois de capital e obrigações, sem presumir proteção uniforme da diversificação.",
+        "titulo": "Diversificação com retorno após custo completo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A melhora do fluxo trimestral inclui desconto de recebíveis, adiantamentos e fornecedores. A condição decisiva é geração que persista sem expansão dessas fontes de financiamento.",
+        "titulo": "Caixa recorrente antes da distribuição"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O release mostra exposições por proteína e região. Nossa hipótese é que preparados e origens diversas reduzam parte da volatilidade; sua confirmação depende do retorno incremental e não apenas do tamanho da receita.",
+        "titulo": "Diversificação condicionada ao retorno"
+      }
+    ],
+    "publicada_em": "2026-10-21T01:59:39.173559+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "IFRS e medidas em USGAAP não auditadas têm conciliações próprias. Recebíveis descontados, antecipações e fornecedores devem permanecer separados da geração recorrente; ajustes de lucro não tornam custos econômicos inexistentes.",
+        "titulo": "Base contábil e financiamento comercial"
+      }
+    ],
+    "resumo": "Diversificação de proteínas precisa gerar caixa após juros, investimento e capital de giro. A releitura do 2T26 preserva cautela: receita maior coexiste com pressão de rentabilidade, e a melhora do fluxo inclui financiamento comercial. Alvo e cenários seguem em revisão. Mantemos visão neutra e baixa convicção, sem substituir avaliação própria pelo consenso.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Oferta de gado, custos, comércio e financiamento podem pressionar margens. Antecipações e obrigações legais podem consumir recursos atribuíveis apesar da receita maior."
+      }
+    ],
+    "setor": "Consumo básico",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "JBS — diversificação exige conversão recorrente e direitos conciliados",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "O release do 2T26, de 2026-08-10, apresenta receita maior e EBITDA ajustado menor na comparação anual, com prejuízo atribuível e lucro ajustado em bases distintas. A melhora do fluxo trimestral depende de giro e financiamento comercial. A informação intermediária não auditada permite separar juros, investimento e obrigações, mas a conciliação integral permanece pendente.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Separar preço e disponibilidade de animais, margem por proteína e caixa após giro, capex e juros. Lucro ajustado não elimina desembolsos legais ou financeiros.",
+        "vetor": "Ciclo animal, giro e juros"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

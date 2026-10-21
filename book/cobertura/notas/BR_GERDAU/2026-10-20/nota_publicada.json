@@ -1,0 +1,346 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-20",
+    "manifest_sha256": "b2e2a3ac9f6777ec36a9c32bef661353c52ca2237658372aa88b24768ce95942",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-20",
+  "hashes": {
+    "contexto": "cd43d0a5dce0a333c9967f9da361ca2dfbe5ede44dbcc1643d43cd7fa539aadd",
+    "factbook": "3c77ee8bd97bb59126a4b1d0adebe1331effe322b1375f6d2331e9be1b76fc10",
+    "nota_json": "99b6be4bd058e18c5f992990a1aa89676fcefbc79f0743ca07b52c61e31b8e8a"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_GERDAU",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-26",
+  "published_at": "2026-10-21T01:55:41.213417+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Projetos de minério e reciclagem são apresentados como alavancas de competitividade. Sua entrada e retorno efetivos precisam ser comprovados; investimento realizado não é benefício econômico concluído.",
+        "titulo": "Entrega não equivale a retorno"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-26",
+        "descricao": "Resultado futuro indicado pelo modelo; confirmar convocação e testar desempenho regional e entrega de projetos.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "evento.BR_GERDAU.proximo_resultado",
+            "nome": "Próxima divulgação de resultado",
+            "valor": "2026-10-26"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo R$ 30,05 em reais, dependente de caixa depois de investimento e giro.",
+      "otimista": "Eficiência e projetos sustentam retorno normalizado; alvo otimista R$ 55,88 em reais.",
+      "pessimista": "Ciclo e baixa utilização pressionam retorno; alvo pessimista R$ 6,53 em reais, sem garantia de piso."
+    },
+    "comentario_valuation": "Preço R$ 25,67, alvo R$ 30,05 e consenso R$ 27,39, em reais. Retorno esperado +21,02%, dispersão 16,93% e rating Neutro. O P/VP 0,9x não comprova desconto sem retorno normalizado. Pares incluem holdings e outras commodities; a diferença +9,71% para consenso não estabelece percepção de mercado.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se margens regionais não persistem e projetos absorvem geração sem elevar produtividade normalizada.",
+        "titulo": "Ciclo favorável mascara capital pouco produtivo"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-20",
+    "dados_simulados": false,
+    "data": "2026-10-20",
+    "ficha": [
+      {
+        "fato": "val.BR_GERDAU.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 25,67"
+      },
+      {
+        "fato": "val.BR_GERDAU.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 30,05"
+      },
+      {
+        "fato": "val.BR_GERDAU.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+17,08%"
+      },
+      {
+        "fato": "val.BR_GERDAU.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_GERDAU.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_GERDAU.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 55,88"
+      },
+      {
+        "fato": "val.BR_GERDAU.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "0,53%"
+      },
+      {
+        "fato": "val.BR_GERDAU.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 6,53"
+      },
+      {
+        "fato": "val.BR_GERDAU.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "0,00%"
+      },
+      {
+        "fato": "val.BR_GERDAU.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,92%"
+      },
+      {
+        "fato": "val.BR_GERDAU.wacc",
+        "rotulo": "WACC",
+        "valor": "9,73%"
+      },
+      {
+        "fato": "val.BR_GERDAU.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_GERDAU.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+21,02%"
+      },
+      {
+        "fato": "val.BR_GERDAU.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+11,46%"
+      },
+      {
+        "fato": "val.BR_GERDAU.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,9x"
+      },
+      {
+        "fato": "val.BR_GERDAU.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,9x"
+      },
+      {
+        "fato": "val.BR_GERDAU.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 27,39"
+      },
+      {
+        "fato": "val.BR_GERDAU.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+9,71%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-20",
+        "id": "F1",
+        "instituicao": "Gerdau",
+        "publicado_em": "2026-08-04",
+        "tipo": "Relações com investidores",
+        "titulo": "Comunicado sobre desempenho trimestral e investimento",
+        "url": "https://www2.gerdau.com.br/noticias/gerdau-encerra-2o-trimestre-de-2026-com-ebitda-ajustado-de-r-34-bilhoe/"
+      },
+      {
+        "consultado_em": "2026-10-20",
+        "id": "F2",
+        "instituicao": "Gerdau",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Histórico e perfil corporativo",
+        "url": "https://ri.gerdau.com/a-gerdau/historico-e-perfil-corporativo/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Margens normalizadas deixam de remunerar capital regional.",
+      "Projetos confirmam produtividade e caixa após maturação.",
+      "Importações e custos invalidam a recuperação brasileira."
+    ],
+    "governanca": "A ação da Gerdau e a da Metalúrgica Gerdau representam direitos e perímetros distintos. Comparar modernização, expansão, novos negócios e distribuição exige retorno atribuível e disciplina de capital; autorização ou anúncio de dividendos não comprova pagamento.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Monitorar preço realizado, volume, sucata, energia, utilização, giro e capex por região; conciliar maturação dos projetos com retorno atribuível.",
+        "titulo": "Retorno regional e caixa"
+      }
+    ],
+    "issuer_id": "BR_GERDAU",
+    "lacunas_de_dados": [
+      "Release completo, demonstrações e fluxo por segmento não integralmente reconciliados.",
+      "Entrega e retorno dos projetos ainda não comprovados nesta consulta.",
+      "Guidance agregado atual e convocação futura não confirmados integralmente.",
+      "Participação independente e percepção de mercado sem comprovação."
+    ],
+    "modelo_de_cobertura": "2026-10-20",
+    "negocio": "A Gerdau produz aços longos e especiais nas Américas e aços planos no Brasil. Sucata, minério, energia, utilização e especificação de produto afetam custos e preços. A presença regional diversifica exposições sem eliminar o ciclo siderúrgico.",
+    "nome": "Gerdau",
+    "o_que_mudou": "O modelo registra variação de alvo -1,92% e rating atual Neutro. A consulta acrescenta o comunicado primário do 2T26 à diligência anterior, explicitando diferenças regionais e projetos. A visão qualitativa segue neutra, sem presumir novo resultado.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CBA",
+        "nome": "Companhia Brasileira de Alumínio"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_SUZANO",
+        "nome": "Suzano"
+      },
+      {
+        "issuer_id": "BR_UNIPAR",
+        "nome": "Unipar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O comunicado do 2T26 destaca a América do Norte e recuperação mais limitada no Brasil. Nossa hipótese exige eficiência observável depois da normalização de preços, sucata e utilização, sem extrapolar o segmento mais favorável.",
+        "titulo": "Margens precisam sobreviver ao ciclo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fato": "val.BR_GERDAU.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,92%"
+          }
+        ],
+        "texto": "A companhia aponta projetos de minério e reciclagem como meios de recuperar competitividade. Nossa condição é retorno após manutenção e maturação, confrontado com ke 10,92%.",
+        "titulo": "Investimento deve remunerar capital"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O perfil institucional descreve uso de sucata e atuação em diferentes mercados. A hipótese de vantagem exige custo entregue, disponibilidade e especificação compatíveis com preço e concorrência; não decorre apenas da escala.",
+        "titulo": "Reciclagem e alcance regional"
+      }
+    ],
+    "publicada_em": "2026-10-21T01:55:41.213417+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A diferença regional apontada no comunicado exige conciliar preços, custos e utilização. Lucro ajustado e EBITDA precisam ser confrontados com resultado societário, capital de giro e desembolso de investimento.",
+        "titulo": "Segmentos e normalização"
+      }
+    ],
+    "resumo": "A América do Norte sustenta o desempenho descrito no 2T26, enquanto o Brasil enfrenta concorrência importada. A tese exige retorno em margem normalizada e caixa após investimento. O alvo R$ 30,05 em reais implica potencial +17,08%; mantemos visão neutra e baixa convicção até reconciliar resultado e capital por região.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Importações, sucata, energia e menor utilização podem pressionar margem; projetos podem consumir caixa antes de comprovar retorno."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Gerdau — divergência regional exige testar margens e retorno do investimento",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "No comunicado de 2026-08-04 sobre o 2T26, a administração associa o desempenho à América do Norte e a recuperação brasileira à readequação de ativos, ainda sob pressão das importações. Anuncia investimento em manutenção e projetos, incluindo minério e reciclagem. A reconciliação integral do release, demonstrações e fluxo por segmento permanece pendente.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Separar volume, preço e custos por operação; ganhos de utilização precisam chegar ao caixa depois do investimento e do capital de giro.",
+        "vetor": "Preço realizado, sucata e utilização por região"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,342 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-20",
+    "manifest_sha256": "b2e2a3ac9f6777ec36a9c32bef661353c52ca2237658372aa88b24768ce95942",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-20",
+  "hashes": {
+    "contexto": "51dbb676ecf968e9d60c3c19515efbc32feea98884b1a0fca4dd10861054aed5",
+    "factbook": "48af5267671484dd227974b13b7772d0d8513c46f6225ee195ce7800f64856a3",
+    "nota_json": "e2ff130afdef8ead250c3eeb17b3daa9c8ca8c130727bf2ee877bac984c557f2"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_GMEXICO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-20",
+  "published_at": "2026-10-21T01:45:00.130178+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O registro de fechamento da combinação de energia requer verificar participação remanescente, obrigações e caixa transferível, evitando reconhecer sinergias sem comprovação.",
+        "titulo": "Energia e atribuição"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Recebimento e reconciliação do relatório primário do trimestre e dos termos da combinação de energia.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "outro"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo MXN 181,28 em pesos mexicanos, condicionado a caixa recorrente atribuível.",
+      "otimista": "Produção e projetos remuneram capital ao longo do ciclo; alvo otimista MXN 216,17 em pesos mexicanos.",
+      "pessimista": "Ciclo e execução pressionam mineração e distribuição; alvo pessimista MXN 149,67 em pesos mexicanos, sem garantia de piso."
+    },
+    "comentario_valuation": "Preço MXN 239,57 e alvo MXN 181,28, em pesos mexicanos, com potencial -24,33% e ke 12,64%. O consenso é MXN 236,59; a diferença -23,38% não prova percepção de mercado. O múltiplo de EBITDA da fonte de mercado exige conferir unidade e perímetro antes de uso comparativo; não fundamenta nossa conclusão.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se preços compensam menor produtividade enquanto projetos e compromissos consomem o caixa do acionista.",
+        "titulo": "Ciclo mascara deterioração física"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-20",
+    "dados_simulados": false,
+    "data": "2026-10-20",
+    "ficha": [
+      {
+        "fato": "val.MX_GMEXICO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 239,57"
+      },
+      {
+        "fato": "val.MX_GMEXICO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 181,28"
+      },
+      {
+        "fato": "val.MX_GMEXICO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-24,33%"
+      },
+      {
+        "fato": "val.MX_GMEXICO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_GMEXICO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_GMEXICO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 216,17"
+      },
+      {
+        "fato": "val.MX_GMEXICO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_GMEXICO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 149,67"
+      },
+      {
+        "fato": "val.MX_GMEXICO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_GMEXICO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,64%"
+      },
+      {
+        "fato": "val.MX_GMEXICO.wacc",
+        "rotulo": "WACC",
+        "valor": "11,98%"
+      },
+      {
+        "fato": "val.MX_GMEXICO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_GMEXICO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-21,28%"
+      },
+      {
+        "fato": "val.MX_GMEXICO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-29,96%"
+      },
+      {
+        "fato": "val.MX_GMEXICO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "15,6x"
+      },
+      {
+        "fato": "val.MX_GMEXICO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "4,1x"
+      },
+      {
+        "fato": "val.MX_GMEXICO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 236,59"
+      },
+      {
+        "fato": "val.MX_GMEXICO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-23,38%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-20",
+        "id": "F1",
+        "instituicao": "Reuters / El Economista",
+        "publicado_em": "2026-10-20",
+        "tipo": "Imprensa",
+        "titulo": "Resultado trimestral e revisão da previsão de cobre",
+        "url": "https://www.eleconomista.com.mx/amp/mercados/grupo-mexico-eleva-56-ganancia-trimestral-impulsado-alza-precios-metales-20261020-839618.html"
+      },
+      {
+        "consultado_em": "2026-10-20",
+        "id": "F2",
+        "instituicao": "Grupo México / BMV",
+        "publicado_em": null,
+        "tipo": "Bolsa",
+        "titulo": "Registro de eventos relevantes e combinação de energia",
+        "url": "https://www.bmv.com.mx/es/emisoras/eventosrelevantes/GMEXICO-6008-CGEN_CAPIT"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Relatório primário confirma causas e persistência da menor produção.",
+      "Retorno dos projetos ou caixa atribuível invalida a tese.",
+      "Termos da combinação de energia alteram obrigações e atribuição."
+    ],
+    "governanca": "A BMV lista comunicado de 2026-09-08 sobre fechamento da combinação de ativos de energia com Saavi. Esse registro atualiza o estado do evento; não comprova sozinho todos os efeitos contábeis, direitos, caixa e sinergias. Controle e partes relacionadas exigem diligência própria.",
+    "guidance": "reduzido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar produção por mina, teor, recuperação, custo antes de subprodutos, investimento e caixa atribuível. Conciliar os efeitos da combinação de energia.",
+        "titulo": "Produção e caixa por entidade"
+      }
+    ],
+    "issuer_id": "MX_GMEXICO",
+    "lacunas_de_dados": [
+      "Release primário do trimestre não recebido; resultado e guidance baseados na Reuters pública.",
+      "Probabilidades implícitas indisponíveis no modelo.",
+      "Unidade e perímetro de múltiplos de mercado precisam ser reconciliados.",
+      "Licenças, projetos, caixa restrito e participações sem diligência integral.",
+      "Não há comprovação de percepção variante do mercado."
+    ],
+    "modelo_de_cobertura": "2026-10-20",
+    "negocio": "Grupo México reúne mineração, transporte ferroviário e infraestrutura. A exposição ao cobre exige distinguir preço realizado, produção, custo e capital investido; participações e obrigações tornam o caixa consolidado diferente dos recursos atribuíveis à holding.",
+    "nome": "Grupo México",
+    "o_que_mudou": "A pesquisa incorpora a notícia do 3T26 e a redução da orientação de produção atribuída pela Reuters à companhia. O registro da BMV atualiza para fechamento o evento de energia antes tratado como futuro. O alvo mudou -0,11% no modelo, sem pressupor incorporação integral do novo trimestre.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_CEMEX",
+        "nome": "Cemex"
+      },
+      {
+        "issuer_id": "MX_ENDEAVOUR",
+        "nome": "Endeavour Silver"
+      },
+      {
+        "issuer_id": "MX_GCC",
+        "nome": "GCC"
+      },
+      {
+        "issuer_id": "MX_ORBIA",
+        "nome": "Orbia"
+      },
+      {
+        "issuer_id": "MX_PENOLES",
+        "nome": "Industrias Peñoles"
+      },
+      {
+        "issuer_id": "MX_TERNIUM",
+        "nome": "Ternium"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Reuters, em 2026-10-20, relata expansão de lucro apoiada nos preços dos metais apesar da queda do cobre produzido. Nossa hipótese exige retorno dos projetos sem depender apenas de preços favoráveis.",
+        "titulo": "Ciclo e execução"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_GMEXICO.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "-29,96%"
+          },
+          {
+            "fato": "val.MX_GMEXICO.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "23,54%"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O modelo apresenta alpha relativo -29,96% e dispersão 23,54%. É necessário reconciliar participações, dívida e caixa por entidade antes de converter lucro consolidado em valor atribuível.",
+        "titulo": "Valor depende da atribuição"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Mineração e ferrovias oferecem exposições econômicas diferentes. A hipótese de vantagem depende de custo comparável, qualidade dos ativos e retorno incremental; escala isolada não comprova superioridade.",
+        "titulo": "Escala mineral e rede"
+      }
+    ],
+    "publicada_em": "2026-10-21T01:45:00.130178+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A combinação de preços favoráveis e produção menor, reportada pela Reuters, torna decisiva a decomposição entre realização, volume e custo. A análise integral segue pendente.",
+        "titulo": "Preço não é produção"
+      }
+    ],
+    "resumo": "A notícia pública do 3T26 associa a melhora do resultado aos metais e informa redução da previsão de cobre. A leitura permanece neutra e de baixa convicção sem o release integral. O alvo de MXN 181,28 em pesos mexicanos e retorno esperado -21,28% exigem examinar ciclo e caixa atribuível, preservando o rating Neutro do modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Queda dos preços, menor teor e atrasos de projeto podem reduzir caixa. A evidência de imprensa não substitui a reconciliação integral da produção e da orientação."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Grupo México — preços sustentam resultado; menor produção limita a conclusão operacional",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A Reuters, publicada pelo El Economista em 2026-10-20, reporta maior resultado no 3T26, apoiado por metais, queda da produção de cobre e redução da projeção anual. A leitura é de fonte secundária: o release primário integral não foi recebido. Não se presume melhora operacional equivalente à expansão financeira.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A redução da previsão de produção reportada pela Reuters exige conferir causas, duração e retorno do investimento. Preços altos podem ocultar deterioração física.",
+        "vetor": "Produção e reinvestimento"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,87 @@
+{
+  "avisos_tecnicos": [],
+  "dados_ate": "2026-10-20",
+  "data": "2026-10-20",
+  "fontes_sugeridas": [
+    {
+      "instituicao": "CNBV",
+      "tipo": "regulatorio",
+      "url": "https://www.gob.mx/cnbv"
+    },
+    {
+      "instituicao": "BMV — emissoras",
+      "tipo": "bolsa",
+      "url": "https://www.bmv.com.mx/"
+    },
+    {
+      "instituicao": "Banxico (SIE)",
+      "tipo": "banco_central",
+      "url": "https://www.banxico.org.mx/"
+    },
+    {
+      "instituicao": "INEGI",
+      "tipo": "estatistica_oficial",
+      "url": "https://www.inegi.org.mx/"
+    },
+    {
+      "instituicao": "Damodaran Online (NYU Stern) — prêmios de risco, betas e múltiplos setoriais",
+      "tipo": "dados_publicos",
+      "url": "https://pages.stern.nyu.edu/~adamodar/"
+    },
+    {
+      "instituicao": "FRED (Federal Reserve Bank of St. Louis) — juros e indicadores dos EUA",
+      "tipo": "dados_publicos",
+      "url": "https://fred.stlouisfed.org/"
+    }
+  ],
+  "is_synthetic": false,
+  "issuer_id": "MX_QUALITAS",
+  "lacunas": [
+    "WACC: sem dado na data."
+  ],
+  "nome": "Quálitas",
+  "nomes": {
+    "MX_BAJIO": "Banco del Bajío",
+    "MX_BANORTE": "Grupo Financiero Banorte",
+    "MX_BMV": "Bolsa Mexicana de Valores",
+    "MX_GENTERA": "Gentera",
+    "MX_INBURSA": "Grupo Financiero Inbursa",
+    "MX_QUALITAS": "Quálitas",
+    "MX_REGIONAL": "Regional (Banregio)"
+  },
+  "nota_anterior": {
+    "autoria": "mente",
+    "conviccao": 1,
+    "data": "2026-10-12",
+    "proximo_resultado": "2026-10-20",
+    "stance": 0,
+    "tipo": "iniciacao",
+    "titulo": "Quálitas — disciplina de subscrição e retorno do capital de seguros"
+  },
+  "pais": "MX",
+  "pais_pt": "México",
+  "pares": [
+    "MX_BAJIO",
+    "MX_BANORTE",
+    "MX_BMV",
+    "MX_GENTERA",
+    "MX_INBURSA",
+    "MX_REGIONAL"
+  ],
+  "proximo_resultado": "2026-10-20",
+  "schema": "cdp.nota.contexto/v1",
+  "setor": "Financials",
+  "setor_pt": "Financeiro",
+  "snapshot": {
+    "as_of": "2026-10-20",
+    "manifest_sha256": "b2e2a3ac9f6777ec36a9c32bef661353c52ca2237658372aa88b24768ce95942",
+    "modelo_as_of": "2026-10-20"
+  },
+  "tem_linha_eua": false,
+  "termos": [],
+  "tickers": [
+    "Q.MX",
+    "Q"
+  ],
+  "tipo_esperado": "atualizacao"
+}

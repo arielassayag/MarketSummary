@@ -1,0 +1,333 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-20",
+    "manifest_sha256": "b2e2a3ac9f6777ec36a9c32bef661353c52ca2237658372aa88b24768ce95942",
+    "modelo_as_of": "2026-10-20"
+  },
+  "conviccao": 1,
+  "data": "2026-10-20",
+  "hashes": {
+    "contexto": "7fc48d0d12e7126e5b4f154ce154e0c31e4aea8eb98926aeb8b192c0fc259a6b",
+    "factbook": "cd86882fcf3f021042b825b913028a25ad31688b11abe7e8386e8029a980f2fc",
+    "nota_json": "b4dd744bc1ec64a5ef3294d9fa40e55fb70d5ce8b28fb30ffceda91755d9b212"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_QUALITAS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-20",
+  "published_at": "2026-10-21T01:48:27.913376+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A expansão internacional descrita pela companhia deve remunerar capital local após perdas e despesas. Investimentos vinculados a obrigações técnicas não são presumidos como recursos livres.",
+        "titulo": "Expansão com capital suficiente"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-21",
+        "descricao": "Conferência de resultados indicada na agenda pública; confrontar reservas, subscrição e capital com material integral.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo MXN 177,27 em pesos mexicanos, dependente de subscrição e reservas sustentáveis.",
+      "otimista": "Renovação remunera sinistros e capital; alvo otimista MXN 205,06 em pesos mexicanos.",
+      "pessimista": "Severidade e reservas pressionam capital; alvo pessimista MXN 153,17 em pesos mexicanos, sem garantia de piso."
+    },
+    "comentario_valuation": "Preço MXN 171,76 e alvo MXN 177,27, em pesos mexicanos. Retorno esperado +8,70%, ke 11,01% e alpha relativo -27,16%. Para seguros, patrimônio e lucro residual exigem reservas e solvência conciliadas; EBITDA industrial não é referência adequada. A diferença +0,31% para consenso não revela a percepção do mercado.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese enfraquece se a rede amplia emissão com preço incapaz de cobrir severidade, despesas e desenvolvimento adverso de reservas.",
+        "titulo": "Escala com preço insuficiente"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-20",
+    "dados_simulados": false,
+    "data": "2026-10-20",
+    "ficha": [
+      {
+        "fato": "val.MX_QUALITAS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 171,76"
+      },
+      {
+        "fato": "val.MX_QUALITAS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 177,27"
+      },
+      {
+        "fato": "val.MX_QUALITAS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+3,21%"
+      },
+      {
+        "fato": "val.MX_QUALITAS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_QUALITAS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_QUALITAS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 205,06"
+      },
+      {
+        "fato": "val.MX_QUALITAS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "28,87%"
+      },
+      {
+        "fato": "val.MX_QUALITAS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 153,17"
+      },
+      {
+        "fato": "val.MX_QUALITAS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "33,82%"
+      },
+      {
+        "fato": "val.MX_QUALITAS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,01%"
+      },
+      {
+        "fato": "val.MX_QUALITAS.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_QUALITAS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_QUALITAS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+8,70%"
+      },
+      {
+        "fato": "val.MX_QUALITAS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-27,16%"
+      },
+      {
+        "fato": "val.MX_QUALITAS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "11,3x"
+      },
+      {
+        "fato": "val.MX_QUALITAS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,7x"
+      },
+      {
+        "fato": "val.MX_QUALITAS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 176,73"
+      },
+      {
+        "fato": "val.MX_QUALITAS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+0,31%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-20",
+        "id": "F1",
+        "instituicao": "Quálitas Controladora",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Apresentação corporativa e economia do seguro",
+        "url": "https://qinversionistas.qualitas.com.mx/storage/informes/2026/trimestral/2T/mx/Presentacion_Corporativa_2T26.pdf"
+      },
+      {
+        "consultado_em": "2026-10-20",
+        "id": "F2",
+        "instituicao": "Quálitas Controladora",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Índice oficial de relatórios trimestrais",
+        "url": "https://qinversionistas.qualitas.com.mx/ES/reportes-trimestrales"
+      },
+      {
+        "consultado_em": "2026-10-20",
+        "id": "F3",
+        "instituicao": "Quálitas Controladora",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Apresentações e calendário",
+        "url": "https://qinversionistas.qualitas.com.mx/ES/presentacion-y-calendario"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Material integral comprova desenvolvimento de reservas e rentabilidade técnica.",
+      "Renovação não cobre severidade e custo de atendimento.",
+      "Expansão requer aportes recorrentes sem retorno suficiente."
+    ],
+    "governanca": "Avaliar reservas, investimentos e recursos disponíveis por subsidiária. Integração vertical e relacionadas exigem atribuição de custos; solvência regulatória não significa liquidez irrestrita para a controladora.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Monitorar prêmio ganho, retenção, frequência, severidade e reservas por ocorrência; conciliar retorno realizado dos investimentos e capital por país.",
+        "titulo": "Coortes e retorno atribuível"
+      }
+    ],
+    "issuer_id": "MX_QUALITAS",
+    "lacunas_de_dados": [
+      "Relatório novo do trimestre não recebido integralmente.",
+      "Guidance novo não confirmado; sem_guidance descreve a evidência consultada, não retirada formal.",
+      "Reservas por coorte, tributos e capital por país sem reconciliação integral.",
+      "WACC indisponível; percepção de mercado não comprovada."
+    ],
+    "modelo_de_cobertura": "2026-10-20",
+    "negocio": "Quálitas concentra sua atividade no seguro automotivo, com rede de agentes, atendimento e integração vertical, além de subsidiárias internacionais. Prêmio emitido, prêmio ganho e resultado técnico têm bases distintas; investimentos respaldam passivos de seguros.",
+    "nome": "Quálitas",
+    "o_que_mudou": "O modelo de 2026-10-20 registra revisão de alvo +1,75%. A consulta atual recebeu a apresentação do 2T26, mas não o relatório integral do trimestre novo. Mantemos a neutralidade e preservamos as lacunas de reservas, tributos e capital da nota anterior.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_BAJIO",
+        "nome": "Banco del Bajío"
+      },
+      {
+        "issuer_id": "MX_BANORTE",
+        "nome": "Grupo Financiero Banorte"
+      },
+      {
+        "issuer_id": "MX_BMV",
+        "nome": "Bolsa Mexicana de Valores"
+      },
+      {
+        "issuer_id": "MX_GENTERA",
+        "nome": "Gentera"
+      },
+      {
+        "issuer_id": "MX_INBURSA",
+        "nome": "Grupo Financiero Inbursa"
+      },
+      {
+        "issuer_id": "MX_REGIONAL",
+        "nome": "Regional (Banregio)"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A apresentação do 2T26 destaca rede e prevenção de sinistros. Nossa hipótese exige que esse alcance resulte em retenção rentável e custo final de sinistro compatível com o prêmio, sem depender de ganhos financeiros transitórios.",
+        "titulo": "Atendimento precisa remunerar o risco"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "cob.MX_QUALITAS.variacao_alvo",
+            "nome": "Variação do preço-alvo",
+            "valor": "+1,75%"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O alvo mudou +1,75% no modelo. A atualização quantitativa não comprova o desenvolvimento das reservas nem a divulgação integral do novo resultado.",
+        "titulo": "Revisão sem confirmação documental completa"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A companhia apresenta agentes, atendimento e prevenção como diferenciais. A hipótese deve ser testada por retenção, prazo de reparo e custo completo contra terceiros, sem tratar liderança autodeclarada como prova independente.",
+        "titulo": "Rede e prevenção"
+      }
+    ],
+    "publicada_em": "2026-10-21T01:48:27.913376+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "As medidas da apresentação distinguem resultado operacional e financeiro. Nossa leitura exige desenvolver reservas por coorte e separar ganhos de mercado da economia recorrente da subscrição.",
+        "titulo": "Subscrição antes do resultado financeiro"
+      }
+    ],
+    "resumo": "Escala de atendimento só cria valor quando preço do risco, reservas e capital sustentam retorno. O modelo indica alvo MXN 177,27 em pesos mexicanos e potencial +3,21%. A leitura segue neutra e de baixa convicção: o documento novo do trimestre não foi recebido integralmente e não presumimos melhora da subscrição.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Inflação de reparos, competição de preço e reservas insuficientes podem deteriorar o resultado técnico; retorno de investimentos pode mascarar a pressão."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Quálitas — revisão quantitativa preserva cautela sobre reservas e subscrição",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A apresentação primária recebida é do 2T26 e separa emissão, prêmio ganho, resultado operacional e resultado financeiro, além de índices de aquisição, sinistralidade e operação. O índice público de relatórios foi consultado, mas o novo documento do trimestre não foi recebido integralmente. A nota não atribui à data de calendário confirmação de novos resultados.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar retenção e prêmio ganho contra custo final dos sinistros; crescimento da emissão sem maturação das coortes não comprova rentabilidade.",
+        "vetor": "Preço de renovação e severidade"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

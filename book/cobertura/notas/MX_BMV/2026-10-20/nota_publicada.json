@@ -1,0 +1,344 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-20",
+    "manifest_sha256": "b2e2a3ac9f6777ec36a9c32bef661353c52ca2237658372aa88b24768ce95942",
+    "modelo_as_of": "2026-10-20"
+  },
+  "conviccao": 1,
+  "data": "2026-10-20",
+  "hashes": {
+    "contexto": "f674e31b67fed82e1ab7bfcf1e0d987f53a348a06356bd66d7684623f4151728",
+    "factbook": "cd86882fcf3f021042b825b913028a25ad31688b11abe7e8386e8029a980f2fc",
+    "nota_json": "cb4861f739d06cbb425f0760e0ab790a7f9af558910047fe95b6ab3faac17955"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_BMV",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-20",
+  "published_at": "2026-10-21T01:50:32.779960+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Investimento e intangíveis precisam ser confrontados com disponibilidade e caixa incremental. Distribuição e recompra não comprovam geração recorrente suficiente.",
+        "titulo": "Retorno da infraestrutura"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Reconciliação do relatório novo do trimestre e da rentabilidade dos projetos; sem data confirmada para conclusão da diligência.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo MXN 41,94 em pesos mexicanos, sujeito à conversão operacional depois dos projetos.",
+      "otimista": "Serviços recorrentes e produtividade sustentam caixa; alvo otimista MXN 47,37 em pesos mexicanos.",
+      "pessimista": "Custos e menor monetização pressionam caixa; alvo pessimista MXN 37,70 em pesos mexicanos, sem garantia de piso."
+    },
+    "comentario_valuation": "Preço MXN 35,87 e alvo MXN 41,94, em pesos mexicanos. Retorno esperado +23,43%, ke 11,01% e dispersão 13,58%. O alpha relativo -12,12% usa pares financeiros com economia diferente da infraestrutura de mercado. A diferença -0,73% para consenso não demonstra percepção variante; recursos de clientes não devem integrar caixa próprio.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se custo e reinvestimento absorvem a monetização ou se falhas de serviço reduzem retenção e confiança.",
+        "titulo": "Mais atividade com menos caixa"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-20",
+    "dados_simulados": false,
+    "data": "2026-10-20",
+    "ficha": [
+      {
+        "fato": "val.MX_BMV.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 35,87"
+      },
+      {
+        "fato": "val.MX_BMV.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 41,94"
+      },
+      {
+        "fato": "val.MX_BMV.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+16,92%"
+      },
+      {
+        "fato": "val.MX_BMV.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_BMV.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_BMV.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 47,37"
+      },
+      {
+        "fato": "val.MX_BMV.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_BMV.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 37,70"
+      },
+      {
+        "fato": "val.MX_BMV.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_BMV.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,01%"
+      },
+      {
+        "fato": "val.MX_BMV.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_BMV.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_BMV.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+23,43%"
+      },
+      {
+        "fato": "val.MX_BMV.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-12,12%"
+      },
+      {
+        "fato": "val.MX_BMV.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "11,0x"
+      },
+      {
+        "fato": "val.MX_BMV.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,7x"
+      },
+      {
+        "fato": "val.MX_BMV.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 42,25"
+      },
+      {
+        "fato": "val.MX_BMV.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-0,73%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-20",
+        "id": "F1",
+        "instituicao": "Grupo BMV",
+        "publicado_em": "2026-07-21",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado operacional e financeiro semestral",
+        "url": "https://www.bmv.com.mx/docs-pub/reporteTrimestral/GBMV-doc-BMV_2T26_esp.pdf"
+      },
+      {
+        "consultado_em": "2026-10-20",
+        "id": "F2",
+        "instituicao": "Grupo BMV",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Cadeia de negócios e infraestrutura de mercado",
+        "url": "https://www.bmv.com.mx/docs-dig/informeAnual/el-negocio.html"
+      },
+      {
+        "consultado_em": "2026-10-20",
+        "id": "F3",
+        "instituicao": "Grupo BMV",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Índice público de relatórios financeiros",
+        "url": "https://bmv.com.mx/es/Grupo_BMV/Reportes_financieros"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Relatório integral novo resolve divergências e mostra caixa recorrente.",
+      "Monetização e retenção não acompanham custo da infraestrutura.",
+      "Incidentes ou reinvestimento deterioram retorno atribuível."
+    ],
+    "governanca": "A natureza de infraestrutura exige controles de continuidade, segurança e conflitos. Avaliar relacionadas, minoritários e distribuição por entidade; objetivos comerciais não equivalem a receita contratada nem a autorização regulatória.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar atividade, preço, retenção, disponibilidade e gastos por serviço. Conciliar caixa operacional, intangíveis, distribuição e atribuição por subsidiária.",
+        "titulo": "Receita por serviço e ponte de caixa"
+      }
+    ],
+    "issuer_id": "MX_BMV",
+    "lacunas_de_dados": [
+      "Relatório integral novo do trimestre não recebido nesta consulta.",
+      "Comentário financeiro, tabelas e fluxo exigem reconciliação.",
+      "Retorno dos projetos e caixa por subsidiária não integralmente demonstrados.",
+      "Guidance novo não confirmado; sem_guidance não indica retirada formal.",
+      "Probabilidades e WACC indisponíveis; percepção de mercado não demonstrada."
+    ],
+    "modelo_de_cobertura": "2026-10-20",
+    "negocio": "Grupo BMV reúne listagem, negociação, derivativos, compensação, custódia, avaliação e informação. Atividade de mercado e subscrições têm dinâmicas próprias. Ativos em custódia e garantias dos participantes não são recursos livres do grupo.",
+    "nome": "Bolsa Mexicana de Valores",
+    "o_que_mudou": "O modelo de 2026-10-20 registra variação de alvo +1,68%. A leitura atual recebeu novamente o material integral do 2T26 e a descrição da cadeia de serviços; o trimestre novo não foi conciliado. Mantemos neutralidade e as lacunas de caixa e retorno dos investimentos.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_BAJIO",
+        "nome": "Banco del Bajío"
+      },
+      {
+        "issuer_id": "MX_BANORTE",
+        "nome": "Grupo Financiero Banorte"
+      },
+      {
+        "issuer_id": "MX_GENTERA",
+        "nome": "Gentera"
+      },
+      {
+        "issuer_id": "MX_INBURSA",
+        "nome": "Grupo Financiero Inbursa"
+      },
+      {
+        "issuer_id": "MX_QUALITAS",
+        "nome": "Quálitas"
+      },
+      {
+        "issuer_id": "MX_REGIONAL",
+        "nome": "Regional (Banregio)"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O informe anual descreve uma cadeia integrada de serviços. Nossa hipótese exige retenção e receita por serviço, além de volume; integração não comprova poder de preço.",
+        "titulo": "Integração com monetização verificável"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O release do 2T26 mostra expansão de receita e de despesas de pessoal e tecnologia. A vantagem precisa aparecer em caixa após manutenção e projetos, com continuidade operacional preservada.",
+        "titulo": "Resultado depois de investimento"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Negociação, compensação, custódia e informação podem reduzir fricções ao usuário. A hipótese exige retenção e monetização observáveis; escala de custódia não equivale a patrimônio do acionista.",
+        "titulo": "Cadeia integrada e retenção"
+      }
+    ],
+    "publicada_em": "2026-10-21T01:50:32.779960+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O relatório separa negócios transacionais e subscrições e descreve efeitos de moeda e juros. Nossa avaliação requer conciliar o comentário financeiro com tabelas e fluxo, preservando a lacuna identificada na nota anterior.",
+        "titulo": "Volume, moeda e recorrência"
+      }
+    ],
+    "resumo": "A cadeia integrada de negociação, pós-negociação e informação oferece motores distintos de receita. Valor depende de monetização recorrente depois dos custos e investimentos. O alvo MXN 41,94 em pesos mexicanos implica potencial +16,92%. Mantemos visão neutra e baixa convicção; o relatório novo do trimestre não foi integralmente recebido.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Menor atividade, concorrência e falhas operacionais podem limitar monetização, enquanto despesas e reinvestimento consomem caixa."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Grupo BMV — monetização da infraestrutura exige caixa após reinvestimento",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O documento integral recebido nesta consulta é o do 2T26. Relata avanço transacional e de subscrições, acompanhado por custos de pessoal, tecnologia e depreciação. Não foi recebida a versão integral do trimestre novo para reconciliar suas mudanças. A data de revisão quantitativa não é tratada como confirmação de novos fundamentos.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Separar volume, preço e retenção em cada serviço, confrontando-os com despesas, intangíveis e investimento necessário à infraestrutura.",
+        "vetor": "Atividade, subscrições e custo de servir"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

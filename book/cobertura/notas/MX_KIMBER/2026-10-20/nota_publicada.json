@@ -1,0 +1,334 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-20",
+    "manifest_sha256": "b2e2a3ac9f6777ec36a9c32bef661353c52ca2237658372aa88b24768ce95942",
+    "modelo_as_of": "2026-10-20"
+  },
+  "conviccao": 1,
+  "data": "2026-10-20",
+  "hashes": {
+    "contexto": "0f18ab90a374075f4987e99da893fce7dc06d1de349e5e5bd7adbb8fb84a2434",
+    "factbook": "35f6c8c0ba920227f86391978f8611bc6eab9caf82ca3fc11b101a5a3a86a19a",
+    "nota_json": "9b4531003547a869204e103f2d7457a438e1ad22c4eb8a78ae799a6713858541"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_KIMBER",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-20",
+  "published_at": "2026-10-21T01:43:13.913972+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O release apresenta investimento, dividendos e recompra. A sustentabilidade deve ser examinada em janelas comparáveis e após manutenção, dívida e dividendos ainda a pagar.",
+        "titulo": "Distribuição depois das obrigações"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-21",
+        "descricao": "Conferência do resultado para esclarecer canais, custos e capital distribuível.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo MXN 44,44 em pesos mexicanos, condicionado a geração após manutenção e obrigações.",
+      "otimista": "Produtividade e volume rentável sustentam caixa; alvo otimista do modelo MXN 55,36 em pesos mexicanos.",
+      "pessimista": "Pressão de insumos e canais compromete conversão; alvo pessimista MXN 35,50 em pesos mexicanos, sem garantia de piso."
+    },
+    "comentario_valuation": "Preço MXN 38,81 e alvo MXN 44,44, em pesos mexicanos. Ke 11,92%, dispersão 15,92% e P/VP 29,0x. O patrimônio reduzido exige cautela com P/VP e ROE. A diferença +2,66% para consenso não prova expectativa de mercado. Os pares incluem negócios de alimentação e varejo, com estruturas econômicas diferentes.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese enfraquece se produtividade não compensar insumos menos favoráveis ou se distribuição consumir caixa necessário à operação.",
+        "titulo": "Margem apoiada no ciclo"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-20",
+    "dados_simulados": false,
+    "data": "2026-10-20",
+    "ficha": [
+      {
+        "fato": "val.MX_KIMBER.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 38,81"
+      },
+      {
+        "fato": "val.MX_KIMBER.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 44,44"
+      },
+      {
+        "fato": "val.MX_KIMBER.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+14,51%"
+      },
+      {
+        "fato": "val.MX_KIMBER.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.MX_KIMBER.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_KIMBER.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 55,36"
+      },
+      {
+        "fato": "val.MX_KIMBER.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "9,51%"
+      },
+      {
+        "fato": "val.MX_KIMBER.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 35,50"
+      },
+      {
+        "fato": "val.MX_KIMBER.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "29,44%"
+      },
+      {
+        "fato": "val.MX_KIMBER.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,92%"
+      },
+      {
+        "fato": "val.MX_KIMBER.wacc",
+        "rotulo": "WACC",
+        "valor": "10,67%"
+      },
+      {
+        "fato": "val.MX_KIMBER.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_KIMBER.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+19,48%"
+      },
+      {
+        "fato": "val.MX_KIMBER.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+23,97%"
+      },
+      {
+        "fato": "val.MX_KIMBER.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "14,3x"
+      },
+      {
+        "fato": "val.MX_KIMBER.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "29,0x"
+      },
+      {
+        "fato": "val.MX_KIMBER.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 43,29"
+      },
+      {
+        "fato": "val.MX_KIMBER.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+2,66%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-20",
+        "id": "F1",
+        "instituicao": "Kimberly-Clark de México",
+        "publicado_em": "2026-10-20",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado, balanço e fluxo trimestrais",
+        "url": "https://www.kimberly-clark.com.mx/data/2026/PR3T26.pdf"
+      },
+      {
+        "consultado_em": "2026-10-20",
+        "id": "F2",
+        "instituicao": "Kimberly-Clark de México",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário de resultados e conferências",
+        "url": "https://www.kimberly-clark.com.mx/finanzas/eventos"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Produtividade deixa de compensar insumos e fraqueza de demanda.",
+      "Reconciliação de caixa e obrigações confirma distribuição sustentável.",
+      "Evidência independente modifica a avaliação de participação por categoria."
+    ],
+    "governanca": "Examinar direitos de marcas, relacionadas e remuneração do capital da emissora mexicana. Dividendos a pagar, derivativos e arrendamentos devem permanecer reconhecidos na avaliação de liquidez disponível.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar canais separadamente, produtividade recorrente, capital de giro e caixa após manutenção; conciliar distribuição com dívida e obrigações.",
+        "titulo": "Volume e caixa econômico"
+      }
+    ],
+    "issuer_id": "MX_KIMBER",
+    "lacunas_de_dados": [
+      "Guidance formal novo não identificado no release consultado.",
+      "Contratos de marcas e relacionadas não integralmente reconciliados.",
+      "Participação independente e retorno da manutenção não comprovados.",
+      "Percepção variante do mercado não demonstrada."
+    ],
+    "modelo_de_cobertura": "2026-10-20",
+    "negocio": "A emissora mexicana fabrica e comercializa produtos de higiene pessoal, familiar e institucional. Marcas e distribuição são relevantes, mas a rentabilidade precisa ser examinada por canal e categoria, sem misturar a companhia mexicana com a Kimberly-Clark Corporation.",
+    "nome": "Kimberly-Clark de México",
+    "o_que_mudou": "A divulgação do 3T26 substitui a expectativa de evento da nota anterior. O modelo registra variação de alvo +1,79%. A resistência da margem não elimina fragilidade dos canais nem a necessidade de conciliar a origem financeira da liquidez.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_AC",
+        "nome": "Arca Continental"
+      },
+      {
+        "issuer_id": "MX_BIMBO",
+        "nome": "Grupo Bimbo"
+      },
+      {
+        "issuer_id": "MX_CHEDRAUI",
+        "nome": "Grupo Comercial Chedraui"
+      },
+      {
+        "issuer_id": "MX_FEMSA",
+        "nome": "FEMSA"
+      },
+      {
+        "issuer_id": "MX_GENOMMA",
+        "nome": "Genomma Lab"
+      },
+      {
+        "issuer_id": "MX_GRUMA",
+        "nome": "Gruma"
+      },
+      {
+        "issuer_id": "MX_KOF",
+        "nome": "Coca-Cola FEMSA"
+      },
+      {
+        "issuer_id": "MX_SIGMA",
+        "nome": "Sigma Foods (ex-Alfa)"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O release do 3T26 mostra crescimento em produtos ao consumidor e retração institucional e de exportação. Nossa hipótese exige produtividade que sobreviva a insumos e moeda menos favoráveis.",
+        "titulo": "Produtividade e demanda"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_KIMBER.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+19,48%"
+          },
+          {
+            "fato": "val.MX_KIMBER.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "+23,97%"
+          }
+        ],
+        "texto": "O retorno esperado é +19,48%, com alpha relativo +23,97%. A conclusão exige caixa após manutenção e obrigações, além de lucro contábil.",
+        "titulo": "Retorno econômico e modelo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A gestão atribui a resistência do consumo às marcas e à participação nas categorias. Isso requer validação independente de volume, preço e retenção; a autodescrição não comprova vantagem duradoura.",
+        "titulo": "Marcas e execução comercial"
+      }
+    ],
+    "publicada_em": "2026-10-21T01:43:13.913972+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A demonstração de fluxo separa geração operacional de emissão de dívida. Nossa leitura não interpreta o aumento do caixa bruto como melhora equivalente na geração recorrente.",
+        "titulo": "Operação e financiamento"
+      }
+    ],
+    "resumo": "O 3T26 combina resistência do consumo doméstico e produtividade com fragilidade dos demais canais. O modelo indica alvo de MXN 44,44 em pesos mexicanos, potencial +14,51% e rating Compra. A leitura qualitativa segue neutra e de baixa convicção até reconciliar caixa, dívida e distribuição.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Consumo fraco e pressão em resinas podem reduzir contribuição; liquidez acrescida por dívida não representa excedente operacional distribuível."
+      }
+    ],
+    "setor": "Consumo básico",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Kimberly-Clark de México — produtividade protege margem; caixa exige separar financiamento",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "O release de 2026-10-20 mostra vendas totais estáveis, crescimento de consumo doméstico e queda em exportação e canal institucional. Produtividade e fibras ajudaram a margem; resinas e superabsorventes pressionaram custos. O caixa acumulado inclui emissão de dívida, e o custo financeiro cresceu. Separar pesos/IFRS da apresentação em dólares/US GAAP.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Testar se a proteção da margem persiste sem apoio favorável de fibras e câmbio e se o crescimento doméstico remunera distribuição e manutenção.",
+        "vetor": "Insumos, volume rentável e produtividade"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

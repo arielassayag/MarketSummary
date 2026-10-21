@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 8.09,
+  "high": 14.0,
+  "low": 8.55,
+  "mean": 11.11667,
+  "median": 11.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.27,
+   "currency": "USD",
+   "growth": 1.25,
+   "high": 0.3,
+   "low": 0.24,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.12
+  },
+  "+1y": {
+   "avg": 0.8796,
+   "currency": "USD",
+   "growth": 0.0979,
+   "high": 1.0,
+   "low": 0.84,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 0.80116
+  },
+  "0q": {
+   "avg": 0.16,
+   "currency": "USD",
+   "growth": -0.77459997,
+   "high": 0.16,
+   "low": 0.16,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.71
+  },
+  "0y": {
+   "avg": 0.80116,
+   "currency": "USD",
+   "growth": -0.2241,
+   "high": 0.83,
+   "low": 0.75698,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 1.0326
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1424179500,
+   "currency": "USD",
+   "growth": 0.1245,
+   "high": 1430359000,
+   "low": 1418000000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 1266543000
+  },
+  "+1y": {
+   "avg": 5643255860,
+   "currency": "USD",
+   "growth": 0.0704,
+   "high": 5813000000,
+   "low": 5485000000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 5272257640
+  },
+  "0q": {
+   "avg": 1329350330,
+   "currency": "USD",
+   "growth": 0.1145,
+   "high": 1356000000,
+   "low": 1283000000,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 1192828000
+  },
+  "0y": {
+   "avg": 5272257640,
+   "currency": "USD",
+   "growth": 0.127,
+   "high": 5322000000,
+   "low": 5225000000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 4678259000
+  }
+ },
+ "ticker": "ARCO",
+ "url": "https://finance.yahoo.com/quote/ARCO"
+}

@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 15.98,
+  "high": 25.0,
+  "low": 18.0,
+  "mean": 21.0,
+  "median": 20.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.49461,
+   "currency": "BRL",
+   "growth": -0.1469,
+   "high": 0.49461,
+   "low": 0.49461,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.5798
+  },
+  "+1y": {
+   "avg": 2.19312,
+   "currency": "BRL",
+   "growth": 0.1337,
+   "high": 2.5,
+   "low": 1.85247,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 1.93454
+  },
+  "0q": {
+   "avg": 0.45958,
+   "currency": "BRL",
+   "growth": -0.2337,
+   "high": 0.45958,
+   "low": 0.45958,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.5997
+  },
+  "0y": {
+   "avg": 1.93454,
+   "currency": "BRL",
+   "growth": -0.075100005,
+   "high": 2.22,
+   "low": 1.68818,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 2.0917
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1051723910,
+   "currency": "BRL",
+   "growth": 0.0428,
+   "high": 1051723910,
+   "low": 1051723910,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 1008606000
+  },
+  "+1y": {
+   "avg": 4291139860,
+   "currency": "BRL",
+   "growth": 0.0935,
+   "high": 4516000000,
+   "low": 4035559460,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 3924119260
+  },
+  "0q": {
+   "avg": 994909920,
+   "currency": "BRL",
+   "growth": 0.041100003,
+   "high": 996531150,
+   "low": 991108550,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 955676000
+  },
+  "0y": {
+   "avg": 3924119260,
+   "currency": "BRL",
+   "growth": 0.1022,
+   "high": 4004000000,
+   "low": 3819477060,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 3560287000
+  }
+ },
+ "ticker": "VULC3.SA",
+ "url": "https://finance.yahoo.com/quote/VULC3.SA"
+}

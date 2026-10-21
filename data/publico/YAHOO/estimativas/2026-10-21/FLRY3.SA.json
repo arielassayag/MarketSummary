@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 28.12,
+  "high": 30.0,
+  "low": 18.0,
+  "mean": 22.16667,
+  "median": 22.25
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.23422,
+   "currency": "BRL",
+   "growth": 0.3778,
+   "high": 0.2776,
+   "low": 0.20414,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 0.17
+  },
+  "+1y": {
+   "avg": 1.6813,
+   "currency": "BRL",
+   "growth": 0.1401,
+   "high": 1.84,
+   "low": 1.51,
+   "numberOfAnalysts": 9,
+   "yearAgoEps": 1.47468
+  },
+  "0q": {
+   "avg": 0.46084,
+   "currency": "BRL",
+   "growth": 0.3554,
+   "high": 0.49366,
+   "low": 0.43547,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 0.34
+  },
+  "0y": {
+   "avg": 1.47468,
+   "currency": "BRL",
+   "growth": 0.3167,
+   "high": 1.57,
+   "low": 1.39,
+   "numberOfAnalysts": 8,
+   "yearAgoEps": 1.12
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 2260645740,
+   "currency": "BRL",
+   "growth": 0.0971,
+   "high": 2309892000,
+   "low": 2235000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 2060595000
+  },
+  "+1y": {
+   "avg": 9991236980,
+   "currency": "BRL",
+   "growth": 0.0763,
+   "high": 10388055340,
+   "low": 9747000000,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 9282821720
+  },
+  "0q": {
+   "avg": 2465278140,
+   "currency": "BRL",
+   "growth": 0.1252,
+   "high": 2488000000,
+   "low": 2426356800,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 2190979000
+  },
+  "0y": {
+   "avg": 9282821720,
+   "currency": "BRL",
+   "growth": 0.1196,
+   "high": 9377655270,
+   "low": 9201696660,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 8291182000
+  }
+ },
+ "ticker": "FLRY3.SA",
+ "url": "https://finance.yahoo.com/quote/FLRY3.SA"
+}

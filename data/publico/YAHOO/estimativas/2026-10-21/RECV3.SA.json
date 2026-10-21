@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 12.4,
+  "high": 13.5,
+  "low": 8.3,
+  "mean": 11.94615,
+  "median": 12.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.2243,
+   "currency": "BRL",
+   "growth": 0.0952,
+   "high": 0.25,
+   "low": 0.19859,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.2048
+  },
+  "+1y": {
+   "avg": 1.64005,
+   "currency": "BRL",
+   "growth": -0.1435,
+   "high": 2.51,
+   "low": 0.93,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 1.91483
+  },
+  "0q": {
+   "avg": 0.36079,
+   "currency": "BRL",
+   "growth": -0.141,
+   "high": 0.44158,
+   "low": 0.28,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.42
+  },
+  "0y": {
+   "avg": 1.91483,
+   "currency": "BRL",
+   "growth": 0.3818,
+   "high": 2.51,
+   "low": 1.55,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 1.3858
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 736549280,
+   "currency": "BRL",
+   "growth": 0.046,
+   "high": 791595340,
+   "low": 661000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 704170000
+  },
+  "+1y": {
+   "avg": 2950925190,
+   "currency": "BRL",
+   "growth": -0.0152,
+   "high": 3346000000,
+   "low": 2645058470,
+   "numberOfAnalysts": 13,
+   "yearAgoRevenue": 2996388440
+  },
+  "0q": {
+   "avg": 748548860,
+   "currency": "BRL",
+   "growth": -0.0476,
+   "high": 782377630,
+   "low": 684000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 786000000
+  },
+  "0y": {
+   "avg": 2996388440,
+   "currency": "BRL",
+   "growth": -0.0511,
+   "high": 3243000000,
+   "low": 2829000000,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 3157609000
+  }
+ },
+ "ticker": "RECV3.SA",
+ "url": "https://finance.yahoo.com/quote/RECV3.SA"
+}

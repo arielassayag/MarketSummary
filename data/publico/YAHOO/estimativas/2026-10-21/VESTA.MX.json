@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 67.55,
+  "high": 80.0,
+  "low": 55.0,
+  "mean": 70.76438,
+  "median": 71.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.84928,
+   "currency": "MXN",
+   "growth": -0.6407,
+   "high": 0.91483,
+   "low": 0.74,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 2.36377
+  },
+  "+1y": {
+   "avg": 3.17135,
+   "currency": "MXN",
+   "growth": -0.3206,
+   "high": 3.634,
+   "low": 2.885,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 4.66808
+  },
+  "0q": {
+   "avg": 0.79308,
+   "currency": "MXN",
+   "growth": 0.64379996,
+   "high": 0.90925,
+   "low": 0.65,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.48248
+  },
+  "0y": {
+   "avg": 4.66808,
+   "currency": "MXN",
+   "growth": 0.22670001,
+   "high": 5.127,
+   "low": 3.731,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 3.80552
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1464674800,
+   "currency": "MXN",
+   "growth": 0.1103,
+   "high": 1541216000,
+   "low": 1397000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 1319152960
+  },
+  "+1y": {
+   "avg": 6238619110,
+   "currency": "MXN",
+   "growth": 0.1159,
+   "high": 6846249000,
+   "low": 5854928170,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 5590441240
+  },
+  "0q": {
+   "avg": 1418150330,
+   "currency": "MXN",
+   "growth": 0.0633,
+   "high": 1508520000,
+   "low": 1274928000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 1333778080
+  },
+  "0y": {
+   "avg": 5590441240,
+   "currency": "MXN",
+   "growth": 0.1433,
+   "high": 5978934000,
+   "low": 5288287540,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 4889844480
+  }
+ },
+ "ticker": "VESTA.MX",
+ "url": "https://finance.yahoo.com/quote/VESTA.MX"
+}

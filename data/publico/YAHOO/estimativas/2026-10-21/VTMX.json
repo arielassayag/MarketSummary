@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 36.2,
+  "high": 43.0,
+  "low": 32.0,
+  "mean": 37.4,
+  "median": 37.3
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.51231,
+   "currency": "USD",
+   "growth": -0.6257,
+   "high": 0.51231,
+   "low": 0.51231,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 1.3686
+  },
+  "+1y": {
+   "avg": 2.08555,
+   "currency": "USD",
+   "growth": -0.025999999,
+   "high": 2.08555,
+   "low": 2.08555,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 2.14123
+  },
+  "0q": {
+   "avg": 0.47056,
+   "currency": "USD",
+   "growth": 0.796,
+   "high": 0.47056,
+   "low": 0.47056,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.262
+  },
+  "0y": {
+   "avg": 2.14123,
+   "currency": "USD",
+   "growth": -0.028499998,
+   "high": 2.14123,
+   "low": 2.14123,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 2.2041
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1464674800,
+   "currency": "MXN",
+   "growth": 0.1103,
+   "high": 1541216000,
+   "low": 1397000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 1319152960
+  },
+  "+1y": {
+   "avg": 6238619110,
+   "currency": "MXN",
+   "growth": 0.1159,
+   "high": 6846249000,
+   "low": 5854928170,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 5590441240
+  },
+  "0q": {
+   "avg": 1418150330,
+   "currency": "MXN",
+   "growth": 0.0633,
+   "high": 1508520000,
+   "low": 1274928000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 1333778080
+  },
+  "0y": {
+   "avg": 5590441240,
+   "currency": "MXN",
+   "growth": 0.1433,
+   "high": 5978934000,
+   "low": 5288287540,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 4889844480
+  }
+ },
+ "ticker": "VTMX",
+ "url": "https://finance.yahoo.com/quote/VTMX"
+}

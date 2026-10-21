@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 220.2,
+  "high": 235.0,
+  "low": 195.0,
+  "mean": 213.74615,
+  "median": 212.7
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 3.77183,
+   "currency": "MXN",
+   "growth": 0.056500003,
+   "high": 3.82,
+   "low": 3.73,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 3.57
+  },
+  "+1y": {
+   "avg": 12.82869,
+   "currency": "MXN",
+   "growth": 0.0832,
+   "high": 13.58,
+   "low": 12.46,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 11.84285
+  },
+  "0q": {
+   "avg": 3.02084,
+   "currency": "MXN",
+   "growth": 0.075,
+   "high": 3.13336,
+   "low": 2.83,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 2.81
+  },
+  "0y": {
+   "avg": 11.84285,
+   "currency": "MXN",
+   "growth": 0.0434,
+   "high": 12.08,
+   "low": 11.52,
+   "numberOfAnalysts": 8,
+   "yearAgoEps": 11.35
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 4745754000,
+   "currency": "USD",
+   "growth": 0.0499,
+   "high": 4878472000,
+   "low": 4550057000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 4520217450
+  },
+  "+1y": {
+   "avg": 18720237450,
+   "currency": "USD",
+   "growth": 0.0784,
+   "high": 19623179390,
+   "low": 17858090000,
+   "numberOfAnalysts": 13,
+   "yearAgoRevenue": 17358808610
+  },
+  "0q": {
+   "avg": 4260079430,
+   "currency": "USD",
+   "growth": 0.091400005,
+   "high": 4514014000,
+   "low": 4093815000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 3903493270
+  },
+  "0y": {
+   "avg": 17358808610,
+   "currency": "USD",
+   "growth": 0.0234,
+   "high": 18078955000,
+   "low": 16618004000,
+   "numberOfAnalysts": 16,
+   "yearAgoRevenue": 16961483730
+  }
+ },
+ "ticker": "KOFUBL.MX",
+ "url": "https://finance.yahoo.com/quote/KOFUBL.MX"
+}

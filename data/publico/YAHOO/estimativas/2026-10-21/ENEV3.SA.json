@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 32.17,
+  "high": 36.0,
+  "low": 26.6,
+  "mean": 32.15,
+  "median": 32.1
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.08775,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0.1355,
+   "low": 0.04,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 0.99006,
+   "currency": "BRL",
+   "growth": 1.1739,
+   "high": 1.14,
+   "low": 0.83017,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.45543
+  },
+  "0q": {
+   "avg": 0.14241,
+   "currency": "BRL",
+   "growth": -0.2158,
+   "high": 0.23482,
+   "low": 0.05,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.1816
+  },
+  "0y": {
+   "avg": 0.45543,
+   "currency": "BRL",
+   "growth": -0.2458,
+   "high": 0.6563,
+   "low": 0.33,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.60386
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 3447530100,
+   "currency": "BRL",
+   "growth": -0.4302,
+   "high": 5006041000,
+   "low": 2418549310,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 6050500000
+  },
+  "+1y": {
+   "avg": 14833124950,
+   "currency": "BRL",
+   "growth": 0.0752,
+   "high": 21994000000,
+   "low": 10977000000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 13796046810
+  },
+  "0q": {
+   "avg": 3357951850,
+   "currency": "BRL",
+   "growth": -0.2417,
+   "high": 4855136000,
+   "low": 2402719550,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 4428000000
+  },
+  "0y": {
+   "avg": 13796046810,
+   "currency": "BRL",
+   "growth": -0.2509,
+   "high": 18519277000,
+   "low": 9173000000,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 18416100000
+  }
+ },
+ "ticker": "ENEV3.SA",
+ "url": "https://finance.yahoo.com/quote/ENEV3.SA"
+}

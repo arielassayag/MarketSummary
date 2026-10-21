@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 252.8,
+  "high": 392.27,
+  "low": 240.0,
+  "mean": 324.2189,
+  "median": 325.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 4.31053,
+   "currency": "USD",
+   "growth": -0.14220001,
+   "high": 4.451,
+   "low": 4.17006,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 5.0251
+  },
+  "+1y": {
+   "avg": 22.74248,
+   "currency": "USD",
+   "growth": 0.23969999,
+   "high": 24.4,
+   "low": 21.65391,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 18.34442
+  },
+  "0q": {
+   "avg": 4.29134,
+   "currency": "USD",
+   "growth": 0.1162,
+   "high": 4.31869,
+   "low": 4.264,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 3.8445
+  },
+  "0y": {
+   "avg": 18.34442,
+   "currency": "USD",
+   "growth": -0.0555,
+   "high": 19.3,
+   "low": 17.41869,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 19.4226
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 11253130940,
+   "currency": "MXN",
+   "growth": 0.025899999,
+   "high": 11549261870,
+   "low": 10957000000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 10969074000
+  },
+  "+1y": {
+   "avg": 47025854860,
+   "currency": "MXN",
+   "growth": 0.1573,
+   "high": 55200000000,
+   "low": 38261000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 40635269880
+  },
+  "0q": {
+   "avg": 9580510680,
+   "currency": "MXN",
+   "growth": 0.093,
+   "high": 10230000000,
+   "low": 8048000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 8765450000
+  },
+  "0y": {
+   "avg": 40635269880,
+   "currency": "MXN",
+   "growth": 0.0912,
+   "high": 44200000000,
+   "low": 35079000000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 37237431000
+  }
+ },
+ "ticker": "ASR",
+ "url": "https://finance.yahoo.com/quote/ASR"
+}

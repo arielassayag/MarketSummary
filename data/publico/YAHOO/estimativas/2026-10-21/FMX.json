@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 127.98,
+  "high": 152.0,
+  "low": 111.0,
+  "mean": 134.92857,
+  "median": 135.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.61208,
+   "currency": "USD",
+   "growth": 0.64669997,
+   "high": 1.92832,
+   "low": 1.28,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.979
+  },
+  "+1y": {
+   "avg": 5.16092,
+   "currency": "USD",
+   "growth": -0.0867,
+   "high": 6.11353,
+   "low": 4.74,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 5.65086
+  },
+  "0q": {
+   "avg": 1.1171,
+   "currency": "USD",
+   "growth": 0.2756,
+   "high": 1.18,
+   "low": 1.053,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.87576
+  },
+  "0y": {
+   "avg": 5.65086,
+   "currency": "USD",
+   "growth": 0.9771,
+   "high": 6.51416,
+   "low": 4.071,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 2.8581
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 238485858540,
+   "currency": "MXN",
+   "growth": 0.0836,
+   "high": 241831743000,
+   "low": 234197718270,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 220091000000
+  },
+  "+1y": {
+   "avg": 974857560010,
+   "currency": "MXN",
+   "growth": 0.076799996,
+   "high": 991075242000,
+   "low": 937413902140,
+   "numberOfAnalysts": 15,
+   "yearAgoRevenue": 905311397680
+  },
+  "0q": {
+   "avg": 230607705430,
+   "currency": "MXN",
+   "growth": 0.0744,
+   "high": 234865000000,
+   "low": 222314000000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 214638000000
+  },
+  "0y": {
+   "avg": 905311397680,
+   "currency": "MXN",
+   "growth": 0.0765,
+   "high": 919429000000,
+   "low": 891375000000,
+   "numberOfAnalysts": 16,
+   "yearAgoRevenue": 840954000000
+  }
+ },
+ "ticker": "FMX",
+ "url": "https://finance.yahoo.com/quote/FMX"
+}

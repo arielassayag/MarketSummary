@@ -1,0 +1,330 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-21",
+    "manifest_sha256": "ad5255d9b4260123fd8b941334f2b591fae4789b25a3ed2038ac4386c6e67e37",
+    "modelo_as_of": "2026-10-21"
+  },
+  "conviccao": 1,
+  "data": "2026-10-21",
+  "hashes": {
+    "contexto": "dd96e74fbf5e0337babeee6192c4f84faf3627d3a084d391e447030c564b6288",
+    "factbook": "b4662ada6085e9f612b007f4278eaa323c2116bfa231ee01fc157533ddb97ee5",
+    "nota_json": "02f1bd567ce7bc3df44b5662cdfa55ac70492c061afd6a8a0d443847e07491dc"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_GENTERA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-21",
+  "published_at": "2026-10-22T01:45:04.914294+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Avaliar solvência, participação de minoritários e liquidez da holding antes de tratar lucro como capacidade de distribuição.",
+        "titulo": "Capital disponível por entidade"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-13",
+        "descricao": "Pagamento de dividendo anunciado pela companhia, sujeito à confirmação de liquidação.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "dividendos"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo em MXN 73,35, condicionado à normalização do risco e retorno atribuível.",
+      "otimista": "Safras estabilizam e eficiência protege margem; cenário em MXN 85,71.",
+      "pessimista": "Perdas e capital requerido restringem distribuição; cenário em MXN 61,76."
+    },
+    "comentario_valuation": "Preço MXN 40,36 e alvo MXN 73,35, em MXN. P/L à frente 6,4x e preço sobre patrimônio 1,7x. O consenso é MXN 54,00. A diferença não prova vantagem sobre bancos comerciais, seguros e infraestrutura de mercado incluídos nos pares. Probabilidades e WACC indisponíveis não são estimados.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Escala perde valor se novas safras elevarem perdas e custo de cobrança mais do que a receita ajustada ao risco.",
+        "titulo": "Crescer sem remunerar o risco"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-21",
+    "dados_simulados": false,
+    "data": "2026-10-21",
+    "ficha": [
+      {
+        "fato": "val.MX_GENTERA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 40,36"
+      },
+      {
+        "fato": "val.MX_GENTERA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 73,35"
+      },
+      {
+        "fato": "val.MX_GENTERA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+81,74%"
+      },
+      {
+        "fato": "val.MX_GENTERA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.MX_GENTERA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_GENTERA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 85,71"
+      },
+      {
+        "fato": "val.MX_GENTERA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_GENTERA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 61,76"
+      },
+      {
+        "fato": "val.MX_GENTERA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_GENTERA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,89%"
+      },
+      {
+        "fato": "val.MX_GENTERA.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_GENTERA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_GENTERA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+86,67%"
+      },
+      {
+        "fato": "val.MX_GENTERA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+50,80%"
+      },
+      {
+        "fato": "val.MX_GENTERA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "6,4x"
+      },
+      {
+        "fato": "val.MX_GENTERA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,7x"
+      },
+      {
+        "fato": "val.MX_GENTERA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 54,00"
+      },
+      {
+        "fato": "val.MX_GENTERA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+35,83%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F1",
+        "instituicao": "Gentera",
+        "publicado_em": "2026-10-21",
+        "tipo": "Relações com investidores",
+        "titulo": "Release de resultados trimestrais",
+        "url": "https://www.gentera.com.mx/wcm/connect/345663ab-8de4-4abe-aafc-82acd7bff9a7/Gentera%2B3T26.pdf?MOD=AJPERES"
+      },
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F2",
+        "instituicao": "Gentera",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Comentários da administração sobre resultados",
+        "url": "https://www.gentera.com.mx/wcm/connect/32302019-ac18-4d13-81a9-97afb161bb52/Comentarios_Administracion_3T26%2BGT.pdf?MOD=AJPERES"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Estabilização comprovada do crédito sem dependência de baixas.",
+      "Mudança no custo de risco, capital regulatório ou distribuição à controladora."
+    ],
+    "governanca": "A proteção ao cliente e os incentivos de cobrança devem acompanhar a expansão. Capital regulatório das subsidiárias e lucro consolidado não equivalem a recursos distribuíveis pela holding.",
+    "guidance": "reduzido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar crédito individual e grupal, provisões, baixas, margem após risco e pagamento anunciado.",
+        "titulo": "Safras e distribuição"
+      }
+    ],
+    "issuer_id": "MX_GENTERA",
+    "lacunas_de_dados": [
+      "Probabilidades dos cenários e WACC não disponíveis.",
+      "Reconciliação completa de safras, baixas e bases por moeda permanece pendente.",
+      "Não foi confirmada revisão formal da meta de lucro por ação."
+    ],
+    "modelo_de_cobertura": "2026-10-21",
+    "negocio": "Grupo de inclusão financeira no México e Peru, com crédito, seguros e pagamentos. A tese depende de relacionamento rentável após perdas e custo de atendimento.",
+    "nome": "Gentera",
+    "o_que_mudou": "O 3T26 substitui a referência semestral e reforça a necessidade de testar a qualidade das novas safras. A postura qualitativa permanece neutra.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_BAJIO",
+        "nome": "Banco del Bajío"
+      },
+      {
+        "issuer_id": "MX_BANORTE",
+        "nome": "Grupo Financiero Banorte"
+      },
+      {
+        "issuer_id": "MX_BMV",
+        "nome": "Bolsa Mexicana de Valores"
+      },
+      {
+        "issuer_id": "MX_INBURSA",
+        "nome": "Grupo Financiero Inbursa"
+      },
+      {
+        "issuer_id": "MX_QUALITAS",
+        "nome": "Quálitas"
+      },
+      {
+        "issuer_id": "MX_REGIONAL",
+        "nome": "Regional (Banregio)"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A gestão privilegia menor expansão, especialmente no México, até estabilizar a carteira. A execução deve preservar margem após perdas.",
+        "titulo": "Disciplina de originação"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_GENTERA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+86,67%"
+          },
+          {
+            "fato": "val.MX_GENTERA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,89%"
+          },
+          {
+            "fato": "val.MX_GENTERA.confianca_codigo",
+            "nome": "Confiança do modelo",
+            "valor": "B"
+          }
+        ],
+        "texto": "O retorno esperado é +86,67%, com ke de 10,89% e confiança B. O modelo não substitui a análise das safras de crédito.",
+        "titulo": "Retorno do capital"
+      }
+    ],
+    "publicada_em": "2026-10-22T01:45:04.914294+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Confrontar economia de juros com provisões, baixas e lucro atribuível, preservando as bases por entidade e moeda.",
+        "titulo": "Margem após risco"
+      }
+    ],
+    "resumo": "O lucro cresce, mas a qualidade dos ativos limita a leitura favorável. Mantém-se visão relativa neutra e baixa convicção. O alvo é MXN 73,35, com potencial +81,74%.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Deterioração do crédito individual pode absorver a economia de fondeo e comprometer rentabilidade."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Gentera: crescimento prudente diante da deterioração do crédito",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "O release de 2026-10-21 distingue crescimento de lucro consolidado e atribuível, menor custo de fondeo e piora da carteira em estágio de maior risco. Guidance reduzido refere-se à orientação qualitativa de crescimento mais cauteloso, não a uma revisão confirmada da meta de lucro por ação.",
+    "vetores": [
+      {
+        "direcao": "negativo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O avanço da carteira em estágio de maior risco exige acompanhar provisões e baixas.",
+        "vetor": "Perdas de crédito"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

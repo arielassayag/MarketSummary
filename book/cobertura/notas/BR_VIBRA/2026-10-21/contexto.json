@@ -1,0 +1,101 @@
+{
+  "avisos_tecnicos": [],
+  "dados_ate": "2026-10-21",
+  "data": "2026-10-21",
+  "fontes_sugeridas": [
+    {
+      "instituicao": "CVM — RAD (fatos relevantes, ITR, DFP, formulário de referência)",
+      "tipo": "regulatorio",
+      "url": "https://www.rad.cvm.gov.br/ENET/frmConsultaExternaCVM.aspx"
+    },
+    {
+      "instituicao": "CVM — dados abertos (DFP, ITR, FRE, IPE)",
+      "tipo": "regulatorio",
+      "url": "https://dados.cvm.gov.br/"
+    },
+    {
+      "instituicao": "B3 — empresas listadas",
+      "tipo": "bolsa",
+      "url": "https://www.b3.com.br/"
+    },
+    {
+      "instituicao": "Banco Central do Brasil (Focus, SGS)",
+      "tipo": "banco_central",
+      "url": "https://www.bcb.gov.br/"
+    },
+    {
+      "instituicao": "IBGE",
+      "tipo": "estatistica_oficial",
+      "url": "https://www.ibge.gov.br/"
+    },
+    {
+      "instituicao": "Damodaran Online (NYU Stern) — prêmios de risco, betas e múltiplos setoriais",
+      "tipo": "dados_publicos",
+      "url": "https://pages.stern.nyu.edu/~adamodar/"
+    },
+    {
+      "instituicao": "FRED (Federal Reserve Bank of St. Louis) — juros e indicadores dos EUA",
+      "tipo": "dados_publicos",
+      "url": "https://fred.stlouisfed.org/"
+    }
+  ],
+  "is_synthetic": false,
+  "issuer_id": "BR_VIBRA",
+  "lacunas": [],
+  "nome": "Vibra Energia",
+  "nomes": {
+    "BR_BRAVA": "Brava Energia",
+    "BR_COSAN": "Cosan",
+    "BR_PRIO": "PRIO",
+    "BR_RECV": "PetroRecôncavo",
+    "BR_ULTRAPAR": "Ultrapar",
+    "BR_VIBRA": "Vibra Energia"
+  },
+  "nota_anterior": {
+    "autoria": "mente",
+    "conviccao": 1,
+    "data": "2026-10-11",
+    "proximo_resultado": "2026-11-04",
+    "stance": 0,
+    "tipo": "iniciacao",
+    "titulo": "Vibra — margem de distribuição, energia e retorno depois do financiamento"
+  },
+  "pais": "BR",
+  "pais_pt": "Brasil",
+  "pares": [
+    "BR_BRAVA",
+    "BR_COSAN",
+    "BR_PRIO",
+    "BR_RECV",
+    "BR_ULTRAPAR"
+  ],
+  "proximo_resultado": "2026-11-04",
+  "schema": "cdp.nota.contexto/v1",
+  "setor": "Energy",
+  "setor_pt": "Energia",
+  "snapshot": {
+    "as_of": "2026-10-21",
+    "manifest_sha256": "ad5255d9b4260123fd8b941334f2b591fae4789b25a3ed2038ac4386c6e67e37",
+    "modelo_as_of": "2026-10-16"
+  },
+  "tem_linha_eua": false,
+  "termos": [
+    "BRAV3",
+    "BRAV3.SA",
+    "CSAN3",
+    "CSAN3.SA",
+    "PRIO3",
+    "PRIO3.SA",
+    "RECV3",
+    "RECV3.SA",
+    "UGPA3",
+    "UGPA3.SA",
+    "VBBR3",
+    "VBBR3.SA"
+  ],
+  "tickers": [
+    "VBBR3.SA",
+    "VBBR3"
+  ],
+  "tipo_esperado": "atualizacao"
+}

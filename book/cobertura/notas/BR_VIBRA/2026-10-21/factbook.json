@@ -1,0 +1,5181 @@
+{
+  "as_of": "2026-10-21",
+  "facts": {
+    "BR_BRAVA.adtv_usd_mm": {
+      "fact_id": "BR_BRAVA.adtv_usd_mm",
+      "formatted": "US$ 20,0 mi",
+      "formula": "média do valor negociado diário em USD somando todas as linhas (janela liquidity.adv_window_days), em milhões",
+      "inputs": [
+        "panel.assets[BR_BRAVA].adtv_usd"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Volume médio diário negociado (todas as linhas)",
+      "point_in_time": true,
+      "unit": "usd_mm",
+      "value": 19.997816862968644
+    },
+    "BR_BRAVA.analyst_count": {
+      "fact_id": "BR_BRAVA.analyst_count",
+      "formatted": "11",
+      "formula": "number_of_analyst_opinions da fonte; retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[BRAV3.SA].number_of_analyst_opinions"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Número de analistas cobrindo",
+      "point_in_time": false,
+      "unit": "count",
+      "value": 11.0
+    },
+    "BR_BRAVA.beta": {
+      "fact_id": "BR_BRAVA.beta",
+      "formatted": "n/d",
+      "formula": "beta reportado pela fonte de fundamentos; retrato atual (não PIT)",
+      "inputs": [
+        "fundamentals[BRAV3.SA].beta"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Beta da fonte de dados",
+      "point_in_time": false,
+      "unit": "ratio",
+      "value": null
+    },
+    "BR_BRAVA.borrow_fee": {
+      "fact_id": "BR_BRAVA.borrow_fee",
+      "formatted": "n/d",
+      "formula": "maior taxa de aluguel entre as linhas do emissor; retrato atual",
+      "inputs": [
+        "squeeze_table[ausente].borrow_fee"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Taxa de aluguel anual (observada ou estimada)",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": null
+    },
+    "BR_BRAVA.days_to_cover": {
+      "fact_id": "BR_BRAVA.days_to_cover",
+      "formatted": "n/d",
+      "formula": "ações vendidas ou doadas / volume médio diário de ações; volume zero com posição vendida ⇒ infinito (sem volume); retrato atual",
+      "inputs": [
+        "squeeze_table[ausente].days_to_cover"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Dias para cobrir (short / volume médio)",
+      "point_in_time": false,
+      "unit": "days",
+      "value": null
+    },
+    "BR_BRAVA.div_yield": {
+      "fact_id": "BR_BRAVA.div_yield",
+      "formatted": "0,59%",
+      "formula": "dividend_yield da fonte (decimal); fora de [0, 1] ⇒ n/d (unidade ambígua); retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[BRAV3.SA].dividend_yield"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Dividend yield",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0059
+    },
+    "BR_BRAVA.ev_ebitda": {
+      "fact_id": "BR_BRAVA.ev_ebitda",
+      "formatted": "5,1x",
+      "formula": "enterprise_to_ebitda da fonte; valores não positivos ⇒ n/d; retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[BRAV3.SA].enterprise_to_ebitda"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "EV / EBITDA",
+      "point_in_time": false,
+      "unit": "x",
+      "value": 5.115
+    },
+    "BR_BRAVA.mcap_usd_bn": {
+      "fact_id": "BR_BRAVA.mcap_usd_bn",
+      "formatted": "US$ 1,9 bi",
+      "formula": "market_cap da fonte × câmbio do último pregão; valor em USD (exibido em bilhões); retrato atual (não PIT)",
+      "inputs": [
+        "panel.assets[BR_BRAVA].market_cap_usd"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Valor de mercado em USD",
+      "point_in_time": false,
+      "unit": "usd",
+      "value": 1938139055.11781
+    },
+    "BR_BRAVA.pb": {
+      "fact_id": "BR_BRAVA.pb",
+      "formatted": "0,8x",
+      "formula": "price_to_book da fonte; fora de (0; 30] ⇒ n/d; retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[BRAV3.SA].price_to_book"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Preço / valor patrimonial (fonte de mercado)",
+      "point_in_time": false,
+      "unit": "x",
+      "value": 0.7927382
+    },
+    "BR_BRAVA.pe_trailing": {
+      "fact_id": "BR_BRAVA.pe_trailing",
+      "formatted": "n/d",
+      "formula": "trailing_pe da fonte; fora de (0; 100] ⇒ n/d (lucro deprimido ou erro da fonte); retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[BRAV3.SA].trailing_pe"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "P/L (lucro dos últimos 12 meses, fonte de mercado)",
+      "point_in_time": false,
+      "unit": "x",
+      "value": null
+    },
+    "BR_BRAVA.ret_12m_usd": {
+      "fact_id": "BR_BRAVA.ret_12m_usd",
+      "formatted": "+55,05%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD (linha primária) nos últimos 252 pregões até 2026-10-21; cobertura 241/252 pregões (96%); mínimo 80% de cobertura, dias sem dado não são preenchidos",
+      "inputs": [
+        "panel.returns[BR_BRAVA]",
+        "janela=2025-10-31..2026-10-21",
+        "cobertura=241/252"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Retorno total em USD — 12 meses",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.5505218399898972
+    },
+    "BR_BRAVA.ret_1m_usd": {
+      "fact_id": "BR_BRAVA.ret_1m_usd",
+      "formatted": "+19,63%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD (linha primária) nos últimos 21 pregões até 2026-10-21; cobertura 20/21 pregões (95%); mínimo 80% de cobertura, dias sem dado não são preenchidos",
+      "inputs": [
+        "panel.returns[BR_BRAVA]",
+        "janela=2026-09-23..2026-10-21",
+        "cobertura=20/21"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Retorno total em USD — 1 mês",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.19634932103828073
+    },
+    "BR_BRAVA.ret_1w_usd": {
+      "fact_id": "BR_BRAVA.ret_1w_usd",
+      "formatted": "+2,43%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD (linha primária) nos últimos 5 pregões até 2026-10-21; cobertura 5/5 pregões (100%); mínimo 80% de cobertura, dias sem dado não são preenchidos",
+      "inputs": [
+        "panel.returns[BR_BRAVA]",
+        "janela=2026-10-15..2026-10-21",
+        "cobertura=5/5"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Retorno total em USD — 1 semana",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.024252030027227534
+    },
+    "BR_BRAVA.ret_3m_usd": {
+      "fact_id": "BR_BRAVA.ret_3m_usd",
+      "formatted": "+3,42%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD (linha primária) nos últimos 63 pregões até 2026-10-21; cobertura 61/63 pregões (97%); mínimo 80% de cobertura, dias sem dado não são preenchidos",
+      "inputs": [
+        "panel.returns[BR_BRAVA]",
+        "janela=2026-07-27..2026-10-21",
+        "cobertura=61/63"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Retorno total em USD — 3 meses",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.03421266866105199
+    },
+    "BR_BRAVA.ret_ytd_usd": {
+      "fact_id": "BR_BRAVA.ret_ytd_usd",
+      "formatted": "+39,35%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD de 2026 até 2026-10-21; cobertura 201/209 pregões (96%)",
+      "inputs": [
+        "panel.returns[BR_BRAVA]",
+        "janela=2026-01-02..2026-10-21",
+        "cobertura=201/209"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Retorno total em USD — no ano",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.3934637832196648
+    },
+    "BR_BRAVA.roe": {
+      "fact_id": "BR_BRAVA.roe",
+      "formatted": "0,44%",
+      "formula": "return_on_equity da fonte (decimal); retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[BRAV3.SA].return_on_equity"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Retorno sobre o patrimônio (ROE)",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0044400003
+    },
+    "BR_BRAVA.si_pct_float": {
+      "fact_id": "BR_BRAVA.si_pct_float",
+      "formatted": "n/d",
+      "formula": "máximo entre short_pct_float (linhas US) e lending_pct_shares (BTC B3); retrato atual",
+      "inputs": [
+        "squeeze_table[ausente].si_pct_float"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Short interest (% do free float, proxy)",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": null
+    },
+    "BR_BRAVA.squeeze_score": {
+      "fact_id": "BR_BRAVA.squeeze_score",
+      "formatted": "n/d",
+      "formula": "média ponderada dos componentes si/dtc/fee/mom/float/catalyst com regra do máximo (analytics.squeeze)",
+      "inputs": [
+        "squeeze_table[ausente].squeeze_score"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Escore de risco de short squeeze (0–100)",
+      "point_in_time": false,
+      "unit": "score",
+      "value": null
+    },
+    "BR_BRAVA.target_upside": {
+      "fact_id": "BR_BRAVA.target_upside",
+      "formatted": "+7,28%",
+      "formula": "target_mean_price / último fechamento da mesma linha − 1; preço de 2026-10-21; retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[BRAV3.SA].target_mean_price",
+        "close[BRAV3.SA]"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Upside ao preço-alvo médio do consenso",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.07284833734686358
+    },
+    "BR_BRAVA.vol_3m": {
+      "fact_id": "BR_BRAVA.vol_3m",
+      "formatted": "36,79%",
+      "formula": "desvio-padrão amostral dos retornos diários em USD dos últimos 63 pregões × √252; cobertura 61/63 pregões (97%)",
+      "inputs": [
+        "panel.returns[BR_BRAVA]",
+        "cobertura=61/63"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Volatilidade anualizada em USD — 3 meses",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.36787427162572833
+    },
+    "BR_COSAN.adtv_usd_mm": {
+      "fact_id": "BR_COSAN.adtv_usd_mm",
+      "formatted": "US$ 28,8 mi",
+      "formula": "média do valor negociado diário em USD somando todas as linhas (janela liquidity.adv_window_days), em milhões",
+      "inputs": [
+        "panel.assets[BR_COSAN].adtv_usd"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Volume médio diário negociado (todas as linhas)",
+      "point_in_time": true,
+      "unit": "usd_mm",
+      "value": 28.81431387803515
+    },
+    "BR_COSAN.analyst_count": {
+      "fact_id": "BR_COSAN.analyst_count",
+      "formatted": "10",
+      "formula": "number_of_analyst_opinions da fonte; retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[CSAN3.SA].number_of_analyst_opinions"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Número de analistas cobrindo",
+      "point_in_time": false,
+      "unit": "count",
+      "value": 10.0
+    },
+    "BR_COSAN.beta": {
+      "fact_id": "BR_COSAN.beta",
+      "formatted": "0,51",
+      "formula": "beta reportado pela fonte de fundamentos; retrato atual (não PIT)",
+      "inputs": [
+        "fundamentals[CSAN3.SA].beta"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Beta da fonte de dados",
+      "point_in_time": false,
+      "unit": "ratio",
+      "value": 0.507
+    },
+    "BR_COSAN.borrow_fee": {
+      "fact_id": "BR_COSAN.borrow_fee",
+      "formatted": "n/d",
+      "formula": "maior taxa de aluguel entre as linhas do emissor; retrato atual",
+      "inputs": [
+        "squeeze_table[ausente].borrow_fee"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Taxa de aluguel anual (observada ou estimada)",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": null
+    },
+    "BR_COSAN.days_to_cover": {
+      "fact_id": "BR_COSAN.days_to_cover",
+      "formatted": "n/d",
+      "formula": "ações vendidas ou doadas / volume médio diário de ações; volume zero com posição vendida ⇒ infinito (sem volume); retrato atual",
+      "inputs": [
+        "squeeze_table[ausente].days_to_cover"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Dias para cobrir (short / volume médio)",
+      "point_in_time": false,
+      "unit": "days",
+      "value": null
+    },
+    "BR_COSAN.div_yield": {
+      "fact_id": "BR_COSAN.div_yield",
+      "formatted": "0,00%",
+      "formula": "dividend_yield da fonte (decimal); fora de [0, 1] ⇒ n/d (unidade ambígua); retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[CSAN3.SA].dividend_yield"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Dividend yield",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0
+    },
+    "BR_COSAN.ev_ebitda": {
+      "fact_id": "BR_COSAN.ev_ebitda",
+      "formatted": "6,1x",
+      "formula": "enterprise_to_ebitda da fonte; valores não positivos ⇒ n/d; retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[CSAN3.SA].enterprise_to_ebitda"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "EV / EBITDA",
+      "point_in_time": false,
+      "unit": "x",
+      "value": 6.088
+    },
+    "BR_COSAN.mcap_usd_bn": {
+      "fact_id": "BR_COSAN.mcap_usd_bn",
+      "formatted": "US$ 4,0 bi",
+      "formula": "market_cap da fonte × câmbio do último pregão; valor em USD (exibido em bilhões); retrato atual (não PIT)",
+      "inputs": [
+        "panel.assets[BR_COSAN].market_cap_usd"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Valor de mercado em USD",
+      "point_in_time": false,
+      "unit": "usd",
+      "value": 4012550544.2774997
+    },
+    "BR_COSAN.pb": {
+      "fact_id": "BR_COSAN.pb",
+      "formatted": "4,1x",
+      "formula": "price_to_book da fonte; fora de (0; 30] ⇒ n/d; retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[CSAN3.SA].price_to_book"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Preço / valor patrimonial (fonte de mercado)",
+      "point_in_time": false,
+      "unit": "x",
+      "value": 4.055556
+    },
+    "BR_COSAN.pe_trailing": {
+      "fact_id": "BR_COSAN.pe_trailing",
+      "formatted": "n/d",
+      "formula": "trailing_pe da fonte; fora de (0; 100] ⇒ n/d (lucro deprimido ou erro da fonte); retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[CSAN3.SA].trailing_pe"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "P/L (lucro dos últimos 12 meses, fonte de mercado)",
+      "point_in_time": false,
+      "unit": "x",
+      "value": null
+    },
+    "BR_COSAN.ret_12m_usd": {
+      "fact_id": "BR_COSAN.ret_12m_usd",
+      "formatted": "-10,57%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD (linha primária) nos últimos 252 pregões até 2026-10-21; cobertura 241/252 pregões (96%); mínimo 80% de cobertura, dias sem dado não são preenchidos",
+      "inputs": [
+        "panel.returns[BR_COSAN]",
+        "janela=2025-10-31..2026-10-21",
+        "cobertura=241/252"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Retorno total em USD — 12 meses",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.10569994422930007
+    },
+    "BR_COSAN.ret_1m_usd": {
+      "fact_id": "BR_COSAN.ret_1m_usd",
+      "formatted": "+38,44%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD (linha primária) nos últimos 21 pregões até 2026-10-21; cobertura 20/21 pregões (95%); mínimo 80% de cobertura, dias sem dado não são preenchidos",
+      "inputs": [
+        "panel.returns[BR_COSAN]",
+        "janela=2026-09-23..2026-10-21",
+        "cobertura=20/21"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Retorno total em USD — 1 mês",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.38442288866165986
+    },
+    "BR_COSAN.ret_1w_usd": {
+      "fact_id": "BR_COSAN.ret_1w_usd",
+      "formatted": "+0,63%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD (linha primária) nos últimos 5 pregões até 2026-10-21; cobertura 5/5 pregões (100%); mínimo 80% de cobertura, dias sem dado não são preenchidos",
+      "inputs": [
+        "panel.returns[BR_COSAN]",
+        "janela=2026-10-15..2026-10-21",
+        "cobertura=5/5"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Retorno total em USD — 1 semana",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0063294270903928584
+    },
+    "BR_COSAN.ret_3m_usd": {
+      "fact_id": "BR_COSAN.ret_3m_usd",
+      "formatted": "+35,90%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD (linha primária) nos últimos 63 pregões até 2026-10-21; cobertura 61/63 pregões (97%); mínimo 80% de cobertura, dias sem dado não são preenchidos",
+      "inputs": [
+        "panel.returns[BR_COSAN]",
+        "janela=2026-07-27..2026-10-21",
+        "cobertura=61/63"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Retorno total em USD — 3 meses",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.3589640976945152
+    },
+    "BR_COSAN.ret_ytd_usd": {
+      "fact_id": "BR_COSAN.ret_ytd_usd",
+      "formatted": "+6,06%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD de 2026 até 2026-10-21; cobertura 201/209 pregões (96%)",
+      "inputs": [
+        "panel.returns[BR_COSAN]",
+        "janela=2026-01-02..2026-10-21",
+        "cobertura=201/209"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Retorno total em USD — no ano",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.060617589124814186
+    },
+    "BR_COSAN.roe": {
+      "fact_id": "BR_COSAN.roe",
+      "formatted": "-27,22%",
+      "formula": "return_on_equity da fonte (decimal); retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[CSAN3.SA].return_on_equity"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Retorno sobre o patrimônio (ROE)",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": -0.27222002
+    },
+    "BR_COSAN.si_pct_float": {
+      "fact_id": "BR_COSAN.si_pct_float",
+      "formatted": "n/d",
+      "formula": "máximo entre short_pct_float (linhas US) e lending_pct_shares (BTC B3); retrato atual",
+      "inputs": [
+        "squeeze_table[ausente].si_pct_float"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Short interest (% do free float, proxy)",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": null
+    },
+    "BR_COSAN.squeeze_score": {
+      "fact_id": "BR_COSAN.squeeze_score",
+      "formatted": "n/d",
+      "formula": "média ponderada dos componentes si/dtc/fee/mom/float/catalyst com regra do máximo (analytics.squeeze)",
+      "inputs": [
+        "squeeze_table[ausente].squeeze_score"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Escore de risco de short squeeze (0–100)",
+      "point_in_time": false,
+      "unit": "score",
+      "value": null
+    },
+    "BR_COSAN.target_upside": {
+      "fact_id": "BR_COSAN.target_upside",
+      "formatted": "+10,41%",
+      "formula": "target_mean_price / último fechamento da mesma linha − 1; preço de 2026-10-21; retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[CSAN3.SA].target_mean_price",
+        "close[CSAN3.SA]"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Upside ao preço-alvo médio do consenso",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.10412570363925111
+    },
+    "BR_COSAN.vol_3m": {
+      "fact_id": "BR_COSAN.vol_3m",
+      "formatted": "79,50%",
+      "formula": "desvio-padrão amostral dos retornos diários em USD dos últimos 63 pregões × √252; cobertura 61/63 pregões (97%)",
+      "inputs": [
+        "panel.returns[BR_COSAN]",
+        "cobertura=61/63"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Volatilidade anualizada em USD — 3 meses",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.7950191376141719
+    },
+    "BR_PRIO.adtv_usd_mm": {
+      "fact_id": "BR_PRIO.adtv_usd_mm",
+      "formatted": "US$ 99,7 mi",
+      "formula": "média do valor negociado diário em USD somando todas as linhas (janela liquidity.adv_window_days), em milhões",
+      "inputs": [
+        "panel.assets[BR_PRIO].adtv_usd"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Volume médio diário negociado (todas as linhas)",
+      "point_in_time": true,
+      "unit": "usd_mm",
+      "value": 99.68774414325621
+    },
+    "BR_PRIO.analyst_count": {
+      "fact_id": "BR_PRIO.analyst_count",
+      "formatted": "14",
+      "formula": "number_of_analyst_opinions da fonte; retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[PRIO3.SA].number_of_analyst_opinions"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Número de analistas cobrindo",
+      "point_in_time": false,
+      "unit": "count",
+      "value": 14.0
+    },
+    "BR_PRIO.beta": {
+      "fact_id": "BR_PRIO.beta",
+      "formatted": "0,16",
+      "formula": "beta reportado pela fonte de fundamentos; retrato atual (não PIT)",
+      "inputs": [
+        "fundamentals[PRIO3.SA].beta"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Beta da fonte de dados",
+      "point_in_time": false,
+      "unit": "ratio",
+      "value": 0.16
+    },
+    "BR_PRIO.borrow_fee": {
+      "fact_id": "BR_PRIO.borrow_fee",
+      "formatted": "n/d",
+      "formula": "maior taxa de aluguel entre as linhas do emissor; retrato atual",
+      "inputs": [
+        "squeeze_table[ausente].borrow_fee"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Taxa de aluguel anual (observada ou estimada)",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": null
+    },
+    "BR_PRIO.days_to_cover": {
+      "fact_id": "BR_PRIO.days_to_cover",
+      "formatted": "n/d",
+      "formula": "ações vendidas ou doadas / volume médio diário de ações; volume zero com posição vendida ⇒ infinito (sem volume); retrato atual",
+      "inputs": [
+        "squeeze_table[ausente].days_to_cover"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Dias para cobrir (short / volume médio)",
+      "point_in_time": false,
+      "unit": "days",
+      "value": null
+    },
+    "BR_PRIO.div_yield": {
+      "fact_id": "BR_PRIO.div_yield",
+      "formatted": "0,00%",
+      "formula": "dividend_yield da fonte (decimal); fora de [0, 1] ⇒ n/d (unidade ambígua); retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[PRIO3.SA].dividend_yield"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Dividend yield",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0
+    },
+    "BR_PRIO.ev_ebitda": {
+      "fact_id": "BR_PRIO.ev_ebitda",
+      "formatted": "6,3x",
+      "formula": "enterprise_to_ebitda da fonte; valores não positivos ⇒ n/d; retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[PRIO3.SA].enterprise_to_ebitda"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "EV / EBITDA",
+      "point_in_time": false,
+      "unit": "x",
+      "value": 6.286
+    },
+    "BR_PRIO.mcap_usd_bn": {
+      "fact_id": "BR_PRIO.mcap_usd_bn",
+      "formatted": "US$ 11,2 bi",
+      "formula": "market_cap da fonte × câmbio do último pregão; valor em USD (exibido em bilhões); retrato atual (não PIT)",
+      "inputs": [
+        "panel.assets[BR_PRIO].market_cap_usd"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Valor de mercado em USD",
+      "point_in_time": false,
+      "unit": "usd",
+      "value": 11193347125.56612
+    },
+    "BR_PRIO.pb": {
+      "fact_id": "BR_PRIO.pb",
+      "formatted": "2,0x",
+      "formula": "price_to_book da fonte; fora de (0; 30] ⇒ n/d; retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[PRIO3.SA].price_to_book"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Preço / valor patrimonial (fonte de mercado)",
+      "point_in_time": false,
+      "unit": "x",
+      "value": 2.0086002
+    },
+    "BR_PRIO.pe_trailing": {
+      "fact_id": "BR_PRIO.pe_trailing",
+      "formatted": "14,9x",
+      "formula": "trailing_pe da fonte; fora de (0; 100] ⇒ n/d (lucro deprimido ou erro da fonte); retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[PRIO3.SA].trailing_pe"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "P/L (lucro dos últimos 12 meses, fonte de mercado)",
+      "point_in_time": false,
+      "unit": "x",
+      "value": 14.884696
+    },
+    "BR_PRIO.ret_12m_usd": {
+      "fact_id": "BR_PRIO.ret_12m_usd",
+      "formatted": "+112,61%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD (linha primária) nos últimos 252 pregões até 2026-10-21; cobertura 241/252 pregões (96%); mínimo 80% de cobertura, dias sem dado não são preenchidos",
+      "inputs": [
+        "panel.returns[BR_PRIO]",
+        "janela=2025-10-31..2026-10-21",
+        "cobertura=241/252"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Retorno total em USD — 12 meses",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 1.1261095669971084
+    },
+    "BR_PRIO.ret_1m_usd": {
+      "fact_id": "BR_PRIO.ret_1m_usd",
+      "formatted": "+19,98%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD (linha primária) nos últimos 21 pregões até 2026-10-21; cobertura 20/21 pregões (95%); mínimo 80% de cobertura, dias sem dado não são preenchidos",
+      "inputs": [
+        "panel.returns[BR_PRIO]",
+        "janela=2026-09-23..2026-10-21",
+        "cobertura=20/21"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Retorno total em USD — 1 mês",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.19978896753997555
+    },
+    "BR_PRIO.ret_1w_usd": {
+      "fact_id": "BR_PRIO.ret_1w_usd",
+      "formatted": "+4,46%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD (linha primária) nos últimos 5 pregões até 2026-10-21; cobertura 5/5 pregões (100%); mínimo 80% de cobertura, dias sem dado não são preenchidos",
+      "inputs": [
+        "panel.returns[BR_PRIO]",
+        "janela=2026-10-15..2026-10-21",
+        "cobertura=5/5"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Retorno total em USD — 1 semana",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.04463889561613987
+    },
+    "BR_PRIO.ret_3m_usd": {
+      "fact_id": "BR_PRIO.ret_3m_usd",
+      "formatted": "+23,00%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD (linha primária) nos últimos 63 pregões até 2026-10-21; cobertura 61/63 pregões (97%); mínimo 80% de cobertura, dias sem dado não são preenchidos",
+      "inputs": [
+        "panel.returns[BR_PRIO]",
+        "janela=2026-07-27..2026-10-21",
+        "cobertura=61/63"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Retorno total em USD — 3 meses",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.2299832090971332
+    },
+    "BR_PRIO.ret_ytd_usd": {
+      "fact_id": "BR_PRIO.ret_ytd_usd",
+      "formatted": "+90,85%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD de 2026 até 2026-10-21; cobertura 201/209 pregões (96%)",
+      "inputs": [
+        "panel.returns[BR_PRIO]",
+        "janela=2026-01-02..2026-10-21",
+        "cobertura=201/209"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Retorno total em USD — no ano",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.9085037704946493
+    },
+    "BR_PRIO.roe": {
+      "fact_id": "BR_PRIO.roe",
+      "formatted": "14,22%",
+      "formula": "return_on_equity da fonte (decimal); retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[PRIO3.SA].return_on_equity"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Retorno sobre o patrimônio (ROE)",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.14225
+    },
+    "BR_PRIO.si_pct_float": {
+      "fact_id": "BR_PRIO.si_pct_float",
+      "formatted": "n/d",
+      "formula": "máximo entre short_pct_float (linhas US) e lending_pct_shares (BTC B3); retrato atual",
+      "inputs": [
+        "squeeze_table[ausente].si_pct_float"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Short interest (% do free float, proxy)",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": null
+    },
+    "BR_PRIO.squeeze_score": {
+      "fact_id": "BR_PRIO.squeeze_score",
+      "formatted": "n/d",
+      "formula": "média ponderada dos componentes si/dtc/fee/mom/float/catalyst com regra do máximo (analytics.squeeze)",
+      "inputs": [
+        "squeeze_table[ausente].squeeze_score"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Escore de risco de short squeeze (0–100)",
+      "point_in_time": false,
+      "unit": "score",
+      "value": null
+    },
+    "BR_PRIO.target_upside": {
+      "fact_id": "BR_PRIO.target_upside",
+      "formatted": "-2,45%",
+      "formula": "target_mean_price / último fechamento da mesma linha − 1; preço de 2026-10-21; retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[PRIO3.SA].target_mean_price",
+        "close[PRIO3.SA]"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Upside ao preço-alvo médio do consenso",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": -0.024480544360688583
+    },
+    "BR_PRIO.vol_3m": {
+      "fact_id": "BR_PRIO.vol_3m",
+      "formatted": "39,52%",
+      "formula": "desvio-padrão amostral dos retornos diários em USD dos últimos 63 pregões × √252; cobertura 61/63 pregões (97%)",
+      "inputs": [
+        "panel.returns[BR_PRIO]",
+        "cobertura=61/63"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Volatilidade anualizada em USD — 3 meses",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.3951803047442711
+    },
+    "BR_RECV.adtv_usd_mm": {
+      "fact_id": "BR_RECV.adtv_usd_mm",
+      "formatted": "US$ 4,4 mi",
+      "formula": "média do valor negociado diário em USD somando todas as linhas (janela liquidity.adv_window_days), em milhões",
+      "inputs": [
+        "panel.assets[BR_RECV].adtv_usd"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Volume médio diário negociado (todas as linhas)",
+      "point_in_time": true,
+      "unit": "usd_mm",
+      "value": 4.412007831088479
+    },
+    "BR_RECV.analyst_count": {
+      "fact_id": "BR_RECV.analyst_count",
+      "formatted": "13",
+      "formula": "number_of_analyst_opinions da fonte; retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[RECV3.SA].number_of_analyst_opinions"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Número de analistas cobrindo",
+      "point_in_time": false,
+      "unit": "count",
+      "value": 13.0
+    },
+    "BR_RECV.beta": {
+      "fact_id": "BR_RECV.beta",
+      "formatted": "n/d",
+      "formula": "beta reportado pela fonte de fundamentos; retrato atual (não PIT)",
+      "inputs": [
+        "fundamentals[RECV3.SA].beta"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Beta da fonte de dados",
+      "point_in_time": false,
+      "unit": "ratio",
+      "value": null
+    },
+    "BR_RECV.borrow_fee": {
+      "fact_id": "BR_RECV.borrow_fee",
+      "formatted": "n/d",
+      "formula": "maior taxa de aluguel entre as linhas do emissor; retrato atual",
+      "inputs": [
+        "squeeze_table[ausente].borrow_fee"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Taxa de aluguel anual (observada ou estimada)",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": null
+    },
+    "BR_RECV.days_to_cover": {
+      "fact_id": "BR_RECV.days_to_cover",
+      "formatted": "n/d",
+      "formula": "ações vendidas ou doadas / volume médio diário de ações; volume zero com posição vendida ⇒ infinito (sem volume); retrato atual",
+      "inputs": [
+        "squeeze_table[ausente].days_to_cover"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Dias para cobrir (short / volume médio)",
+      "point_in_time": false,
+      "unit": "days",
+      "value": null
+    },
+    "BR_RECV.div_yield": {
+      "fact_id": "BR_RECV.div_yield",
+      "formatted": "5,45%",
+      "formula": "dividend_yield da fonte (decimal); fora de [0, 1] ⇒ n/d (unidade ambígua); retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[RECV3.SA].dividend_yield"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Dividend yield",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0545
+    },
+    "BR_RECV.ev_ebitda": {
+      "fact_id": "BR_RECV.ev_ebitda",
+      "formatted": "3,9x",
+      "formula": "enterprise_to_ebitda da fonte; valores não positivos ⇒ n/d; retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[RECV3.SA].enterprise_to_ebitda"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "EV / EBITDA",
+      "point_in_time": false,
+      "unit": "x",
+      "value": 3.917
+    },
+    "BR_RECV.mcap_usd_bn": {
+      "fact_id": "BR_RECV.mcap_usd_bn",
+      "formatted": "US$ 737,8 mi",
+      "formula": "market_cap da fonte × câmbio do último pregão; valor em USD (exibido em bilhões); retrato atual (não PIT)",
+      "inputs": [
+        "panel.assets[BR_RECV].market_cap_usd"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Valor de mercado em USD",
+      "point_in_time": false,
+      "unit": "usd",
+      "value": 737823782.1084483
+    },
+    "BR_RECV.pb": {
+      "fact_id": "BR_RECV.pb",
+      "formatted": "0,8x",
+      "formula": "price_to_book da fonte; fora de (0; 30] ⇒ n/d; retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[RECV3.SA].price_to_book"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Preço / valor patrimonial (fonte de mercado)",
+      "point_in_time": false,
+      "unit": "x",
+      "value": 0.83603626
+    },
+    "BR_RECV.pe_trailing": {
+      "fact_id": "BR_RECV.pe_trailing",
+      "formatted": "7,4x",
+      "formula": "trailing_pe da fonte; fora de (0; 100] ⇒ n/d (lucro deprimido ou erro da fonte); retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[RECV3.SA].trailing_pe"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "P/L (lucro dos últimos 12 meses, fonte de mercado)",
+      "point_in_time": false,
+      "unit": "x",
+      "value": 7.4294114
+    },
+    "BR_RECV.ret_12m_usd": {
+      "fact_id": "BR_RECV.ret_12m_usd",
+      "formatted": "+25,05%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD (linha primária) nos últimos 252 pregões até 2026-10-21; cobertura 241/252 pregões (96%); mínimo 80% de cobertura, dias sem dado não são preenchidos",
+      "inputs": [
+        "panel.returns[BR_RECV]",
+        "janela=2025-10-31..2026-10-21",
+        "cobertura=241/252"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Retorno total em USD — 12 meses",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.2504818003019955
+    },
+    "BR_RECV.ret_1m_usd": {
+      "fact_id": "BR_RECV.ret_1m_usd",
+      "formatted": "+15,30%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD (linha primária) nos últimos 21 pregões até 2026-10-21; cobertura 20/21 pregões (95%); mínimo 80% de cobertura, dias sem dado não são preenchidos",
+      "inputs": [
+        "panel.returns[BR_RECV]",
+        "janela=2026-09-23..2026-10-21",
+        "cobertura=20/21"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Retorno total em USD — 1 mês",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.15299372916483378
+    },
+    "BR_RECV.ret_1w_usd": {
+      "fact_id": "BR_RECV.ret_1w_usd",
+      "formatted": "+0,77%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD (linha primária) nos últimos 5 pregões até 2026-10-21; cobertura 5/5 pregões (100%); mínimo 80% de cobertura, dias sem dado não são preenchidos",
+      "inputs": [
+        "panel.returns[BR_RECV]",
+        "janela=2026-10-15..2026-10-21",
+        "cobertura=5/5"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Retorno total em USD — 1 semana",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.007712145981859209
+    },
+    "BR_RECV.ret_3m_usd": {
+      "fact_id": "BR_RECV.ret_3m_usd",
+      "formatted": "+22,69%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD (linha primária) nos últimos 63 pregões até 2026-10-21; cobertura 61/63 pregões (97%); mínimo 80% de cobertura, dias sem dado não são preenchidos",
+      "inputs": [
+        "panel.returns[BR_RECV]",
+        "janela=2026-07-27..2026-10-21",
+        "cobertura=61/63"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Retorno total em USD — 3 meses",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.2269148678855415
+    },
+    "BR_RECV.ret_ytd_usd": {
+      "fact_id": "BR_RECV.ret_ytd_usd",
+      "formatted": "+42,15%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD de 2026 até 2026-10-21; cobertura 201/209 pregões (96%)",
+      "inputs": [
+        "panel.returns[BR_RECV]",
+        "janela=2026-01-02..2026-10-21",
+        "cobertura=201/209"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Retorno total em USD — no ano",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.42151072405132783
+    },
+    "BR_RECV.roe": {
+      "fact_id": "BR_RECV.roe",
+      "formatted": "11,25%",
+      "formula": "return_on_equity da fonte (decimal); retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[RECV3.SA].return_on_equity"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Retorno sobre o patrimônio (ROE)",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.11252
+    },
+    "BR_RECV.si_pct_float": {
+      "fact_id": "BR_RECV.si_pct_float",
+      "formatted": "n/d",
+      "formula": "máximo entre short_pct_float (linhas US) e lending_pct_shares (BTC B3); retrato atual",
+      "inputs": [
+        "squeeze_table[ausente].si_pct_float"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Short interest (% do free float, proxy)",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": null
+    },
+    "BR_RECV.squeeze_score": {
+      "fact_id": "BR_RECV.squeeze_score",
+      "formatted": "n/d",
+      "formula": "média ponderada dos componentes si/dtc/fee/mom/float/catalyst com regra do máximo (analytics.squeeze)",
+      "inputs": [
+        "squeeze_table[ausente].squeeze_score"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Escore de risco de short squeeze (0–100)",
+      "point_in_time": false,
+      "unit": "score",
+      "value": null
+    },
+    "BR_RECV.target_upside": {
+      "fact_id": "BR_RECV.target_upside",
+      "formatted": "-4,28%",
+      "formula": "target_mean_price / último fechamento da mesma linha − 1; preço de 2026-10-21; retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[RECV3.SA].target_mean_price",
+        "close[RECV3.SA]"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Upside ao preço-alvo médio do consenso",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": -0.042804002811185904
+    },
+    "BR_RECV.vol_3m": {
+      "fact_id": "BR_RECV.vol_3m",
+      "formatted": "38,69%",
+      "formula": "desvio-padrão amostral dos retornos diários em USD dos últimos 63 pregões × √252; cobertura 61/63 pregões (97%)",
+      "inputs": [
+        "panel.returns[BR_RECV]",
+        "cobertura=61/63"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Volatilidade anualizada em USD — 3 meses",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.38690212463184587
+    },
+    "BR_ULTRAPAR.adtv_usd_mm": {
+      "fact_id": "BR_ULTRAPAR.adtv_usd_mm",
+      "formatted": "US$ 98,5 mi",
+      "formula": "média do valor negociado diário em USD somando todas as linhas (janela liquidity.adv_window_days), em milhões",
+      "inputs": [
+        "panel.assets[BR_ULTRAPAR].adtv_usd"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Volume médio diário negociado (todas as linhas)",
+      "point_in_time": true,
+      "unit": "usd_mm",
+      "value": 98.48487510466389
+    },
+    "BR_ULTRAPAR.analyst_count": {
+      "fact_id": "BR_ULTRAPAR.analyst_count",
+      "formatted": "16",
+      "formula": "number_of_analyst_opinions da fonte; retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[UGPA3.SA].number_of_analyst_opinions"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Número de analistas cobrindo",
+      "point_in_time": false,
+      "unit": "count",
+      "value": 16.0
+    },
+    "BR_ULTRAPAR.beta": {
+      "fact_id": "BR_ULTRAPAR.beta",
+      "formatted": "0,26",
+      "formula": "beta reportado pela fonte de fundamentos; retrato atual (não PIT)",
+      "inputs": [
+        "fundamentals[UGPA3.SA].beta"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Beta da fonte de dados",
+      "point_in_time": false,
+      "unit": "ratio",
+      "value": 0.259
+    },
+    "BR_ULTRAPAR.borrow_fee": {
+      "fact_id": "BR_ULTRAPAR.borrow_fee",
+      "formatted": "n/d",
+      "formula": "maior taxa de aluguel entre as linhas do emissor; retrato atual",
+      "inputs": [
+        "squeeze_table[ausente].borrow_fee"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Taxa de aluguel anual (observada ou estimada)",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": null
+    },
+    "BR_ULTRAPAR.days_to_cover": {
+      "fact_id": "BR_ULTRAPAR.days_to_cover",
+      "formatted": "n/d",
+      "formula": "ações vendidas ou doadas / volume médio diário de ações; volume zero com posição vendida ⇒ infinito (sem volume); retrato atual",
+      "inputs": [
+        "squeeze_table[ausente].days_to_cover"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Dias para cobrir (short / volume médio)",
+      "point_in_time": false,
+      "unit": "days",
+      "value": null
+    },
+    "BR_ULTRAPAR.div_yield": {
+      "fact_id": "BR_ULTRAPAR.div_yield",
+      "formatted": "5,08%",
+      "formula": "dividend_yield da fonte (decimal); fora de [0, 1] ⇒ n/d (unidade ambígua); retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[UGPA3.SA].dividend_yield"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Dividend yield",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.0508
+    },
+    "BR_ULTRAPAR.ev_ebitda": {
+      "fact_id": "BR_ULTRAPAR.ev_ebitda",
+      "formatted": "6,0x",
+      "formula": "enterprise_to_ebitda da fonte; valores não positivos ⇒ n/d; retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[UGPA3.SA].enterprise_to_ebitda"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "EV / EBITDA",
+      "point_in_time": false,
+      "unit": "x",
+      "value": 5.972
+    },
+    "BR_ULTRAPAR.mcap_usd_bn": {
+      "fact_id": "BR_ULTRAPAR.mcap_usd_bn",
+      "formatted": "US$ 8,3 bi",
+      "formula": "market_cap da fonte × câmbio do último pregão; valor em USD (exibido em bilhões); retrato atual (não PIT)",
+      "inputs": [
+        "panel.assets[BR_ULTRAPAR].market_cap_usd"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Valor de mercado em USD",
+      "point_in_time": false,
+      "unit": "usd",
+      "value": 8293670460.716848
+    },
+    "BR_ULTRAPAR.pb": {
+      "fact_id": "BR_ULTRAPAR.pb",
+      "formatted": "2,3x",
+      "formula": "price_to_book da fonte; fora de (0; 30] ⇒ n/d; retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[UGPA3.SA].price_to_book"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Preço / valor patrimonial (fonte de mercado)",
+      "point_in_time": false,
+      "unit": "x",
+      "value": 2.3305714
+    },
+    "BR_ULTRAPAR.pe_trailing": {
+      "fact_id": "BR_ULTRAPAR.pe_trailing",
+      "formatted": "11,9x",
+      "formula": "trailing_pe da fonte; fora de (0; 100] ⇒ n/d (lucro deprimido ou erro da fonte); retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[UGPA3.SA].trailing_pe"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "P/L (lucro dos últimos 12 meses, fonte de mercado)",
+      "point_in_time": false,
+      "unit": "x",
+      "value": 11.920732
+    },
+    "BR_ULTRAPAR.ret_12m_usd": {
+      "fact_id": "BR_ULTRAPAR.ret_12m_usd",
+      "formatted": "+116,77%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD (linha primária) nos últimos 252 pregões até 2026-10-21; cobertura 241/252 pregões (96%); mínimo 80% de cobertura, dias sem dado não são preenchidos",
+      "inputs": [
+        "panel.returns[BR_ULTRAPAR]",
+        "janela=2025-10-31..2026-10-21",
+        "cobertura=241/252"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Retorno total em USD — 12 meses",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 1.167700742531045
+    },
+    "BR_ULTRAPAR.ret_1m_usd": {
+      "fact_id": "BR_ULTRAPAR.ret_1m_usd",
+      "formatted": "+3,14%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD (linha primária) nos últimos 21 pregões até 2026-10-21; cobertura 20/21 pregões (95%); mínimo 80% de cobertura, dias sem dado não são preenchidos",
+      "inputs": [
+        "panel.returns[BR_ULTRAPAR]",
+        "janela=2026-09-23..2026-10-21",
+        "cobertura=20/21"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Retorno total em USD — 1 mês",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.03140923752264113
+    },
+    "BR_ULTRAPAR.ret_1w_usd": {
+      "fact_id": "BR_ULTRAPAR.ret_1w_usd",
+      "formatted": "+2,16%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD (linha primária) nos últimos 5 pregões até 2026-10-21; cobertura 5/5 pregões (100%); mínimo 80% de cobertura, dias sem dado não são preenchidos",
+      "inputs": [
+        "panel.returns[BR_ULTRAPAR]",
+        "janela=2026-10-15..2026-10-21",
+        "cobertura=5/5"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Retorno total em USD — 1 semana",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.02158002010520832
+    },
+    "BR_ULTRAPAR.ret_3m_usd": {
+      "fact_id": "BR_ULTRAPAR.ret_3m_usd",
+      "formatted": "+27,84%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD (linha primária) nos últimos 63 pregões até 2026-10-21; cobertura 61/63 pregões (97%); mínimo 80% de cobertura, dias sem dado não são preenchidos",
+      "inputs": [
+        "panel.returns[BR_ULTRAPAR]",
+        "janela=2026-07-27..2026-10-21",
+        "cobertura=61/63"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Retorno total em USD — 3 meses",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.27841239576515897
+    },
+    "BR_ULTRAPAR.ret_ytd_usd": {
+      "fact_id": "BR_ULTRAPAR.ret_ytd_usd",
+      "formatted": "+118,62%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD de 2026 até 2026-10-21; cobertura 201/209 pregões (96%)",
+      "inputs": [
+        "panel.returns[BR_ULTRAPAR]",
+        "janela=2026-01-02..2026-10-21",
+        "cobertura=201/209"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Retorno total em USD — no ano",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 1.1861710582834903
+    },
+    "BR_ULTRAPAR.roe": {
+      "fact_id": "BR_ULTRAPAR.roe",
+      "formatted": "19,80%",
+      "formula": "return_on_equity da fonte (decimal); retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[UGPA3.SA].return_on_equity"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Retorno sobre o patrimônio (ROE)",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.19804001
+    },
+    "BR_ULTRAPAR.si_pct_float": {
+      "fact_id": "BR_ULTRAPAR.si_pct_float",
+      "formatted": "n/d",
+      "formula": "máximo entre short_pct_float (linhas US) e lending_pct_shares (BTC B3); retrato atual",
+      "inputs": [
+        "squeeze_table[ausente].si_pct_float"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Short interest (% do free float, proxy)",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": null
+    },
+    "BR_ULTRAPAR.squeeze_score": {
+      "fact_id": "BR_ULTRAPAR.squeeze_score",
+      "formatted": "n/d",
+      "formula": "média ponderada dos componentes si/dtc/fee/mom/float/catalyst com regra do máximo (analytics.squeeze)",
+      "inputs": [
+        "squeeze_table[ausente].squeeze_score"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Escore de risco de short squeeze (0–100)",
+      "point_in_time": false,
+      "unit": "score",
+      "value": null
+    },
+    "BR_ULTRAPAR.target_upside": {
+      "fact_id": "BR_ULTRAPAR.target_upside",
+      "formatted": "-3,01%",
+      "formula": "target_mean_price / último fechamento da mesma linha − 1; preço de 2026-10-21; retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[UGPA3.SA].target_mean_price",
+        "close[UGPA3.SA]"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Upside ao preço-alvo médio do consenso",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": -0.030102393605869526
+    },
+    "BR_ULTRAPAR.vol_3m": {
+      "fact_id": "BR_ULTRAPAR.vol_3m",
+      "formatted": "33,88%",
+      "formula": "desvio-padrão amostral dos retornos diários em USD dos últimos 63 pregões × √252; cobertura 61/63 pregões (97%)",
+      "inputs": [
+        "panel.returns[BR_ULTRAPAR]",
+        "cobertura=61/63"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Volatilidade anualizada em USD — 3 meses",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.33881025402360204
+    },
+    "BR_VIBRA.adtv_usd_mm": {
+      "fact_id": "BR_VIBRA.adtv_usd_mm",
+      "formatted": "US$ 80,9 mi",
+      "formula": "média do valor negociado diário em USD somando todas as linhas (janela liquidity.adv_window_days), em milhões",
+      "inputs": [
+        "panel.assets[BR_VIBRA].adtv_usd"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Volume médio diário negociado (todas as linhas)",
+      "point_in_time": true,
+      "unit": "usd_mm",
+      "value": 80.92865057273188
+    },
+    "BR_VIBRA.analyst_count": {
+      "fact_id": "BR_VIBRA.analyst_count",
+      "formatted": "16",
+      "formula": "number_of_analyst_opinions da fonte; retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[VBBR3.SA].number_of_analyst_opinions"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Número de analistas cobrindo",
+      "point_in_time": false,
+      "unit": "count",
+      "value": 16.0
+    },
+    "BR_VIBRA.beta": {
+      "fact_id": "BR_VIBRA.beta",
+      "formatted": "0,09",
+      "formula": "beta reportado pela fonte de fundamentos; retrato atual (não PIT)",
+      "inputs": [
+        "fundamentals[VBBR3.SA].beta"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Beta da fonte de dados",
+      "point_in_time": false,
+      "unit": "ratio",
+      "value": 0.088
+    },
+    "BR_VIBRA.borrow_fee": {
+      "fact_id": "BR_VIBRA.borrow_fee",
+      "formatted": "n/d",
+      "formula": "maior taxa de aluguel entre as linhas do emissor; retrato atual",
+      "inputs": [
+        "squeeze_table[ausente].borrow_fee"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Taxa de aluguel anual (observada ou estimada)",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": null
+    },
+    "BR_VIBRA.days_to_cover": {
+      "fact_id": "BR_VIBRA.days_to_cover",
+      "formatted": "n/d",
+      "formula": "ações vendidas ou doadas / volume médio diário de ações; volume zero com posição vendida ⇒ infinito (sem volume); retrato atual",
+      "inputs": [
+        "squeeze_table[ausente].days_to_cover"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Dias para cobrir (short / volume médio)",
+      "point_in_time": false,
+      "unit": "days",
+      "value": null
+    },
+    "BR_VIBRA.div_yield": {
+      "fact_id": "BR_VIBRA.div_yield",
+      "formatted": "5,40%",
+      "formula": "dividend_yield da fonte (decimal); fora de [0, 1] ⇒ n/d (unidade ambígua); retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[VBBR3.SA].dividend_yield"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Dividend yield",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.054000000000000006
+    },
+    "BR_VIBRA.ev_ebitda": {
+      "fact_id": "BR_VIBRA.ev_ebitda",
+      "formatted": "5,7x",
+      "formula": "enterprise_to_ebitda da fonte; valores não positivos ⇒ n/d; retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[VBBR3.SA].enterprise_to_ebitda"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "EV / EBITDA",
+      "point_in_time": false,
+      "unit": "x",
+      "value": 5.697
+    },
+    "BR_VIBRA.mcap_usd_bn": {
+      "fact_id": "BR_VIBRA.mcap_usd_bn",
+      "formatted": "US$ 8,6 bi",
+      "formula": "market_cap da fonte × câmbio do último pregão; valor em USD (exibido em bilhões); retrato atual (não PIT)",
+      "inputs": [
+        "panel.assets[BR_VIBRA].market_cap_usd"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Valor de mercado em USD",
+      "point_in_time": false,
+      "unit": "usd",
+      "value": 8640983351.364784
+    },
+    "BR_VIBRA.pb": {
+      "fact_id": "BR_VIBRA.pb",
+      "formatted": "1,8x",
+      "formula": "price_to_book da fonte; fora de (0; 30] ⇒ n/d; retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[VBBR3.SA].price_to_book"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Preço / valor patrimonial (fonte de mercado)",
+      "point_in_time": false,
+      "unit": "x",
+      "value": 1.844754
+    },
+    "BR_VIBRA.pe_trailing": {
+      "fact_id": "BR_VIBRA.pe_trailing",
+      "formatted": "8,4x",
+      "formula": "trailing_pe da fonte; fora de (0; 100] ⇒ n/d (lucro deprimido ou erro da fonte); retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[VBBR3.SA].trailing_pe"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "P/L (lucro dos últimos 12 meses, fonte de mercado)",
+      "point_in_time": false,
+      "unit": "x",
+      "value": 8.439535
+    },
+    "BR_VIBRA.ret_12m_usd": {
+      "fact_id": "BR_VIBRA.ret_12m_usd",
+      "formatted": "+88,07%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD (linha primária) nos últimos 252 pregões até 2026-10-21; cobertura 241/252 pregões (96%); mínimo 80% de cobertura, dias sem dado não são preenchidos",
+      "inputs": [
+        "panel.returns[BR_VIBRA]",
+        "janela=2025-10-31..2026-10-21",
+        "cobertura=241/252"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Retorno total em USD — 12 meses",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.8807248771760836
+    },
+    "BR_VIBRA.ret_1m_usd": {
+      "fact_id": "BR_VIBRA.ret_1m_usd",
+      "formatted": "-5,63%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD (linha primária) nos últimos 21 pregões até 2026-10-21; cobertura 20/21 pregões (95%); mínimo 80% de cobertura, dias sem dado não são preenchidos",
+      "inputs": [
+        "panel.returns[BR_VIBRA]",
+        "janela=2026-09-23..2026-10-21",
+        "cobertura=20/21"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Retorno total em USD — 1 mês",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.056300327871779854
+    },
+    "BR_VIBRA.ret_1w_usd": {
+      "fact_id": "BR_VIBRA.ret_1w_usd",
+      "formatted": "-0,66%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD (linha primária) nos últimos 5 pregões até 2026-10-21; cobertura 5/5 pregões (100%); mínimo 80% de cobertura, dias sem dado não são preenchidos",
+      "inputs": [
+        "panel.returns[BR_VIBRA]",
+        "janela=2026-10-15..2026-10-21",
+        "cobertura=5/5"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Retorno total em USD — 1 semana",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.006614550514007278
+    },
+    "BR_VIBRA.ret_3m_usd": {
+      "fact_id": "BR_VIBRA.ret_3m_usd",
+      "formatted": "+7,59%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD (linha primária) nos últimos 63 pregões até 2026-10-21; cobertura 61/63 pregões (97%); mínimo 80% de cobertura, dias sem dado não são preenchidos",
+      "inputs": [
+        "panel.returns[BR_VIBRA]",
+        "janela=2026-07-27..2026-10-21",
+        "cobertura=61/63"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Retorno total em USD — 3 meses",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.07588943124533887
+    },
+    "BR_VIBRA.ret_ytd_usd": {
+      "fact_id": "BR_VIBRA.ret_ytd_usd",
+      "formatted": "+67,28%",
+      "formula": "Π(1+r_d)−1 dos retornos diários em USD de 2026 até 2026-10-21; cobertura 201/209 pregões (96%)",
+      "inputs": [
+        "panel.returns[BR_VIBRA]",
+        "janela=2026-01-02..2026-10-21",
+        "cobertura=201/209"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Retorno total em USD — no ano",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.6728195082053503
+    },
+    "BR_VIBRA.roe": {
+      "fact_id": "BR_VIBRA.roe",
+      "formatted": "22,62%",
+      "formula": "return_on_equity da fonte (decimal); retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[VBBR3.SA].return_on_equity"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Retorno sobre o patrimônio (ROE)",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.22621
+    },
+    "BR_VIBRA.si_pct_float": {
+      "fact_id": "BR_VIBRA.si_pct_float",
+      "formatted": "n/d",
+      "formula": "máximo entre short_pct_float (linhas US) e lending_pct_shares (BTC B3); retrato atual",
+      "inputs": [
+        "squeeze_table[ausente].si_pct_float"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Short interest (% do free float, proxy)",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": null
+    },
+    "BR_VIBRA.squeeze_score": {
+      "fact_id": "BR_VIBRA.squeeze_score",
+      "formatted": "n/d",
+      "formula": "média ponderada dos componentes si/dtc/fee/mom/float/catalyst com regra do máximo (analytics.squeeze)",
+      "inputs": [
+        "squeeze_table[ausente].squeeze_score"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Escore de risco de short squeeze (0–100)",
+      "point_in_time": false,
+      "unit": "score",
+      "value": null
+    },
+    "BR_VIBRA.target_upside": {
+      "fact_id": "BR_VIBRA.target_upside",
+      "formatted": "+13,51%",
+      "formula": "target_mean_price / último fechamento da mesma linha − 1; preço de 2026-10-21; retrato atual do snapshot (não point-in-time)",
+      "inputs": [
+        "fundamentals[VBBR3.SA].target_mean_price",
+        "close[VBBR3.SA]"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Upside ao preço-alvo médio do consenso",
+      "point_in_time": false,
+      "unit": "pct",
+      "value": 0.1351139810356834
+    },
+    "BR_VIBRA.vol_3m": {
+      "fact_id": "BR_VIBRA.vol_3m",
+      "formatted": "31,30%",
+      "formula": "desvio-padrão amostral dos retornos diários em USD dos últimos 63 pregões × √252; cobertura 61/63 pregões (97%)",
+      "inputs": [
+        "panel.returns[BR_VIBRA]",
+        "cobertura=61/63"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Volatilidade anualizada em USD — 3 meses",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.31295707703575565
+    },
+    "bench.ARGT.ret_1m": {
+      "fact_id": "bench.ARGT.ret_1m",
+      "formatted": "-5,89%",
+      "formula": "variação composta do fechamento de ARGT nos últimos 21 pregões até 2026-10-21, como cotado (USD; sem conversão cambial); cobertura 21/21 pregões (100%)",
+      "inputs": [
+        "benchmarks[ARGT]",
+        "janela=2026-09-23..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de 1 mês de ARGT (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.05889312826295634
+    },
+    "bench.ARGT.ret_ytd": {
+      "fact_id": "bench.ARGT.ret_ytd",
+      "formatted": "-4,38%",
+      "formula": "variação composta do fechamento de ARGT de 2026 até 2026-10-21, como cotado (USD; sem conversão cambial); cobertura 202/208 pregões (97%)",
+      "inputs": [
+        "benchmarks[ARGT]",
+        "janela=2026-01-02..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de ARGT no ano (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.04375888677114148
+    },
+    "bench.BOVA11.SA.ret_1m": {
+      "fact_id": "bench.BOVA11.SA.ret_1m",
+      "formatted": "+10,42%",
+      "formula": "variação composta do fechamento de BOVA11.SA nos últimos 21 pregões até 2026-10-21, como cotado (em BRL, moeda local; sem conversão cambial); cobertura 20/21 pregões (95%)",
+      "inputs": [
+        "benchmarks[BOVA11.SA]",
+        "janela=2026-09-23..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de 1 mês de BOVA11.SA (em BRL, moeda local)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.10417795241625805
+    },
+    "bench.BOVA11.SA.ret_ytd": {
+      "fact_id": "bench.BOVA11.SA.ret_ytd",
+      "formatted": "+28,80%",
+      "formula": "variação composta do fechamento de BOVA11.SA de 2026 até 2026-10-21, como cotado (em BRL, moeda local; sem conversão cambial); cobertura 201/208 pregões (97%)",
+      "inputs": [
+        "benchmarks[BOVA11.SA]",
+        "janela=2026-01-02..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de BOVA11.SA no ano (em BRL, moeda local)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.2879746835443038
+    },
+    "bench.BZ=F.ret_1m": {
+      "fact_id": "bench.BZ=F.ret_1m",
+      "formatted": "+10,64%",
+      "formula": "variação composta do fechamento de BZ=F nos últimos 21 pregões até 2026-10-21, como cotado (futuro cotado em USD; sem conversão cambial); cobertura 21/21 pregões (100%)",
+      "inputs": [
+        "benchmarks[BZ=F]",
+        "janela=2026-09-23..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de 1 mês de BZ=F (futuro cotado em USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.10639796028809867
+    },
+    "bench.BZ=F.ret_ytd": {
+      "fact_id": "bench.BZ=F.ret_ytd",
+      "formatted": "+80,46%",
+      "formula": "variação composta do fechamento de BZ=F de 2026 até 2026-10-21, como cotado (futuro cotado em USD; sem conversão cambial); cobertura 202/208 pregões (97%)",
+      "inputs": [
+        "benchmarks[BZ=F]",
+        "janela=2026-01-02..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de BZ=F no ano (futuro cotado em USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.804601484177438
+    },
+    "bench.CL=F.ret_1m": {
+      "fact_id": "bench.CL=F.ret_1m",
+      "formatted": "+3,50%",
+      "formula": "variação composta do fechamento de CL=F nos últimos 21 pregões até 2026-10-21, como cotado (futuro cotado em USD; sem conversão cambial); cobertura 21/21 pregões (100%)",
+      "inputs": [
+        "benchmarks[CL=F]",
+        "janela=2026-09-23..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de 1 mês de CL=F (futuro cotado em USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.03499318443955057
+    },
+    "bench.CL=F.ret_ytd": {
+      "fact_id": "bench.CL=F.ret_ytd",
+      "formatted": "+70,50%",
+      "formula": "variação composta do fechamento de CL=F de 2026 até 2026-10-21, como cotado (futuro cotado em USD; sem conversão cambial); cobertura 202/208 pregões (97%)",
+      "inputs": [
+        "benchmarks[CL=F]",
+        "janela=2026-01-02..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de CL=F no ano (futuro cotado em USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.7049809238556646
+    },
+    "bench.COLO.ret_1m": {
+      "fact_id": "bench.COLO.ret_1m",
+      "formatted": "-2,03%",
+      "formula": "variação composta do fechamento de COLO nos últimos 21 pregões até 2026-10-21, como cotado (USD; sem conversão cambial); cobertura 21/21 pregões (100%)",
+      "inputs": [
+        "benchmarks[COLO]",
+        "janela=2026-09-23..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de 1 mês de COLO (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.02025262368488734
+    },
+    "bench.COLO.ret_ytd": {
+      "fact_id": "bench.COLO.ret_ytd",
+      "formatted": "+37,09%",
+      "formula": "variação composta do fechamento de COLO de 2026 até 2026-10-21, como cotado (USD; sem conversão cambial); cobertura 202/208 pregões (97%)",
+      "inputs": [
+        "benchmarks[COLO]",
+        "janela=2026-01-02..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de COLO no ano (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.3709315782015059
+    },
+    "bench.DX-Y.NYB.ret_1m": {
+      "fact_id": "bench.DX-Y.NYB.ret_1m",
+      "formatted": "+1,08%",
+      "formula": "variação composta do fechamento de DX-Y.NYB nos últimos 21 pregões até 2026-10-21, como cotado (variação do nível do índice; sem conversão cambial); cobertura 21/21 pregões (100%)",
+      "inputs": [
+        "benchmarks[DX-Y.NYB]",
+        "janela=2026-09-23..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de 1 mês de DX-Y.NYB (variação do nível do índice)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.010844964557821912
+    },
+    "bench.DX-Y.NYB.ret_ytd": {
+      "fact_id": "bench.DX-Y.NYB.ret_ytd",
+      "formatted": "+3,47%",
+      "formula": "variação composta do fechamento de DX-Y.NYB de 2026 até 2026-10-21, como cotado (variação do nível do índice; sem conversão cambial); cobertura 202/208 pregões (97%)",
+      "inputs": [
+        "benchmarks[DX-Y.NYB]",
+        "janela=2026-01-02..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de DX-Y.NYB no ano (variação do nível do índice)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0347069918107441
+    },
+    "bench.ECH.ret_1m": {
+      "fact_id": "bench.ECH.ret_1m",
+      "formatted": "-7,68%",
+      "formula": "variação composta do fechamento de ECH nos últimos 21 pregões até 2026-10-21, como cotado (USD; sem conversão cambial); cobertura 21/21 pregões (100%)",
+      "inputs": [
+        "benchmarks[ECH]",
+        "janela=2026-09-23..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de 1 mês de ECH (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.07677019012640696
+    },
+    "bench.ECH.ret_ytd": {
+      "fact_id": "bench.ECH.ret_ytd",
+      "formatted": "-8,02%",
+      "formula": "variação composta do fechamento de ECH de 2026 até 2026-10-21, como cotado (USD; sem conversão cambial); cobertura 202/208 pregões (97%)",
+      "inputs": [
+        "benchmarks[ECH]",
+        "janela=2026-01-02..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de ECH no ano (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.08019805831916693
+    },
+    "bench.EEM.ret_1m": {
+      "fact_id": "bench.EEM.ret_1m",
+      "formatted": "-8,00%",
+      "formula": "variação composta do fechamento de EEM nos últimos 21 pregões até 2026-10-21, como cotado (USD; sem conversão cambial); cobertura 21/21 pregões (100%)",
+      "inputs": [
+        "benchmarks[EEM]",
+        "janela=2026-09-23..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de 1 mês de EEM (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.08002892766152425
+    },
+    "bench.EEM.ret_ytd": {
+      "fact_id": "bench.EEM.ret_ytd",
+      "formatted": "+16,19%",
+      "formula": "variação composta do fechamento de EEM de 2026 até 2026-10-21, como cotado (USD; sem conversão cambial); cobertura 202/208 pregões (97%)",
+      "inputs": [
+        "benchmarks[EEM]",
+        "janela=2026-01-02..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de EEM no ano (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.16194481371991287
+    },
+    "bench.EPU.ret_1m": {
+      "fact_id": "bench.EPU.ret_1m",
+      "formatted": "-4,69%",
+      "formula": "variação composta do fechamento de EPU nos últimos 21 pregões até 2026-10-21, como cotado (USD; sem conversão cambial); cobertura 21/21 pregões (100%)",
+      "inputs": [
+        "benchmarks[EPU]",
+        "janela=2026-09-23..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de 1 mês de EPU (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.046948889778857805
+    },
+    "bench.EPU.ret_ytd": {
+      "fact_id": "bench.EPU.ret_ytd",
+      "formatted": "+22,61%",
+      "formula": "variação composta do fechamento de EPU de 2026 até 2026-10-21, como cotado (USD; sem conversão cambial); cobertura 202/208 pregões (97%)",
+      "inputs": [
+        "benchmarks[EPU]",
+        "janela=2026-01-02..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de EPU no ano (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.2261230263356988
+    },
+    "bench.EWW.ret_1m": {
+      "fact_id": "bench.EWW.ret_1m",
+      "formatted": "+1,46%",
+      "formula": "variação composta do fechamento de EWW nos últimos 21 pregões até 2026-10-21, como cotado (USD; sem conversão cambial); cobertura 21/21 pregões (100%)",
+      "inputs": [
+        "benchmarks[EWW]",
+        "janela=2026-09-23..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de 1 mês de EWW (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.014638785665959775
+    },
+    "bench.EWW.ret_ytd": {
+      "fact_id": "bench.EWW.ret_ytd",
+      "formatted": "+8,97%",
+      "formula": "variação composta do fechamento de EWW de 2026 até 2026-10-21, como cotado (USD; sem conversão cambial); cobertura 202/208 pregões (97%)",
+      "inputs": [
+        "benchmarks[EWW]",
+        "janela=2026-01-02..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de EWW no ano (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.08971586696132205
+    },
+    "bench.EWZ.ret_1m": {
+      "fact_id": "bench.EWZ.ret_1m",
+      "formatted": "+11,11%",
+      "formula": "variação composta do fechamento de EWZ nos últimos 21 pregões até 2026-10-21, como cotado (USD; sem conversão cambial); cobertura 21/21 pregões (100%)",
+      "inputs": [
+        "benchmarks[EWZ]",
+        "janela=2026-09-23..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de 1 mês de EWZ (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.11108207492021926
+    },
+    "bench.EWZ.ret_ytd": {
+      "fact_id": "bench.EWZ.ret_ytd",
+      "formatted": "+33,81%",
+      "formula": "variação composta do fechamento de EWZ de 2026 até 2026-10-21, como cotado (USD; sem conversão cambial); cobertura 202/208 pregões (97%)",
+      "inputs": [
+        "benchmarks[EWZ]",
+        "janela=2026-01-02..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de EWZ no ano (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.3380546965382558
+    },
+    "bench.GC=F.ret_1m": {
+      "fact_id": "bench.GC=F.ret_1m",
+      "formatted": "-5,07%",
+      "formula": "variação composta do fechamento de GC=F nos últimos 21 pregões até 2026-10-21, como cotado (futuro cotado em USD; sem conversão cambial); cobertura 21/21 pregões (100%)",
+      "inputs": [
+        "benchmarks[GC=F]",
+        "janela=2026-09-23..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de 1 mês de GC=F (futuro cotado em USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.050726625754906385
+    },
+    "bench.GC=F.ret_ytd": {
+      "fact_id": "bench.GC=F.ret_ytd",
+      "formatted": "-4,30%",
+      "formula": "variação composta do fechamento de GC=F de 2026 até 2026-10-21, como cotado (futuro cotado em USD; sem conversão cambial); cobertura 202/208 pregões (97%)",
+      "inputs": [
+        "benchmarks[GC=F]",
+        "janela=2026-01-02..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de GC=F no ano (futuro cotado em USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.04300757667700361
+    },
+    "bench.HG=F.ret_1m": {
+      "fact_id": "bench.HG=F.ret_1m",
+      "formatted": "-2,90%",
+      "formula": "variação composta do fechamento de HG=F nos últimos 21 pregões até 2026-10-21, como cotado (futuro cotado em USD; sem conversão cambial); cobertura 21/21 pregões (100%)",
+      "inputs": [
+        "benchmarks[HG=F]",
+        "janela=2026-09-23..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de 1 mês de HG=F (futuro cotado em USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.028996242090072788
+    },
+    "bench.HG=F.ret_ytd": {
+      "fact_id": "bench.HG=F.ret_ytd",
+      "formatted": "+16,58%",
+      "formula": "variação composta do fechamento de HG=F de 2026 até 2026-10-21, como cotado (futuro cotado em USD; sem conversão cambial); cobertura 202/208 pregões (97%)",
+      "inputs": [
+        "benchmarks[HG=F]",
+        "janela=2026-01-02..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de HG=F no ano (futuro cotado em USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.16580813394397542
+    },
+    "bench.ILF.ret_1m": {
+      "fact_id": "bench.ILF.ret_1m",
+      "formatted": "+5,70%",
+      "formula": "variação composta do fechamento de ILF nos últimos 21 pregões até 2026-10-21, como cotado (USD; sem conversão cambial); cobertura 21/21 pregões (100%)",
+      "inputs": [
+        "benchmarks[ILF]",
+        "janela=2026-09-23..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de 1 mês de ILF (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.05696724441769052
+    },
+    "bench.ILF.ret_ytd": {
+      "fact_id": "bench.ILF.ret_ytd",
+      "formatted": "+24,30%",
+      "formula": "variação composta do fechamento de ILF de 2026 até 2026-10-21, como cotado (USD; sem conversão cambial); cobertura 202/208 pregões (97%)",
+      "inputs": [
+        "benchmarks[ILF]",
+        "janela=2026-01-02..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de ILF no ano (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.24302126521415768
+    },
+    "bench.SI=F.ret_1m": {
+      "fact_id": "bench.SI=F.ret_1m",
+      "formatted": "-12,11%",
+      "formula": "variação composta do fechamento de SI=F nos últimos 21 pregões até 2026-10-21, como cotado (futuro cotado em USD; sem conversão cambial); cobertura 21/21 pregões (100%)",
+      "inputs": [
+        "benchmarks[SI=F]",
+        "janela=2026-09-23..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de 1 mês de SI=F (futuro cotado em USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.12113995643751319
+    },
+    "bench.SI=F.ret_ytd": {
+      "fact_id": "bench.SI=F.ret_ytd",
+      "formatted": "-17,38%",
+      "formula": "variação composta do fechamento de SI=F de 2026 até 2026-10-21, como cotado (futuro cotado em USD; sem conversão cambial); cobertura 202/208 pregões (97%)",
+      "inputs": [
+        "benchmarks[SI=F]",
+        "janela=2026-01-02..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de SI=F no ano (futuro cotado em USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.17379591245309856
+    },
+    "bench.SPY.ret_1m": {
+      "fact_id": "bench.SPY.ret_1m",
+      "formatted": "-0,04%",
+      "formula": "variação composta do fechamento de SPY nos últimos 21 pregões até 2026-10-21, como cotado (USD; sem conversão cambial); cobertura 21/21 pregões (100%)",
+      "inputs": [
+        "benchmarks[SPY]",
+        "janela=2026-09-23..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de 1 mês de SPY (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.00037494895848544374
+    },
+    "bench.SPY.ret_ytd": {
+      "fact_id": "bench.SPY.ret_ytd",
+      "formatted": "+13,37%",
+      "formula": "variação composta do fechamento de SPY de 2026 até 2026-10-21, como cotado (USD; sem conversão cambial); cobertura 202/208 pregões (97%)",
+      "inputs": [
+        "benchmarks[SPY]",
+        "janela=2026-01-02..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de SPY no ano (USD)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.13369610251958686
+    },
+    "bench.^BVSP.ret_1m": {
+      "fact_id": "bench.^BVSP.ret_1m",
+      "formatted": "+10,18%",
+      "formula": "variação composta do fechamento de ^BVSP nos últimos 21 pregões até 2026-10-21, como cotado (em BRL, moeda local; sem conversão cambial); cobertura 20/21 pregões (95%)",
+      "inputs": [
+        "benchmarks[^BVSP]",
+        "janela=2026-09-23..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de 1 mês de ^BVSP (em BRL, moeda local)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.10176037292648243
+    },
+    "bench.^BVSP.ret_ytd": {
+      "fact_id": "bench.^BVSP.ret_ytd",
+      "formatted": "+28,16%",
+      "formula": "variação composta do fechamento de ^BVSP de 2026 até 2026-10-21, como cotado (em BRL, moeda local; sem conversão cambial); cobertura 201/208 pregões (97%)",
+      "inputs": [
+        "benchmarks[^BVSP]",
+        "janela=2026-01-02..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de ^BVSP no ano (em BRL, moeda local)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.2815840768037252
+    },
+    "bench.^MERV.ret_1m": {
+      "fact_id": "bench.^MERV.ret_1m",
+      "formatted": "-4,96%",
+      "formula": "variação composta do fechamento de ^MERV nos últimos 21 pregões até 2026-10-21, como cotado (em ARS, moeda local; sem conversão cambial); cobertura 17/21 pregões (81%)",
+      "inputs": [
+        "benchmarks[^MERV]",
+        "janela=2026-09-23..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de 1 mês de ^MERV (em ARS, moeda local)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.049610279351227415
+    },
+    "bench.^MERV.ret_ytd": {
+      "fact_id": "bench.^MERV.ret_ytd",
+      "formatted": "-6,64%",
+      "formula": "variação composta do fechamento de ^MERV de 2026 até 2026-10-21, como cotado (em ARS, moeda local; sem conversão cambial); cobertura 195/208 pregões (94%)",
+      "inputs": [
+        "benchmarks[^MERV]",
+        "janela=2026-01-02..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de ^MERV no ano (em ARS, moeda local)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.06641454350267295
+    },
+    "bench.^MXX.ret_1m": {
+      "fact_id": "bench.^MXX.ret_1m",
+      "formatted": "+8,99%",
+      "formula": "variação composta do fechamento de ^MXX nos últimos 21 pregões até 2026-10-21, como cotado (em MXN, moeda local; sem conversão cambial); cobertura 21/21 pregões (100%)",
+      "inputs": [
+        "benchmarks[^MXX]",
+        "janela=2026-09-23..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de 1 mês de ^MXX (em MXN, moeda local)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0898736534587512
+    },
+    "bench.^MXX.ret_ytd": {
+      "fact_id": "bench.^MXX.ret_ytd",
+      "formatted": "+9,24%",
+      "formula": "variação composta do fechamento de ^MXX de 2026 até 2026-10-21, como cotado (em MXN, moeda local; sem conversão cambial); cobertura 203/208 pregões (98%)",
+      "inputs": [
+        "benchmarks[^MXX]",
+        "janela=2026-01-02..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de ^MXX no ano (em MXN, moeda local)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.09238700152986223
+    },
+    "bench.^VIX.ret_1m": {
+      "fact_id": "bench.^VIX.ret_1m",
+      "formatted": "+17,38%",
+      "formula": "variação composta do fechamento de ^VIX nos últimos 21 pregões até 2026-10-21, como cotado (variação do nível do índice; sem conversão cambial); cobertura 21/21 pregões (100%)",
+      "inputs": [
+        "benchmarks[^VIX]",
+        "janela=2026-09-23..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de 1 mês de ^VIX (variação do nível do índice)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.1738212709639726
+    },
+    "bench.^VIX.ret_ytd": {
+      "fact_id": "bench.^VIX.ret_ytd",
+      "formatted": "+11,57%",
+      "formula": "variação composta do fechamento de ^VIX de 2026 até 2026-10-21, como cotado (variação do nível do índice; sem conversão cambial); cobertura 204/208 pregões (98%)",
+      "inputs": [
+        "benchmarks[^VIX]",
+        "janela=2026-01-02..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Retorno de ^VIX no ano (variação do nível do índice)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.11571909819279869
+    },
+    "cob.BR_BRAVA.alvo_anterior": {
+      "fact_id": "cob.BR_BRAVA.alvo_anterior",
+      "formatted": "R$ 20,63",
+      "formula": "evento anterior do livro da cobertura",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Preço-alvo anterior",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 20.6297
+    },
+    "cob.BR_BRAVA.dias_desde_revisao": {
+      "fact_id": "cob.BR_BRAVA.dias_desde_revisao",
+      "formatted": "5,0 dias",
+      "formula": "data − última revisão",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Dias desde a última revisão",
+      "point_in_time": true,
+      "unit": "days",
+      "value": 5.0
+    },
+    "cob.BR_BRAVA.n_revisoes": {
+      "fact_id": "cob.BR_BRAVA.n_revisoes",
+      "formatted": "2",
+      "formula": "eventos REVISAO e MUDANCA_RATING no livro",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Número de revisões do preço-alvo",
+      "point_in_time": true,
+      "unit": "count",
+      "value": 2.0
+    },
+    "cob.BR_BRAVA.retorno_desde_inicio": {
+      "fact_id": "cob.BR_BRAVA.retorno_desde_inicio",
+      "formatted": "+4,02%",
+      "formula": "P0 × fator de desdobramentos ÷ preço na iniciação − 1 (mesma linha)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Variação de preço desde o início da cobertura",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.040221216691805006
+    },
+    "cob.BR_BRAVA.variacao_alvo": {
+      "fact_id": "cob.BR_BRAVA.variacao_alvo",
+      "formatted": "-1,46%",
+      "formula": "TP atual ÷ TP anterior − 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Variação do preço-alvo",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.014619698783792323
+    },
+    "cob.BR_COSAN.alvo_anterior": {
+      "fact_id": "cob.BR_COSAN.alvo_anterior",
+      "formatted": "R$ 5,01",
+      "formula": "evento anterior do livro da cobertura",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Preço-alvo anterior",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 5.01149
+    },
+    "cob.BR_COSAN.dias_desde_revisao": {
+      "fact_id": "cob.BR_COSAN.dias_desde_revisao",
+      "formatted": "7,0 dias",
+      "formula": "data − última revisão",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Dias desde a última revisão",
+      "point_in_time": true,
+      "unit": "days",
+      "value": 7.0
+    },
+    "cob.BR_COSAN.n_revisoes": {
+      "fact_id": "cob.BR_COSAN.n_revisoes",
+      "formatted": "1",
+      "formula": "eventos REVISAO e MUDANCA_RATING no livro",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Número de revisões do preço-alvo",
+      "point_in_time": true,
+      "unit": "count",
+      "value": 1.0
+    },
+    "cob.BR_COSAN.retorno_desde_inicio": {
+      "fact_id": "cob.BR_COSAN.retorno_desde_inicio",
+      "formatted": "-2,57%",
+      "formula": "P0 × fator de desdobramentos ÷ preço na iniciação − 1 (mesma linha)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Variação de preço desde o início da cobertura",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.025742574257425765
+    },
+    "cob.BR_COSAN.variacao_alvo": {
+      "fact_id": "cob.BR_COSAN.variacao_alvo",
+      "formatted": "+0,16%",
+      "formula": "TP atual ÷ TP anterior − 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Variação do preço-alvo",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0015624095827786455
+    },
+    "cob.BR_PRIO.alvo_anterior": {
+      "fact_id": "cob.BR_PRIO.alvo_anterior",
+      "formatted": "R$ 87,11",
+      "formula": "evento anterior do livro da cobertura",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Preço-alvo anterior",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 87.1073
+    },
+    "cob.BR_PRIO.dias_desde_revisao": {
+      "fact_id": "cob.BR_PRIO.dias_desde_revisao",
+      "formatted": "5,0 dias",
+      "formula": "data − última revisão",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Dias desde a última revisão",
+      "point_in_time": true,
+      "unit": "days",
+      "value": 5.0
+    },
+    "cob.BR_PRIO.n_revisoes": {
+      "fact_id": "cob.BR_PRIO.n_revisoes",
+      "formatted": "2",
+      "formula": "eventos REVISAO e MUDANCA_RATING no livro",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Número de revisões do preço-alvo",
+      "point_in_time": true,
+      "unit": "count",
+      "value": 2.0
+    },
+    "cob.BR_PRIO.retorno_desde_inicio": {
+      "fact_id": "cob.BR_PRIO.retorno_desde_inicio",
+      "formatted": "+9,17%",
+      "formula": "P0 × fator de desdobramentos ÷ preço na iniciação − 1 (mesma linha)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Variação de preço desde o início da cobertura",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.09167864558377259
+    },
+    "cob.BR_PRIO.variacao_alvo": {
+      "fact_id": "cob.BR_PRIO.variacao_alvo",
+      "formatted": "-2,04%",
+      "formula": "TP atual ÷ TP anterior − 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Variação do preço-alvo",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.02041390331235149
+    },
+    "cob.BR_RECV.alvo_anterior": {
+      "fact_id": "cob.BR_RECV.alvo_anterior",
+      "formatted": "R$ 15,13",
+      "formula": "evento anterior do livro da cobertura",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Preço-alvo anterior",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 15.1255
+    },
+    "cob.BR_RECV.dias_desde_revisao": {
+      "fact_id": "cob.BR_RECV.dias_desde_revisao",
+      "formatted": "5,0 dias",
+      "formula": "data − última revisão",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Dias desde a última revisão",
+      "point_in_time": true,
+      "unit": "days",
+      "value": 5.0
+    },
+    "cob.BR_RECV.n_revisoes": {
+      "fact_id": "cob.BR_RECV.n_revisoes",
+      "formatted": "3",
+      "formula": "eventos REVISAO e MUDANCA_RATING no livro",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Número de revisões do preço-alvo",
+      "point_in_time": true,
+      "unit": "count",
+      "value": 3.0
+    },
+    "cob.BR_RECV.retorno_desde_inicio": {
+      "fact_id": "cob.BR_RECV.retorno_desde_inicio",
+      "formatted": "+4,53%",
+      "formula": "P0 × fator de desdobramentos ÷ preço na iniciação − 1 (mesma linha)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Variação de preço desde o início da cobertura",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.04529914529914536
+    },
+    "cob.BR_RECV.variacao_alvo": {
+      "fact_id": "cob.BR_RECV.variacao_alvo",
+      "formatted": "-1,66%",
+      "formula": "TP atual ÷ TP anterior − 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Variação do preço-alvo",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.016620938150804898
+    },
+    "cob.BR_ULTRAPAR.alvo_anterior": {
+      "fact_id": "cob.BR_ULTRAPAR.alvo_anterior",
+      "formatted": "R$ 44,50",
+      "formula": "evento anterior do livro da cobertura",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Preço-alvo anterior",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 44.5029
+    },
+    "cob.BR_ULTRAPAR.dias_desde_revisao": {
+      "fact_id": "cob.BR_ULTRAPAR.dias_desde_revisao",
+      "formatted": "5,0 dias",
+      "formula": "data − última revisão",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Dias desde a última revisão",
+      "point_in_time": true,
+      "unit": "days",
+      "value": 5.0
+    },
+    "cob.BR_ULTRAPAR.n_revisoes": {
+      "fact_id": "cob.BR_ULTRAPAR.n_revisoes",
+      "formatted": "2",
+      "formula": "eventos REVISAO e MUDANCA_RATING no livro",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Número de revisões do preço-alvo",
+      "point_in_time": true,
+      "unit": "count",
+      "value": 2.0
+    },
+    "cob.BR_ULTRAPAR.retorno_desde_inicio": {
+      "fact_id": "cob.BR_ULTRAPAR.retorno_desde_inicio",
+      "formatted": "-0,23%",
+      "formula": "P0 × fator de desdobramentos ÷ preço na iniciação − 1 (mesma linha)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Variação de preço desde o início da cobertura",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.0023237800154917165
+    },
+    "cob.BR_ULTRAPAR.variacao_alvo": {
+      "fact_id": "cob.BR_ULTRAPAR.variacao_alvo",
+      "formatted": "-2,63%",
+      "formula": "TP atual ÷ TP anterior − 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Variação do preço-alvo",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.0263196331025618
+    },
+    "cob.BR_VIBRA.alvo_anterior": {
+      "fact_id": "cob.BR_VIBRA.alvo_anterior",
+      "formatted": "R$ 50,46",
+      "formula": "evento anterior do livro da cobertura",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Preço-alvo anterior",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 50.4646
+    },
+    "cob.BR_VIBRA.dias_desde_revisao": {
+      "fact_id": "cob.BR_VIBRA.dias_desde_revisao",
+      "formatted": "5,0 dias",
+      "formula": "data − última revisão",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Dias desde a última revisão",
+      "point_in_time": true,
+      "unit": "days",
+      "value": 5.0
+    },
+    "cob.BR_VIBRA.n_revisoes": {
+      "fact_id": "cob.BR_VIBRA.n_revisoes",
+      "formatted": "2",
+      "formula": "eventos REVISAO e MUDANCA_RATING no livro",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Número de revisões do preço-alvo",
+      "point_in_time": true,
+      "unit": "count",
+      "value": 2.0
+    },
+    "cob.BR_VIBRA.retorno_desde_inicio": {
+      "fact_id": "cob.BR_VIBRA.retorno_desde_inicio",
+      "formatted": "-3,46%",
+      "formula": "P0 × fator de desdobramentos ÷ preço na iniciação − 1 (mesma linha)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Variação de preço desde o início da cobertura",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.03462050599201061
+    },
+    "cob.BR_VIBRA.variacao_alvo": {
+      "fact_id": "cob.BR_VIBRA.variacao_alvo",
+      "formatted": "-2,64%",
+      "formula": "TP atual ÷ TP anterior − 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Variação do preço-alvo",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.026448242926724874
+    },
+    "etf.ARGT.cobertura": {
+      "fact_id": "etf.ARGT.cobertura",
+      "formatted": "10,50%",
+      "formula": "Σ pesos com preço-alvo da casa",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_ARGT.json"
+      ],
+      "issuer_id": null,
+      "name": "Peso coberto por modelos da casa no ARGT",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.105
+    },
+    "etf.ARGT.preco_alvo": {
+      "fact_id": "etf.ARGT.preco_alvo",
+      "formatted": "US$ 81,92",
+      "formula": "TP_e = P_e × (1 + R_e − DY)",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_ARGT.json"
+      ],
+      "issuer_id": null,
+      "name": "Preço-alvo de 12 meses do ARGT",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 81.9238
+    },
+    "etf.ARGT.r_bu": {
+      "fact_id": "etf.ARGT.r_bu",
+      "formatted": "-3,45%",
+      "formula": "alvos da casa por posição",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_ARGT.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno bottom-up do ARGT",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.0344655
+    },
+    "etf.ARGT.r_td": {
+      "fact_id": "etf.ARGT.r_td",
+      "formatted": "-5,24%",
+      "formula": "P/L justificado e Grinold–Kroner",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_ARGT.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno top-down do ARGT",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.0523526
+    },
+    "etf.ARGT.retorno_esperado": {
+      "fact_id": "etf.ARGT.retorno_esperado",
+      "formatted": "-5,13%",
+      "formula": "R_e = ω × R_BU + (1 − ω) × R_TD",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_ARGT.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno esperado de 12 meses do ARGT",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.0513092
+    },
+    "etf.ARGT.visao_ilf": {
+      "fact_id": "etf.ARGT.visao_ilf",
+      "formatted": "Negativa",
+      "formula": "IR = (R_e − R_ILF) ÷ TE",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_ARGT.json"
+      ],
+      "issuer_id": null,
+      "name": "Visão do ARGT relativa ao ILF",
+      "point_in_time": true,
+      "unit": "ratio",
+      "value": -0.522279
+    },
+    "etf.BOVA11.cobertura": {
+      "fact_id": "etf.BOVA11.cobertura",
+      "formatted": "81,39%",
+      "formula": "Σ pesos com preço-alvo da casa",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_BOVA11.json"
+      ],
+      "issuer_id": null,
+      "name": "Peso coberto por modelos da casa no BOVA11",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.81391
+    },
+    "etf.BOVA11.preco_alvo": {
+      "fact_id": "etf.BOVA11.preco_alvo",
+      "formatted": "R$ 222,41",
+      "formula": "TP_e = P_e × (1 + R_e − DY)",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_BOVA11.json"
+      ],
+      "issuer_id": null,
+      "name": "Preço-alvo de 12 meses do BOVA11",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 222.407
+    },
+    "etf.BOVA11.r_bu": {
+      "fact_id": "etf.BOVA11.r_bu",
+      "formatted": "+17,12%",
+      "formula": "alvos da casa por posição",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_BOVA11.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno bottom-up do BOVA11",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.171196
+    },
+    "etf.BOVA11.r_td": {
+      "fact_id": "etf.BOVA11.r_td",
+      "formatted": "+12,13%",
+      "formula": "P/L justificado e Grinold–Kroner",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_BOVA11.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno top-down do BOVA11",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.12132
+    },
+    "etf.BOVA11.retorno_esperado": {
+      "fact_id": "etf.BOVA11.retorno_esperado",
+      "formatted": "+14,39%",
+      "formula": "R_e = ω × R_BU + (1 − ω) × R_TD",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_BOVA11.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno esperado de 12 meses do BOVA11",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.143872
+    },
+    "etf.BOVA11.visao_ilf": {
+      "fact_id": "etf.BOVA11.visao_ilf",
+      "formatted": "Neutra",
+      "formula": "IR = (R_e − R_ILF) ÷ TE",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_BOVA11.json"
+      ],
+      "issuer_id": null,
+      "name": "Visão do BOVA11 relativa ao ILF",
+      "point_in_time": true,
+      "unit": "ratio",
+      "value": 0.269305
+    },
+    "etf.COLO.cobertura": {
+      "fact_id": "etf.COLO.cobertura",
+      "formatted": "45,61%",
+      "formula": "Σ pesos com preço-alvo da casa",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_COLO.json"
+      ],
+      "issuer_id": null,
+      "name": "Peso coberto por modelos da casa no COLO",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.456112
+    },
+    "etf.COLO.preco_alvo": {
+      "fact_id": "etf.COLO.preco_alvo",
+      "formatted": "US$ 51,18",
+      "formula": "TP_e = P_e × (1 + R_e − DY)",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_COLO.json"
+      ],
+      "issuer_id": null,
+      "name": "Preço-alvo de 12 meses do COLO",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 51.1754
+    },
+    "etf.COLO.r_bu": {
+      "fact_id": "etf.COLO.r_bu",
+      "formatted": "+5,15%",
+      "formula": "alvos da casa por posição",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_COLO.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno bottom-up do COLO",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0514622
+    },
+    "etf.COLO.r_td": {
+      "fact_id": "etf.COLO.r_td",
+      "formatted": "+10,24%",
+      "formula": "P/L justificado e Grinold–Kroner",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_COLO.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno top-down do COLO",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.102378
+    },
+    "etf.COLO.retorno_esperado": {
+      "fact_id": "etf.COLO.retorno_esperado",
+      "formatted": "+8,95%",
+      "formula": "R_e = ω × R_BU + (1 − ω) × R_TD",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_COLO.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno esperado de 12 meses do COLO",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0894759
+    },
+    "etf.COLO.visao_ilf": {
+      "fact_id": "etf.COLO.visao_ilf",
+      "formatted": "Neutra",
+      "formula": "IR = (R_e − R_ILF) ÷ TE",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_COLO.json"
+      ],
+      "issuer_id": null,
+      "name": "Visão do COLO relativa ao ILF",
+      "point_in_time": true,
+      "unit": "ratio",
+      "value": -0.109116
+    },
+    "etf.ECH.cobertura": {
+      "fact_id": "etf.ECH.cobertura",
+      "formatted": "52,18%",
+      "formula": "Σ pesos com preço-alvo da casa",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_ECH.json"
+      ],
+      "issuer_id": null,
+      "name": "Peso coberto por modelos da casa no ECH",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.5218
+    },
+    "etf.ECH.preco_alvo": {
+      "fact_id": "etf.ECH.preco_alvo",
+      "formatted": "US$ 39,29",
+      "formula": "TP_e = P_e × (1 + R_e − DY)",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_ECH.json"
+      ],
+      "issuer_id": null,
+      "name": "Preço-alvo de 12 meses do ECH",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 39.2933
+    },
+    "etf.ECH.r_bu": {
+      "fact_id": "etf.ECH.r_bu",
+      "formatted": "+4,12%",
+      "formula": "alvos da casa por posição",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_ECH.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno bottom-up do ECH",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0412464
+    },
+    "etf.ECH.r_td": {
+      "fact_id": "etf.ECH.r_td",
+      "formatted": "+10,53%",
+      "formula": "P/L justificado e Grinold–Kroner",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_ECH.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno top-down do ECH",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.105271
+    },
+    "etf.ECH.retorno_esperado": {
+      "fact_id": "etf.ECH.retorno_esperado",
+      "formatted": "+8,67%",
+      "formula": "R_e = ω × R_BU + (1 − ω) × R_TD",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_ECH.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno esperado de 12 meses do ECH",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0867108
+    },
+    "etf.ECH.visao_ilf": {
+      "fact_id": "etf.ECH.visao_ilf",
+      "formatted": "Neutra",
+      "formula": "IR = (R_e − R_ILF) ÷ TE",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_ECH.json"
+      ],
+      "issuer_id": null,
+      "name": "Visão do ECH relativa ao ILF",
+      "point_in_time": true,
+      "unit": "ratio",
+      "value": -0.151263
+    },
+    "etf.EPU.cobertura": {
+      "fact_id": "etf.EPU.cobertura",
+      "formatted": "39,68%",
+      "formula": "Σ pesos com preço-alvo da casa",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_EPU.json"
+      ],
+      "issuer_id": null,
+      "name": "Peso coberto por modelos da casa no EPU",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.39676
+    },
+    "etf.EPU.preco_alvo": {
+      "fact_id": "etf.EPU.preco_alvo",
+      "formatted": "US$ 91,14",
+      "formula": "TP_e = P_e × (1 + R_e − DY)",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_EPU.json"
+      ],
+      "issuer_id": null,
+      "name": "Preço-alvo de 12 meses do EPU",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 91.1397
+    },
+    "etf.EPU.r_bu": {
+      "fact_id": "etf.EPU.r_bu",
+      "formatted": "+6,09%",
+      "formula": "alvos da casa por posição",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_EPU.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno bottom-up do EPU",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0609204
+    },
+    "etf.EPU.r_td": {
+      "fact_id": "etf.EPU.r_td",
+      "formatted": "+5,30%",
+      "formula": "P/L justificado e Grinold–Kroner",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_EPU.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno top-down do EPU",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0529862
+    },
+    "etf.EPU.retorno_esperado": {
+      "fact_id": "etf.EPU.retorno_esperado",
+      "formatted": "+5,47%",
+      "formula": "R_e = ω × R_BU + (1 − ω) × R_TD",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_EPU.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno esperado de 12 meses do EPU",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0547351
+    },
+    "etf.EPU.visao_ilf": {
+      "fact_id": "etf.EPU.visao_ilf",
+      "formatted": "Neutra",
+      "formula": "IR = (R_e − R_ILF) ÷ TE",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_EPU.json"
+      ],
+      "issuer_id": null,
+      "name": "Visão do EPU relativa ao ILF",
+      "point_in_time": true,
+      "unit": "ratio",
+      "value": -0.278853
+    },
+    "etf.EWW.cobertura": {
+      "fact_id": "etf.EWW.cobertura",
+      "formatted": "58,91%",
+      "formula": "Σ pesos com preço-alvo da casa",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_EWW.json"
+      ],
+      "issuer_id": null,
+      "name": "Peso coberto por modelos da casa no EWW",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.589059
+    },
+    "etf.EWW.preco_alvo": {
+      "fact_id": "etf.EWW.preco_alvo",
+      "formatted": "US$ 75,99",
+      "formula": "TP_e = P_e × (1 + R_e − DY)",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_EWW.json"
+      ],
+      "issuer_id": null,
+      "name": "Preço-alvo de 12 meses do EWW",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 75.9915
+    },
+    "etf.EWW.r_bu": {
+      "fact_id": "etf.EWW.r_bu",
+      "formatted": "+5,89%",
+      "formula": "alvos da casa por posição",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_EWW.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno bottom-up do EWW",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0588811
+    },
+    "etf.EWW.r_td": {
+      "fact_id": "etf.EWW.r_td",
+      "formatted": "+3,47%",
+      "formula": "P/L justificado e Grinold–Kroner",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_EWW.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno top-down do EWW",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0347364
+    },
+    "etf.EWW.retorno_esperado": {
+      "fact_id": "etf.EWW.retorno_esperado",
+      "formatted": "+4,26%",
+      "formula": "R_e = ω × R_BU + (1 − ω) × R_TD",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_EWW.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno esperado de 12 meses do EWW",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0426379
+    },
+    "etf.EWW.visao_ilf": {
+      "fact_id": "etf.EWW.visao_ilf",
+      "formatted": "Negativa",
+      "formula": "IR = (R_e − R_ILF) ÷ TE",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_EWW.json"
+      ],
+      "issuer_id": null,
+      "name": "Visão do EWW relativa ao ILF",
+      "point_in_time": true,
+      "unit": "ratio",
+      "value": -0.467694
+    },
+    "etf.EWZ.cobertura": {
+      "fact_id": "etf.EWZ.cobertura",
+      "formatted": "85,41%",
+      "formula": "Σ pesos com preço-alvo da casa",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_EWZ.json"
+      ],
+      "issuer_id": null,
+      "name": "Peso coberto por modelos da casa no EWZ",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.854056
+    },
+    "etf.EWZ.preco_alvo": {
+      "fact_id": "etf.EWZ.preco_alvo",
+      "formatted": "US$ 45,61",
+      "formula": "TP_e = P_e × (1 + R_e − DY)",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_EWZ.json"
+      ],
+      "issuer_id": null,
+      "name": "Preço-alvo de 12 meses do EWZ",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 45.6129
+    },
+    "etf.EWZ.r_bu": {
+      "fact_id": "etf.EWZ.r_bu",
+      "formatted": "+11,92%",
+      "formula": "alvos da casa por posição",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_EWZ.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno bottom-up do EWZ",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.119156
+    },
+    "etf.EWZ.r_td": {
+      "fact_id": "etf.EWZ.r_td",
+      "formatted": "+12,98%",
+      "formula": "P/L justificado e Grinold–Kroner",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_EWZ.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno top-down do EWZ",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.129816
+    },
+    "etf.EWZ.retorno_esperado": {
+      "fact_id": "etf.EWZ.retorno_esperado",
+      "formatted": "+12,48%",
+      "formula": "R_e = ω × R_BU + (1 − ω) × R_TD",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_EWZ.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno esperado de 12 meses do EWZ",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.124758
+    },
+    "etf.EWZ.visao_ilf": {
+      "fact_id": "etf.EWZ.visao_ilf",
+      "formatted": "Neutra",
+      "formula": "IR = (R_e − R_ILF) ÷ TE",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_EWZ.json"
+      ],
+      "issuer_id": null,
+      "name": "Visão do EWZ relativa ao ILF",
+      "point_in_time": true,
+      "unit": "ratio",
+      "value": 0.138869
+    },
+    "etf.ILF.cobertura": {
+      "fact_id": "etf.ILF.cobertura",
+      "formatted": "78,40%",
+      "formula": "Σ pesos com preço-alvo da casa",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_ILF.json"
+      ],
+      "issuer_id": null,
+      "name": "Peso coberto por modelos da casa no ILF",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.784
+    },
+    "etf.ILF.preco_alvo": {
+      "fact_id": "etf.ILF.preco_alvo",
+      "formatted": "US$ 40,21",
+      "formula": "TP_e = P_e × (1 + R_e − DY)",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_ILF.json"
+      ],
+      "issuer_id": null,
+      "name": "Preço-alvo de 12 meses do ILF",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 40.212
+    },
+    "etf.ILF.r_bu": {
+      "fact_id": "etf.ILF.r_bu",
+      "formatted": "+12,88%",
+      "formula": "alvos da casa por posição",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_ILF.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno bottom-up do ILF",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.128849
+    },
+    "etf.ILF.r_td": {
+      "fact_id": "etf.ILF.r_td",
+      "formatted": "+9,87%",
+      "formula": "P/L justificado e Grinold–Kroner",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_ILF.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno top-down do ILF",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0987067
+    },
+    "etf.ILF.retorno_esperado": {
+      "fact_id": "etf.ILF.retorno_esperado",
+      "formatted": "+11,18%",
+      "formula": "R_e = ω × R_BU + (1 − ω) × R_TD",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_ILF.json"
+      ],
+      "issuer_id": null,
+      "name": "Retorno esperado de 12 meses do ILF",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.111836
+    },
+    "etf.ILF.visao_ilf": {
+      "fact_id": "etf.ILF.visao_ilf",
+      "formatted": "Referência",
+      "formula": "IR = (R_e − R_ILF) ÷ TE",
+      "inputs": [
+        "cobertura/2026-10-21/etfs/ETF_ILF.json"
+      ],
+      "issuer_id": null,
+      "name": "Visão do ILF relativa ao ILF",
+      "point_in_time": true,
+      "unit": "ratio",
+      "value": null
+    },
+    "evento.BR_BRAVA.dias_ate_resultado": {
+      "fact_id": "evento.BR_BRAVA.dias_ate_resultado",
+      "formatted": "19,0 dias",
+      "formula": "data do evento − data",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Dias até a próxima divulgação",
+      "point_in_time": true,
+      "unit": "days",
+      "value": 19.0
+    },
+    "evento.BR_BRAVA.proximo_resultado": {
+      "fact_id": "evento.BR_BRAVA.proximo_resultado",
+      "formatted": "2026-11-09",
+      "formula": "calendário público de eventos corporativos",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Próxima divulgação de resultado (data estimada)",
+      "point_in_time": true,
+      "unit": "days",
+      "value": 19.0
+    },
+    "evento.BR_COSAN.dias_ate_resultado": {
+      "fact_id": "evento.BR_COSAN.dias_ate_resultado",
+      "formatted": "23,0 dias",
+      "formula": "data do evento − data",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Dias até a próxima divulgação",
+      "point_in_time": true,
+      "unit": "days",
+      "value": 23.0
+    },
+    "evento.BR_COSAN.proximo_resultado": {
+      "fact_id": "evento.BR_COSAN.proximo_resultado",
+      "formatted": "2026-11-13",
+      "formula": "calendário público de eventos corporativos",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Próxima divulgação de resultado",
+      "point_in_time": true,
+      "unit": "days",
+      "value": 23.0
+    },
+    "evento.BR_PRIO.dias_ate_resultado": {
+      "fact_id": "evento.BR_PRIO.dias_ate_resultado",
+      "formatted": "14,0 dias",
+      "formula": "data do evento − data",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Dias até a próxima divulgação",
+      "point_in_time": true,
+      "unit": "days",
+      "value": 14.0
+    },
+    "evento.BR_PRIO.proximo_resultado": {
+      "fact_id": "evento.BR_PRIO.proximo_resultado",
+      "formatted": "2026-11-04",
+      "formula": "calendário público de eventos corporativos",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Próxima divulgação de resultado",
+      "point_in_time": true,
+      "unit": "days",
+      "value": 14.0
+    },
+    "evento.BR_RECV.dias_ate_resultado": {
+      "fact_id": "evento.BR_RECV.dias_ate_resultado",
+      "formatted": "15,0 dias",
+      "formula": "data do evento − data",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Dias até a próxima divulgação",
+      "point_in_time": true,
+      "unit": "days",
+      "value": 15.0
+    },
+    "evento.BR_RECV.proximo_resultado": {
+      "fact_id": "evento.BR_RECV.proximo_resultado",
+      "formatted": "2026-11-05",
+      "formula": "calendário público de eventos corporativos",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Próxima divulgação de resultado",
+      "point_in_time": true,
+      "unit": "days",
+      "value": 15.0
+    },
+    "evento.BR_ULTRAPAR.dias_ate_resultado": {
+      "fact_id": "evento.BR_ULTRAPAR.dias_ate_resultado",
+      "formatted": "21,0 dias",
+      "formula": "data do evento − data",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Dias até a próxima divulgação",
+      "point_in_time": true,
+      "unit": "days",
+      "value": 21.0
+    },
+    "evento.BR_ULTRAPAR.proximo_resultado": {
+      "fact_id": "evento.BR_ULTRAPAR.proximo_resultado",
+      "formatted": "2026-11-11",
+      "formula": "calendário público de eventos corporativos",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Próxima divulgação de resultado",
+      "point_in_time": true,
+      "unit": "days",
+      "value": 21.0
+    },
+    "evento.BR_VIBRA.dias_ate_resultado": {
+      "fact_id": "evento.BR_VIBRA.dias_ate_resultado",
+      "formatted": "14,0 dias",
+      "formula": "data do evento − data",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Dias até a próxima divulgação",
+      "point_in_time": true,
+      "unit": "days",
+      "value": 14.0
+    },
+    "evento.BR_VIBRA.proximo_resultado": {
+      "fact_id": "evento.BR_VIBRA.proximo_resultado",
+      "formatted": "2026-11-04",
+      "formula": "calendário público de eventos corporativos",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Próxima divulgação de resultado",
+      "point_in_time": true,
+      "unit": "days",
+      "value": 14.0
+    },
+    "fx.ARS.ret_1m": {
+      "fact_id": "fx.ARS.ret_1m",
+      "formatted": "-0,74%",
+      "formula": "variação composta de USD por 1 ARS nos últimos 21 pregões até 2026-10-21; positivo = moeda local se valorizou; cobertura 21/21 pregões (100%)",
+      "inputs": [
+        "fx[ARS]",
+        "janela=2026-09-23..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Variação de 1 mês do ARS (USD por unidade)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.00738823464642735
+    },
+    "fx.BRL.ret_1m": {
+      "fact_id": "fx.BRL.ret_1m",
+      "formatted": "+1,72%",
+      "formula": "variação composta de USD por 1 BRL nos últimos 21 pregões até 2026-10-21; positivo = moeda local se valorizou; cobertura 20/21 pregões (95%)",
+      "inputs": [
+        "fx[BRL]",
+        "janela=2026-09-23..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Variação de 1 mês do BRL (USD por unidade)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.017238008168819263
+    },
+    "fx.CLP.ret_1m": {
+      "fact_id": "fx.CLP.ret_1m",
+      "formatted": "-2,80%",
+      "formula": "variação composta de USD por 1 CLP nos últimos 21 pregões até 2026-10-21; positivo = moeda local se valorizou; cobertura 20/21 pregões (95%)",
+      "inputs": [
+        "fx[CLP]",
+        "janela=2026-09-23..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Variação de 1 mês do CLP (USD por unidade)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.028046518730769465
+    },
+    "fx.COP.ret_1m": {
+      "fact_id": "fx.COP.ret_1m",
+      "formatted": "+0,47%",
+      "formula": "variação composta de USD por 1 COP nos últimos 21 pregões até 2026-10-21; positivo = moeda local se valorizou; cobertura 21/21 pregões (100%)",
+      "inputs": [
+        "fx[COP]",
+        "janela=2026-09-23..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Variação de 1 mês do COP (USD por unidade)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.004742239732926201
+    },
+    "fx.MXN.ret_1m": {
+      "fact_id": "fx.MXN.ret_1m",
+      "formatted": "-7,93%",
+      "formula": "variação composta de USD por 1 MXN nos últimos 21 pregões até 2026-10-21; positivo = moeda local se valorizou; cobertura 21/21 pregões (100%)",
+      "inputs": [
+        "fx[MXN]",
+        "janela=2026-09-23..2026-10-21"
+      ],
+      "issuer_id": null,
+      "name": "Variação de 1 mês do MXN (USD por unidade)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.07926249812815234
+    },
+    "rate.SELIC": {
+      "fact_id": "rate.SELIC",
+      "formatted": "13,75%",
+      "formula": "último valor disponível até 2026-10-21 (2026-10-21); decimal anual",
+      "inputs": [
+        "rates[SELIC]"
+      ],
+      "issuer_id": null,
+      "name": "Taxa SELIC (anual)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.1375
+    },
+    "rate.USD_3M": {
+      "fact_id": "rate.USD_3M",
+      "formatted": "4,06%",
+      "formula": "último valor disponível até 2026-10-21 (2026-10-21); decimal anual",
+      "inputs": [
+        "rates[USD_3M]"
+      ],
+      "issuer_id": null,
+      "name": "Taxa USD_3M (anual)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.040630002021789555
+    },
+    "val.BR_BRAVA.alpha": {
+      "fact_id": "val.BR_BRAVA.alpha",
+      "formatted": "-2,43%",
+      "formula": "PWR − ke (Monte Carlo dos direcionadores)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Alpha de valuation",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.0243372
+    },
+    "val.BR_BRAVA.alpha_rel": {
+      "fact_id": "val.BR_BRAVA.alpha_rel",
+      "formatted": "-11,36%",
+      "formula": "α − mediana(α do grupo de comparação registrado no modelo)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Alpha de valuation relativo aos pares",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.113554
+    },
+    "val.BR_BRAVA.alvo_otimista": {
+      "fact_id": "val.BR_BRAVA.alvo_otimista",
+      "formatted": "R$ 40,64",
+      "formula": "percentil 90 do Monte Carlo dos direcionadores",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Preço-alvo otimista (P90)",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 40.6396
+    },
+    "val.BR_BRAVA.alvo_pessimista": {
+      "fact_id": "val.BR_BRAVA.alvo_pessimista",
+      "formatted": "R$ 1,39",
+      "formula": "percentil 10 do Monte Carlo dos direcionadores",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Preço-alvo pessimista (P10)",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 1.38949
+    },
+    "val.BR_BRAVA.confianca_codigo": {
+      "fact_id": "val.BR_BRAVA.confianca_codigo",
+      "formatted": "B",
+      "formula": "A = 3, B = 2, C = 1, Insuficiente = 0",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Confiança do modelo",
+      "point_in_time": true,
+      "unit": "score",
+      "value": 2.0
+    },
+    "val.BR_BRAVA.consenso_alvo": {
+      "fact_id": "val.BR_BRAVA.consenso_alvo",
+      "formatted": "R$ 22,57",
+      "formula": "consenso público Yahoo Finance (por unidade da linha)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Preço-alvo médio do consenso público",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 22.5727
+    },
+    "val.BR_BRAVA.cv_metodos": {
+      "fact_id": "val.BR_BRAVA.cv_metodos",
+      "formatted": "35,51%",
+      "formula": "desvio-padrão ÷ média dos V_m",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Dispersão entre métodos (CV)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.355101
+    },
+    "val.BR_BRAVA.diff_consenso": {
+      "fact_id": "val.BR_BRAVA.diff_consenso",
+      "formatted": "-9,94%",
+      "formula": "TP12 ÷ alvo médio do consenso − 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Preço-alvo da casa contra o consenso",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.0994375
+    },
+    "val.BR_BRAVA.etr": {
+      "fact_id": "val.BR_BRAVA.etr",
+      "formatted": "+9,93%",
+      "formula": "(TP12 + DPS12) ÷ P0 − 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Retorno total esperado em 12 meses",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0992657
+    },
+    "val.BR_BRAVA.g": {
+      "fact_id": "val.BR_BRAVA.g",
+      "formatted": "5,29%",
+      "formula": "g = (1 + g_real)(1 + π) − 1, limitado",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Crescimento nominal na perpetuidade",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.052946
+    },
+    "val.BR_BRAVA.ke": {
+      "fact_id": "val.BR_BRAVA.ke",
+      "formatted": "13,70%",
+      "formula": "ke_USD = rf + β × ERP + λ × CRP, convertido pela inflação relativa",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Custo de capital próprio",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.13699
+    },
+    "val.BR_BRAVA.pb": {
+      "fact_id": "val.BR_BRAVA.pb",
+      "formatted": "0,8x",
+      "formula": "P0 ÷ patrimônio por ação",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Preço sobre valor patrimonial",
+      "point_in_time": true,
+      "unit": "x",
+      "value": 0.782529
+    },
+    "val.BR_BRAVA.pl_fwd": {
+      "fact_id": "val.BR_BRAVA.pl_fwd",
+      "formatted": "8,6x",
+      "formula": "P0 ÷ LPA de consenso do ano 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "P/L à frente (consenso público)",
+      "point_in_time": true,
+      "unit": "x",
+      "value": 8.56487
+    },
+    "val.BR_BRAVA.preco": {
+      "fact_id": "val.BR_BRAVA.preco",
+      "formatted": "R$ 20,69",
+      "formula": "fechamento de BRAV3.SA em 2026-10-15",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Preço de referência da cobertura",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 20.69
+    },
+    "val.BR_BRAVA.preco_alvo": {
+      "fact_id": "val.BR_BRAVA.preco_alvo",
+      "formatted": "R$ 20,33",
+      "formula": "TP12 = V0 × (1 + ke) − DPS12 (modelo aberto da cobertura)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Preço-alvo de 12 meses",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 20.3281
+    },
+    "val.BR_BRAVA.prob_otimista": {
+      "fact_id": "val.BR_BRAVA.prob_otimista",
+      "formatted": "2,72%",
+      "formula": "lognormal com drift ke e σ realizada de 12 meses",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Probabilidade implícita pelo mercado de atingir o otimista",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0271731
+    },
+    "val.BR_BRAVA.prob_pessimista": {
+      "fact_id": "val.BR_BRAVA.prob_pessimista",
+      "formatted": "0,00%",
+      "formula": "lognormal com drift ke e σ realizada de 12 meses",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Probabilidade implícita pelo mercado de cair ao pessimista",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 1.09443e-12
+    },
+    "val.BR_BRAVA.rating_codigo": {
+      "fact_id": "val.BR_BRAVA.rating_codigo",
+      "formatted": "Neutro",
+      "formula": "Compra = 1, Neutro = 0, Venda = −1 (regra de α_rel por incerteza)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Rating da cobertura (12 meses)",
+      "point_in_time": true,
+      "unit": "score",
+      "value": 0.0
+    },
+    "val.BR_BRAVA.sens.ke_mais_100bp": {
+      "fact_id": "val.BR_BRAVA.sens.ke_mais_100bp",
+      "formatted": "-10,32%",
+      "formula": "grade de sensibilidade do modelo aberto",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Upside com ke +1 p.p.",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.103151
+    },
+    "val.BR_BRAVA.sens.ke_menos_100bp": {
+      "fact_id": "val.BR_BRAVA.sens.ke_menos_100bp",
+      "formatted": "+12,62%",
+      "formula": "grade de sensibilidade do modelo aberto",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Upside com ke −1 p.p.",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.126172
+    },
+    "val.BR_BRAVA.upside": {
+      "fact_id": "val.BR_BRAVA.upside",
+      "formatted": "-1,75%",
+      "formula": "TP12 ÷ P0 − 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Potencial até o preço-alvo",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.0174903
+    },
+    "val.BR_BRAVA.wacc": {
+      "fact_id": "val.BR_BRAVA.wacc",
+      "formatted": "9,48%",
+      "formula": "WACC = E/V × ke + D/V × kd × (1 − t)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_BRAVA.json"
+      ],
+      "issuer_id": "BR_BRAVA",
+      "name": "Custo médio ponderado de capital",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0947554
+    },
+    "val.BR_COSAN.alpha": {
+      "fact_id": "val.BR_COSAN.alpha",
+      "formatted": "-12,42%",
+      "formula": "PWR − ke (Monte Carlo dos direcionadores)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Alpha de valuation",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.124172
+    },
+    "val.BR_COSAN.alpha_rel": {
+      "fact_id": "val.BR_COSAN.alpha_rel",
+      "formatted": "-21,34%",
+      "formula": "α − mediana(α do grupo de comparação registrado no modelo)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Alpha de valuation relativo aos pares",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.213389
+    },
+    "val.BR_COSAN.alvo_otimista": {
+      "fact_id": "val.BR_COSAN.alvo_otimista",
+      "formatted": "R$ 5,33",
+      "formula": "percentil 90 do Monte Carlo dos direcionadores",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Preço-alvo otimista (P90)",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 5.32646
+    },
+    "val.BR_COSAN.alvo_pessimista": {
+      "fact_id": "val.BR_COSAN.alvo_pessimista",
+      "formatted": "R$ 4,69",
+      "formula": "percentil 10 do Monte Carlo dos direcionadores",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Preço-alvo pessimista (P10)",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 4.68854
+    },
+    "val.BR_COSAN.confianca_codigo": {
+      "fact_id": "val.BR_COSAN.confianca_codigo",
+      "formatted": "C",
+      "formula": "A = 3, B = 2, C = 1, Insuficiente = 0",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Confiança do modelo",
+      "point_in_time": true,
+      "unit": "score",
+      "value": 1.0
+    },
+    "val.BR_COSAN.consenso_alvo": {
+      "fact_id": "val.BR_COSAN.consenso_alvo",
+      "formatted": "R$ 5,62",
+      "formula": "consenso público Yahoo Finance (por unidade da linha)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Preço-alvo médio do consenso público",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 5.62
+    },
+    "val.BR_COSAN.cv_metodos": {
+      "fact_id": "val.BR_COSAN.cv_metodos",
+      "formatted": "n/d",
+      "formula": "desvio-padrão ÷ média dos V_m",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Dispersão entre métodos (CV)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": null
+    },
+    "val.BR_COSAN.diff_consenso": {
+      "fact_id": "val.BR_COSAN.diff_consenso",
+      "formatted": "-10,69%",
+      "formula": "TP12 ÷ alvo médio do consenso − 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Preço-alvo da casa contra o consenso",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.106882
+    },
+    "val.BR_COSAN.etr": {
+      "fact_id": "val.BR_COSAN.etr",
+      "formatted": "+2,02%",
+      "formula": "(TP12 + DPS12) ÷ P0 − 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Retorno total esperado em 12 meses",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0201872
+    },
+    "val.BR_COSAN.g": {
+      "fact_id": "val.BR_COSAN.g",
+      "formatted": "5,29%",
+      "formula": "g = (1 + g_real)(1 + π) − 1, limitado",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Crescimento nominal na perpetuidade",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.052946
+    },
+    "val.BR_COSAN.ke": {
+      "fact_id": "val.BR_COSAN.ke",
+      "formatted": "14,22%",
+      "formula": "ke_USD = rf + β × ERP + λ × CRP, convertido pela inflação relativa",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Custo de capital próprio",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.142162
+    },
+    "val.BR_COSAN.pb": {
+      "fact_id": "val.BR_COSAN.pb",
+      "formatted": "3,9x",
+      "formula": "P0 ÷ patrimônio por ação",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Preço sobre valor patrimonial",
+      "point_in_time": true,
+      "unit": "x",
+      "value": 3.90588
+    },
+    "val.BR_COSAN.pl_fwd": {
+      "fact_id": "val.BR_COSAN.pl_fwd",
+      "formatted": "10,6x",
+      "formula": "P0 ÷ LPA de consenso do ano 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "P/L à frente (consenso público)",
+      "point_in_time": true,
+      "unit": "x",
+      "value": 10.5601
+    },
+    "val.BR_COSAN.preco": {
+      "fact_id": "val.BR_COSAN.preco",
+      "formatted": "R$ 4,92",
+      "formula": "fechamento de CSAN3.SA em 2026-10-15",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Preço de referência da cobertura",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 4.92
+    },
+    "val.BR_COSAN.preco_alvo": {
+      "fact_id": "val.BR_COSAN.preco_alvo",
+      "formatted": "R$ 5,02",
+      "formula": "TP12 = V0 × (1 + ke) − DPS12 (modelo aberto da cobertura)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Preço-alvo de 12 meses",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 5.01932
+    },
+    "val.BR_COSAN.prob_otimista": {
+      "fact_id": "val.BR_COSAN.prob_otimista",
+      "formatted": "44,69%",
+      "formula": "lognormal com drift ke e σ realizada de 12 meses",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Probabilidade implícita pelo mercado de atingir o otimista",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.446855
+    },
+    "val.BR_COSAN.prob_pessimista": {
+      "fact_id": "val.BR_COSAN.prob_pessimista",
+      "formatted": "45,41%",
+      "formula": "lognormal com drift ke e σ realizada de 12 meses",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Probabilidade implícita pelo mercado de cair ao pessimista",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.45407
+    },
+    "val.BR_COSAN.rating_codigo": {
+      "fact_id": "val.BR_COSAN.rating_codigo",
+      "formatted": "Neutro",
+      "formula": "Compra = 1, Neutro = 0, Venda = −1 (regra de α_rel por incerteza)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Rating da cobertura (12 meses)",
+      "point_in_time": true,
+      "unit": "score",
+      "value": 0.0
+    },
+    "val.BR_COSAN.sens.ke_mais_100bp": {
+      "fact_id": "val.BR_COSAN.sens.ke_mais_100bp",
+      "formatted": "+2,91%",
+      "formula": "grade de sensibilidade do modelo aberto",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Upside com ke +1 p.p.",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0291199
+    },
+    "val.BR_COSAN.sens.ke_menos_100bp": {
+      "fact_id": "val.BR_COSAN.sens.ke_menos_100bp",
+      "formatted": "+1,13%",
+      "formula": "grade de sensibilidade do modelo aberto",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Upside com ke −1 p.p.",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0112561
+    },
+    "val.BR_COSAN.upside": {
+      "fact_id": "val.BR_COSAN.upside",
+      "formatted": "+2,02%",
+      "formula": "TP12 ÷ P0 − 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Potencial até o preço-alvo",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0201872
+    },
+    "val.BR_COSAN.wacc": {
+      "fact_id": "val.BR_COSAN.wacc",
+      "formatted": "10,55%",
+      "formula": "WACC = E/V × ke + D/V × kd × (1 − t)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_COSAN.json"
+      ],
+      "issuer_id": "BR_COSAN",
+      "name": "Custo médio ponderado de capital",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.105509
+    },
+    "val.BR_PRIO.alpha": {
+      "fact_id": "val.BR_PRIO.alpha",
+      "formatted": "+13,94%",
+      "formula": "PWR − ke (Monte Carlo dos direcionadores)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Alpha de valuation",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.139442
+    },
+    "val.BR_PRIO.alpha_rel": {
+      "fact_id": "val.BR_PRIO.alpha_rel",
+      "formatted": "+5,02%",
+      "formula": "α − mediana(α do grupo de comparação registrado no modelo)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Alpha de valuation relativo aos pares",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0502253
+    },
+    "val.BR_PRIO.alvo_otimista": {
+      "fact_id": "val.BR_PRIO.alvo_otimista",
+      "formatted": "R$ 112,97",
+      "formula": "percentil 90 do Monte Carlo dos direcionadores",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Preço-alvo otimista (P90)",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 112.973
+    },
+    "val.BR_PRIO.alvo_pessimista": {
+      "fact_id": "val.BR_PRIO.alvo_pessimista",
+      "formatted": "R$ 60,11",
+      "formula": "percentil 10 do Monte Carlo dos direcionadores",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Preço-alvo pessimista (P10)",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 60.1057
+    },
+    "val.BR_PRIO.confianca_codigo": {
+      "fact_id": "val.BR_PRIO.confianca_codigo",
+      "formatted": "B",
+      "formula": "A = 3, B = 2, C = 1, Insuficiente = 0",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Confiança do modelo",
+      "point_in_time": true,
+      "unit": "score",
+      "value": 2.0
+    },
+    "val.BR_PRIO.consenso_alvo": {
+      "fact_id": "val.BR_PRIO.consenso_alvo",
+      "formatted": "R$ 69,56",
+      "formula": "consenso público Yahoo Finance (por unidade da linha)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Preço-alvo médio do consenso público",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 69.5643
+    },
+    "val.BR_PRIO.cv_metodos": {
+      "fact_id": "val.BR_PRIO.cv_metodos",
+      "formatted": "13,80%",
+      "formula": "desvio-padrão ÷ média dos V_m",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Dispersão entre métodos (CV)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.13801
+    },
+    "val.BR_PRIO.diff_consenso": {
+      "fact_id": "val.BR_PRIO.diff_consenso",
+      "formatted": "+22,66%",
+      "formula": "TP12 ÷ alvo médio do consenso − 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Preço-alvo da casa contra o consenso",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.226622
+    },
+    "val.BR_PRIO.etr": {
+      "fact_id": "val.BR_PRIO.etr",
+      "formatted": "+24,84%",
+      "formula": "(TP12 + DPS12) ÷ P0 − 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Retorno total esperado em 12 meses",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.248414
+    },
+    "val.BR_PRIO.g": {
+      "fact_id": "val.BR_PRIO.g",
+      "formatted": "5,29%",
+      "formula": "g = (1 + g_real)(1 + π) − 1, limitado",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Crescimento nominal na perpetuidade",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.052946
+    },
+    "val.BR_PRIO.ke": {
+      "fact_id": "val.BR_PRIO.ke",
+      "formatted": "11,83%",
+      "formula": "ke_USD = rf + β × ERP + λ × CRP, convertido pela inflação relativa",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Custo de capital próprio",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.118319
+    },
+    "val.BR_PRIO.pb": {
+      "fact_id": "val.BR_PRIO.pb",
+      "formatted": "1,9x",
+      "formula": "P0 ÷ patrimônio por ação",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Preço sobre valor patrimonial",
+      "point_in_time": true,
+      "unit": "x",
+      "value": 1.93363
+    },
+    "val.BR_PRIO.pl_fwd": {
+      "fact_id": "val.BR_PRIO.pl_fwd",
+      "formatted": "6,8x",
+      "formula": "P0 ÷ LPA de consenso do ano 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "P/L à frente (consenso público)",
+      "point_in_time": true,
+      "unit": "x",
+      "value": 6.80556
+    },
+    "val.BR_PRIO.preco": {
+      "fact_id": "val.BR_PRIO.preco",
+      "formatted": "R$ 68,35",
+      "formula": "fechamento de PRIO3.SA em 2026-10-15",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Preço de referência da cobertura",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 68.35
+    },
+    "val.BR_PRIO.preco_alvo": {
+      "fact_id": "val.BR_PRIO.preco_alvo",
+      "formatted": "R$ 85,33",
+      "formula": "TP12 = V0 × (1 + ke) − DPS12 (modelo aberto da cobertura)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Preço-alvo de 12 meses",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 85.3291
+    },
+    "val.BR_PRIO.prob_otimista": {
+      "fact_id": "val.BR_PRIO.prob_otimista",
+      "formatted": "10,91%",
+      "formula": "lognormal com drift ke e σ realizada de 12 meses",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Probabilidade implícita pelo mercado de atingir o otimista",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.10908
+    },
+    "val.BR_PRIO.prob_pessimista": {
+      "fact_id": "val.BR_PRIO.prob_pessimista",
+      "formatted": "31,20%",
+      "formula": "lognormal com drift ke e σ realizada de 12 meses",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Probabilidade implícita pelo mercado de cair ao pessimista",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.311988
+    },
+    "val.BR_PRIO.rating_codigo": {
+      "fact_id": "val.BR_PRIO.rating_codigo",
+      "formatted": "Neutro",
+      "formula": "Compra = 1, Neutro = 0, Venda = −1 (regra de α_rel por incerteza)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Rating da cobertura (12 meses)",
+      "point_in_time": true,
+      "unit": "score",
+      "value": 0.0
+    },
+    "val.BR_PRIO.sens.ke_mais_100bp": {
+      "fact_id": "val.BR_PRIO.sens.ke_mais_100bp",
+      "formatted": "+9,36%",
+      "formula": "grade de sensibilidade do modelo aberto",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Upside com ke +1 p.p.",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0936284
+    },
+    "val.BR_PRIO.sens.ke_menos_100bp": {
+      "fact_id": "val.BR_PRIO.sens.ke_menos_100bp",
+      "formatted": "+51,52%",
+      "formula": "grade de sensibilidade do modelo aberto",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Upside com ke −1 p.p.",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.515187
+    },
+    "val.BR_PRIO.upside": {
+      "fact_id": "val.BR_PRIO.upside",
+      "formatted": "+24,84%",
+      "formula": "TP12 ÷ P0 − 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Potencial até o preço-alvo",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.248414
+    },
+    "val.BR_PRIO.wacc": {
+      "fact_id": "val.BR_PRIO.wacc",
+      "formatted": "9,96%",
+      "formula": "WACC = E/V × ke + D/V × kd × (1 − t)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_PRIO.json"
+      ],
+      "issuer_id": "BR_PRIO",
+      "name": "Custo médio ponderado de capital",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0995687
+    },
+    "val.BR_RECV.alpha": {
+      "fact_id": "val.BR_RECV.alpha",
+      "formatted": "+15,24%",
+      "formula": "PWR − ke (Monte Carlo dos direcionadores)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Alpha de valuation",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.152357
+    },
+    "val.BR_RECV.alpha_rel": {
+      "fact_id": "val.BR_RECV.alpha_rel",
+      "formatted": "+6,31%",
+      "formula": "α − mediana(α do grupo de comparação registrado no modelo)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Alpha de valuation relativo aos pares",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0631403
+    },
+    "val.BR_RECV.alvo_otimista": {
+      "fact_id": "val.BR_RECV.alvo_otimista",
+      "formatted": "R$ 21,92",
+      "formula": "percentil 90 do Monte Carlo dos direcionadores",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Preço-alvo otimista (P90)",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 21.9162
+    },
+    "val.BR_RECV.alvo_pessimista": {
+      "fact_id": "val.BR_RECV.alvo_pessimista",
+      "formatted": "R$ 7,73",
+      "formula": "percentil 10 do Monte Carlo dos direcionadores",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Preço-alvo pessimista (P10)",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 7.72636
+    },
+    "val.BR_RECV.confianca_codigo": {
+      "fact_id": "val.BR_RECV.confianca_codigo",
+      "formatted": "B",
+      "formula": "A = 3, B = 2, C = 1, Insuficiente = 0",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Confiança do modelo",
+      "point_in_time": true,
+      "unit": "score",
+      "value": 2.0
+    },
+    "val.BR_RECV.consenso_alvo": {
+      "fact_id": "val.BR_RECV.consenso_alvo",
+      "formatted": "R$ 11,87",
+      "formula": "consenso público Yahoo Finance (por unidade da linha)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Preço-alvo médio do consenso público",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 11.8692
+    },
+    "val.BR_RECV.cv_metodos": {
+      "fact_id": "val.BR_RECV.cv_metodos",
+      "formatted": "16,31%",
+      "formula": "desvio-padrão ÷ média dos V_m",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Dispersão entre métodos (CV)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.163099
+    },
+    "val.BR_RECV.diff_consenso": {
+      "fact_id": "val.BR_RECV.diff_consenso",
+      "formatted": "+25,32%",
+      "formula": "TP12 ÷ alvo médio do consenso − 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Preço-alvo da casa contra o consenso",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.25317
+    },
+    "val.BR_RECV.etr": {
+      "fact_id": "val.BR_RECV.etr",
+      "formatted": "+27,36%",
+      "formula": "(TP12 + DPS12) ÷ P0 − 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Retorno total esperado em 12 meses",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.273632
+    },
+    "val.BR_RECV.g": {
+      "fact_id": "val.BR_RECV.g",
+      "formatted": "5,29%",
+      "formula": "g = (1 + g_real)(1 + π) − 1, limitado",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Crescimento nominal na perpetuidade",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.052946
+    },
+    "val.BR_RECV.ke": {
+      "fact_id": "val.BR_RECV.ke",
+      "formatted": "12,36%",
+      "formula": "ke_USD = rf + β × ERP + λ × CRP, convertido pela inflação relativa",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Custo de capital próprio",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.123582
+    },
+    "val.BR_RECV.pb": {
+      "fact_id": "val.BR_RECV.pb",
+      "formatted": "0,8x",
+      "formula": "P0 ÷ patrimônio por ação",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Preço sobre valor patrimonial",
+      "point_in_time": true,
+      "unit": "x",
+      "value": 0.80958
+    },
+    "val.BR_RECV.pl_fwd": {
+      "fact_id": "val.BR_RECV.pl_fwd",
+      "formatted": "7,2x",
+      "formula": "P0 ÷ LPA de consenso do ano 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "P/L à frente (consenso público)",
+      "point_in_time": true,
+      "unit": "x",
+      "value": 7.20571
+    },
+    "val.BR_RECV.preco": {
+      "fact_id": "val.BR_RECV.preco",
+      "formatted": "R$ 12,23",
+      "formula": "fechamento de RECV3.SA em 2026-10-15",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Preço de referência da cobertura",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 12.23
+    },
+    "val.BR_RECV.preco_alvo": {
+      "fact_id": "val.BR_RECV.preco_alvo",
+      "formatted": "R$ 14,87",
+      "formula": "TP12 = V0 × (1 + ke) − DPS12 (modelo aberto da cobertura)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Preço-alvo de 12 meses",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 14.8741
+    },
+    "val.BR_RECV.prob_otimista": {
+      "fact_id": "val.BR_RECV.prob_otimista",
+      "formatted": "4,10%",
+      "formula": "lognormal com drift ke e σ realizada de 12 meses",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Probabilidade implícita pelo mercado de atingir o otimista",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.041031
+    },
+    "val.BR_RECV.prob_pessimista": {
+      "fact_id": "val.BR_RECV.prob_pessimista",
+      "formatted": "7,56%",
+      "formula": "lognormal com drift ke e σ realizada de 12 meses",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Probabilidade implícita pelo mercado de cair ao pessimista",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0755832
+    },
+    "val.BR_RECV.rating_codigo": {
+      "fact_id": "val.BR_RECV.rating_codigo",
+      "formatted": "Neutro",
+      "formula": "Compra = 1, Neutro = 0, Venda = −1 (regra de α_rel por incerteza)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Rating da cobertura (12 meses)",
+      "point_in_time": true,
+      "unit": "score",
+      "value": 0.0
+    },
+    "val.BR_RECV.sens.ke_mais_100bp": {
+      "fact_id": "val.BR_RECV.sens.ke_mais_100bp",
+      "formatted": "+9,33%",
+      "formula": "grade de sensibilidade do modelo aberto",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Upside com ke +1 p.p.",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0932625
+    },
+    "val.BR_RECV.sens.ke_menos_100bp": {
+      "fact_id": "val.BR_RECV.sens.ke_menos_100bp",
+      "formatted": "+42,87%",
+      "formula": "grade de sensibilidade do modelo aberto",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Upside com ke −1 p.p.",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.428724
+    },
+    "val.BR_RECV.upside": {
+      "fact_id": "val.BR_RECV.upside",
+      "formatted": "+21,62%",
+      "formula": "TP12 ÷ P0 − 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Potencial até o preço-alvo",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.2162
+    },
+    "val.BR_RECV.wacc": {
+      "fact_id": "val.BR_RECV.wacc",
+      "formatted": "9,42%",
+      "formula": "WACC = E/V × ke + D/V × kd × (1 − t)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_RECV.json"
+      ],
+      "issuer_id": "BR_RECV",
+      "name": "Custo médio ponderado de capital",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0941681
+    },
+    "val.BR_ULTRAPAR.alpha": {
+      "fact_id": "val.BR_ULTRAPAR.alpha",
+      "formatted": "+3,90%",
+      "formula": "PWR − ke (Monte Carlo dos direcionadores)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Alpha de valuation",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0389918
+    },
+    "val.BR_ULTRAPAR.alpha_rel": {
+      "fact_id": "val.BR_ULTRAPAR.alpha_rel",
+      "formatted": "-5,02%",
+      "formula": "α − mediana(α do grupo de comparação registrado no modelo)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Alpha de valuation relativo aos pares",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.0502253
+    },
+    "val.BR_ULTRAPAR.alvo_otimista": {
+      "fact_id": "val.BR_ULTRAPAR.alvo_otimista",
+      "formatted": "R$ 56,96",
+      "formula": "percentil 90 do Monte Carlo dos direcionadores",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Preço-alvo otimista (P90)",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 56.959
+    },
+    "val.BR_ULTRAPAR.alvo_pessimista": {
+      "fact_id": "val.BR_ULTRAPAR.alvo_pessimista",
+      "formatted": "R$ 30,66",
+      "formula": "percentil 10 do Monte Carlo dos direcionadores",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Preço-alvo pessimista (P10)",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 30.663
+    },
+    "val.BR_ULTRAPAR.confianca_codigo": {
+      "fact_id": "val.BR_ULTRAPAR.confianca_codigo",
+      "formatted": "A",
+      "formula": "A = 3, B = 2, C = 1, Insuficiente = 0",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Confiança do modelo",
+      "point_in_time": true,
+      "unit": "score",
+      "value": 3.0
+    },
+    "val.BR_ULTRAPAR.consenso_alvo": {
+      "fact_id": "val.BR_ULTRAPAR.consenso_alvo",
+      "formatted": "R$ 38,83",
+      "formula": "consenso público Yahoo Finance (por unidade da linha)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Preço-alvo médio do consenso público",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 38.825
+    },
+    "val.BR_ULTRAPAR.cv_metodos": {
+      "fact_id": "val.BR_ULTRAPAR.cv_metodos",
+      "formatted": "21,67%",
+      "formula": "desvio-padrão ÷ média dos V_m",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Dispersão entre métodos (CV)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.216749
+    },
+    "val.BR_ULTRAPAR.diff_consenso": {
+      "fact_id": "val.BR_ULTRAPAR.diff_consenso",
+      "formatted": "+11,61%",
+      "formula": "TP12 ÷ alvo médio do consenso − 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Preço-alvo da casa contra o consenso",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.116075
+    },
+    "val.BR_ULTRAPAR.etr": {
+      "fact_id": "val.BR_ULTRAPAR.etr",
+      "formatted": "+14,74%",
+      "formula": "(TP12 + DPS12) ÷ P0 − 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Retorno total esperado em 12 meses",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.147441
+    },
+    "val.BR_ULTRAPAR.g": {
+      "fact_id": "val.BR_ULTRAPAR.g",
+      "formatted": "5,29%",
+      "formula": "g = (1 + g_real)(1 + π) − 1, limitado",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Crescimento nominal na perpetuidade",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.052946
+    },
+    "val.BR_ULTRAPAR.ke": {
+      "fact_id": "val.BR_ULTRAPAR.ke",
+      "formatted": "11,44%",
+      "formula": "ke_USD = rf + β × ERP + λ × CRP, convertido pela inflação relativa",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Custo de capital próprio",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.114368
+    },
+    "val.BR_ULTRAPAR.pb": {
+      "fact_id": "val.BR_ULTRAPAR.pb",
+      "formatted": "2,3x",
+      "formula": "P0 ÷ patrimônio por ação",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Preço sobre valor patrimonial",
+      "point_in_time": true,
+      "unit": "x",
+      "value": 2.3469
+    },
+    "val.BR_ULTRAPAR.pl_fwd": {
+      "fact_id": "val.BR_ULTRAPAR.pl_fwd",
+      "formatted": "11,5x",
+      "formula": "P0 ÷ LPA de consenso do ano 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "P/L à frente (consenso público)",
+      "point_in_time": true,
+      "unit": "x",
+      "value": 11.5308
+    },
+    "val.BR_ULTRAPAR.preco": {
+      "fact_id": "val.BR_ULTRAPAR.preco",
+      "formatted": "R$ 38,64",
+      "formula": "fechamento de UGPA3.SA em 2026-10-15",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Preço de referência da cobertura",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 38.64
+    },
+    "val.BR_ULTRAPAR.preco_alvo": {
+      "fact_id": "val.BR_ULTRAPAR.preco_alvo",
+      "formatted": "R$ 43,33",
+      "formula": "TP12 = V0 × (1 + ke) − DPS12 (modelo aberto da cobertura)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Preço-alvo de 12 meses",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 43.3316
+    },
+    "val.BR_ULTRAPAR.prob_otimista": {
+      "fact_id": "val.BR_ULTRAPAR.prob_otimista",
+      "formatted": "12,25%",
+      "formula": "lognormal com drift ke e σ realizada de 12 meses",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Probabilidade implícita pelo mercado de atingir o otimista",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.122517
+    },
+    "val.BR_ULTRAPAR.prob_pessimista": {
+      "fact_id": "val.BR_ULTRAPAR.prob_pessimista",
+      "formatted": "17,50%",
+      "formula": "lognormal com drift ke e σ realizada de 12 meses",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Probabilidade implícita pelo mercado de cair ao pessimista",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.175029
+    },
+    "val.BR_ULTRAPAR.rating_codigo": {
+      "fact_id": "val.BR_ULTRAPAR.rating_codigo",
+      "formatted": "Neutro",
+      "formula": "Compra = 1, Neutro = 0, Venda = −1 (regra de α_rel por incerteza)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Rating da cobertura (12 meses)",
+      "point_in_time": true,
+      "unit": "score",
+      "value": 0.0
+    },
+    "val.BR_ULTRAPAR.sens.ke_mais_100bp": {
+      "fact_id": "val.BR_ULTRAPAR.sens.ke_mais_100bp",
+      "formatted": "-3,09%",
+      "formula": "grade de sensibilidade do modelo aberto",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Upside com ke +1 p.p.",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": -0.0308877
+    },
+    "val.BR_ULTRAPAR.sens.ke_menos_100bp": {
+      "fact_id": "val.BR_ULTRAPAR.sens.ke_menos_100bp",
+      "formatted": "+32,70%",
+      "formula": "grade de sensibilidade do modelo aberto",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Upside com ke −1 p.p.",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.327042
+    },
+    "val.BR_ULTRAPAR.upside": {
+      "fact_id": "val.BR_ULTRAPAR.upside",
+      "formatted": "+12,14%",
+      "formula": "TP12 ÷ P0 − 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Potencial até o preço-alvo",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.121418
+    },
+    "val.BR_ULTRAPAR.wacc": {
+      "fact_id": "val.BR_ULTRAPAR.wacc",
+      "formatted": "9,62%",
+      "formula": "WACC = E/V × ke + D/V × kd × (1 − t)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_ULTRAPAR.json"
+      ],
+      "issuer_id": "BR_ULTRAPAR",
+      "name": "Custo médio ponderado de capital",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0962439
+    },
+    "val.BR_VIBRA.alpha": {
+      "fact_id": "val.BR_VIBRA.alpha",
+      "formatted": "+28,17%",
+      "formula": "PWR − ke (Monte Carlo dos direcionadores)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Alpha de valuation",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.281711
+    },
+    "val.BR_VIBRA.alpha_rel": {
+      "fact_id": "val.BR_VIBRA.alpha_rel",
+      "formatted": "+19,25%",
+      "formula": "α − mediana(α do grupo de comparação registrado no modelo)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Alpha de valuation relativo aos pares",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.192494
+    },
+    "val.BR_VIBRA.alvo_otimista": {
+      "fact_id": "val.BR_VIBRA.alvo_otimista",
+      "formatted": "R$ 70,47",
+      "formula": "percentil 90 do Monte Carlo dos direcionadores",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Preço-alvo otimista (P90)",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 70.4689
+    },
+    "val.BR_VIBRA.alvo_pessimista": {
+      "fact_id": "val.BR_VIBRA.alvo_pessimista",
+      "formatted": "R$ 29,14",
+      "formula": "percentil 10 do Monte Carlo dos direcionadores",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Preço-alvo pessimista (P10)",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 29.1429
+    },
+    "val.BR_VIBRA.confianca_codigo": {
+      "fact_id": "val.BR_VIBRA.confianca_codigo",
+      "formatted": "A",
+      "formula": "A = 3, B = 2, C = 1, Insuficiente = 0",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Confiança do modelo",
+      "point_in_time": true,
+      "unit": "score",
+      "value": 3.0
+    },
+    "val.BR_VIBRA.consenso_alvo": {
+      "fact_id": "val.BR_VIBRA.consenso_alvo",
+      "formatted": "R$ 41,81",
+      "formula": "consenso público Yahoo Finance (por unidade da linha)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Preço-alvo médio do consenso público",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 41.8062
+    },
+    "val.BR_VIBRA.cv_metodos": {
+      "fact_id": "val.BR_VIBRA.cv_metodos",
+      "formatted": "13,74%",
+      "formula": "desvio-padrão ÷ média dos V_m",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Dispersão entre métodos (CV)",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.137401
+    },
+    "val.BR_VIBRA.diff_consenso": {
+      "fact_id": "val.BR_VIBRA.diff_consenso",
+      "formatted": "+17,52%",
+      "formula": "TP12 ÷ alvo médio do consenso − 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Preço-alvo da casa contra o consenso",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.175182
+    },
+    "val.BR_VIBRA.etr": {
+      "fact_id": "val.BR_VIBRA.etr",
+      "formatted": "+38,69%",
+      "formula": "(TP12 + DPS12) ÷ P0 − 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Retorno total esperado em 12 meses",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.386928
+    },
+    "val.BR_VIBRA.g": {
+      "fact_id": "val.BR_VIBRA.g",
+      "formatted": "5,29%",
+      "formula": "g = (1 + g_real)(1 + π) − 1, limitado",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Crescimento nominal na perpetuidade",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.052946
+    },
+    "val.BR_VIBRA.ke": {
+      "fact_id": "val.BR_VIBRA.ke",
+      "formatted": "11,48%",
+      "formula": "ke_USD = rf + β × ERP + λ × CRP, convertido pela inflação relativa",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Custo de capital próprio",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.114799
+    },
+    "val.BR_VIBRA.pb": {
+      "fact_id": "val.BR_VIBRA.pb",
+      "formatted": "1,8x",
+      "formula": "P0 ÷ patrimônio por ação",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Preço sobre valor patrimonial",
+      "point_in_time": true,
+      "unit": "x",
+      "value": 1.84271
+    },
+    "val.BR_VIBRA.pl_fwd": {
+      "fact_id": "val.BR_VIBRA.pl_fwd",
+      "formatted": "8,7x",
+      "formula": "P0 ÷ LPA de consenso do ano 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "P/L à frente (consenso público)",
+      "point_in_time": true,
+      "unit": "x",
+      "value": 8.71012
+    },
+    "val.BR_VIBRA.preco": {
+      "fact_id": "val.BR_VIBRA.preco",
+      "formatted": "R$ 36,25",
+      "formula": "fechamento de VBBR3.SA em 2026-10-15",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Preço de referência da cobertura",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 36.25
+    },
+    "val.BR_VIBRA.preco_alvo": {
+      "fact_id": "val.BR_VIBRA.preco_alvo",
+      "formatted": "R$ 49,13",
+      "formula": "TP12 = V0 × (1 + ke) − DPS12 (modelo aberto da cobertura)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Preço-alvo de 12 meses",
+      "point_in_time": true,
+      "unit": "preco",
+      "value": 49.1299
+    },
+    "val.BR_VIBRA.prob_otimista": {
+      "fact_id": "val.BR_VIBRA.prob_otimista",
+      "formatted": "1,40%",
+      "formula": "lognormal com drift ke e σ realizada de 12 meses",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Probabilidade implícita pelo mercado de atingir o otimista",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0139838
+    },
+    "val.BR_VIBRA.prob_pessimista": {
+      "fact_id": "val.BR_VIBRA.prob_pessimista",
+      "formatted": "17,77%",
+      "formula": "lognormal com drift ke e σ realizada de 12 meses",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Probabilidade implícita pelo mercado de cair ao pessimista",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.177652
+    },
+    "val.BR_VIBRA.rating_codigo": {
+      "fact_id": "val.BR_VIBRA.rating_codigo",
+      "formatted": "Neutro",
+      "formula": "Compra = 1, Neutro = 0, Venda = −1 (regra de α_rel por incerteza)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Rating da cobertura (12 meses)",
+      "point_in_time": true,
+      "unit": "score",
+      "value": 0.0
+    },
+    "val.BR_VIBRA.sens.ke_mais_100bp": {
+      "fact_id": "val.BR_VIBRA.sens.ke_mais_100bp",
+      "formatted": "+16,79%",
+      "formula": "grade de sensibilidade do modelo aberto",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Upside com ke +1 p.p.",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.16795
+    },
+    "val.BR_VIBRA.sens.ke_menos_100bp": {
+      "fact_id": "val.BR_VIBRA.sens.ke_menos_100bp",
+      "formatted": "+60,69%",
+      "formula": "grade de sensibilidade do modelo aberto",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Upside com ke −1 p.p.",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.606935
+    },
+    "val.BR_VIBRA.upside": {
+      "fact_id": "val.BR_VIBRA.upside",
+      "formatted": "+35,53%",
+      "formula": "TP12 ÷ P0 − 1",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Potencial até o preço-alvo",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.355308
+    },
+    "val.BR_VIBRA.wacc": {
+      "fact_id": "val.BR_VIBRA.wacc",
+      "formatted": "9,55%",
+      "formula": "WACC = E/V × ke + D/V × kd × (1 − t)",
+      "inputs": [
+        "cobertura/2026-10-16/modelos/BR_VIBRA.json"
+      ],
+      "issuer_id": "BR_VIBRA",
+      "name": "Custo médio ponderado de capital",
+      "point_in_time": true,
+      "unit": "pct",
+      "value": 0.0954548
+    }
+  },
+  "is_synthetic": false,
+  "snapshot_id": "store-2026-10-02+13-2026-10-21"
+}

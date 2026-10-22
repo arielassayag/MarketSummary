@@ -1,0 +1,324 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-21",
+    "manifest_sha256": "ad5255d9b4260123fd8b941334f2b591fae4789b25a3ed2038ac4386c6e67e37",
+    "modelo_as_of": "2026-10-21"
+  },
+  "conviccao": 1,
+  "data": "2026-10-21",
+  "hashes": {
+    "contexto": "99392aa64ac9cc5685f223738685bfe0e14e13a380c1cb644f04cac942709517",
+    "factbook": "aea4b8f1a0edbf6edeb2214461b304908e10a94374be1166959a658f768ec94d",
+    "nota_json": "7af6f9f1b4e5ff0e740d064e2b4575823db889e9de1c4791c0d6799fc2e74187"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_WEG",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-21",
+  "published_at": "2026-10-22T01:43:12.012363+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O investimento cobre instalações no Brasil e no exterior. Aplicações sem liquidez imediata exigem leitura própria; não equivalem a caixa livremente disponível.",
+        "titulo": "Expansão e disponibilidade"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Alvo em R$ 29,14, condicionado à persistência de retorno e caixa recorrentes.",
+      "otimista": "Produtividade e demanda remuneram a expansão; cenário em R$ 35,37.",
+      "pessimista": "Demanda ou margens cedem antes da maturação dos investimentos; cenário em R$ 24,21."
+    },
+    "comentario_valuation": "Preço R$ 45,21 e alvo R$ 29,14, em BRL. O P/L à frente é 25,5x, com dispersão entre métodos de 34,47%. O consenso público aponta R$ 55,98; sua distância frente ao alvo interno não comprova percepção variante. O alpha relativo de -72,66% usa pares industriais heterogêneos e não encerra a análise competitiva.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se a capacidade nova exigir giro e investimento sem geração proporcional de caixa.",
+        "titulo": "Escala sem retorno adicional"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-21",
+    "dados_simulados": false,
+    "data": "2026-10-21",
+    "ficha": [
+      {
+        "fato": "val.BR_WEG.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 45,21"
+      },
+      {
+        "fato": "val.BR_WEG.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 29,14"
+      },
+      {
+        "fato": "val.BR_WEG.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-35,55%"
+      },
+      {
+        "fato": "val.BR_WEG.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_WEG.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_WEG.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 35,37"
+      },
+      {
+        "fato": "val.BR_WEG.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_WEG.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 24,21"
+      },
+      {
+        "fato": "val.BR_WEG.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_WEG.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,39%"
+      },
+      {
+        "fato": "val.BR_WEG.wacc",
+        "rotulo": "WACC",
+        "valor": "10,27%"
+      },
+      {
+        "fato": "val.BR_WEG.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_WEG.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-33,50%"
+      },
+      {
+        "fato": "val.BR_WEG.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-72,66%"
+      },
+      {
+        "fato": "val.BR_WEG.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "25,5x"
+      },
+      {
+        "fato": "val.BR_WEG.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "10,1x"
+      },
+      {
+        "fato": "val.BR_WEG.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 55,98"
+      },
+      {
+        "fato": "val.BR_WEG.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-47,95%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F1",
+        "instituicao": "WEG",
+        "publicado_em": "2026-10-21",
+        "tipo": "Relações com investidores",
+        "titulo": "Release de resultados trimestrais",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/50c1bd3e-8ac6-42d9-884f-b9d69f690602/0d843d22-bfd2-85e7-70be-4cfd65c4b0c4?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F2",
+        "instituicao": "WEG",
+        "publicado_em": "2026-10-21",
+        "tipo": "Relações com investidores",
+        "titulo": "Demonstrações financeiras intermediárias",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/50c1bd3e-8ac6-42d9-884f-b9d69f690602/452fc8bf-cb6e-10bf-f76c-732412ae4720?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Retorno incremental e caixa confirmam ou invalidam a expansão.",
+      "Alterações de composição, moedas ou demanda mudam a rentabilidade recorrente."
+    ],
+    "governanca": "Confrontar capital alocado por subsidiária, transações relacionadas e remuneração efetivamente paga. A demonstração individual recebe dividendos de controladas no fluxo operacional e não representa o caixa consolidado.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar pedidos, entregas, margem por área, estoques, adiantamentos e retorno incremental das instalações.",
+        "titulo": "Operação e capital"
+      }
+    ],
+    "issuer_id": "BR_WEG",
+    "lacunas_de_dados": [
+      "Probabilidades implícitas dos cenários indisponíveis.",
+      "Retorno incremental das novas fábricas e vantagem frente a concorrentes não demonstrados integralmente.",
+      "Ponte completa entre resultado, giro e premissas do modelo permanece pendente."
+    ],
+    "modelo_de_cobertura": "2026-10-21",
+    "negocio": "A WEG fabrica motores, automação, equipamentos de geração, transmissão e distribuição elétrica, além de tintas. Presença industrial internacional combina ciclos de demanda e moedas diferentes.",
+    "nome": "WEG",
+    "o_que_mudou": "A análise do 3T26 substitui a base do 2T26. A recuperação da receita não elimina a necessidade de reconciliar margem, caixa e maturação do capital.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MARCOPOLO",
+        "nome": "Marcopolo"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A gestão destaca demanda externa e entregas de ciclo longo, com fraqueza persistente em solar no Brasil. O teste é sustentar rentabilidade na expansão.",
+        "titulo": "Infraestrutura e ciclo industrial"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_WEG.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-33,50%"
+          },
+          {
+            "fato": "val.BR_WEG.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,39%"
+          }
+        ],
+        "texto": "O retorno esperado é -33,50%, com ke de 10,39%. A qualidade industrial precisa ser confrontada com o preço pago e o retorno incremental do capital.",
+        "titulo": "Preço e retorno"
+      }
+    ],
+    "publicada_em": "2026-10-22T01:43:12.012363+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A demonstração consolidada acumula menor caixa operacional que no ano anterior, com consumo em clientes e estoques. Separar essa evolução da melhora trimestral do lucro.",
+        "titulo": "Lucro e caixa consolidado"
+      }
+    ],
+    "resumo": "O 3T26 confirma retomada da receita, com pressão sobre margens. A leitura relativa permanece neutra, com baixa convicção diante da distância entre preço e valor calculado. O alvo é R$ 29,14 e o potencial -35,55%.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Câmbio, composição das vendas e investimento antecipado podem pressionar margens e retorno do capital."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "WEG: demanda externa sustenta crescimento, expansão exige retorno incremental",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "Receita, EBITDA e lucro líquido crescem na comparação anual; a margem EBITDA recua. A demanda externa compensa parcialmente a tradução cambial. A administração não apresenta guidance financeiro agregado no material examinado; comentários sobre demanda são expectativas condicionais.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Novas instalações precisam converter demanda em caixa após investimento e giro.",
+        "vetor": "Maturação da capacidade"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

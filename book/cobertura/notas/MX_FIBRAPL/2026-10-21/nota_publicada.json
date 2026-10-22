@@ -1,0 +1,327 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-21",
+    "manifest_sha256": "ad5255d9b4260123fd8b941334f2b591fae4789b25a3ed2038ac4386c6e67e37",
+    "modelo_as_of": "2026-10-21"
+  },
+  "conviccao": 1,
+  "data": "2026-10-21",
+  "hashes": {
+    "contexto": "df80f6983cb66bf5e47c25ecb91781ee0fd224a07d9f6cf5e015f0cbbd6d7997",
+    "factbook": "f1ca2f631cfee0057330c491162946839a0a229165f37b4542f35337f1b5555a",
+    "nota_json": "e90e261a11f9ad6e69a4852a51295303c3083b8c0e1da0eed3c8763769eb3d13"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_FIBRAPL",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-21",
+  "published_at": "2026-10-22T01:47:57.389107+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A distribuição foi declarada para pagamento futuro. Comparar sua cobertura com caixa recorrente, preservando a distinção entre linha de crédito e caixa irrestrito.",
+        "titulo": "Distribuição e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-04",
+        "descricao": "Pagamento da distribuição declarada, sujeito à confirmação de liquidação.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "dividendos"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo MXN 108,66, condicionado à transmissão de valor por certificado.",
+      "otimista": "Retenção e renda após despesas sustentam cenário MXN 122,73.",
+      "pessimista": "Menor ocupação e despesas limitam caixa; cenário MXN 95,09."
+    },
+    "comentario_valuation": "Preço MXN 83,65 e alvo MXN 108,66, em MXN. Consenso MXN 84,52 e dispersão entre métodos 37,00%. A diferença não constitui percepção variante comprovada. Comparação com shoppings e holdings imobiliárias exige cautela; a conciliação de FFO, valor patrimonial e caixa distribuível permanece central.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese enfraquece se taxas, incentivos e diluição impedirem que renovação se converta em caixa atribuível.",
+        "titulo": "Renda sem retorno por certificado"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-21",
+    "dados_simulados": false,
+    "data": "2026-10-21",
+    "ficha": [
+      {
+        "fato": "val.MX_FIBRAPL.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 83,65"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 108,66"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+29,90%"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 122,73"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 95,09"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,74%"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.wacc",
+        "rotulo": "WACC",
+        "valor": "9,55%"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+31,00%"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+26,03%"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "17,9x"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,0x"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 84,52"
+      },
+      {
+        "fato": "val.MX_FIBRAPL.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+28,56%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F1",
+        "instituicao": "Fibra Prologis",
+        "publicado_em": "2026-10-21",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultados trimestrais do portfólio",
+        "url": "https://www.fibraprologis.com/en-US/investors/news-events/press-releases/detail/759/fibra-prologis-announces-third-quarter-2026-earnings-results"
+      },
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F2",
+        "instituicao": "Fibra Prologis",
+        "publicado_em": "2026-10-21",
+        "tipo": "Relações com investidores",
+        "titulo": "Distribuição trimestral declarada",
+        "url": "https://www.fibraprologis.com/en-US/investors/news-events/press-releases/detail/758/fibra-prologis-declares-quarterly-distribution"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Reconciliação do guidance e das taxas altera caixa esperado por certificado.",
+      "Mudança persistente de retenção, ocupação ou custo financeiro."
+    ],
+    "governanca": "Remuneração do patrocinador, aquisições relacionadas e direitos por certificado exigem avaliação contratual específica. Não se presume alinhamento apenas pelo acesso à plataforma.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar ocupação, retenção, NOI em caixa, FFO após incentivos e distribuição efetiva.",
+        "titulo": "Retorno atribuível"
+      }
+    ],
+    "issuer_id": "MX_FIBRAPL",
+    "lacunas_de_dados": [
+      "Probabilidades dos cenários indisponíveis.",
+      "Guidance anterior e atual não integralmente reconciliados.",
+      "Demonstrações completas, comissão de incentivo e caixa distribuível exigem conciliação."
+    ],
+    "modelo_de_cobertura": "2026-10-21",
+    "negocio": "Fideicomisso mexicano de imóveis industriais e logísticos. A renda deve remunerar vacância, manutenção, financiamento e administração.",
+    "nome": "Fibra Prologis",
+    "o_que_mudou": "O release do 3T26 substitui a referência semestral. Mantém-se atualização, pois a direção agregada do guidance não foi reconciliada.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "AR_CRESUD",
+        "nome": "Cresud"
+      },
+      {
+        "issuer_id": "AR_IRSA",
+        "nome": "IRSA"
+      },
+      {
+        "issuer_id": "BR_ALLOS",
+        "nome": "Allos"
+      },
+      {
+        "issuer_id": "BR_IGUATEMI",
+        "nome": "Iguatemi"
+      },
+      {
+        "issuer_id": "BR_MULTIPLAN",
+        "nome": "Multiplan"
+      },
+      {
+        "issuer_id": "CL_CENCOMALLS",
+        "nome": "Cencosud Shopping"
+      },
+      {
+        "issuer_id": "CL_MALLPLAZA",
+        "nome": "Plaza SA (Mallplaza)"
+      },
+      {
+        "issuer_id": "CL_PARAUCO",
+        "nome": "Parque Arauco"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A renovação mantém aumento de aluguel, enquanto ocupação e retenção ficam abaixo do ano anterior. Crescimento do aluguel contratado não garante caixa incremental.",
+        "titulo": "Aluguéis e retenção"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_FIBRAPL.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+31,00%"
+          },
+          {
+            "fato": "val.MX_FIBRAPL.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,74%"
+          }
+        ],
+        "texto": "O retorno esperado é +31,00%, com ke 10,74%. O modelo precisa ser confrontado com renda recorrente após taxas e manutenção.",
+        "titulo": "Valor calculado e preço"
+      }
+    ],
+    "publicada_em": "2026-10-22T01:47:57.389107+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A orientação de FFO exclui comissão de incentivo. Separar essa medida do caixa após todas as despesas.",
+        "titulo": "FFO e disponibilidade"
+      }
+    ],
+    "resumo": "O release do 3T26 foi recebido com data de 2026-10-21. A leitura permanece neutra, de baixa convicção, condicionada ao caixa por certificado. Alvo MXN 108,66 e potencial +29,90%.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Vacância, manutenção, taxas e financiamento podem absorver o ganho das renovações."
+      }
+    ],
+    "setor": "Imobiliário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Fibra Prologis: renda por certificado exige conciliar ocupação e taxas",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O lucro e o FFO por certificado crescem anualmente, enquanto o crescimento de NOI em caixa de mesmos imóveis desacelera. A liquidez divulgada inclui crédito disponível. Há orientação para 2026; sem reconciliação da base anterior, não se atribui direção agregada à revisão.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar incentivos, vacância e renda recebida por imóvel.",
+        "vetor": "Conversão das renovações"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

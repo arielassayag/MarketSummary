@@ -1,0 +1,326 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-21",
+    "manifest_sha256": "ad5255d9b4260123fd8b941334f2b591fae4789b25a3ed2038ac4386c6e67e37",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-21",
+  "hashes": {
+    "contexto": "3b877c19d39db154caf520cd76f98129de9c620aae8af10e59c63907556bc41d",
+    "factbook": "b53c71a639a6c1f10e8f546f7733d7f0a6ec708305094e310fc38d25ad95e895",
+    "nota_json": "742a4596988aab88e067e5233f4fa17c98f3680eb0be47fb4a98928d4778a26e"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_VIBRA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-04",
+  "published_at": "2026-10-22T01:59:46.258791+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "O RI relaciona anúncio de encerramento da emissão. A conciliação da liquidação, permutas, destinação e dívida remanescente ainda precisa ser concluída.",
+        "titulo": "Financiamento posterior"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-04",
+        "descricao": "Divulgação do resultado trimestral prevista no calendário de RI.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo R$ 49,13, condicionado à margem normalizada e conversão financeira.",
+      "otimista": "Distribuição preserva caixa e energia remunera capital; cenário R$ 70,47.",
+      "pessimista": "Giro, energia e financiamento absorvem resultado; cenário R$ 29,14."
+    },
+    "comentario_valuation": "Preço R$ 36,25 e alvo R$ 49,13, em BRL. Consenso R$ 41,81 e diferença +17,52%. EV/EBITDA 5,7x e WACC 9,55% requerem resultado recorrente e perímetro coerentes. A presença de produtoras de petróleo entre os pares limita inferências de desconto operacional. Confiança quantitativa não encerra a diligência de caixa e contratos.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A tese enfraquece se ganhos conjunturais de distribuição mascaram retorno insuficiente da energia e do capital contratado.",
+        "titulo": "Margem transitória"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-21",
+    "dados_simulados": false,
+    "data": "2026-10-21",
+    "ficha": [
+      {
+        "fato": "val.BR_VIBRA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 36,25"
+      },
+      {
+        "fato": "val.BR_VIBRA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 49,13"
+      },
+      {
+        "fato": "val.BR_VIBRA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+35,53%"
+      },
+      {
+        "fato": "val.BR_VIBRA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_VIBRA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_VIBRA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 70,47"
+      },
+      {
+        "fato": "val.BR_VIBRA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "1,40%"
+      },
+      {
+        "fato": "val.BR_VIBRA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 29,14"
+      },
+      {
+        "fato": "val.BR_VIBRA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "17,77%"
+      },
+      {
+        "fato": "val.BR_VIBRA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,48%"
+      },
+      {
+        "fato": "val.BR_VIBRA.wacc",
+        "rotulo": "WACC",
+        "valor": "9,55%"
+      },
+      {
+        "fato": "val.BR_VIBRA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_VIBRA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+38,69%"
+      },
+      {
+        "fato": "val.BR_VIBRA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+19,25%"
+      },
+      {
+        "fato": "val.BR_VIBRA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,7x"
+      },
+      {
+        "fato": "val.BR_VIBRA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,8x"
+      },
+      {
+        "fato": "val.BR_VIBRA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 41,81"
+      },
+      {
+        "fato": "val.BR_VIBRA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+17,52%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F1",
+        "instituicao": "Vibra Energia",
+        "publicado_em": "2026-08-14",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado trimestral, distribuição, energia e caixa",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/d243bdaa-0468-4f64-8c09-ba0bcee9789b/36213875-dcba-f137-2545-3f3eaa493e36?origin=2"
+      },
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F2",
+        "instituicao": "Vibra Energia",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário de relações com investidores",
+        "url": "https://ri.vibraenergia.com.br/servicos-aos-investidores/calendario-de-r-i/"
+      },
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F3",
+        "instituicao": "Vibra Energia",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Relação de documentos de debêntures",
+        "url": "https://ri.vibraenergia.com.br/informacoes-financeiras/debentures/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Margem normalizada deixa de sustentar caixa após manutenção.",
+      "Retorno da Comerc e conciliação da dívida alteram a hipótese de capital."
+    ],
+    "governanca": "A análise dos direitos acionários e das notificações de participação relevante permanece pendente de conciliação. Licença de marca não equivale à propriedade dos postos.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Acompanhar margem comparável, bonificações, giro, cortes, recebimentos e dívida após todas as obrigações.",
+        "titulo": "Caixa por segmento"
+      }
+    ],
+    "issuer_id": "BR_VIBRA",
+    "lacunas_de_dados": [
+      "Ponte integral de caixa por segmento não concluída.",
+      "Liquidação, permutas e destinação da emissão exigem conciliação documental.",
+      "Ressarcimentos e risco de contraparte da energia exigem diligência específica.",
+      "Notificações acionárias e documentos posteriores não integralmente reconciliados.",
+      "Guidance agregado e tom atual não classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-21",
+    "negocio": "Distribuidora de combustíveis e lubrificantes com plataforma de geração, comercialização e serviços de energia da Comerc. A rede comercial e os ativos energéticos têm riscos e capital distintos.",
+    "nome": "Vibra Energia",
+    "o_que_mudou": "A atualização confirma o próximo resultado e identifica anúncio de encerramento posterior ao bookbuilding. Isso não substitui a conciliação financeira, que permanece pendente.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRAVA",
+        "nome": "Brava Energia"
+      },
+      {
+        "issuer_id": "BR_COSAN",
+        "nome": "Cosan"
+      },
+      {
+        "issuer_id": "BR_PRIO",
+        "nome": "PRIO"
+      },
+      {
+        "issuer_id": "BR_RECV",
+        "nome": "PetroRecôncavo"
+      },
+      {
+        "issuer_id": "BR_ULTRAPAR",
+        "nome": "Ultrapar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Distribuição precisa preservar contribuição após suprimento, crédito, bonificações e giro, além de condições conjunturais favoráveis.",
+        "titulo": "Margem recorrente"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_VIBRA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+38,69%"
+          },
+          {
+            "fato": "val.BR_VIBRA.confianca_codigo",
+            "nome": "Confiança do modelo",
+            "valor": "A"
+          },
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O retorno esperado é +38,69%, com confiança quantitativa A. O caixa da energia precisa remunerar o capital e os riscos contratados.",
+        "titulo": "Retorno integrado"
+      }
+    ],
+    "publicada_em": "2026-10-22T01:59:46.258791+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Distinguir ressarcimento de cortes anteriores, marcações sem caixa e geração efetiva. A hipótese de giro sem recebimento atrasado não é caixa realizado.",
+        "titulo": "Reconhecimento e recebimento"
+      }
+    ],
+    "resumo": "O alvo R$ 49,13 implica potencial +35,53%. A hipótese depende de margem normalizada e caixa após financiamento. A visão permanece neutra, com baixa convicção, até a conciliação do retorno energético e das obrigações.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Normalização da margem, cortes de geração e crédito de contrapartes podem reduzir caixa enquanto obrigações financeiras permanecem."
+      }
+    ],
+    "setor": "Energia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Vibra: margem de distribuição e retorno da Comerc exigem leituras distintas",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O 2T26 mostra avanço da distribuição e pressão anual sobre o EBITDA da Comerc. Comercialização, recurso e cortes de geração limitam energia. O fluxo operacional melhora, mas recebíveis e estoques consomem giro. A medida de caixa após financiamento tem direção sequencial distinta do caixa livre anterior ao financiamento. O próximo trimestre ainda será divulgado.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar margem comparável e caixa da distribuição separadamente de geração, contratos e contrapartes da Comerc.",
+        "vetor": "Margem, giro e energia"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

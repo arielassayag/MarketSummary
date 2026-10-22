@@ -1,0 +1,329 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-21",
+    "manifest_sha256": "ad5255d9b4260123fd8b941334f2b591fae4789b25a3ed2038ac4386c6e67e37",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-21",
+  "hashes": {
+    "contexto": "8f1e90620b50c35cd4861c4726e216c464d533989501e0d71d64eb04553ce589",
+    "factbook": "fe2c87e687de6a0789d5d15705251931d742b02991202094aed026a47a20aa52",
+    "nota_json": "5648ef169d7345e83d857d32c5a334bf8edf86592384691c1221879b72170351"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_CEMEX",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-26",
+  "published_at": "2026-10-22T01:57:57.911024+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A alienação colombiana foi anunciada sujeita a condições. Receita esperada de venda não deve financiar antecipadamente a hipótese de distribuição.",
+        "titulo": "Manutenção e alienações"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-26",
+        "descricao": "Divulgação e teleconferência trimestrais anunciadas pela companhia.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo US$ 12,00, condicionado à rentabilidade recorrente.",
+      "otimista": "Economias e disciplina de preço sustentam caixa através do ciclo; cenário US$ 18,60.",
+      "pessimista": "Custos e demanda frustram retorno dos ativos; cenário US$ 6,17."
+    },
+    "comentario_valuation": "Preço US$ 10,06 e alvo US$ 12,00, em USD. O consenso é US$ 14,04, com diferença -14,51%. O P/L à frente 9,8x precisa ser confrontado com lucro normalizado e direitos do recibo negociado. Pares de mineração e metais têm ciclos distintos; múltiplos sem conciliação de moeda e unidades não comprovam desconto.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese enfraquece se ganhos pontuais ou menor manutenção substituírem eficiência recorrente.",
+        "titulo": "Caixa dependente de exceções"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-21",
+    "dados_simulados": false,
+    "data": "2026-10-21",
+    "ficha": [
+      {
+        "fato": "val.MX_CEMEX.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 10,06"
+      },
+      {
+        "fato": "val.MX_CEMEX.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 12,00"
+      },
+      {
+        "fato": "val.MX_CEMEX.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+19,30%"
+      },
+      {
+        "fato": "val.MX_CEMEX.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_CEMEX.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.MX_CEMEX.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 18,60"
+      },
+      {
+        "fato": "val.MX_CEMEX.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "5,65%"
+      },
+      {
+        "fato": "val.MX_CEMEX.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 6,17"
+      },
+      {
+        "fato": "val.MX_CEMEX.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "8,63%"
+      },
+      {
+        "fato": "val.MX_CEMEX.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "9,80%"
+      },
+      {
+        "fato": "val.MX_CEMEX.wacc",
+        "rotulo": "WACC",
+        "valor": "8,31%"
+      },
+      {
+        "fato": "val.MX_CEMEX.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.MX_CEMEX.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+19,93%"
+      },
+      {
+        "fato": "val.MX_CEMEX.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+16,74%"
+      },
+      {
+        "fato": "val.MX_CEMEX.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "9,8x"
+      },
+      {
+        "fato": "val.MX_CEMEX.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,1x"
+      },
+      {
+        "fato": "val.MX_CEMEX.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 14,04"
+      },
+      {
+        "fato": "val.MX_CEMEX.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-14,51%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F1",
+        "instituicao": "Cemex / SEC",
+        "publicado_em": "2026-07-23",
+        "tipo": "Regulador",
+        "titulo": "Resultados e orientação da administração",
+        "url": "https://www.sec.gov/Archives/edgar/data/1076378/000119312526313194/d46310dex1.htm"
+      },
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F2",
+        "instituicao": "Cemex / BMV",
+        "publicado_em": "2026-10-19",
+        "tipo": "Bolsa",
+        "titulo": "Convite para divulgação e teleconferência",
+        "url": "https://www.bmv.com.mx/docs-pub/eventemi/eventemi_1596200_1.pdf"
+      },
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F3",
+        "instituicao": "Cemex / SEC",
+        "publicado_em": "2026-03-12",
+        "tipo": "Regulador",
+        "titulo": "Anúncio de desinvestimento na Colômbia",
+        "url": "https://www.sec.gov/Archives/edgar/data/1076378/000119312526102954/d71639dex991.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultado subsequente demonstra persistência das economias e caixa.",
+      "Conclusão documentada das alienações altera perímetro e financiamento."
+    ],
+    "governanca": "Conciliar direitos dos certificados e recibos, dívida, arrendamentos e títulos subordinados antes de interpretar o valor por ação. Preservar distinção entre projeção e execução.",
+    "guidance": "elevado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Acompanhar custos, volumes, economias e caixa após investimento por região; verificar conclusão de alienações.",
+        "titulo": "Execução do programa"
+      }
+    ],
+    "issuer_id": "MX_CEMEX",
+    "lacunas_de_dados": [
+      "Resultado gerencial e fluxo de caixa ainda exigem reconciliação integral.",
+      "Execução posterior do guidance não comprovada.",
+      "Conclusão da alienação colombiana não confirmada.",
+      "Direitos do recibo e base diluída exigem conciliação com o modelo."
+    ],
+    "modelo_de_cobertura": "2026-10-21",
+    "negocio": "Produtora de cimento, concreto e agregados, exposta à construção e infraestrutura em mercados regionais. Logística, reservas e intensidade de capital condicionam o retorno.",
+    "nome": "Cemex",
+    "o_que_mudou": "A atualização confirma a data da próxima divulgação e incorpora os fatos atuais do modelo. A comprovação das metas elevadas e do desinvestimento permanece pendente.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_ENDEAVOUR",
+        "nome": "Endeavour Silver"
+      },
+      {
+        "issuer_id": "MX_GCC",
+        "nome": "GCC"
+      },
+      {
+        "issuer_id": "MX_GMEXICO",
+        "nome": "Grupo México"
+      },
+      {
+        "issuer_id": "MX_ORBIA",
+        "nome": "Orbia"
+      },
+      {
+        "issuer_id": "MX_PENOLES",
+        "nome": "Industrias Peñoles"
+      },
+      {
+        "issuer_id": "MX_TERNIUM",
+        "nome": "Ternium"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "As economias do Cutting Edge precisam permanecer após manutenção e normalização da demanda.",
+        "titulo": "Eficiência persistente"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_CEMEX.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+19,93%"
+          },
+          {
+            "fato": "val.MX_CEMEX.confianca_codigo",
+            "nome": "Confiança do modelo",
+            "valor": "C"
+          },
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O retorno esperado é +19,93%, com confiança C. A geração recorrente precisa remunerar ativos e capital contratado.",
+        "titulo": "Preço e reinvestimento"
+      }
+    ],
+    "publicada_em": "2026-10-22T01:57:57.911024+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A melhora operacional precisa persistir sem o acordo excepcional europeu. Métricas gerenciais exigem ponte com demonstrações e caixa.",
+        "titulo": "Ajustes e recorrência"
+      }
+    ],
+    "resumo": "O modelo indica alvo US$ 12,00 e potencial +19,30%. A leitura permanece neutra, com baixa convicção, até confirmar economias e caixa após manutenção. A divulgação do 3T26 está agendada para 2026-10-26.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Demanda fraca e custos de energia podem consumir economias, enquanto a manutenção industrial continua necessária."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Cemex: eficiência recorrente sob teste antes da próxima divulgação",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O 2T26 apresentou crescimento operacional e geração de caixa. O release elevou o guidance anual de EBITDA e a meta de economias do Cutting Edge. O acordo excepcional favorável na Europa precisa ser separado da operação. A divulgação do 3T26 permanece futura; não há confirmação de execução posterior das projeções.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Confrontar preço, volumes, energia e economias recorrentes com o caixa após manutenção.",
+        "vetor": "Demanda e eficiência por região"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

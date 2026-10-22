@@ -1,0 +1,321 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-21",
+    "manifest_sha256": "ad5255d9b4260123fd8b941334f2b591fae4789b25a3ed2038ac4386c6e67e37",
+    "modelo_as_of": "2026-10-21"
+  },
+  "conviccao": 1,
+  "data": "2026-10-21",
+  "hashes": {
+    "contexto": "ecfd1820c134421ac5f9742a55721841b11c4985f499d65810324846d39c5654",
+    "factbook": "7279186186023aa5316a83a831782a98b432a955538e045186ffa088dc00939b",
+    "nota_json": "4b7e047aff0192b8118957e58824ed117c09f29768c6fe7963fa13e98ccb3ea9"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_GENOMMA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-21",
+  "published_at": "2026-10-22T01:41:27.878387+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O refinanciamento e a distribuição ao acionista devem ser avaliados junto ao investimento em marcas e fábrica; não se presume retorno suficiente apenas pelo alongamento de passivos.",
+        "titulo": "Prioridade ao retorno"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-12-03",
+        "descricao": "Apresentação do novo modelo operacional no encontro com investidores.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "dia_do_investidor"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo de MXN 26,34; depende da adequação das premissas ao caixa recorrente.",
+      "otimista": "Demanda rentável e liberação de giro sustentam o cenário de MXN 31,12.",
+      "pessimista": "Promoção e financiamento do canal absorvem retorno; cenário de MXN 22,24. Probabilidade não disponível."
+    },
+    "comentario_valuation": "Preço MXN 14,38 e alvo MXN 26,34, ambos em MXN. Ke de 12,21% e dispersão entre métodos de 26,16%. O alvo do consenso é MXN 21,33. A divergência não comprova erro de preço nem vantagem econômica sobre pares de consumo com modelos distintos.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A tese enfraquece se crescimento de vendas persistir sem melhoria de margem e conversão em caixa.",
+        "titulo": "Recuperação sem recebimento"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-21",
+    "dados_simulados": false,
+    "data": "2026-10-21",
+    "ficha": [
+      {
+        "fato": "val.MX_GENOMMA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 14,38"
+      },
+      {
+        "fato": "val.MX_GENOMMA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 26,34"
+      },
+      {
+        "fato": "val.MX_GENOMMA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+83,15%"
+      },
+      {
+        "fato": "val.MX_GENOMMA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_GENOMMA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.MX_GENOMMA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 31,12"
+      },
+      {
+        "fato": "val.MX_GENOMMA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_GENOMMA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 22,24"
+      },
+      {
+        "fato": "val.MX_GENOMMA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_GENOMMA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,21%"
+      },
+      {
+        "fato": "val.MX_GENOMMA.wacc",
+        "rotulo": "WACC",
+        "valor": "9,94%"
+      },
+      {
+        "fato": "val.MX_GENOMMA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_GENOMMA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+90,23%"
+      },
+      {
+        "fato": "val.MX_GENOMMA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+93,88%"
+      },
+      {
+        "fato": "val.MX_GENOMMA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "7,4x"
+      },
+      {
+        "fato": "val.MX_GENOMMA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,2x"
+      },
+      {
+        "fato": "val.MX_GENOMMA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 21,33"
+      },
+      {
+        "fato": "val.MX_GENOMMA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+23,46%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F1",
+        "instituicao": "Genomma Lab",
+        "publicado_em": "2026-10-21",
+        "tipo": "Relações com investidores",
+        "titulo": "Release de resultados trimestrais",
+        "url": "https://inversionistas.genommalab.com/wp-content/uploads/2026/04/Reporte-trimestral-3T26-ESP_vf.pdf"
+      },
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F2",
+        "instituicao": "Genomma Lab",
+        "publicado_em": "2026-09-17",
+        "tipo": "Relações com investidores",
+        "titulo": "Transição da direção geral",
+        "url": "https://inversionistas.genommalab.com/wp-content/uploads/2026/09/Press-Release_Spanish-17-sep-26_vf.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Normalização comprovada de giro e melhoria operacional recorrente.",
+      "Mudanças de governança, distribuição ou financiamento alteram retorno econômico."
+    ],
+    "governanca": "A comunicação de setembro anuncia transição da direção para o fundador, também presidente do conselho. A concentração de funções exige acompanhamento da independência de supervisão e da execução.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Confrontar sell-in, sell-out, margem após promoção, estoques e recebimentos por região.",
+        "titulo": "Execução comercial"
+      }
+    ],
+    "issuer_id": "MX_GENOMMA",
+    "lacunas_de_dados": [
+      "Probabilidades implícitas dos cenários não disponíveis.",
+      "Demonstrações, efeitos hiperinflacionários e premissas do modelo não integralmente reconciliados.",
+      "Sem evidência independente suficiente para percepção variante ou participação de mercado."
+    ],
+    "modelo_de_cobertura": "2026-10-21",
+    "negocio": "Genomma reúne medicamentos de venda livre, cuidado pessoal, bebidas e nutrição infantil. Marcas e distribuição precisam remunerar promoção, fabricação e financiamento do canal.",
+    "nome": "Genomma Lab",
+    "o_que_mudou": "O release do 3T26 substitui a base qualitativa do 2T26. A leitura permanece neutra até reconciliação integral de caixa e premissas.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_AC",
+        "nome": "Arca Continental"
+      },
+      {
+        "issuer_id": "MX_BIMBO",
+        "nome": "Grupo Bimbo"
+      },
+      {
+        "issuer_id": "MX_CHEDRAUI",
+        "nome": "Grupo Comercial Chedraui"
+      },
+      {
+        "issuer_id": "MX_FEMSA",
+        "nome": "FEMSA"
+      },
+      {
+        "issuer_id": "MX_GRUMA",
+        "nome": "Gruma"
+      },
+      {
+        "issuer_id": "MX_KIMBER",
+        "nome": "Kimberly-Clark de México"
+      },
+      {
+        "issuer_id": "MX_KOF",
+        "nome": "Coca-Cola FEMSA"
+      },
+      {
+        "issuer_id": "MX_SIGMA",
+        "nome": "Sigma Foods (ex-Alfa)"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A administração relata retomada do sell-out mexicano. O avanço precisa persistir após gastos promocionais e converter-se em recebimentos.",
+        "titulo": "Recuperação com condições"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_GENOMMA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+90,23%"
+          },
+          {
+            "fato": "val.MX_GENOMMA.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "+93,88%"
+          }
+        ],
+        "texto": "O retorno esperado de +90,23% e o alpha relativo de +93,88% são resultados do modelo. A tese qualitativa permanece condicionada à geração recorrente de caixa.",
+        "titulo": "Valuation exige confirmação"
+      }
+    ],
+    "publicada_em": "2026-10-22T01:41:27.878387+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar contribuição financeira, efeitos hiperinflacionários e desempenho operacional antes de inferir recuperação recorrente.",
+        "titulo": "Lucro e operação"
+      }
+    ],
+    "resumo": "O 3T26 traz recuperação comercial, mas a qualidade da conversão exige acompanhamento. Mantém-se visão neutra, de baixa convicção. O alvo é MXN 26,34, com potencial +83,15% e confiança C.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Demanda fraca nos Estados Unidos e giro elevado podem prolongar a pressão operacional."
+      }
+    ],
+    "setor": "Consumo básico",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Genomma: recuperação comercial ainda exige disciplina de giro",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "No release de 2026-10-21, receita e lucro líquido crescem, enquanto EBITDA e margem bruta recuam. Menor despesa financeira e câmbio favorecem o lucro. O caixa livre melhora, mas o ciclo de conversão aumenta. O texto recebido não apresenta guidance financeiro formal comparável; as expectativas operacionais são tratadas como condicionais.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar estoques e recebíveis; normalização esperada pela gestão ainda precisa ocorrer.",
+        "vetor": "Capital de giro"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

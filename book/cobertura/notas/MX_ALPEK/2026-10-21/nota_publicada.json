@@ -1,0 +1,299 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-21",
+    "manifest_sha256": "ad5255d9b4260123fd8b941334f2b591fae4789b25a3ed2038ac4386c6e67e37",
+    "modelo_as_of": "2026-10-21"
+  },
+  "conviccao": 1,
+  "data": "2026-10-21",
+  "hashes": {
+    "contexto": "cb7154d94ceacd643b9f06d81f84e10ba332b29862b0a03ae926bac01d835ea9",
+    "factbook": "9a40e50cbdfa783384b643253d36e0e992b39fbfb9159c84733e88e59a9d66f1",
+    "nota_json": "e63608f89fe148d7abc87a9983ccc22c10e949b31e50bea14855a70a35dc808f"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_ALPEK",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-21",
+  "published_at": "2026-10-22T01:52:53.754768+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Exigir retorno dos projetos e redução efetiva da dívida, além da melhora do indicador de alavancagem.",
+        "titulo": "Investimentos e dívida"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Alvo MXN 13,99, condicionado à conversão de resultado em caixa.",
+      "otimista": "Margens resilientes e liberação de giro sustentam retorno; cenário MXN 44,64.",
+      "pessimista": "Compressão de spreads e necessidade de caixa pressionam valor; cenário MXN 0,00, sem probabilidade disponível."
+    },
+    "comentario_valuation": "Preço MXN 16,33 e alvo MXN 13,99, em MXN. O consenso é MXN 16,71, com diferença -16,29%. A dispersão entre métodos é 62,91%; WACC 9,12% e crescimento terminal 5,28% exigem confronto com a rentabilidade normalizada. O cenário pessimista é saída do modelo, sem inferência automática de insolvência.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A recuperação pode depender de fretes e spreads excepcionalmente favoráveis.",
+        "titulo": "Melhora transitória"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-21",
+    "dados_simulados": false,
+    "data": "2026-10-21",
+    "ficha": [
+      {
+        "fato": "val.MX_ALPEK.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 16,33"
+      },
+      {
+        "fato": "val.MX_ALPEK.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 13,99"
+      },
+      {
+        "fato": "val.MX_ALPEK.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-14,35%"
+      },
+      {
+        "fato": "val.MX_ALPEK.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_ALPEK.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.MX_ALPEK.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 44,64"
+      },
+      {
+        "fato": "val.MX_ALPEK.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "0,40%"
+      },
+      {
+        "fato": "val.MX_ALPEK.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 0,00"
+      },
+      {
+        "fato": "val.MX_ALPEK.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_ALPEK.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,93%"
+      },
+      {
+        "fato": "val.MX_ALPEK.wacc",
+        "rotulo": "WACC",
+        "valor": "9,12%"
+      },
+      {
+        "fato": "val.MX_ALPEK.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_ALPEK.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-14,35%"
+      },
+      {
+        "fato": "val.MX_ALPEK.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-19,95%"
+      },
+      {
+        "fato": "val.MX_ALPEK.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "14,2x"
+      },
+      {
+        "fato": "val.MX_ALPEK.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,3x"
+      },
+      {
+        "fato": "val.MX_ALPEK.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 16,71"
+      },
+      {
+        "fato": "val.MX_ALPEK.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-16,29%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F1",
+        "instituicao": "Alpek",
+        "publicado_em": "2026-10-21",
+        "tipo": "Relações com investidores",
+        "titulo": "Relatório de resultados trimestrais",
+        "url": "https://www.alpek.com/wp-content/uploads/2026/10/Alpek-3Q26-Report-ENG.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Spreads normalizam sem compensação de volume ou custo.",
+      "Giro deixa de consumir caixa e dívida líquida passa a cair."
+    ],
+    "governanca": "Examinar incentivos do controle e a destinação de caixa após a reorganização societária. Projeções da administração não garantem execução.",
+    "guidance": "elevado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar spreads, giro, dívida líquida, caixa após todos os investimentos e execução do guidance.",
+        "titulo": "Conversão financeira"
+      }
+    ],
+    "issuer_id": "MX_ALPEK",
+    "lacunas_de_dados": [
+      "Retorno incremental dos projetos e margem normalizada não comprovados.",
+      "Probabilidade do cenário pessimista indisponível.",
+      "Sensibilidade elevada entre métodos exige conciliação de premissas."
+    ],
+    "modelo_de_cobertura": "2026-10-21",
+    "negocio": "Produtora de poliéster, plásticos e químicos. Margens dependem de demanda industrial, matérias-primas, concorrência asiática e logística; capacidade instalada não comprova retorno incremental.",
+    "nome": "Alpek",
+    "o_que_mudou": "O resultado do 3T26 e a elevação do guidance substituem a referência anterior. O caixa e a dívida impedem interpretar a melhora operacional como desalavancagem já realizada.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_CEMEX",
+        "nome": "Cemex"
+      },
+      {
+        "issuer_id": "MX_ENDEAVOUR",
+        "nome": "Endeavour Silver"
+      },
+      {
+        "issuer_id": "MX_GCC",
+        "nome": "GCC"
+      },
+      {
+        "issuer_id": "MX_GMEXICO",
+        "nome": "Grupo México"
+      },
+      {
+        "issuer_id": "MX_ORBIA",
+        "nome": "Orbia"
+      },
+      {
+        "issuer_id": "MX_PENOLES",
+        "nome": "Industrias Peñoles"
+      },
+      {
+        "issuer_id": "MX_TERNIUM",
+        "nome": "Ternium"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A vantagem da produção local precisa sobreviver à normalização do frete e dos spreads de PET.",
+        "titulo": "Margem e logística"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_ALPEK.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "MXN 13,99"
+          },
+          {
+            "fato": "val.MX_ALPEK.confianca_codigo",
+            "nome": "Confiança do modelo",
+            "valor": "C"
+          },
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O alvo é MXN 13,99, com confiança C. A melhora do EBITDA precisa converter-se em caixa após investimentos.",
+        "titulo": "Remuneração do capital"
+      }
+    ],
+    "publicada_em": "2026-10-22T01:52:53.754768+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar ajustes de estoques do EBITDA comparável. A medida gerencial de caixa operacional livre exclui investimentos estratégicos e distribuições.",
+        "titulo": "Caixa e comparabilidade"
+      }
+    ],
+    "resumo": "A melhora operacional convive com absorção de capital de giro e dívida líquida maior na comparação sequencial. A posição permanece neutra, com baixa convicção. Preço-alvo MXN 13,99 e potencial -14,35%.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Normalização logística e demanda fraca podem reduzir margens antes da liberação de capital de giro."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Alpek: guidance elevado exige conversão de margem em caixa",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O EBITDA comparável cresce anualmente, mas recua sequencialmente. O caixa operacional livre é pressionado pelo giro. A dívida líquida aumenta sequencialmente, embora a alavancagem caia com o EBITDA acumulado. A companhia eleva o guidance anual de EBITDA comparável e mantém as projeções de volume, investimento e caixa operacional livre.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar margens de PET, estoques e recebíveis em conjunto com geração de caixa.",
+        "vetor": "Spreads e capital de giro"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

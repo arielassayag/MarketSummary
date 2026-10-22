@@ -1,0 +1,316 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-21",
+    "manifest_sha256": "ad5255d9b4260123fd8b941334f2b591fae4789b25a3ed2038ac4386c6e67e37",
+    "modelo_as_of": "2026-10-21"
+  },
+  "conviccao": 1,
+  "data": "2026-10-21",
+  "hashes": {
+    "contexto": "04ee5da5c6e612b6ead5a3e76890fe4f2e748daff37522b7b060cd2992cb95ec",
+    "factbook": "b2732530aa51d5bf15f8971510c307d68d6c09efd4d900ec9dfdc77727a91fee",
+    "nota_json": "9f9d04feb59327245664089a46409834d3d6415900605ecdca550d9755fcaad2"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_BRADSAUDE",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-21",
+  "published_at": "2026-10-22T01:49:26.356282+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Hospitais contratados não equivalem a capacidade operacional. Dividendos anunciados permanecem distintos de pagamentos recebidos.",
+        "titulo": "Capacidade e distribuição"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Alvo R$ 17,23, condicionado à comparabilidade da base e à margem recorrente.",
+      "otimista": "Reajustes e integração remuneram capital; cenário R$ 19,41.",
+      "pessimista": "Custo médico e capital pressionam retorno atribuível; cenário R$ 15,27."
+    },
+    "comentario_valuation": "Preço R$ 15,42 e alvo R$ 17,23, em BRL. O consenso é R$ 18,06, com diferença -4,59%. Pares de setores distintos limitam inferências relativas. O ke é 11,68%; WACC ausente não é estimado. A conciliação entre bases gerenciais, contábeis e por ação permanece condição da leitura.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A tese enfraquece se crescimento de vidas não remunerar sinistros, despesas e capital.",
+        "titulo": "Escala sem margem"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-21",
+    "dados_simulados": false,
+    "data": "2026-10-21",
+    "ficha": [
+      {
+        "fato": "val.BR_BRADSAUDE.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 15,42"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 17,23"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+11,74%"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 19,41"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "22,04%"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 15,27"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "55,62%"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,68%"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+22,52%"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+11,16%"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "9,3x"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,4x"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 18,06"
+      },
+      {
+        "fato": "val.BR_BRADSAUDE.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-4,59%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F1",
+        "instituicao": "Bradsaúde",
+        "publicado_em": "2026-10-21",
+        "tipo": "Relações com investidores",
+        "titulo": "Relatório de resultados trimestrais",
+        "url": "https://filemanager-cdn.mziq.com/published/c504a4a5-75e7-4404-8af7-524b50cd7e11/1db31ea0-12b9-4cde-a5f6-535e54ef329b"
+      },
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F2",
+        "instituicao": "Bradsaúde",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Anúncio de dividendos",
+        "url": "https://filemanager-cdn.mziq.com/published/c504a4a5-75e7-4404-8af7-524b50cd7e11/e86cb6b1-293e-41dc-8464-e5d3f1054332"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Reajustes deixam de compensar custo médico por contrato.",
+      "Reconciliação da base acionária e do lucro altera a leitura do modelo."
+    ],
+    "governanca": "O controle e as transações relacionadas exigem avaliar transmissão de valor aos minoritários. Bases gerenciais recompostas não comprovam comparabilidade por ação.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar sinistralidade, reajuste, retenção, resultado financeiro, participações e lucro por ação reconciliado.",
+        "titulo": "Retorno atribuível"
+      }
+    ],
+    "issuer_id": "BR_BRADSAUDE",
+    "lacunas_de_dados": [
+      "Base acionária e modelo não integralmente reconciliados após reorganização.",
+      "Histórico gerencial, normas contábeis e reconhecimento estatutário têm bases distintas.",
+      "Capital por entidade, reservas e retorno dos hospitais exigem conciliação.",
+      "WACC não disponível; vantagem relativa não comprovada."
+    ],
+    "modelo_de_cobertura": "2026-10-21",
+    "negocio": "Holding de saúde com seguros médico-hospitalares, odontologia e participações em prestadores. Economias de distribuição precisam alcançar o resultado atribuível após sinistros e capital.",
+    "nome": "Bradesco Saúde",
+    "o_que_mudou": "O 3T26 substitui a referência semestral. Persistem as lacunas da reorganização e do retorno incremental em hospitais.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_3TENTOS",
+        "nome": "3tentos"
+      },
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALLOS",
+        "nome": "Allos"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AMBEV",
+        "nome": "Ambev"
+      },
+      {
+        "issuer_id": "BR_ASSAI",
+        "nome": "Assaí Atacadista"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A expansão de beneficiários precisa preservar a margem depois do custo médico. O lucro maior não resolve isoladamente a pressão de sinistros.",
+        "titulo": "Subscrição rentável"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BRADSAUDE.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+22,52%"
+          },
+          {
+            "fato": "val.BR_BRADSAUDE.confianca_codigo",
+            "nome": "Confiança do modelo",
+            "valor": "C"
+          },
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O retorno esperado é +22,52%, com confiança C. A interpretação requer base acionária e lucro atribuível reconciliados após a reorganização.",
+        "titulo": "Base por ação"
+      }
+    ],
+    "publicada_em": "2026-10-22T01:49:26.356282+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar subscrição, equivalência e contribuição tributária antes de inferir recorrência do lucro.",
+        "titulo": "Operação e tributação"
+      }
+    ],
+    "resumo": "O 3T26 combina crescimento de lucro e receita com maior sinistralidade. A leitura permanece neutra e de baixa convicção. Alvo R$ 17,23 e potencial +11,74%, sujeitos à conciliação da estrutura reorganizada.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Sinistros e necessidade de capital podem absorver crescimento e limitar distribuição."
+      }
+    ],
+    "setor": "Saúde",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Bradsaúde: lucro cresce, subscrição e nova base contábil exigem conciliação",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O relatório indica receita e lucro maiores, com sinistralidade também maior. Hospitais, equivalência patrimonial e eficiência tributária contribuem para o lucro. A apresentação recompõe a estrutura atual em períodos anteriores; essa base difere do reconhecimento estatutário. Não foi identificado guidance financeiro agregado no material examinado.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Confrontar retenção, composição dos contratos e custo médico por segmento.",
+        "vetor": "Sinistralidade e reajuste"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

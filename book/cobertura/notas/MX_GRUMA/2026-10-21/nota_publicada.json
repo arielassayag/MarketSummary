@@ -1,0 +1,326 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-21",
+    "manifest_sha256": "ad5255d9b4260123fd8b941334f2b591fae4789b25a3ed2038ac4386c6e67e37",
+    "modelo_as_of": "2026-10-21"
+  },
+  "conviccao": 1,
+  "data": "2026-10-21",
+  "hashes": {
+    "contexto": "e0b9d5fddf9111d9be871ef2ae901322e3155fa2e30490cf0def8bde6aebcdd4",
+    "factbook": "7279186186023aa5316a83a831782a98b432a955538e045186ffa088dc00939b",
+    "nota_json": "fb01e376165d3e14036443ca42579a8c57462023ffb1ba7871b5075123f9a265"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_GRUMA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-21",
+  "published_at": "2026-10-22T01:46:26.731748+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Os investimentos incluem equipamentos e capacidade de tortillas. Avaliar utilização e retorno após manutenção e giro.",
+        "titulo": "Retorno das instalações"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-22",
+        "descricao": "Teleconferência trimestral prevista no calendário corporativo.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo MXN 449,08, condicionado a caixa recorrente compatível com as premissas.",
+      "otimista": "Volume e eficiência recuperam contribuição; cenário MXN 552,79.",
+      "pessimista": "Demanda e custos pressionam retorno; cenário MXN 356,55."
+    },
+    "comentario_valuation": "Preço MXN 245,37 e alvo MXN 449,08, em MXN. O consenso aponta MXN 332,08 e a dispersão entre métodos é 12,22%. A avaliação exige conciliar a moeda das demonstrações e a unidade dos múltiplos antes de inferir desconto frente aos pares. Probabilidades implícitas ausentes permanecem indisponíveis.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese enfraquece se outras regiões não remunerarem a pressão persistente no principal mercado.",
+        "titulo": "Diversificação insuficiente"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-21",
+    "dados_simulados": false,
+    "data": "2026-10-21",
+    "ficha": [
+      {
+        "fato": "val.MX_GRUMA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 245,37"
+      },
+      {
+        "fato": "val.MX_GRUMA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 449,08"
+      },
+      {
+        "fato": "val.MX_GRUMA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+83,02%"
+      },
+      {
+        "fato": "val.MX_GRUMA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.MX_GRUMA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_GRUMA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 552,79"
+      },
+      {
+        "fato": "val.MX_GRUMA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_GRUMA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 356,55"
+      },
+      {
+        "fato": "val.MX_GRUMA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_GRUMA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "9,85%"
+      },
+      {
+        "fato": "val.MX_GRUMA.wacc",
+        "rotulo": "WACC",
+        "valor": "8,54%"
+      },
+      {
+        "fato": "val.MX_GRUMA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_GRUMA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+84,73%"
+      },
+      {
+        "fato": "val.MX_GRUMA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+90,17%"
+      },
+      {
+        "fato": "val.MX_GRUMA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "9,9x"
+      },
+      {
+        "fato": "val.MX_GRUMA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,0x"
+      },
+      {
+        "fato": "val.MX_GRUMA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 332,08"
+      },
+      {
+        "fato": "val.MX_GRUMA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+35,23%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F1",
+        "instituicao": "Gruma",
+        "publicado_em": "2026-10-21",
+        "tipo": "Relações com investidores",
+        "titulo": "Release de resultados trimestrais",
+        "url": "https://www.gruma.com/media/752052/3q26-gruma-e.pdf"
+      },
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F2",
+        "instituicao": "Gruma",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário corporativo",
+        "url": "https://www.gruma.com/es/inversionistas/inversionistas-gruma/proximos-eventos.aspx"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Recuperação sustentada da contribuição americana após distribuição.",
+      "Reconciliação de moeda, múltiplos e retorno incremental altera a avaliação."
+    ],
+    "governanca": "Examinar controle, direitos econômicos e transferência de caixa entre subsidiárias antes de inferir capacidade de distribuição.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar volume, composição, distribuição, giro e dívida incluindo arrendamentos.",
+        "titulo": "Canais e capital"
+      }
+    ],
+    "issuer_id": "MX_GRUMA",
+    "lacunas_de_dados": [
+      "Probabilidades dos cenários não disponíveis.",
+      "Demonstrações detalhadas, arrendamentos e caixa atribuível não integralmente reconciliados.",
+      "Moeda e unidade dos múltiplos exigem conciliação; não se presume desconto relativo."
+    ],
+    "modelo_de_cobertura": "2026-10-21",
+    "negocio": "Produtora de farinha de milho, tortillas e alimentos, com canais e geografias de rentabilidade distinta.",
+    "nome": "Gruma",
+    "o_que_mudou": "O 3T26 substitui o trimestre anterior como referência qualitativa. A leitura preserva a cautela com demanda americana e recorrência.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_AC",
+        "nome": "Arca Continental"
+      },
+      {
+        "issuer_id": "MX_BIMBO",
+        "nome": "Grupo Bimbo"
+      },
+      {
+        "issuer_id": "MX_CHEDRAUI",
+        "nome": "Grupo Comercial Chedraui"
+      },
+      {
+        "issuer_id": "MX_FEMSA",
+        "nome": "FEMSA"
+      },
+      {
+        "issuer_id": "MX_GENOMMA",
+        "nome": "Genomma Lab"
+      },
+      {
+        "issuer_id": "MX_KIMBER",
+        "nome": "Kimberly-Clark de México"
+      },
+      {
+        "issuer_id": "MX_KOF",
+        "nome": "Coca-Cola FEMSA"
+      },
+      {
+        "issuer_id": "MX_SIGMA",
+        "nome": "Sigma Foods (ex-Alfa)"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Nos Estados Unidos, o canal institucional permanece pressionado. A hipótese exige recuperação de contribuição após distribuição.",
+        "titulo": "Volume e contribuição"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_GRUMA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+84,73%"
+          },
+          {
+            "fato": "val.MX_GRUMA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "9,85%"
+          },
+          {
+            "fato": "val.MX_GRUMA.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "+90,17%"
+          }
+        ],
+        "texto": "O retorno esperado é +84,73%, com ke 9,85%. O alpha relativo aos pares, +90,17%, não comprova vantagem competitiva.",
+        "titulo": "Premissas do retorno"
+      }
+    ],
+    "publicada_em": "2026-10-22T01:46:26.731748+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A indenização de seguro exige separação do desempenho operacional recorrente.",
+        "titulo": "Recorrência da contribuição"
+      }
+    ],
+    "resumo": "A demanda institucional americana permanece fraca. Diversificação mitiga a pressão, mas não demonstra recuperação uniforme. Visão neutra, baixa convicção; alvo MXN 449,08 e potencial +83,02%.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Volume fraco e custos podem adiar o retorno do capital reinvestido."
+      }
+    ],
+    "setor": "Consumo básico",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Gruma: pressão americana exige foco em volume rentável",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "O release de 2026-10-21 apresenta receita maior, mas volume, EBITDA ajustado e lucro majoritário menores. A melhora centro-americana inclui indenização de seguro. Não foi apresentado guidance financeiro agregado no documento examinado.",
+    "vetores": [
+      {
+        "direcao": "negativo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Custos logísticos maiores limitam a transmissão de receita em margem.",
+        "vetor": "Custos de distribuição"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

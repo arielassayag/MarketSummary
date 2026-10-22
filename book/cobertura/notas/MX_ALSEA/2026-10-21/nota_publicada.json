@@ -1,0 +1,298 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-21",
+    "manifest_sha256": "ad5255d9b4260123fd8b941334f2b591fae4789b25a3ed2038ac4386c6e67e37",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-21",
+  "hashes": {
+    "contexto": "0145141ba7c798d27934226b1537c32fe4657ae08d344de4fe52333ccc4a918a",
+    "factbook": "e71ddb2ab4af85f7ed22790b0b8a7c5fd4c80ae554d15972d810a5ffcead5746",
+    "nota_json": "4e955baed28ac232055f06b3d9abf19fd58f8a3df1d58bca702b92d6eaef0dc4"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_ALSEA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-21",
+  "published_at": "2026-10-22T01:54:39.664159+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A melhora do caixa com menor investimento exige acompanhar manutenção e reformas antes de extrapolar capacidade de distribuição.",
+        "titulo": "Caixa sustentável"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Alvo MXN 47,95, condicionado à geração recorrente após manutenção.",
+      "otimista": "Tráfego e contribuição por unidade remuneram expansão; cenário MXN 63,53.",
+      "pessimista": "Contratos e custos absorvem monetização; cenário MXN 33,24."
+    },
+    "comentario_valuation": "Preço MXN 50,32 e alvo MXN 47,95, em MXN. O consenso é MXN 58,61, com diferença -18,20%. O múltiplo EV/EBITDA 6,6x requer coerência entre dívida, aluguel e resultado. Pares de atividades distintas limitam a interpretação relativa. A dispersão 33,75% mantém sensibilidade às premissas.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A tese enfraquece se frequência cresce sem contribuição após custos completos.",
+        "titulo": "Promoção sem retorno"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-21",
+    "dados_simulados": false,
+    "data": "2026-10-21",
+    "ficha": [
+      {
+        "fato": "val.MX_ALSEA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 50,32"
+      },
+      {
+        "fato": "val.MX_ALSEA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 47,95"
+      },
+      {
+        "fato": "val.MX_ALSEA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-4,71%"
+      },
+      {
+        "fato": "val.MX_ALSEA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_ALSEA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_ALSEA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 63,53"
+      },
+      {
+        "fato": "val.MX_ALSEA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "28,13%"
+      },
+      {
+        "fato": "val.MX_ALSEA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 33,24"
+      },
+      {
+        "fato": "val.MX_ALSEA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "2,55%"
+      },
+      {
+        "fato": "val.MX_ALSEA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "13,18%"
+      },
+      {
+        "fato": "val.MX_ALSEA.wacc",
+        "rotulo": "WACC",
+        "valor": "9,53%"
+      },
+      {
+        "fato": "val.MX_ALSEA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_ALSEA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-3,31%"
+      },
+      {
+        "fato": "val.MX_ALSEA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-22,40%"
+      },
+      {
+        "fato": "val.MX_ALSEA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "13,5x"
+      },
+      {
+        "fato": "val.MX_ALSEA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "4,8x"
+      },
+      {
+        "fato": "val.MX_ALSEA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 58,61"
+      },
+      {
+        "fato": "val.MX_ALSEA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-18,20%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F1",
+        "instituicao": "Alsea / BMV",
+        "publicado_em": "2026-10-20",
+        "tipo": "Bolsa",
+        "titulo": "Relatório de resultados trimestrais",
+        "url": "https://bmv.com.mx/docs-pub/eventemi/eventemi_1596498_1.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Recuperação de tráfego deixa de produzir contribuição recorrente.",
+      "Caixa após manutenção e aluguel confirma retorno das expansões."
+    ],
+    "governanca": "Direitos de marca e compromissos por unidade precisam permanecer conciliáveis com o retorno dos minoritários. Recompras devem competir com manutenção e redução da dívida.",
+    "guidance": "mantido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar tráfego, gasto por compra, contribuição, reformas, giro e caixa após obrigações.",
+        "titulo": "Economia por formato"
+      }
+    ],
+    "issuer_id": "MX_ALSEA",
+    "lacunas_de_dados": [
+      "Retorno por unidade após administração, royalties e reformas não integralmente reconciliado.",
+      "Sustentabilidade da redução do investimento precisa ser avaliada.",
+      "Comparação entre pares exige ajuste de atividade e contratos."
+    ],
+    "modelo_de_cobertura": "2026-10-21",
+    "negocio": "Operadora de cafeterias, alimentação rápida e restaurantes na América Latina e Europa. Marcas licenciadas, lojas próprias e franquias apresentam necessidades distintas de capital.",
+    "nome": "Alsea",
+    "o_que_mudou": "O resultado do 3T26 substitui a referência anterior. A recuperação comercial e a reafirmação do guidance melhoram o quadro, preservadas as condições de retorno e comparabilidade.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_AZZAS",
+        "nome": "Azzas 2154"
+      },
+      {
+        "issuer_id": "BR_CEA",
+        "nome": "C&A Modas"
+      },
+      {
+        "issuer_id": "BR_COGNA",
+        "nome": "Cogna"
+      },
+      {
+        "issuer_id": "BR_CURY",
+        "nome": "Cury"
+      },
+      {
+        "issuer_id": "BR_CYRELA",
+        "nome": "Cyrela"
+      },
+      {
+        "issuer_id": "BR_DIRECIONAL",
+        "nome": "Direcional"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A recuperação de frequência precisa remunerar promoções, aluguel e estrutura corporativa.",
+        "titulo": "Tráfego rentável"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_ALSEA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "13,18%"
+          },
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O custo de capital próprio é 13,18%. Expansão e recompras exigem retorno econômico superior ao financiamento e à manutenção.",
+        "titulo": "Retorno requerido"
+      }
+    ],
+    "publicada_em": "2026-10-22T01:54:39.664159+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O EBITDA de loja exclui administração e pré-operação. Separar arrendamentos, hiperinflação argentina e operações descontinuadas.",
+        "titulo": "Bases de comparação"
+      }
+    ],
+    "resumo": "A recuperação comercial melhora a leitura operacional, mas não encerra as lacunas de retorno por loja. Visão neutra e baixa convicção. Alvo MXN 47,95, potencial -4,71% e retorno esperado -3,31%.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Consumo desigual, câmbio e despesas contratuais podem limitar a conversão da recuperação comercial em caixa recorrente."
+      }
+    ],
+    "setor": "Consumo discricionário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Alsea: recuperação de tráfego e caixa, com disciplina na leitura das margens",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "No 3T26, vendas comparáveis aceleram sequencialmente. A gestão reafirma o guidance revisado em julho. O EBITDA anterior aos efeitos de arrendamentos cresce, enquanto o consolidado após esses efeitos recua anualmente. O caixa livre acumulado melhora com giro, menor investimento e juros. A dívida líquida cai anualmente.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Confrontar vendas comparáveis e caixa com o custo completo de cada formato.",
+        "vetor": "Contribuição por loja"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

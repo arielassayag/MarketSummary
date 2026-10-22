@@ -1,0 +1,114 @@
+{
+  "avisos_tecnicos": [],
+  "dados_ate": "2026-10-21",
+  "data": "2026-10-21",
+  "fontes_sugeridas": [
+    {
+      "instituicao": "CVM — RAD (fatos relevantes, ITR, DFP, formulário de referência)",
+      "tipo": "regulatorio",
+      "url": "https://www.rad.cvm.gov.br/ENET/frmConsultaExternaCVM.aspx"
+    },
+    {
+      "instituicao": "CVM — dados abertos (DFP, ITR, FRE, IPE)",
+      "tipo": "regulatorio",
+      "url": "https://dados.cvm.gov.br/"
+    },
+    {
+      "instituicao": "B3 — empresas listadas",
+      "tipo": "bolsa",
+      "url": "https://www.b3.com.br/"
+    },
+    {
+      "instituicao": "Banco Central do Brasil (Focus, SGS)",
+      "tipo": "banco_central",
+      "url": "https://www.bcb.gov.br/"
+    },
+    {
+      "instituicao": "IBGE",
+      "tipo": "estatistica_oficial",
+      "url": "https://www.ibge.gov.br/"
+    },
+    {
+      "instituicao": "Damodaran Online (NYU Stern) — prêmios de risco, betas e múltiplos setoriais",
+      "tipo": "dados_publicos",
+      "url": "https://pages.stern.nyu.edu/~adamodar/"
+    },
+    {
+      "instituicao": "FRED (Federal Reserve Bank of St. Louis) — juros e indicadores dos EUA",
+      "tipo": "dados_publicos",
+      "url": "https://fred.stlouisfed.org/"
+    }
+  ],
+  "is_synthetic": false,
+  "issuer_id": "BR_BRADSAUDE",
+  "lacunas": [
+    "WACC: sem dado na data."
+  ],
+  "nome": "Bradesco Saúde",
+  "nomes": {
+    "BR_3TENTOS": "3tentos",
+    "BR_ABC": "Banco ABC Brasil",
+    "BR_AFYA": "Afya",
+    "BR_ALLOS": "Allos",
+    "BR_ALPARGATAS": "Alpargatas",
+    "BR_ALUPAR": "Alupar",
+    "BR_AMBEV": "Ambev",
+    "BR_ASSAI": "Assaí Atacadista",
+    "BR_BRADSAUDE": "Bradesco Saúde"
+  },
+  "nota_anterior": {
+    "autoria": "mente",
+    "conviccao": 1,
+    "data": "2026-10-12",
+    "proximo_resultado": "2026-10-21",
+    "stance": 0,
+    "tipo": "iniciacao",
+    "titulo": "Bradsaúde — economia da saúde após reorganização, sinistros e capital"
+  },
+  "pais": "BR",
+  "pais_pt": "Brasil",
+  "pares": [
+    "BR_3TENTOS",
+    "BR_ABC",
+    "BR_AFYA",
+    "BR_ALLOS",
+    "BR_ALPARGATAS",
+    "BR_ALUPAR",
+    "BR_AMBEV",
+    "BR_ASSAI"
+  ],
+  "proximo_resultado": "2026-10-21",
+  "schema": "cdp.nota.contexto/v1",
+  "setor": "Health Care",
+  "setor_pt": "Saúde",
+  "snapshot": {
+    "as_of": "2026-10-21",
+    "manifest_sha256": "ad5255d9b4260123fd8b941334f2b591fae4789b25a3ed2038ac4386c6e67e37",
+    "modelo_as_of": "2026-10-21"
+  },
+  "tem_linha_eua": false,
+  "termos": [
+    "3tentos",
+    "ABCB4",
+    "ABCB4.SA",
+    "ABEV3",
+    "ABEV3.SA",
+    "ALOS3",
+    "ALOS3.SA",
+    "ALPA4",
+    "ALPA4.SA",
+    "ALUP11",
+    "ALUP11.SA",
+    "ASAI3",
+    "ASAI3.SA",
+    "SAUD3",
+    "SAUD3.SA",
+    "TTEN3",
+    "TTEN3.SA"
+  ],
+  "tickers": [
+    "SAUD3.SA",
+    "SAUD3"
+  ],
+  "tipo_esperado": "atualizacao"
+}

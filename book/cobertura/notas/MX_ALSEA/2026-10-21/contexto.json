@@ -1,0 +1,105 @@
+{
+  "avisos_tecnicos": [],
+  "dados_ate": "2026-10-21",
+  "data": "2026-10-21",
+  "fontes_sugeridas": [
+    {
+      "instituicao": "CNBV",
+      "tipo": "regulatorio",
+      "url": "https://www.gob.mx/cnbv"
+    },
+    {
+      "instituicao": "BMV — emissoras",
+      "tipo": "bolsa",
+      "url": "https://www.bmv.com.mx/"
+    },
+    {
+      "instituicao": "Banxico (SIE)",
+      "tipo": "banco_central",
+      "url": "https://www.banxico.org.mx/"
+    },
+    {
+      "instituicao": "INEGI",
+      "tipo": "estatistica_oficial",
+      "url": "https://www.inegi.org.mx/"
+    },
+    {
+      "instituicao": "Damodaran Online (NYU Stern) — prêmios de risco, betas e múltiplos setoriais",
+      "tipo": "dados_publicos",
+      "url": "https://pages.stern.nyu.edu/~adamodar/"
+    },
+    {
+      "instituicao": "FRED (Federal Reserve Bank of St. Louis) — juros e indicadores dos EUA",
+      "tipo": "dados_publicos",
+      "url": "https://fred.stlouisfed.org/"
+    }
+  ],
+  "is_synthetic": false,
+  "issuer_id": "MX_ALSEA",
+  "lacunas": [],
+  "nome": "Alsea",
+  "nomes": {
+    "BR_AFYA": "Afya",
+    "BR_ALPARGATAS": "Alpargatas",
+    "BR_AZZAS": "Azzas 2154",
+    "BR_CEA": "C&A Modas",
+    "BR_COGNA": "Cogna",
+    "BR_CURY": "Cury",
+    "BR_CYRELA": "Cyrela",
+    "BR_DIRECIONAL": "Direcional",
+    "MX_ALSEA": "Alsea"
+  },
+  "nota_anterior": {
+    "autoria": "mente",
+    "conviccao": 1,
+    "data": "2026-10-11",
+    "proximo_resultado": "2026-10-21",
+    "stance": 0,
+    "tipo": "iniciacao",
+    "titulo": "Alsea — economia por restaurante, franquias e caixa depois de contratos de uso"
+  },
+  "pais": "MX",
+  "pais_pt": "México",
+  "pares": [
+    "BR_AFYA",
+    "BR_ALPARGATAS",
+    "BR_AZZAS",
+    "BR_CEA",
+    "BR_COGNA",
+    "BR_CURY",
+    "BR_CYRELA",
+    "BR_DIRECIONAL"
+  ],
+  "proximo_resultado": "2026-10-21",
+  "schema": "cdp.nota.contexto/v1",
+  "setor": "Consumer Discretionary",
+  "setor_pt": "Consumo discricionário",
+  "snapshot": {
+    "as_of": "2026-10-21",
+    "manifest_sha256": "ad5255d9b4260123fd8b941334f2b591fae4789b25a3ed2038ac4386c6e67e37",
+    "modelo_as_of": "2026-10-16"
+  },
+  "tem_linha_eua": false,
+  "termos": [
+    "ALPA4",
+    "ALPA4.SA",
+    "AZZA3",
+    "AZZA3.SA",
+    "Azzas 2154",
+    "CEAB3",
+    "CEAB3.SA",
+    "COGN3",
+    "COGN3.SA",
+    "CURY3",
+    "CURY3.SA",
+    "CYRE3",
+    "CYRE3.SA",
+    "DIRR3",
+    "DIRR3.SA"
+  ],
+  "tickers": [
+    "ALSEA.MX",
+    "ALSEA"
+  ],
+  "tipo_esperado": "atualizacao"
+}

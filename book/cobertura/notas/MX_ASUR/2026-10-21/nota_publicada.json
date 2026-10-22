@@ -1,0 +1,333 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-21",
+    "manifest_sha256": "ad5255d9b4260123fd8b941334f2b591fae4789b25a3ed2038ac4386c6e67e37",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-21",
+  "hashes": {
+    "contexto": "c123132ab0dd40393773e9533dcab184d162d26d18ced8b7843b165700c512fb",
+    "factbook": "14c8a039e8095be7daafa752e1a6749299ef3114efbe029d3b25f9becd7491f3",
+    "nota_json": "974dfd1555a7a2490149ca50781e50f30e3686e24d3505a6b24e07dab4a1693e"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_ASUR",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-22",
+  "published_at": "2026-10-22T01:39:39.657914+00:00",
+  "rendered": {
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-23",
+        "descricao": "Teleconferência corporativa sobre o resultado do 3T26.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "O cenário base é MXN 375,90, condicionado à adequação das premissas ao perímetro corrente.",
+      "otimista": "Recuperação operacional e integração rentável sustentam o cenário de MXN 463,32.",
+      "pessimista": "Demanda fraca e custo financeiro comprimem caixa; cenário do modelo em MXN 289,04."
+    },
+    "comentario_valuation": "Preço em MXN de MXN 433,15, alvo de MXN 375,90 e retorno total esperado de -7,92%. O ke é 11,72%; o alpha relativo aos pares é -16,49%. A diferença frente ao consenso público, -38,57%, não prova percepção do mercado. Pares industriais heterogêneos limitam a comparação econômica.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese perde força se a expansão geográfica não compensar enfraquecimento mexicano e custo financeiro na geração de caixa atribuível.",
+        "titulo": "Integração sem retorno"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-21",
+    "dados_simulados": false,
+    "data": "2026-10-21",
+    "ficha": [
+      {
+        "fato": "val.MX_ASUR.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 433,15"
+      },
+      {
+        "fato": "val.MX_ASUR.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 375,90"
+      },
+      {
+        "fato": "val.MX_ASUR.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-13,22%"
+      },
+      {
+        "fato": "val.MX_ASUR.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_ASUR.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_ASUR.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 463,32"
+      },
+      {
+        "fato": "val.MX_ASUR.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "44,56%"
+      },
+      {
+        "fato": "val.MX_ASUR.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 289,04"
+      },
+      {
+        "fato": "val.MX_ASUR.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "3,96%"
+      },
+      {
+        "fato": "val.MX_ASUR.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,72%"
+      },
+      {
+        "fato": "val.MX_ASUR.wacc",
+        "rotulo": "WACC",
+        "valor": "10,70%"
+      },
+      {
+        "fato": "val.MX_ASUR.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_ASUR.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-7,92%"
+      },
+      {
+        "fato": "val.MX_ASUR.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-16,49%"
+      },
+      {
+        "fato": "val.MX_ASUR.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "11,1x"
+      },
+      {
+        "fato": "val.MX_ASUR.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "3,1x"
+      },
+      {
+        "fato": "val.MX_ASUR.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 611,94"
+      },
+      {
+        "fato": "val.MX_ASUR.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-38,57%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F1",
+        "instituicao": "ASUR",
+        "publicado_em": "2026-10-07",
+        "tipo": "Relações com investidores",
+        "titulo": "Tráfego de passageiros de setembro",
+        "url": "https://www.asur.com.mx/asur-announces-total-passenger-traffic-for-september-2096"
+      },
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F2",
+        "instituicao": "ASUR",
+        "publicado_em": "2026-10-08",
+        "tipo": "Relações com investidores",
+        "titulo": "Colocação de dívida da subsidiária de Cancún",
+        "url": "https://www.asur.com.mx/asur-signs-deal-to-acquire-motiva-s-stake-in-airport-business-in-brazil-ecuador-costa-rica-and-curacao-4"
+      },
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F3",
+        "instituicao": "ASUR",
+        "publicado_em": "2026-10-08",
+        "tipo": "Relações com investidores",
+        "titulo": "Aviso da teleconferência trimestral",
+        "url": "https://www.asur.com.mx/media/Comunicados%20de%20prensa/Comunicados%20a%20Bolsa/2026/10/ASUR_3Q26_Earnings%20Call%20Advisory.pdf"
+      },
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F4",
+        "instituicao": "ASUR",
+        "publicado_em": "2026-07-23",
+        "tipo": "Relações com investidores",
+        "titulo": "Release financeiro trimestral",
+        "url": "https://www.asur.com.mx/media/Informes%20Financieros/2026/2/ASUR-Aeropuerto-Cancun-Mexico-Informe-Financiero-2T26.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Recebimento do resultado trimestral e reconciliação do perímetro adquirido.",
+      "Alteração material de demanda, investimento ou financiamento."
+    ],
+    "governanca": "A colocação pela subsidiária exige leitura das garantias e da transferência de caixa entre entidades. A documentação recebida não encerra a revisão de diluição e direitos econômicos.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "Conferir tráfego comparável, receita comercial, investimentos e serviço da dívida por entidade quando o resultado estiver disponível.",
+        "titulo": "Caixa por operação"
+      }
+    ],
+    "issuer_id": "MX_ASUR",
+    "lacunas_de_dados": [
+      "Release do 3T26 e guidance corrente não recebidos.",
+      "Caixa transferível, garantias e base diluída não reconciliados integralmente.",
+      "Sem evidência suficiente de consenso qualitativo para percepção variante."
+    ],
+    "modelo_de_cobertura": "2026-10-21",
+    "negocio": "A ASUR combina concessões aeroportuárias e exploração comercial. A expansão geográfica exige distinguir desempenho comparável, operações adquiridas e caixa efetivamente atribuível aos acionistas.",
+    "nome": "Grupo Aeroportuario del Sureste",
+    "o_que_mudou": "Atualiza-se a leitura dos comunicados de tráfego, dívida e calendário. A sinalização de pós-resultado não foi confirmada por novo release recebido; mantém-se atualização e baixa convicção.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_SIMPAR",
+        "nome": "Simpar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O comunicado de setembro registra queda de passageiros no México e crescimento na Colômbia e em Porto Rico. O teste da tese é preservar receita comercial e caixa perante demanda desigual, sem atribuir ao crescimento adquirido a qualidade de crescimento orgânico.",
+        "titulo": "Demanda e monetização"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A subsidiária de Cancún concluiu colocação de dívida. O alongamento do financiamento precisa ser confrontado com juros, garantias e retorno das aquisições; a operação financeira isolada não demonstra criação de valor.",
+        "titulo": "Financiamento e retorno"
+      }
+    ],
+    "publicada_em": "2026-10-22T01:39:39.657914+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "O release trimestral distingue receitas de construção e consolidação do negócio comercial americano sem base comparável anterior. Crescimento consolidado não basta para inferir ganho operacional recorrente.",
+        "titulo": "Separação de perímetros"
+      }
+    ],
+    "resumo": "A leitura permanece neutra, com baixa convicção. O tráfego de setembro mostra fragilidade no México e recuperação em outros mercados, sem demonstrar o retorno do perímetro ampliado. O alvo é MXN 375,90, com potencial -13,22%. O novo resultado trimestral não foi recebido; o aviso corporativo prevê a teleconferência para 2026-10-23.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Fraqueza do tráfego mexicano e compromissos de investimento podem pressionar o caixa após o serviço da dívida."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "ASUR: tráfego mexicano e financiamento antecedem a divulgação trimestral",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O release do 2T26 informa crescimento da receita consolidada, com efeito de construção e aquisição, enquanto o EBITDA recua. A leitura exige separar construção, margem operacional e comparabilidade. O release do 3T26 não foi recebido nesta consulta.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A recuperação depende da demanda mexicana e da capacidade de monetização por passageiro.",
+        "vetor": "Tráfego comparável"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

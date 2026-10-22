@@ -1,0 +1,320 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-21",
+    "manifest_sha256": "ad5255d9b4260123fd8b941334f2b591fae4789b25a3ed2038ac4386c6e67e37",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-21",
+  "hashes": {
+    "contexto": "44f8a59b1a48b423d86c460741f605a51f7d5490d6629d0529bdf0782a575efb",
+    "factbook": "7279186186023aa5316a83a831782a98b432a955538e045186ffa088dc00939b",
+    "nota_json": "0b6396d540a387fcb08f0cbe7bd7976fd7918e12491fa06673cb1cdfa3837123"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_FEMSA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-28",
+  "published_at": "2026-10-22T01:56:16.805088+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Dividendos e recompras precisam ser confrontados com investimento e capacidade financeira, sem confundir caixa de subsidiárias com disponibilidade irrestrita.",
+        "titulo": "Distribuição e flexibilidade"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-28",
+        "descricao": "Divulgação e teleconferência do resultado trimestral anunciadas pelo RI.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo MXN 83,17, sujeito à conciliação de participações e unidade de cotação.",
+      "otimista": "Maturação das lojas e caixa atribuível remuneram capital; cenário MXN 103,22, sem probabilidade disponível.",
+      "pessimista": "Investimento e financiamento absorvem caixa; cenário MXN 65,23, sem probabilidade disponível."
+    },
+    "comentario_valuation": "Preço MXN 221,83 e alvo MXN 83,17, em MXN, com potencial -62,51%. Consenso MXN 249,81 e diferença -66,71%. A confiança C limita a leitura. É necessário confrontar método agregado, participações, classes e unidade negociada, evitando dupla contagem da Coca-Cola FEMSA. Pares operacionais não substituem avaliação coerente da holding.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A tese enfraquece se lojas e serviços digitais ampliam atividade sem caixa após capital e risco.",
+        "titulo": "Escala sem monetização"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-21",
+    "dados_simulados": false,
+    "data": "2026-10-21",
+    "ficha": [
+      {
+        "fato": "val.MX_FEMSA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 221,83"
+      },
+      {
+        "fato": "val.MX_FEMSA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 83,17"
+      },
+      {
+        "fato": "val.MX_FEMSA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-62,51%"
+      },
+      {
+        "fato": "val.MX_FEMSA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_FEMSA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.MX_FEMSA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 103,22"
+      },
+      {
+        "fato": "val.MX_FEMSA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_FEMSA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 65,23"
+      },
+      {
+        "fato": "val.MX_FEMSA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_FEMSA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,38%"
+      },
+      {
+        "fato": "val.MX_FEMSA.wacc",
+        "rotulo": "WACC",
+        "valor": "10,99%"
+      },
+      {
+        "fato": "val.MX_FEMSA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_FEMSA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-58,11%"
+      },
+      {
+        "fato": "val.MX_FEMSA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-66,88%"
+      },
+      {
+        "fato": "val.MX_FEMSA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "22,7x"
+      },
+      {
+        "fato": "val.MX_FEMSA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "4,2x"
+      },
+      {
+        "fato": "val.MX_FEMSA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 249,81"
+      },
+      {
+        "fato": "val.MX_FEMSA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-66,71%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F1",
+        "instituicao": "FEMSA",
+        "publicado_em": "2026-07-28",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultados do trimestre e atualização de segmentos",
+        "url": "https://www.femsa.com/en/press-room/press-release/femsa-2q-2026-results/"
+      },
+      {
+        "consultado_em": "2026-10-21",
+        "id": "F2",
+        "instituicao": "FEMSA",
+        "publicado_em": "2026-10-01",
+        "tipo": "Relações com investidores",
+        "titulo": "Agenda de divulgação e teleconferência",
+        "url": "https://femsa.gcs-web.com/news-releases/news-release-details/femsa-schedules-conference-call-discuss-third-quarter-2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultado trimestral esclarece retorno incremental e caixa por negócio.",
+      "Conciliação de classes e participações altera a interpretação do modelo."
+    ],
+    "governanca": "Examinar direitos das classes, participação econômica e destinação de caixa por nível societário. A avaliação dos controles financeiros indicada na nota anterior permanece pendente de atualização documental.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar tráfego, margem, maturação, capital empregado e caixa atribuível por segmento.",
+        "titulo": "Retorno por negócio"
+      }
+    ],
+    "issuer_id": "MX_FEMSA",
+    "lacunas_de_dados": [
+      "Participações, direitos por unidade e perímetro do valuation não integralmente reconciliados.",
+      "Probabilidades dos cenários indisponíveis.",
+      "Guidance financeiro agregado não reconciliado.",
+      "Controles financeiros e medidas corretivas precisam de documentação atualizada."
+    ],
+    "modelo_de_cobertura": "2026-10-21",
+    "negocio": "Grupo de varejo de proximidade, saúde e bebidas, com operações digitais. Controladora, subsidiárias e participações têm direitos econômicos e necessidades de capital distintos.",
+    "nome": "FEMSA",
+    "o_que_mudou": "A análise incorpora o trimestre divulgado e confirma a data futura do próximo resultado. A conciliação da avaliação agregada permanece aberta.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_AC",
+        "nome": "Arca Continental"
+      },
+      {
+        "issuer_id": "MX_BIMBO",
+        "nome": "Grupo Bimbo"
+      },
+      {
+        "issuer_id": "MX_CHEDRAUI",
+        "nome": "Grupo Comercial Chedraui"
+      },
+      {
+        "issuer_id": "MX_GENOMMA",
+        "nome": "Genomma Lab"
+      },
+      {
+        "issuer_id": "MX_GRUMA",
+        "nome": "Gruma"
+      },
+      {
+        "issuer_id": "MX_KIMBER",
+        "nome": "Kimberly-Clark de México"
+      },
+      {
+        "issuer_id": "MX_KOF",
+        "nome": "Coca-Cola FEMSA"
+      },
+      {
+        "issuer_id": "MX_SIGMA",
+        "nome": "Sigma Foods (ex-Alfa)"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A recuperação de tráfego precisa sustentar contribuição após custos e maturação das lojas.",
+        "titulo": "Contribuição por negócio"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_FEMSA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-58,11%"
+          },
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O retorno esperado é -58,11%. A discrepância exige conciliar perímetro, direitos por unidade e participação econômica antes de convertê-la em conclusão direcional.",
+        "titulo": "Valor atribuível"
+      }
+    ],
+    "publicada_em": "2026-10-22T01:56:16.805088+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar lucro recorrente de câmbio e participações. Reclassificações do custo de distribuição alteram margem bruta sem efeito equivalente no lucro operacional.",
+        "titulo": "Operação e efeitos financeiros"
+      }
+    ],
+    "resumo": "A melhora comercial de OXXO México exige confirmação de retorno após expansão e distribuição. O próximo resultado está agendado para 2026-10-28. Visão neutra e baixa convicção, com alvo MXN 83,17 e confiança C.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Expansão, crédito digital e distribuições podem consumir capital sem retorno atribuível suficiente."
+      }
+    ],
+    "setor": "Consumo básico",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "FEMSA: tráfego melhora, atribuição de valor e caixa seguem decisivos",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O 2T26 apresenta crescimento de receita e lucro operacional, com tráfego positivo no OXXO México. Europa, Saúde e Americas & Mobility pressionam o resultado. O lucro líquido inclui contribuição de menor perda cambial e associadas; a nova segmentação e reclassificações de despesas exigem comparação homogênea. O 3T26 permanece futuro na agenda do RI.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Separar resultado consolidado, participação dos minoritários e distribuições efetivamente recebidas.",
+        "vetor": "Caixa recebido pela controladora"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

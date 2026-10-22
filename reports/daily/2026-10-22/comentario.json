@@ -1,0 +1,19 @@
+{
+  "mind": "codex",
+  "headline": "CDP avança {{fact:day.ret}}; lado vendido sustenta o resultado em sessão de queda regional",
+  "paragraphs": [
+    "A carteira simulada encerrou 22/10/2026 com retorno de {{fact:day.ret}} e P&L de {{fact:day.pnl_usd}}, em dólares. O NAV ficou em {{fact:nav}}, com retorno acumulado de {{fact:itd.ret}} desde o início do mandato. DADOS SIMULADOS: execução hipotética com preços reais.",
+    "Na atribuição em dólares, o lado vendido contribuiu {{fact:attr.short}} e o comprado {{fact:attr.long}}. A parcela específica respondeu por {{fact:attr.specific}} e a fatorial por {{fact:attr.factor}}; esta decomposição é estimada e não comprova causalidade. Lithium Argentina, Sigma Lithium e Embraer contribuíram, respectivamente, {{fact:top.contrib.1.contrib}}, {{fact:top.contrib.2.contrib}} e {{fact:top.contrib.3.contrib}}. Fortuna, Banco Pine e SQM foram os principais detratores, com {{fact:top.detract.1.contrib}}, {{fact:top.detract.2.contrib}} e {{fact:top.detract.3.contrib}}.",
+    "Os mercados regionais recuaram: o Ibovespa variou {{fact:mkt.BVSP.ret_1d}} em reais e o índice mexicano {{fact:mkt.MXX.ret_1d}} em pesos mexicanos. Em dólares, EWZ marcou {{fact:mkt.EWZ.ret_1d}}, EWW {{fact:mkt.EWW.ret_1d}}, ILF {{fact:mkt.ILF.ret_1d}} e EPU {{fact:mkt.EPU.ret_1d}}. As barras de câmbio indicaram {{fact:fx.BRL.ret_1d}} para o real, {{fact:fx.MXN.ret_1d}} para o peso mexicano e {{fact:fx.CLP.ret_1d}} para o peso chileno, em dólares por unidade de moeda local. A contribuição da carteira no Brasil foi {{fact:attr.country.BR}} e no México {{fact:attr.country.MX}}.",
+    "Nos futuros cotados em dólares, Brent variou {{fact:mkt.BZ_F.ret_1d}}, WTI {{fact:mkt.CL_F.ret_1d}}, cobre {{fact:mkt.HG_F.ret_1d}} e ouro {{fact:mkt.GC_F.ret_1d}}. A agenda de relações com investidores do Bradesco prevê a divulgação do 3T26 em 22/10/2026 após o fechamento da B3 e da NYSE, com videoconferência em 23/10/2026. A referência registra o calendário corporativo, sem antecipar o conteúdo do resultado nem atribuir a ele os movimentos individuais das posições.",
+    "A vol ex-ante ficou em {{fact:risk.ex_ante_vol}}, na banda de {{fact:mandate.vol_band_min}} a {{fact:mandate.vol_band_max}}, com beta de {{fact:risk.beta}}, exposição bruta de {{fact:risk.gross}} e líquida de {{fact:risk.net}}. O VaR diário foi {{fact:risk.var_1d}} e o drawdown corrente {{fact:dd.current}}. A carteira mantém {{fact:risk.n_long}} posições compradas e {{fact:risk.n_short}} vendidas, com {{fact:risk.squeeze_high_shorts}} posições vendidas classificadas com squeeze alto. A janela eleitoral brasileira permanece ativa. O aluguel da B3 de 21/10/2026 está indisponível; a classificação de squeeze deve ser lida com essa limitação, além das defasagens próprias das fontes públicas."
+  ],
+  "risk_flags": [
+    "Janela eleitoral brasileira ativa, com ajuste de risco previsto no mandato.",
+    "Aluguel B3 ausente para 21/10/2026 por indisponibilidade da fonte; indicadores de posições vendidas sujeitos a defasagem.",
+    "Atribuição fatorial e específica estimada; não equivale a causalidade nem comprova persistência de alpha.",
+    "Fundamentos atuais, viés de sobrevivência e câmbio sem fixing oficial limitam comparabilidade e inferência retrospectiva.",
+    "Notícias ausentes, divergências de paridade ADR e benchmark argentino sem barra exigem leitura cautelosa.",
+    "Revisões históricas e barras tardias preservadas sem aplicação ao histórico selado."
+  ]
+}

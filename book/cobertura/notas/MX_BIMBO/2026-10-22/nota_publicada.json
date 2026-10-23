@@ -1,0 +1,339 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-21",
+    "manifest_sha256": "ad5255d9b4260123fd8b941334f2b591fae4789b25a3ed2038ac4386c6e67e37",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-22",
+  "hashes": {
+    "contexto": "abd066900a5a542a0c6f08a3698ff8359475bbd1e56b5851f1a95aa9144c94f4",
+    "factbook": "585eba9ee4acde29838c05070fd1835a62892b5320f5d4de4c1bb75a7bbbadb9",
+    "nota_json": "e401c58c51cfd467f633544320787af731894d63471ad1f67613539f207817f7"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_BIMBO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-22",
+  "published_at": "2026-10-23T01:57:26.520294+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A estratégia prioriza investimento em continuidade, crescimento e produtividade. Confrontar redução de dívida com caixa após aquisição e compromissos completos antes de atribuir retorno ao acionista.",
+        "titulo": "Investimento e desalavancagem"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Comprovação da continuidade dos ganhos de produtividade e da integração brasileira nos próximos resultados; sem data primária futura confirmada nesta consulta.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo de MXN 60,73, condicionado a caixa após manutenção e obrigações.",
+      "otimista": "Produtividade sustentável e integração rentável enquadram MXN 88,44.",
+      "pessimista": "Demanda fraca e custos de integração enquadram MXN 34,00."
+    },
+    "comentario_valuation": "Preço de MXN 57,97, potencial +4,77%, retorno total esperado +6,59% e ke 10,07%. O modelo vigente tem dispersão 22,83% e antecede o resultado. A diligência deve preservar tratamento consistente de arrendamentos, pensões, aquisições e caixa por região. A diferença -13,55% para o consenso público não comprova percepção de mercado.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se ganhos de margem não persistirem após integração, manutenção e custos completos de distribuição.",
+        "titulo": "Eficiência sem volume rentável"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-22",
+    "dados_simulados": false,
+    "data": "2026-10-22",
+    "ficha": [
+      {
+        "fato": "val.MX_BIMBO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 57,97"
+      },
+      {
+        "fato": "val.MX_BIMBO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 60,73"
+      },
+      {
+        "fato": "val.MX_BIMBO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+4,77%"
+      },
+      {
+        "fato": "val.MX_BIMBO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_BIMBO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_BIMBO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 88,44"
+      },
+      {
+        "fato": "val.MX_BIMBO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "8,63%"
+      },
+      {
+        "fato": "val.MX_BIMBO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 34,00"
+      },
+      {
+        "fato": "val.MX_BIMBO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "1,87%"
+      },
+      {
+        "fato": "val.MX_BIMBO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,07%"
+      },
+      {
+        "fato": "val.MX_BIMBO.wacc",
+        "rotulo": "WACC",
+        "valor": "8,38%"
+      },
+      {
+        "fato": "val.MX_BIMBO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_BIMBO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+6,59%"
+      },
+      {
+        "fato": "val.MX_BIMBO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "0,00%"
+      },
+      {
+        "fato": "val.MX_BIMBO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "17,6x"
+      },
+      {
+        "fato": "val.MX_BIMBO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,2x"
+      },
+      {
+        "fato": "val.MX_BIMBO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 70,25"
+      },
+      {
+        "fato": "val.MX_BIMBO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-13,55%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-22",
+        "id": "F1",
+        "instituicao": "Grupo Bimbo",
+        "publicado_em": "2026-10-22",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado trimestral por região e medidas financeiras",
+        "url": "https://d2rwhogv2mrkk6.cloudfront.net/s3fs-public/eventos-2026/Grupo%20Bimbo%20Reporta%20Resultados%20del%203T26.pdf?VersionId=aUCUKEaDCpzoG_ZlZuronB89apoFRu6K"
+      },
+      {
+        "consultado_em": "2026-10-22",
+        "id": "F2",
+        "instituicao": "Grupo Bimbo",
+        "publicado_em": "2026-10-22",
+        "tipo": "Relações com investidores",
+        "titulo": "Apresentação de resultados e perspectivas",
+        "url": "https://d2rwhogv2mrkk6.cloudfront.net/s3fs-public/eventos-2026/GB_Investor_PPT_3Q26.pdf?VersionId=t7B7JjXP_BodQW04R2B38_pucKjK2lcM"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Volume rentável e produtividade confirmam ou contrariam o guidance de margem.",
+      "Integração brasileira altera contribuição e caixa.",
+      "Obrigações ou reinvestimento absorvem os ganhos operacionais."
+    ],
+    "governanca": "Reconciliar dívida por subsidiária e moeda, arrendamentos e obrigações previdenciárias com caixa disponível. Ganhos gerenciais e alavancagem ajustada não encerram a avaliação de passivos e direitos econômicos.",
+    "guidance": "elevado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar volume e mistura por região, custo logístico, integração brasileira, capital de giro e caixa após aquisições e obrigações.",
+        "titulo": "Retorno da transformação"
+      }
+    ],
+    "issuer_id": "MX_BIMBO",
+    "lacunas_de_dados": [
+      "Modelo anterior à divulgação do resultado.",
+      "Aquisições, pensões, arrendamentos e dívida por subsidiária não reconciliados integralmente.",
+      "Participação de mercado e retorno por rota sem validação independente.",
+      "Sem evidência suficiente para percepção variante."
+    ],
+    "modelo_de_cobertura": "2026-10-21",
+    "negocio": "Grupo Bimbo atua em panificação e alimentos de marca, combinando produção e distribuição direta em diferentes regiões. Escala e presença comercial precisam produzir contribuição rentável após manutenção de fábricas, rotas e capital de giro.",
+    "nome": "Grupo Bimbo",
+    "o_que_mudou": "Incorpora-se o 3T26 e a elevação do guidance de margem. O foco passa à persistência da produtividade, aos volumes norte-americanos e à integração brasileira. A visão permanece neutra, sem alteração do modelo por esta nota.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_AC",
+        "nome": "Arca Continental"
+      },
+      {
+        "issuer_id": "MX_CHEDRAUI",
+        "nome": "Grupo Comercial Chedraui"
+      },
+      {
+        "issuer_id": "MX_GENOMMA",
+        "nome": "Genomma Lab"
+      },
+      {
+        "issuer_id": "MX_GRUMA",
+        "nome": "Gruma"
+      },
+      {
+        "issuer_id": "MX_KIMBER",
+        "nome": "Kimberly-Clark de México"
+      },
+      {
+        "issuer_id": "MX_KOF",
+        "nome": "Coca-Cola FEMSA"
+      },
+      {
+        "issuer_id": "MX_SIGMA",
+        "nome": "Sigma Foods (ex-Alfa)"
+      },
+      {
+        "issuer_id": "MX_WALMEX",
+        "nome": "Walmart de México"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O release registra melhora de margem no México e na Norteamérica, mas os volumes norte-americanos recuam. A hipótese a testar é que eficiência e realização sustentem retorno sem depender de recomposição temporária de custos.",
+        "titulo": "Produtividade com demanda desigual"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A apresentação eleva o guidance de margem do EBITDA ajustado para 2026. A revisão diz respeito à margem e não autoriza presumir elevação de todas as metas nem desempenho futuro realizado.",
+        "titulo": "Perspectiva operacional melhor"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A apresentação descreve marcas e distribuição como bases da posição comercial. O teste econômico é volume rentável e produtividade de atendimento; liderança declarada não substitui comparação independente.",
+        "titulo": "Marcas e densidade das rotas"
+      }
+    ],
+    "publicada_em": "2026-10-23T01:57:26.520294+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar câmbio, aquisições e produtividade. A medida ajustada exclui efeitos previdenciários, e caixa livre antes de aquisições não representa todos os usos de capital.",
+        "titulo": "Bases ajustadas e câmbio"
+      }
+    ],
+    "resumo": "O 3T26 confirma avanço de margem e geração de caixa, com elevação do guidance de margem na apresentação aos investidores. O México sustenta o desempenho; Norteamérica melhora rentabilidade apesar de volume menor e o Brasil enfrenta integração. Mantém-se visão neutra de baixa convicção. O alvo de MXN 60,73 é anterior à divulgação e depende de produtividade recorrente após obrigações completas.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Volume fraco, logística e integração podem absorver ganhos de margem; medidas ajustadas não abrangem todas as obrigações econômicas."
+      }
+    ],
+    "setor": "Consumo básico",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Bimbo: guidance de margem elevado com volumes norte-americanos ainda frágeis",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O release do 3T26 distingue crescimento sem câmbio de vendas reportadas menores em pesos. Margem e lucro melhoram, enquanto a Norteamérica mantém volume menor e o Brasil enfrenta a integração de Wickbold. A apresentação eleva o guidance de margem. O caixa livre divulgado exclui aquisições; a alavancagem divulgada exclui o efeito dos arrendamentos, exigindo base comparável.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Produtividade norte-americana e integração de Wickbold no Brasil têm economias distintas; verificar contribuição após logística, reestruturação e reinvestimento.",
+        "vetor": "Transformação e integração regional"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

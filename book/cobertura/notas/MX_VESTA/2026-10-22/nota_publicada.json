@@ -1,0 +1,329 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-21",
+    "manifest_sha256": "ad5255d9b4260123fd8b941334f2b591fae4789b25a3ed2038ac4386c6e67e37",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-22",
+  "hashes": {
+    "contexto": "bb3b15a435c42e550e73666beff65c1a6201a6d3fb2022362c0a5f4bc188b20e",
+    "factbook": "b1250b4b9ae7f2dd87aec2bf66cfca5c0a531e37f766388f9d32bd5f4d679db8",
+    "nota_json": "f20bf8196ae345f3a8b2748f749cb8e0e2eac263b36cf2de26f8f7a3cbb434d4"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_VESTA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-22",
+  "published_at": "2026-10-23T01:55:22.401100+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A dívida privada quitada simplifica obrigações, mas novos projetos requerem capital. Retorno esperado da construção precisa superar custo total de financiamento e risco de locação.",
+        "titulo": "Flexibilidade e desenvolvimento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-23",
+        "descricao": "Teleconferência do 3T26 para discutir guidance, impostos, capital e desenvolvimento.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo vigente de US$ 46,04, condicionado à conversão de renda em caixa após impostos e investimento.",
+      "otimista": "Entrega e locação remuneradoras enquadram US$ 53,04.",
+      "pessimista": "Vacância, custos e diluição enquadram US$ 40,14. Esse cenário do modelo não constitui piso de cotação; probabilidades implícitas indisponíveis."
+    },
+    "comentario_valuation": "Preço de referência em dólar de US$ 34,68, potencial +32,75%, retorno total esperado +33,49% e ke 10,11%. A dispersão entre métodos é 57,81%, com confiança C. O modelo antecede o release; é necessário conciliar patrimônio econômico, desenvolvimento líquido e fluxo normalizado, preservando a unidade do recibo. A diferença de +20,74% para o consenso não demonstra percepção variante.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese enfraquece se ocupação e expansão não compensarem imposto, diluição e capital investido na geração de recursos por ação.",
+        "titulo": "Guidance sem retorno por ação"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-22",
+    "dados_simulados": false,
+    "data": "2026-10-22",
+    "ficha": [
+      {
+        "fato": "val.MX_VESTA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 34,68"
+      },
+      {
+        "fato": "val.MX_VESTA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 46,04"
+      },
+      {
+        "fato": "val.MX_VESTA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+32,75%"
+      },
+      {
+        "fato": "val.MX_VESTA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_VESTA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.MX_VESTA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 53,04"
+      },
+      {
+        "fato": "val.MX_VESTA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_VESTA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 40,14"
+      },
+      {
+        "fato": "val.MX_VESTA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_VESTA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,11%"
+      },
+      {
+        "fato": "val.MX_VESTA.wacc",
+        "rotulo": "WACC",
+        "valor": "8,87%"
+      },
+      {
+        "fato": "val.MX_VESTA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.MX_VESTA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+33,49%"
+      },
+      {
+        "fato": "val.MX_VESTA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+36,40%"
+      },
+      {
+        "fato": "val.MX_VESTA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "18,3x"
+      },
+      {
+        "fato": "val.MX_VESTA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,0x"
+      },
+      {
+        "fato": "val.MX_VESTA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 38,13"
+      },
+      {
+        "fato": "val.MX_VESTA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+20,74%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-22",
+        "id": "F1",
+        "instituicao": "Vesta",
+        "publicado_em": "2026-10-22",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado trimestral e revisão de perspectivas",
+        "url": "https://ir.vesta.com.mx/news-events/press-releases/detail/157/corporacin-inmobiliaria-vesta-reports-third-quarter-2026-earnings-results"
+      },
+      {
+        "consultado_em": "2026-10-22",
+        "id": "F2",
+        "instituicao": "Vesta",
+        "publicado_em": "2026-09-09",
+        "tipo": "Relações com investidores",
+        "titulo": "Quitação antecipada de financiamentos privados",
+        "url": "https://ir.vesta.com.mx/news-events/press-releases/detail/155/vesta-repays-us105-million-of-private-debt-ahead-of-maturity"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Locação efetiva e custo final do desenvolvimento alteram retorno esperado.",
+      "Caixa após impostos por ação confirma ou contraria a melhora operacional.",
+      "Reavaliação quantitativa após o novo resultado."
+    ],
+    "governanca": "A base de ações após a oferta e os direitos do recibo precisam ser reconciliados com as medidas por ação. A quitação de dívida incluiu juros e custos contratuais; comparar custo total e retorno das alternativas de uso do caixa.",
+    "guidance": "elevado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar locação do desenvolvimento, custo até conclusão, recebimento e caixa após impostos por ação, em base média e diluída compatível.",
+        "titulo": "Caixa e capital por imóvel"
+      }
+    ],
+    "issuer_id": "MX_VESTA",
+    "lacunas_de_dados": [
+      "Modelo anterior ao resultado corrente.",
+      "Demonstrações, impostos, caixa e base diluída não reconciliados integralmente.",
+      "Contratos e retorno realizado dos projetos em construção ainda pendentes.",
+      "Probabilidades implícitas indisponíveis e percepção variante sem suporte suficiente."
+    ],
+    "modelo_de_cobertura": "2026-10-21",
+    "negocio": "Vesta possui, desenvolve e administra imóveis industriais e centros de distribuição no México. A avaliação deve distinguir imóveis estabilizados, mesmos imóveis e desenvolvimento, além de preservar a unidade de ação ou recibo de depósito.",
+    "nome": "Corporación Inmobiliaria Vesta",
+    "o_que_mudou": "Incorpora-se o 3T26 e classifica-se o guidance como elevado. A melhora operacional é confrontada com FFO após impostos por ação menor. O modelo anterior ao resultado permanece sem alteração por esta nota.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "BR_ALLOS",
+        "nome": "Allos"
+      },
+      {
+        "issuer_id": "BR_IGUATEMI",
+        "nome": "Iguatemi"
+      },
+      {
+        "issuer_id": "BR_MULTIPLAN",
+        "nome": "Multiplan"
+      },
+      {
+        "issuer_id": "CL_CENCOMALLS",
+        "nome": "Cencosud Shopping"
+      },
+      {
+        "issuer_id": "CL_MALLPLAZA",
+        "nome": "Plaza SA (Mallplaza)"
+      },
+      {
+        "issuer_id": "CL_PARAUCO",
+        "nome": "Parque Arauco"
+      },
+      {
+        "issuer_id": "MX_FIBRAPL",
+        "nome": "Fibra Prologis"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O release informa maior ocupação e contratos novos, sustentando a elevação do guidance de receita e margens. A hipótese a verificar é que esse avanço se converta em caixa recorrente por ação após capital empregado.",
+        "titulo": "Locação e disciplina operacional"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A quitação antecipada de financiamentos privados foi confirmada em setembro, incluindo encargos de antecipação. Flexibilidade financeira precisa ser confrontada com recursos exigidos pelo desenvolvimento.",
+        "titulo": "Custo de capital e financiamento"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Os novos contratos abrangem setores industriais e logísticos. A vantagem de localização deve ser testada pela retenção e pelo retorno realizado frente à oferta concorrente, sem presumir locação do desenvolvimento.",
+        "titulo": "Demanda por localização industrial"
+      }
+    ],
+    "publicada_em": "2026-10-23T01:55:22.401100+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O lucro inclui reavaliação e difere do FFO após impostos por ação. Exigir reconciliação com recebimento, manutenção e reinvestimento antes de usar lucro como capacidade distributiva.",
+        "titulo": "Renda, reavaliação e caixa"
+      }
+    ],
+    "resumo": "O RI de 2026-10-22 confirma guidance elevado para receita e margens em 2026. A ocupação melhora, mas FFO após impostos por ação recua e os projetos em construção permanecem sem locação. Mantém-se visão neutra de baixa convicção até reconciliar retorno do capital e diluição. O alvo vigente de US$ 46,04 pertence ao modelo anterior à divulgação.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Vacância no desenvolvimento, impostos e diluição podem absorver renda maior e limitar caixa por ação."
+      }
+    ],
+    "setor": "Imobiliário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Vesta: guidance elevado e locação melhor contrastam com caixa por ação menor",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O release do 3T26 confirma receita de locação maior, guidance elevado e ocupação melhor. O FFO sofre com juros; a medida após impostos por ação recua com imposto corrente e maior base de ações após a oferta. Lucro abrangente inclui reavaliação dos imóveis. A revisão favorável de guidance operacional não equivale a aumento de caixa por ação.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Projetos em construção estão sem locação no release. Rendimento esperado sobre custo depende de contratos, entrega, recebimento e investimento final.",
+        "vetor": "Conversão do desenvolvimento em renda"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

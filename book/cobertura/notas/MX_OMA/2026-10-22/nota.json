@@ -1,0 +1,32 @@
+{
+ "mind":"codex","issuer_id":"MX_OMA","data":"2026-10-22","tipo":"atualizacao",
+ "titulo":"OMA: tráfego doméstico e investimento contratado exigem disciplina de caixa",
+ "resumo":"A atualização preserva visão neutra e baixa convicção. O comunicado de setembro registra retração no tráfego doméstico, enquanto o programa de desenvolvimento mantém compromissos de expansão. O alvo vigente é {{fact:val.MX_OMA.preco_alvo}}, com potencial {{fact:val.MX_OMA.upside}}. A sinalização de pós-resultado da fila não foi confirmada por novo release recebido; não se atribui desempenho realizado ao 3T26.",
+ "negocio":"A OMA explora concessões aeroportuárias no centro e norte do México, além de serviços comerciais, carga, hotelaria e atividades industriais. A capacidade de monetização depende do tráfego, das tarifas permitidas e do capital exigido pelos contratos.",
+ "pilares_tese":[
+ {"titulo":"Demanda e monetização","texto":"O comunicado de setembro registra queda doméstica e crescimento internacional. A hipótese de remuneração das concessões exige acompanhar receita comercial e caixa por aeroporto diante da demanda desigual.","evidencias":["F3"]},
+ {"titulo":"Investimento contratado","texto":"O programa aprovado contempla expansão e modernização com compromissos por aeroporto. A criação de valor depende de remuneração econômica e financiamento compatíveis com esses desembolsos.","evidencias":["F2"]}
+ ],
+ "vetores":[{"vetor":"Caixa após manutenção e desenvolvimento","direcao":"incerto","sensibilidade":"alta","texto":"O resultado ajustado deve ser confrontado com desembolsos de manutenção maior, direitos de uso e investimento contratado.","evidencias":["F1","F2"]}],
+ "catalisadores":[{"descricao":"Próximo resultado indicado no contexto público da cobertura: {{fact:evento.MX_OMA.proximo_resultado}}; calendário ainda requer confirmação primária.","data":null,"tipo":"resultado","direcao":"incerto","evidencias":["evento.MX_OMA.proximo_resultado"]}],
+ "riscos":[{"texto":"Tráfego mais fraco pode limitar caixa enquanto os compromissos de desenvolvimento permanecem exigíveis.","probabilidade":"media","impacto":"alto","evidencias":["F2","F3"]}],
+ "cenarios":{"otimista":"Recuperação da demanda e investimento remunerado enquadram o cenário de {{fact:val.MX_OMA.alvo_otimista}}.","base":"Alvo vigente de {{fact:val.MX_OMA.preco_alvo}}, sujeito à confirmação de caixa recorrente após compromissos.","pessimista":"Demanda fraca e reinvestimento oneroso enquadram {{fact:val.MX_OMA.alvo_pessimista}}; probabilidades implícitas não estão disponíveis."},
+ "comentario_valuation":"Preço de {{fact:val.MX_OMA.preco}}, retorno total esperado de {{fact:val.MX_OMA.etr}} e ke de {{fact:val.MX_OMA.ke}}. A confiança quantitativa é {{fact:val.MX_OMA.confianca_codigo}}, e a dispersão entre métodos é {{fact:val.MX_OMA.cv_metodos}}. A divergência de {{fact:val.MX_OMA.diff_consenso}} perante o consenso público não comprova percepção do mercado; pares industriais heterogêneos limitam comparações econômicas.",
+ "ultimo_resultado":"O release do 2T26 recebido da BMV registra avanço de receitas aeronáuticas e não aeronáuticas e de EBITDA ajustado. Construção não gera resultado; a provisão de manutenção maior deve ser distinguida do desembolso. Não foi recebido novo release do 3T26 nesta consulta, nem avaliada revisão corrente de guidance.",
+ "guidance":"nd","tom_gestao":"nd",
+ "governanca":"A BMV registra comunicado de troca de auditor externo em 2026-10-09. A mudança exige acompanhamento da transição e dos relatórios subsequentes; não constitui evidência isolada de problema contábil. Direitos econômicos por classe e recibo permanecem sujeitos a reconciliação.",
+ "posicao_competitiva":{"titulo":"Concessões com obrigações","texto":"A rede inclui Monterrey e aeroportos regionais e turísticos. Localização e concessão oferecem acesso à demanda, mas tarifas máximas e investimento comprometido delimitam a remuneração.","evidencias":["F2"]},
+ "qualidade_resultados":{"titulo":"Ajustes e caixa","texto":"O release separa construção sem margem e provisão de manutenção maior. O teste de qualidade é a conversão do resultado recorrente em caixa após manutenção, desenvolvimento e juros.","evidencias":["F1"]},
+ "alocacao_capital":{"titulo":"Remuneração do desenvolvimento","texto":"Confrontar a execução física e o financiamento do programa aprovado com demanda e retorno por aeroporto, sem presumir que expansão de capacidade produza retorno adequado.","evidencias":["F2"]},
+ "contratese":{"titulo":"Margem sem remuneração do capital","texto":"A hipótese perde força se a rentabilidade ajustada não financiar manutenção e expansão ou se a retração doméstica persistir.","evidencias":["F1","F2","F3"]},
+ "indicadores_monitoramento":[{"titulo":"Demanda e caixa atribuível","texto":"Acompanhar passageiros domésticos e internacionais, receita comercial, provisões, investimento e serviço da dívida quando o novo resultado estiver disponível.","evidencias":["F1","F2","F3"]}],
+ "o_que_mudou":"Reexaminam-se o tráfego de setembro, os compromissos de desenvolvimento e a troca de auditor. A nova divulgação trimestral não foi recebida; o estudo permanece atualização, sem inferir resultado a partir de calendário.",
+ "gatilhos_revisao":["Recebimento e reconciliação do resultado corrente.","Mudança de demanda, remuneração tarifária, investimento ou financiamento."],
+ "lacunas_de_dados":["Novo release do 3T26 e guidance corrente não recebidos.","Datas de resultado da fila e do contexto divergem; sem confirmação primária da data futura.","Probabilidades implícitas dos cenários indisponíveis.","Caixa, manutenção, classes e base diluída não reconciliados integralmente.","Sem evidência suficiente para percepção variante."],
+ "stance":0,"conviccao":1,
+ "fontes":[
+ {"id":"F1","tipo":"bolsa","instituicao":"BMV e OMA","titulo":"Release operacional e financeiro trimestral","url":"https://www.bmv.com.mx/docs-pub/eventemi/eventemi_1577262_1.pdf","publicado_em":"2026-07-27","consultado_em":"2026-10-22"},
+ {"id":"F2","tipo":"relacoes_com_investidores","instituicao":"OMA","titulo":"Programa mestre de desenvolvimento aprovado","url":"https://ir.oma.aero/wp-content/uploads/2025/12/OMA_PMD_2026_2030_vf.pdf","publicado_em":"2025-12-18","consultado_em":"2026-10-22"},
+ {"id":"F3","tipo":"bolsa","instituicao":"BMV","titulo":"Eventos relevantes de OMA","url":"https://www.bmv.com.mx/es/emisoras/eventosrelevantes/OMA-6707-CGEN_CAPIT","publicado_em":null,"consultado_em":"2026-10-22"}
+ ]
+}

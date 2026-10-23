@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 19.38,
+  "high": 26.0,
+  "low": 20.0,
+  "mean": 22.20833,
+  "median": 22.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.317,
+   "currency": "MXN",
+   "growth": -0.4627,
+   "high": 0.317,
+   "low": 0.317,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.59
+  },
+  "+1y": {
+   "avg": 1.15175,
+   "currency": "MXN",
+   "growth": 0.0642,
+   "high": 1.3,
+   "low": 1.036,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 1.08225
+  },
+  "0q": {
+   "avg": 0.3695,
+   "currency": "MXN",
+   "growth": 0.4255,
+   "high": 0.37,
+   "low": 0.369,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.2592
+  },
+  "0y": {
+   "avg": 1.08225,
+   "currency": "MXN",
+   "growth": -0.1728,
+   "high": 1.188,
+   "low": 0.925,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 1.3084
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "MXN",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 174480467670,
+   "currency": "MXN",
+   "growth": 0.010199999,
+   "high": 179849105000,
+   "low": 171154246000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 172713045750.0
+  },
+  "0q": {
+   "avg": 46329019000,
+   "currency": "MXN",
+   "growth": 0.0257,
+   "high": 46975522000,
+   "low": 45682516000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 45166546000.0
+  },
+  "0y": {
+   "avg": 172713045750,
+   "currency": "MXN",
+   "growth": -0.028900001,
+   "high": 183056581000,
+   "low": 166590987000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 177853452000.0
+  }
+ },
+ "ticker": "SIGMAFA.MX",
+ "url": "https://finance.yahoo.com/quote/SIGMAFA.MX"
+}

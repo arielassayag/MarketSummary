@@ -1,0 +1,117 @@
+{
+  "acknowledged_soft_checks": [
+    "IDIO_SHARE_BASE"
+  ],
+  "approval_hash": "8122b9de5a08f2091ee93d17d4e73de308e3cabe9b1fed94a0fa88bc259b5823",
+  "approver": "CDP — Cabra da Peste (PM autônomo)",
+  "audit_head_hash": "56bb1d3dfd241cca894d392f757742a27c317412c9b3de167a1ac388268808ff",
+  "co_sign_reasons": [
+    "Ciência automática de IDIO_SHARE_BASE (limite SOFT do mandato; registrado no relatório)."
+  ],
+  "co_signed_at": null,
+  "co_signer": null,
+  "config_hash": "2ddf7d89ac769dea9781ac51fb825fa55931bf19250fa64e2f7447aa91f34ff0",
+  "conviction": null,
+  "decided_at": "2026-10-23T14:37:13.178172Z",
+  "decision": "APPROVE",
+  "journal": {
+    "ai_vs_quant_vs_pm": "Abstenção do agente PM: carteira só-quant com as restrições vigentes.",
+    "alternatives_considered": "O que mudou na visão: Os modelos foram atualizados com preços até 2026-10-22. A revisão corrente acrescenta vetos por squeeze elevado e resultados próximos, e preserva ressalvas de eventos societários, caixa e direitos econômicos ainda não reconciliados. O evento de Bradesco passou de divulgação futura para revisão do resultado e videoconferência; não se presume qualificação integral do material corrente. Notícias de alienação em Allos e recompra de Petz-Cobasi motivam cautela sem presumir conclusão. O veto anterior de Alpargatas por squeeze não é mantido automaticamente, pois o indicador corrente se normalizou; a neutralidade qualitativa permanece. A revisão pré-trade também veta vendas em Banco do Brasil e Patria diante de divergências de avaliação e evidência insuficiente, sem converter esses vetos em visões compradas.",
+    "bias_checklist": {},
+    "catalysts": [],
+    "horizon_weeks": 8,
+    "key_variables": [
+      "Regime: neutro",
+      "Postura: defensiva → defensiva",
+      "Escada de drawdown: normal"
+    ],
+    "mental_state": "Mente: codex",
+    "positions": [
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Investimento, política comercial ou obrigações absorvem o retorno atribuível.",
+        "issuer_id": "BR_PETROBRAS",
+        "premortem": "Produção e preço melhoram o lucro enquanto a alocação de capital reduz a remuneração econômica.",
+        "probability_correct": null,
+        "thesis": "O rating atualizado é Compra. A geração de valor depende de produção e refino convertidos em caixa após investimento e obrigações, preservada a cautela eleitoral.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Receita por capacidade não remunera custos completos, frota e financiamento.",
+        "issuer_id": "MX_AEROMEXICO",
+        "premortem": "A expansão de receita ocultaria pressão sobre caixa e direitos por ação.",
+        "probability_correct": null,
+        "thesis": "O modelo permanece Em revisão; a leitura não incorpora convicção adicional a partir de crescimento operacional isolado.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Perdas, captação ou capital prudencial deterioram o retorno após risco.",
+        "issuer_id": "BR_PINE",
+        "premortem": "Crescimento de safras eleva o lucro antes do reconhecimento completo de perdas.",
+        "probability_correct": null,
+        "thesis": "A avaliação corrente é Compra, mas o squeeze em 70,0 exige veto ao lado vendido e cautela com a maturação do crédito.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Recebíveis e estoque absorvem a recuperação de vendas.",
+        "issuer_id": "MX_GENOMMA",
+        "premortem": "O crescimento financiaria o canal sem retorno econômico suficiente.",
+        "probability_correct": null,
+        "thesis": "A recuperação comercial descrita na nota precisa resultar em caixa após promoção, fábrica e giro; preserva-se baixa convicção.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Resultado recebido e caixa, participações e direitos reconciliados permitem rever a assimetria.",
+        "issuer_id": "MX_FEMSA",
+        "premortem": "Surpresa operacional ou anúncio de capital dominaria a tese vendida antes da revisão.",
+        "probability_correct": null,
+        "thesis": "Resultado próximo e divergência entre calendários recomendam veto vendido até a requalificação da divulgação.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Reconciliação dos documentos correntes demonstra retorno sustentável e base acionária consistente.",
+        "issuer_id": "BR_BRADESCO",
+        "premortem": "A leitura incompleta confundiria evento de capital, recorrência e qualidade do crédito.",
+        "probability_correct": null,
+        "thesis": "O RI programa videoconferência em 2026-10-23; preserva-se veto vendido enquanto crédito, capital e o novo resultado não forem integralmente examinados.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Documentação atual de caixa, capital e direitos econômicos resolve a divergência antes de nova exposição.",
+        "issuer_id": "BR_BB",
+        "premortem": "A posição vendida depende de premissas incompletas e sofre recomposição adversa antes da conciliação fundamental.",
+        "probability_correct": null,
+        "thesis": "Crédito rural, capital e controle público não foram integralmente requalificados na nota. Na janela eleitoral, a divergência entre venda proposta e avaliação exige veto ao lado vendido até conciliação da evidência.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Documentação atual de caixa, capital e direitos econômicos resolve a divergência antes de nova exposição.",
+        "issuer_id": "BR_PATRIA",
+        "premortem": "A posição vendida depende de premissas incompletas e sofre recomposição adversa antes da conciliação fundamental.",
+        "probability_correct": null,
+        "thesis": "A revisão pré-trade identifica divergência entre venda proposta e avaliação, com caixa, remuneração em ações e direitos da gestora ainda não reconciliados. Sem confirmação adicional, veto ao lado vendido.",
+        "variant_perception": ""
+      }
+    ],
+    "premortem": "BR_PETROBRAS: Produção e preço melhoram o lucro enquanto a alocação de capital reduz a remuneração econômica. | MX_AEROMEXICO: A expansão de receita ocultaria pressão sobre caixa e direitos por ação. | BR_PINE: Crescimento de safras eleva o lucro antes do reconhecimento completo de perdas. | MX_GENOMMA: O crescimento financiaria o canal sem retorno econômico suficiente. | MX_FEMSA: Surpresa operacional ou anúncio de capital dominaria a tese vendida antes da revisão.",
+    "situation": "A janela eleitoral brasileira e as reuniões próximas de política monetária recomendam postura defensiva. O drawdown está em 0,00% e a volatilidade realizada permanece n/d. A revisão das notas publicadas e dos modelos atualizados não comprova retorno residual suficiente para inclinações fundamentais adicionais. Preservo a seleção quantitativa sob restrições específicas de risco, sem definir pesos ou antecipar os eventos.",
+    "sizing_rationale": "Postura solicitada defensiva; efetiva defensiva (escada de drawdown: normal); vol-alvo 4,00% e gross máximo 2,00x (calculados por código). "
+  },
+  "mind": "codex",
+  "mode": "AUTONOMOUS",
+  "pm_decision_hash": "91b4b8b03367384e07e226271c2dcff88000e9aa4bda6e0fb97a4dbe6149caac",
+  "proposal_hash": "fcd7aae2317838b41f827f778c004a0ad5d13f2a9ddec792cc2a843ebd48e7b2",
+  "proposal_id": "CDP-2026-10-23-cdp-restricoes",
+  "rationale": "Postura defensiva; regime neutro. A janela eleitoral brasileira e as reuniões próximas de política monetária recomendam postura defensiva. O drawdown está em 0,00% e a volatilidade realizada permanece n/d. A revisão das notas publicadas e dos modelos atualizados não comprova retorno residual suficiente para inclinações fundamentais adicionais. Preservo a seleção quantitativa sob restrições específicas de risco, sem definir pesos ou antecipar os eventos. Caminho: cdp-restricoes.",
+  "research_hash": "874fd0fe5c729d7313b95acd244b9a61d133bc2e07d5e73d6de64ac029986b5c",
+  "risk_gate_hash": "8e8897eeaf4f9a2b7a86d8f83b5a63473efb59339d3f296e9f4cf6edf5f47a75",
+  "snapshot_hash": "c9ee5f2ed83bf6c6802ffdadf1f2ecaaceb880375e9fbe99de2b99f485cc0d1a",
+  "week": "2026-10-23"
+}

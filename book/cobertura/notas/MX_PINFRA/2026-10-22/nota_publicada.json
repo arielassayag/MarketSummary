@@ -1,0 +1,336 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-21",
+    "manifest_sha256": "ad5255d9b4260123fd8b941334f2b591fae4789b25a3ed2038ac4386c6e67e37",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-22",
+  "hashes": {
+    "contexto": "8c000ed726f1c6104b488c118e5920bc8fcfde92185c64b637acd09f8a474970",
+    "factbook": "ca2115014325132593a7a71150d7562dd2a7db4d505599f0967112dc86c40839",
+    "nota_json": "905434b98f95b849b76c547a7fdbe4dd26ef7d08027bd455d5b59f469a067ea5"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_PINFRA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-22",
+  "published_at": "2026-10-23T01:51:28.376687+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "As ampliações descritas pelo diretor exigem verificar custo final e retorno contratual. Previsões de entrega não comprovam operação nem recursos distribuíveis.",
+        "titulo": "Obras e capital atribuível"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Conclusão das obras e comprovação da remuneração contratual dos projetos em andamento; sem data exata confirmada para esta análise.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "outro"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo vigente de MXN 388,91, condicionado à confirmação de caixa após obrigações.",
+      "otimista": "Tráfego e obras remuneradas enquadram MXN 446,61.",
+      "pessimista": "Demanda ou execução desfavorável enquadram MXN 333,53. O cenário inferior do modelo não é piso de cotação; probabilidades implícitas indisponíveis."
+    },
+    "comentario_valuation": "Preço de MXN 300,07, potencial de +29,61%, retorno total esperado de +30,99% e ke de 11,58%. O rating é Compra e a dispersão entre métodos 8,07%. Concordância quantitativa não encerra diligência de contratos e caixa. A diferença de +19,66% perante o consenso não prova percepção de mercado.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se pedágio e reajustes não cobrirem manutenção e expansão ou se recursos de projetos permanecerem indisponíveis à holding.",
+        "titulo": "Receita sem caixa disponível"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-22",
+    "dados_simulados": false,
+    "data": "2026-10-22",
+    "ficha": [
+      {
+        "fato": "val.MX_PINFRA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 300,07"
+      },
+      {
+        "fato": "val.MX_PINFRA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 388,91"
+      },
+      {
+        "fato": "val.MX_PINFRA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+29,61%"
+      },
+      {
+        "fato": "val.MX_PINFRA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.MX_PINFRA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_PINFRA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 446,61"
+      },
+      {
+        "fato": "val.MX_PINFRA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_PINFRA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 333,53"
+      },
+      {
+        "fato": "val.MX_PINFRA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_PINFRA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,58%"
+      },
+      {
+        "fato": "val.MX_PINFRA.wacc",
+        "rotulo": "WACC",
+        "valor": "11,14%"
+      },
+      {
+        "fato": "val.MX_PINFRA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_PINFRA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+30,99%"
+      },
+      {
+        "fato": "val.MX_PINFRA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+22,64%"
+      },
+      {
+        "fato": "val.MX_PINFRA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "14,4x"
+      },
+      {
+        "fato": "val.MX_PINFRA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,6x"
+      },
+      {
+        "fato": "val.MX_PINFRA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 325,00"
+      },
+      {
+        "fato": "val.MX_PINFRA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+19,66%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-22",
+        "id": "F1",
+        "instituicao": "Pinfra",
+        "publicado_em": "2026-10-22",
+        "tipo": "Relações com investidores",
+        "titulo": "Relatório financeiro trimestral consolidado",
+        "url": "https://cdn.investorcloud.net/pinfra/InformacionFinanciera/InformesTrimestrales/2026-10-3T26Reporte.pdf"
+      },
+      {
+        "consultado_em": "2026-10-22",
+        "id": "F2",
+        "instituicao": "Pinfra",
+        "publicado_em": "2026-10-22",
+        "tipo": "Relações com investidores",
+        "titulo": "Informe do diretor sobre desempenho e projetos",
+        "url": "https://cdn.investorcloud.net/pinfra/InformacionFinanciera/InformeDirector/2026-3T-InformeDirector.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Reconciliação do caixa recorrente após a base extraordinária.",
+      "Desvio de custo, prazo ou remuneração das ampliações.",
+      "Reavaliação quantitativa após a divulgação."
+    ],
+    "governanca": "Distinguir concessões, associadas e operadoras antes de atribuir caixa à holding. A apresentação do conselho e dos comitês no relatório não substitui revisão dos títulos, alterações contratuais e direitos econômicos.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar tráfego, tarifa, custo, andamento de obras e distribuições efetivas, reconciliando participações consolidadas e associadas.",
+        "titulo": "Retorno por corredor"
+      }
+    ],
+    "issuer_id": "MX_PINFRA",
+    "lacunas_de_dados": [
+      "Modelo anterior ao resultado; demonstrações não reconciliadas integralmente.",
+      "Títulos, remuneração, caixa restrito e dívida por projeto exigem conciliação.",
+      "Probabilidades implícitas indisponíveis.",
+      "Sem suporte suficiente para percepção variante ou valor por ação plenamente diluído."
+    ],
+    "modelo_de_cobertura": "2026-10-21",
+    "negocio": "Pinfra promove, financia, constrói e opera infraestrutura mexicana, sobretudo rodovias concedidas. Construção, materiais e serviços intragrupo exigem separação das concessões e das participações não consolidadas.",
+    "nome": "Pinfra",
+    "o_que_mudou": "Incorpora-se o resultado do 3T26 recebido hoje, incluindo a ressalva sobre Altamira e os projetos em execução. O retrato de cobertura permanece anterior à divulgação; mantém-se neutralidade de baixa convicção.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_SIMPAR",
+        "nome": "Simpar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O relatório atribui crescimento de receita rodoviária a tráfego, portfólio e tarifas. A hipótese a testar é que remuneração contratual e demanda sustentem caixa após manutenção e expansão.",
+        "titulo": "Pedágio e remuneração contratual"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A venda de Altamira beneficia a base anterior de lucro, EBITDA e fluxo operacional. Sua ausência não deve ser interpretada automaticamente como deterioração recorrente das concessões.",
+        "titulo": "Comparabilidade dos resultados"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O portfólio rodoviário oferece exposição à mobilidade regional. O retorno precisa ser verificado por corredor e contrato; não se presume vantagem durável apenas pela titularidade de concessões.",
+        "titulo": "Concessões e execução"
+      }
+    ],
+    "publicada_em": "2026-10-23T01:51:28.376687+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar ganho de Altamira, construção e serviços intragrupo do resultado recorrente. A evolução do lucro consolidado não resume a qualidade econômica dos pedágios.",
+        "titulo": "Base extraordinária e eliminações"
+      }
+    ],
+    "resumo": "O resultado do 3T26 foi recebido no RI. A comparação de lucro e EBITDA contém a venda de Altamira na base anterior, enquanto concessões e obras têm dinâmicas distintas. Mantém-se visão neutra e baixa convicção até reconciliar caixa por projeto. O alvo vigente de MXN 388,91 antecede esta divulgação e não constitui reavaliação do trimestre.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Atrasos, custos de expansão e restrições por concessão podem consumir caixa apesar do crescimento de receita."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Pinfra: pedágios crescem, mas a base de Altamira distorce a comparação",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O relatório de 2026-10-22 registra crescimento de pedágios e construção. A venda de Altamira torna lucro, EBITDA e fluxo operacional anteriores não comparáveis; construção é descrita como não recorrente. Não se identificou guidance agregado formal no conteúdo recebido; a classificação sem_guidance se limita a esse material, preservando os cronogramas de projeto como estimativas.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Cronogramas e remuneração de projetos precisam ser confrontados com custos realizados, desembolsos e caixa atribuível, sem converter previsão de conclusão em obra entregue.",
+        "vetor": "Execução e retorno das obras"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

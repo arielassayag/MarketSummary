@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 38.0,
+  "high": 48.0,
+  "low": 40.0,
+  "mean": 43.29167,
+  "median": 43.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.71,
+   "currency": "MXN",
+   "growth": 0.044099998,
+   "high": 0.71,
+   "low": 0.71,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.68
+  },
+  "+1y": {
+   "avg": 2.73808,
+   "currency": "MXN",
+   "growth": 0.0759,
+   "high": 2.90108,
+   "low": 2.52,
+   "numberOfAnalysts": 8,
+   "yearAgoEps": 2.545
+  },
+  "0q": {
+   "avg": 0.61,
+   "currency": "MXN",
+   "growth": -0.16440001,
+   "high": 0.61,
+   "low": 0.61,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.73
+  },
+  "0y": {
+   "avg": 2.545,
+   "currency": "MXN",
+   "growth": 0.0139,
+   "high": 2.56,
+   "low": 2.53,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 2.51
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "MXN",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 60270858630,
+   "currency": "MXN",
+   "growth": 0.0656,
+   "high": 65562853570,
+   "low": 58631451020,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 56560500000.0
+  },
+  "0q": {
+   "avg": 14402862250,
+   "currency": "MXN",
+   "growth": 0.024500001,
+   "high": 14511778760,
+   "low": 14293945740,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 14058000000.0
+  },
+  "0y": {
+   "avg": 56560500000,
+   "currency": "MXN",
+   "growth": 0.0215,
+   "high": 56989000000,
+   "low": 56132000000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 55371000000.0
+  }
+ },
+ "ticker": "KIMBERA.MX",
+ "url": "https://finance.yahoo.com/quote/KIMBERA.MX"
+}

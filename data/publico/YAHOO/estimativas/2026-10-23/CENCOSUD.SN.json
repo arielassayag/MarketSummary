@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 1840.0,
+  "high": 3520.0,
+  "low": 1600.0,
+  "mean": 2575.0,
+  "median": 2500.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 55.75442,
+   "currency": "CLP",
+   "growth": -0.3657,
+   "high": 70.69,
+   "low": 40.91559,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 87.90501
+  },
+  "+1y": {
+   "avg": 176.43542,
+   "currency": "CLP",
+   "growth": 0.24309999,
+   "high": 207.33,
+   "low": 153.81898,
+   "numberOfAnalysts": 9,
+   "yearAgoEps": 141.9275
+  },
+  "0q": {
+   "avg": 22.23265,
+   "currency": "CLP",
+   "growth": 0.1149,
+   "high": 32.14977,
+   "low": 11.13,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 19.94169
+  },
+  "0y": {
+   "avg": 141.9275,
+   "currency": "CLP",
+   "growth": -0.1808,
+   "high": 164.97,
+   "low": 124.21,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 173.2466
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 4805369526800,
+   "currency": "CLP",
+   "growth": 0.0556,
+   "high": 4809490245600,
+   "low": 4801248808000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 4552420000000
+  },
+  "+1y": {
+   "avg": 17947876848920,
+   "currency": "CLP",
+   "growth": 0.0512,
+   "high": 18631000000000,
+   "low": 17409700000000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 17072997854970
+  },
+  "0q": {
+   "avg": 4098392724070,
+   "currency": "CLP",
+   "growth": 0.014400001,
+   "high": 4127985657000,
+   "low": 4061068000000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 4040335000000
+  },
+  "0y": {
+   "avg": 17072997854970,
+   "currency": "CLP",
+   "growth": 0.010199999,
+   "high": 17588000000000,
+   "low": 16612000000000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 16900071000000
+  }
+ },
+ "ticker": "CENCOSUD.SN",
+ "url": "https://finance.yahoo.com/quote/CENCOSUD.SN"
+}

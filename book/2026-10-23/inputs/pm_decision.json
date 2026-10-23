@@ -1,0 +1,357 @@
+{
+  "mind": "codex",
+  "regime": "neutral",
+  "risk_posture": "defensiva",
+  "abstain": true,
+  "views": [],
+  "market_view": "A janela eleitoral brasileira e as reuniões próximas de política monetária recomendam postura defensiva. O drawdown está em {{fact:cdp.drawdown}} e a volatilidade realizada permanece {{fact:cdp.realized_vol_21d}}. A revisão das notas publicadas e dos modelos atualizados não comprova retorno residual suficiente para inclinações fundamentais adicionais. Preservo a seleção quantitativa sob restrições específicas de risco, sem definir pesos ou antecipar os eventos.",
+  "what_changed": "Os modelos foram atualizados com preços até 2026-10-22. A revisão corrente acrescenta vetos por squeeze elevado e resultados próximos, e preserva ressalvas de eventos societários, caixa e direitos econômicos ainda não reconciliados. O evento de Bradesco passou de divulgação futura para revisão do resultado e videoconferência; não se presume qualificação integral do material corrente. Notícias de alienação em Allos e recompra de Petz-Cobasi motivam cautela sem presumir conclusão. O veto anterior de Alpargatas por squeeze não é mantido automaticamente, pois o indicador corrente se normalizou; a neutralidade qualitativa permanece. A revisão pré-trade também veta vendas em Banco do Brasil e Patria diante de divergências de avaliação e evidência insuficiente, sem converter esses vetos em visões compradas.",
+  "evaluation_last_week": "A decisão anterior adotou abstenção direcional. A avaliação determinística classifica as visões como sem inclinação; não há taxa de acerto direcional a atribuir à gestão. Os resíduos de Embraer foram {{fact:eval.BR_EMBRAER.resid_ret_1w}}, Gerdau {{fact:eval.BR_GERDAU.resid_ret_1w}} e VTEX {{fact:eval.BR_VTEX.resid_ret_1w}}. Esses resultados são heterogêneos e não equivalem ao P&L realizado, nem demonstram causalidade ou persistência de alpha.",
+  "exclusions": [
+    {
+      "issuer_id": "AR_GLOBANT",
+      "no_long": false,
+      "no_short": true,
+      "reason": "O indicador de squeeze é {{fact:AR_GLOBANT.squeeze_score}}. O risco de recompra, a volatilidade e a defasagem das fontes públicas desaconselham exposição vendida."
+    },
+    {
+      "issuer_id": "BR_AFYA",
+      "no_long": false,
+      "no_short": true,
+      "reason": "O indicador de squeeze é {{fact:BR_AFYA.squeeze_score}}. O risco de recompra, a volatilidade e a defasagem das fontes públicas desaconselham exposição vendida."
+    },
+    {
+      "issuer_id": "BR_CEA",
+      "no_long": false,
+      "no_short": true,
+      "reason": "O indicador de squeeze é {{fact:BR_CEA.squeeze_score}}. O risco de recompra, a volatilidade e a defasagem das fontes públicas desaconselham exposição vendida."
+    },
+    {
+      "issuer_id": "BR_COSAN",
+      "no_long": false,
+      "no_short": true,
+      "reason": "O indicador de squeeze é {{fact:BR_COSAN.squeeze_score}}. O risco de recompra, a volatilidade e a defasagem das fontes públicas desaconselham exposição vendida."
+    },
+    {
+      "issuer_id": "BR_EZTEC",
+      "no_long": false,
+      "no_short": true,
+      "reason": "O indicador de squeeze é {{fact:BR_EZTEC.squeeze_score}}. O risco de recompra, a volatilidade e a defasagem das fontes públicas desaconselham exposição vendida."
+    },
+    {
+      "issuer_id": "BR_INTER",
+      "no_long": false,
+      "no_short": true,
+      "reason": "O indicador de squeeze é {{fact:BR_INTER.squeeze_score}}. O risco de recompra, a volatilidade e a defasagem das fontes públicas desaconselham exposição vendida."
+    },
+    {
+      "issuer_id": "BR_ITAU",
+      "no_long": false,
+      "no_short": true,
+      "reason": "O indicador de squeeze é {{fact:BR_ITAU.squeeze_score}}. O risco de recompra, a volatilidade e a defasagem das fontes públicas desaconselham exposição vendida."
+    },
+    {
+      "issuer_id": "BR_MAGALU",
+      "no_long": false,
+      "no_short": true,
+      "reason": "O indicador de squeeze é {{fact:BR_MAGALU.squeeze_score}}. O risco de recompra, a volatilidade e a defasagem das fontes públicas desaconselham exposição vendida."
+    },
+    {
+      "issuer_id": "BR_MATEUS",
+      "no_long": false,
+      "no_short": true,
+      "reason": "O indicador de squeeze é {{fact:BR_MATEUS.squeeze_score}}. O risco de recompra, a volatilidade e a defasagem das fontes públicas desaconselham exposição vendida."
+    },
+    {
+      "issuer_id": "BR_MOVIDA",
+      "no_long": false,
+      "no_short": true,
+      "reason": "O indicador de squeeze é {{fact:BR_MOVIDA.squeeze_score}}. O risco de recompra, a volatilidade e a defasagem das fontes públicas desaconselham exposição vendida."
+    },
+    {
+      "issuer_id": "BR_PAGUEMENOS",
+      "no_long": false,
+      "no_short": true,
+      "reason": "O indicador de squeeze é {{fact:BR_PAGUEMENOS.squeeze_score}}. O risco de recompra, a volatilidade e a defasagem das fontes públicas desaconselham exposição vendida."
+    },
+    {
+      "issuer_id": "BR_PICPAY",
+      "no_long": false,
+      "no_short": true,
+      "reason": "O indicador de squeeze é {{fact:BR_PICPAY.squeeze_score}}. O risco de recompra, a volatilidade e a defasagem das fontes públicas desaconselham exposição vendida."
+    },
+    {
+      "issuer_id": "BR_PINE",
+      "no_long": false,
+      "no_short": true,
+      "reason": "O indicador de squeeze é {{fact:BR_PINE.squeeze_score}}. O risco de recompra, a volatilidade e a defasagem das fontes públicas desaconselham exposição vendida."
+    },
+    {
+      "issuer_id": "BR_PLANO",
+      "no_long": false,
+      "no_short": true,
+      "reason": "O indicador de squeeze é {{fact:BR_PLANO.squeeze_score}}. O risco de recompra, a volatilidade e a defasagem das fontes públicas desaconselham exposição vendida."
+    },
+    {
+      "issuer_id": "BR_RANDON",
+      "no_long": false,
+      "no_short": true,
+      "reason": "O indicador de squeeze é {{fact:BR_RANDON.squeeze_score}}. O risco de recompra, a volatilidade e a defasagem das fontes públicas desaconselham exposição vendida."
+    },
+    {
+      "issuer_id": "BR_RIACHUELO",
+      "no_long": false,
+      "no_short": true,
+      "reason": "O indicador de squeeze é {{fact:BR_RIACHUELO.squeeze_score}}. O risco de recompra, a volatilidade e a defasagem das fontes públicas desaconselham exposição vendida."
+    },
+    {
+      "issuer_id": "BR_SIMPAR",
+      "no_long": false,
+      "no_short": true,
+      "reason": "O indicador de squeeze é {{fact:BR_SIMPAR.squeeze_score}}. O risco de recompra, a volatilidade e a defasagem das fontes públicas desaconselham exposição vendida."
+    },
+    {
+      "issuer_id": "BR_SMARTFIT",
+      "no_long": false,
+      "no_short": true,
+      "reason": "O indicador de squeeze é {{fact:BR_SMARTFIT.squeeze_score}}. O risco de recompra, a volatilidade e a defasagem das fontes públicas desaconselham exposição vendida."
+    },
+    {
+      "issuer_id": "BR_UNIPAR",
+      "no_long": false,
+      "no_short": true,
+      "reason": "O indicador de squeeze é {{fact:BR_UNIPAR.squeeze_score}}. O risco de recompra, a volatilidade e a defasagem das fontes públicas desaconselham exposição vendida."
+    },
+    {
+      "issuer_id": "CL_ENELCHILE",
+      "no_long": false,
+      "no_short": true,
+      "reason": "O indicador de squeeze é {{fact:CL_ENELCHILE.squeeze_score}}. O risco de recompra, a volatilidade e a defasagem das fontes públicas desaconselham exposição vendida. Resultado indicado para {{fact:evento.CL_ENELCHILE.proximo_resultado}}; a data de calendário pode mudar. Veto ao lado vendido durante o catalisador próximo, sem antecipar resultado."
+    },
+    {
+      "issuer_id": "AR_TGS",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Resultado indicado para {{fact:evento.AR_TGS.proximo_resultado}}; a data de calendário pode mudar. Veto ao lado vendido durante o catalisador próximo, sem antecipar resultado."
+    },
+    {
+      "issuer_id": "AR_YPF",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Resultado indicado para {{fact:evento.AR_YPF.proximo_resultado}}; a data de calendário pode mudar. Veto ao lado vendido durante o catalisador próximo, sem antecipar resultado."
+    },
+    {
+      "issuer_id": "BR_AMBEV",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Resultado indicado para {{fact:evento.BR_AMBEV.proximo_resultado}}; a data de calendário pode mudar. Veto ao lado vendido durante o catalisador próximo, sem antecipar resultado."
+    },
+    {
+      "issuer_id": "BR_GERDAU",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Resultado indicado para {{fact:evento.BR_GERDAU.proximo_resultado}}; a data de calendário pode mudar. Veto ao lado vendido durante o catalisador próximo, sem antecipar resultado."
+    },
+    {
+      "issuer_id": "BR_HYPERA",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Resultado indicado para {{fact:evento.BR_HYPERA.proximo_resultado}}; a data de calendário pode mudar. Veto ao lado vendido durante o catalisador próximo, sem antecipar resultado."
+    },
+    {
+      "issuer_id": "BR_KLABIN",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Resultado indicado para {{fact:evento.BR_KLABIN.proximo_resultado}}; a data de calendário pode mudar. Veto ao lado vendido durante o catalisador próximo, sem antecipar resultado."
+    },
+    {
+      "issuer_id": "BR_SANTANDER",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Resultado indicado para {{fact:evento.BR_SANTANDER.proximo_resultado}}; a data de calendário pode mudar. Veto ao lado vendido durante o catalisador próximo, sem antecipar resultado."
+    },
+    {
+      "issuer_id": "BR_USIMINAS",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Resultado indicado para {{fact:evento.BR_USIMINAS.proximo_resultado}}; a data de calendário pode mudar. Veto ao lado vendido durante o catalisador próximo, sem antecipar resultado."
+    },
+    {
+      "issuer_id": "BR_VALE",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Resultado indicado para {{fact:evento.BR_VALE.proximo_resultado}}; a data de calendário pode mudar. Veto ao lado vendido durante o catalisador próximo, sem antecipar resultado."
+    },
+    {
+      "issuer_id": "CL_BCHILE",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Resultado indicado para {{fact:evento.CL_BCHILE.proximo_resultado}}; a data de calendário pode mudar. Veto ao lado vendido durante o catalisador próximo, sem antecipar resultado."
+    },
+    {
+      "issuer_id": "CL_BSAC",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Resultado indicado para {{fact:evento.CL_BSAC.proximo_resultado}}; a data de calendário pode mudar. Veto ao lado vendido durante o catalisador próximo, sem antecipar resultado."
+    },
+    {
+      "issuer_id": "MX_CEMEX",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Resultado indicado para {{fact:evento.MX_CEMEX.proximo_resultado}}; a data de calendário pode mudar. Veto ao lado vendido durante o catalisador próximo, sem antecipar resultado."
+    },
+    {
+      "issuer_id": "MX_FEMSA",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Resultado indicado para {{fact:evento.MX_FEMSA.proximo_resultado}}; a data de calendário pode mudar. Veto ao lado vendido durante o catalisador próximo, sem antecipar resultado."
+    },
+    {
+      "issuer_id": "MX_OMA",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Resultado indicado para {{fact:evento.MX_OMA.proximo_resultado}}; a data de calendário pode mudar. Veto ao lado vendido durante o catalisador próximo, sem antecipar resultado."
+    },
+    {
+      "issuer_id": "MX_ORBIA",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Resultado indicado para {{fact:evento.MX_ORBIA.proximo_resultado}}; a data de calendário pode mudar. Veto ao lado vendido durante o catalisador próximo, sem antecipar resultado."
+    },
+    {
+      "issuer_id": "MX_VISTA",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Resultado indicado para {{fact:evento.MX_VISTA.proximo_resultado}}; a data de calendário pode mudar. Veto ao lado vendido durante o catalisador próximo, sem antecipar resultado."
+    },
+    {
+      "issuer_id": "MX_VOLARIS",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Resultado indicado para {{fact:evento.MX_VOLARIS.proximo_resultado}}; a data de calendário pode mudar. Veto ao lado vendido durante o catalisador próximo, sem antecipar resultado."
+    },
+    {
+      "issuer_id": "BR_BRASKEM",
+      "no_long": true,
+      "no_short": true,
+      "reason": "Continuidade, reestruturação e elegibilidade de classes na oferta permanecem sem reconciliação completa. Não há avaliação suficiente para assumir exposição."
+    },
+    {
+      "issuer_id": "BR_CBA",
+      "no_long": false,
+      "no_short": true,
+      "reason": "A nota publicada mantém mudança de controle condicionada e direitos do minoritário a reconciliar. Veto ao lado vendido enquanto a assimetria societária estiver sem resolução documental."
+    },
+    {
+      "issuer_id": "PE_NEXA",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Acordo de controle e eventual oferta aos minoritários têm condições e instrumentos distintos; veto ao lado vendido até conciliação dos direitos."
+    },
+    {
+      "issuer_id": "BR_COPEL",
+      "no_long": true,
+      "no_short": false,
+      "reason": "Preservo o veto de compra: avaliação desfavorável e lacunas de caixa e remuneração regulada continuam sem evidência independente suficiente para resolver a divergência."
+    },
+    {
+      "issuer_id": "PE_HUDBAY",
+      "no_long": true,
+      "no_short": false,
+      "reason": "Preservo o veto de compra enquanto caixa restrito, direitos do sócio e capital dos projetos não estiverem conciliados com a avaliação."
+    },
+    {
+      "issuer_id": "BR_GPS",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Preservo o veto ao lado vendido: crescimento orgânico, obrigações de aquisições e reversões de resultado exigem conciliação de caixa para resolver a divergência com a avaliação."
+    },
+    {
+      "issuer_id": "BR_BRADESCO",
+      "no_long": false,
+      "no_short": true,
+      "reason": "O calendário de RI indica videoconferência em 2026-10-23, após divulgação em 2026-10-22. Sem revisão integral do material corrente, veto ao lado vendido na janela do resultado."
+    },
+    {
+      "issuer_id": "BR_ALLOS",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Há notícia de acordo de alienação e manutenção de participação na gestão. O documento primário novo não foi recebido integralmente; veto ao lado vendido até conciliar termos, recebimentos e condições."
+    },
+    {
+      "issuer_id": "BR_PETZCOBASI",
+      "no_long": false,
+      "no_short": true,
+      "reason": "A notícia corrente informa autorização de recompra; a íntegra primária não foi recebida nesta consulta. Veto ao lado vendido diante do evento, sem presumir compras já realizadas."
+    },
+    {
+      "issuer_id": "AR_CRESUD",
+      "no_long": false,
+      "no_short": true,
+      "reason": "O relatório anual e a deliberação da assembleia indicada para 2026-10-22 não foram integralmente reconciliados. Preservo veto ao lado vendido sem presumir distribuição liquidada."
+    },
+    {
+      "issuer_id": "BR_BB",
+      "no_long": false,
+      "no_short": true,
+      "reason": "Crédito rural, capital e controle público não foram integralmente requalificados na nota. Na janela eleitoral, a divergência entre venda proposta e avaliação exige veto ao lado vendido até conciliação da evidência."
+    },
+    {
+      "issuer_id": "BR_PATRIA",
+      "no_long": false,
+      "no_short": true,
+      "reason": "A revisão pré-trade identifica divergência entre venda proposta e avaliação, com caixa, remuneração em ações e direitos da gestora ainda não reconciliados. Sem confirmação adicional, veto ao lado vendido."
+    }
+  ],
+  "position_journal": [
+    {
+      "issuer_id": "BR_PETROBRAS",
+      "thesis": "O rating atualizado é {{fact:val.BR_PETROBRAS.rating_codigo}}. A geração de valor depende de produção e refino convertidos em caixa após investimento e obrigações, preservada a cautela eleitoral.",
+      "invalidation_criteria": "Investimento, política comercial ou obrigações absorvem o retorno atribuível.",
+      "premortem": "Produção e preço melhoram o lucro enquanto a alocação de capital reduz a remuneração econômica."
+    },
+    {
+      "issuer_id": "MX_AEROMEXICO",
+      "thesis": "O modelo permanece {{fact:val.MX_AEROMEXICO.rating_codigo}}; a leitura não incorpora convicção adicional a partir de crescimento operacional isolado.",
+      "invalidation_criteria": "Receita por capacidade não remunera custos completos, frota e financiamento.",
+      "premortem": "A expansão de receita ocultaria pressão sobre caixa e direitos por ação."
+    },
+    {
+      "issuer_id": "BR_PINE",
+      "thesis": "A avaliação corrente é {{fact:val.BR_PINE.rating_codigo}}, mas o squeeze em {{fact:BR_PINE.squeeze_score}} exige veto ao lado vendido e cautela com a maturação do crédito.",
+      "invalidation_criteria": "Perdas, captação ou capital prudencial deterioram o retorno após risco.",
+      "premortem": "Crescimento de safras eleva o lucro antes do reconhecimento completo de perdas."
+    },
+    {
+      "issuer_id": "MX_GENOMMA",
+      "thesis": "A recuperação comercial descrita na nota precisa resultar em caixa após promoção, fábrica e giro; preserva-se baixa convicção.",
+      "invalidation_criteria": "Recebíveis e estoque absorvem a recuperação de vendas.",
+      "premortem": "O crescimento financiaria o canal sem retorno econômico suficiente."
+    },
+    {
+      "issuer_id": "MX_FEMSA",
+      "thesis": "Resultado próximo e divergência entre calendários recomendam veto vendido até a requalificação da divulgação.",
+      "invalidation_criteria": "Resultado recebido e caixa, participações e direitos reconciliados permitem rever a assimetria.",
+      "premortem": "Surpresa operacional ou anúncio de capital dominaria a tese vendida antes da revisão."
+    },
+    {
+      "issuer_id": "BR_BRADESCO",
+      "thesis": "O RI programa videoconferência em 2026-10-23; preserva-se veto vendido enquanto crédito, capital e o novo resultado não forem integralmente examinados.",
+      "invalidation_criteria": "Reconciliação dos documentos correntes demonstra retorno sustentável e base acionária consistente.",
+      "premortem": "A leitura incompleta confundiria evento de capital, recorrência e qualidade do crédito."
+    },
+    {
+      "issuer_id": "BR_BB",
+      "thesis": "Crédito rural, capital e controle público não foram integralmente requalificados na nota. Na janela eleitoral, a divergência entre venda proposta e avaliação exige veto ao lado vendido até conciliação da evidência.",
+      "invalidation_criteria": "Documentação atual de caixa, capital e direitos econômicos resolve a divergência antes de nova exposição.",
+      "premortem": "A posição vendida depende de premissas incompletas e sofre recomposição adversa antes da conciliação fundamental."
+    },
+    {
+      "issuer_id": "BR_PATRIA",
+      "thesis": "A revisão pré-trade identifica divergência entre venda proposta e avaliação, com caixa, remuneração em ações e direitos da gestora ainda não reconciliados. Sem confirmação adicional, veto ao lado vendido.",
+      "invalidation_criteria": "Documentação atual de caixa, capital e direitos econômicos resolve a divergência antes de nova exposição.",
+      "premortem": "A posição vendida depende de premissas incompletas e sofre recomposição adversa antes da conciliação fundamental."
+    }
+  ]
+}
+

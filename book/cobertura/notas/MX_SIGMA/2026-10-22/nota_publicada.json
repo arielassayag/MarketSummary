@@ -1,0 +1,357 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-21",
+    "manifest_sha256": "ad5255d9b4260123fd8b941334f2b591fae4789b25a3ed2038ac4386c6e67e37",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-22",
+  "hashes": {
+    "contexto": "f2612ce95568630d5d860f5d3f92ad4692cb722d8abcdfe1962af81c6ee08503",
+    "factbook": "585eba9ee4acde29838c05070fd1835a62892b5320f5d4de4c1bb75a7bbbadb9",
+    "nota_json": "1f7c44f9fdf327aedd11836851e978ee69bd01c244aceaaccabf2cfad562352a"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_SIGMA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-27",
+  "published_at": "2026-10-23T01:49:43.118159+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O investimento em capacidade e aquisição pede acompanhamento de utilização, integração e caixa incremental, sem atribuir retorno a projetos ainda em execução.",
+        "titulo": "Retorno da recuperação industrial"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-27",
+        "descricao": "Divulgação do 3T26 anunciada no convite corporativo.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": "2026-10-28",
+        "descricao": "Teleconferência para discutir resultado e perspectivas.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo de MXN 13,10, condicionado à qualidade das premissas e do caixa normalizado.",
+      "otimista": "Execução industrial rentável e transmissão de caixa enquadram MXN 17,30.",
+      "pessimista": "Pressão sobre contribuição e maior necessidade de capital enquadram MXN 9,30. Probabilidades implícitas indisponíveis."
+    },
+    "comentario_valuation": "Preço de MXN 19,09 e dispersão entre métodos de 34,64%. O rating quantitativo é Venda, separado da visão ordinal desta nota. A diferença de -40,33% frente ao consenso não comprova percepção variante. O teste econômico é fluxo normalizado dos alimentos transmitido à holding, após dívida e reinvestimento, sem duplicar valor da subsidiária.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese enfraquece se melhora operacional não resultar em recursos disponíveis por ação após necessidades de capital e financiamento.",
+        "titulo": "Execução sem transmissão de valor"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-22",
+    "dados_simulados": false,
+    "data": "2026-10-22",
+    "ficha": [
+      {
+        "fato": "val.MX_SIGMA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 19,09"
+      },
+      {
+        "fato": "val.MX_SIGMA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 13,10"
+      },
+      {
+        "fato": "val.MX_SIGMA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-31,35%"
+      },
+      {
+        "fato": "val.MX_SIGMA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.MX_SIGMA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_SIGMA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 17,30"
+      },
+      {
+        "fato": "val.MX_SIGMA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_SIGMA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 9,30"
+      },
+      {
+        "fato": "val.MX_SIGMA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_SIGMA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,43%"
+      },
+      {
+        "fato": "val.MX_SIGMA.wacc",
+        "rotulo": "WACC",
+        "valor": "8,95%"
+      },
+      {
+        "fato": "val.MX_SIGMA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_SIGMA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-29,16%"
+      },
+      {
+        "fato": "val.MX_SIGMA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-35,85%"
+      },
+      {
+        "fato": "val.MX_SIGMA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "16,8x"
+      },
+      {
+        "fato": "val.MX_SIGMA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "6,9x"
+      },
+      {
+        "fato": "val.MX_SIGMA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 21,96"
+      },
+      {
+        "fato": "val.MX_SIGMA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-40,33%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-22",
+        "id": "F1",
+        "instituicao": "Sigma Foods",
+        "publicado_em": "2026-07-21",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado da holding e da subsidiária de alimentos",
+        "url": "https://www.sigmafoods.com/wp-content/uploads/2026/07/SigmaFoods2T26Resultados.pdf"
+      },
+      {
+        "consultado_em": "2026-10-22",
+        "id": "F2",
+        "instituicao": "Sigma Foods",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Convite da divulgação e teleconferência de resultados",
+        "url": "https://www.sigmafoods.com/wp-content/uploads/2026/10/InviteSigmaFoods_3Q26.pdf"
+      },
+      {
+        "consultado_em": "2026-10-22",
+        "id": "F3",
+        "instituicao": "Sigma Foods",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Informações institucionais para investidores",
+        "url": "https://www.sigmafoods.com/en/investors-information/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Recebimento do resultado e da avaliação corrente de guidance.",
+      "Retorno da capacidade recuperada e da aquisição diverge da hipótese.",
+      "Caixa transferível não acompanha a contribuição recorrente."
+    ],
+    "governanca": "Preservar a distinção entre Sigma Foods e Sigma Alimentos. Reconciliar passivos por entidade, direitos da ação e recursos distribuíveis; anúncio ou passagem da data de pagamento não comprova liquidação de dividendo.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Comparar volume, preço local, margem regional, reinvestimento e dívida por entidade quando o novo resultado for publicado.",
+        "titulo": "Volume rentável e caixa"
+      }
+    ],
+    "issuer_id": "MX_SIGMA",
+    "lacunas_de_dados": [
+      "Resultado do 3T26 ainda futuro conforme convite primário.",
+      "Guidance corrente e liquidação de dividendos não requalificados.",
+      "Holding, subsidiária e base plenamente diluída não reconciliadas integralmente.",
+      "Probabilidades implícitas indisponíveis; percepção variante sem evidência suficiente."
+    ],
+    "modelo_de_cobertura": "2026-10-21",
+    "negocio": "Sigma Foods, antiga Alfa, atua em alimentos de marca por meio de Sigma Alimentos. Carnes processadas, queijos e iogurtes atendem México, Europa, Estados Unidos e América Latina. A análise da ação exige identidade e perímetro compatíveis com a holding.",
+    "nome": "Sigma Foods (ex-Alfa)",
+    "o_que_mudou": "Confirma-se o calendário primário do resultado futuro. A fila sugeria pós-resultado, mas o convite não confirma divulgação hoje. Atualizam-se fatos do modelo e prioridades de acompanhamento, preservando as lacunas de caixa e perímetro.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_AC",
+        "nome": "Arca Continental"
+      },
+      {
+        "issuer_id": "MX_BIMBO",
+        "nome": "Grupo Bimbo"
+      },
+      {
+        "issuer_id": "MX_CHEDRAUI",
+        "nome": "Grupo Comercial Chedraui"
+      },
+      {
+        "issuer_id": "MX_GENOMMA",
+        "nome": "Genomma Lab"
+      },
+      {
+        "issuer_id": "MX_GRUMA",
+        "nome": "Gruma"
+      },
+      {
+        "issuer_id": "MX_KIMBER",
+        "nome": "Kimberly-Clark de México"
+      },
+      {
+        "issuer_id": "MX_KOF",
+        "nome": "Coca-Cola FEMSA"
+      },
+      {
+        "issuer_id": "MX_WALMEX",
+        "nome": "Walmart de México"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O release do 2T26 descreve recuperação de capacidade europeia e aquisição de Roger Wood. A hipótese a testar é que esses investimentos gerem contribuição recorrente após custos completos, sem presumir capacidade futura já operante.",
+        "titulo": "Marca e execução industrial"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_SIGMA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-29,16%"
+          },
+          {
+            "fato": "val.MX_SIGMA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,43%"
+          }
+        ],
+        "texto": "O retorno total esperado de -29,16% e o ke de 10,43% exigem confrontar premissas com caixa atribuível por ação.",
+        "titulo": "Preço e exigência de retorno"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "O material institucional descreve portfólio de alimentos e rede refrigerada multicanal. A vantagem econômica deve ser testada por realização, giro e retorno, sem adotar liderança declarada como prova independente.",
+        "titulo": "Marcas e distribuição"
+      }
+    ],
+    "publicada_em": "2026-10-23T01:49:43.118159+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O release separa recorrência de efeitos extraordinários. Exigir ponte entre contribuição operacional, caixa, giro e obrigações antes de extrapolar a melhora comparável.",
+        "titulo": "Comparável não equivale a caixa"
+      }
+    ],
+    "resumo": "O convite primário prevê divulgação do 3T26 em 2026-10-27 e teleconferência em 2026-10-28. Mantém-se atualização e visão neutra de baixa convicção, sem antecipar resultado. O modelo aponta alvo de MXN 13,10 e potencial -31,35%. Recuperação industrial e marcas devem demonstrar retorno em caixa, distinguindo holding e subsidiária.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Insumos, integração e recuperação industrial podem absorver capital sem gerar caixa suficiente para a holding."
+      }
+    ],
+    "setor": "Consumo básico",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Sigma Foods: calendário confirmado e foco no caixa atribuível à holding",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O release do 2T26 distingue fluxo reportado de comparável, com efeitos extraordinários e operações descontinuadas na base anterior. A administração expressa confiança na meta anual. Essa leitura é histórica: não confirma revisão de guidance em outubro nem resultado do 3T26.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar margem em moeda local, giro, reinvestimento e integração antes de concluir que crescimento consolidado remunera o capital.",
+        "vetor": "Rentabilidade recorrente e capital empregado"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

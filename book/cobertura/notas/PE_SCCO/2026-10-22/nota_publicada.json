@@ -1,0 +1,343 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-21",
+    "manifest_sha256": "ad5255d9b4260123fd8b941334f2b591fae4789b25a3ed2038ac4386c6e67e37",
+    "modelo_as_of": "2026-10-16"
+  },
+  "conviccao": 1,
+  "data": "2026-10-22",
+  "hashes": {
+    "contexto": "16cc92927f71072b987b85b56303e52fb3ae44745a9ed1fc90df5b7744a120d3",
+    "factbook": "db8f177cfd5d302e2f8bf6d6aa74e6c706cc00c7d36c687426f131abe84ec2f3",
+    "nota_json": "c7bf609719d8447668d192474c4469e4984806109819737101e10eedda285c70"
+  },
+  "is_synthetic": false,
+  "issuer_id": "PE_SCCO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-22",
+  "published_at": "2026-10-23T01:53:32.963436+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Tía María e El Pilar permanecem projetos em desenvolvimento no comunicado. Conferir orçamento, cronograma e financiamento antes de atribuir produção futura à base corrente.",
+        "titulo": "Projetos antes da contribuição"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-19",
+        "descricao": "Pagamento de dividendos anunciado no comunicado, condicionado aos termos e à liquidação futura.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "dividendos"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo vigente de US$ 89,62, sujeito à revisão das premissas de metais e reinvestimento.",
+      "otimista": "Produtividade e expansão remunerada sustentam o cenário de US$ 112,25.",
+      "pessimista": "Preços menores e pressão operacional enquadram US$ 68,09; probabilidades implícitas indisponíveis."
+    },
+    "comentario_valuation": "Preço de US$ 201,69, P/L à frente de 26,6x e dispersão entre métodos de 25,03%. A diferença de -49,29% para o consenso público não demonstra o que está precificado. O retrato de 2026-10-21 não comprova incorporação integral deste resultado; pares de materiais têm exposições heterogêneas e não substituem comparação de minas em base equivalente.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese enfraquece se preços e subprodutos sustentarem lucro enquanto produtividade e capital empregado deterioram a economia das operações.",
+        "titulo": "Resultado cíclico sem retorno suficiente"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-22",
+    "dados_simulados": false,
+    "data": "2026-10-22",
+    "ficha": [
+      {
+        "fato": "val.PE_SCCO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 201,69"
+      },
+      {
+        "fato": "val.PE_SCCO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 89,62"
+      },
+      {
+        "fato": "val.PE_SCCO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-55,56%"
+      },
+      {
+        "fato": "val.PE_SCCO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.PE_SCCO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.PE_SCCO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 112,25"
+      },
+      {
+        "fato": "val.PE_SCCO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.PE_SCCO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 68,09"
+      },
+      {
+        "fato": "val.PE_SCCO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.PE_SCCO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,21%"
+      },
+      {
+        "fato": "val.PE_SCCO.wacc",
+        "rotulo": "WACC",
+        "valor": "9,98%"
+      },
+      {
+        "fato": "val.PE_SCCO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.PE_SCCO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-53,43%"
+      },
+      {
+        "fato": "val.PE_SCCO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-58,96%"
+      },
+      {
+        "fato": "val.PE_SCCO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "26,6x"
+      },
+      {
+        "fato": "val.PE_SCCO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "13,3x"
+      },
+      {
+        "fato": "val.PE_SCCO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 176,73"
+      },
+      {
+        "fato": "val.PE_SCCO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-49,29%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-22",
+        "id": "F1",
+        "instituicao": "Southern Copper via Publicnow e MarketScreener",
+        "publicado_em": "2026-10-20",
+        "tipo": "Imprensa",
+        "titulo": "Comunicado corporativo de resultados trimestrais",
+        "url": "https://www.marketscreener.com/news/southern-copper-third-quarter-and-nine-months-2026-results-ce785cd8dc8af721"
+      },
+      {
+        "consultado_em": "2026-10-22",
+        "id": "F2",
+        "instituicao": "Southern Copper",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil institucional e política operacional",
+        "url": "https://southerncoppercorp.com/eng/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Recebimento do material primário integral e reavaliação de guidance.",
+      "Produtividade, custos brutos ou orçamento de projetos divergem da hipótese.",
+      "Revisão das premissas de metais e caixa do modelo."
+    ],
+    "governanca": "Examinar controle, partes relacionadas e obrigações por entidade. A autorização de dividendos e o avanço descrito em projetos não comprovam liquidação, licenças completas nem retorno realizado.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar teor, recuperação, volume, custo antes de créditos, manutenção, expansão e recursos atribuíveis, por operação e entidade.",
+        "titulo": "Minas e caixa após investimento"
+      }
+    ],
+    "issuer_id": "PE_SCCO",
+    "lacunas_de_dados": [
+      "Acesso direto ao RI recusado; comunicado recebido por distribuição pública.",
+      "Guidance e transcrição primária corrente não requalificados integralmente.",
+      "Incorporação integral do trimestre ao modelo não comprovada.",
+      "Projetos, relacionadas, diluição e caixa após manutenção exigem conciliação.",
+      "Probabilidades implícitas e percepção variante sem evidência suficiente."
+    ],
+    "modelo_de_cobertura": "2026-10-21",
+    "negocio": "Southern Copper integra mineração, fundição e refino, com operações no México e no Peru. Cobre e subprodutos expõem o caixa a preços, teor e recuperação. A base operacional deve ser separada dos projetos ainda em desenvolvimento.",
+    "nome": "Southern Copper",
+    "o_que_mudou": "Incorpora-se qualitativamente o comunicado público recente do 3T26, com foco em preços, teor peruano e expansão. A consulta direta ao RI falhou, e a classificação corrente de guidance permanece pendente; preserva-se atualização de baixa convicção.",
+    "pais": "Peru",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CBA",
+        "nome": "Companhia Brasileira de Alumínio"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_SUZANO",
+        "nome": "Suzano"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O comunicado do 3T26 atribui a melhora financeira a preços de metais, com produção peruana pressionada por teor. A hipótese é que eficiência e continuidade operacional sustentem caixa também em condições menos favoráveis de preço.",
+        "titulo": "Preço não substitui produtividade"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.PE_SCCO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-53,43%"
+          },
+          {
+            "fato": "val.PE_SCCO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "10,21%"
+          },
+          {
+            "fato": "val.PE_SCCO.confianca_codigo",
+            "nome": "Confiança do modelo",
+            "valor": "C"
+          }
+        ],
+        "texto": "O retorno total esperado de -53,43% e o ke de 10,21% exigem testar premissas do ciclo e do capital. A confiança quantitativa é C.",
+        "titulo": "Preço e retorno exigido"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O perfil institucional enfatiza integração, custo e estrutura de capital prudente. São características a testar ao longo do ciclo, sem converter declaração da administração em comparação independente de competitividade.",
+        "titulo": "Integração e disciplina de custos"
+      }
+    ],
+    "publicada_em": "2026-10-23T01:53:32.963436+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar melhora de preços e créditos de subprodutos da eficiência física. O teste de recorrência é caixa após manutenção e reinvestimento sob premissas normalizadas.",
+        "titulo": "Preço, volume e custo bruto"
+      }
+    ],
+    "resumo": "O comunicado corporativo do 3T26 distribuído publicamente registra melhora financeira apoiada em metais mais caros, enquanto a produção peruana sofre com teores menores. Mantém-se atualização de baixa convicção, sem classificação de guidance ainda não requalificado. O alvo vigente é US$ 89,62, com potencial -55,56%; resultado forte não elimina a necessidade de testar retorno ao preço da ação.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Preços de metais e créditos de subprodutos podem normalizar antes de novos projetos contribuírem; teores e execução pressionam caixa."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Southern Copper: preços sustentam resultado enquanto teor e expansão exigem acompanhamento",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O comunicado do 3T26 recebido em distribuição pública informa crescimento de vendas, EBITDA e caixa operacional, apoiado em preços. Registra queda da produção peruana por teor e aumento de investimentos. A revisão integral de guidance e da transcrição primária não foi concluída; mantém-se atualização e guidance não avaliado, sem afirmar ausência ou manutenção de metas.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo líquido menor inclui créditos de subprodutos favorecidos por preços. É necessário testar separadamente custo bruto, produtividade e sustentabilidade desses créditos.",
+        "vetor": "Custo e créditos de subprodutos"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

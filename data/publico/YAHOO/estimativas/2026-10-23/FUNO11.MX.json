@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 32.58,
+  "high": 45.0,
+  "low": 23.6,
+  "mean": 35.0,
+  "median": 35.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.67219,
+   "currency": "MXN",
+   "growth": -0.7567,
+   "high": 0.77612,
+   "low": 0.5,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 2.7624
+  },
+  "+1y": {
+   "avg": 2.83137,
+   "currency": "MXN",
+   "growth": 0.063,
+   "high": 3.47,
+   "low": 2.0,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 2.66347
+  },
+  "0q": {
+   "avg": 0.62708,
+   "currency": "MXN",
+   "growth": -0.2511,
+   "high": 0.75,
+   "low": 0.45,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.8373
+  },
+  "0y": {
+   "avg": 2.66347,
+   "currency": "MXN",
+   "growth": -0.4884,
+   "high": 3.19,
+   "low": 2.12,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 5.2062
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 8452742220,
+   "currency": "MXN",
+   "growth": 0.0736,
+   "high": 8538000000,
+   "low": 8252702079,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 7873457000
+  },
+  "+1y": {
+   "avg": 34234405830,
+   "currency": "MXN",
+   "growth": 0.0531,
+   "high": 35994000000,
+   "low": 29858000000,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 32507311880
+  },
+  "0q": {
+   "avg": 8161444290,
+   "currency": "MXN",
+   "growth": 0.0845,
+   "high": 8332000000,
+   "low": 8023000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 7525316000
+  },
+  "0y": {
+   "avg": 32507311880,
+   "currency": "MXN",
+   "growth": 0.0655,
+   "high": 33426000000,
+   "low": 31095000000,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 30508818000
+  }
+ },
+ "ticker": "FUNO11.MX",
+ "url": "https://finance.yahoo.com/quote/FUNO11.MX"
+}

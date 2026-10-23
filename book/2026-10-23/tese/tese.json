@@ -1,0 +1,606 @@
+{
+  "mind": "codex",
+  "week": "2026-10-23",
+  "titulo": "Defesa do orçamento de risco em uma semana de eleição e decisões monetárias",
+  "resumo": "Carteira simulada com preços reais e execução hipotética. A postura defensiva combina {{fact:tese.n_long}} compras e {{fact:tese.n_short}} vendas, exposição bruta de {{fact:tese.gross}}, líquida de {{fact:tese.net}} e beta de {{fact:tese.beta}}. A volatilidade ex-ante é {{fact:tese.vol}}. A decisão se abstém de visões direcionais adicionais: a seleção quantitativa opera sob exclusões e cautelas qualitativas.\n\nO alpha anual esperado é {{fact:tese.alpha}}, líquido de custos {{fact:tese.alpha_liquido}}; são estimativas, sem garantia de realização. A fatia idiossincrática no modelo base, {{fact:tese.risco_idio_base}}, fica abaixo da meta {{fact:tese.risco_idio_meta}}, com alerta de acompanhamento. O modelo de decisão com eventos apresenta {{fact:tese.risco_idio_decisao}}. A carteira ainda depende da efetivação hipotética no leilão de fechamento.",
+  "contexto": "O regime é neutro, com postura defensiva diante da eleição brasileira em 2026-10-25, do calendário de resultados e das próximas decisões monetárias. A agenda pública do Federal Reserve indica reunião em 2026-10-27 e 2026-10-28; Banco Central de Chile e Banco de la República também concentram eventos na janela. Datas são agenda, sem antecipação de seus resultados.\n\nA pesquisa não sustenta convicção direcional adicional. Notas anteriores oferecem hipóteses e riscos, com consulta indireta das fontes subjacentes; não equivalem a uma nova revisão integral dos documentos. Falhas de acesso e lacunas contábeis permanecem abertas. Restrições a vendas descobertas e a casos com eventos ou inconsistências reduzem a dependência de informação não confirmada. A incerteza continua material nas posições remanescentes.",
+  "construcao": "O universo elegível contém {{fact:tese.funil.universo}} emissores e o conjunto final {{fact:tese.funil.final}}. As neutralidades e restrições, somadas ao orçamento de volatilidade, determinam os pesos. Compras de {{fact:tese.long}} e vendas de {{fact:tese.short}} deixam exposição líquida de {{fact:tese.net}}. O giro indicado na tese é {{fact:tese.giro}} e o custo estimado de execução {{fact:tese.custo_execucao_bps}}, nas bases específicas dessas medidas.\n\nA carteira reúne {{fact:tese.papel.alpha.n}} posições geradoras de alpha, {{fact:tese.papel.hedge.n}} de neutralidade e {{fact:tese.papel.alpha_div.n}} de alpha com diversificação. Há {{fact:tese.dim.interior}} dimensionamentos interiores, {{fact:tese.dim.teto_risco}} limitados por risco individual, {{fact:tese.dim.teto_visao}} por restrição qualitativa ou sentinela e {{fact:tese.dim.squeeze}} por squeeze. Não se presume que toda venda expresse deterioração fundamental.\n\nRiachuelo e Sigma Lithium encontram o limite de risco individual; Galicia, o de squeeze. Millicom, Arcos Dorados, Stone, Totvs, Rumo e Banco Macro servem à neutralidade conjunta. LATAM Airlines acrescenta diversificação. O número efetivo de posições é {{fact:tese.n_efetivo}}. Não se aumentou o risco para eliminar o alerta de composição fatorial.",
+  "temas": [
+    {
+      "titulo": "Consumo e crédito: recuperação depende de caixa",
+      "lado": "long_short",
+      "emissores": [
+        "BR_RIACHUELO",
+        "BR_TENDA",
+        "BR_CURY",
+        "BR_MOURADUBEUX",
+        "BR_HYPERA",
+        "BR_FLEURY",
+        "BR_REDEDOR",
+        "BR_ALPARGATAS"
+      ],
+      "tese": "Compras em varejo, habitação e Hypera convivem com vendas em saúde e Alpargatas. O sinal relativo orienta a seleção; as notas exigem confirmação de margem, capital de giro, recebimentos e retorno do reinvestimento. A leitura qualitativa tem baixa convicção e não representa previsão de consumo agregado.",
+      "riscos": "Crédito mais caro, perdas, estoques e capital de giro podem consumir a margem. Resultados próximos podem alterar premissas antes que o preço reflita a informação."
+    },
+    {
+      "titulo": "Energia e materiais: dispersão empresarial com risco comum",
+      "lado": "long_short",
+      "emissores": [
+        "BR_PETROBRAS",
+        "BR_PRIO",
+        "CO_GEOPARK",
+        "MX_VISTA",
+        "BR_BRAVA",
+        "BR_ULTRAPAR",
+        "BR_VIBRA",
+        "BR_SUZANO",
+        "BR_GERDAU",
+        "BR_ERO",
+        "BR_VALE",
+        "LA_FORTUNA",
+        "AR_LAR",
+        "BR_SIGMALITH",
+        "BR_BRADESPAR",
+        "MX_FIRSTMAJ"
+      ],
+      "tese": "A seleção combina produtores, transformadores e distribuidores nos lados comprado e vendido. A hipótese de retorno é relativa entre negócios; geração de caixa, execução operacional, reinvestimento e direitos dos acionistas continuam determinantes. Exposições comuns a commodities são controladas em conjunto, sem presumir compensação perfeita.",
+      "riscos": "Movimentos de petróleo, metais e câmbio, incidentes operacionais e mudança de preços realizados podem dominar a dispersão empresarial. Vendas em lítio e prata mantêm risco de squeeze."
+    },
+    {
+      "titulo": "Financeiro: qualidade do resultado e remuneração do capital",
+      "lado": "long_short",
+      "emissores": [
+        "BR_PAGS",
+        "BR_BBSEG",
+        "BR_PINE",
+        "BR_CXSEG",
+        "BR_PORTO",
+        "BR_PICPAY",
+        "AR_BBVA",
+        "BR_NU",
+        "AR_GALICIA",
+        "CO_CIBEST",
+        "PE_CREDICORP",
+        "BR_BANRISUL",
+        "BR_STONE",
+        "AR_MACRO"
+      ],
+      "tese": "O conjunto distribui compras e vendas entre crédito, seguros e pagamentos. Retorno sobre capital, perdas e conversão em caixa devem confirmar o sinal. Stone e Banco Macro entram pelo benefício de neutralidade, e não por uma tese fundamental negativa autônoma. A exposição agregada não elimina diferenças de regulação e país.",
+      "riscos": "Mudanças de provisão, capital regulatório, custo de captação e remuneração de saldos podem alterar resultados. Eventos políticos e concentração acionária ampliam assimetrias das vendas."
+    },
+    {
+      "titulo": "Serviços essenciais: contratos, investimento e alavancagem",
+      "lado": "long_short",
+      "emissores": [
+        "BR_ISAENERGIA",
+        "BR_AXIA",
+        "BR_ENEVA",
+        "BR_ALUPAR",
+        "AR_CEPU",
+        "BR_AUREN",
+        "BR_ENERGISA",
+        "BR_EQUATORIAL",
+        "BR_SANEPAR",
+        "BR_CEMIG",
+        "BR_SABESP",
+        "AR_PAMPA"
+      ],
+      "tese": "Compras em geração e transmissão são contrapostas a vendas em outras elétricas e saneamento. A seleção depende de retorno após investimento, obrigações contratuais e financiamento. O caráter regulado das receitas não assegura caixa livre ou baixa sensibilidade a juros.",
+      "riscos": "Revisões tarifárias, hidrologia, combustível, atrasos e necessidade de capital podem alterar o valor econômico. Estruturas societárias e concessões exigem diligência específica."
+    },
+    {
+      "titulo": "Transporte e infraestrutura: demanda e execução",
+      "lado": "long_short",
+      "emissores": [
+        "MX_AEROMEXICO",
+        "CL_LATAM",
+        "LA_COPA",
+        "BR_MARCOPOLO",
+        "BR_EMBRAER",
+        "MX_ASUR",
+        "MX_GAP",
+        "BR_RUMO",
+        "BR_ORIZON"
+      ],
+      "tese": "A carteira compra aéreas e Marcopolo e vende aeroportos, Embraer e Orizon segundo os sinais relativos. LATAM Airlines também diversifica o risco; Rumo serve à neutralidade. O calendário de resultados exige distinguir demanda divulgada, faturamento, entrega e recebimento.",
+      "riscos": "Combustível, câmbio, capacidade, concessões e atrasos operacionais podem dominar o sinal. Informação recente ainda não reconciliada limita a convicção nas vendas."
+    },
+    {
+      "titulo": "Comunicações, tecnologia e consumo regional",
+      "lado": "long_short",
+      "emissores": [
+        "LA_MILLICOM",
+        "AR_TEO",
+        "MX_AMX",
+        "BR_VTEX",
+        "BR_AMBEV",
+        "BR_JBS",
+        "BR_SAOMARTINHO",
+        "AR_IRSA",
+        "LA_LILA",
+        "BR_TIM",
+        "BR_VIVO",
+        "LA_MELI",
+        "LA_ARCOS",
+        "BR_TOTVS",
+        "MX_GENOMMA",
+        "AR_ADECOAGRO"
+      ],
+      "tese": "Retorno esperado, caixa após investimento e disciplina de capital orientam a seleção entre serviços recorrentes, plataformas, alimentos e ativos reais. Millicom, Arcos Dorados e Totvs exercem função de neutralidade. A convivência de compras e vendas não constitui previsão uniforme de crescimento regional.",
+      "riscos": "Concorrência, alavancagem, monetização, custos agrícolas e câmbio podem alterar o retorno. Métricas operacionais sem reconciliação com caixa não confirmam a hipótese."
+    }
+  ],
+  "exposicoes": "O Brasil concentra gross de {{fact:tese.pais.BR.gross}}, mas líquido de {{fact:tese.pais.BR.net}}. Argentina está em {{fact:tese.pais.AR.net}}, México em {{fact:tese.pais.MX.net}}, Chile em {{fact:tese.pais.CL.net}}, Colômbia em {{fact:tese.pais.CO.net}} e Peru em {{fact:tese.pais.PE.net}}; o limite líquido por país é {{fact:tese.pais_limite}}. Baixo líquido não elimina risco de correlação e liquidez.\n\nFinanceiro apresenta líquido {{fact:tese.setor.financials.net}}; utilidades e industriais, respectivamente {{fact:tese.setor.utilities.net}} e {{fact:tese.setor.industrials.net}}, diante do limite setorial {{fact:tese.setor_limite}}. O orçamento exige acompanhar também estilos e exposições brutas dentro desses grupos.\n\nAs exposições temáticas são petróleo {{fact:tese.commodity.oil}}, cobre {{fact:tese.commodity.copper}} e ouro {{fact:tese.commodity.gold}}. Estatais somam {{fact:tese.tema.estatais}}; a medida do evento eleitoral é {{fact:tese.evento.eleicao_br}}. A base em dólar preserva sensibilidade cambial das operações e ativos, mesmo com exposição líquida reduzida.",
+  "sensibilidade": "O beta previsto de {{fact:tese.beta}} fica dentro do limite {{fact:tese.beta_limite}}. Para choque de mercado de {{fact:tese.sens.choque}}, a estimativa linear é {{fact:tese.sens.mercado_choque}}, equivalente a {{fact:tese.sens.mercado_choque_usd}}. A neutralidade estimada não protege contra gaps ou mudança de correlações.\n\nNa janela histórica de {{fact:tese.hist.dias}} observações, o beta contra ILF é {{fact:tese.sens.ilf.beta}}, contra EWZ {{fact:tese.sens.ewz.beta}} e contra o dólar {{fact:tese.sens.dxy.beta}}. Essas sensibilidades reaplicam os pesos atuais ao passado; não são desempenho realizado desta carteira. A sensibilidade histórica ao sol peruano permanece indisponível. Juros não são modelados diretamente.\n\nA queda simultânea das maiores compras no cenário definido implica {{fact:tese.estresse.quebra_5_maiores_longs_menos_30}}; o squeeze das maiores vendas, {{fact:tese.estresse.squeeze_5_maiores_shorts_mais_30}}. São cenários condicionais, sem probabilidade atribuída e sem limite para a perda possível.",
+  "volatilidade": "A meta do mandato é {{fact:tese.vol_meta_mandato}}; a postura defensiva a reduz a {{fact:tese.vol_meta_postura}}. O viés a priori {{fact:tese.vies_prior}} leva à meta aplicada {{fact:tese.vol_meta_aplicada}}, atingida pela vol ex-ante {{fact:tese.vol}}, dentro da banda {{fact:tese.vol_banda_min}} a {{fact:tese.vol_banda_max}}.\n\nO risco idiossincrático é {{fact:tese.risco_idio_base}} no modelo base, abaixo da meta {{fact:tese.risco_idio_meta}} e acima do piso {{fact:tese.risco_idio_piso}}. O componente fatorial base de {{fact:tese.risco_fatorial}} supera a referência {{fact:tese.fator_limite}}, produzindo o alerta SOFT. A tentativa de ajuste fatorial não encontrou solução viável e a solução anterior foi preservada. No modelo de decisão com eventos, a fatia idiossincrática é {{fact:tese.risco_idio_decisao}}; as bases não são intercambiáveis.\n\nEstilos respondem por {{fact:tese.grupo.estilo}} e setores por {{fact:tese.grupo.setor}} da variância base. O VaR diário {{fact:tese.var_1d}} permanece abaixo do limite {{fact:tese.var_1d_limite}}; o expected shortfall é {{fact:tese.es_1d}}. A oscilação semanal típica é {{fact:tese.sigma_semana}}, ou {{fact:tese.sigma_semana_usd}}, sem garantia de contenção de perdas.",
+  "riscos": [
+    "A eleição brasileira e decisões monetárias podem alterar correlações, câmbio e liquidez antes que a neutralidade prevista responda.",
+    "O alerta de composição idiossincrática permanece aberto; a participação fatorial base pode crescer com volatilidade e correlação.",
+    "Aluguel, disponibilidade de ações e gaps podem tornar vendas descobertas mais onerosas e impor cobertura em condições adversas.",
+    "Resultados próximos podem invalidar sinais relativos, sobretudo quando margem contábil não se converte em caixa.",
+    "Lacunas de fontes, consistência contábil e revisão documental limitam a convicção qualitativa; ausência de informação não confirma estabilidade.",
+    "Preços provisórios e execução hipotética no fechamento podem divergir das referências usadas na decisão.",
+    "Valor, qualidade e revisões não contam com qualificação histórica equivalente à dos sinais de preços; a avaliação prospectiva ainda é imatura."
+  ],
+  "premortem": "A seleção pode falhar se o aparente retorno relativo refletir informação já incorporada de forma incompleta, enquanto resultados e eleição provocam reversão conjunta. Nesse cenário, compras consomem caixa, vendas surpreendem positivamente e a neutralidade estimada perde eficácia. A participação específica elevada não impede perdas simultâneas por lacunas de dados ou exposição econômica omitida. A combinação de baixa convicção qualitativa e calendário concentrado exige preservar as restrições e reconhecer rapidamente a invalidação, sem transformar o alvo quantitativo em certeza.",
+  "gatilhos": [
+    "Rever a posição quando resultado ou documento primário alterar caixa, capital, perímetro ou premissa determinante do retorno esperado.",
+    "Reavaliar o orçamento se a fatia idiossincrática base se deteriorar ou a exposição fatorial crescer, respeitando as regras vigentes.",
+    "Aplicar os controles previstos diante de insuficiência de aluguel, aumento de squeeze ou perda de liquidez nas vendas.",
+    "Revisar após eleição e decisões monetárias se câmbio, volatilidade ou correlações se afastarem das premissas.",
+    "Reavaliar quando um evento societário mudar direitos, unidade da ação ou condição de negociação; não presumir sua conclusão."
+  ],
+  "monitoramento": "Acompanhar a efetivação hipotética no leilão e reconciliar posições, custos e aluguel antes de tratar a carteira como executada. Monitorar a eleição de 2026-10-25 e a janela de eventos brasileiros; conferir os resultados de Gerdau em 2026-10-26, Hypera em 2026-10-27, Vista em 2026-10-28 e Ambev e Vale em 2026-10-29 conforme as agendas disponíveis. As datas permanecem sujeitas à confirmação do emissor.\n\nNa janela monetária, acompanhar Federal Reserve, Banco Central de Chile e Banco de la República, com atenção a câmbio e curva de juros. Para cada posição, confrontar resultado, caixa, capital e liquidez com a hipótese registrada. Manter separadas avaliação prospectiva ainda imatura, sensibilidades históricas e desempenho efetivamente observado.",
+  "posicoes": [
+    {
+      "issuer_id": "BR_RIACHUELO",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_RIACHUELO.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_RIACHUELO.peso}}. O peso é limitado pelo orçamento de risco por emissor.",
+      "risco": "Demanda, estoque e utilização industrial podem reduzir margem.",
+      "gatilho": "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese."
+    },
+    {
+      "issuer_id": "BR_HYPERA",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_HYPERA.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_HYPERA.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Concorrência, regulação, execução industrial e custo comercial podem limitar retorno.",
+      "gatilho": "Demanda final e margens deixam de sustentar gasto comercial e inovação."
+    },
+    {
+      "issuer_id": "LA_MILLICOM",
+      "por_que": "A posição atende à neutralidade conjunta da carteira; o retorno esperado isolado não é sua justificativa central. Peso {{fact:tese.LA_MILLICOM.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Integração, concorrência e necessidade de rede podem consumir caixa antes dos benefícios.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    },
+    {
+      "issuer_id": "MX_GENOMMA",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.MX_GENOMMA.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.MX_GENOMMA.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Demanda fraca nos Estados Unidos e giro elevado podem prolongar a pressão operacional.",
+      "gatilho": "Normalização comprovada de giro e melhoria operacional recorrente."
+    },
+    {
+      "issuer_id": "BR_AUREN",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_AUREN.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_AUREN.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Hidrologia, vento, restrições e preços regionais podem elevar compras ou reduzir margem.",
+      "gatilho": "A recuperação hídrica não se traduz em margem realizada e caixa após compras de energia."
+    },
+    {
+      "issuer_id": "BR_TENDA",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_TENDA.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_TENDA.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Inadimplência, crédito e custos podem limitar margem e repasse.",
+      "gatilho": "Margem de novas safras não sustenta a recuperação depois de custos e perdas."
+    },
+    {
+      "issuer_id": "MX_AEROMEXICO",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.MX_AEROMEXICO.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.MX_AEROMEXICO.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Combustível elevado e custos em moeda local podem impedir que a realização comercial preserve rentabilidade.",
+      "gatilho": "Conferência esclarece recorrência da fidelidade e premissas de combustível."
+    },
+    {
+      "issuer_id": "BR_FLEURY",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_FLEURY.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_FLEURY.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Glosas, concentração em pagadores, custos de pessoal e integração podem limitar conversão.",
+      "gatilho": "Crescimento orgânico e utilização não remuneram capital depois da integração."
+    },
+    {
+      "issuer_id": "BR_BRAVA",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_BRAVA.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_BRAVA.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Paradas, integridade, preço do petróleo, proteção financeira e obrigações de aquisição podem absorver caixa.",
+      "gatilho": "Disponibilidade, restrições e custo impedem converter investimentos em produção econômica."
+    },
+    {
+      "issuer_id": "BR_PETROBRAS",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_PETROBRAS.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_PETROBRAS.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Ciclo do petróleo e investimento podem absorver caixa e tornar distribuição passada pouco representativa da capacidade futura.",
+      "gatilho": "Caixa após obrigações confirma ou invalida o retorno do investimento."
+    },
+    {
+      "issuer_id": "AR_LAR",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.AR_LAR.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.AR_LAR.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Preço do lítio, execução industrial e financiamento podem impedir retorno.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    },
+    {
+      "issuer_id": "BR_ULTRAPAR",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_ULTRAPAR.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_ULTRAPAR.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Normalização das margens, giro e refinanciamento podem absorver recursos.",
+      "gatilho": "Caixa recorrente persiste após normalização de margens e giro."
+    },
+    {
+      "issuer_id": "AR_ADECOAGRO",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.AR_ADECOAGRO.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.AR_ADECOAGRO.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Clima, preços agrícolas, energia e execução industrial podem se combinar com necessidade de giro.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    },
+    {
+      "issuer_id": "LA_LILA",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.LA_LILA.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.LA_LILA.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Concorrência, danos climáticos e reinvestimento podem pressionar margem e caixa.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    },
+    {
+      "issuer_id": "BR_ENERGISA",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_ENERGISA.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_ENERGISA.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Qualidade, perdas, inadimplência e reconhecimento regulatório podem exigir investimento adicional.",
+      "gatilho": "Qualidade, perdas e custos impedem remuneração suficiente do investimento nas redes."
+    },
+    {
+      "issuer_id": "BR_PAGS",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_PAGS.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_PAGS.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Competição, preço, fraude, perdas de crédito e captação podem reduzir contribuição.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    },
+    {
+      "issuer_id": "BR_SUZANO",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_SUZANO.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_SUZANO.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Ciclo de celulose, câmbio, insumos e logística podem comprimir caixa.",
+      "gatilho": "Produtividade e escala deixam de sustentar margem depois do custo entregue e manutenção."
+    },
+    {
+      "issuer_id": "LA_MELI",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.LA_MELI.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.LA_MELI.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Subsídios permanentes, perdas de crédito e financiamento podem impedir transmissão do crescimento ao caixa econômico.",
+      "gatilho": "Maturação de coortes confirma ou invalida o retorno dos incentivos."
+    },
+    {
+      "issuer_id": "BR_SANEPAR",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_SANEPAR.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_SANEPAR.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Regulação, recursos hídricos, perdas e obras podem reduzir retorno.",
+      "gatilho": "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese."
+    },
+    {
+      "issuer_id": "BR_BRADESPAR",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_BRADESPAR.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_BRADESPAR.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Concentração na Vale, ciclo mineral, obrigações da investida e despesas da holding podem reduzir retorno.",
+      "gatilho": "Proventos recebidos da Vale não sustentam custos e remuneração da holding."
+    },
+    {
+      "issuer_id": "BR_ORIZON",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_ORIZON.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_ORIZON.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Licenças, contratos públicos, integração e maturação energética podem limitar retorno.",
+      "gatilho": "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese."
+    },
+    {
+      "issuer_id": "BR_ISAENERGIA",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_ISAENERGIA.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_ISAENERGIA.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Obras, penalidades, inflação da dívida e revisão de remuneração podem absorver caixa.",
+      "gatilho": "Receita permitida, disponibilidade e recebimento deixam de remunerar o capital das obras."
+    },
+    {
+      "issuer_id": "BR_NU",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_NU.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_NU.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Expansão em risco maior pode elevar perdas quando as safras amadurecem; melhora sazonal inicial não comprova recorrência.",
+      "gatilho": "Safras maduras confirmam retorno depois das perdas."
+    },
+    {
+      "issuer_id": "LA_ARCOS",
+      "por_que": "A posição atende à neutralidade conjunta da carteira; o retorno esperado isolado não é sua justificativa central. Peso {{fact:tese.LA_ARCOS.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Consumo, insumos e salários podem restringir acessibilidade e margem.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    },
+    {
+      "issuer_id": "LA_FORTUNA",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.LA_FORTUNA.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.LA_FORTUNA.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Teor, recuperação, contratação de serviços, acesso operacional e custos locais podem deteriorar a geração de caixa.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    },
+    {
+      "issuer_id": "BR_TIM",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_TIM.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_TIM.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Competição, qualidade de rede, perda de clientes e inadimplência podem pressionar receita.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    },
+    {
+      "issuer_id": "MX_ASUR",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.MX_ASUR.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.MX_ASUR.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Demanda mexicana fraca e maior dívida após aquisições podem limitar a conversão do resultado operacional em caixa atribuível.",
+      "gatilho": "Reconciliação de dívida, caixa e investimento no perímetro adquirido."
+    },
+    {
+      "issuer_id": "BR_ALPARGATAS",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_ALPARGATAS.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_ALPARGATAS.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Consumo, competição e estoques podem exigir remarcação.",
+      "gatilho": "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese."
+    },
+    {
+      "issuer_id": "BR_AXIA",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_AXIA.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_AXIA.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Hidrologia, preços e financiamento podem absorver margem; provisões menores não comprovam liberação equivalente de caixa.",
+      "gatilho": "Contratação e disponibilidade modificam margem após compras."
+    },
+    {
+      "issuer_id": "BR_PRIO",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_PRIO.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_PRIO.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Paradas, declínio e preço realizado podem pressionar o caixa.",
+      "gatilho": "Material integral confirma produção econômica e caixa após investimento."
+    },
+    {
+      "issuer_id": "BR_BBSEG",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_BBSEG.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_BBSEG.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Crédito rural, sinistros, resgates e descasamentos de índices podem reduzir resultado.",
+      "gatilho": "Prêmios rentáveis, retenção e comissões deixam de sustentar a contribuição operacional da distribuição."
+    },
+    {
+      "issuer_id": "BR_CURY",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_CURY.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_CURY.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Crédito, elegibilidade, renda e concentração regional podem limitar vendas e repasses.",
+      "gatilho": "Menor repasse e velocidade comercial ampliam exposição ao crédito direto sem retorno suficiente."
+    },
+    {
+      "issuer_id": "BR_EMBRAER",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_EMBRAER.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_EMBRAER.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Fornecedores, certificação e desenvolvimento podem impedir conversão rentável da carteira; benefício fiscal e adiantamentos limitam extrapolação do caixa.",
+      "gatilho": "Conversão das entregas altera caixa após desenvolvimento."
+    },
+    {
+      "issuer_id": "BR_VIBRA",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_VIBRA.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_VIBRA.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Normalização da margem, cortes de geração e crédito de contrapartes podem reduzir caixa enquanto obrigações financeiras permanecem.",
+      "gatilho": "Margem normalizada deixa de sustentar caixa após manutenção."
+    },
+    {
+      "issuer_id": "BR_EQUATORIAL",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_EQUATORIAL.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_EQUATORIAL.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Juros, perdas, provisões e restrições de geração podem absorver margem.",
+      "gatilho": "Próximo resultado altera operação e conversão em caixa."
+    },
+    {
+      "issuer_id": "BR_PINE",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_PINE.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_PINE.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Maturação de safras, empregadores, processos de cobrança e regras do consignado podem elevar perdas.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    },
+    {
+      "issuer_id": "CO_GEOPARK",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.CO_GEOPARK.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.CO_GEOPARK.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Petróleo, câmbio, declínio de reservatórios e execução podem reduzir caixa durante o pico de investimento.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    },
+    {
+      "issuer_id": "BR_SIGMALITH",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_SIGMALITH.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_SIGMALITH.peso}}. O peso é limitado pelo orçamento de risco por emissor.",
+      "risco": "Ciclo de lítio, liquidez, obrigações ambientais e execução podem comprometer caixa.",
+      "gatilho": "Recebimentos não sustentam custo entregue, arrendamentos e obrigações financeiras."
+    },
+    {
+      "issuer_id": "BR_REDEDOR",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_REDEDOR.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_REDEDOR.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Glosas, custo assistencial, reajustes insuficientes, expansão antes da maturação e dívida crescente podem reduzir caixa atribuível.",
+      "gatilho": "Ocupação e especialidades deixam de remunerar expansão, recebimento e juros."
+    },
+    {
+      "issuer_id": "AR_CEPU",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.AR_CEPU.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.AR_CEPU.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Hidrologia, indisponibilidade, combustível, remuneração e atraso de recebíveis podem pressionar caixa.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    },
+    {
+      "issuer_id": "BR_MARCOPOLO",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_MARCOPOLO.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_MARCOPOLO.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Calendário público, demanda, câmbio e mix podem reduzir margens.",
+      "gatilho": "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese."
+    },
+    {
+      "issuer_id": "BR_GERDAU",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_GERDAU.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_GERDAU.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Importações, sucata, energia e menor utilização podem pressionar margem; projetos podem consumir caixa antes de comprovar retorno.",
+      "gatilho": "Margens normalizadas deixam de remunerar capital regional."
+    },
+    {
+      "issuer_id": "BR_ERO",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_ERO.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_ERO.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Preço, câmbio, teor e disponibilidade podem reduzir caixa.",
+      "gatilho": "Produtividade não confirma margem depois de reposição e desenvolvimento."
+    },
+    {
+      "issuer_id": "CO_CIBEST",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.CO_CIBEST.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.CO_CIBEST.peso}}. O dimensionamento encontra o teto da restrição qualitativa ou da sentinela.",
+      "risco": "Crédito, funding, mercados e câmbio podem reduzir retorno e exigir capital.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    },
+    {
+      "issuer_id": "BR_CXSEG",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_CXSEG.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_CXSEG.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Dependência da rede, parceiros, habitação e regras dos produtos pode reduzir receita.",
+      "gatilho": "Distribuição rentável e retenção não confirmam crescimento de receita recorrente por ação."
+    },
+    {
+      "issuer_id": "MX_VISTA",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.MX_VISTA.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.MX_VISTA.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Declínio, custo de perfuração e gargalos de infraestrutura podem absorver o crescimento.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    },
+    {
+      "issuer_id": "BR_PORTO",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_PORTO.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_PORTO.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Sinistros, crédito, custo médico e comissões podem absorver receitas.",
+      "gatilho": "Emissão e relacionamento não sustentam margem após sinistros, perdas e custos comerciais."
+    },
+    {
+      "issuer_id": "AR_TEO",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.AR_TEO.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.AR_TEO.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Perda de clientes, necessidade de rede e dívida cambial podem reduzir caixa residual.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    },
+    {
+      "issuer_id": "BR_VTEX",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_VTEX.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_VTEX.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Consumo e pressão comercial podem reduzir monetização, enquanto desenvolvimento e suporte mantêm custos.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    },
+    {
+      "issuer_id": "BR_MOURADUBEUX",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_MOURADUBEUX.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_MOURADUBEUX.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Concentração regional, absorção, custos e distratos podem reduzir retorno.",
+      "gatilho": "Receita de terreno e serviços não se converte em caixa depois de obrigações."
+    },
+    {
+      "issuer_id": "BR_PICPAY",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_PICPAY.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_PICPAY.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Crédito parcialmente garantido, cartões e safras novas podem revelar perdas com atraso.",
+      "gatilho": "Safras maduras não confirmam margem e perdas compatíveis com crescimento."
+    },
+    {
+      "issuer_id": "AR_GALICIA",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.AR_GALICIA.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.AR_GALICIA.peso}}. O dimensionamento é limitado pelo risco de squeeze.",
+      "risco": "Integração, crédito ao consumidor, inflação e títulos podem pressionar retorno.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    },
+    {
+      "issuer_id": "BR_ENEVA",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_ENEVA.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_ENEVA.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Indisponibilidade, suprimento, reservas, restrições e crédito podem reduzir margem.",
+      "gatilho": "Disponibilidade, suprimento e compras deixam de sustentar margem depois das obrigações contratuais."
+    },
+    {
+      "issuer_id": "MX_GAP",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.MX_GAP.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.MX_GAP.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Demanda menor e investimento obrigatório podem limitar distribuição mesmo com aumento do resultado consolidado.",
+      "gatilho": "Caixa recorrente por ação confirma retorno do investimento."
+    },
+    {
+      "issuer_id": "BR_VIVO",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_VIVO.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_VIVO.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Preços, retenção, qualidade de serviço e ocupação das redes podem frustrar monetização.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    },
+    {
+      "issuer_id": "BR_STONE",
+      "por_que": "A posição atende à neutralidade conjunta da carteira; o retorno esperado isolado não é sua justificativa central. Peso {{fact:tese.BR_STONE.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Competição, retenção, custo de servir e financiamento podem reduzir a contribuição por cliente.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    },
+    {
+      "issuer_id": "MX_FIRSTMAJ",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.MX_FIRSTMAJ.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.MX_FIRSTMAJ.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Conflitos, teores e manutenção podem impedir monetização dos preços.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    },
+    {
+      "issuer_id": "BR_BANRISUL",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_BANRISUL.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_BANRISUL.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Concentração regional, crédito, contingências e custo da folha podem reduzir retorno.",
+      "gatilho": "Margem recorrente e receita da folha não remuneram aquisição e despesas durante o contrato."
+    },
+    {
+      "issuer_id": "BR_VALE",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_VALE.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_VALE.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Ciclo mineral, frete e reinvestimento podem absorver geração; reparação exige caixa além de medidas recorrentes.",
+      "gatilho": "Custo completo e realização deixam de sustentar retorno."
+    },
+    {
+      "issuer_id": "CL_LATAM",
+      "por_que": "A compra combina retorno esperado e diversificação; sua contribuição depende da covariância com o conjunto. Peso {{fact:tese.CL_LATAM.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Combustível, câmbio e capacidade concorrente podem reduzir margem antes de a companhia ajustar tarifas ou frota.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    },
+    {
+      "issuer_id": "LA_COPA",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.LA_COPA.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.LA_COPA.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Combustível e mudanças na demanda podem reduzir rentabilidade enquanto compromissos de frota permanecem.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    },
+    {
+      "issuer_id": "PE_CREDICORP",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.PE_CREDICORP.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.PE_CREDICORP.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Clima, crédito, captação e reservas podem afetar lucro e capital.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    },
+    {
+      "issuer_id": "BR_ALUPAR",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_ALUPAR.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_ALUPAR.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Atrasos, penalidades, custo de obra e financiamento podem reduzir retorno das concessões.",
+      "gatilho": "Penalidades, custos e disponibilidade impedem conversão da receita contratual em caixa."
+    },
+    {
+      "issuer_id": "AR_BBVA",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.AR_BBVA.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.AR_BBVA.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Inflação, moeda, crédito e títulos afetam lucro e capital.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    },
+    {
+      "issuer_id": "BR_JBS",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_JBS.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_JBS.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Oferta de gado, custos, comércio e financiamento podem pressionar margens.",
+      "gatilho": "Caixa persiste sem expansão de recebíveis descontados e antecipações."
+    },
+    {
+      "issuer_id": "BR_CEMIG",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_CEMIG.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_CEMIG.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Regulação, obras, hidrologia e financiamento podem pressionar caixa e distribuição.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    },
+    {
+      "issuer_id": "BR_TOTVS",
+      "por_que": "A posição atende à neutralidade conjunta da carteira; o retorno esperado isolado não é sua justificativa central. Peso {{fact:tese.BR_TOTVS.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Integração, concorrência e desenvolvimento podem absorver margem e caixa.",
+      "gatilho": "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese."
+    },
+    {
+      "issuer_id": "AR_IRSA",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.AR_IRSA.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.AR_IRSA.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Consumo, locatários, inflação, moeda e custos podem afetar renda e caixa.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    },
+    {
+      "issuer_id": "BR_SABESP",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_SABESP.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_SABESP.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Obras e despesas financeiras podem absorver geração antes da remuneração; clima, perdas e cobrança podem limitar receita.",
+      "gatilho": "Obras e qualidade alteram cumprimento de metas."
+    },
+    {
+      "issuer_id": "BR_RUMO",
+      "por_que": "A posição atende à neutralidade conjunta da carteira; o retorno esperado isolado não é sua justificativa central. Peso {{fact:tese.BR_RUMO.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Safra, clima, concorrência, preço e obras podem reduzir retorno.",
+      "gatilho": "Indicadores de operação e caixa deixam de confirmar as condições específicas da hipótese."
+    },
+    {
+      "issuer_id": "MX_AMX",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.MX_AMX.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.MX_AMX.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Concorrência e renovação da rede podem consumir o ganho operacional.",
+      "gatilho": "Caixa após investimento e arrendamentos confirma ou invalida monetização."
+    },
+    {
+      "issuer_id": "BR_AMBEV",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_AMBEV.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_AMBEV.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Custo industrial, distribuição e competição podem limitar a captura de preço.",
+      "gatilho": "Próximo resultado altera composição entre preço e volume."
+    },
+    {
+      "issuer_id": "AR_PAMPA",
+      "por_que": "Venda sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.AR_PAMPA.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.AR_PAMPA.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Preços, remuneração, transporte e garantias podem pressionar caixa.",
+      "gatilho": "Produção de Rincón de Aranda cresce sem conexão verificável entre transporte, realização comercial e caixa após reinvestimento."
+    },
+    {
+      "issuer_id": "BR_SAOMARTINHO",
+      "por_que": "Compra sustentada pelo sinal quantitativo de retorno esperado {{fact:tese.BR_SAOMARTINHO.alpha}}; a pesquisa qualitativa permanece neutra e de baixa convicção. Peso {{fact:tese.BR_SAOMARTINHO.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Clima, preço, compra de matéria-prima e comercialização podem limitar margem.",
+      "gatilho": "Comercialização e preços não monetizam produtividade e produção da safra."
+    },
+    {
+      "issuer_id": "AR_MACRO",
+      "por_que": "A posição atende à neutralidade conjunta da carteira; o retorno esperado isolado não é sua justificativa central. Peso {{fact:tese.AR_MACRO.peso}}. O peso resulta da otimização conjunta de retorno, risco e neutralidades, sem teto individual ativo.",
+      "risco": "Títulos soberanos, inflação e câmbio podem gerar volatilidade de lucro e capital.",
+      "gatilho": "Resultados recorrentes e caixa deixam de confirmar a hipótese de investimento."
+    }
+  ]
+}

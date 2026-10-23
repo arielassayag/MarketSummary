@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 50.34,
+  "high": 78.0,
+  "low": 50.0,
+  "mean": 61.96667,
+  "median": 60.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.07,
+   "currency": "USD",
+   "growth": null,
+   "high": 1.07,
+   "low": 1.07,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 5.48706,
+   "currency": "USD",
+   "growth": -0.2324,
+   "high": 6.58,
+   "low": 4.68,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 7.14812
+  },
+  "0q": {
+   "avg": 1.82,
+   "currency": "USD",
+   "growth": 3.9232001,
+   "high": 1.82,
+   "low": 1.82,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -0.6226
+  },
+  "0y": {
+   "avg": 7.14812,
+   "currency": "USD",
+   "growth": 4.5466,
+   "high": 8.74,
+   "low": 6.13248,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": -2.0155
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 7829788634400,
+   "currency": "ARS",
+   "growth": 0.2206,
+   "high": 9827791578000,
+   "low": 6495995537000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 6414848000000
+  },
+  "+1y": {
+   "avg": 30935825787800,
+   "currency": "ARS",
+   "growth": -0.066599995,
+   "high": 36026175031020,
+   "low": 28598776038000,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 33144862332980
+  },
+  "0q": {
+   "avg": 8570565335400,
+   "currency": "ARS",
+   "growth": 0.2865,
+   "high": 9377618052000,
+   "low": 8098143158000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 6661776400000
+  },
+  "0y": {
+   "avg": 33144862332980,
+   "currency": "ARS",
+   "growth": 0.276,
+   "high": 37392992584770,
+   "low": 28133647920000,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 25974784000000
+  }
+ },
+ "ticker": "YPF",
+ "url": "https://finance.yahoo.com/quote/YPF"
+}

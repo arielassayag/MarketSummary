@@ -1,0 +1,17 @@
+{
+  "mind": "codex",
+  "headline": "CDP encerra o dia com {{fact:day.ret}}; custos e posições vendidas pressionam o resultado",
+  "paragraphs": [
+    "A carteira simulada registrou retorno de {{fact:day.ret}} e resultado de {{fact:day.pnl_usd}}, encerrando com NAV de {{fact:nav}} e acumulado de {{fact:itd.ret}} desde o início do mandato. A contribuição das ações foi de {{fact:attr.equity}}, enquanto os custos responderam por {{fact:attr.costs}} e o financiamento por {{fact:attr.financing}}.",
+    "O lado comprado contribuiu {{fact:attr.long}} e o vendido {{fact:attr.short}}. Riachuelo, Genomma e Hypera contribuíram, respectivamente, {{fact:top.contrib.1.contrib}}, {{fact:top.contrib.2.contrib}} e {{fact:top.contrib.3.contrib}}; Usiminas, Orizon e Auren responderam por {{fact:top.detract.1.contrib}}, {{fact:top.detract.2.contrib}} e {{fact:top.detract.3.contrib}}. A parcela fatorial estimada contribuiu {{fact:attr.factor}} e a específica {{fact:attr.specific}}; a decomposição não estabelece causalidade para os movimentos dos emissores.",
+    "A carteira de fechamento reúne {{fact:risk.n_long}} posições compradas e {{fact:risk.n_short}} vendidas. A vol ex-ante ficou em {{fact:risk.ex_ante_vol}}, dentro da banda de {{fact:mandate.vol_band_min}} a {{fact:mandate.vol_band_max}}, com beta de {{fact:risk.beta}}, exposição bruta de {{fact:risk.gross}} e líquida de {{fact:risk.net}}. O VaR de um dia foi de {{fact:risk.var_1d}} e o drawdown corrente de {{fact:dd.current}}.",
+    "Nos referenciais cotados em dólar, o ETF latino-americano ILF avançou {{fact:mkt.ILF.ret_1d}}, o ETF argentino ARGT {{fact:mkt.ARGT.ret_1d}} e o ETF mexicano EWW {{fact:mkt.EWW.ret_1d}}, enquanto o ETF chileno ECH variou {{fact:mkt.ECH.ret_1d}} e o peruano EPU {{fact:mkt.EPU.ret_1d}}. Nos futuros cotados em dólar, o Brent variou {{fact:mkt.BZ_F.ret_1d}}, o cobre {{fact:mkt.HG_F.ret_1d}} e o ouro {{fact:mkt.GC_F.ret_1d}}. Essas referências contextualizam a sessão, sem atribuição causal adicional à carteira.",
+    "No Brasil, o Ibovespa avançou {{fact:mkt.BVSP.ret_1d}} em reais. A sessão antecedeu a votação de 25/10/2026 prevista no calendário eleitoral do Tribunal Superior Eleitoral. A janela eleitoral permanece ativa na avaliação de risco; a direção da reação dos ativos ao evento é incerta, com convicção baixa sobre sua antecipação. Os alertas de aluguel e a defasagem dos insumos exigem acompanhamento das posições vendidas."
+  ],
+  "risk_flags": [
+    "Squeeze alto em {{fact:risk.squeeze_high_shorts}} posições vendidas: Orizon, Fleury, Energisa, Alpargatas e TOTVS; reavaliação indicada pelos alertas de risco.",
+    "Janela eleitoral brasileira ativa; a reação ao resultado da votação de 25/10/2026 permanece incerta.",
+    "Atribuição fatorial estimada; fundamentos atuais, câmbio não oficial e dados de aluguel defasados limitam a leitura.",
+    "Benchmark argentino local indisponível; divergência de paridade ADR e revisões históricas não aplicadas preservadas."
+  ]
+}

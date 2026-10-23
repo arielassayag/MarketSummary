@@ -1,0 +1,45 @@
+{
+  "mind": "codex",
+  "resumo": "A carteira simulada encerrou a semana com retorno de {{fact:semana.ret}} e resultado de {{fact:semana.pnl_usd}}. Desde o início do mandato, acumula {{fact:itd.ret}}, com NAV de {{fact:nav}}. O rebalanceamento ampliou a exposição bruta, preservando beta próximo da neutralidade.",
+  "desempenho_semana": [
+    "No período de 19/10/2026 a 23/10/2026, o retorno foi de {{fact:semana.ret}}, equivalente a {{fact:semana.pnl_usd}}. As ações contribuíram {{fact:semana.attr.equity}}, o financiamento {{fact:semana.attr.financing}} e os custos de transação {{fact:semana.attr.costs}}. A contribuição fatorial foi de {{fact:semana.attr.factor}} e a específica de {{fact:semana.attr.specific}}.",
+    "O fechamento semanal antecedeu a votação de 25/10/2026 prevista no calendário eleitoral do Tribunal Superior Eleitoral. Esse contexto permanece relevante para o risco brasileiro, sem estabelecer causalidade adicional para o resultado da carteira."
+  ],
+  "desempenho_desde_inicio": [
+    "Desde 09/10/2026, o retorno acumulado é de {{fact:itd.ret}}, com resultado de {{fact:itd.pnl_usd}}. A contribuição específica soma {{fact:itd.attr.specific}}, a fatorial {{fact:itd.attr.factor}} e os custos {{fact:itd.attr.costs}}. Genomma e Inter contribuíram {{fact:itd.top.contrib.1.contrib}} e {{fact:itd.top.contrib.2.contrib}}, enquanto Fortuna Mining respondeu por {{fact:itd.top.detrator.1.contrib}}. O histórico ainda curto limita a convicção sobre a persistência do desempenho."
+  ],
+  "atribuicao": [
+    "Na semana, o lado comprado contribuiu {{fact:semana.attr.lado.long}} e o vendido {{fact:semana.attr.lado.short}}. Riachuelo, PRIO e Hypera contribuíram {{fact:semana.top.contrib.1.contrib}}, {{fact:semana.top.contrib.2.contrib}} e {{fact:semana.top.contrib.3.contrib}}. Fortuna Mining, Aeroméxico e Orizon foram os principais detratores, com {{fact:semana.top.detrator.1.contrib}}, {{fact:semana.top.detrator.2.contrib}} e {{fact:semana.top.detrator.3.contrib}}.",
+    "Por país, Brasil contribuiu {{fact:semana.attr.pais.BR}} e Argentina {{fact:semana.attr.pais.AR}}, enquanto as exposições regionais responderam por {{fact:semana.attr.pais.LATAM}} e México por {{fact:semana.attr.pais.MX}}. Por setor, consumo discricionário contribuiu {{fact:semana.attr.setor.Consumer_Discretionary}} e financeiro {{fact:semana.attr.setor.Financials}}; utilidades públicas e industriais responderam por {{fact:semana.attr.setor.Utilities}} e {{fact:semana.attr.setor.Industrials}}.",
+    "Na decomposição fatorial estimada, estilos contribuíram {{fact:semana.attr.fg.style}}, países {{fact:semana.attr.fg.country}} e macro {{fact:semana.attr.fg.macro}}. A atribuição descreve as exposições realizadas e não demonstra que notícias específicas tenham causado os movimentos observados."
+  ],
+  "mudancas_carteira": [
+    {"emissor":"BR_ALPARGATAS","tipo":"entrada","lado_depois":"vendida","racional":"Alocação resultante da construção conjunta da carteira: peso de {{fact:mud.BR_ALPARGATAS.antes}} para {{fact:mud.BR_ALPARGATAS.depois}}, com alpha composto de {{fact:mud.BR_ALPARGATAS.alpha_z}} e contribuição ao risco de {{fact:mud.BR_ALPARGATAS.risco}}. O sinal isolado de alpha não determina o lado final."},
+    {"emissor":"BR_BRADESPAR","tipo":"entrada","lado_depois":"vendida","racional":"Peso de {{fact:mud.BR_BRADESPAR.antes}} para {{fact:mud.BR_BRADESPAR.depois}}, com alpha composto de {{fact:mud.BR_BRADESPAR.alpha_z}} e contribuição ao risco de {{fact:mud.BR_BRADESPAR.risco}}."},
+    {"emissor":"LA_MILLICOM","tipo":"entrada","lado_depois":"comprada","racional":"Peso de {{fact:mud.LA_MILLICOM.antes}} para {{fact:mud.LA_MILLICOM.depois}}, com alpha composto de {{fact:mud.LA_MILLICOM.alpha_z}} e contribuição ao risco de {{fact:mud.LA_MILLICOM.risco}}."},
+    {"emissor":"BR_TIM","tipo":"entrada","lado_depois":"vendida","racional":"Peso de {{fact:mud.BR_TIM.antes}} para {{fact:mud.BR_TIM.depois}}, com alpha composto de {{fact:mud.BR_TIM.alpha_z}} e contribuição ao risco de {{fact:mud.BR_TIM.risco}}."},
+    {"emissor":"BR_ERO","tipo":"entrada","lado_depois":"comprada","racional":"Peso de {{fact:mud.BR_ERO.antes}} para {{fact:mud.BR_ERO.depois}}, com alpha composto de {{fact:mud.BR_ERO.alpha_z}} e contribuição ao risco de {{fact:mud.BR_ERO.risco}}."},
+    {"emissor":"AR_MACRO","tipo":"entrada","lado_depois":"vendida","racional":"O peso passou de {{fact:mud.AR_MACRO.antes}} para {{fact:mud.AR_MACRO.depois}}, mudando o lado da exposição. Alpha composto de {{fact:mud.AR_MACRO.alpha_z}} e contribuição ao risco de {{fact:mud.AR_MACRO.risco}} na construção conjunta da carteira."},
+    {"emissor":"LA_LILA","tipo":"aumento","lado_depois":"vendida","racional":"Ampliação do peso vendido de {{fact:mud.LA_LILA.antes}} para {{fact:mud.LA_LILA.depois}}, com alpha composto de {{fact:mud.LA_LILA.alpha_z}} e contribuição ao risco de {{fact:mud.LA_LILA.risco}}."},
+    {"emissor":"BR_RIACHUELO","tipo":"aumento","lado_depois":"comprada","racional":"Ampliação do peso comprado de {{fact:mud.BR_RIACHUELO.antes}} para {{fact:mud.BR_RIACHUELO.depois}}, com alpha composto de {{fact:mud.BR_RIACHUELO.alpha_z}} e contribuição ao risco de {{fact:mud.BR_RIACHUELO.risco}}."},
+    {"emissor":"BR_MARCOPOLO","tipo":"aumento","lado_depois":"comprada","racional":"Peso de {{fact:mud.BR_MARCOPOLO.antes}} para {{fact:mud.BR_MARCOPOLO.depois}}, com alpha composto de {{fact:mud.BR_MARCOPOLO.alpha_z}} e contribuição ao risco de {{fact:mud.BR_MARCOPOLO.risco}}."},
+    {"emissor":"MX_AEROMEXICO","tipo":"reducao","lado_depois":"comprada","racional":"Redução do peso comprado de {{fact:mud.MX_AEROMEXICO.antes}} para {{fact:mud.MX_AEROMEXICO.depois}}, preservando exposição com alpha composto de {{fact:mud.MX_AEROMEXICO.alpha_z}} e contribuição ao risco de {{fact:mud.MX_AEROMEXICO.risco}}."},
+    {"emissor":"BR_PRIO","tipo":"reducao","lado_depois":"comprada","racional":"Redução do peso comprado de {{fact:mud.BR_PRIO.antes}} para {{fact:mud.BR_PRIO.depois}}, com alpha composto de {{fact:mud.BR_PRIO.alpha_z}} e contribuição ao risco de {{fact:mud.BR_PRIO.risco}}."},
+    {"emissor":"BR_VALE","tipo":"reducao","lado_depois":"comprada","racional":"Peso comprado de {{fact:mud.BR_VALE.antes}} para {{fact:mud.BR_VALE.depois}}, com alpha composto de {{fact:mud.BR_VALE.alpha_z}} e contribuição ao risco de {{fact:mud.BR_VALE.risco}}."},
+    {"emissor":"MX_FEMSA","tipo":"saida","lado_depois":"zerada","racional":"Encerramento da exposição, de {{fact:mud.MX_FEMSA.antes}} para {{fact:mud.MX_FEMSA.depois}}, conforme a alocação final do rebalanceamento."},
+    {"emissor":"BR_USIMINAS","tipo":"saida","lado_depois":"zerada","racional":"Encerramento da exposição, de {{fact:mud.BR_USIMINAS.antes}} para {{fact:mud.BR_USIMINAS.depois}}, conforme a alocação final do rebalanceamento."},
+    {"emissor":"MX_CEMEX","tipo":"saida","lado_depois":"zerada","racional":"Encerramento da exposição, de {{fact:mud.MX_CEMEX.antes}} para {{fact:mud.MX_CEMEX.depois}}, conforme a alocação final do rebalanceamento."},
+    {"emissor":"CL_SQM","tipo":"saida","lado_depois":"zerada","racional":"Encerramento da exposição comprada, de {{fact:mud.CL_SQM.antes}} para {{fact:mud.CL_SQM.depois}}, conforme a alocação final do rebalanceamento."}
+  ],
+  "risco_nova_carteira": [
+    "A carteira efetiva encerra com vol ex-ante de {{fact:risco.efetiva.vol}}, ante {{fact:risco.alvo.vol}} na carteira decidida e meta de {{fact:risco.meta}}. O beta efetivo é de {{fact:risco.efetiva.beta}}, a exposição bruta de {{fact:risco.efetiva.gross}} e a líquida de {{fact:risco.efetiva.net}}, com {{fact:risco.efetiva.n_long}} posições compradas e {{fact:risco.efetiva.n_short}} vendidas.",
+    "A fatia idiossincrática efetiva, na base do limite do mandato, é de {{fact:risco.efetiva.idio_kf}}. Em estresse, a fração liquidável no fechamento é de {{fact:liquidez.frac_1}}, com custo estimado de liquidação de {{fact:liquidez.custo_nav}}. O risco de squeeze e a janela eleitoral brasileira permanecem pontos de acompanhamento, sujeitos à defasagem dos dados de aluguel."
+  ],
+  "execucao": [
+    "A execução hipotética no leilão apresentou giro de {{fact:exec.giro}}, custo de {{fact:exec.custos_usd}} e taxa de execução de {{fact:exec.taxa_execucao}}. O custo por valor negociado foi de {{fact:exec.custos_bps_negociado}}. A carteira efetiva incorpora {{fact:mudancas.entrada}} entradas, {{fact:mudancas.saida}} saídas, {{fact:mudancas.aumento}} aumentos e {{fact:mudancas.reducao}} reduções; a relação integral acompanha o relatório.",
+    "A deriva entre decisão e fechamento foi de {{fact:exec.deriva_bps}}, com implementation shortfall de {{fact:exec.shortfall_bps}}. A participação mediana na janela foi de {{fact:exec.participacao_janela}}. Esses valores refletem os preços e custos do modelo de simulação."
+  ],
+  "perspectivas": [
+    "O acompanhamento prioriza a reação ao evento eleitoral, a evolução do aluguel e as divulgações corporativas. A direção desses movimentos permanece incerta, com convicção baixa sobre sua antecipação; ajustes de carteira dependem dos critérios de risco e da próxima decisão de investimento."
+  ]
+}

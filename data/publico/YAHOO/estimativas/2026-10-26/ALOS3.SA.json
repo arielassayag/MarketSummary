@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 26.19,
+  "high": 51.0,
+  "low": 31.0,
+  "mean": 37.5,
+  "median": 36.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.63054,
+   "currency": "BRL",
+   "growth": 0.087,
+   "high": 0.67109,
+   "low": 0.59,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.5801
+  },
+  "+1y": {
+   "avg": 2.02237,
+   "currency": "BRL",
+   "growth": 0.081199996,
+   "high": 2.29,
+   "low": 1.78,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 1.87052
+  },
+  "0q": {
+   "avg": 0.36574,
+   "currency": "BRL",
+   "growth": 0.7317,
+   "high": 0.40148,
+   "low": 0.33,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.2112
+  },
+  "0y": {
+   "avg": 1.87052,
+   "currency": "BRL",
+   "growth": 0.1365,
+   "high": 2.19,
+   "low": 1.58,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 1.6459
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 862398830,
+   "currency": "BRL",
+   "growth": 0.0352,
+   "high": 885500090,
+   "low": 829859000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 833062000
+  },
+  "+1y": {
+   "avg": 3201286760,
+   "currency": "BRL",
+   "growth": 0.0668,
+   "high": 3391000000,
+   "low": 3061692970,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 3000731560
+  },
+  "0q": {
+   "avg": 725554260,
+   "currency": "BRL",
+   "growth": 0.0696,
+   "high": 739000000,
+   "low": 710905720,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 678318000
+  },
+  "0y": {
+   "avg": 3000731560,
+   "currency": "BRL",
+   "growth": 0.0495,
+   "high": 3079000000,
+   "low": 2940768000,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 2859106000
+  }
+ },
+ "ticker": "ALOS3.SA",
+ "url": "https://finance.yahoo.com/quote/ALOS3.SA"
+}

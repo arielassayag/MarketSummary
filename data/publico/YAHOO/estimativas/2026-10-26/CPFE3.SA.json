@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 42.7,
+  "high": 63.0,
+  "low": 46.0,
+  "mean": 52.65917,
+  "median": 51.9
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.95958,
+   "currency": "BRL",
+   "growth": -0.2561,
+   "high": 1.06915,
+   "low": 0.85,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 1.29
+  },
+  "+1y": {
+   "avg": 4.0042,
+   "currency": "BRL",
+   "growth": -0.0708,
+   "high": 4.48,
+   "low": 3.55523,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 4.30941
+  },
+  "0q": {
+   "avg": 0.89672,
+   "currency": "BRL",
+   "growth": -0.2134,
+   "high": 0.93344,
+   "low": 0.86,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 1.14
+  },
+  "0y": {
+   "avg": 4.30941,
+   "currency": "BRL",
+   "growth": -0.0947,
+   "high": 4.82,
+   "low": 3.81,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 4.76
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 10608894210,
+   "currency": "BRL",
+   "growth": -0.1035,
+   "high": 12759159000,
+   "low": 9277000000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 11834000000
+  },
+  "+1y": {
+   "avg": 40997901690,
+   "currency": "BRL",
+   "growth": 0.022,
+   "high": 48015000000,
+   "low": 37329000000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 40113526940
+  },
+  "0q": {
+   "avg": 9350588560,
+   "currency": "BRL",
+   "growth": -0.17459999,
+   "high": 9879941000,
+   "low": 8626000000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 11329141000
+  },
+  "0y": {
+   "avg": 40113526940,
+   "currency": "BRL",
+   "growth": -0.0959,
+   "high": 45518628530,
+   "low": 36664251210,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 44368000000
+  }
+ },
+ "ticker": "CPFE3.SA",
+ "url": "https://finance.yahoo.com/quote/CPFE3.SA"
+}

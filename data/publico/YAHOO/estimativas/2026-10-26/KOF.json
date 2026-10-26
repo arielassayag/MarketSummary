@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 115.9,
+  "high": 134.0,
+  "low": 106.0,
+  "mean": 120.82231,
+  "median": 120.69
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.468,
+   "currency": "USD",
+   "growth": 0.2352,
+   "high": 1.55,
+   "low": 1.386,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 1.18843
+  },
+  "+1y": {
+   "avg": 7.87702,
+   "currency": "USD",
+   "growth": 0.1363,
+   "high": 7.87703,
+   "low": 7.877,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 6.93198
+  },
+  "0q": {
+   "avg": 1.9563,
+   "currency": "USD",
+   "growth": -0.0577,
+   "high": 2.1842,
+   "low": 1.49,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 2.0761
+  },
+  "0y": {
+   "avg": 6.93198,
+   "currency": "USD",
+   "growth": 0.0505,
+   "high": 7.00696,
+   "low": 6.857,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 6.59865
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 4397292500,
+   "currency": "USD",
+   "growth": 0.0783,
+   "high": 4410490000,
+   "low": 4384095000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 4077860250
+  },
+  "+1y": {
+   "avg": 18620415520,
+   "currency": "USD",
+   "growth": 0.1243,
+   "high": 19623179390,
+   "low": 17707372000,
+   "numberOfAnalysts": 13,
+   "yearAgoRevenue": 16561192000
+  },
+  "0q": {
+   "avg": 4745754000,
+   "currency": "USD",
+   "growth": 0.0499,
+   "high": 4878472000,
+   "low": 4550057000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 4520217450
+  },
+  "0y": {
+   "avg": 16561192000,
+   "currency": "USD",
+   "growth": -0.023599999,
+   "high": 16561192000,
+   "low": 16561192000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 16961483730
+  }
+ },
+ "ticker": "KOF",
+ "url": "https://finance.yahoo.com/quote/KOF"
+}

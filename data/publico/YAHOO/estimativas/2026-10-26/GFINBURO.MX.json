@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 47.2,
+  "high": 49.0,
+  "low": 34.0,
+  "mean": 43.28571,
+  "median": 46.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.38458,
+   "currency": "MXN",
+   "growth": 0.38459998,
+   "high": 1.47645,
+   "low": 1.17888,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 1.0
+  },
+  "+1y": {
+   "avg": 5.48553,
+   "currency": "MXN",
+   "growth": 0.1627,
+   "high": 6.002,
+   "low": 5.06,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 4.7178
+  },
+  "0q": {
+   "avg": 1.2053,
+   "currency": "MXN",
+   "growth": 0.2053,
+   "high": 1.331,
+   "low": 1.04785,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 1.0
+  },
+  "0y": {
+   "avg": 4.7178,
+   "currency": "MXN",
+   "growth": 0.17950001,
+   "high": 4.954,
+   "low": 4.39,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 4.0
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 16559140630,
+   "currency": "MXN",
+   "growth": 0.1424,
+   "high": 16991000000,
+   "low": 16127281260,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 14494734700
+  },
+  "+1y": {
+   "avg": 68784431500,
+   "currency": "MXN",
+   "growth": 0.09770001,
+   "high": 70609000000,
+   "low": 66687999090,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 62663669850
+  },
+  "0q": {
+   "avg": 15290264130,
+   "currency": "MXN",
+   "growth": -0.176,
+   "high": 15893000000,
+   "low": 14860000000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 18556983740
+  },
+  "0y": {
+   "avg": 62663669850,
+   "currency": "MXN",
+   "growth": 0.0043,
+   "high": 64339000000,
+   "low": 61554073640,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 62392758450
+  }
+ },
+ "ticker": "GFINBURO.MX",
+ "url": "https://finance.yahoo.com/quote/GFINBURO.MX"
+}

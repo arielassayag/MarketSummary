@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 4.68,
+  "high": 7.0,
+  "low": 2.7,
+  "mean": 4.98182,
+  "median": 5.3
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": -0.01056,
+   "currency": "BRL",
+   "growth": -1.0479,
+   "high": -0.01042,
+   "low": -0.0107,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.2203
+  },
+  "+1y": {
+   "avg": 0.31689,
+   "currency": "BRL",
+   "growth": 17.254,
+   "high": 0.35,
+   "low": 0.29076,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.01736
+  },
+  "0q": {
+   "avg": -0.01211,
+   "currency": "BRL",
+   "growth": -1.0945,
+   "high": -0.01,
+   "low": -0.01586,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.12821
+  },
+  "0y": {
+   "avg": 0.05,
+   "currency": "BRL",
+   "growth": -0.8354,
+   "high": 0.05472,
+   "low": 0.04528,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.30369
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 2196570500,
+   "currency": "BRL",
+   "growth": -0.55439997,
+   "high": 2836760000,
+   "low": 1556381000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 4929464000
+  },
+  "+1y": {
+   "avg": 14166052780,
+   "currency": "BRL",
+   "growth": 0.0731,
+   "high": 17222000000,
+   "low": 9947992000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 13201142150
+  },
+  "0q": {
+   "avg": 2762723740,
+   "currency": "BRL",
+   "growth": -0.46310002,
+   "high": 3374981000,
+   "low": 2362369000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 5146073000
+  },
+  "0y": {
+   "avg": 13201142150,
+   "currency": "BRL",
+   "growth": -0.2676,
+   "high": 15196000000,
+   "low": 11236087000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 18025121000
+  }
+ },
+ "ticker": "CMIN3.SA",
+ "url": "https://finance.yahoo.com/quote/CMIN3.SA"
+}

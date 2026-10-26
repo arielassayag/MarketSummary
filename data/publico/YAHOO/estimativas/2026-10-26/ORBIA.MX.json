@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 23.6,
+  "high": 48.77474,
+  "low": 16.443842,
+  "mean": 29.152927,
+  "median": 27.858023
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.009,
+   "currency": "USD",
+   "growth": 1.1235,
+   "high": 0.009,
+   "low": 0.009,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -0.0729
+  },
+  "+1y": {
+   "avg": 0.07932,
+   "currency": "USD",
+   "growth": 13.3177,
+   "high": 0.15,
+   "low": 0.04,
+   "numberOfAnalysts": 10,
+   "yearAgoEps": 0.00554
+  },
+  "0q": {
+   "avg": 0.007,
+   "currency": "USD",
+   "growth": 1.1166999,
+   "high": 0.007,
+   "low": 0.007,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -0.06
+  },
+  "0y": {
+   "avg": 0.00554,
+   "currency": "USD",
+   "growth": 1.0358,
+   "high": 0.04,
+   "low": -0.03,
+   "numberOfAnalysts": 10,
+   "yearAgoEps": -0.1548
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 2186425120,
+   "currency": "USD",
+   "growth": 0.16610001,
+   "high": 2469221210,
+   "low": 2035328810,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 1875000000
+  },
+  "+1y": {
+   "avg": 8536151700,
+   "currency": "USD",
+   "growth": 0.014400001,
+   "high": 9199848530,
+   "low": 8005000000,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 8414709919
+  },
+  "0q": {
+   "avg": 2113213190,
+   "currency": "USD",
+   "growth": 0.0749,
+   "high": 2212720000,
+   "low": 1995000000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 1966000000
+  },
+  "0y": {
+   "avg": 8414709919,
+   "currency": "USD",
+   "growth": 0.104399994,
+   "high": 8893729770,
+   "low": 8099000000,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 7619000000
+  }
+ },
+ "ticker": "ORBIA.MX",
+ "url": "https://finance.yahoo.com/quote/ORBIA.MX"
+}

@@ -1,0 +1,17 @@
+{
+  "mind": "codex",
+  "headline": "CDP avança {{fact:day.ret}} em sessão de forte queda no Brasil; exposição líquida exige atenção",
+  "paragraphs": [
+    "Em 26/10/2026, a carteira simulada registrou retorno de {{fact:day.ret}} e resultado de {{fact:day.pnl_usd}}, em dólares, encerrando com NAV de {{fact:nav}}. O retorno acumulado desde o início atingiu {{fact:itd.ret}}. A contribuição das ações foi de {{fact:attr.equity}}, enquanto o financiamento acrescentou {{fact:attr.financing}} e o aluguel respondeu por {{fact:attr.borrow}}.",
+    "Na atribuição em dólares, o lado vendido contribuiu {{fact:attr.short}} e o comprado, {{fact:attr.long}}. Auren, Energisa e Equatorial acrescentaram, respectivamente, {{fact:top.contrib.1.contrib}}, {{fact:top.contrib.2.contrib}} e {{fact:top.contrib.3.contrib}}. Riachuelo, Tenda e Hypera retiraram {{fact:top.detract.1.contrib}}, {{fact:top.detract.2.contrib}} e {{fact:top.detract.3.contrib}}. A parcela específica contribuiu {{fact:attr.specific}} e a fatorial, {{fact:attr.factor}}; esta última é estimada e não constitui evidência isolada de causalidade.",
+    "No mercado brasileiro, o Ibovespa recuou {{fact:mkt.BVSP.ret_1d}} em reais. A B3 informou o acionamento do circuit breaker em 26/10/2026, e sua publicação Bora Investir descreveu forte retração no pregão posterior ao turno final das eleições presidenciais. Esse contexto caracteriza a sessão; a atribuição da carteira permanece a calculada por posição, sem presumir uma causa individual para cada emissor.",
+    "A vol ex-ante ficou em {{fact:risk.ex_ante_vol}}, dentro da banda de {{fact:mandate.vol_band_min}} a {{fact:mandate.vol_band_max}}, com beta de {{fact:risk.beta}} e VaR diário de {{fact:risk.var_1d}}, sobre a base em dólares. A exposição bruta foi de {{fact:risk.gross}} e a líquida de {{fact:risk.net}}, sinalizada acima do limite de neutralidade. O short de Galicia apresentou squeeze HIGH, ante MEDIUM na decisão. Permanecem a janela eleitoral ativa e as limitações de fundamentos atuais, câmbio não oficial, paridade de ADRs e benchmark argentino ausente; revisões históricas de preços e volumes não foram incorporadas. A neutralidade prevista não elimina o risco de movimentos divergentes entre os lados da carteira."
+  ],
+  "risk_flags": [
+    "Exposição líquida de {{fact:risk.net}} sinalizada fora do limite de neutralidade; acompanhar pelos controles do mandato.",
+    "Galicia com squeeze HIGH; shorts com risco alto: {{fact:risk.squeeze_high_shorts}}.",
+    "Janela eleitoral brasileira ativa; vol ex-ante de {{fact:risk.ex_ante_vol}} é estimativa e não limita perdas de uma sessão.",
+    "Atribuição fatorial estimada; fundamentos atuais, câmbio não oficial e divergências de paridade limitam a leitura.",
+    "Benchmark argentino ausente e revisões históricas não aplicadas; dados ausentes permanecem indisponíveis."
+  ]
+}

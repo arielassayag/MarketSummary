@@ -1,0 +1,336 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-26",
+    "manifest_sha256": "96b074349c8934ac30658448f68661a4f9a20591d3e2b179d61182a28d057573",
+    "modelo_as_of": "2026-10-26"
+  },
+  "conviccao": 1,
+  "data": "2026-10-26",
+  "hashes": {
+    "contexto": "d3811e693a2890f5ca870fee9c4b46dae34af164aab8de95dd14c20599e0b549",
+    "factbook": "719d0b8a19b92e9f1593589035861b91f9de855c3185c28de4abc0ead4372196",
+    "nota_json": "1d0fb83b3b3c1a47eafbe10c0a0c6ebba95d33e586e6ed2b5301d46ad4dcb554"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_REGIONAL",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-26",
+  "published_at": "2026-10-27T01:48:34.038172+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A reorganização de Hey exige identificar capital requerido e contribuição incremental. Transferência de operações existentes não equivale a geração nova.",
+        "titulo": "Autonomia e consolidação"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Recebimento do resultado novo e conciliação da contribuição de Hey e do capital por entidade.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo MXN 261,98 condicionado à recorrência econômica, sem probabilidade narrativa adicional.",
+      "otimista": "Crédito disciplinado e eficiência sustentam retorno; cenário do modelo MXN 322,56.",
+      "pessimista": "Margem e capital são pressionados; cenário MXN 210,54 não representa piso garantido."
+    },
+    "comentario_valuation": "Preço MXN 155,21, alvo MXN 261,98, consenso público MXN 174,30 e rating Compra. A diferença +50,30% exige testar retorno normalizado e premissas; não demonstra percepção do mercado. P/L à frente 7,2x e P/VP 1,1x usam as bases do modelo.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se ativos e despesas crescem sem margem após perdas suficiente. A avaliação deve ser revista ao receber evidência atual na mesma base.",
+        "titulo": "Expansão sem retorno atribuível"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-26",
+    "dados_simulados": false,
+    "data": "2026-10-26",
+    "ficha": [
+      {
+        "fato": "val.MX_REGIONAL.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 155,21"
+      },
+      {
+        "fato": "val.MX_REGIONAL.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 261,98"
+      },
+      {
+        "fato": "val.MX_REGIONAL.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+68,79%"
+      },
+      {
+        "fato": "val.MX_REGIONAL.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.MX_REGIONAL.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_REGIONAL.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 322,56"
+      },
+      {
+        "fato": "val.MX_REGIONAL.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_REGIONAL.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 210,54"
+      },
+      {
+        "fato": "val.MX_REGIONAL.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_REGIONAL.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,03%"
+      },
+      {
+        "fato": "val.MX_REGIONAL.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_REGIONAL.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_REGIONAL.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+73,23%"
+      },
+      {
+        "fato": "val.MX_REGIONAL.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+39,14%"
+      },
+      {
+        "fato": "val.MX_REGIONAL.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "7,2x"
+      },
+      {
+        "fato": "val.MX_REGIONAL.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,1x"
+      },
+      {
+        "fato": "val.MX_REGIONAL.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 174,30"
+      },
+      {
+        "fato": "val.MX_REGIONAL.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+50,30%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F1",
+        "instituicao": "Regional",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Centro oficial de informações financeiras",
+        "url": "https://www.regional.mx/"
+      },
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F2",
+        "instituicao": "BMV — Regional",
+        "publicado_em": null,
+        "tipo": "Bolsa",
+        "titulo": "Demonstrações e notas explicativas semestrais",
+        "url": "https://www.bmv.com.mx/docs-pub/infingps/infingps_1577211_2026-02_1.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Recebimento do trimestre novo e da orientação da gestão.",
+      "Deterioração de risco intermediário ou funding.",
+      "Mudança de perímetro e capital que altere retorno por ação."
+    ],
+    "governanca": "O documento primário descreve transferência de ativos, passivos e capital ligados a Hey para sua operação bancária. A análise deve conferir capital e fluxo à holding por entidade, sem presumir caixa livremente transferível.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar migração de risco, custo de depósitos, despesas por negócio e retorno atribuível. O avanço da carteira deve ser confrontado com perdas finais e capital empregado.",
+        "titulo": "Margem, crédito e capital"
+      }
+    ],
+    "issuer_id": "MX_REGIONAL",
+    "lacunas_de_dados": [
+      "Resultado e transcrição do 3T26 não recebidos; guidance atual não avaliado.",
+      "Capital por entidade, contribuição incremental de Hey e caixa à holding não integralmente reconciliados.",
+      "Probabilidades implícitas e WACC indisponíveis.",
+      "Sem evidência suficiente de expectativa de mercado."
+    ],
+    "modelo_de_cobertura": "2026-10-26",
+    "negocio": "Grupo financeiro mexicano com atuação bancária e crédito empresarial. O relatório consolidado descreve a reorganização de Banco Regional e Hey Banco; a independência operacional precisa ser distinguida do perímetro econômico consolidado.",
+    "nome": "Regional (Banregio)",
+    "o_que_mudou": "Atualizamos a avaliação para 26/10/2026 e relimos o relatório primário já disponível. A agenda sugere resultado hoje, mas a consulta ao centro do emissor não o entregou. Não apresentamos a releitura do 2T26 como resultado novo.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_BAJIO",
+        "nome": "Banco del Bajío"
+      },
+      {
+        "issuer_id": "MX_BANORTE",
+        "nome": "Grupo Financiero Banorte"
+      },
+      {
+        "issuer_id": "MX_BMV",
+        "nome": "Bolsa Mexicana de Valores"
+      },
+      {
+        "issuer_id": "MX_GENTERA",
+        "nome": "Gentera"
+      },
+      {
+        "issuer_id": "MX_INBURSA",
+        "nome": "Grupo Financiero Inbursa"
+      },
+      {
+        "issuer_id": "MX_QUALITAS",
+        "nome": "Quálitas"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "No relatório do 2T26, menor inadimplência anual coexistia com maior carteira em estágio de risco intermediário. A hipótese de crédito disciplinado exige conferir migração e perdas finais no novo trimestre, ainda não recebido.",
+        "titulo": "Crédito além da inadimplência"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_REGIONAL.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,03%"
+          },
+          {
+            "fato": "val.MX_REGIONAL.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+73,23%"
+          },
+          {
+            "fato": "val.MX_REGIONAL.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "7,28%"
+          },
+          {
+            "fato": "val.MX_REGIONAL.confianca_codigo",
+            "nome": "Confiança do modelo",
+            "valor": "B"
+          }
+        ],
+        "texto": "O ke é 11,03%, o retorno esperado +73,23% e a dispersão 7,28%. A confiança B mede o modelo; não encerra a diligência de capital.",
+        "titulo": "Avaliação exige retorno sustentável"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A carteira empresarial sustenta a hipótese de conhecimento do cliente. Sua vantagem econômica precisa aparecer no retorno após perdas e no custo de servir; o relatório não comprova superioridade permanente.",
+        "titulo": "Relacionamento empresarial como hipótese"
+      }
+    ],
+    "publicada_em": "2026-10-27T01:48:34.038172+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Reconciliar indicadores anualizados, lucro trimestral e capital antes de comparar rentabilidade. Menor inadimplência isolada não encerra o risco em formação.",
+        "titulo": "Mesma base temporal"
+      }
+    ],
+    "resumo": "A visão permanece neutra e de baixa convicção. O alvo MXN 261,98 e o potencial +68,79% dependem da sustentação do retorno após crédito e despesas. A fonte primária recebida continua sendo o relatório do 2T26; não confirmamos a divulgação do trimestre novo sugerida pela agenda.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Perdas, funding e despesas podem consumir o retorno empresarial. A reorganização pode dificultar comparações homogêneas."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Regional — crédito em formação e capital de Hey seguem no centro da diligência",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O relatório do 2T26 mostra pressão de despesas sobre lucro e crescimento de risco intermediário apesar da menor inadimplência anual. Os indicadores de rentabilidade usam horizonte anualizado, e a informação de capital tem corte diferente. Não recebemos o resultado do 3T26; guidance e tom atuais não foram avaliados.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Depósitos a prazo e risco em formação exigem análise conjunta de margem, perdas e despesas. O crescimento dos ativos não comprova criação de valor por ação.",
+        "vetor": "Perdas e custo da captação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

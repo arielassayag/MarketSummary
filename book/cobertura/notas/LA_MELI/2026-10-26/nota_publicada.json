@@ -1,0 +1,371 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-26",
+    "manifest_sha256": "96b074349c8934ac30658448f68661a4f9a20591d3e2b179d61182a28d057573",
+    "modelo_as_of": "2026-10-23"
+  },
+  "conviccao": 1,
+  "data": "2026-10-26",
+  "hashes": {
+    "contexto": "d8e0c39d7c700344e93ca178675da46bb9bba107424417a7716bb189211ef7e9",
+    "factbook": "5dc6d1d51a91c4e8bf724667e3e7f08c85fbb0f3d6af8d5dfff31bf42ae2f6da",
+    "nota_json": "cddfb527861e8793d12e3f6233ea601bef5663bc5784810a923b5ee3300b04bd"
+  },
+  "is_synthetic": false,
+  "issuer_id": "LA_MELI",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-04",
+  "published_at": "2026-10-27T02:06:06.381678+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A análise de expansão do crédito deve incluir o capital subordinado e a exposição econômica mantida após securitização.",
+        "titulo": "Exposição retida"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-04",
+        "descricao": "Data provisória de divulgação de resultado no calendário da companhia; sujeita a confirmação.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Reinvestimento sustenta atividade com retorno ainda a testar; alvo Em revisão.",
+      "otimista": "Retenção e maturação do crédito remuneram os investimentos; referência quantitativa Em revisão. Não atribuímos valor alternativo.",
+      "pessimista": "Incentivos e perdas absorvem a monetização; referência quantitativa Em revisão. Não atribuímos probabilidade ausente."
+    },
+    "comentario_valuation": "O preço de referência é US$ 1.824,95, o P/L à frente 34,8x e o ke 11,21%. A dispersão entre métodos é 52,53%, enquanto o consenso público aponta US$ 2.273,86. Alvo, retorno esperado, alpha relativo e cenários próprios permanecem em revisão. Não usamos o consenso como substituto. Pares de educação, vestuário e incorporação não reproduzem a combinação de comércio e crédito.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A cautela perderia força com evidência persistente de maturação das coortes e retorno após financiamento. A mera expansão da atividade não encerra esse teste.",
+        "titulo": "Retorno do reinvestimento"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-26",
+    "dados_simulados": false,
+    "data": "2026-10-26",
+    "ficha": [
+      {
+        "fato": "val.LA_MELI.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 1.824,95"
+      },
+      {
+        "fato": "val.LA_MELI.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.LA_MELI.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,21%"
+      },
+      {
+        "fato": "val.LA_MELI.wacc",
+        "rotulo": "WACC",
+        "valor": "10,47%"
+      },
+      {
+        "fato": "val.LA_MELI.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.LA_MELI.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "34,8x"
+      },
+      {
+        "fato": "val.LA_MELI.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "11,8x"
+      },
+      {
+        "fato": "val.LA_MELI.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 2.273,86"
+      },
+      {
+        "fato": "val.LA_MELI.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F1",
+        "instituicao": "SEC — MercadoLibre",
+        "publicado_em": "2026-08-05",
+        "tipo": "Regulador",
+        "titulo": "Carta aos acionistas e demonstrações condensadas",
+        "url": "https://www.sec.gov/Archives/edgar/data/1099590/000109959026000021/meli-20260805xex991.htm"
+      },
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F2",
+        "instituicao": "MercadoLibre",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário de eventos e comunicados",
+        "url": "https://investor.mercadolibre.com/news-and-events"
+      },
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F3",
+        "instituicao": "SEC — MercadoLibre",
+        "publicado_em": "2026-08-05",
+        "tipo": "Regulador",
+        "titulo": "Demonstrações trimestrais, liquidez e securitizações",
+        "url": "https://www.sec.gov/Archives/edgar/data/1099590/000109959026000023/meli-20260630.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultado confirma ou invalida a maturação econômica das novas coortes.",
+      "Custo de financiamento ou exposição retida altera o retorno do crédito.",
+      "Modelo conclui a revisão de alvo e cenários."
+    ],
+    "governanca": "As demonstrações distinguem caixa restrito e recursos de clientes de fundos corporativos. A revisão deve preservar essa separação e considerar o risco econômico retido nos veículos. Direitos de acionistas e diluição não foram integralmente requalificados nesta consulta.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar retenção, custo de entrega e margem após perdas nas novas coortes.",
+        "titulo": "Maturação e margem"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Acompanhar caixa restrito, fundos de clientes e risco subordinado junto do financiamento do crédito.",
+        "titulo": "Liquidez corporativa"
+      }
+    ],
+    "issuer_id": "LA_MELI",
+    "lacunas_de_dados": [
+      "Alvo, potencial, rating, retorno esperado e alpha relativo em revisão.",
+      "Cenários e probabilidades implícitas em revisão.",
+      "Data do próximo resultado provisória no calendário oficial.",
+      "Retorno por coorte e conciliação integral do caixa corporativo pendentes.",
+      "Conteúdo completo do comunicado de emissão listado no RI não foi recebido nesta consulta.",
+      "Percepção variante e vantagem competitiva independente não comprovadas."
+    ],
+    "modelo_de_cobertura": "2026-10-26",
+    "negocio": "Ecossistema latino-americano de comércio, logística, publicidade e serviços financeiros. A integração pode aprofundar relacionamento, mas cada atividade demanda capital e financiamento próprios.",
+    "nome": "MercadoLibre",
+    "o_que_mudou": "Atualizamos os fatos do valuation e aprofundamos a leitura de recursos restritos e risco retido nas securitizações. O calendário oficial continua provisório. Não localizamos novo resultado completo que resolva as lacunas de retorno por coorte; alvo e cenários seguem em revisão.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_AZZAS",
+        "nome": "Azzas 2154"
+      },
+      {
+        "issuer_id": "BR_CEA",
+        "nome": "C&A Modas"
+      },
+      {
+        "issuer_id": "BR_COGNA",
+        "nome": "Cogna"
+      },
+      {
+        "issuer_id": "BR_CURY",
+        "nome": "Cury"
+      },
+      {
+        "issuer_id": "BR_CYRELA",
+        "nome": "Cyrela"
+      },
+      {
+        "issuer_id": "BR_DIRECIONAL",
+        "nome": "Direcional"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "MercadoLibre, carta de 2026-08-05: a administração associa maior frequência ao ecossistema e aos incentivos. A pressão sobre resultado operacional e lucro torna a maturação econômica das iniciativas o teste central.",
+        "titulo": "Engajamento exige retorno"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "MercadoLibre, SEC, 2026-08-05: securitizações incluem interesses subordinados retidos e veículos consolidados. O acesso a financiamento não elimina a necessidade de avaliar risco retido, garantias e recursos restritos.",
+        "titulo": "Financiamento não elimina exposição"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A companhia associa o uso conjunto de comércio e pagamentos a maior engajamento. Atribuímos essa leitura à administração; a vantagem durável exige validação por retorno.",
+        "titulo": "Complementaridade em teste"
+      }
+    ],
+    "publicada_em": "2026-10-27T02:06:06.381678+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Conciliar o crescimento dos saldos com restrições e obrigações, sem tratar recursos vinculados como liquidez distribuível.",
+        "titulo": "Caixa disponível"
+      }
+    ],
+    "resumo": "Mantemos neutralidade qualitativa e baixa convicção. O alvo da cobertura permanece Em revisão, com confiança C. O crescimento precisa remunerar logística, incentivos e crédito; a conciliação do financiamento ajuda a distinguir expansão de criação de valor.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Margem do cartão pode permanecer pressionada se a maturação esperada pela administração não se confirmar."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Restrições de caixa e interesses subordinados podem limitar flexibilidade durante a expansão do crédito."
+      }
+    ],
+    "setor": "Consumo discricionário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "MercadoLibre: financiamento e retorno das coortes com valuation em revisão",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A carta de 2T26 continua sendo a divulgação financeira completa localizada. A companhia descreve compressão da margem do cartão após perdas na expansão de novas coortes e espera melhora com maturação. Essa expectativa permanece hipótese da administração. O fluxo ajustado requer conciliação com o consolidado.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Testar se retenção e produtividade logística sustentam margem após incentivos e perdas nas safras maduras.",
+        "vetor": "Economia das coortes"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A avaliação deve acompanhar cessões, securitizações e dívida junto dos ativos financiados, em vez de tomar caixa consolidado como recurso livre.",
+        "vetor": "Custo e disponibilidade de financiamento"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

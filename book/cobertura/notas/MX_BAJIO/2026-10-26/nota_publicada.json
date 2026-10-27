@@ -1,0 +1,340 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-26",
+    "manifest_sha256": "96b074349c8934ac30658448f68661a4f9a20591d3e2b179d61182a28d057573",
+    "modelo_as_of": "2026-10-23"
+  },
+  "conviccao": 1,
+  "data": "2026-10-26",
+  "hashes": {
+    "contexto": "c6dc661ff37dc7f28b90d989597e510aec385ab2bc99a9be7bbf6a44bde3ea46",
+    "factbook": "719d0b8a19b92e9f1593589035861b91f9de855c3185c28de4abc0ead4372196",
+    "nota_json": "2159b85789196a3888ab59702690b0fc73af84ae9a777aba8b37f9d538e1cf6d"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_BAJIO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-27",
+  "published_at": "2026-10-27T01:50:12.433387+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A análise deve confrontar crescimento com capital prudencial e reservas. Distribuição só sustenta valor se não comprometer capacidade de absorver perdas; o quadro do relatório exige conferência definitiva.",
+        "titulo": "Expansão condicionada a capital"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Confirmação da divulgação do trimestre novo e conciliação de margem, perdas e capital.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo MXN 87,97, condicionado à margem normalizada e ao capital necessário para crescer.",
+      "otimista": "Relacionamento preserva captação e retorno após risco; cenário MXN 103,13.",
+      "pessimista": "Reprecificação e perdas limitam distribuição; cenário MXN 73,40 não constitui piso."
+    },
+    "comentario_valuation": "Preço MXN 58,16, alvo MXN 87,97 e retorno esperado +59,52%. O consenso público é MXN 65,50; a diferença +34,30% não comprova expectativa precificada. O P/L 7,5x e o P/VP 1,5x exigem lucro e patrimônio na mesma base.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se a carteira aumenta e o retorno depois de crédito cai, ou se a distribuição reduz capacidade de financiar a expansão. A informação nova deve ser reconciliada antes de elevar a convicção.",
+        "titulo": "Crescimento sem margem econômica"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-26",
+    "dados_simulados": false,
+    "data": "2026-10-26",
+    "ficha": [
+      {
+        "fato": "val.MX_BAJIO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 58,16"
+      },
+      {
+        "fato": "val.MX_BAJIO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 87,97"
+      },
+      {
+        "fato": "val.MX_BAJIO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+51,25%"
+      },
+      {
+        "fato": "val.MX_BAJIO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.MX_BAJIO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_BAJIO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 103,13"
+      },
+      {
+        "fato": "val.MX_BAJIO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_BAJIO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 73,40"
+      },
+      {
+        "fato": "val.MX_BAJIO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_BAJIO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,11%"
+      },
+      {
+        "fato": "val.MX_BAJIO.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_BAJIO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_BAJIO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+59,52%"
+      },
+      {
+        "fato": "val.MX_BAJIO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+24,15%"
+      },
+      {
+        "fato": "val.MX_BAJIO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "7,5x"
+      },
+      {
+        "fato": "val.MX_BAJIO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,5x"
+      },
+      {
+        "fato": "val.MX_BAJIO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 65,50"
+      },
+      {
+        "fato": "val.MX_BAJIO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+34,30%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F1",
+        "instituicao": "BMV — BanBajío",
+        "publicado_em": null,
+        "tipo": "Bolsa",
+        "titulo": "Comentários da administração e demonstrações semestrais",
+        "url": "https://www.bmv.com.mx/docs-pub/infinbnc/infinbnc_1577916_2026-02_1.pdf"
+      },
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F2",
+        "instituicao": "BMV — BanBajío",
+        "publicado_em": null,
+        "tipo": "Bolsa",
+        "titulo": "Resultado por segmento e indicadores prudenciais",
+        "url": "https://www.bmv.com.mx/docs-pub/infinbnc/bncinfin_1577916_2026-02_2.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultado novo e guidance recebidos em fonte primária.",
+      "Margem após perdas e funding invalida a expansão rentável.",
+      "Capital ou cobertura restringe crescimento e distribuição."
+    ],
+    "governanca": "Conferir partes relacionadas, composição do capital e retenção necessária ao crescimento. Índices prudenciais não equivalem a caixa distribuível; a revisão completa dos cortes e metodologias segue pendente.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Rever margem antes e depois de perdas, custo de depósitos, cobertura, capital e lucro atribuível. A melhora precisa sobreviver à normalização de provisões e tesouraria.",
+        "titulo": "Retorno após crédito"
+      }
+    ],
+    "issuer_id": "MX_BAJIO",
+    "lacunas_de_dados": [
+      "Resultado do 3T26 e transcrição não recebidos; guidance atual não avaliado.",
+      "Divergência de calendário entre fila e contexto ainda sem confirmação primária.",
+      "Capital definitivo, concentração e perdas por safra não reconciliados.",
+      "WACC e probabilidades implícitas indisponíveis."
+    ],
+    "modelo_de_cobertura": "2026-10-26",
+    "negocio": "Banco mexicano com crédito empresarial, depósitos e serviços. A análise distingue banca e crédito, operações redescontadas, tesouraria e subsidiárias, evitando atribuir ao relacionamento comercial toda a contribuição consolidada.",
+    "nome": "Banco del Bajío",
+    "o_que_mudou": "Atualizamos a avaliação para 26/10/2026 e reconfirmamos o teor público do relatório do 2T26. A divergência entre a marcação da fila e o calendário do contexto não foi resolvida por documento de divulgação novo; não a tratamos como resultado observado.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_BANORTE",
+        "nome": "Grupo Financiero Banorte"
+      },
+      {
+        "issuer_id": "MX_BMV",
+        "nome": "Bolsa Mexicana de Valores"
+      },
+      {
+        "issuer_id": "MX_GENTERA",
+        "nome": "Gentera"
+      },
+      {
+        "issuer_id": "MX_INBURSA",
+        "nome": "Grupo Financiero Inbursa"
+      },
+      {
+        "issuer_id": "MX_QUALITAS",
+        "nome": "Quálitas"
+      },
+      {
+        "issuer_id": "MX_REGIONAL",
+        "nome": "Regional (Banregio)"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O documento do 2T26 registra compressão de margem associada à redução dos juros de referência. O crescimento só cria valor se compensar a reprificação sem elevar perdas ou consumir capital em excesso.",
+        "titulo": "Margem e qualidade do crescimento"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_BAJIO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,11%"
+          },
+          {
+            "fato": "val.MX_BAJIO.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "14,00%"
+          },
+          {
+            "fato": "val.MX_BAJIO.confianca_codigo",
+            "nome": "Confiança do modelo",
+            "valor": "B"
+          }
+        ],
+        "texto": "O ke 11,11% deve ser confrontado com retorno normalizado. A dispersão 14,00% e a confiança B não eliminam o risco das premissas.",
+        "titulo": "Retorno exigido e avaliação"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A exposição empresarial sustenta a hipótese de conhecimento do cliente. A condição para vantagem é retenção de depósitos e disciplina de originação após custo de servir, ainda por testar em base comparável.",
+        "titulo": "Crédito empresarial deve provar retorno"
+      }
+    ],
+    "publicada_em": "2026-10-27T01:50:12.433387+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Os segmentos do relatório têm trajetórias distintas. Verificar lucro recorrente depois de provisões e impostos, sem extrapolar contribuição da tesouraria para o negócio de crédito.",
+        "titulo": "Separar franquia e tesouraria"
+      }
+    ],
+    "resumo": "Mantemos visão neutra e baixa convicção. O modelo aponta alvo MXN 87,97, potencial +51,25% e rating Compra. A questão é a capacidade de preservar retorno após reprificação, perdas e despesas. A fila marca pós-resultado, mas o contexto aponta divulgação futura e o relatório novo não foi recebido; esta nota é atualização.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Ativos podem reprificar antes do funding. Menor provisão ou resultado de tesouraria pode ocultar pressão no retorno recorrente."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "BanBajío — margem após perdas e capital precisam sustentar a expansão",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O relatório primário do 2T26 registra queda anual de lucro e margem, enquanto a tesouraria contribui de forma distinta da banca e crédito. O quadro de risco mostra deterioração sequencial da inadimplência e menor cobertura. As mudanças tributárias descritas exigem conciliação normativa. Não recebemos o relatório do 3T26; não confirmamos guidance atual.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar taxas dos ativos e depósitos, migração de crédito e provisões. Resultado de tesouraria não deve ser confundido com margem recorrente da franquia.",
+        "vetor": "Reprecificação, perdas e captação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

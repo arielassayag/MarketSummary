@@ -1,0 +1,112 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_PENOLES",
+  "data": "2026-10-26",
+  "tipo": "atualizacao",
+  "titulo": "Peñoles — resultado ainda não recebido mantém teste de caixa e capital atribuível",
+  "resumo": "Mantemos visão neutra e baixa convicção. O alvo {{fact:val.MX_PENOLES.preco_alvo}} implica potencial {{fact:val.MX_PENOLES.upside}}, com dispersão entre métodos {{fact:val.MX_PENOLES.cv_metodos}}. A página pública apresenta a data de hoje como estimada para o 3T26 e mantém o material como aguardado na versão consultada. As tentativas de receber os relatórios primários retornaram indisponibilidade.",
+  "negocio": "A cobertura acompanha a exposição a metais e a hipótese de integração entre mineração e processamento. A diligência precisa distinguir propriedade econômica, custo completo e caixa atribuível, preservando as lacunas documentais desta consulta.",
+  "pilares_tese": [
+    {
+      "titulo": "Continuidade econômica por operação",
+      "texto": "A hipótese mantida da nota anterior exige que produção e processamento gerem caixa após manutenção, desenvolvimento e obrigações ambientais. Trata-se de condição de investimento a comprovar, não de desempenho atual confirmado.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Dispersão exige cautela",
+      "texto": "A dispersão {{fact:val.MX_PENOLES.cv_metodos}} e o WACC {{fact:val.MX_PENOLES.wacc}} tornam relevante testar ciclo de metais, reinvestimento e perímetro. A confiança {{fact:val.MX_PENOLES.confianca_codigo}} não comprova diligência financeira integral.",
+      "evidencias": [
+        "val.MX_PENOLES.cv_metodos",
+        "val.MX_PENOLES.wacc",
+        "val.MX_PENOLES.confianca_codigo"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Metais, custos e reinvestimento",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Testar preço realizado, teor, recuperação e custo completo contra manutenção e obrigações. Sem o relatório recebido, não confirmamos mudança operacional ou de orientação.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Recebimento efetivo do relatório do 3T26; o calendário estimado não comprova divulgação.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Ciclo de metais, paradas e reinvestimento podem impedir retorno atribuível. A indisponibilidade documental limita a confirmação atual desses riscos.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Continuidade e disciplina de capital sustentam caixa; cenário {{fact:val.MX_PENOLES.alvo_otimista}}.",
+    "base": "Alvo {{fact:val.MX_PENOLES.preco_alvo}}, dependente da reconciliação do ciclo completo de investimento.",
+    "pessimista": "Preços e operação pressionam caixa enquanto obrigações exigem capital; cenário {{fact:val.MX_PENOLES.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço {{fact:val.MX_PENOLES.preco}}, alvo {{fact:val.MX_PENOLES.preco_alvo}} e consenso público {{fact:val.MX_PENOLES.consenso_alvo}}, em MXN. O retorno esperado é {{fact:val.MX_PENOLES.etr}} e o ke {{fact:val.MX_PENOLES.ke}}. A avaliação requer reservas, vida útil, desenvolvimento e fechamento por operação, sem perpetuar lucro de ciclo favorável. A diferença para consenso {{fact:val.MX_PENOLES.diff_consenso}} não demonstra percepção do mercado.",
+  "ultimo_resultado": "A central pública lista os materiais do 2T26 e apresenta o 3T26 como aguardado na versão indexada consultada. O acesso direto à central, ao informe e às demonstrações retornou indisponibilidade. Assim, não revalidamos o conteúdo financeiro do trimestre anterior nem afirmamos resultado novo, guidance ou desempenho de minas nesta data.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A diligência pendente deve conciliar participações não controladoras, transações relacionadas e caixa distribuível por entidade. A análise de valor deve preservar direitos econômicos e evitar atribuir todo o consolidado ao acionista coberto.",
+  "contratese": {
+    "titulo": "Exposição a metais sem caixa atribuível",
+    "texto": "A hipótese enfraquece se preços favoráveis ocultarem custo operacional, reinvestimento ou obrigações não refletidas na avaliação. É condição a testar quando os documentos forem recebidos.",
+    "evidencias": [
+      "val.MX_PENOLES.cv_metodos",
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Reconciliação antes de elevar convicção",
+      "texto": "Receber o relatório e conferir produção pagável, manutenção, giro, tributos e minoritários. Confrontar resultado operacional com caixa após o ciclo completo de capital.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "o_que_mudou": "Atualizamos os fatos do modelo e a conferência do calendário. A data estimada de divulgação chegou, mas o relatório não foi recebido. A indisponibilidade fica explícita; a hipótese da nota anterior permanece sujeita a confirmação.",
+  "gatilhos_revisao": [
+    "Recebimento do relatório, apresentação e orientação atuais.",
+    "Capital necessário ou direitos econômicos alteram caixa atribuível.",
+    "Evidência operacional confirma ou invalida retorno após manutenção."
+  ],
+  "lacunas_de_dados": [
+    "Acesso direto às fontes do emissor retornou indisponibilidade.",
+    "Relatório do 3T26 não recebido e data efetiva de divulgação não confirmada.",
+    "Resultado anterior não revalidado integralmente nesta consulta.",
+    "Reservas, custo completo, minoritários e obrigações ambientais por reconciliar.",
+    "Guidance e percepção de mercado não avaliados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Industrias Peñoles",
+      "titulo": "Calendário financeiro e materiais de resultados",
+      "url": "https://www.penoles.com.mx/inversionistas/reportes-y-presentaciones/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-26"
+    }
+  ]
+}

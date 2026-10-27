@@ -1,0 +1,295 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-26",
+    "manifest_sha256": "96b074349c8934ac30658448f68661a4f9a20591d3e2b179d61182a28d057573",
+    "modelo_as_of": "2026-10-23"
+  },
+  "conviccao": 1,
+  "data": "2026-10-26",
+  "hashes": {
+    "contexto": "ffaedc7743ec9f63388ef5b9372d15fc550ace4e44f5215ed15d69be8dad4c6c",
+    "factbook": "114fddd5829fbd68a35146916c2a5d674c07ff65e478415a02f844725c445ed3",
+    "nota_json": "9dfdf461610ebc7174f1927d3210b287613b38cbe63f167cfa444f2540198dce"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_PENOLES",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-26",
+  "published_at": "2026-10-27T01:53:56.207193+00:00",
+  "rendered": {
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Recebimento efetivo do relatório do 3T26; o calendário estimado não comprova divulgação.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo MXN 937,07, dependente da reconciliação do ciclo completo de investimento.",
+      "otimista": "Continuidade e disciplina de capital sustentam caixa; cenário MXN 1.213,30.",
+      "pessimista": "Preços e operação pressionam caixa enquanto obrigações exigem capital; cenário MXN 639,08."
+    },
+    "comentario_valuation": "Preço MXN 856,33, alvo MXN 937,07 e consenso público MXN 977,00, em MXN. O retorno esperado é +11,71% e o ke 12,71%. A avaliação requer reservas, vida útil, desenvolvimento e fechamento por operação, sem perpetuar lucro de ciclo favorável. A diferença para consenso -4,09% não demonstra percepção do mercado.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_PENOLES.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "47,20%"
+          },
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese enfraquece se preços favoráveis ocultarem custo operacional, reinvestimento ou obrigações não refletidas na avaliação. É condição a testar quando os documentos forem recebidos.",
+        "titulo": "Exposição a metais sem caixa atribuível"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-26",
+    "dados_simulados": false,
+    "data": "2026-10-26",
+    "ficha": [
+      {
+        "fato": "val.MX_PENOLES.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 856,33"
+      },
+      {
+        "fato": "val.MX_PENOLES.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 937,07"
+      },
+      {
+        "fato": "val.MX_PENOLES.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+9,43%"
+      },
+      {
+        "fato": "val.MX_PENOLES.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_PENOLES.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_PENOLES.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 1.213,30"
+      },
+      {
+        "fato": "val.MX_PENOLES.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "22,93%"
+      },
+      {
+        "fato": "val.MX_PENOLES.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 639,08"
+      },
+      {
+        "fato": "val.MX_PENOLES.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "28,91%"
+      },
+      {
+        "fato": "val.MX_PENOLES.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,71%"
+      },
+      {
+        "fato": "val.MX_PENOLES.wacc",
+        "rotulo": "WACC",
+        "valor": "11,84%"
+      },
+      {
+        "fato": "val.MX_PENOLES.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_PENOLES.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+11,71%"
+      },
+      {
+        "fato": "val.MX_PENOLES.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "0,00%"
+      },
+      {
+        "fato": "val.MX_PENOLES.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,6x"
+      },
+      {
+        "fato": "val.MX_PENOLES.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,7x"
+      },
+      {
+        "fato": "val.MX_PENOLES.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 977,00"
+      },
+      {
+        "fato": "val.MX_PENOLES.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-4,09%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F1",
+        "instituicao": "Industrias Peñoles",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário financeiro e materiais de resultados",
+        "url": "https://www.penoles.com.mx/inversionistas/reportes-y-presentaciones/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Recebimento do relatório, apresentação e orientação atuais.",
+      "Capital necessário ou direitos econômicos alteram caixa atribuível.",
+      "Evidência operacional confirma ou invalida retorno após manutenção."
+    ],
+    "governanca": "A diligência pendente deve conciliar participações não controladoras, transações relacionadas e caixa distribuível por entidade. A análise de valor deve preservar direitos econômicos e evitar atribuir todo o consolidado ao acionista coberto.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Receber o relatório e conferir produção pagável, manutenção, giro, tributos e minoritários. Confrontar resultado operacional com caixa após o ciclo completo de capital.",
+        "titulo": "Reconciliação antes de elevar convicção"
+      }
+    ],
+    "issuer_id": "MX_PENOLES",
+    "lacunas_de_dados": [
+      "Acesso direto às fontes do emissor retornou indisponibilidade.",
+      "Relatório do 3T26 não recebido e data efetiva de divulgação não confirmada.",
+      "Resultado anterior não revalidado integralmente nesta consulta.",
+      "Reservas, custo completo, minoritários e obrigações ambientais por reconciliar.",
+      "Guidance e percepção de mercado não avaliados."
+    ],
+    "modelo_de_cobertura": "2026-10-26",
+    "negocio": "A cobertura acompanha a exposição a metais e a hipótese de integração entre mineração e processamento. A diligência precisa distinguir propriedade econômica, custo completo e caixa atribuível, preservando as lacunas documentais desta consulta.",
+    "nome": "Industrias Peñoles",
+    "o_que_mudou": "Atualizamos os fatos do modelo e a conferência do calendário. A data estimada de divulgação chegou, mas o relatório não foi recebido. A indisponibilidade fica explícita; a hipótese da nota anterior permanece sujeita a confirmação.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_CEMEX",
+        "nome": "Cemex"
+      },
+      {
+        "issuer_id": "MX_ENDEAVOUR",
+        "nome": "Endeavour Silver"
+      },
+      {
+        "issuer_id": "MX_GCC",
+        "nome": "GCC"
+      },
+      {
+        "issuer_id": "MX_GMEXICO",
+        "nome": "Grupo México"
+      },
+      {
+        "issuer_id": "MX_ORBIA",
+        "nome": "Orbia"
+      },
+      {
+        "issuer_id": "MX_TERNIUM",
+        "nome": "Ternium"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese mantida da nota anterior exige que produção e processamento gerem caixa após manutenção, desenvolvimento e obrigações ambientais. Trata-se de condição de investimento a comprovar, não de desempenho atual confirmado.",
+        "titulo": "Continuidade econômica por operação"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_PENOLES.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "47,20%"
+          },
+          {
+            "fato": "val.MX_PENOLES.wacc",
+            "nome": "Custo médio ponderado de capital",
+            "valor": "11,84%"
+          },
+          {
+            "fato": "val.MX_PENOLES.confianca_codigo",
+            "nome": "Confiança do modelo",
+            "valor": "B"
+          }
+        ],
+        "texto": "A dispersão 47,20% e o WACC 11,84% tornam relevante testar ciclo de metais, reinvestimento e perímetro. A confiança B não comprova diligência financeira integral.",
+        "titulo": "Dispersão exige cautela"
+      }
+    ],
+    "publicada_em": "2026-10-27T01:53:56.207193+00:00",
+    "resumo": "Mantemos visão neutra e baixa convicção. O alvo MXN 937,07 implica potencial +9,43%, com dispersão entre métodos 47,20%. A página pública apresenta a data de hoje como estimada para o 3T26 e mantém o material como aguardado na versão consultada. As tentativas de receber os relatórios primários retornaram indisponibilidade.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Ciclo de metais, paradas e reinvestimento podem impedir retorno atribuível. A indisponibilidade documental limita a confirmação atual desses riscos."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Peñoles — resultado ainda não recebido mantém teste de caixa e capital atribuível",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A central pública lista os materiais do 2T26 e apresenta o 3T26 como aguardado na versão indexada consultada. O acesso direto à central, ao informe e às demonstrações retornou indisponibilidade. Assim, não revalidamos o conteúdo financeiro do trimestre anterior nem afirmamos resultado novo, guidance ou desempenho de minas nesta data.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Testar preço realizado, teor, recuperação e custo completo contra manutenção e obrigações. Sem o relatório recebido, não confirmamos mudança operacional ou de orientação.",
+        "vetor": "Metais, custos e reinvestimento"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

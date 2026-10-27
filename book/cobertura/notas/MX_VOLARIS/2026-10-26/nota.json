@@ -1,0 +1,152 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_VOLARIS",
+  "data": "2026-10-26",
+  "tipo": "pos_resultado",
+  "titulo": "Volaris — melhora comercial não elimina perda líquida e pressão do combustível",
+  "resumo": "O comunicado do 3T26 registra EBIT positivo e receita maior, mas perda líquida e redução da orientação anual de margem EBITDAR. A leitura permanece neutra e de baixa convicção. O modelo segue {{fact:val.MX_VOLARIS.rating_codigo}}, com confiança {{fact:val.MX_VOLARIS.confianca_codigo}}; o consenso público não substitui alvo próprio ausente.",
+  "negocio": "Transportadora de baixo custo com rotas ponto a ponto no México e mercados internacionais. Tarifa básica e receitas adicionais precisam cobrir o custo completo da frota, inclusive aeronaves indisponíveis, manutenção e arrendamentos.",
+  "pilares_tese": [
+    {
+      "titulo": "Receita maior precisa pagar a frota",
+      "texto": "O comunicado do 3T26 apresenta EBIT positivo, porém perda líquida e pressão de combustível. A hipótese exige caixa depois de manutenção e arrendamentos, sem confundir melhora comercial com rentabilidade final.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Disponibilidade e compensações",
+      "texto": "As perspectivas recebidas mantêm compensações esperadas pelas inspeções de motores. Valores esperados não comprovam recebimento; testar a geração normalizada sem perpetuar compensações temporárias.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Tarifa, combustível e motores",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Tarifas e receitas adicionais devem remunerar capacidade disponível e custos completos. Combustível e indisponibilidade podem impedir que ocupação se traduza em retorno.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Teleconferência para esclarecer custos, motores e revisão das perspectivas.",
+      "data": "2026-10-27",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Combustível, moeda e obrigações de frota podem absorver receita adicional. Compensações previstas e capex líquido de financiamento podem superestimar caixa recorrente.",
+      "probabilidade": "alta",
+      "impacto": "alto",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Disponibilidade e preço cobrem o custo completo, gerando caixa recorrente; cenário quantitativo indisponível.",
+    "base": "Não há alvo próprio disponível. A hipótese exige conciliação de manutenção, arrendamentos e compensações.",
+    "pessimista": "Custos e indisponibilidade absorvem receita e restringem liquidez; não há preço de cenário calculado."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.MX_VOLARIS.preco}}, ke {{fact:val.MX_VOLARIS.ke}} e WACC {{fact:val.MX_VOLARIS.wacc}}. O alvo próprio permanece {{fact:val.MX_VOLARIS.preco_alvo}}. O consenso público {{fact:val.MX_VOLARIS.consenso_alvo}} tem finalidade distinta. A avaliação exige fluxo com arrendamentos, pré-entregas e manutenção consistentes; EBITDAR isolado não remunera a frota integral.",
+  "ultimo_resultado": "O comunicado de 26/10/2026, distribuído pela companhia via GlobeNewswire e reproduzido publicamente, registra crescimento de receita e EBIT positivo, mas perda líquida e menor margem EBITDAR anual. Frente ao release do 2T26, a orientação anual de margem EBITDAR foi reduzida. A gestão mantém tom positivo sobre execução comercial; a teleconferência ainda é futura.",
+  "guidance": "reduzido",
+  "tom_gestao": "positivo",
+  "governanca": "A combinação anunciada com Viva continua sujeita a condições e aprovações conforme o comunicado. A análise preserva direitos por instrumento e não antecipa sinergias, conclusão ou caixa liberado.",
+  "posicao_competitiva": {
+    "titulo": "Custo completo como condição",
+    "texto": "O modelo de tarifa básica pode ampliar demanda. A vantagem só se comprova quando receita por capacidade disponível remunera também aeronaves imobilizadas e obrigações; ocupação não basta.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "EBIT e perda líquida coexistem",
+    "texto": "A melhora comercial recebida não elimina financiamento e tributos. Conciliar resultado operacional com perda líquida e caixa, distinguindo trimestre e acumulado.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Obrigações brutas da frota",
+    "texto": "O capex das perspectivas é líquido de pré-entregas financiadas. A diligência deve reconstruir obrigações brutas e arrendamentos antes de estimar capacidade de distribuição.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "contratese": {
+    "titulo": "Monetização sem retorno integral",
+    "texto": "A tese enfraquece se combustível, manutenção e financiamento absorvem a receita adicional, ou se a liquidez depende de compensações temporárias.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Motores e caixa após frota",
+      "texto": "Conferir disponibilidade, compensações reconhecidas e recebidas, desembolsos de manutenção e pré-entregas. O teste é geração depois das obrigações completas.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "o_que_mudou": "A atualização passa a pós-resultado com comunicado do 3T26. Incorpora melhora comercial, perda líquida persistente e guidance anual de margem reduzido. A conclusão da combinação com Viva continua condicionada, e o modelo permanece sem alvo.",
+  "gatilhos_revisao": [
+    "Conciliação completa do trimestre e esclarecimentos da teleconferência.",
+    "Receita recorrente remunera frota, manutenção e financiamento.",
+    "Compensações não recebidas ou condições societárias alteram liquidez."
+  ],
+  "lacunas_de_dados": [
+    "Sem alvo próprio, cenários, probabilidades ou retorno esperado no modelo.",
+    "Comunicado novo recebido por reprodução pública; anexo regulatório completo não localizado nesta consulta.",
+    "Demonstrações, arrendamentos e compensações não integralmente reconciliados.",
+    "Teleconferência futura e combinação com Viva ainda condicionada."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "imprensa",
+      "instituicao": "Volaris — comunicado via GlobeNewswire",
+      "titulo": "Comunicado trimestral reproduzido publicamente",
+      "url": "https://www.streetinsider.com/Globe%2BNewswire/Volaris%2BReports%2BFinancial%2BResults%2Bfor%2Bthe%2BThird%2BQuarter%2B2026%3A%2B%241%2BBillion%2BRevenue%2C%2Bup%2B32%25%2BYoY/27235059.html",
+      "publicado_em": "2026-10-26",
+      "consultado_em": "2026-10-26"
+    },
+    {
+      "id": "F2",
+      "tipo": "regulatorio",
+      "instituicao": "SEC — Volaris",
+      "titulo": "Resultado e perspectivas trimestrais anteriores",
+      "url": "https://www.sec.gov/Archives/edgar/data/1520504/000129281426003836/ex99-1.htm",
+      "publicado_em": "2026-07-21",
+      "consultado_em": "2026-10-26"
+    },
+    {
+      "id": "F3",
+      "tipo": "regulatorio",
+      "instituicao": "SEC — Volaris",
+      "titulo": "Tráfego preliminar e comentário operacional",
+      "url": "https://www.sec.gov/Archives/edgar/data/1520504/000129281426004856/ex99-1.htm",
+      "publicado_em": "2026-10-06",
+      "consultado_em": "2026-10-26"
+    }
+  ]
+}

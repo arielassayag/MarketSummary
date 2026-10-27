@@ -1,0 +1,169 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_GERDAU",
+  "data": "2026-10-26",
+  "tipo": "atualizacao",
+  "titulo": "Gerdau — avaliação incorpora maior exigência de retorno, com resultado novo por conferir",
+  "resumo": "Mantemos leitura neutra e baixa convicção. O modelo aponta alvo {{fact:val.BR_GERDAU.preco_alvo}}, potencial {{fact:val.BR_GERDAU.upside}} e retorno esperado {{fact:val.BR_GERDAU.etr}}. A sustentação operacional continua dependendo das margens regionais e do caixa após investimento. O resultado do 3T26 indicado para hoje não foi recebido na central consultada; a leitura operacional documentada abaixo refere-se ao 2T26.",
+  "negocio": "A Gerdau produz aços longos, especiais e planos, com operações nas Américas e atividade de minério no Brasil. A análise precisa distinguir preço, sucata, energia e utilização por região; a diversificação não elimina a exposição ao ciclo.",
+  "pilares_tese": [
+    {
+      "titulo": "Margens regionais e custo entregue",
+      "texto": "O comunicado do 2T26 destaca a América do Norte e recuperação brasileira mais gradual, ainda sob concorrência importada. A hipótese exige preservação de margem depois da normalização do ciclo; não projetamos essa descrição sobre o trimestre ainda não recebido.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Capital deve produzir caixa",
+      "texto": "O release do 2T26 registra fluxo livre positivo apesar do consumo de capital de giro, com investimento e distribuição concorrendo pelo caixa. A condição econômica é retorno após manutenção e expansão superior ao WACC {{fact:val.BR_GERDAU.wacc}}.",
+      "evidencias": [
+        "F2",
+        "val.BR_GERDAU.wacc"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Preços, sucata e utilização por região",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Margens favoráveis na América do Norte não comprovam recuperação equivalente no Brasil. Testar preço realizado e custo entregue na mesma moeda e separar eficiência de câmbio.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Investimento e retorno exigido",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O ke é {{fact:val.BR_GERDAU.ke}}; a dispersão entre métodos é {{fact:val.BR_GERDAU.cv_metodos}}. A amplitude dos cenários exige conferir caixa normalizado e reinvestimento.",
+      "evidencias": [
+        "val.BR_GERDAU.ke",
+        "val.BR_GERDAU.cv_metodos"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Conciliação do resultado do 3T26 e confirmação das perspectivas regionais e de investimento.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Importações, custos metálicos e menor utilização podem pressionar margem e comprometer retorno dos projetos.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "texto": "O trimestre programado para hoje não foi recebido; eventual mudança de guidance ou de operação permanece por conferir.",
+      "probabilidade": "alta",
+      "impacto": "alto",
+      "evidencias": [
+        "F3"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Margens e produtividade sustentam caixa após investimento; cenário calculado {{fact:val.BR_GERDAU.alvo_otimista}}.",
+    "base": "A rentabilidade regional atravessa normalização cíclica; alvo {{fact:val.BR_GERDAU.preco_alvo}} e retorno esperado {{fact:val.BR_GERDAU.etr}}.",
+    "pessimista": "Compressão de spreads e investimento pouco produtivo consomem valor; cenário {{fact:val.BR_GERDAU.alvo_pessimista}}, sem garantia de piso."
+  },
+  "comentario_valuation": "O preço {{fact:val.BR_GERDAU.preco}} é confrontado com alvo {{fact:val.BR_GERDAU.preco_alvo}} e consenso público {{fact:val.BR_GERDAU.consenso_alvo}}. O modelo registra variação de alvo {{fact:cob.BR_GERDAU.variacao_alvo}}, rating {{fact:val.BR_GERDAU.rating_codigo}} e ke {{fact:val.BR_GERDAU.ke}}. Não atribuímos a revisão do alvo a um resultado específico sem sua conciliação. Pares incluem holdings e outros materiais; o P/VP {{fact:val.BR_GERDAU.pb}} não comprova desconto econômico.",
+  "ultimo_resultado": "O release primário do 2T26, de 04/08/2026, registra melhora sequencial por segmento e maior contribuição da América do Norte, com Brasil ainda inferior à comparação anual em EBITDA ajustado. O caixa livre gerencial foi positivo apesar do giro, juros e impostos. O release do 3T26 não foi recebido nesta consulta; guidance e tom atuais permanecem não avaliados.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Distinguir Gerdau da holding Metalúrgica Gerdau e o perímetro consolidado das participações com controle compartilhado. Dividendos aprovados e recompras autorizadas devem ser separados dos desembolsos comprovados.",
+  "posicao_competitiva": {
+    "titulo": "Diversificação exige retorno local",
+    "texto": "A presença regional oferece exposições distintas. Nossa hipótese exige custo competitivo e disciplina de oferta em cada operação, sem extrapolar a rentabilidade norte-americana para o grupo.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Ajustado não equivale a caixa livre",
+    "texto": "O EBITDA ajustado inclui parcela proporcional de operações com controle compartilhado, conforme o release. Conciliar essa medida com lucro societário e fluxo de caixa evita equiparar margem operacional a recurso distribuível.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Giro, investimento e acionista",
+    "texto": "O release registra execução de capex e recompras. O teste da tese é geração após manutenção e giro ao longo do ciclo; autorização de recompra e dividendo não assegura retorno futuro.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "contratese": {
+    "titulo": "Margem cíclica sem retorno estrutural",
+    "texto": "A hipótese enfraquece se spreads favoráveis mascararem retorno insuficiente após investimento e custos de manutenção. O desempenho regional precisa sobreviver ao ciclo.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Retorno e conversão regional",
+      "texto": "Acompanhar preço realizado, sucata, utilização, giro e capex por operação. Invalidar a melhora quando o avanço de EBITDA não chegar ao caixa após reinvestimento.",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "o_que_mudou": "A avaliação foi atualizada para 26/10/2026, com variação do alvo {{fact:cob.BR_GERDAU.variacao_alvo}}. Acrescentamos a conferência do release primário do 2T26 na SEC. O resultado do 3T26 indicado para hoje não foi recebido; preservamos tipo atualização e guidance não avaliado.",
+  "gatilhos_revisao": [
+    "Resultado novo e orientação da gestão recebidos em fonte primária.",
+    "Margens normalizadas deixam de remunerar capital por operação.",
+    "Caixa após giro e investimento confirma ou invalida a tese."
+  ],
+  "lacunas_de_dados": [
+    "Relatório e teleconferência do 3T26 não recebidos nesta consulta.",
+    "Demonstrações e caixa por segmento não integralmente reconciliados.",
+    "Guidance atual, retorno dos projetos e execução de pagamentos por conferir.",
+    "Consenso público não comprova percepção de mercado."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Gerdau",
+      "titulo": "Comunicado de desempenho e investimento",
+      "url": "https://www2.gerdau.com.br/noticias/gerdau-encerra-2o-trimestre-de-2026-com-ebitda-ajustado-de-r-34-bilhoe/",
+      "publicado_em": "2026-08-04",
+      "consultado_em": "2026-10-26"
+    },
+    {
+      "id": "F2",
+      "tipo": "regulatorio",
+      "instituicao": "SEC — Gerdau",
+      "titulo": "Release trimestral arquivado pelo emissor",
+      "url": "https://www.sec.gov/Archives/edgar/data/1073404/000110465926090494/tm2621830d2_ex99-1.htm",
+      "publicado_em": "2026-08-04",
+      "consultado_em": "2026-10-26"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Gerdau",
+      "titulo": "Central de resultados",
+      "url": "https://ri.gerdau.com/informacoes-ao-mercado/central-de-resultados/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-26"
+    }
+  ]
+}

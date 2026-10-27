@@ -1,0 +1,325 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-26",
+    "manifest_sha256": "96b074349c8934ac30658448f68661a4f9a20591d3e2b179d61182a28d057573",
+    "modelo_as_of": "2026-10-23"
+  },
+  "conviccao": 1,
+  "data": "2026-10-26",
+  "hashes": {
+    "contexto": "6c9b20c16b7bfbca1bfd4fe2606db14beddb9e6e4c9d7e79c659dcc67ec19d26",
+    "factbook": "d467aaab76ec127def35b90689a68bba15b581ca38fcc3e4603cdb435818b127",
+    "nota_json": "647fdbf7268bc162889c8674ded366bd8f65c9f83b83c1d86ef3fb8166bd851f"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_PETROBRAS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-10",
+  "published_at": "2026-10-27T01:59:31.934086+00:00",
+  "rendered": {
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-28",
+        "descricao": "Divulgação do relatório de produção e vendas conforme calendário regulatório.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "outro"
+      },
+      {
+        "data": "2026-11-10",
+        "descricao": "Divulgação do resultado financeiro conforme calendário regulatório.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Execução industrial preserva a capacidade de geração, com disciplina de capital a confirmar. Alvo do código: R$ 104,75.",
+      "otimista": "Produção e utilização industrial se convertem em caixa após reinvestimento. Referência otimista do código: R$ 145,35; probabilidade implícita indisponível.",
+      "pessimista": "Preços realizados, custos ou investimentos comprimem o caixa disponível. Referência pessimista do código: R$ 67,70; probabilidade implícita indisponível."
+    },
+    "comentario_valuation": "O alvo anterior é R$ 106,89, com revisão de -2,00%. O modelo utiliza custo de capital próprio de 11,68% e WACC de 9,69%. O P/L à frente é 5,2x e a dispersão entre métodos é 21,16%. A atualização utiliza o alvo disponível no pacote atual, sem transportar o estado de revisão da nota anterior. As probabilidades ausentes permanecem indisponíveis.",
+    "conviccao": 1,
+    "dados_ate": "2026-10-26",
+    "dados_simulados": false,
+    "data": "2026-10-26",
+    "ficha": [
+      {
+        "fato": "val.BR_PETROBRAS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 57,83"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 104,75"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+81,13%"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 145,35"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 67,70"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,68%"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.wacc",
+        "rotulo": "WACC",
+        "valor": "9,69%"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+95,82%"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+81,48%"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "5,2x"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,5x"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 62,87"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+66,60%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F1",
+        "instituicao": "Petrobras",
+        "publicado_em": "2026-08-06",
+        "tipo": "Relações com investidores",
+        "titulo": "Comunicado sobre o resultado trimestral",
+        "url": "https://agencia.petrobras.com.br/w/negocio/petrobras-lucra-r-52-4-bilh%C3%B5es-no-segundo-trimestre-de-2026"
+      },
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F2",
+        "instituicao": "SEC — Petrobras",
+        "publicado_em": "2026-10-13",
+        "tipo": "Regulador",
+        "titulo": "Calendário de divulgação operacional e financeira",
+        "url": "https://www.sec.gov/Archives/edgar/data/1119639/000129281426004918/pbr20261013_6k1.htm"
+      },
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F3",
+        "instituicao": "Petrobras",
+        "publicado_em": "2026-10-26",
+        "tipo": "Relações com investidores",
+        "titulo": "Aprimoramento da produção de SAF com menor intensidade de carbono",
+        "url": "https://agencia.petrobras.com.br/w/negocio/petrobras-aprimora-produ%C3%A7%C3%A3o-e-oferece-ao-mercado-saf-com-menor-intensidade-de-carbono"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Confrontar produção e vendas com a conversão em caixa após investimentos.",
+      "Reavaliar premissas quando forem divulgados o resultado e a apresentação financeira.",
+      "Rever a materialidade de SAF após evidência de comercialização e retorno econômico."
+    ],
+    "governanca": "O calendário arquivado na SEC permite separar os marcos operacionais da apresentação financeira. A análise de alocação de capital requer conciliar investimento, endividamento e distribuição com documentos completos; esta consulta não revalida todas as políticas de governança.",
+    "guidance": "não avaliado",
+    "issuer_id": "BR_PETROBRAS",
+    "lacunas_de_dados": [
+      "Probabilidades implícitas dos cenários otimista e pessimista indisponíveis no código.",
+      "Resultado financeiro do trimestre seguinte ainda não divulgado conforme calendário consultado.",
+      "Contribuição econômica específica de SAF não quantificada no pacote."
+    ],
+    "modelo_de_cobertura": "2026-10-26",
+    "negocio": "Companhia integrada de petróleo e gás, com exploração e produção, refino e comercialização. O pré-sal sustenta a oferta, enquanto a integração com o refino transmite preços de petróleo, câmbio e utilização industrial à geração de caixa. A certificação de combustíveis de menor intensidade de carbono abre mercados sujeitos a exigências específicas.",
+    "nome": "Petrobras",
+    "o_que_mudou": "Desde a nota anterior, incorporamos o comunicado de aprimoramento e certificação do SAF na Reduc e os fatos atuais do modelo. Mantemos a separação entre avanço industrial e retorno econômico comprovado. O calendário segue como referência para a próxima revisão operacional e financeira.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRAVA",
+        "nome": "Brava Energia"
+      },
+      {
+        "issuer_id": "BR_COSAN",
+        "nome": "Cosan"
+      },
+      {
+        "issuer_id": "BR_PRIO",
+        "nome": "PRIO"
+      },
+      {
+        "issuer_id": "BR_RECV",
+        "nome": "PetroRecôncavo"
+      },
+      {
+        "issuer_id": "BR_ULTRAPAR",
+        "nome": "Ultrapar"
+      },
+      {
+        "issuer_id": "BR_VIBRA",
+        "nome": "Vibra Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O comunicado do último resultado consultado atribui a melhora operacional à produção e ao refino. A tese depende da persistência dessa geração após investimentos, sem extrapolar o efeito de preços ou eventos exclusivos do período.",
+        "titulo": "Caixa após reinvestimento"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A Petrobras informou certificação e aprimoramento do SAF produzido na Reduc. A elegibilidade comercial é um avanço industrial; não comprova, isoladamente, volume contratado, margem ou retorno do capital aplicado.",
+        "titulo": "Opção comercial com prova econômica pendente"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_PETROBRAS.rating_codigo",
+            "nome": "Rating da cobertura (12 meses)",
+            "valor": "Compra"
+          },
+          {
+            "fato": "val.BR_PETROBRAS.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "+81,48%"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O rating do código é Compra e o alpha relativo é +81,48%. A leitura qualitativa continua cautelosa até confrontar o modelo com o próximo conjunto de informações operacionais e financeiras.",
+        "titulo": "Valuation sujeito a validação operacional"
+      }
+    ],
+    "publicada_em": "2026-10-27T01:59:31.934086+00:00",
+    "resumo": "O modelo aponta alvo de R$ 104,75, ante referência de R$ 57,83, com potencial de +81,13% e confiança B. A certificação de SAF na Reduc amplia uma opção comercial, mas sua contribuição econômica ainda precisa ser demonstrada. Mantemos postura qualitativa neutra e baixa convicção até a divulgação operacional e financeira.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Investimentos e compromissos de capital podem limitar a conversão do desempenho operacional em caixa distribuível."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_PETROBRAS.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "+66,60%"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "A distância do alvo em relação ao consenso público, +66,60%, exige revalidação de premissas; não representa erro comprovado do mercado."
+      }
+    ],
+    "setor": "Energia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Petrobras: execução industrial e disciplina de caixa antes do resultado",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O comunicado de resultado consultado é do trimestre anterior e relaciona o desempenho a produção, refino e ambiente de preços. O calendário regulatório confirma que a divulgação financeira do trimestre seguinte ainda é futura. Não tratamos notícias industriais como substituto desse resultado.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Maior disponibilidade industrial pode sustentar caixa, mas preços realizados, custos e investimentos determinam o retorno efetivo.",
+        "vetor": "Produção, refino e geração de caixa"
+      },
+      {
+        "direcao": "positivo",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "sensibilidade": "baixa",
+        "texto": "A certificação amplia a capacidade de atender requisitos comerciais de sustentabilidade; a contribuição financeira não foi quantificada nesta nota.",
+        "vetor": "Acesso ao mercado de SAF"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

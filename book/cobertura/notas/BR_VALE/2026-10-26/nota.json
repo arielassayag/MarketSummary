@@ -1,0 +1,188 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_VALE",
+  "data": "2026-10-26",
+  "tipo": "atualizacao",
+  "titulo": "Vale: financiamento na China e custo completo antes do relatório integrado",
+  "resumo": "Mantemos postura neutra e baixa convicção antes do resultado. O pedido de registro de dívida na China amplia uma alternativa de financiamento, sem representar captação concluída. O modelo indica {{fact:val.BR_VALE.rating_codigo}}, alvo de {{fact:val.BR_VALE.preco_alvo}} ante preço de {{fact:val.BR_VALE.preco}}, com potencial de {{fact:val.BR_VALE.upside}}. A produção precisa remunerar custos, reinvestimento e reparação.",
+  "negocio": "Mineradora de minério de ferro, cobre e níquel, com infraestrutura logística. Qualidade do produto, preço realizado, frete e disponibilidade condicionam a margem; investimentos e obrigações de reparação condicionam o caixa atribuível.",
+  "pilares_tese": [
+    {
+      "titulo": "Financiamento sujeito a aprovação",
+      "texto": "Vale, SEC, 2026-10-20: a subsidiária Vale Overseas apresentou pedido de registro do programa de Panda Bonds. Aprovação e emissões futuras dependem de condições específicas. Não há fundamento para reconhecer ingresso de caixa ou redução de custo de dívida apenas pelo pedido.",
+      "evidencias": [
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Custo completo continua central",
+      "texto": "Vale, 2026-07-30: câmbio e frete pressionaram os custos do minério; metais básicos receberam benefício de subprodutos. A contribuição de proteção financeira deve permanecer separada da eficiência operacional.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Próxima leitura será integrada",
+      "texto": "Vale, 2026-10-01: produção, vendas e finanças passam a compor o Relatório de Desempenho a partir de 3T26. A divulgação conjunta permitirá confrontar realização e custos, sem supor uma prévia operacional independente.",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Preço realizado e custo completo",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Qualidade, frete e subprodutos precisam ser conciliados com caixa econômico após reinvestimento.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Alternativas de financiamento",
+      "direcao": "incerto",
+      "sensibilidade": "media",
+      "texto": "Acesso potencial ao mercado chinês pode ampliar flexibilidade. Moeda, custo final e prazo dependem de emissão efetiva e não foram presumidos.",
+      "evidencias": [
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Câmbio, frete e preços minerais podem absorver ganhos de volume; obrigações de reparação exigem recursos adicionais.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "Registro de programa de dívida pode não resultar em emissão; garantia da controladora exige avaliar o custo completo da eventual captação.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "F3"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Produtividade e realização sustentam retorno após obrigações. Alvo {{fact:val.BR_VALE.alvo_otimista}}, com probabilidade implícita {{fact:val.BR_VALE.prob_otimista}}.",
+    "base": "Custo completo e disciplina de capital determinam o retorno. Alvo {{fact:val.BR_VALE.preco_alvo}}.",
+    "pessimista": "Custos e compromissos absorvem a geração operacional. Alvo {{fact:val.BR_VALE.alvo_pessimista}}, com probabilidade implícita {{fact:val.BR_VALE.prob_pessimista}}."
+  },
+  "comentario_valuation": "O alvo anterior é {{fact:cob.BR_VALE.alvo_anterior}}, com revisão de {{fact:cob.BR_VALE.variacao_alvo}}. O retorno esperado é {{fact:val.BR_VALE.etr}}, com alpha relativo de {{fact:val.BR_VALE.alpha_rel}}. O ke é {{fact:val.BR_VALE.ke}} e o consenso público aponta {{fact:val.BR_VALE.consenso_alvo}}. A diferença de {{fact:val.BR_VALE.diff_consenso}} não comprova a expectativa efetivamente incorporada ao preço. Pares de celulose, siderurgia e holdings têm exposições distintas; a comparação quantitativa não demonstra vantagem operacional.",
+  "ultimo_resultado": "O resultado financeiro consultado continua sendo o de 2T26. EBITDA proforma e fluxo de caixa recorrente melhoraram, enquanto a revisão de custos teve direções distintas entre minério e metais básicos. Não agregamos essas direções em classificação única de guidance. O próximo relatório está previsto para 2026-10-29.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "O comunicado regulatório informa garantia integral e incondicional da Vale para eventuais títulos do programa. Separar autorização, emissão e uso dos recursos. Reparação e descaracterização precisam permanecer na avaliação do caixa distribuível.",
+  "posicao_competitiva": {
+    "titulo": "Qualidade e logística",
+    "texto": "Testar se qualidade e confiabilidade logística sustentam realização após frete e custos completos; subprodutos não equivalem a ganho permanente de produtividade.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Operação e efeitos financeiros",
+    "texto": "Reconciliar medidas proforma e caixa recorrente com desembolsos e benefícios de proteção financeira antes de extrapolar retorno.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Flexibilidade sem caixa presumido",
+    "texto": "O programa proposto cria uma alternativa condicionada. Avaliar eventual emissão por custo, moeda, prazo e emprego dos recursos, sem atribuir ganho econômico antecipado.",
+    "evidencias": [
+      "F3"
+    ]
+  },
+  "contratese": {
+    "titulo": "Retorno após compromissos",
+    "texto": "A neutralidade deve ser revista se o relatório integrado demonstrar melhora persistente de caixa após reinvestimento e obrigações, ou deterioração que invalide as premissas.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Conciliação operacional e financeira",
+      "texto": "Confrontar produção, vendas, realização, frete e custo completo na divulgação conjunta.",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Captação efetiva",
+      "texto": "Acompanhar aprovação do programa e termos de eventual emissão, preservando a distinção entre pedido e caixa recebido.",
+      "evidencias": [
+        "F3"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Divulgação conjunta de produção, vendas e desempenho financeiro, após o fechamento.",
+      "data": "2026-10-29",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "descricao": "Teleconferência de resultados para discussão do desempenho.",
+      "data": "2026-10-30",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "o_que_mudou": "Incorporamos o pedido de registro de Panda Bonds divulgado após a nota anterior e confirmamos o novo calendário integrado. Atualizamos os fatos do valuation. Não reconhecemos captação concluída nem resultado de 3T26 antes da divulgação oficial.",
+  "gatilhos_revisao": [
+    "Relatório integrado altera a leitura de realização, custos e caixa após obrigações.",
+    "Emissão efetiva muda custo e perfil do financiamento.",
+    "Reparação ou projetos alteram o caixa atribuível."
+  ],
+  "lacunas_de_dados": [
+    "Sem lacunas quantitativas sinalizadas pelo modelo; diligência qualitativa permanece aberta.",
+    "Resultado de 3T26 ainda futuro no calendário oficial.",
+    "Termos e execução de eventual captação não confirmados.",
+    "Reconciliação integral de reparação e retorno de projetos pendente; percepção variante não comprovada."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Vale",
+      "titulo": "Desempenho financeiro, custos e reparação",
+      "url": "https://www.vale.com/ca/confira-os-resultados-financeiros-do-2t26",
+      "publicado_em": "2026-07-30",
+      "consultado_em": "2026-10-26"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Vale",
+      "titulo": "Calendário de divulgação do relatório integrado",
+      "url": "https://www.vale.com/pt/w/vale-divulga-resultados-3t26-29-outubro/-/categories",
+      "publicado_em": "2026-10-01",
+      "consultado_em": "2026-10-26"
+    },
+    {
+      "id": "F3",
+      "tipo": "regulatorio",
+      "instituicao": "SEC — Vale",
+      "titulo": "Pedido de registro do programa de Panda Bonds na China",
+      "url": "https://www.sec.gov/Archives/edgar/data/917851/0001292814-26-004954.txt",
+      "publicado_em": "2026-10-20",
+      "consultado_em": "2026-10-26"
+    }
+  ]
+}

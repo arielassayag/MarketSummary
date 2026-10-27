@@ -1,0 +1,378 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-26",
+    "manifest_sha256": "96b074349c8934ac30658448f68661a4f9a20591d3e2b179d61182a28d057573",
+    "modelo_as_of": "2026-10-26"
+  },
+  "conviccao": 1,
+  "data": "2026-10-26",
+  "hashes": {
+    "contexto": "54f1e4832d60a32a536265dd23e4d30bd8750fae1a2766da6336c60f30bc3005",
+    "factbook": "44efc31d565a691911b56c66669fa3df25d370691bc18421a0c23c48bbef1faf",
+    "nota_json": "d0a0326f93187dd9eee881cc1f43503df5f3c8801e4691d8c10a49a0467bb5da"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_GERDAU",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-26",
+  "published_at": "2026-10-27T01:46:57.055179+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O release registra execução de capex e recompras. O teste da tese é geração após manutenção e giro ao longo do ciclo; autorização de recompra e dividendo não assegura retorno futuro.",
+        "titulo": "Giro, investimento e acionista"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Conciliação do resultado do 3T26 e confirmação das perspectivas regionais e de investimento.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "A rentabilidade regional atravessa normalização cíclica; alvo R$ 24,23 e retorno esperado -0,81%.",
+      "otimista": "Margens e produtividade sustentam caixa após investimento; cenário calculado R$ 47,45.",
+      "pessimista": "Compressão de spreads e investimento pouco produtivo consomem valor; cenário R$ 1,50, sem garantia de piso."
+    },
+    "comentario_valuation": "O preço R$ 25,45 é confrontado com alvo R$ 24,23 e consenso público R$ 27,75. O modelo registra variação de alvo -18,08%, rating Neutro e ke 12,69%. Não atribuímos a revisão do alvo a um resultado específico sem sua conciliação. Pares incluem holdings e outros materiais; o P/VP 0,9x não comprova desconto econômico.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se spreads favoráveis mascararem retorno insuficiente após investimento e custos de manutenção. O desempenho regional precisa sobreviver ao ciclo.",
+        "titulo": "Margem cíclica sem retorno estrutural"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-26",
+    "dados_simulados": false,
+    "data": "2026-10-26",
+    "ficha": [
+      {
+        "fato": "val.BR_GERDAU.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 25,45"
+      },
+      {
+        "fato": "val.BR_GERDAU.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 24,23"
+      },
+      {
+        "fato": "val.BR_GERDAU.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-4,81%"
+      },
+      {
+        "fato": "val.BR_GERDAU.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_GERDAU.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_GERDAU.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 47,45"
+      },
+      {
+        "fato": "val.BR_GERDAU.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "2,51%"
+      },
+      {
+        "fato": "val.BR_GERDAU.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 1,50"
+      },
+      {
+        "fato": "val.BR_GERDAU.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "0,00%"
+      },
+      {
+        "fato": "val.BR_GERDAU.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,69%"
+      },
+      {
+        "fato": "val.BR_GERDAU.wacc",
+        "rotulo": "WACC",
+        "valor": "11,05%"
+      },
+      {
+        "fato": "val.BR_GERDAU.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_GERDAU.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-0,81%"
+      },
+      {
+        "fato": "val.BR_GERDAU.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-12,93%"
+      },
+      {
+        "fato": "val.BR_GERDAU.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,7x"
+      },
+      {
+        "fato": "val.BR_GERDAU.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,9x"
+      },
+      {
+        "fato": "val.BR_GERDAU.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 27,75"
+      },
+      {
+        "fato": "val.BR_GERDAU.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-12,70%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F1",
+        "instituicao": "Gerdau",
+        "publicado_em": "2026-08-04",
+        "tipo": "Relações com investidores",
+        "titulo": "Comunicado de desempenho e investimento",
+        "url": "https://www2.gerdau.com.br/noticias/gerdau-encerra-2o-trimestre-de-2026-com-ebitda-ajustado-de-r-34-bilhoe/"
+      },
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F2",
+        "instituicao": "SEC — Gerdau",
+        "publicado_em": "2026-08-04",
+        "tipo": "Regulador",
+        "titulo": "Release trimestral arquivado pelo emissor",
+        "url": "https://www.sec.gov/Archives/edgar/data/1073404/000110465926090494/tm2621830d2_ex99-1.htm"
+      },
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F3",
+        "instituicao": "Gerdau",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Central de resultados",
+        "url": "https://ri.gerdau.com/informacoes-ao-mercado/central-de-resultados/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultado novo e orientação da gestão recebidos em fonte primária.",
+      "Margens normalizadas deixam de remunerar capital por operação.",
+      "Caixa após giro e investimento confirma ou invalida a tese."
+    ],
+    "governanca": "Distinguir Gerdau da holding Metalúrgica Gerdau e o perímetro consolidado das participações com controle compartilhado. Dividendos aprovados e recompras autorizadas devem ser separados dos desembolsos comprovados.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar preço realizado, sucata, utilização, giro e capex por operação. Invalidar a melhora quando o avanço de EBITDA não chegar ao caixa após reinvestimento.",
+        "titulo": "Retorno e conversão regional"
+      }
+    ],
+    "issuer_id": "BR_GERDAU",
+    "lacunas_de_dados": [
+      "Relatório e teleconferência do 3T26 não recebidos nesta consulta.",
+      "Demonstrações e caixa por segmento não integralmente reconciliados.",
+      "Guidance atual, retorno dos projetos e execução de pagamentos por conferir.",
+      "Consenso público não comprova percepção de mercado."
+    ],
+    "modelo_de_cobertura": "2026-10-26",
+    "negocio": "A Gerdau produz aços longos, especiais e planos, com operações nas Américas e atividade de minério no Brasil. A análise precisa distinguir preço, sucata, energia e utilização por região; a diversificação não elimina a exposição ao ciclo.",
+    "nome": "Gerdau",
+    "o_que_mudou": "A avaliação foi atualizada para 26/10/2026, com variação do alvo -18,08%. Acrescentamos a conferência do release primário do 2T26 na SEC. O resultado do 3T26 indicado para hoje não foi recebido; preservamos tipo atualização e guidance não avaliado.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CBA",
+        "nome": "Companhia Brasileira de Alumínio"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_SUZANO",
+        "nome": "Suzano"
+      },
+      {
+        "issuer_id": "BR_UNIPAR",
+        "nome": "Unipar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O comunicado do 2T26 destaca a América do Norte e recuperação brasileira mais gradual, ainda sob concorrência importada. A hipótese exige preservação de margem depois da normalização do ciclo; não projetamos essa descrição sobre o trimestre ainda não recebido.",
+        "titulo": "Margens regionais e custo entregue"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fato": "val.BR_GERDAU.wacc",
+            "nome": "Custo médio ponderado de capital",
+            "valor": "11,05%"
+          }
+        ],
+        "texto": "O release do 2T26 registra fluxo livre positivo apesar do consumo de capital de giro, com investimento e distribuição concorrendo pelo caixa. A condição econômica é retorno após manutenção e expansão superior ao WACC 11,05%.",
+        "titulo": "Capital deve produzir caixa"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A presença regional oferece exposições distintas. Nossa hipótese exige custo competitivo e disciplina de oferta em cada operação, sem extrapolar a rentabilidade norte-americana para o grupo.",
+        "titulo": "Diversificação exige retorno local"
+      }
+    ],
+    "publicada_em": "2026-10-27T01:46:57.055179+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O EBITDA ajustado inclui parcela proporcional de operações com controle compartilhado, conforme o release. Conciliar essa medida com lucro societário e fluxo de caixa evita equiparar margem operacional a recurso distribuível.",
+        "titulo": "Ajustado não equivale a caixa livre"
+      }
+    ],
+    "resumo": "Mantemos leitura neutra e baixa convicção. O modelo aponta alvo R$ 24,23, potencial -4,81% e retorno esperado -0,81%. A sustentação operacional continua dependendo das margens regionais e do caixa após investimento. O resultado do 3T26 indicado para hoje não foi recebido na central consultada; a leitura operacional documentada abaixo refere-se ao 2T26.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Importações, custos metálicos e menor utilização podem pressionar margem e comprometer retorno dos projetos."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "alta",
+        "texto": "O trimestre programado para hoje não foi recebido; eventual mudança de guidance ou de operação permanece por conferir."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Gerdau — avaliação incorpora maior exigência de retorno, com resultado novo por conferir",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O release primário do 2T26, de 04/08/2026, registra melhora sequencial por segmento e maior contribuição da América do Norte, com Brasil ainda inferior à comparação anual em EBITDA ajustado. O caixa livre gerencial foi positivo apesar do giro, juros e impostos. O release do 3T26 não foi recebido nesta consulta; guidance e tom atuais permanecem não avaliados.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Margens favoráveis na América do Norte não comprovam recuperação equivalente no Brasil. Testar preço realizado e custo entregue na mesma moeda e separar eficiência de câmbio.",
+        "vetor": "Preços, sucata e utilização por região"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_GERDAU.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,69%"
+          },
+          {
+            "fato": "val.BR_GERDAU.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "16,69%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O ke é 12,69%; a dispersão entre métodos é 16,69%. A amplitude dos cenários exige conferir caixa normalizado e reinvestimento.",
+        "vetor": "Investimento e retorno exigido"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

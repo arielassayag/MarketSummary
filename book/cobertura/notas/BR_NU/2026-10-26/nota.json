@@ -1,0 +1,171 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_NU",
+  "data": "2026-10-26",
+  "tipo": "atualizacao",
+  "titulo": "Nu: transição na liderança de tecnologia amplia a diligência sobre execução",
+  "resumo": "A saída anunciada do diretor de tecnologia adiciona um ponto de acompanhamento à expansão internacional. Mantemos postura qualitativa neutra e baixa convicção. O modelo indica {{fact:val.BR_NU.rating_codigo}}, alvo de {{fact:val.BR_NU.preco_alvo}} ante preço de {{fact:val.BR_NU.preco}}, com potencial de {{fact:val.BR_NU.upside}}. A divergência quantitativa não estabelece, por si, o que o mercado antecipa.",
+  "negocio": "Grupo financeiro digital com crédito, depósitos e serviços no Brasil, México e Colômbia. A monetização do relacionamento depende de atividade, custo de servir, financiamento e perdas. A expansão internacional exige avaliar retorno e capital por jurisdição.",
+  "pilares_tese": [
+    {
+      "titulo": "Execução durante a transição",
+      "texto": "Nu, em comunicado de 2026-10-23 distribuído pela Business Wire, anunciou a saída de Eric Young. David Vélez supervisionará a área global de plataformas interinamente com John Walton. A companhia mantém as prioridades estratégicas; a transição exige acompanhar continuidade operacional sem presumir deterioração.",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Retorno ajustado ao risco",
+      "texto": "Nu, 2026-08-13: a melhora dos atrasos iniciais teve componente sazonal, enquanto os atrasos longos cresceram. O próximo resultado deve permitir testar a persistência da rentabilidade após perdas.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Divergência quantitativa",
+      "texto": "O alpha relativo de {{fact:val.BR_NU.alpha_rel}} acompanha confiança {{fact:val.BR_NU.confianca_codigo}}. O conjunto de pares inclui bancos, seguradoras e infraestrutura de mercado; a comparação exige atenção a capital e fontes de receita distintos.",
+      "evidencias": [
+        "val.BR_NU.alpha_rel",
+        "val.BR_NU.confianca_codigo"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Continuidade de plataformas e sucessão",
+      "direcao": "incerto",
+      "sensibilidade": "media",
+      "texto": "A busca de um sucessor permanente pode preservar a agenda anunciada; acompanhar estabilidade de serviços e capacidade de execução, sem atribuir incidentes não observados.",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Crédito e monetização",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Testar se novas safras sustentam a margem após perdas, em vez de extrapolar a melhora sazonal.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "A transição de liderança pode disputar atenção gerencial durante a expansão; não há evidência nesta consulta de interrupção operacional.",
+      "probabilidade": "media",
+      "impacto": "medio",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "texto": "Maior exposição a segmentos de crédito arriscados pode elevar perdas quando as safras amadurecem.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Transição preserva execução e monetização remunera perdas e capital. Alvo otimista de {{fact:val.BR_NU.alvo_otimista}}, sem probabilidade implícita disponível.",
+    "base": "Expansão continua sob exigência de rentabilidade por país. Alvo de {{fact:val.BR_NU.preco_alvo}}.",
+    "pessimista": "Perdas e despesas de expansão absorvem a monetização. Alvo pessimista de {{fact:val.BR_NU.alvo_pessimista}}, sem probabilidade implícita disponível."
+  },
+  "comentario_valuation": "O alvo anterior de {{fact:cob.BR_NU.alvo_anterior}} foi revisto em {{fact:cob.BR_NU.variacao_alvo}}. O retorno total esperado é {{fact:val.BR_NU.etr}}, com ke de {{fact:val.BR_NU.ke}}. O consenso público indica alvo de {{fact:val.BR_NU.consenso_alvo}}, e a diferença da casa é {{fact:val.BR_NU.diff_consenso}}. Essa distância não comprova percepção variante. WACC e probabilidades implícitas permanecem indisponíveis.",
+  "ultimo_resultado": "O resultado consultado permanece o de 2T26, divulgado em 2026-08-13. Receita e lucro avançaram; a eficiência piorou sequencialmente com despesas e expansão internacional. A leitura requer distinguir medidas gerenciais das contábeis. Não identificamos novo resultado financeiro completo nesta consulta.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "O aviso de 2026-10-23 prevê a permanência do diretor de tecnologia até 2026-11-12 para apoiar a transição. A supervisão interina do fundador e do responsável por segurança exige acompanhamento de responsabilidades e sucessão. Não inferimos alteração de política de capital a partir desse aviso.",
+  "posicao_competitiva": {
+    "titulo": "Relacionamento com qualidade",
+    "texto": "Testar se atividade e relacionamento principal se traduzem em resultado recorrente. Alegações de liderança da companhia não substituem comparação independente.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Sazonalidade e reconciliação",
+    "texto": "A melhora sazonal e as medidas gerenciais requerem leitura separada antes de extrapolar rentabilidade.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Financiamento por jurisdição",
+    "texto": "A estratégia de otimização dos depósitos mexicanos descrita pela companhia deve ser confrontada com crescimento e capital local. Depósitos não representam caixa livre dos acionistas.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Persistência do retorno",
+    "texto": "A cautela perderia força se a expansão preservasse retorno após perdas e continuidade operacional durante a sucessão. Esse teste permanece aberto.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Sucessão e operação",
+      "texto": "Acompanhar nomeação permanente, responsabilidades interinas e eventuais comunicações oficiais sobre estabilidade dos serviços.",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Safras maduras",
+      "texto": "Confrontar evolução dos atrasos, margem após perdas e despesas internacionais com o capital empregado.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Próximo resultado indicado pela cobertura; reavaliar risco de crédito e capital por país.",
+      "data": "2026-11-12",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "evento.BR_NU.proximo_resultado"
+      ]
+    }
+  ],
+  "o_que_mudou": "Desde a nota anterior, incorporamos o aviso de saída do diretor de tecnologia e a estrutura de supervisão interina. Os fatos de valuation foram atualizados. A transição é um risco de execução a monitorar, sem evidência que sustente alterar a postura qualitativa nesta data.",
+  "gatilhos_revisao": [
+    "Sucessão permanente ou mudança material de responsabilidades na área de tecnologia.",
+    "Safras maduras alteram a rentabilidade após perdas.",
+    "Resultados por país mudam a avaliação do capital empregado."
+  ],
+  "lacunas_de_dados": [
+    "WACC e probabilidades dos cenários indisponíveis.",
+    "Resultado financeiro posterior ao de 2T26 não recebido nesta consulta.",
+    "Capital por jurisdição sem conciliação integral.",
+    "Percepção variante sem evidência independente; direitos de classe e diluição sem nova revisão integral."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Nu Holdings",
+      "titulo": "Resultados trimestrais e indicadores de crédito",
+      "url": "https://nu.com/en/newsroom/company/nu-holdings-ltd-reports-second-quarter-2026-financial-results",
+      "publicado_em": "2026-08-13",
+      "consultado_em": "2026-10-26"
+    },
+    {
+      "id": "F2",
+      "tipo": "imprensa",
+      "instituicao": "Nu Holdings — Business Wire via StreetInsider",
+      "titulo": "Aviso ao mercado sobre transição na liderança de tecnologia",
+      "url": "https://www.streetinsider.com/Business%2BWire/Notice%2Bto%2BMarket%3A%2BNu%2BHoldings%2BLtd./27228550.html",
+      "publicado_em": "2026-10-23",
+      "consultado_em": "2026-10-26"
+    }
+  ]
+}

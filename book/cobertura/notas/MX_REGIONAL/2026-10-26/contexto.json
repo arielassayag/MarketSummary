@@ -1,0 +1,89 @@
+{
+  "avisos_tecnicos": [],
+  "dados_ate": "2026-10-26",
+  "data": "2026-10-26",
+  "fontes_sugeridas": [
+    {
+      "instituicao": "CNBV",
+      "tipo": "regulatorio",
+      "url": "https://www.gob.mx/cnbv"
+    },
+    {
+      "instituicao": "BMV — emissoras",
+      "tipo": "bolsa",
+      "url": "https://www.bmv.com.mx/"
+    },
+    {
+      "instituicao": "Banxico (SIE)",
+      "tipo": "banco_central",
+      "url": "https://www.banxico.org.mx/"
+    },
+    {
+      "instituicao": "INEGI",
+      "tipo": "estatistica_oficial",
+      "url": "https://www.inegi.org.mx/"
+    },
+    {
+      "instituicao": "Damodaran Online (NYU Stern) — prêmios de risco, betas e múltiplos setoriais",
+      "tipo": "dados_publicos",
+      "url": "https://pages.stern.nyu.edu/~adamodar/"
+    },
+    {
+      "instituicao": "FRED (Federal Reserve Bank of St. Louis) — juros e indicadores dos EUA",
+      "tipo": "dados_publicos",
+      "url": "https://fred.stlouisfed.org/"
+    }
+  ],
+  "is_synthetic": false,
+  "issuer_id": "MX_REGIONAL",
+  "lacunas": [
+    "Probabilidade implícita do otimista: sem dado na data.",
+    "Probabilidade implícita do pessimista: sem dado na data.",
+    "WACC: sem dado na data."
+  ],
+  "nome": "Regional (Banregio)",
+  "nomes": {
+    "MX_BAJIO": "Banco del Bajío",
+    "MX_BANORTE": "Grupo Financiero Banorte",
+    "MX_BMV": "Bolsa Mexicana de Valores",
+    "MX_GENTERA": "Gentera",
+    "MX_INBURSA": "Grupo Financiero Inbursa",
+    "MX_QUALITAS": "Quálitas",
+    "MX_REGIONAL": "Regional (Banregio)"
+  },
+  "nota_anterior": {
+    "autoria": "mente",
+    "conviccao": 1,
+    "data": "2026-10-11",
+    "proximo_resultado": "2026-10-26",
+    "stance": 0,
+    "tipo": "iniciacao",
+    "titulo": "Regional — crédito empresarial e separação econômica de Hey Banco"
+  },
+  "pais": "MX",
+  "pais_pt": "México",
+  "pares": [
+    "MX_BAJIO",
+    "MX_BANORTE",
+    "MX_BMV",
+    "MX_GENTERA",
+    "MX_INBURSA",
+    "MX_QUALITAS"
+  ],
+  "proximo_resultado": "2026-10-26",
+  "schema": "cdp.nota.contexto/v1",
+  "setor": "Financials",
+  "setor_pt": "Financeiro",
+  "snapshot": {
+    "as_of": "2026-10-26",
+    "manifest_sha256": "96b074349c8934ac30658448f68661a4f9a20591d3e2b179d61182a28d057573",
+    "modelo_as_of": "2026-10-26"
+  },
+  "tem_linha_eua": false,
+  "termos": [],
+  "tickers": [
+    "RA.MX",
+    "RA"
+  ],
+  "tipo_esperado": "atualizacao"
+}

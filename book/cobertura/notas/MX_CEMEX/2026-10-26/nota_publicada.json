@@ -1,0 +1,387 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-26",
+    "manifest_sha256": "96b074349c8934ac30658448f68661a4f9a20591d3e2b179d61182a28d057573",
+    "modelo_as_of": "2026-10-26"
+  },
+  "conviccao": 2,
+  "data": "2026-10-26",
+  "hashes": {
+    "contexto": "32cf4f07d91af8c8fcd52b0e254687803349939d17c8a5055868445bae320883",
+    "factbook": "cc8d06cc85ff07508fef78b39b8a7fb288c410d0926d541df4dd51059b6ba1ac",
+    "nota_json": "3b57eb21a5742438374a6f2c31797cf0fd7984a97030836810fc2aa27e8ed788"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_CEMEX",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-26",
+  "published_at": "2026-10-27T01:51:58.686950+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A administração pretende redirecionar recursos das alienações a investimentos estratégicos. O teste econômico é retorno realizado após capex e obrigações. Valores anunciados e recebidos devem permanecer separados.",
+        "titulo": "Reciclagem de ativos"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Execução das metas anuais de EBITDA e investimento, com confirmação das alienações ainda sujeitas a condições.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "guidance"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo US$ 11,85, com retorno esperado +16,91%, condicionado a margens sustentáveis.",
+      "otimista": "Eficiência persiste e caixa normalizado remunera o reinvestimento; cenário US$ 18,04.",
+      "pessimista": "Demanda e custos frustram economias e retorno; cenário US$ 6,15 sem garantia de proteção."
+    },
+    "comentario_valuation": "Preço US$ 10,19 e alvo US$ 11,85, em USD, com ke 9,83% e WACC 8,35%. O consenso público é US$ 13,88 e a dispersão 13,95%. A variação de alvo +12,01% pertence ao modelo e não é recalculada pela narrativa. A relação entre ADS e certificados precisa ser preservada; múltiplos de pares com outros ciclos não provam desconto.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A tese perde força se demanda e manutenção absorvem economias, ou se caixa passa a depender de alienações. A margem mexicana precisa ser acompanhada junto às operações pressionadas.",
+        "titulo": "Economias sem criação recorrente de valor"
+      }
+    ],
+    "conviccao": 2,
+    "dados_ate": "2026-10-26",
+    "dados_simulados": false,
+    "data": "2026-10-26",
+    "ficha": [
+      {
+        "fato": "val.MX_CEMEX.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 10,19"
+      },
+      {
+        "fato": "val.MX_CEMEX.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 11,85"
+      },
+      {
+        "fato": "val.MX_CEMEX.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+16,27%"
+      },
+      {
+        "fato": "val.MX_CEMEX.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_CEMEX.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.MX_CEMEX.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 18,04"
+      },
+      {
+        "fato": "val.MX_CEMEX.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "7,00%"
+      },
+      {
+        "fato": "val.MX_CEMEX.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 6,15"
+      },
+      {
+        "fato": "val.MX_CEMEX.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "7,76%"
+      },
+      {
+        "fato": "val.MX_CEMEX.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "9,83%"
+      },
+      {
+        "fato": "val.MX_CEMEX.wacc",
+        "rotulo": "WACC",
+        "valor": "8,35%"
+      },
+      {
+        "fato": "val.MX_CEMEX.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.MX_CEMEX.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+16,91%"
+      },
+      {
+        "fato": "val.MX_CEMEX.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+33,25%"
+      },
+      {
+        "fato": "val.MX_CEMEX.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "10,0x"
+      },
+      {
+        "fato": "val.MX_CEMEX.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,2x"
+      },
+      {
+        "fato": "val.MX_CEMEX.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 13,88"
+      },
+      {
+        "fato": "val.MX_CEMEX.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-14,62%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F1",
+        "instituicao": "SEC — Cemex",
+        "publicado_em": "2026-10-26",
+        "tipo": "Regulador",
+        "titulo": "Comunicado de resultado trimestral",
+        "url": "https://www.sec.gov/Archives/edgar/data/1076378/000119312526430975/d110472dex1.htm"
+      },
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F2",
+        "instituicao": "SEC — Cemex",
+        "publicado_em": "2026-10-26",
+        "tipo": "Regulador",
+        "titulo": "Relatório de resultados e demonstrações",
+        "url": "https://www.sec.gov/Archives/edgar/data/1076378/000119312526430975/d110472dex2.htm"
+      },
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F3",
+        "instituicao": "SEC — Cemex",
+        "publicado_em": "2026-10-26",
+        "tipo": "Regulador",
+        "titulo": "Apresentação de resultados e perspectivas",
+        "url": "https://www.sec.gov/Archives/edgar/data/1076378/000119312526430975/d110472dex3.htm"
+      },
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F4",
+        "instituicao": "SEC — Cemex",
+        "publicado_em": "2026-07-23",
+        "tipo": "Regulador",
+        "titulo": "Apresentação anterior de perspectivas",
+        "url": "https://www.sec.gov/Archives/edgar/data/1076378/000119312526313194/d46310dex3.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Economias persistem após manutenção e normalização de giro.",
+      "Retorno dos ativos e caixa recorrente não confirmam expansão de margem.",
+      "Alienações concluídas alteram perímetro e reinvestimento."
+    ],
+    "governanca": "Distinguir dívida, arrendamentos, títulos subordinados e direitos dos certificados e ADS. A companhia informa venda concluída de ativos em Atlanta e negociação exclusiva na França; negociação não comprova conclusão ou recebimento de recursos.",
+    "guidance": "mantido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Reconciliar giro, capex, arrendamentos, alienações e impostos. Confrontar crescimento de EBITDA e caixa na mesma base de operações continuadas.",
+        "titulo": "Caixa após manutenção e perímetro"
+      }
+    ],
+    "issuer_id": "MX_CEMEX",
+    "lacunas_de_dados": [
+      "Demonstrações, transcrição e ponte de caixa não integralmente reconciliadas.",
+      "Guidance de todos os itens e volumes não comparado integralmente.",
+      "Conclusão da negociação francesa não presumida.",
+      "Sem evidência para atribuir ao mercado uma expectativa operacional específica."
+    ],
+    "modelo_de_cobertura": "2026-10-26",
+    "negocio": "Cemex produz cimento, concreto, agregados e materiais associados. Redes locais, disponibilidade mineral, logística e energia condicionam a rentabilidade, com exposição à construção e infraestrutura em diferentes regiões.",
+    "nome": "Cemex",
+    "o_que_mudou": "A divulgação antes programada foi confirmada pelo resultado primário de 26/10/2026. A nota passa a pós-resultado e incorpora expansão operacional, diferença regional e composição do caixa. O guidance agregado de EBITDA é mantido frente à apresentação do 2T26.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_ALPEK",
+        "nome": "Alpek"
+      },
+      {
+        "issuer_id": "MX_ENDEAVOUR",
+        "nome": "Endeavour Silver"
+      },
+      {
+        "issuer_id": "MX_FIRSTMAJ",
+        "nome": "First Majestic Silver"
+      },
+      {
+        "issuer_id": "MX_GCC",
+        "nome": "GCC"
+      },
+      {
+        "issuer_id": "MX_GMEXICO",
+        "nome": "Grupo México"
+      },
+      {
+        "issuer_id": "MX_ORBIA",
+        "nome": "Orbia"
+      },
+      {
+        "issuer_id": "MX_PENOLES",
+        "nome": "Industrias Peñoles"
+      },
+      {
+        "issuer_id": "MX_TERNIUM",
+        "nome": "Ternium"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O release de 26/10/2026 associa a expansão de margem a preços, eficiências e demanda de cimento. O México avança, mas os Estados Unidos não apresentam a mesma trajetória de EBITDA. A sustentação exige desempenho por região, sem extrapolar o consolidado.",
+        "titulo": "Eficiência operacional observada"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A apresentação mostra melhora de caixa operacional, mas também contribuição de vendas de ativos. A hipótese de retorno exige geração após manutenção e obrigações, excluindo a repetição presumida de desinvestimentos.",
+        "titulo": "Caixa precisa ser recorrente"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A otimização das redes pode melhorar utilização e custo entregue. A tese exige retorno do capital em cada mercado; a presença internacional não assegura compensação simultânea entre regiões.",
+        "titulo": "Redes e eficiência local"
+      }
+    ],
+    "publicada_em": "2026-10-27T01:51:58.686950+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "O lucro trimestral avança, enquanto o acumulado mantém trajetória diferente. A ponte de caixa inclui vendas de ativos; separar esses recursos da geração operacional recorrente antes de inferir capacidade de distribuição.",
+        "titulo": "Operação e alienações têm funções distintas"
+      }
+    ],
+    "resumo": "O resultado do 3T26 confirma melhora operacional e avanço do programa Cutting Edge. A conversão de caixa deve ser normalizada por venda de ativos e manutenção. Mantemos visão neutra, com convicção baixa a moderada. O alvo US$ 11,85 implica potencial +16,27%; a confiança do modelo é C.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Demanda, energia e manutenção podem consumir economias. A diferença regional limita extrapolar a expansão consolidada de margem."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Vendas de ativos e menor desembolso de manutenção podem elevar caixa gerencial sem ganho equivalente de geração recorrente."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Cemex — eficiência avança, mas conversão de caixa exige separar alienações",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O 3T26 divulgado em 26/10/2026 apresenta crescimento de vendas, EBITDA, lucro atribuível e caixa operacional, com expansão da margem consolidada. A leitura regional mostra México favorável e pressão no EBITDA dos Estados Unidos. A apresentação mantém a faixa anual de crescimento de EBITDA já indicada no 2T26; classificamos esse guidance agregado como mantido, sem presumir manutenção de todos os itens e volumes.",
+    "vetores": [
+      {
+        "direcao": "positivo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Cutting Edge e preço realizado apoiam a margem. O teste subsequente é preservar economias com manutenção adequada e demanda normalizada, distinguindo resultados por região.",
+        "vetor": "Preço, volumes e economias"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Separar alienações, giro, pagamentos de arrendamento e capex. Maior fluxo gerencial não comprova igual avanço do caixa recorrente distribuível.",
+        "vetor": "Conversão em caixa normalizado"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

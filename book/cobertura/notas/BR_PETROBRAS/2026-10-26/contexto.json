@@ -1,0 +1,124 @@
+{
+  "avisos_tecnicos": [],
+  "dados_ate": "2026-10-26",
+  "data": "2026-10-26",
+  "fontes_sugeridas": [
+    {
+      "instituicao": "CVM — RAD (fatos relevantes, ITR, DFP, formulário de referência)",
+      "tipo": "regulatorio",
+      "url": "https://www.rad.cvm.gov.br/ENET/frmConsultaExternaCVM.aspx"
+    },
+    {
+      "instituicao": "CVM — dados abertos (DFP, ITR, FRE, IPE)",
+      "tipo": "regulatorio",
+      "url": "https://dados.cvm.gov.br/"
+    },
+    {
+      "instituicao": "B3 — empresas listadas",
+      "tipo": "bolsa",
+      "url": "https://www.b3.com.br/"
+    },
+    {
+      "instituicao": "Banco Central do Brasil (Focus, SGS)",
+      "tipo": "banco_central",
+      "url": "https://www.bcb.gov.br/"
+    },
+    {
+      "instituicao": "IBGE",
+      "tipo": "estatistica_oficial",
+      "url": "https://www.ibge.gov.br/"
+    },
+    {
+      "instituicao": "SEC EDGAR — busca de documentos (20-F, 6-K, 10-K, 8-K)",
+      "tipo": "regulatorio",
+      "url": "https://www.sec.gov/edgar/search/"
+    },
+    {
+      "instituicao": "SEC EDGAR — dados XBRL por empresa (companyfacts)",
+      "tipo": "regulatorio",
+      "url": "https://www.sec.gov/search-filings/edgar-application-programming-interfaces"
+    },
+    {
+      "instituicao": "Damodaran Online (NYU Stern) — prêmios de risco, betas e múltiplos setoriais",
+      "tipo": "dados_publicos",
+      "url": "https://pages.stern.nyu.edu/~adamodar/"
+    },
+    {
+      "instituicao": "FRED (Federal Reserve Bank of St. Louis) — juros e indicadores dos EUA",
+      "tipo": "dados_publicos",
+      "url": "https://fred.stlouisfed.org/"
+    }
+  ],
+  "is_synthetic": false,
+  "issuer_id": "BR_PETROBRAS",
+  "lacunas": [
+    "Probabilidade implícita do otimista: sem dado na data.",
+    "Probabilidade implícita do pessimista: sem dado na data."
+  ],
+  "nome": "Petrobras",
+  "nomes": {
+    "BR_BRAVA": "Brava Energia",
+    "BR_COSAN": "Cosan",
+    "BR_PETROBRAS": "Petrobras",
+    "BR_PRIO": "PRIO",
+    "BR_RECV": "PetroRecôncavo",
+    "BR_ULTRAPAR": "Ultrapar",
+    "BR_VIBRA": "Vibra Energia"
+  },
+  "nota_anterior": {
+    "autoria": "mente",
+    "conviccao": 1,
+    "data": "2026-10-19",
+    "proximo_resultado": "2026-11-10",
+    "stance": 0,
+    "tipo": "atualizacao",
+    "titulo": "Petrobras — produção, retorno após reinvestimento e calendário confirmado"
+  },
+  "pais": "BR",
+  "pais_pt": "Brasil",
+  "pares": [
+    "BR_BRAVA",
+    "BR_COSAN",
+    "BR_PRIO",
+    "BR_RECV",
+    "BR_ULTRAPAR",
+    "BR_VIBRA"
+  ],
+  "proximo_resultado": "2026-11-10",
+  "schema": "cdp.nota.contexto/v1",
+  "setor": "Energy",
+  "setor_pt": "Energia",
+  "snapshot": {
+    "as_of": "2026-10-26",
+    "manifest_sha256": "96b074349c8934ac30658448f68661a4f9a20591d3e2b179d61182a28d057573",
+    "modelo_as_of": "2026-10-23"
+  },
+  "tem_linha_eua": true,
+  "termos": [
+    "BRAV3",
+    "BRAV3.SA",
+    "CSAN3",
+    "CSAN3.SA",
+    "PETR3",
+    "PETR3.SA",
+    "PETR4",
+    "PETR4.SA",
+    "PRIO3",
+    "PRIO3.SA",
+    "RECV3",
+    "RECV3.SA",
+    "UGPA3",
+    "UGPA3.SA",
+    "VBBR3",
+    "VBBR3.SA"
+  ],
+  "tickers": [
+    "PBR",
+    "PBR-A",
+    "PETR3.SA",
+    "PETR3",
+    "PETR4.SA",
+    "PETR4"
+  ],
+  "tipo_esperado": "atualizacao"
+}

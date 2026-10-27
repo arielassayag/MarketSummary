@@ -1,0 +1,318 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-26",
+    "manifest_sha256": "96b074349c8934ac30658448f68661a4f9a20591d3e2b179d61182a28d057573",
+    "modelo_as_of": "2026-10-26"
+  },
+  "conviccao": 1,
+  "data": "2026-10-26",
+  "hashes": {
+    "contexto": "3d102152e26e677b3af38b16174e9c3674a2acdf676580016c70b6078d15a3f3",
+    "factbook": "78d0f32f11ce537b146b12e4d28ec4a80dc0dcfef088e19eba17ac9f2dda352f",
+    "nota_json": "2ac49f5ffdb56d5702009654191f2b6481365a796be24476464464d9b0f747bc"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_VOLARIS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-26",
+  "published_at": "2026-10-27T01:56:09.017640+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O capex das perspectivas é líquido de pré-entregas financiadas. A diligência deve reconstruir obrigações brutas e arrendamentos antes de estimar capacidade de distribuição.",
+        "titulo": "Obrigações brutas da frota"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-27",
+        "descricao": "Teleconferência para esclarecer custos, motores e revisão das perspectivas.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Não há alvo próprio disponível. A hipótese exige conciliação de manutenção, arrendamentos e compensações.",
+      "otimista": "Disponibilidade e preço cobrem o custo completo, gerando caixa recorrente; cenário quantitativo indisponível.",
+      "pessimista": "Custos e indisponibilidade absorvem receita e restringem liquidez; não há preço de cenário calculado."
+    },
+    "comentario_valuation": "Preço de referência US$ 5,62, ke 14,17% e WACC 10,53%. O alvo próprio permanece Sem preço-alvo. O consenso público US$ 8,90 tem finalidade distinta. A avaliação exige fluxo com arrendamentos, pré-entregas e manutenção consistentes; EBITDAR isolado não remunera a frota integral.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A tese enfraquece se combustível, manutenção e financiamento absorvem a receita adicional, ou se a liquidez depende de compensações temporárias.",
+        "titulo": "Monetização sem retorno integral"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-26",
+    "dados_simulados": false,
+    "data": "2026-10-26",
+    "ficha": [
+      {
+        "fato": "val.MX_VOLARIS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 5,62"
+      },
+      {
+        "fato": "val.MX_VOLARIS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Sem preço-alvo"
+      },
+      {
+        "fato": "val.MX_VOLARIS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Sem preço-alvo"
+      },
+      {
+        "fato": "val.MX_VOLARIS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Sem preço-alvo"
+      },
+      {
+        "fato": "val.MX_VOLARIS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "Insuficiente"
+      },
+      {
+        "fato": "val.MX_VOLARIS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Sem preço-alvo"
+      },
+      {
+        "fato": "val.MX_VOLARIS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Sem preço-alvo"
+      },
+      {
+        "fato": "val.MX_VOLARIS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Sem preço-alvo"
+      },
+      {
+        "fato": "val.MX_VOLARIS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Sem preço-alvo"
+      },
+      {
+        "fato": "val.MX_VOLARIS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "14,17%"
+      },
+      {
+        "fato": "val.MX_VOLARIS.wacc",
+        "rotulo": "WACC",
+        "valor": "10,53%"
+      },
+      {
+        "fato": "val.MX_VOLARIS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.MX_VOLARIS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Sem preço-alvo"
+      },
+      {
+        "fato": "val.MX_VOLARIS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Sem preço-alvo"
+      },
+      {
+        "fato": "val.MX_VOLARIS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_VOLARIS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "9,5x"
+      },
+      {
+        "fato": "val.MX_VOLARIS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 8,90"
+      },
+      {
+        "fato": "val.MX_VOLARIS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Sem preço-alvo"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F1",
+        "instituicao": "Volaris — comunicado via GlobeNewswire",
+        "publicado_em": "2026-10-26",
+        "tipo": "Imprensa",
+        "titulo": "Comunicado trimestral reproduzido publicamente",
+        "url": "https://www.streetinsider.com/Globe%2BNewswire/Volaris%2BReports%2BFinancial%2BResults%2Bfor%2Bthe%2BThird%2BQuarter%2B2026%3A%2B%241%2BBillion%2BRevenue%2C%2Bup%2B32%25%2BYoY/27235059.html"
+      },
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F2",
+        "instituicao": "SEC — Volaris",
+        "publicado_em": "2026-07-21",
+        "tipo": "Regulador",
+        "titulo": "Resultado e perspectivas trimestrais anteriores",
+        "url": "https://www.sec.gov/Archives/edgar/data/1520504/000129281426003836/ex99-1.htm"
+      },
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F3",
+        "instituicao": "SEC — Volaris",
+        "publicado_em": "2026-10-06",
+        "tipo": "Regulador",
+        "titulo": "Tráfego preliminar e comentário operacional",
+        "url": "https://www.sec.gov/Archives/edgar/data/1520504/000129281426004856/ex99-1.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Conciliação completa do trimestre e esclarecimentos da teleconferência.",
+      "Receita recorrente remunera frota, manutenção e financiamento.",
+      "Compensações não recebidas ou condições societárias alteram liquidez."
+    ],
+    "governanca": "A combinação anunciada com Viva continua sujeita a condições e aprovações conforme o comunicado. A análise preserva direitos por instrumento e não antecipa sinergias, conclusão ou caixa liberado.",
+    "guidance": "reduzido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Conferir disponibilidade, compensações reconhecidas e recebidas, desembolsos de manutenção e pré-entregas. O teste é geração depois das obrigações completas.",
+        "titulo": "Motores e caixa após frota"
+      }
+    ],
+    "issuer_id": "MX_VOLARIS",
+    "lacunas_de_dados": [
+      "Sem alvo próprio, cenários, probabilidades ou retorno esperado no modelo.",
+      "Comunicado novo recebido por reprodução pública; anexo regulatório completo não localizado nesta consulta.",
+      "Demonstrações, arrendamentos e compensações não integralmente reconciliados.",
+      "Teleconferência futura e combinação com Viva ainda condicionada."
+    ],
+    "modelo_de_cobertura": "2026-10-26",
+    "negocio": "Transportadora de baixo custo com rotas ponto a ponto no México e mercados internacionais. Tarifa básica e receitas adicionais precisam cobrir o custo completo da frota, inclusive aeronaves indisponíveis, manutenção e arrendamentos.",
+    "nome": "Volaris",
+    "o_que_mudou": "A atualização passa a pós-resultado com comunicado do 3T26. Incorpora melhora comercial, perda líquida persistente e guidance anual de margem reduzido. A conclusão da combinação com Viva continua condicionada, e o modelo permanece sem alvo.",
+    "pais": "México",
+    "pares": [],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O comunicado do 3T26 apresenta EBIT positivo, porém perda líquida e pressão de combustível. A hipótese exige caixa depois de manutenção e arrendamentos, sem confundir melhora comercial com rentabilidade final.",
+        "titulo": "Receita maior precisa pagar a frota"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "As perspectivas recebidas mantêm compensações esperadas pelas inspeções de motores. Valores esperados não comprovam recebimento; testar a geração normalizada sem perpetuar compensações temporárias.",
+        "titulo": "Disponibilidade e compensações"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O modelo de tarifa básica pode ampliar demanda. A vantagem só se comprova quando receita por capacidade disponível remunera também aeronaves imobilizadas e obrigações; ocupação não basta.",
+        "titulo": "Custo completo como condição"
+      }
+    ],
+    "publicada_em": "2026-10-27T01:56:09.017640+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A melhora comercial recebida não elimina financiamento e tributos. Conciliar resultado operacional com perda líquida e caixa, distinguindo trimestre e acumulado.",
+        "titulo": "EBIT e perda líquida coexistem"
+      }
+    ],
+    "resumo": "O comunicado do 3T26 registra EBIT positivo e receita maior, mas perda líquida e redução da orientação anual de margem EBITDAR. A leitura permanece neutra e de baixa convicção. O modelo segue Sem preço-alvo, com confiança Insuficiente; o consenso público não substitui alvo próprio ausente.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "alta",
+        "texto": "Combustível, moeda e obrigações de frota podem absorver receita adicional. Compensações previstas e capex líquido de financiamento podem superestimar caixa recorrente."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Volaris — melhora comercial não elimina perda líquida e pressão do combustível",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O comunicado de 26/10/2026, distribuído pela companhia via GlobeNewswire e reproduzido publicamente, registra crescimento de receita e EBIT positivo, mas perda líquida e menor margem EBITDAR anual. Frente ao release do 2T26, a orientação anual de margem EBITDAR foi reduzida. A gestão mantém tom positivo sobre execução comercial; a teleconferência ainda é futura.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Tarifas e receitas adicionais devem remunerar capacidade disponível e custos completos. Combustível e indisponibilidade podem impedir que ocupação se traduza em retorno.",
+        "vetor": "Tarifa, combustível e motores"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,174 @@
+{
+  "mind": "codex",
+  "issuer_id": "LA_MELI",
+  "data": "2026-10-26",
+  "tipo": "atualizacao",
+  "titulo": "MercadoLibre: financiamento e retorno das coortes com valuation em revisão",
+  "resumo": "Mantemos neutralidade qualitativa e baixa convicção. O alvo da cobertura permanece {{fact:val.LA_MELI.preco_alvo}}, com confiança {{fact:val.LA_MELI.confianca_codigo}}. O crescimento precisa remunerar logística, incentivos e crédito; a conciliação do financiamento ajuda a distinguir expansão de criação de valor.",
+  "negocio": "Ecossistema latino-americano de comércio, logística, publicidade e serviços financeiros. A integração pode aprofundar relacionamento, mas cada atividade demanda capital e financiamento próprios.",
+  "pilares_tese": [
+    {
+      "titulo": "Engajamento exige retorno",
+      "texto": "MercadoLibre, carta de 2026-08-05: a administração associa maior frequência ao ecossistema e aos incentivos. A pressão sobre resultado operacional e lucro torna a maturação econômica das iniciativas o teste central.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Financiamento não elimina exposição",
+      "texto": "MercadoLibre, SEC, 2026-08-05: securitizações incluem interesses subordinados retidos e veículos consolidados. O acesso a financiamento não elimina a necessidade de avaliar risco retido, garantias e recursos restritos.",
+      "evidencias": [
+        "F3"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Economia das coortes",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Testar se retenção e produtividade logística sustentam margem após incentivos e perdas nas safras maduras.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Custo e disponibilidade de financiamento",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "A avaliação deve acompanhar cessões, securitizações e dívida junto dos ativos financiados, em vez de tomar caixa consolidado como recurso livre.",
+      "evidencias": [
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Margem do cartão pode permanecer pressionada se a maturação esperada pela administração não se confirmar.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "Restrições de caixa e interesses subordinados podem limitar flexibilidade durante a expansão do crédito.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F3"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Retenção e maturação do crédito remuneram os investimentos; referência quantitativa {{fact:val.LA_MELI.alvo_otimista}}. Não atribuímos valor alternativo.",
+    "base": "Reinvestimento sustenta atividade com retorno ainda a testar; alvo {{fact:val.LA_MELI.preco_alvo}}.",
+    "pessimista": "Incentivos e perdas absorvem a monetização; referência quantitativa {{fact:val.LA_MELI.alvo_pessimista}}. Não atribuímos probabilidade ausente."
+  },
+  "comentario_valuation": "O preço de referência é {{fact:val.LA_MELI.preco}}, o P/L à frente {{fact:val.LA_MELI.pl_fwd}} e o ke {{fact:val.LA_MELI.ke}}. A dispersão entre métodos é {{fact:val.LA_MELI.cv_metodos}}, enquanto o consenso público aponta {{fact:val.LA_MELI.consenso_alvo}}. Alvo, retorno esperado, alpha relativo e cenários próprios permanecem em revisão. Não usamos o consenso como substituto. Pares de educação, vestuário e incorporação não reproduzem a combinação de comércio e crédito.",
+  "ultimo_resultado": "A carta de 2T26 continua sendo a divulgação financeira completa localizada. A companhia descreve compressão da margem do cartão após perdas na expansão de novas coortes e espera melhora com maturação. Essa expectativa permanece hipótese da administração. O fluxo ajustado requer conciliação com o consolidado.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "As demonstrações distinguem caixa restrito e recursos de clientes de fundos corporativos. A revisão deve preservar essa separação e considerar o risco econômico retido nos veículos. Direitos de acionistas e diluição não foram integralmente requalificados nesta consulta.",
+  "posicao_competitiva": {
+    "titulo": "Complementaridade em teste",
+    "texto": "A companhia associa o uso conjunto de comércio e pagamentos a maior engajamento. Atribuímos essa leitura à administração; a vantagem durável exige validação por retorno.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Caixa disponível",
+    "texto": "Conciliar o crescimento dos saldos com restrições e obrigações, sem tratar recursos vinculados como liquidez distribuível.",
+    "evidencias": [
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Exposição retida",
+    "texto": "A análise de expansão do crédito deve incluir o capital subordinado e a exposição econômica mantida após securitização.",
+    "evidencias": [
+      "F3"
+    ]
+  },
+  "contratese": {
+    "titulo": "Retorno do reinvestimento",
+    "texto": "A cautela perderia força com evidência persistente de maturação das coortes e retorno após financiamento. A mera expansão da atividade não encerra esse teste.",
+    "evidencias": [
+      "F1",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Maturação e margem",
+      "texto": "Acompanhar retenção, custo de entrega e margem após perdas nas novas coortes.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Liquidez corporativa",
+      "texto": "Acompanhar caixa restrito, fundos de clientes e risco subordinado junto do financiamento do crédito.",
+      "evidencias": [
+        "F3"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Data provisória de divulgação de resultado no calendário da companhia; sujeita a confirmação.",
+      "data": "2026-11-04",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "o_que_mudou": "Atualizamos os fatos do valuation e aprofundamos a leitura de recursos restritos e risco retido nas securitizações. O calendário oficial continua provisório. Não localizamos novo resultado completo que resolva as lacunas de retorno por coorte; alvo e cenários seguem em revisão.",
+  "gatilhos_revisao": [
+    "Resultado confirma ou invalida a maturação econômica das novas coortes.",
+    "Custo de financiamento ou exposição retida altera o retorno do crédito.",
+    "Modelo conclui a revisão de alvo e cenários."
+  ],
+  "lacunas_de_dados": [
+    "Alvo, potencial, rating, retorno esperado e alpha relativo em revisão.",
+    "Cenários e probabilidades implícitas em revisão.",
+    "Data do próximo resultado provisória no calendário oficial.",
+    "Retorno por coorte e conciliação integral do caixa corporativo pendentes.",
+    "Conteúdo completo do comunicado de emissão listado no RI não foi recebido nesta consulta.",
+    "Percepção variante e vantagem competitiva independente não comprovadas."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "regulatorio",
+      "instituicao": "SEC — MercadoLibre",
+      "titulo": "Carta aos acionistas e demonstrações condensadas",
+      "url": "https://www.sec.gov/Archives/edgar/data/1099590/000109959026000021/meli-20260805xex991.htm",
+      "publicado_em": "2026-08-05",
+      "consultado_em": "2026-10-26"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "MercadoLibre",
+      "titulo": "Calendário de eventos e comunicados",
+      "url": "https://investor.mercadolibre.com/news-and-events",
+      "publicado_em": null,
+      "consultado_em": "2026-10-26"
+    },
+    {
+      "id": "F3",
+      "tipo": "regulatorio",
+      "instituicao": "SEC — MercadoLibre",
+      "titulo": "Demonstrações trimestrais, liquidez e securitizações",
+      "url": "https://www.sec.gov/Archives/edgar/data/1099590/000109959026000023/meli-20260630.htm",
+      "publicado_em": "2026-08-05",
+      "consultado_em": "2026-10-26"
+    }
+  ]
+}

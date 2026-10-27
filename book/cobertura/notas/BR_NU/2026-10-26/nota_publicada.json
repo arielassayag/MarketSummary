@@ -1,0 +1,378 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-26",
+    "manifest_sha256": "96b074349c8934ac30658448f68661a4f9a20591d3e2b179d61182a28d057573",
+    "modelo_as_of": "2026-10-23"
+  },
+  "conviccao": 1,
+  "data": "2026-10-26",
+  "hashes": {
+    "contexto": "da13c1a42af1ebda61a4213510d2f202e6f3f51130c49522a74d957936e773fe",
+    "factbook": "100a6237e5b87d55b78536286dc9fe4da51b44daf40599794470a4fbd0bb5390",
+    "nota_json": "a09d678a5858e5fbc60774361266f7bdf524cc7f8d478423ed672109d2eed4ba"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_NU",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-12",
+  "published_at": "2026-10-27T02:01:37.343828+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A estratégia de otimização dos depósitos mexicanos descrita pela companhia deve ser confrontada com crescimento e capital local. Depósitos não representam caixa livre dos acionistas.",
+        "titulo": "Financiamento por jurisdição"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-12",
+        "descricao": "Próximo resultado indicado pela cobertura; reavaliar risco de crédito e capital por país.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "evento.BR_NU.proximo_resultado",
+            "nome": "Próxima divulgação de resultado",
+            "valor": "2026-11-12"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Expansão continua sob exigência de rentabilidade por país. Alvo de US$ 8,27.",
+      "otimista": "Transição preserva execução e monetização remunera perdas e capital. Alvo otimista de US$ 9,30, sem probabilidade implícita disponível.",
+      "pessimista": "Perdas e despesas de expansão absorvem a monetização. Alvo pessimista de US$ 7,35, sem probabilidade implícita disponível."
+    },
+    "comentario_valuation": "O alvo anterior de US$ 8,49 foi revisto em -2,53%. O retorno total esperado é -40,62%, com ke de 11,39%. O consenso público indica alvo de US$ 18,92, e a diferença da casa é -56,27%. Essa distância não comprova percepção variante. WACC e probabilidades implícitas permanecem indisponíveis.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A cautela perderia força se a expansão preservasse retorno após perdas e continuidade operacional durante a sucessão. Esse teste permanece aberto.",
+        "titulo": "Persistência do retorno"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-26",
+    "dados_simulados": false,
+    "data": "2026-10-26",
+    "ficha": [
+      {
+        "fato": "val.BR_NU.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 14,73"
+      },
+      {
+        "fato": "val.BR_NU.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 8,27"
+      },
+      {
+        "fato": "val.BR_NU.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-43,83%"
+      },
+      {
+        "fato": "val.BR_NU.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_NU.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_NU.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 9,30"
+      },
+      {
+        "fato": "val.BR_NU.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_NU.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 7,35"
+      },
+      {
+        "fato": "val.BR_NU.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_NU.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,39%"
+      },
+      {
+        "fato": "val.BR_NU.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_NU.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.BR_NU.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-40,62%"
+      },
+      {
+        "fato": "val.BR_NU.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-70,17%"
+      },
+      {
+        "fato": "val.BR_NU.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "13,9x"
+      },
+      {
+        "fato": "val.BR_NU.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "5,4x"
+      },
+      {
+        "fato": "val.BR_NU.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 18,92"
+      },
+      {
+        "fato": "val.BR_NU.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-56,27%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F1",
+        "instituicao": "Nu Holdings",
+        "publicado_em": "2026-08-13",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultados trimestrais e indicadores de crédito",
+        "url": "https://nu.com/en/newsroom/company/nu-holdings-ltd-reports-second-quarter-2026-financial-results"
+      },
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F2",
+        "instituicao": "Nu Holdings — Business Wire via StreetInsider",
+        "publicado_em": "2026-10-23",
+        "tipo": "Imprensa",
+        "titulo": "Aviso ao mercado sobre transição na liderança de tecnologia",
+        "url": "https://www.streetinsider.com/Business%2BWire/Notice%2Bto%2BMarket%3A%2BNu%2BHoldings%2BLtd./27228550.html"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Sucessão permanente ou mudança material de responsabilidades na área de tecnologia.",
+      "Safras maduras alteram a rentabilidade após perdas.",
+      "Resultados por país mudam a avaliação do capital empregado."
+    ],
+    "governanca": "O aviso de 2026-10-23 prevê a permanência do diretor de tecnologia até 2026-11-12 para apoiar a transição. A supervisão interina do fundador e do responsável por segurança exige acompanhamento de responsabilidades e sucessão. Não inferimos alteração de política de capital a partir desse aviso.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar nomeação permanente, responsabilidades interinas e eventuais comunicações oficiais sobre estabilidade dos serviços.",
+        "titulo": "Sucessão e operação"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Confrontar evolução dos atrasos, margem após perdas e despesas internacionais com o capital empregado.",
+        "titulo": "Safras maduras"
+      }
+    ],
+    "issuer_id": "BR_NU",
+    "lacunas_de_dados": [
+      "WACC e probabilidades dos cenários indisponíveis.",
+      "Resultado financeiro posterior ao de 2T26 não recebido nesta consulta.",
+      "Capital por jurisdição sem conciliação integral.",
+      "Percepção variante sem evidência independente; direitos de classe e diluição sem nova revisão integral."
+    ],
+    "modelo_de_cobertura": "2026-10-26",
+    "negocio": "Grupo financeiro digital com crédito, depósitos e serviços no Brasil, México e Colômbia. A monetização do relacionamento depende de atividade, custo de servir, financiamento e perdas. A expansão internacional exige avaliar retorno e capital por jurisdição.",
+    "nome": "Nu Holdings",
+    "o_que_mudou": "Desde a nota anterior, incorporamos o aviso de saída do diretor de tecnologia e a estrutura de supervisão interina. Os fatos de valuation foram atualizados. A transição é um risco de execução a monitorar, sem evidência que sustente alterar a postura qualitativa nesta data.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Nu, em comunicado de 2026-10-23 distribuído pela Business Wire, anunciou a saída de Eric Young. David Vélez supervisionará a área global de plataformas interinamente com John Walton. A companhia mantém as prioridades estratégicas; a transição exige acompanhar continuidade operacional sem presumir deterioração.",
+        "titulo": "Execução durante a transição"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Nu, 2026-08-13: a melhora dos atrasos iniciais teve componente sazonal, enquanto os atrasos longos cresceram. O próximo resultado deve permitir testar a persistência da rentabilidade após perdas.",
+        "titulo": "Retorno ajustado ao risco"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_NU.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "-70,17%"
+          },
+          {
+            "fato": "val.BR_NU.confianca_codigo",
+            "nome": "Confiança do modelo",
+            "valor": "B"
+          }
+        ],
+        "texto": "O alpha relativo de -70,17% acompanha confiança B. O conjunto de pares inclui bancos, seguradoras e infraestrutura de mercado; a comparação exige atenção a capital e fontes de receita distintos.",
+        "titulo": "Divergência quantitativa"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Testar se atividade e relacionamento principal se traduzem em resultado recorrente. Alegações de liderança da companhia não substituem comparação independente.",
+        "titulo": "Relacionamento com qualidade"
+      }
+    ],
+    "publicada_em": "2026-10-27T02:01:37.343828+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A melhora sazonal e as medidas gerenciais requerem leitura separada antes de extrapolar rentabilidade.",
+        "titulo": "Sazonalidade e reconciliação"
+      }
+    ],
+    "resumo": "A saída anunciada do diretor de tecnologia adiciona um ponto de acompanhamento à expansão internacional. Mantemos postura qualitativa neutra e baixa convicção. O modelo indica Venda, alvo de US$ 8,27 ante preço de US$ 14,73, com potencial de -43,83%. A divergência quantitativa não estabelece, por si, o que o mercado antecipa.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A transição de liderança pode disputar atenção gerencial durante a expansão; não há evidência nesta consulta de interrupção operacional."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Maior exposição a segmentos de crédito arriscados pode elevar perdas quando as safras amadurecem."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Nu: transição na liderança de tecnologia amplia a diligência sobre execução",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O resultado consultado permanece o de 2T26, divulgado em 2026-08-13. Receita e lucro avançaram; a eficiência piorou sequencialmente com despesas e expansão internacional. A leitura requer distinguir medidas gerenciais das contábeis. Não identificamos novo resultado financeiro completo nesta consulta.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "média",
+        "texto": "A busca de um sucessor permanente pode preservar a agenda anunciada; acompanhar estabilidade de serviços e capacidade de execução, sem atribuir incidentes não observados.",
+        "vetor": "Continuidade de plataformas e sucessão"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Testar se novas safras sustentam a margem após perdas, em vez de extrapolar a melhora sazonal.",
+        "vetor": "Crédito e monetização"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

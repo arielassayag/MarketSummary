@@ -1,0 +1,176 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_BRADESCO",
+  "data": "2026-10-26",
+  "tipo": "atualizacao",
+  "titulo": "Bradesco — retorno por ação exige conciliação de crédito, despesas e capital",
+  "resumo": "A leitura permanece neutra, com baixa convicção. A recuperação precisa aparecer na margem após perdas e no resultado atribuível ao acionista, preservando capital. O modelo aponta alvo de {{fact:val.BR_BRADESCO.preco_alvo}} e potencial de {{fact:val.BR_BRADESCO.upside}}. A agenda de resultados do RI registra a divulgação de 22/10/2026, mas o relatório completo do 3T26 não foi recebido nesta consulta; sua ausência impede confirmar a trajetória operacional e eventual revisão de guidance.",
+  "negocio": "O Bradesco reúne atividades bancárias, serviços financeiros e seguros. A combinação amplia os canais de relacionamento, mas a análise de rentabilidade deve distinguir contribuição operacional, perdas de crédito e capital exigido por entidade.",
+  "pilares_tese": [
+    {
+      "titulo": "Rentabilidade após perdas",
+      "texto": "A hipótese de recuperação depende da margem com clientes depois do custo de crédito e das despesas totais. O retorno sobre patrimônio disponível é {{fact:BR_BRADESCO.roe}}; sua base não substitui a análise do trimestre anunciado. Sem o relatório completo, não atribuímos avanço operacional ao 3T26.",
+      "evidencias": [
+        "BR_BRADESCO.roe",
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Preço e retorno exigido",
+      "texto": "O alvo é {{fact:val.BR_BRADESCO.preco_alvo}}, com retorno total esperado de {{fact:val.BR_BRADESCO.etr}} e ke de {{fact:val.BR_BRADESCO.ke}}. São parâmetros quantitativos; a confirmação qualitativa depende da recorrência do lucro e de sua transmissão por ação.",
+      "evidencias": [
+        "val.BR_BRADESCO.preco_alvo",
+        "val.BR_BRADESCO.etr",
+        "val.BR_BRADESCO.ke"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Margem depois de crédito e despesas",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar margem com clientes, perdas finais, renegociações e custo total. Ganho comercial que exija capital ou provisões adicionais pode não elevar o retorno ao acionista.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "vetor": "Custo do capital",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O ke é {{fact:val.BR_BRADESCO.ke}} e a dispersão entre métodos é {{fact:val.BR_BRADESCO.cv_metodos}}. A sensibilidade da avaliação permanece material mesmo com confiança quantitativa {{fact:val.BR_BRADESCO.confianca_codigo}}.",
+      "evidencias": [
+        "val.BR_BRADESCO.ke",
+        "val.BR_BRADESCO.cv_metodos",
+        "val.BR_BRADESCO.confianca_codigo"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Recebimento e conciliação das demonstrações anunciadas para o 3T26, incluindo capital e guidance.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Perdas de crédito, despesas e necessidade de capital podem absorver a recuperação da margem antes de chegar ao resultado por ação.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "A indisponibilidade do relatório completo limita a confirmação do evento registrado na agenda e a comparação com a nota anterior.",
+      "probabilidade": "alta",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Margem após perdas e eficiência sustentam retorno recorrente por ação; cenário quantitativo em {{fact:val.BR_BRADESCO.alvo_otimista}}.",
+    "base": "Recuperação gradual sujeita a crédito e despesas; alvo do modelo em {{fact:val.BR_BRADESCO.preco_alvo}}. Não se atribui probabilidade adicional à narrativa.",
+    "pessimista": "Perdas e capital absorvem a melhora comercial; cenário calculado em {{fact:val.BR_BRADESCO.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_BRADESCO.preco}}, alvo {{fact:val.BR_BRADESCO.preco_alvo}}, potencial {{fact:val.BR_BRADESCO.upside}} e rating {{fact:val.BR_BRADESCO.rating_codigo}}. O P/L à frente é {{fact:val.BR_BRADESCO.pl_fwd}} e o preço sobre patrimônio {{fact:val.BR_BRADESCO.pb}}. O consenso público aponta {{fact:val.BR_BRADESCO.consenso_alvo}}; essa comparação não demonstra o que está precificado nem confirma a recuperação econômica.",
+  "ultimo_resultado": "O RI registra divulgação do 3T26 em 22/10/2026 e videoconferência em 23/10/2026. A central consultada não expôs o relatório completo, e a tentativa de receber o release anterior também falhou. Não confirmamos lucro, inadimplência, eficiência, capital ou mudança de guidance do trimestre anunciado.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A estrutura institucional do RI identifica conselho, diretoria e atividades do grupo. A diligência deve reconciliar lucro atribuível, capital prudencial e direitos por classe. A data programada de crédito das ações citada na nota anterior já passou, mas a liquidação não foi confirmada por documento recebido nesta consulta.",
+  "posicao_competitiva": {
+    "titulo": "Relacionamento e diversificação",
+    "texto": "Banco e seguros permitem relacionamento integrado. A hipótese de vantagem competitiva exige verificar retenção e rentabilidade após risco, em vez de inferir superioridade apenas da amplitude do grupo.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Reconciliação ainda necessária",
+    "texto": "Separar resultado recorrente e contábil, margem com clientes e mercado, despesas totais e contribuição de seguros. Esta é a diligência pendente; não constitui conclusão sobre o desempenho do trimestre anunciado.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Capital disponível ao acionista",
+    "texto": "A análise deve distinguir capital requerido no banco e nos seguros e verificar a base acionária após a subscrição. O calendário de eventos, isoladamente, não comprova crédito de ações ou pagamento de proventos.",
+    "evidencias": [
+      "F1",
+      "F3"
+    ]
+  },
+  "contratese": {
+    "titulo": "Condição de invalidação",
+    "texto": "A recuperação perde força se a margem depender de mercado e ajustes enquanto perdas e capital impedem avanço recorrente por ação. O alvo quantitativo, por si, não resolve essa hipótese.",
+    "evidencias": [
+      "F1",
+      "val.BR_BRADESCO.preco_alvo"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Lucro e capital na mesma base",
+      "texto": "Conciliar margem após perdas, despesas totais, lucro atribuível por classe e capital principal. Rever a visão quando as demonstrações e a apresentação da gestão forem recebidas.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "o_que_mudou": "Atualizamos a avaliação para o retrato de 26/10/2026 e conferimos a agenda do 3T26. A nota anterior tratava a divulgação como futura; hoje sua data programada passou, mas o relatório completo não foi recebido. Mantemos visão neutra e não classificamos guidance ou tom da gestão.",
+  "gatilhos_revisao": [
+    "Recebimento do resultado completo e de sua conciliação recorrente.",
+    "Mudança de perdas, despesas ou capital que altere o retorno por ação.",
+    "Confirmação documental da base acionária e dos proventos."
+  ],
+  "lacunas_de_dados": [
+    "Relatório completo e transcrição do 3T26 não recebidos; guidance não avaliado.",
+    "Crédito das ações, pagamentos e direitos por classe não reconciliados nesta consulta.",
+    "Probabilidades implícitas e WACC indisponíveis no modelo.",
+    "Sem evidência para atribuir uma expectativa operacional ao mercado."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Bradesco",
+      "titulo": "Perfil e estrutura institucional",
+      "url": "https://www.bradescori.com.br/o-bradesco/quem-somos-nos/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-26"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Bradesco",
+      "titulo": "Central de resultados",
+      "url": "https://www.bradescori.com.br/informacoes-ao-mercado/central-de-resultados/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-26"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Bradesco",
+      "titulo": "Agenda de divulgação e videoconferência",
+      "url": "https://www.bradescori.com.br/informacoes-ao-mercado/agenda-3t26/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-26"
+    }
+  ]
+}

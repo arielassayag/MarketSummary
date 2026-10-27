@@ -1,0 +1,389 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-26",
+    "manifest_sha256": "96b074349c8934ac30658448f68661a4f9a20591d3e2b179d61182a28d057573",
+    "modelo_as_of": "2026-10-23"
+  },
+  "conviccao": 1,
+  "data": "2026-10-26",
+  "hashes": {
+    "contexto": "e2c3aa0d92f52ba03824bfb799cdbf6df1a113382c1c760f7554c31e306254e4",
+    "factbook": "240e81ce3e8578388639b6ba6f1459bb4c3dc7d6a2900c41ed90e9b8f3be52d7",
+    "nota_json": "d775f7b1a21bdad018a239cea2dd27b4522e26392654450974be43cf6b0ebec9"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_VALE",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-29",
+  "published_at": "2026-10-27T02:04:04.116898+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "O programa proposto cria uma alternativa condicionada. Avaliar eventual emissão por custo, moeda, prazo e emprego dos recursos, sem atribuir ganho econômico antecipado.",
+        "titulo": "Flexibilidade sem caixa presumido"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-29",
+        "descricao": "Divulgação conjunta de produção, vendas e desempenho financeiro, após o fechamento.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": "2026-10-30",
+        "descricao": "Teleconferência de resultados para discussão do desempenho.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Custo completo e disciplina de capital determinam o retorno. Alvo R$ 65,38.",
+      "otimista": "Produtividade e realização sustentam retorno após obrigações. Alvo R$ 99,19, com probabilidade implícita 3,63%.",
+      "pessimista": "Custos e compromissos absorvem a geração operacional. Alvo R$ 34,30, com probabilidade implícita 1,71%."
+    },
+    "comentario_valuation": "O alvo anterior é R$ 67,61, com revisão de -3,30%. O retorno esperado é +16,71%, com alpha relativo de +1,47%. O ke é 13,15% e o consenso público aponta R$ 81,43. A diferença de -19,71% não comprova a expectativa efetivamente incorporada ao preço. Pares de celulose, siderurgia e holdings têm exposições distintas; a comparação quantitativa não demonstra vantagem operacional.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A neutralidade deve ser revista se o relatório integrado demonstrar melhora persistente de caixa após reinvestimento e obrigações, ou deterioração que invalide as premissas.",
+        "titulo": "Retorno após compromissos"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-26",
+    "dados_simulados": false,
+    "data": "2026-10-26",
+    "ficha": [
+      {
+        "fato": "val.BR_VALE.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 61,49"
+      },
+      {
+        "fato": "val.BR_VALE.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 65,38"
+      },
+      {
+        "fato": "val.BR_VALE.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+6,32%"
+      },
+      {
+        "fato": "val.BR_VALE.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_VALE.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_VALE.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 99,19"
+      },
+      {
+        "fato": "val.BR_VALE.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "3,63%"
+      },
+      {
+        "fato": "val.BR_VALE.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 34,30"
+      },
+      {
+        "fato": "val.BR_VALE.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "1,71%"
+      },
+      {
+        "fato": "val.BR_VALE.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "13,15%"
+      },
+      {
+        "fato": "val.BR_VALE.wacc",
+        "rotulo": "WACC",
+        "valor": "11,07%"
+      },
+      {
+        "fato": "val.BR_VALE.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_VALE.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+16,71%"
+      },
+      {
+        "fato": "val.BR_VALE.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+1,47%"
+      },
+      {
+        "fato": "val.BR_VALE.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "6,6x"
+      },
+      {
+        "fato": "val.BR_VALE.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,3x"
+      },
+      {
+        "fato": "val.BR_VALE.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 81,43"
+      },
+      {
+        "fato": "val.BR_VALE.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-19,71%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F1",
+        "instituicao": "Vale",
+        "publicado_em": "2026-07-30",
+        "tipo": "Relações com investidores",
+        "titulo": "Desempenho financeiro, custos e reparação",
+        "url": "https://www.vale.com/ca/confira-os-resultados-financeiros-do-2t26"
+      },
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F2",
+        "instituicao": "Vale",
+        "publicado_em": "2026-10-01",
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário de divulgação do relatório integrado",
+        "url": "https://www.vale.com/pt/w/vale-divulga-resultados-3t26-29-outubro/-/categories"
+      },
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F3",
+        "instituicao": "SEC — Vale",
+        "publicado_em": "2026-10-20",
+        "tipo": "Regulador",
+        "titulo": "Pedido de registro do programa de Panda Bonds na China",
+        "url": "https://www.sec.gov/Archives/edgar/data/917851/0001292814-26-004954.txt"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Relatório integrado altera a leitura de realização, custos e caixa após obrigações.",
+      "Emissão efetiva muda custo e perfil do financiamento.",
+      "Reparação ou projetos alteram o caixa atribuível."
+    ],
+    "governanca": "O comunicado regulatório informa garantia integral e incondicional da Vale para eventuais títulos do programa. Separar autorização, emissão e uso dos recursos. Reparação e descaracterização precisam permanecer na avaliação do caixa distribuível.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Confrontar produção, vendas, realização, frete e custo completo na divulgação conjunta.",
+        "titulo": "Conciliação operacional e financeira"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Acompanhar aprovação do programa e termos de eventual emissão, preservando a distinção entre pedido e caixa recebido.",
+        "titulo": "Captação efetiva"
+      }
+    ],
+    "issuer_id": "BR_VALE",
+    "lacunas_de_dados": [
+      "Sem lacunas quantitativas sinalizadas pelo modelo; diligência qualitativa permanece aberta.",
+      "Resultado de 3T26 ainda futuro no calendário oficial.",
+      "Termos e execução de eventual captação não confirmados.",
+      "Reconciliação integral de reparação e retorno de projetos pendente; percepção variante não comprovada."
+    ],
+    "modelo_de_cobertura": "2026-10-26",
+    "negocio": "Mineradora de minério de ferro, cobre e níquel, com infraestrutura logística. Qualidade do produto, preço realizado, frete e disponibilidade condicionam a margem; investimentos e obrigações de reparação condicionam o caixa atribuível.",
+    "nome": "Vale",
+    "o_que_mudou": "Incorporamos o pedido de registro de Panda Bonds divulgado após a nota anterior e confirmamos o novo calendário integrado. Atualizamos os fatos do valuation. Não reconhecemos captação concluída nem resultado de 3T26 antes da divulgação oficial.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CBA",
+        "nome": "Companhia Brasileira de Alumínio"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_SUZANO",
+        "nome": "Suzano"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Vale, SEC, 2026-10-20: a subsidiária Vale Overseas apresentou pedido de registro do programa de Panda Bonds. Aprovação e emissões futuras dependem de condições específicas. Não há fundamento para reconhecer ingresso de caixa ou redução de custo de dívida apenas pelo pedido.",
+        "titulo": "Financiamento sujeito a aprovação"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Vale, 2026-07-30: câmbio e frete pressionaram os custos do minério; metais básicos receberam benefício de subprodutos. A contribuição de proteção financeira deve permanecer separada da eficiência operacional.",
+        "titulo": "Custo completo continua central"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Vale, 2026-10-01: produção, vendas e finanças passam a compor o Relatório de Desempenho a partir de 3T26. A divulgação conjunta permitirá confrontar realização e custos, sem supor uma prévia operacional independente.",
+        "titulo": "Próxima leitura será integrada"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Testar se qualidade e confiabilidade logística sustentam realização após frete e custos completos; subprodutos não equivalem a ganho permanente de produtividade.",
+        "titulo": "Qualidade e logística"
+      }
+    ],
+    "publicada_em": "2026-10-27T02:04:04.116898+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Reconciliar medidas proforma e caixa recorrente com desembolsos e benefícios de proteção financeira antes de extrapolar retorno.",
+        "titulo": "Operação e efeitos financeiros"
+      }
+    ],
+    "resumo": "Mantemos postura neutra e baixa convicção antes do resultado. O pedido de registro de dívida na China amplia uma alternativa de financiamento, sem representar captação concluída. O modelo indica Neutro, alvo de R$ 65,38 ante preço de R$ 61,49, com potencial de +6,32%. A produção precisa remunerar custos, reinvestimento e reparação.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Câmbio, frete e preços minerais podem absorver ganhos de volume; obrigações de reparação exigem recursos adicionais."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "Registro de programa de dívida pode não resultar em emissão; garantia da controladora exige avaliar o custo completo da eventual captação."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Vale: financiamento na China e custo completo antes do relatório integrado",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O resultado financeiro consultado continua sendo o de 2T26. EBITDA proforma e fluxo de caixa recorrente melhoraram, enquanto a revisão de custos teve direções distintas entre minério e metais básicos. Não agregamos essas direções em classificação única de guidance. O próximo relatório está previsto para 2026-10-29.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Qualidade, frete e subprodutos precisam ser conciliados com caixa econômico após reinvestimento.",
+        "vetor": "Preço realizado e custo completo"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "sensibilidade": "média",
+        "texto": "Acesso potencial ao mercado chinês pode ampliar flexibilidade. Moeda, custo final e prazo dependem de emissão efetiva e não foram presumidos.",
+        "vetor": "Alternativas de financiamento"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

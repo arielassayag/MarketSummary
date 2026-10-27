@@ -1,0 +1,141 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_REGIONAL",
+  "data": "2026-10-26",
+  "tipo": "atualizacao",
+  "titulo": "Regional — crédito em formação e capital de Hey seguem no centro da diligência",
+  "resumo": "A visão permanece neutra e de baixa convicção. O alvo {{fact:val.MX_REGIONAL.preco_alvo}} e o potencial {{fact:val.MX_REGIONAL.upside}} dependem da sustentação do retorno após crédito e despesas. A fonte primária recebida continua sendo o relatório do 2T26; não confirmamos a divulgação do trimestre novo sugerida pela agenda.",
+  "negocio": "Grupo financeiro mexicano com atuação bancária e crédito empresarial. O relatório consolidado descreve a reorganização de Banco Regional e Hey Banco; a independência operacional precisa ser distinguida do perímetro econômico consolidado.",
+  "pilares_tese": [
+    {
+      "titulo": "Crédito além da inadimplência",
+      "texto": "No relatório do 2T26, menor inadimplência anual coexistia com maior carteira em estágio de risco intermediário. A hipótese de crédito disciplinado exige conferir migração e perdas finais no novo trimestre, ainda não recebido.",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Avaliação exige retorno sustentável",
+      "texto": "O ke é {{fact:val.MX_REGIONAL.ke}}, o retorno esperado {{fact:val.MX_REGIONAL.etr}} e a dispersão {{fact:val.MX_REGIONAL.cv_metodos}}. A confiança {{fact:val.MX_REGIONAL.confianca_codigo}} mede o modelo; não encerra a diligência de capital.",
+      "evidencias": [
+        "val.MX_REGIONAL.ke",
+        "val.MX_REGIONAL.etr",
+        "val.MX_REGIONAL.cv_metodos",
+        "val.MX_REGIONAL.confianca_codigo"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Perdas e custo da captação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Depósitos a prazo e risco em formação exigem análise conjunta de margem, perdas e despesas. O crescimento dos ativos não comprova criação de valor por ação.",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Recebimento do resultado novo e conciliação da contribuição de Hey e do capital por entidade.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Perdas, funding e despesas podem consumir o retorno empresarial. A reorganização pode dificultar comparações homogêneas.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Crédito disciplinado e eficiência sustentam retorno; cenário do modelo {{fact:val.MX_REGIONAL.alvo_otimista}}.",
+    "base": "Alvo {{fact:val.MX_REGIONAL.preco_alvo}} condicionado à recorrência econômica, sem probabilidade narrativa adicional.",
+    "pessimista": "Margem e capital são pressionados; cenário {{fact:val.MX_REGIONAL.alvo_pessimista}} não representa piso garantido."
+  },
+  "comentario_valuation": "Preço {{fact:val.MX_REGIONAL.preco}}, alvo {{fact:val.MX_REGIONAL.preco_alvo}}, consenso público {{fact:val.MX_REGIONAL.consenso_alvo}} e rating {{fact:val.MX_REGIONAL.rating_codigo}}. A diferença {{fact:val.MX_REGIONAL.diff_consenso}} exige testar retorno normalizado e premissas; não demonstra percepção do mercado. P/L à frente {{fact:val.MX_REGIONAL.pl_fwd}} e P/VP {{fact:val.MX_REGIONAL.pb}} usam as bases do modelo.",
+  "ultimo_resultado": "O relatório do 2T26 mostra pressão de despesas sobre lucro e crescimento de risco intermediário apesar da menor inadimplência anual. Os indicadores de rentabilidade usam horizonte anualizado, e a informação de capital tem corte diferente. Não recebemos o resultado do 3T26; guidance e tom atuais não foram avaliados.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "O documento primário descreve transferência de ativos, passivos e capital ligados a Hey para sua operação bancária. A análise deve conferir capital e fluxo à holding por entidade, sem presumir caixa livremente transferível.",
+  "posicao_competitiva": {
+    "titulo": "Relacionamento empresarial como hipótese",
+    "texto": "A carteira empresarial sustenta a hipótese de conhecimento do cliente. Sua vantagem econômica precisa aparecer no retorno após perdas e no custo de servir; o relatório não comprova superioridade permanente.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Mesma base temporal",
+    "texto": "Reconciliar indicadores anualizados, lucro trimestral e capital antes de comparar rentabilidade. Menor inadimplência isolada não encerra o risco em formação.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Autonomia e consolidação",
+    "texto": "A reorganização de Hey exige identificar capital requerido e contribuição incremental. Transferência de operações existentes não equivale a geração nova.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "contratese": {
+    "titulo": "Expansão sem retorno atribuível",
+    "texto": "A hipótese enfraquece se ativos e despesas crescem sem margem após perdas suficiente. A avaliação deve ser revista ao receber evidência atual na mesma base.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Margem, crédito e capital",
+      "texto": "Acompanhar migração de risco, custo de depósitos, despesas por negócio e retorno atribuível. O avanço da carteira deve ser confrontado com perdas finais e capital empregado.",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "o_que_mudou": "Atualizamos a avaliação para 26/10/2026 e relimos o relatório primário já disponível. A agenda sugere resultado hoje, mas a consulta ao centro do emissor não o entregou. Não apresentamos a releitura do 2T26 como resultado novo.",
+  "gatilhos_revisao": [
+    "Recebimento do trimestre novo e da orientação da gestão.",
+    "Deterioração de risco intermediário ou funding.",
+    "Mudança de perímetro e capital que altere retorno por ação."
+  ],
+  "lacunas_de_dados": [
+    "Resultado e transcrição do 3T26 não recebidos; guidance atual não avaliado.",
+    "Capital por entidade, contribuição incremental de Hey e caixa à holding não integralmente reconciliados.",
+    "Probabilidades implícitas e WACC indisponíveis.",
+    "Sem evidência suficiente de expectativa de mercado."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Regional",
+      "titulo": "Centro oficial de informações financeiras",
+      "url": "https://www.regional.mx/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-26"
+    },
+    {
+      "id": "F2",
+      "tipo": "bolsa",
+      "instituicao": "BMV — Regional",
+      "titulo": "Demonstrações e notas explicativas semestrais",
+      "url": "https://www.bmv.com.mx/docs-pub/infingps/infingps_1577211_2026-02_1.pdf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-26"
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_BAJIO",
+  "data": "2026-10-26",
+  "tipo": "atualizacao",
+  "titulo": "BanBajío — margem após perdas e capital precisam sustentar a expansão",
+  "resumo": "Mantemos visão neutra e baixa convicção. O modelo aponta alvo {{fact:val.MX_BAJIO.preco_alvo}}, potencial {{fact:val.MX_BAJIO.upside}} e rating {{fact:val.MX_BAJIO.rating_codigo}}. A questão é a capacidade de preservar retorno após reprificação, perdas e despesas. A fila marca pós-resultado, mas o contexto aponta divulgação futura e o relatório novo não foi recebido; esta nota é atualização.",
+  "negocio": "Banco mexicano com crédito empresarial, depósitos e serviços. A análise distingue banca e crédito, operações redescontadas, tesouraria e subsidiárias, evitando atribuir ao relacionamento comercial toda a contribuição consolidada.",
+  "pilares_tese": [
+    {
+      "titulo": "Margem e qualidade do crescimento",
+      "texto": "O documento do 2T26 registra compressão de margem associada à redução dos juros de referência. O crescimento só cria valor se compensar a reprificação sem elevar perdas ou consumir capital em excesso.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Retorno exigido e avaliação",
+      "texto": "O ke {{fact:val.MX_BAJIO.ke}} deve ser confrontado com retorno normalizado. A dispersão {{fact:val.MX_BAJIO.cv_metodos}} e a confiança {{fact:val.MX_BAJIO.confianca_codigo}} não eliminam o risco das premissas.",
+      "evidencias": [
+        "val.MX_BAJIO.ke",
+        "val.MX_BAJIO.cv_metodos",
+        "val.MX_BAJIO.confianca_codigo"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Reprecificação, perdas e captação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar taxas dos ativos e depósitos, migração de crédito e provisões. Resultado de tesouraria não deve ser confundido com margem recorrente da franquia.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Confirmação da divulgação do trimestre novo e conciliação de margem, perdas e capital.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Ativos podem reprificar antes do funding. Menor provisão ou resultado de tesouraria pode ocultar pressão no retorno recorrente.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Relacionamento preserva captação e retorno após risco; cenário {{fact:val.MX_BAJIO.alvo_otimista}}.",
+    "base": "Alvo {{fact:val.MX_BAJIO.preco_alvo}}, condicionado à margem normalizada e ao capital necessário para crescer.",
+    "pessimista": "Reprecificação e perdas limitam distribuição; cenário {{fact:val.MX_BAJIO.alvo_pessimista}} não constitui piso."
+  },
+  "comentario_valuation": "Preço {{fact:val.MX_BAJIO.preco}}, alvo {{fact:val.MX_BAJIO.preco_alvo}} e retorno esperado {{fact:val.MX_BAJIO.etr}}. O consenso público é {{fact:val.MX_BAJIO.consenso_alvo}}; a diferença {{fact:val.MX_BAJIO.diff_consenso}} não comprova expectativa precificada. O P/L {{fact:val.MX_BAJIO.pl_fwd}} e o P/VP {{fact:val.MX_BAJIO.pb}} exigem lucro e patrimônio na mesma base.",
+  "ultimo_resultado": "O relatório primário do 2T26 registra queda anual de lucro e margem, enquanto a tesouraria contribui de forma distinta da banca e crédito. O quadro de risco mostra deterioração sequencial da inadimplência e menor cobertura. As mudanças tributárias descritas exigem conciliação normativa. Não recebemos o relatório do 3T26; não confirmamos guidance atual.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Conferir partes relacionadas, composição do capital e retenção necessária ao crescimento. Índices prudenciais não equivalem a caixa distribuível; a revisão completa dos cortes e metodologias segue pendente.",
+  "posicao_competitiva": {
+    "titulo": "Crédito empresarial deve provar retorno",
+    "texto": "A exposição empresarial sustenta a hipótese de conhecimento do cliente. A condição para vantagem é retenção de depósitos e disciplina de originação após custo de servir, ainda por testar em base comparável.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Separar franquia e tesouraria",
+    "texto": "Os segmentos do relatório têm trajetórias distintas. Verificar lucro recorrente depois de provisões e impostos, sem extrapolar contribuição da tesouraria para o negócio de crédito.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Expansão condicionada a capital",
+    "texto": "A análise deve confrontar crescimento com capital prudencial e reservas. Distribuição só sustenta valor se não comprometer capacidade de absorver perdas; o quadro do relatório exige conferência definitiva.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "contratese": {
+    "titulo": "Crescimento sem margem econômica",
+    "texto": "A hipótese enfraquece se a carteira aumenta e o retorno depois de crédito cai, ou se a distribuição reduz capacidade de financiar a expansão. A informação nova deve ser reconciliada antes de elevar a convicção.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Retorno após crédito",
+      "texto": "Rever margem antes e depois de perdas, custo de depósitos, cobertura, capital e lucro atribuível. A melhora precisa sobreviver à normalização de provisões e tesouraria.",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "o_que_mudou": "Atualizamos a avaliação para 26/10/2026 e reconfirmamos o teor público do relatório do 2T26. A divergência entre a marcação da fila e o calendário do contexto não foi resolvida por documento de divulgação novo; não a tratamos como resultado observado.",
+  "gatilhos_revisao": [
+    "Resultado novo e guidance recebidos em fonte primária.",
+    "Margem após perdas e funding invalida a expansão rentável.",
+    "Capital ou cobertura restringe crescimento e distribuição."
+  ],
+  "lacunas_de_dados": [
+    "Resultado do 3T26 e transcrição não recebidos; guidance atual não avaliado.",
+    "Divergência de calendário entre fila e contexto ainda sem confirmação primária.",
+    "Capital definitivo, concentração e perdas por safra não reconciliados.",
+    "WACC e probabilidades implícitas indisponíveis."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "bolsa",
+      "instituicao": "BMV — BanBajío",
+      "titulo": "Comentários da administração e demonstrações semestrais",
+      "url": "https://www.bmv.com.mx/docs-pub/infinbnc/infinbnc_1577916_2026-02_1.pdf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-26"
+    },
+    {
+      "id": "F2",
+      "tipo": "bolsa",
+      "instituicao": "BMV — BanBajío",
+      "titulo": "Resultado por segmento e indicadores prudenciais",
+      "url": "https://www.bmv.com.mx/docs-pub/infinbnc/bncinfin_1577916_2026-02_2.pdf",
+      "publicado_em": null,
+      "consultado_em": "2026-10-26"
+    }
+  ]
+}

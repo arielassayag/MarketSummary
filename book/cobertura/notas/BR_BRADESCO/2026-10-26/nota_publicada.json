@@ -1,0 +1,409 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-26",
+    "manifest_sha256": "96b074349c8934ac30658448f68661a4f9a20591d3e2b179d61182a28d057573",
+    "modelo_as_of": "2026-10-23"
+  },
+  "conviccao": 1,
+  "data": "2026-10-26",
+  "hashes": {
+    "contexto": "b9030309f7bd184fe516e67f6c554157b399eca4fcf416fa50069477530237b2",
+    "factbook": "30b7d1ca6922de51c422cc1dc827022e7939569930ac95ea6b5738c0d18f10e8",
+    "nota_json": "4b9bee0d604516044c850a08aafbe98fd3327360e94097c4c6f62596e214bb0a"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_BRADESCO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-27T01:44:52.774038+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A análise deve distinguir capital requerido no banco e nos seguros e verificar a base acionária após a subscrição. O calendário de eventos, isoladamente, não comprova crédito de ações ou pagamento de proventos.",
+        "titulo": "Capital disponível ao acionista"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Recebimento e conciliação das demonstrações anunciadas para o 3T26, incluindo capital e guidance.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Recuperação gradual sujeita a crédito e despesas; alvo do modelo em R$ 25,07. Não se atribui probabilidade adicional à narrativa.",
+      "otimista": "Margem após perdas e eficiência sustentam retorno recorrente por ação; cenário quantitativo em R$ 30,08.",
+      "pessimista": "Perdas e capital absorvem a melhora comercial; cenário calculado em R$ 20,36."
+    },
+    "comentario_valuation": "Preço de referência R$ 20,22, alvo R$ 25,07, potencial +24,00% e rating Neutro. O P/L à frente é 7,8x e o preço sobre patrimônio 1,2x. O consenso público aponta R$ 22,11; essa comparação não demonstra o que está precificado nem confirma a recuperação econômica.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fato": "val.BR_BRADESCO.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 25,07"
+          }
+        ],
+        "texto": "A recuperação perde força se a margem depender de mercado e ajustes enquanto perdas e capital impedem avanço recorrente por ação. O alvo quantitativo, por si, não resolve essa hipótese.",
+        "titulo": "Condição de invalidação"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-26",
+    "dados_simulados": false,
+    "data": "2026-10-26",
+    "ficha": [
+      {
+        "fato": "val.BR_BRADESCO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 20,22"
+      },
+      {
+        "fato": "val.BR_BRADESCO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 25,07"
+      },
+      {
+        "fato": "val.BR_BRADESCO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+24,00%"
+      },
+      {
+        "fato": "val.BR_BRADESCO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_BRADESCO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_BRADESCO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 30,08"
+      },
+      {
+        "fato": "val.BR_BRADESCO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BRADESCO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 20,36"
+      },
+      {
+        "fato": "val.BR_BRADESCO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BRADESCO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,35%"
+      },
+      {
+        "fato": "val.BR_BRADESCO.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BRADESCO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_BRADESCO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+33,90%"
+      },
+      {
+        "fato": "val.BR_BRADESCO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+3,77%"
+      },
+      {
+        "fato": "val.BR_BRADESCO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "7,8x"
+      },
+      {
+        "fato": "val.BR_BRADESCO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,2x"
+      },
+      {
+        "fato": "val.BR_BRADESCO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 22,11"
+      },
+      {
+        "fato": "val.BR_BRADESCO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+13,38%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F1",
+        "instituicao": "Bradesco",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil e estrutura institucional",
+        "url": "https://www.bradescori.com.br/o-bradesco/quem-somos-nos/"
+      },
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F2",
+        "instituicao": "Bradesco",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Central de resultados",
+        "url": "https://www.bradescori.com.br/informacoes-ao-mercado/central-de-resultados/"
+      },
+      {
+        "consultado_em": "2026-10-26",
+        "id": "F3",
+        "instituicao": "Bradesco",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Agenda de divulgação e videoconferência",
+        "url": "https://www.bradescori.com.br/informacoes-ao-mercado/agenda-3t26/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Recebimento do resultado completo e de sua conciliação recorrente.",
+      "Mudança de perdas, despesas ou capital que altere o retorno por ação.",
+      "Confirmação documental da base acionária e dos proventos."
+    ],
+    "governanca": "A estrutura institucional do RI identifica conselho, diretoria e atividades do grupo. A diligência deve reconciliar lucro atribuível, capital prudencial e direitos por classe. A data programada de crédito das ações citada na nota anterior já passou, mas a liquidação não foi confirmada por documento recebido nesta consulta.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Conciliar margem após perdas, despesas totais, lucro atribuível por classe e capital principal. Rever a visão quando as demonstrações e a apresentação da gestão forem recebidas.",
+        "titulo": "Lucro e capital na mesma base"
+      }
+    ],
+    "issuer_id": "BR_BRADESCO",
+    "lacunas_de_dados": [
+      "Relatório completo e transcrição do 3T26 não recebidos; guidance não avaliado.",
+      "Crédito das ações, pagamentos e direitos por classe não reconciliados nesta consulta.",
+      "Probabilidades implícitas e WACC indisponíveis no modelo.",
+      "Sem evidência para atribuir uma expectativa operacional ao mercado."
+    ],
+    "modelo_de_cobertura": "2026-10-26",
+    "negocio": "O Bradesco reúne atividades bancárias, serviços financeiros e seguros. A combinação amplia os canais de relacionamento, mas a análise de rentabilidade deve distinguir contribuição operacional, perdas de crédito e capital exigido por entidade.",
+    "nome": "Banco Bradesco",
+    "o_que_mudou": "Atualizamos a avaliação para o retrato de 26/10/2026 e conferimos a agenda do 3T26. A nota anterior tratava a divulgação como futura; hoje sua data programada passou, mas o relatório completo não foi recebido. Mantemos visão neutra e não classificamos guidance ou tom da gestão.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      },
+      {
+        "issuer_id": "BR_IRB",
+        "nome": "IRB Brasil RE"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fato": "BR_BRADESCO.roe",
+            "nome": "Retorno sobre o patrimônio (ROE)",
+            "valor": "14,19%"
+          },
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese de recuperação depende da margem com clientes depois do custo de crédito e das despesas totais. O retorno sobre patrimônio disponível é 14,19%; sua base não substitui a análise do trimestre anunciado. Sem o relatório completo, não atribuímos avanço operacional ao 3T26.",
+        "titulo": "Rentabilidade após perdas"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BRADESCO.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 25,07"
+          },
+          {
+            "fato": "val.BR_BRADESCO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+33,90%"
+          },
+          {
+            "fato": "val.BR_BRADESCO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,35%"
+          }
+        ],
+        "texto": "O alvo é R$ 25,07, com retorno total esperado de +33,90% e ke de 12,35%. São parâmetros quantitativos; a confirmação qualitativa depende da recorrência do lucro e de sua transmissão por ação.",
+        "titulo": "Preço e retorno exigido"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Banco e seguros permitem relacionamento integrado. A hipótese de vantagem competitiva exige verificar retenção e rentabilidade após risco, em vez de inferir superioridade apenas da amplitude do grupo.",
+        "titulo": "Relacionamento e diversificação"
+      }
+    ],
+    "publicada_em": "2026-10-27T01:44:52.774038+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Separar resultado recorrente e contábil, margem com clientes e mercado, despesas totais e contribuição de seguros. Esta é a diligência pendente; não constitui conclusão sobre o desempenho do trimestre anunciado.",
+        "titulo": "Reconciliação ainda necessária"
+      }
+    ],
+    "resumo": "A leitura permanece neutra, com baixa convicção. A recuperação precisa aparecer na margem após perdas e no resultado atribuível ao acionista, preservando capital. O modelo aponta alvo de R$ 25,07 e potencial de +24,00%. A agenda de resultados do RI registra a divulgação de 22/10/2026, mas o relatório completo do 3T26 não foi recebido nesta consulta; sua ausência impede confirmar a trajetória operacional e eventual revisão de guidance.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Perdas de crédito, despesas e necessidade de capital podem absorver a recuperação da margem antes de chegar ao resultado por ação."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "alta",
+        "texto": "A indisponibilidade do relatório completo limita a confirmação do evento registrado na agenda e a comparação com a nota anterior."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Bradesco — retorno por ação exige conciliação de crédito, despesas e capital",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O RI registra divulgação do 3T26 em 22/10/2026 e videoconferência em 23/10/2026. A central consultada não expôs o relatório completo, e a tentativa de receber o release anterior também falhou. Não confirmamos lucro, inadimplência, eficiência, capital ou mudança de guidance do trimestre anunciado.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar margem com clientes, perdas finais, renegociações e custo total. Ganho comercial que exija capital ou provisões adicionais pode não elevar o retorno ao acionista.",
+        "vetor": "Margem depois de crédito e despesas"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_BRADESCO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,35%"
+          },
+          {
+            "fato": "val.BR_BRADESCO.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "11,92%"
+          },
+          {
+            "fato": "val.BR_BRADESCO.confianca_codigo",
+            "nome": "Confiança do modelo",
+            "valor": "A"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O ke é 12,35% e a dispersão entre métodos é 11,92%. A sensibilidade da avaliação permanece material mesmo com confiança quantitativa A.",
+        "vetor": "Custo do capital"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 23.93,
+  "high": 35.0,
+  "low": 20.8,
+  "mean": 29.37133,
+  "median": 30.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.444,
+   "currency": "USD",
+   "growth": 0.0091,
+   "high": 0.45799,
+   "low": 0.43,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.44
+  },
+  "+1y": {
+   "avg": 2.07428,
+   "currency": "USD",
+   "growth": 0.1096,
+   "high": 2.34,
+   "low": 1.89067,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 1.86941
+  },
+  "0q": {
+   "avg": 0.521,
+   "currency": "USD",
+   "growth": 0.40330002,
+   "high": 0.521,
+   "low": 0.521,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.37128
+  },
+  "0y": {
+   "avg": 1.86941,
+   "currency": "USD",
+   "growth": 0.17559999,
+   "high": 1.99,
+   "low": 1.721,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 1.59021
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 249148131840,
+   "currency": "MXN",
+   "growth": 0.051999997,
+   "high": 251746527690,
+   "low": 246549736000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 236844000000
+  },
+  "+1y": {
+   "avg": 1027154660740,
+   "currency": "MXN",
+   "growth": 0.0541,
+   "high": 1078814000000,
+   "low": 967772655930,
+   "numberOfAnalysts": 16,
+   "yearAgoRevenue": 974432215120
+  },
+  "0q": {
+   "avg": 251814856650,
+   "currency": "MXN",
+   "growth": 0.028199999,
+   "high": 254243292340,
+   "low": 250183428600,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 244897000000
+  },
+  "0y": {
+   "avg": 974432215120,
+   "currency": "MXN",
+   "growth": 0.0326,
+   "high": 997355000000,
+   "low": 950951000000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 943638000000
+  }
+ },
+ "ticker": "AMX",
+ "url": "https://finance.yahoo.com/quote/AMX"
+}

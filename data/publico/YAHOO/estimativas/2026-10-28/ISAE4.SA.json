@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 25.35,
+  "high": 37.0,
+  "low": 27.2,
+  "mean": 31.13,
+  "median": 29.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.15304,
+   "currency": "BRL",
+   "growth": 0.0339,
+   "high": 1.15304,
+   "low": 1.15304,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 1.11519
+  },
+  "+1y": {
+   "avg": 2.94976,
+   "currency": "BRL",
+   "growth": 0.32869998,
+   "high": 4.0837,
+   "low": 2.6051,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 2.22
+  },
+  "0q": {
+   "avg": 0.42015,
+   "currency": "BRL",
+   "growth": -0.6472,
+   "high": 0.42015,
+   "low": 0.42015,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 1.19106
+  },
+  "0y": {
+   "avg": 2.22,
+   "currency": "BRL",
+   "growth": -0.4025,
+   "high": 2.36,
+   "low": 2.07,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 3.71522
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 6136049750,
+   "currency": "BRL",
+   "growth": 0.1732,
+   "high": 6429900000,
+   "low": 5578558150,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 5230232700.0
+  },
+  "0q": {
+   "avg": 1288062770,
+   "currency": "BRL",
+   "growth": 0.20120001,
+   "high": 1288062770,
+   "low": 1288062770,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 1072333000.0
+  },
+  "0y": {
+   "avg": 5230232700,
+   "currency": "BRL",
+   "growth": 0.2013,
+   "high": 5396000000,
+   "low": 5017000000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 4353632000.0
+  }
+ },
+ "ticker": "ISAE4.SA",
+ "url": "https://finance.yahoo.com/quote/ISAE4.SA"
+}

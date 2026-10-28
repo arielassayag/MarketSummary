@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 45.71,
+  "high": 88.3,
+  "low": 54.0,
+  "mean": 66.92538,
+  "median": 65.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.96,
+   "currency": "BRL",
+   "growth": -0.1904,
+   "high": 0.96,
+   "low": 0.96,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 1.1858
+  },
+  "+1y": {
+   "avg": 2.81843,
+   "currency": "BRL",
+   "growth": 0.26389998,
+   "high": 4.02528,
+   "low": 2.14,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 2.23
+  },
+  "0q": {
+   "avg": 0.99,
+   "currency": "BRL",
+   "growth": 1.2878,
+   "high": 0.99,
+   "low": 0.99,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.43273
+  },
+  "0y": {
+   "avg": 2.23,
+   "currency": "BRL",
+   "growth": -0.5274,
+   "high": 2.26,
+   "low": 2.2,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 4.7182
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 7660208280,
+   "currency": "BRL",
+   "growth": -0.1751,
+   "high": 8254905000,
+   "low": 7038847650,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 9285887000
+  },
+  "+1y": {
+   "avg": 31889516660,
+   "currency": "BRL",
+   "growth": 0.0058999998,
+   "high": 40080288150,
+   "low": 28917180250,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 31703042440
+  },
+  "0q": {
+   "avg": 7693172860,
+   "currency": "BRL",
+   "growth": -0.16209999,
+   "high": 9380962000,
+   "low": 7009000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 9182000000
+  },
+  "0y": {
+   "avg": 31703042440,
+   "currency": "BRL",
+   "growth": -0.105500005,
+   "high": 37648136380,
+   "low": 29221988800,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 35441353000
+  }
+ },
+ "ticker": "ENGI11.SA",
+ "url": "https://finance.yahoo.com/quote/ENGI11.SA"
+}

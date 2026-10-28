@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 8.99,
+  "high": 13.78,
+  "low": 11.0,
+  "mean": 12.38,
+  "median": 12.25
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": null,
+   "currency": "USD",
+   "growth": null,
+   "high": null,
+   "low": null,
+   "numberOfAnalysts": null,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 1.092,
+   "currency": "USD",
+   "growth": -0.41759998,
+   "high": 1.092,
+   "low": 1.092,
+   "numberOfAnalysts": 1.0,
+   "yearAgoEps": 1.875
+  },
+  "0q": {
+   "avg": null,
+   "currency": "USD",
+   "growth": null,
+   "high": null,
+   "low": null,
+   "numberOfAnalysts": null,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 1.875,
+   "currency": "USD",
+   "growth": -0.098500006,
+   "high": 1.875,
+   "low": 1.875,
+   "numberOfAnalysts": 1.0,
+   "yearAgoEps": 2.07987
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 17632068260,
+   "currency": "BRL",
+   "growth": 0.3446,
+   "high": 18125427120,
+   "low": 17313708000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 13113718000
+  },
+  "+1y": {
+   "avg": 62778182300,
+   "currency": "BRL",
+   "growth": 0.1503,
+   "high": 77153083340,
+   "low": 49813000000,
+   "numberOfAnalysts": 16,
+   "yearAgoRevenue": 54577076170
+  },
+  "0q": {
+   "avg": 16948739819,
+   "currency": "BRL",
+   "growth": 0.3946,
+   "high": 17090096000,
+   "low": 16764000000,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 12153145000
+  },
+  "0y": {
+   "avg": 54577076170,
+   "currency": "BRL",
+   "growth": 0.088999994,
+   "high": 60689348680,
+   "low": 47892312880,
+   "numberOfAnalysts": 16,
+   "yearAgoRevenue": 50115679000
+  }
+ },
+ "ticker": "SUZ",
+ "url": "https://finance.yahoo.com/quote/SUZ"
+}

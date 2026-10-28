@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 1.86,
+  "high": 2.25,
+  "low": 1.8,
+  "mean": 1.98667,
+  "median": 1.91
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.064,
+   "currency": "USD",
+   "growth": -0.47959998,
+   "high": 0.064,
+   "low": 0.064,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.12299
+  },
+  "+1y": {
+   "avg": 0.178,
+   "currency": "USD",
+   "growth": -0.26450002,
+   "high": 0.178,
+   "low": 0.178,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.242
+  },
+  "0q": {
+   "avg": 0.053,
+   "currency": "USD",
+   "growth": 0.0002,
+   "high": 0.053,
+   "low": 0.053,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.05299
+  },
+  "0y": {
+   "avg": 0.03,
+   "currency": "USD",
+   "growth": null,
+   "high": 0.03,
+   "low": 0.03,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 8901417840,
+   "currency": "BRL",
+   "growth": -0.22600001,
+   "high": 9537835680,
+   "low": 8265000000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 11501016000
+  },
+  "+1y": {
+   "avg": 34996532430,
+   "currency": "BRL",
+   "growth": -0.0671,
+   "high": 43288414330,
+   "low": 27441000000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 37512462350
+  },
+  "0q": {
+   "avg": 8925084240,
+   "currency": "BRL",
+   "growth": -0.1596,
+   "high": 10175472470,
+   "low": 8178000000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 10619741000
+  },
+  "0y": {
+   "avg": 37512462350,
+   "currency": "BRL",
+   "growth": -0.1225,
+   "high": 43826018640,
+   "low": 33964000000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 42751283000
+  }
+ },
+ "ticker": "CIG",
+ "url": "https://finance.yahoo.com/quote/CIG"
+}

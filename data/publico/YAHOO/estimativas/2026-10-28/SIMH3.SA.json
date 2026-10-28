@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 5.24,
+  "high": 27.0,
+  "low": 8.5,
+  "mean": 16.28889,
+  "median": 16.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.22365,
+   "currency": "BRL",
+   "growth": -0.71370006,
+   "high": 0.22365,
+   "low": 0.22365,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.7813
+  },
+  "+1y": {
+   "avg": 3.14,
+   "currency": "BRL",
+   "growth": 1.9623,
+   "high": 4.68,
+   "low": 1.6,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 1.06
+  },
+  "0q": {
+   "avg": 0.22677,
+   "currency": "BRL",
+   "growth": 1.5533999,
+   "high": 0.22677,
+   "low": 0.22677,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -0.4098
+  },
+  "0y": {
+   "avg": 1.06,
+   "currency": "BRL",
+   "growth": 2.0066001,
+   "high": 1.06,
+   "low": 1.06,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": -1.053
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 12310000000,
+   "currency": "BRL",
+   "growth": 0.0916,
+   "high": 12310000000,
+   "low": 12310000000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 11277400000
+  },
+  "+1y": {
+   "avg": 52927255450,
+   "currency": "BRL",
+   "growth": 0.095,
+   "high": 56103000000,
+   "low": 50386000000,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 48335564010
+  },
+  "0q": {
+   "avg": 12268500000,
+   "currency": "BRL",
+   "growth": 0.0771,
+   "high": 12588000000,
+   "low": 11949000000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 11390347000
+  },
+  "0y": {
+   "avg": 48335564010,
+   "currency": "BRL",
+   "growth": 0.1104,
+   "high": 51829000000,
+   "low": 45897000000,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 43528400000
+  }
+ },
+ "ticker": "SIMH3.SA",
+ "url": "https://finance.yahoo.com/quote/SIMH3.SA"
+}

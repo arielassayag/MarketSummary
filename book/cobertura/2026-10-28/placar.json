@@ -1,0 +1,147 @@
+{
+ "as_of": "2026-10-28",
+ "distribuicao_ratings": {
+  "Compra": 30,
+  "Em revisão": 37,
+  "Neutro": 125,
+  "Sem preço-alvo": 6,
+  "Venda": 35
+ },
+ "em_maturacao": true,
+ "erro_abs_mediano": null,
+ "exibir_ranking": false,
+ "exibir_taxas": false,
+ "ic_resumo": {
+  "dp": 0.0455512,
+  "icir_anual": 4.48197,
+  "media": 0.0283118,
+  "p_ic_positivo": 0.917705,
+  "semanas": 5,
+  "t_newey_west": 1.55384
+ },
+ "ic_semanal": [
+  {
+   "ate": "2026-10-09",
+   "data": "2026-10-07",
+   "ic": 0.0772133,
+   "n": 199
+  },
+  {
+   "ate": "2026-10-14",
+   "data": "2026-10-09",
+   "ic": -0.00900226,
+   "n": 193
+  },
+  {
+   "ate": "2026-10-16",
+   "data": "2026-10-14",
+   "ic": 0.0465253,
+   "n": 192
+  },
+  {
+   "ate": "2026-10-23",
+   "data": "2026-10-16",
+   "ic": 0.0566556,
+   "n": 190
+  },
+  {
+   "ate": "2026-10-28",
+   "data": "2026-10-23",
+   "ic": -0.0298332,
+   "n": 194
+  }
+ ],
+ "metodo": "amostragem semanal dos preços de referência registrados no livro, reescalados por desdobramentos; IC entre snapshots completos consecutivos contra o retorno total em dólar menos a média do grupo país × setor",
+ "n_previsoes": 1198,
+ "n_vencidas": 0,
+ "obsoletos": 0,
+ "primeiro_vencimento": "2027-10-07",
+ "referencias_literatura": {
+  "erro_abs": [
+   0.36,
+   0.45
+  ],
+  "tpmet12": [
+   0.24,
+   0.38
+  ],
+  "tpmetany": [
+   0.45,
+   0.64
+  ]
+ },
+ "tempo_ate_alvo_km": [
+  {
+   "dias": 1.0,
+   "sobrevivencia": 0.999006
+  },
+  {
+   "dias": 2.0,
+   "sobrevivencia": 0.988915
+  },
+  {
+   "dias": 3.0,
+   "sobrevivencia": 0.9879
+  },
+  {
+   "dias": 4.0,
+   "sobrevivencia": 0.986884
+  },
+  {
+   "dias": 5.0,
+   "sobrevivencia": 0.950333
+  },
+  {
+   "dias": 7.0,
+   "sobrevivencia": 0.931844
+  },
+  {
+   "dias": 9.0,
+   "sobrevivencia": 0.926821
+  },
+  {
+   "dias": 11.0,
+   "sobrevivencia": 0.925565
+  },
+  {
+   "dias": 12.0,
+   "sobrevivencia": 0.89668
+  },
+  {
+   "dias": 13.0,
+   "sobrevivencia": 0.895065
+  },
+  {
+   "dias": 14.0,
+   "sobrevivencia": 0.848211
+  },
+  {
+   "dias": 16.0,
+   "sobrevivencia": 0.843563
+  },
+  {
+   "dias": 18.0,
+   "sobrevivencia": 0.841239
+  },
+  {
+   "dias": 19.0,
+   "sobrevivencia": 0.78779
+  },
+  {
+   "dias": 21.0,
+   "sobrevivencia": 0.664963
+  }
+ ],
+ "tpmet12": {
+  "ic90": null,
+  "k": 0,
+  "n": 0,
+  "taxa": null
+ },
+ "tpmetany": {
+  "ic90": null,
+  "k": 0,
+  "n": 0,
+  "taxa": null
+ }
+}

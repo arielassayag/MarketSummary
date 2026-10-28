@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 10.52,
+  "high": 20.0,
+  "low": 11.0,
+  "mean": 14.63667,
+  "median": 15.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.15,
+   "currency": "USD",
+   "growth": null,
+   "high": 0.15,
+   "low": 0.15,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 0.89,
+   "currency": "USD",
+   "growth": 0.08979999,
+   "high": 0.92,
+   "low": 0.86,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.81667
+  },
+  "0q": {
+   "avg": 0.17,
+   "currency": "USD",
+   "growth": null,
+   "high": 0.17,
+   "low": 0.17,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 0.81667,
+   "currency": "USD",
+   "growth": 0.5701,
+   "high": 0.85,
+   "low": 0.8,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.52015
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 4257279500,
+   "currency": "USD",
+   "growth": 0.059299998,
+   "high": 4444259000,
+   "low": 4070300000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 4019094000
+  },
+  "+1y": {
+   "avg": 18055958590,
+   "currency": "USD",
+   "growth": 0.0381,
+   "high": 18624821820,
+   "low": 17578564130,
+   "numberOfAnalysts": 14,
+   "yearAgoRevenue": 17392690410
+  },
+  "0q": {
+   "avg": 4318911630,
+   "currency": "USD",
+   "growth": 0.033299997,
+   "high": 4460934000,
+   "low": 4202600000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 4179704000
+  },
+  "0y": {
+   "avg": 17392690410,
+   "currency": "USD",
+   "growth": 0.078200005,
+   "high": 17677000000,
+   "low": 17083000000,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 16131879000
+  }
+ },
+ "ticker": "CX",
+ "url": "https://finance.yahoo.com/quote/CX"
+}

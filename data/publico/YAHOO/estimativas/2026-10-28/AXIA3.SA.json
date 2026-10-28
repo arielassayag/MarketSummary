@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 48.23,
+  "high": 78.0,
+  "low": 60.0,
+  "mean": 69.13429,
+  "median": 70.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.33269,
+   "currency": "BRL",
+   "growth": null,
+   "high": 1.33269,
+   "low": 1.33269,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 5.95978,
+   "currency": "BRL",
+   "growth": 0.53400004,
+   "high": 6.23,
+   "low": 5.73,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 3.885
+  },
+  "0q": {
+   "avg": 0.86125,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0.86125,
+   "low": 0.86125,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 3.885,
+   "currency": "BRL",
+   "growth": 0.9813,
+   "high": 4.15,
+   "low": 3.62,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 1.9608
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 11083692840,
+   "currency": "BRL",
+   "growth": 0.0392,
+   "high": 12249587000,
+   "low": 10519000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 10665960000
+  },
+  "+1y": {
+   "avg": 51819758130,
+   "currency": "BRL",
+   "growth": 0.17459999,
+   "high": 55224275160,
+   "low": 48984175170,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 44117413590
+  },
+  "0q": {
+   "avg": 10404830340,
+   "currency": "BRL",
+   "growth": 0.0402,
+   "high": 11628000000,
+   "low": 9743000000,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 10002503000
+  },
+  "0y": {
+   "avg": 44117413590,
+   "currency": "BRL",
+   "growth": 0.0687,
+   "high": 47826850000,
+   "low": 41908955310,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 41281596000
+  }
+ },
+ "ticker": "AXIA3.SA",
+ "url": "https://finance.yahoo.com/quote/AXIA3.SA"
+}

@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 14.48,
+  "high": 24.0,
+  "low": 12.0,
+  "mean": 20.07333,
+  "median": 22.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.26769,
+   "currency": "BRL",
+   "growth": 0.1297,
+   "high": 0.3708,
+   "low": 0.20495,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.23695
+  },
+  "+1y": {
+   "avg": 1.35265,
+   "currency": "BRL",
+   "growth": 0.2756,
+   "high": 1.7,
+   "low": 0.81,
+   "numberOfAnalysts": 10,
+   "yearAgoEps": 1.06044
+  },
+  "0q": {
+   "avg": 0.3667,
+   "currency": "BRL",
+   "growth": -0.070199996,
+   "high": 0.3708,
+   "low": 0.36141,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.3944
+  },
+  "0y": {
+   "avg": 1.06044,
+   "currency": "BRL",
+   "growth": -0.0586,
+   "high": 1.14,
+   "low": 0.86,
+   "numberOfAnalysts": 9,
+   "yearAgoEps": 1.12644
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 3650296090,
+   "currency": "BRL",
+   "growth": 0.0896,
+   "high": 3772873680,
+   "low": 3603000000,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 3350000000
+  },
+  "+1y": {
+   "avg": 15953230380,
+   "currency": "BRL",
+   "growth": 0.0774,
+   "high": 16904416969,
+   "low": 15155669170,
+   "numberOfAnalysts": 14,
+   "yearAgoRevenue": 14807499420
+  },
+  "0q": {
+   "avg": 3928506160,
+   "currency": "BRL",
+   "growth": 0.0287,
+   "high": 3984000000,
+   "low": 3889000000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 3819000000
+  },
+  "0y": {
+   "avg": 14807499420,
+   "currency": "BRL",
+   "growth": 0.069299996,
+   "high": 14902000000,
+   "low": 14714183880,
+   "numberOfAnalysts": 13,
+   "yearAgoRevenue": 13848000000
+  }
+ },
+ "ticker": "RAIL3.SA",
+ "url": "https://finance.yahoo.com/quote/RAIL3.SA"
+}

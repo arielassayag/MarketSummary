@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 2.07,
+  "high": 4.6,
+  "low": 1.3,
+  "mean": 2.98333,
+  "median": 3.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": -0.17124,
+   "currency": "BRL",
+   "growth": 0.8304,
+   "high": -0.12623,
+   "low": -0.21626,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": -1.00974
+  },
+  "+1y": {
+   "avg": -0.75082,
+   "currency": "BRL",
+   "growth": 0.6976,
+   "high": -0.5,
+   "low": -1.17,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": -2.4828
+  },
+  "0q": {
+   "avg": -0.47577,
+   "currency": "BRL",
+   "growth": -2.6543,
+   "high": -0.47517,
+   "low": -0.47637,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.2876
+  },
+  "0y": {
+   "avg": -2.4828,
+   "currency": "BRL",
+   "growth": -0.8697,
+   "high": -0.86,
+   "low": -3.74272,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": -1.32794
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 4839158330,
+   "currency": "BRL",
+   "growth": -0.0537,
+   "high": 4839158330,
+   "low": 4839158330,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 5114000000
+  },
+  "+1y": {
+   "avg": 19320253620,
+   "currency": "BRL",
+   "growth": 0.039,
+   "high": 21361000000,
+   "low": 18147000290,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 18594344620
+  },
+  "0q": {
+   "avg": 4153047750,
+   "currency": "BRL",
+   "growth": -0.0884,
+   "high": 4153047750,
+   "low": 4153047750,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 4556000000
+  },
+  "0y": {
+   "avg": 18594344620,
+   "currency": "BRL",
+   "growth": -0.0271,
+   "high": 20464000000,
+   "low": 17594095690,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 19113000000
+  }
+ },
+ "ticker": "PCAR3.SA",
+ "url": "https://finance.yahoo.com/quote/PCAR3.SA"
+}

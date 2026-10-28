@@ -1,0 +1,125 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_BANORTE",
+  "data": "2026-10-27",
+  "tipo": "atualizacao",
+  "titulo": "Banorte — leitura prospectiva do resultado, com calendário primário confirmado",
+  "resumo": "O resultado recente ainda não foi recebido. A fonte primária indica divulgação futura e conferência em novembro; esta é atualização prospectiva. O modelo aponta alvo {{fact:val.MX_BANORTE.preco_alvo}} e potencial {{fact:val.MX_BANORTE.upside}}. A tese exige retorno após perdas e capital por atividade.",
+  "negocio": "Grupo financeiro mexicano com banco, seguros, pensões e administração de recursos. Margem e capital têm perímetros próprios; recursos administrados de clientes não pertencem à controladora.",
+  "pilares_tese": [
+    {
+      "titulo": "Calendário e perímetro",
+      "texto": "O aviso do Banco Mercantil del Norte marca publicação em 2026-11-03. O calendário do Grupo Financiero Banorte confirma conferência em 2026-11-04. Nenhum desses eventos representa resultado já recebido.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Rentabilidade atribuível",
+      "texto": "A hipótese de diversificação depende de margem após perdas, reservas e custo das iniciativas digitais, com capital transferível à companhia listada.",
+      "evidencias": [
+        "F3"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Margem após crédito e capital",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Examinar contribuição por negócio e restrições prudenciais antes de inferir caixa distribuível.",
+      "evidencias": [
+        "F3"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Conferência de resultados do grupo; confrontar margem, perdas, capital e lucro atribuível.",
+      "data": "2026-11-04",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Crédito, reservas e funding podem absorver receitas; capital de subsidiárias pode não ser livremente transferível.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F3"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Relacionamento sustenta receitas recorrentes e retorno após risco. Cenário calculado: {{fact:val.MX_BANORTE.alvo_otimista}}.",
+    "base": "Lucro atribuível e capital condicionam o valor da diversificação. Base calculada: {{fact:val.MX_BANORTE.preco_alvo}}.",
+    "pessimista": "Perdas, reservas e expansão consomem capital sem distribuição. Cenário calculado: {{fact:val.MX_BANORTE.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.MX_BANORTE.preco}}, alvo {{fact:val.MX_BANORTE.preco_alvo}} e potencial {{fact:val.MX_BANORTE.upside}}. Retorno esperado {{fact:val.MX_BANORTE.etr}}, ke {{fact:val.MX_BANORTE.ke}} e confiança {{fact:val.MX_BANORTE.confianca_codigo}}. Consenso público {{fact:val.MX_BANORTE.consenso_alvo}}; a diferença {{fact:val.MX_BANORTE.diff_consenso}} não comprova o que está precificado. Métodos e cenários permanecem os calculados; a análise qualitativa não altera suas premissas.",
+  "ultimo_resultado": "A central primária apresenta o 2T26 como último trimestre disponível na consulta. A marcação da fila não comprova divulgação do 3T26. Guidance atual não avaliado até recebimento da informação recente.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Distinguir grupo listado e Banco Mercantil del Norte; reservas, participações e capital regulatório limitam a distribuição por subsidiária.",
+  "o_que_mudou": "Desde 2026-10-11, o calendário primário foi conferido e foi documentado o adiamento da publicação do banco, além da conferência futura do grupo. A avaliação usa o retrato de 2026-10-27.",
+  "gatilhos_revisao": [
+    "Recebimento do resultado e das orientações atuais.",
+    "Deterioração da margem após perdas ou restrição de capital."
+  ],
+  "lacunas_de_dados": [
+    "Resultado do 3T26 não recebido; guidance atual não classificado.",
+    "Capital e retorno das iniciativas digitais não reconciliados.",
+    "WACC e probabilidades implícitas indisponíveis."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "bolsa",
+      "instituicao": "BMV / Banco Mercantil del Norte",
+      "titulo": "Aviso de adiamento da divulgação trimestral do banco",
+      "url": "https://www.bmv.com.mx/docs-pub/extempor/extempor_1593764_1.pdf",
+      "publicado_em": "2026-10-06",
+      "consultado_em": "2026-10-27"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Financiero Banorte",
+      "titulo": "Calendário da conferência de resultados do grupo",
+      "url": "https://investors.banorte.com/es/news-and-events/events-and-presentations",
+      "publicado_em": null,
+      "consultado_em": "2026-10-27"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Financiero Banorte",
+      "titulo": "Resultado semestral e negócios financeiros",
+      "url": "https://www.banorte.com/GFB/Boletines-de-prensa/Grupo-Financiero-Banorte-reporta-un-crecimiento-solido-en-sus-carteras-de-credito",
+      "publicado_em": "2026-07-21",
+      "consultado_em": "2026-10-27"
+    }
+  ],
+  "contratese": {
+    "titulo": "Receita diversificada sem capital distribuível",
+    "texto": "A tese enfraquece se perdas e reservas absorverem a contribuição ou se o capital permanecer retido sem retorno adequado.",
+    "evidencias": [
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Conciliação por negócio",
+      "texto": "Conferir margem após perdas, reservas de seguros e pensões, capital e transferências à companhia listada.",
+      "evidencias": [
+        "F3"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_BAJIO",
+  "data": "2026-10-27",
+  "tipo": "atualizacao",
+  "titulo": "BanBajío — nova conferência mantém aberta a lacuna do resultado",
+  "resumo": "O modelo aponta {{fact:val.MX_BAJIO.preco_alvo}} de alvo e {{fact:val.MX_BAJIO.upside}} de potencial. A busca primária de hoje não entregou o resultado do 3T26, apesar da marcação da fila. Mantemos visão neutra e baixa convicção até conciliar margem após perdas e capital.",
+  "negocio": "Banco mexicano de crédito empresarial, depósitos e serviços. A leitura deve distinguir margem de crédito, tesouraria e subsidiárias.",
+  "pilares_tese": [
+    {
+      "titulo": "Retorno após perdas",
+      "texto": "A hipótese favorável requer originação e depósitos que preservem retorno após crédito e despesas. Crescimento da carteira não demonstra, isoladamente, rentabilidade incremental.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Calendário não é resultado recebido",
+      "texto": "A listagem primária consultada apresenta documentos semestrais e eventos de financiamento. Não foi recebido novo release trimestral; a divergência de calendário segue aberta.",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Reprecificação de ativos e depósitos",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Conferir margem recorrente depois de perdas e contribuição da tesouraria antes de elevar convicção.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Funding pode ajustar depois dos ativos; perdas e concentração podem consumir capital e limitar distribuição.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Relacionamento e depósitos sustentam expansão rentável. Cenário calculado: {{fact:val.MX_BAJIO.alvo_otimista}}.",
+    "base": "Margem normalizada e capital necessário condicionam o retorno. Base calculada: {{fact:val.MX_BAJIO.preco_alvo}}.",
+    "pessimista": "Reprecificação e crédito reduzem a capacidade de distribuir e crescer. Cenário calculado: {{fact:val.MX_BAJIO.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.MX_BAJIO.preco}}, alvo {{fact:val.MX_BAJIO.preco_alvo}} e potencial {{fact:val.MX_BAJIO.upside}}. Retorno esperado {{fact:val.MX_BAJIO.etr}}, ke {{fact:val.MX_BAJIO.ke}} e confiança {{fact:val.MX_BAJIO.confianca_codigo}}. Consenso público {{fact:val.MX_BAJIO.consenso_alvo}}; a diferença {{fact:val.MX_BAJIO.diff_consenso}} não comprova o que está precificado. Métodos e cenários permanecem os calculados; a análise qualitativa não altera suas premissas.",
+  "ultimo_resultado": "A documentação primária recebida nesta pesquisa é do 2T26. A conferência da BMV não entregou o relatório do 3T26. Não se apresenta releitura semestral como resultado novo nem se classifica guidance atual sem material recebido.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Revisar partes relacionadas, capital e direitos de distribuição. Capital regulatório tem definição e corte próprios e não equivale a caixa distribuível.",
+  "o_que_mudou": "Desde a nota de 2026-10-26, foi feita nova consulta pública da BMV, sem recebimento do release trimestral novo. O retrato de 2026-10-27 é a referência de avaliação; a lacuna de calendário permanece.",
+  "gatilhos_revisao": [
+    "Recebimento primário do resultado e orientação atual da administração.",
+    "Margem após perdas ou capital invalida crescimento rentável."
+  ],
+  "lacunas_de_dados": [
+    "Resultado do 3T26 não recebido; divergência de calendário não resolvida.",
+    "Capital definitivo, concentração e perdas por safra não reconciliados.",
+    "WACC, probabilidades implícitas e percepção de mercado indisponíveis."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "bolsa",
+      "instituicao": "BMV / Banco del Bajío",
+      "titulo": "Demonstrações financeiras semestrais",
+      "url": "https://www.bmv.com.mx/docs-pub/infinbnc/infinbnc_1577916_2026-02_1.pdf",
+      "publicado_em": "2026-07-29",
+      "consultado_em": "2026-10-27"
+    },
+    {
+      "id": "F2",
+      "tipo": "bolsa",
+      "instituicao": "BMV",
+      "titulo": "Eventos relevantes de BanBajío",
+      "url": "https://www.bmv.com.mx/es/emisoras/eventosrelevantes/BBAJIO-31431-CGEN_CAPIT",
+      "publicado_em": null,
+      "consultado_em": "2026-10-27"
+    }
+  ],
+  "contratese": {
+    "titulo": "Crédito sem remuneração do risco",
+    "texto": "A expansão não cria valor se spread e provisões deteriorarem o retorno ou se a distribuição consumir capital necessário.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Margem e solvência",
+      "texto": "Rever retorno após perdas, composição dos depósitos, migração de crédito, cobertura e capital em bases homogêneas.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ]
+}

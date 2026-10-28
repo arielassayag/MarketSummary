@@ -1,0 +1,300 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-27",
+    "manifest_sha256": "57831ad63d4e235002ce4d0943e5da5f902350160fd18ebee0f514ce5e81b59f",
+    "modelo_as_of": "2026-10-27"
+  },
+  "conviccao": 1,
+  "data": "2026-10-27",
+  "hashes": {
+    "contexto": "6d575f6c05add5eb084f964b473818456393f9681dde8fcde47f2516cf9efabf",
+    "factbook": "17f0319b468458592be22cccc0c2dfea9c973a8262487734e5d419e1a9676807",
+    "nota_json": "82222a48f73ee9d7da3fe828ce0a5be5b4747602106947ab90792d6f44200743"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_OMA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-27",
+  "published_at": "2026-10-28T01:49:39.095554+00:00",
+  "rendered": {
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Concessões dependem de retorno depois das obrigações contratuais. Base calculada: MXN 153,87.",
+      "otimista": "Demanda e monetização remuneram investimento e manutenção. Cenário calculado: MXN 193,67.",
+      "pessimista": "Demanda e capital comprometido pressionam distribuição. Cenário calculado: MXN 117,44."
+    },
+    "comentario_valuation": "Preço de referência MXN 231,51, alvo MXN 153,87 e potencial -33,54%. Retorno esperado -27,04%, ke 11,75% e confiança C. Consenso público MXN 260,26; a diferença -40,88% não comprova o que está precificado. Métodos e cenários permanecem os calculados; a análise qualitativa não altera suas premissas.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese enfraquece se manutenção e expansão consumirem a contribuição ou a demanda não remunerar capacidade.",
+        "titulo": "Margem sem retorno do capital"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-27",
+    "dados_simulados": false,
+    "data": "2026-10-27",
+    "ficha": [
+      {
+        "fato": "val.MX_OMA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 231,51"
+      },
+      {
+        "fato": "val.MX_OMA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 153,87"
+      },
+      {
+        "fato": "val.MX_OMA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-33,54%"
+      },
+      {
+        "fato": "val.MX_OMA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_OMA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.MX_OMA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 193,67"
+      },
+      {
+        "fato": "val.MX_OMA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_OMA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 117,44"
+      },
+      {
+        "fato": "val.MX_OMA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_OMA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,75%"
+      },
+      {
+        "fato": "val.MX_OMA.wacc",
+        "rotulo": "WACC",
+        "valor": "10,89%"
+      },
+      {
+        "fato": "val.MX_OMA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_OMA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-27,04%"
+      },
+      {
+        "fato": "val.MX_OMA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-46,34%"
+      },
+      {
+        "fato": "val.MX_OMA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "12,7x"
+      },
+      {
+        "fato": "val.MX_OMA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "9,7x"
+      },
+      {
+        "fato": "val.MX_OMA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 260,26"
+      },
+      {
+        "fato": "val.MX_OMA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-40,88%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-27",
+        "id": "F1",
+        "instituicao": "BMV / OMA",
+        "publicado_em": "2026-07-27",
+        "tipo": "Bolsa",
+        "titulo": "Resultado operacional e financeiro semestral",
+        "url": "https://www.bmv.com.mx/docs-pub/eventemi/eventemi_1577262_1.pdf"
+      },
+      {
+        "consultado_em": "2026-10-27",
+        "id": "F2",
+        "instituicao": "OMA",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Central de relatórios financeiros",
+        "url": "https://ir.oma.aero/es/reportes-financieros/"
+      },
+      {
+        "consultado_em": "2026-10-27",
+        "id": "F3",
+        "instituicao": "OMA",
+        "publicado_em": "2026-10-09",
+        "tipo": "Relações com investidores",
+        "titulo": "Comunicado de troca de auditor externo",
+        "url": "https://ir.oma.aero/wp-content/uploads/2026/10/Cambio-Auditor-externo-ESP_vf.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Recebimento e conciliação do resultado atual.",
+      "Mudança na remuneração tarifária, investimento ou financiamento."
+    ],
+    "governanca": "A companhia anunciou troca de auditor externo em 2026-10-09. O acompanhamento deve verificar a transição e relatórios subsequentes; o anúncio não prova problema contábil.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar tráfego, monetização comercial, tarifas, desembolso de manutenção e serviço da dívida.",
+        "titulo": "Concessão e caixa"
+      }
+    ],
+    "issuer_id": "MX_OMA",
+    "lacunas_de_dados": [
+      "Release primário do 3T26 e guidance atual não recebidos.",
+      "Caixa após manutenção, capital e direitos de classes não integralmente reconciliados.",
+      "Probabilidades implícitas e percepção variante indisponíveis."
+    ],
+    "modelo_de_cobertura": "2026-10-27",
+    "negocio": "Operadora de concessões aeroportuárias no centro e norte do México, com receita aeronáutica, comercial e de diversificação. Tarifas e obrigações de desenvolvimento delimitam a remuneração.",
+    "nome": "Grupo Aeroportuario Centro Norte",
+    "o_que_mudou": "Desde 2026-10-22, atualiza-se a avaliação ao retrato de 2026-10-27 e reconfirma-se a documentação primária disponível. A busca atual mantém aberta a lacuna do resultado recente.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MARCOPOLO",
+        "nome": "Marcopolo"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O release semestral separa receita de construção, provisão de manutenção e desempenho operacional. O teste é o caixa depois de desembolsos obrigatórios e financiamento.",
+        "titulo": "Margem ajustada não encerra o investimento"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A central consultada lista o trimestre, sem entregar seu conteúdo nesta pesquisa. A marcação da fila não substitui o release recebido.",
+        "titulo": "Documento recente ainda pendente"
+      }
+    ],
+    "publicada_em": "2026-10-28T01:49:39.095554+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar receita de construção e provisão de manutenção da contribuição que efetivamente remunera o acionista.",
+        "titulo": "Ajustes e desembolso"
+      }
+    ],
+    "resumo": "O alvo do modelo é MXN 153,87, com potencial -33,54%. A busca atual não recebeu o release primário do 3T26. Mantém-se atualização neutra, condicionada à remuneração do investimento e à conversão de margem ajustada em caixa.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Tráfego insuficiente e investimento exigível podem reduzir caixa disponível mesmo com margem ajustada elevada."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "OMA — concessão e margem exigem caixa após manutenção e desenvolvimento",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A fonte primária financeira recebida é o 2T26, com crescimento de receitas aeronáuticas e comerciais. Não foi recebido o novo release do 3T26 nem requalificado guidance corrente. Construção e provisão de manutenção não equivalem a caixa livre.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Confrontar demanda, receita comercial e tarifas com investimento contratado e caixa após manutenção.",
+        "vetor": "Manutenção e desenvolvimento"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

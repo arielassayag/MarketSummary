@@ -1,0 +1,291 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-27",
+    "manifest_sha256": "57831ad63d4e235002ce4d0943e5da5f902350160fd18ebee0f514ce5e81b59f",
+    "modelo_as_of": "2026-10-27"
+  },
+  "conviccao": 1,
+  "data": "2026-10-27",
+  "hashes": {
+    "contexto": "a3e3c8323d54e85414d7a78f8040b97b9ae2164ee42168abf05492d961545a22",
+    "factbook": "ea0bd9453b97268e6cc0538d16ad945aa144cbb06876f3fd5303576b7292a794",
+    "nota_json": "e14cb238ef4cc3d5d3216e4ae4e2331804f10f174a93187fdcfc39471b2cd0ca"
+  },
+  "is_synthetic": false,
+  "issuer_id": "CL_ANDINA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-27",
+  "published_at": "2026-10-28T01:47:33.399702+00:00",
+  "rendered": {
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "A operação deve preservar retorno por território e direitos da classe avaliada. Base calculada: CLP 6.980,68.",
+      "otimista": "Volume rentável e produtividade sustentam caixa depois da rede. Cenário calculado: CLP 8.367,07.",
+      "pessimista": "Reajustes reduzem demanda enquanto insumos e giro absorvem caixa. Cenário calculado: CLP 5.499,73."
+    },
+    "comentario_valuation": "Preço de referência CLP 4.863,70, alvo CLP 6.980,68 e potencial +43,53%. Retorno esperado +48,97%, ke 8,94% e confiança B. Consenso público CLP 5.109,09; a diferença +36,63% não comprova o que está precificado. Métodos e cenários permanecem os calculados; a análise qualitativa não altera suas premissas.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese enfraquece se preço e mix ocultarem menor volume ou investimento maior sem contribuição econômica.",
+        "titulo": "Crescimento nominal sem retorno"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-27",
+    "dados_simulados": false,
+    "data": "2026-10-27",
+    "ficha": [
+      {
+        "fato": "val.CL_ANDINA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "CLP 4.863,70"
+      },
+      {
+        "fato": "val.CL_ANDINA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "CLP 6.980,68"
+      },
+      {
+        "fato": "val.CL_ANDINA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+43,53%"
+      },
+      {
+        "fato": "val.CL_ANDINA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.CL_ANDINA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.CL_ANDINA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "CLP 8.367,07"
+      },
+      {
+        "fato": "val.CL_ANDINA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_ANDINA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "CLP 5.499,73"
+      },
+      {
+        "fato": "val.CL_ANDINA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_ANDINA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "8,94%"
+      },
+      {
+        "fato": "val.CL_ANDINA.wacc",
+        "rotulo": "WACC",
+        "valor": "8,14%"
+      },
+      {
+        "fato": "val.CL_ANDINA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,09%"
+      },
+      {
+        "fato": "val.CL_ANDINA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+48,97%"
+      },
+      {
+        "fato": "val.CL_ANDINA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+39,08%"
+      },
+      {
+        "fato": "val.CL_ANDINA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "13,9x"
+      },
+      {
+        "fato": "val.CL_ANDINA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "3,5x"
+      },
+      {
+        "fato": "val.CL_ANDINA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "CLP 5.109,09"
+      },
+      {
+        "fato": "val.CL_ANDINA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+36,63%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-27",
+        "id": "F1",
+        "instituicao": "SEC / Coca-Cola Andina",
+        "publicado_em": null,
+        "tipo": "Regulador",
+        "titulo": "Resultado semestral e bases de comparação",
+        "url": "https://www.sec.gov/Archives/edgar/data/925261/000110465926087665/tm2621488d1_6k.htm"
+      },
+      {
+        "consultado_em": "2026-10-27",
+        "id": "F2",
+        "instituicao": "Coca-Cola Andina",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Central pública de informação financeira",
+        "url": "https://www.koandina.com/inversionistas/informacion-financiera/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Recebimento e conciliação do resultado primário recente.",
+      "Perda de volume rentável ou mudança nos direitos de franquia e capital."
+    ],
+    "governanca": "Conferir voto, preferência econômica e recibo correspondente à série coberta. Caixa de subsidiárias e dividendos anunciados exigem ponte até o acionista.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar volume, preço real, embalagem, logística e giro; conciliar fluxo, dívida e remuneração da classe coberta.",
+        "titulo": "Territórios e classe"
+      }
+    ],
+    "issuer_id": "CL_ANDINA",
+    "lacunas_de_dados": [
+      "Resultado primário do 3T26 não recebido.",
+      "Fluxo por subsidiária, derivativos e direitos de classes não conciliados integralmente.",
+      "Probabilidades implícitas, guidance e percepção de mercado indisponíveis."
+    ],
+    "modelo_de_cobertura": "2026-10-27",
+    "negocio": "Engarrafadora e distribuidora de bebidas na Argentina, Brasil, Chile e Paraguai. Desempenho em moeda local, conversão cambial e direitos econômicos das séries precisam de leitura separada.",
+    "nome": "Embotelladora Andina",
+    "o_que_mudou": "Desde 2026-10-11, a avaliação usa o retrato de 2026-10-27. A nova busca preserva a lacuna do trimestre recente e evita transportar documentos históricos para a data atual.",
+    "pais": "Chile",
+    "pares": [
+      {
+        "issuer_id": "AR_ADECOAGRO",
+        "nome": "Adecoagro"
+      },
+      {
+        "issuer_id": "BR_3TENTOS",
+        "nome": "3tentos"
+      },
+      {
+        "issuer_id": "BR_AMBEV",
+        "nome": "Ambev"
+      },
+      {
+        "issuer_id": "BR_ASSAI",
+        "nome": "Assaí Atacadista"
+      },
+      {
+        "issuer_id": "BR_JBS",
+        "nome": "JBS N.V."
+      },
+      {
+        "issuer_id": "BR_MATEUS",
+        "nome": "Grupo Mateus"
+      },
+      {
+        "issuer_id": "BR_MDIAS",
+        "nome": "M. Dias Branco"
+      },
+      {
+        "issuer_id": "BR_NATURA",
+        "nome": "Natura Cosméticos"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A operação territorial permite escala, mas o retorno depende de volume, preço real, embalagem e custo logístico depois do reinvestimento.",
+        "titulo": "Distribuição precisa remunerar capital"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O release semestral separa efeitos de câmbio e inflação. Crescimento consolidado nominal não demonstra melhora homogênea de demanda ou caixa.",
+        "titulo": "Comparabilidade monetária"
+      }
+    ],
+    "publicada_em": "2026-10-28T01:47:33.399702+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar inflação, tradução, dívida indexada e ajustes do resultado antes de extrapolar EBITDA para caixa distribuível.",
+        "titulo": "Moeda e caixa"
+      }
+    ],
+    "resumo": "O modelo aponta alvo CLP 6.980,68 e potencial +43,53%. A pesquisa não recebeu resultado primário do 3T26; mantém-se atualização com baixa convicção. O teste econômico continua sendo demanda rentável e caixa depois da rede e da franquia.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Insumos, moedas e dívida indexada podem impedir transmissão da margem ao acionista, mesmo com receita nominal maior."
+      }
+    ],
+    "setor": "Consumo básico",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Coca-Cola Andina — preço real, caixa territorial e direitos por classe",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A evidência primária recebida é o release do 2T26 arquivado na SEC. A consulta da central financeira não entregou material atual do 3T26; um vínculo aberto correspondia a período histórico, sem ser tratado como nova divulgação. Guidance atual permanece não determinado.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Conferir elasticidade, embalagem e margem por território em bases monetárias compatíveis.",
+        "vetor": "Preço real e volume"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

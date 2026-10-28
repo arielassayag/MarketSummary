@@ -1,0 +1,103 @@
+{
+  "mind": "codex",
+  "issuer_id": "LA_BLADEX",
+  "data": "2026-10-27",
+  "tipo": "pos_resultado",
+  "titulo": "Bladex — expansão comercial exige separar margem recorrente e capital ordinário",
+  "resumo": "O resultado do 3T26 amplia a evidência sobre originação, funding e comissões, mas a antecipação de receitas e o capital adicional exigem cautela na leitura do retorno ordinário. O modelo aponta {{fact:val.LA_BLADEX.upside}} de potencial, com confiança {{fact:val.LA_BLADEX.confianca_codigo}}. Visão neutra até reconciliar recorrência e concentração.",
+  "negocio": "Banco de comércio exterior sediado no Panamá, com crédito a empresas e instituições da América Latina e Caribe. Sua origem institucional não representa garantia soberana.",
+  "pilares_tese": [
+    {
+      "titulo": "Escala com disciplina de crédito",
+      "texto": "O comunicado da companhia em 2026-10-26 relata expansão comercial, inclusive operação de curto prazo com o governo panamenho. Concentração e consumo de capital importam tanto quanto crescimento.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Margem recorrente e atribuição",
+      "texto": "Reconhecimento antecipado de comissões favoreceu a margem; o lucro por ação deduz remuneração do capital adicional. Retorno ajustado e retorno total usam bases distintas.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Funding e originação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Depósitos e acesso a mercado sustentam negócios; competição por bons créditos limita spreads.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Concentração, perdas esperadas e funding podem consumir retorno na expansão do balanço.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Originação rentável e diversificação preservam capital ordinário. Cenário calculado: {{fact:val.LA_BLADEX.alvo_otimista}}.",
+    "base": "Crescimento exige comprovação de margem depois de perdas. Base calculada: {{fact:val.LA_BLADEX.preco_alvo}}.",
+    "pessimista": "Compressão de spread e perdas absorvem comissões. Cenário calculado: {{fact:val.LA_BLADEX.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.LA_BLADEX.preco}}, alvo {{fact:val.LA_BLADEX.preco_alvo}} e potencial {{fact:val.LA_BLADEX.upside}}. Retorno esperado {{fact:val.LA_BLADEX.etr}}, ke {{fact:val.LA_BLADEX.ke}} e confiança {{fact:val.LA_BLADEX.confianca_codigo}}. Consenso público {{fact:val.LA_BLADEX.consenso_alvo}}; a diferença {{fact:val.LA_BLADEX.diff_consenso}} não comprova o que está precificado. Métodos e cenários permanecem os calculados; a análise qualitativa não altera suas premissas.",
+  "ultimo_resultado": "O release primário do 3T26 foi recebido. A melhora de margem inclui reconhecimento acelerado de receitas diferidas; não se presume recorrência integral. Não foi identificado guidance formal no comunicado consultado.",
+  "guidance": "sem_guidance",
+  "tom_gestao": "positivo",
+  "governanca": "Distinguir direitos por classe, retorno regulatório e remuneração de instrumentos adicionais. Dividendos anunciados não comprovam pagamento.",
+  "o_que_mudou": "Desde 2026-10-11, o release do 3T26 explicita efeito de comissões antecipadas e expansão comercial. A avaliação usa o retrato de 2026-10-27, sem confundir crescimento do balanço com lucro atribuível.",
+  "gatilhos_revisao": [
+    "Deterioração do crédito ou concentração sem remuneração adequada.",
+    "Queda da margem recorrente após comissões antecipadas."
+  ],
+  "lacunas_de_dados": [
+    "Concentração detalhada e notas de crédito não integralmente reconciliadas.",
+    "Probabilidades implícitas e WACC indisponíveis.",
+    "Percepção de mercado e pagamento efetivo de proventos não confirmados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Bladex",
+      "titulo": "Comunicado da companhia sobre resultado trimestral",
+      "url": "https://www.prnewswire.com/news-releases/bladex-announces-net-profit-of-63-2-million-for-the-third-quarter-2026--302919885.html",
+      "publicado_em": "2026-10-26",
+      "consultado_em": "2026-10-27"
+    }
+  ],
+  "qualidade_resultados": {
+    "titulo": "Recorrência sob exame",
+    "texto": "A decomposição da margem deve separar antecipação de comissões e custo estável de funding.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Expansão sem retorno ordinário",
+    "texto": "A hipótese falha se concentração e capital adicional impedirem que o crescimento beneficie o acionista ordinário.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Margem e capital",
+      "texto": "Acompanhar spread recorrente, migração de crédito, concentração, depósitos e retorno após remuneração do capital adicional.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ]
+}

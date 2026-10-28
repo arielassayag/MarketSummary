@@ -1,0 +1,103 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_WALMEX",
+  "data": "2026-10-27",
+  "tipo": "pos_resultado",
+  "titulo": "Walmart de México — margem cede enquanto preço e expansão exigem produtividade",
+  "resumo": "O release primário do 3T26 mostra expansão comercial com pressão de despesas e margem. A hipótese de escala exige contribuição econômica dos canais após investimento. O modelo indica {{fact:val.MX_WALMEX.upside}} de potencial; a leitura qualitativa segue neutra e de baixa convicção.",
+  "negocio": "Varejista no México e América Central com formatos de desconto, supermercados, clubes e operação digital. Preço, abastecimento, estoque e entrega determinam a conversão de escala em caixa.",
+  "pilares_tese": [
+    {
+      "titulo": "Preço precisa de produtividade",
+      "texto": "No release de 2026-10-27, soluções comerciais ajudam a compensar investimento em preço, enquanto despesas de crescimento pressionam margem. A hipótese favorável exige eficiência persistente.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Canais digitais exigem contribuição",
+      "texto": "A expansão de entregas e comércio eletrônico deve remunerar logística e capital. Crescimento de vendas ou GMV não comprova caixa incremental.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Margem após investimento em preço",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar tráfego mexicano, composição da cesta, despesa por loja e contribuição da entrega.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Competição e despesas podem absorver receita; expansão e estoque exigem caixa antes de remunerar o acionista.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Produtividade compensa investimento em preço e canais remuneram expansão. Cenário calculado: {{fact:val.MX_WALMEX.alvo_otimista}}.",
+    "base": "Escala comercial exige recuperação da contribuição após despesas. Base calculada: {{fact:val.MX_WALMEX.preco_alvo}}.",
+    "pessimista": "Competição e custo de servir pressionam margens e caixa. Cenário calculado: {{fact:val.MX_WALMEX.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.MX_WALMEX.preco}}, alvo {{fact:val.MX_WALMEX.preco_alvo}} e potencial {{fact:val.MX_WALMEX.upside}}. Retorno esperado {{fact:val.MX_WALMEX.etr}}, ke {{fact:val.MX_WALMEX.ke}} e confiança {{fact:val.MX_WALMEX.confianca_codigo}}. Consenso público {{fact:val.MX_WALMEX.consenso_alvo}}; a diferença {{fact:val.MX_WALMEX.diff_consenso}} não comprova o que está precificado. Métodos e cenários permanecem os calculados; a análise qualitativa não altera suas premissas.",
+  "ultimo_resultado": "O resultado primário do 3T26 foi recebido: margem bruta estável, pressão de despesas, contração de margem EBITDA e recuo de lucro. Tráfego mexicano permanece relativamente estável, com avanço digital. Não foi identificada projeção formal agregada no material consultado.",
+  "guidance": "sem_guidance",
+  "tom_gestao": "nd",
+  "governanca": "Examinar arrendamentos e transações intragrupo na ponte de caixa e valor. Não duplicar obrigações ou tratar aprovação de distribuição como comprovação de crédito.",
+  "o_que_mudou": "Desde 2026-10-11, o release de hoje documenta a combinação de avanço comercial e pressão de margem. A avaliação usa o retrato de 2026-10-27 e preserva a lacuna de contribuição econômica por canal.",
+  "gatilhos_revisao": [
+    "Recuperação de produtividade sem perda de tráfego e competitividade.",
+    "Caixa após expansão e arrendamentos diverge da melhora comercial."
+  ],
+  "lacunas_de_dados": [
+    "Contribuição econômica digital e retorno de novas lojas não reconciliados.",
+    "Fluxo completo e obrigações por entidade não integralmente conciliados.",
+    "Probabilidades implícitas indisponíveis; percepção de mercado não demonstrada."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Walmart de México y Centroamérica",
+      "titulo": "Release trimestral e demonstrativos resumidos",
+      "url": "https://files.walmex.mx/upload/files/2026/ES/Trimestral/3T26/Walmex%203T26%20Reporte%20de%20Resultados.pdf",
+      "publicado_em": "2026-10-27",
+      "consultado_em": "2026-10-27"
+    }
+  ],
+  "qualidade_resultados": {
+    "titulo": "Vendas e margem",
+    "texto": "Separar crescimento comercial de contribuição depois de gastos e de efeitos de moeda na América Central.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Preço competitivo sem retorno",
+    "texto": "A tese falha se custo de servir e expansão absorverem continuamente os ganhos de escala.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Giro e contribuição",
+      "texto": "Acompanhar tráfego, ticket, estoques, custo de entrega e caixa depois de compromissos de uso.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ]
+}

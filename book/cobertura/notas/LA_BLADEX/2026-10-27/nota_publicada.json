@@ -1,0 +1,282 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-27",
+    "manifest_sha256": "57831ad63d4e235002ce4d0943e5da5f902350160fd18ebee0f514ce5e81b59f",
+    "modelo_as_of": "2026-10-27"
+  },
+  "conviccao": 1,
+  "data": "2026-10-27",
+  "hashes": {
+    "contexto": "eebe40505189eb31710424ed71fdeed342a0cc8d87e3ec342740f6f763b2e1a6",
+    "factbook": "1fb620355e80f4834a24f919758b0a5139fb7f1a7f6ce94c6f63b9c0ca028546",
+    "nota_json": "7c7c6cd498f680232b5bb87649e57da7a2e48c73bf958ac9027d6ebbf559e2ec"
+  },
+  "is_synthetic": false,
+  "issuer_id": "LA_BLADEX",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-26",
+  "published_at": "2026-10-28T01:41:50.580870+00:00",
+  "rendered": {
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Crescimento exige comprovação de margem depois de perdas. Base calculada: US$ 72,79.",
+      "otimista": "Originação rentável e diversificação preservam capital ordinário. Cenário calculado: US$ 86,91.",
+      "pessimista": "Compressão de spread e perdas absorvem comissões. Cenário calculado: US$ 59,46."
+    },
+    "comentario_valuation": "Preço de referência US$ 52,18, alvo US$ 72,79 e potencial +39,49%. Retorno esperado +44,64%, ke 11,99% e confiança B. Consenso público US$ 65,90; a diferença +10,45% não comprova o que está precificado. Métodos e cenários permanecem os calculados; a análise qualitativa não altera suas premissas.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese falha se concentração e capital adicional impedirem que o crescimento beneficie o acionista ordinário.",
+        "titulo": "Expansão sem retorno ordinário"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-27",
+    "dados_simulados": false,
+    "data": "2026-10-27",
+    "ficha": [
+      {
+        "fato": "val.LA_BLADEX.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 52,18"
+      },
+      {
+        "fato": "val.LA_BLADEX.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 72,79"
+      },
+      {
+        "fato": "val.LA_BLADEX.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+39,49%"
+      },
+      {
+        "fato": "val.LA_BLADEX.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.LA_BLADEX.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.LA_BLADEX.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 86,91"
+      },
+      {
+        "fato": "val.LA_BLADEX.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.LA_BLADEX.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 59,46"
+      },
+      {
+        "fato": "val.LA_BLADEX.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.LA_BLADEX.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,99%"
+      },
+      {
+        "fato": "val.LA_BLADEX.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.LA_BLADEX.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.LA_BLADEX.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+44,64%"
+      },
+      {
+        "fato": "val.LA_BLADEX.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+13,90%"
+      },
+      {
+        "fato": "val.LA_BLADEX.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "7,5x"
+      },
+      {
+        "fato": "val.LA_BLADEX.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,1x"
+      },
+      {
+        "fato": "val.LA_BLADEX.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 65,90"
+      },
+      {
+        "fato": "val.LA_BLADEX.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+10,45%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-27",
+        "id": "F1",
+        "instituicao": "Bladex",
+        "publicado_em": "2026-10-26",
+        "tipo": "Relações com investidores",
+        "titulo": "Comunicado da companhia sobre resultado trimestral",
+        "url": "https://www.prnewswire.com/news-releases/bladex-announces-net-profit-of-63-2-million-for-the-third-quarter-2026--302919885.html"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Deterioração do crédito ou concentração sem remuneração adequada.",
+      "Queda da margem recorrente após comissões antecipadas."
+    ],
+    "governanca": "Distinguir direitos por classe, retorno regulatório e remuneração de instrumentos adicionais. Dividendos anunciados não comprovam pagamento.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar spread recorrente, migração de crédito, concentração, depósitos e retorno após remuneração do capital adicional.",
+        "titulo": "Margem e capital"
+      }
+    ],
+    "issuer_id": "LA_BLADEX",
+    "lacunas_de_dados": [
+      "Concentração detalhada e notas de crédito não integralmente reconciliadas.",
+      "Probabilidades implícitas e WACC indisponíveis.",
+      "Percepção de mercado e pagamento efetivo de proventos não confirmados."
+    ],
+    "modelo_de_cobertura": "2026-10-27",
+    "negocio": "Banco de comércio exterior sediado no Panamá, com crédito a empresas e instituições da América Latina e Caribe. Sua origem institucional não representa garantia soberana.",
+    "nome": "Bladex",
+    "o_que_mudou": "Desde 2026-10-11, o release do 3T26 explicita efeito de comissões antecipadas e expansão comercial. A avaliação usa o retrato de 2026-10-27, sem confundir crescimento do balanço com lucro atribuível.",
+    "pais": "Panamá",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BANRISUL",
+        "nome": "Banrisul"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O comunicado da companhia em 2026-10-26 relata expansão comercial, inclusive operação de curto prazo com o governo panamenho. Concentração e consumo de capital importam tanto quanto crescimento.",
+        "titulo": "Escala com disciplina de crédito"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Reconhecimento antecipado de comissões favoreceu a margem; o lucro por ação deduz remuneração do capital adicional. Retorno ajustado e retorno total usam bases distintas.",
+        "titulo": "Margem recorrente e atribuição"
+      }
+    ],
+    "publicada_em": "2026-10-28T01:41:50.580870+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A decomposição da margem deve separar antecipação de comissões e custo estável de funding.",
+        "titulo": "Recorrência sob exame"
+      }
+    ],
+    "resumo": "O resultado do 3T26 amplia a evidência sobre originação, funding e comissões, mas a antecipação de receitas e o capital adicional exigem cautela na leitura do retorno ordinário. O modelo aponta +39,49% de potencial, com confiança B. Visão neutra até reconciliar recorrência e concentração.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Concentração, perdas esperadas e funding podem consumir retorno na expansão do balanço."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Bladex — expansão comercial exige separar margem recorrente e capital ordinário",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O release primário do 3T26 foi recebido. A melhora de margem inclui reconhecimento acelerado de receitas diferidas; não se presume recorrência integral. Não foi identificado guidance formal no comunicado consultado.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Depósitos e acesso a mercado sustentam negócios; competição por bons créditos limita spreads.",
+        "vetor": "Funding e originação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

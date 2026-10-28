@@ -1,0 +1,294 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-27",
+    "manifest_sha256": "57831ad63d4e235002ce4d0943e5da5f902350160fd18ebee0f514ce5e81b59f",
+    "modelo_as_of": "2026-10-27"
+  },
+  "conviccao": 1,
+  "data": "2026-10-27",
+  "hashes": {
+    "contexto": "7c3f85c7e3cf33991815b488dc6b1f6c636cb44fa6d60b982f5aef4f3ff974eb",
+    "factbook": "7d18d0dcc11814a7e2c0bced0b106acd3c4b7fe78f237e08a5177f4464f1ee12",
+    "nota_json": "614d7c94bd28ef857bbb2b66e24a2b277c89a68ddd87fd49772be0612be09eac"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_HYPERA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-27",
+  "published_at": "2026-10-28T01:44:55.233328+00:00",
+  "rendered": {
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "A melhora precisa de confirmação na demanda e no fluxo após juros. Base calculada: R$ 20,46.",
+      "otimista": "Portfólio e execução sustentam margem e caixa após reinvestimento. Cenário calculado: R$ 26,76.",
+      "pessimista": "Gasto comercial e giro absorvem retorno e elevam necessidade de financiamento. Cenário calculado: R$ 15,14."
+    },
+    "comentario_valuation": "Preço de referência R$ 21,45, alvo R$ 20,46 e potencial -4,61%. Retorno esperado +4,01%, ke 13,98% e confiança B. Consenso público R$ 31,02; a diferença -34,03% não comprova o que está precificado. Métodos e cenários permanecem os calculados; a análise qualitativa não altera suas premissas.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A tese enfraquece se estoque e gasto comercial sustentarem receita sem demanda e caixa após financiamento.",
+        "titulo": "Escala sem conversão"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-27",
+    "dados_simulados": false,
+    "data": "2026-10-27",
+    "ficha": [
+      {
+        "fato": "val.BR_HYPERA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 21,45"
+      },
+      {
+        "fato": "val.BR_HYPERA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 20,46"
+      },
+      {
+        "fato": "val.BR_HYPERA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-4,61%"
+      },
+      {
+        "fato": "val.BR_HYPERA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_HYPERA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_HYPERA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 26,76"
+      },
+      {
+        "fato": "val.BR_HYPERA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "27,28%"
+      },
+      {
+        "fato": "val.BR_HYPERA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 15,14"
+      },
+      {
+        "fato": "val.BR_HYPERA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "23,64%"
+      },
+      {
+        "fato": "val.BR_HYPERA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "13,98%"
+      },
+      {
+        "fato": "val.BR_HYPERA.wacc",
+        "rotulo": "WACC",
+        "valor": "11,23%"
+      },
+      {
+        "fato": "val.BR_HYPERA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_HYPERA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+4,01%"
+      },
+      {
+        "fato": "val.BR_HYPERA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-8,08%"
+      },
+      {
+        "fato": "val.BR_HYPERA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "7,0x"
+      },
+      {
+        "fato": "val.BR_HYPERA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,0x"
+      },
+      {
+        "fato": "val.BR_HYPERA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 31,02"
+      },
+      {
+        "fato": "val.BR_HYPERA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-34,03%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-27",
+        "id": "F1",
+        "instituicao": "Hypera",
+        "publicado_em": "2026-06-18",
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil corporativo, portfólio e estrutura",
+        "url": "https://ri.hypera.com.br/hypera-pharma/perfil-corporativo/"
+      },
+      {
+        "consultado_em": "2026-10-27",
+        "id": "F2",
+        "instituicao": "UOL",
+        "publicado_em": "2026-10-27",
+        "tipo": "Imprensa",
+        "titulo": "Notícia do resultado trimestral da Hypera",
+        "url": "https://economia.uol.com.br/noticias/redacao/2026/10/27/hypera-lucra-r-5270-milhoes-em-operacoes-continuadas-no-terceiro-trimestre-alta-de-161.amp.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Recebimento do release e das demonstrações primárias do trimestre.",
+      "Divergência persistente entre demanda final, vendas ao canal e caixa."
+    ],
+    "governanca": "O perfil informa participação da Votorantim no bloco de controle e conselho. Acompanhamento de partes relacionadas, diluição e capital deve distinguir aporte de geração operacional.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Conciliar estoque, recebíveis, marketing, investimento industrial e intangível, juros e efeito de aportes.",
+        "titulo": "Giro e financiamento"
+      }
+    ],
+    "issuer_id": "BR_HYPERA",
+    "lacunas_de_dados": [
+      "Release primário completo do resultado de hoje não recebido.",
+      "Fluxo após juros, intangíveis e giro não reconciliado.",
+      "Guidance, tom agregado e retorno dos lançamentos não classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-27",
+    "negocio": "Grupo farmacêutico com medicamentos de prescrição, produtos sem prescrição, genéricos, cuidados com a pele e canal institucional. Marcas, produção e distribuição precisam remunerar inovação e capital empregado.",
+    "nome": "Hypera",
+    "o_que_mudou": "Desde 2026-10-11, o modelo foi atualizado e há notícia do resultado de hoje. Preservam-se como pendentes a leitura primária do trimestre e a conciliação do fluxo após financiamento.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_3TENTOS",
+        "nome": "3tentos"
+      },
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALLOS",
+        "nome": "Allos"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AMBEV",
+        "nome": "Ambev"
+      },
+      {
+        "issuer_id": "BR_ASSAI",
+        "nome": "Assaí Atacadista"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A estrutura pública descreve marcas, produção integrada e distribuição nacional. A hipótese favorável exige demanda final e caixa depois de marketing, giro e juros; escala não comprova retorno.",
+        "titulo": "Portfólio exige conversão econômica"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A notícia de 2026-10-27 relata avanço do lucro e redução de dívida. Sem demonstrações primárias completas, não se certifica recorrência ou geração de caixa atribuível.",
+        "titulo": "Resultado recebido de forma incompleta"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A amplitude do portfólio e a integração industrial são capacidades descritas pela companhia; sua tradução em retorno continua hipótese a testar.",
+        "titulo": "Marcas e execução"
+      }
+    ],
+    "publicada_em": "2026-10-28T01:44:55.233328+00:00",
+    "resumo": "O retrato de 2026-10-27 aponta alvo R$ 20,46 e potencial -4,61%. A pesquisa encontrou notícia do resultado de hoje, mas não recebeu o release primário completo. Mantemos visão neutra e baixa convicção, com atenção à demanda final, estoques e financiamento.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Concorrência, regulação e gasto comercial podem limitar retorno; estoques, intangíveis e juros podem consumir caixa."
+      }
+    ],
+    "setor": "Saúde",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Hypera — demanda final e caixa após juros continuam decisivos",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "Há notícia pública do 3T26 em 2026-10-27, mas a central de resultados consultada não entregou seu conteúdo completo. Não se declara leitura pós-resultado integral ou revisão de guidance. A pesquisa não adota alegações comerciais como evidência médica.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Confrontar vendas ao canal, demanda do varejo e giro; recomposição de estoques pode absorver caixa.",
+        "vetor": "Demanda final e estoque"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

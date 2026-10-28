@@ -1,0 +1,103 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_KOF",
+  "data": "2026-10-27",
+  "tipo": "pos_resultado",
+  "titulo": "Coca-Cola FEMSA — volume e operação avançam; caixa após investimento permanece o teste",
+  "resumo": "O resultado primário do 3T26 confirma crescimento de volume e resultado operacional, com pressão financeira sobre a transmissão ao lucro atribuível. O modelo indica potencial {{fact:val.MX_KOF.upside}}. A leitura permanece neutra, sem equiparar força comercial a retorno após investimento.",
+  "negocio": "Engarrafadora e distribuidora de bebidas sob contratos territoriais da Coca-Cola. A economia depende de rotas, preço, embalagens, concentrado e capital necessário por território.",
+  "pilares_tese": [
+    {
+      "titulo": "Demanda e execução comercial",
+      "texto": "A companhia relata expansão de volume nas operações no 3T26, mesmo com consumo mexicano desafiador. Alegação de ganho de participação permanece atribuída à administração.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Lucro e financiamento",
+      "texto": "A melhora operacional foi parcialmente absorvida pelo resultado financeiro. A contribuição atribuível e o caixa após investimento devem sustentar a avaliação.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Volume e contribuição por território",
+      "direcao": "positivo",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar frequência, embalagem e margem após distribuição, sem confundir preço nominal com demanda.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Consumo, tributação e concentrado podem limitar acessibilidade e rentabilidade da engarrafadora.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Demanda e eficiência geram caixa depois da expansão. Cenário calculado: {{fact:val.MX_KOF.alvo_otimista}}.",
+    "base": "Melhora operacional exige confirmação na geração recorrente. Base calculada: {{fact:val.MX_KOF.preco_alvo}}.",
+    "pessimista": "Custos e financiamento absorvem a contribuição comercial. Cenário calculado: {{fact:val.MX_KOF.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.MX_KOF.preco}}, alvo {{fact:val.MX_KOF.preco_alvo}} e potencial {{fact:val.MX_KOF.upside}}. Retorno esperado {{fact:val.MX_KOF.etr}}, ke {{fact:val.MX_KOF.ke}} e confiança {{fact:val.MX_KOF.confianca_codigo}}. Consenso público {{fact:val.MX_KOF.consenso_alvo}}; a diferença {{fact:val.MX_KOF.diff_consenso}} não comprova o que está precificado. Métodos e cenários permanecem os calculados; a análise qualitativa não altera suas premissas.",
+  "ultimo_resultado": "O comunicado de 2026-10-26 descreve expansão de volume e operação, parcialmente contrabalançada por despesa financeira no lucro majoritário. Não apresenta guidance agregado formal; não se transporta a revisão de projeções da The Coca-Cola Company para a engarrafadora.",
+  "guidance": "sem_guidance",
+  "tom_gestao": "positivo",
+  "governanca": "Franquia e controle exigem distinguir valor da marca e retorno da engarrafadora. Ações, unidades e ADSs não são bases intercambiáveis de lucro e remuneração.",
+  "o_que_mudou": "Desde 2026-10-12, o resultado primário do 3T26 substitui a dependência do semestre. A projeção de valor segue o retrato de 2026-10-27; confirmação de caixa e investimento permanece necessária.",
+  "gatilhos_revisao": [
+    "Queda de volume ou contribuição após reajustes.",
+    "Deterioração de caixa após concentrado, investimento e financiamento."
+  ],
+  "lacunas_de_dados": [
+    "Fluxo, investimento pago e lucro atribuível não integralmente reconciliados.",
+    "Participação de mercado sem confirmação independente.",
+    "Percepção de mercado e retorno realizado da expansão não demonstrados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "FEMSA / Coca-Cola FEMSA",
+      "titulo": "Resultado trimestral da engarrafadora",
+      "url": "https://www.femsa.com/en/press-room/press-release/coca-cola-femsa-third-quarter-2026-results/",
+      "publicado_em": "2026-10-26",
+      "consultado_em": "2026-10-27"
+    }
+  ],
+  "qualidade_resultados": {
+    "titulo": "Operação e atribuição",
+    "texto": "Separar efeito financeiro, moeda e perímetro antes de extrapolar a melhora operacional para caixa livre.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Volume sem retorno econômico",
+    "texto": "A expansão perde valor se concentrado, distribuição e capital absorverem a contribuição incremental.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Execução e caixa",
+      "texto": "Confrontar volume territorial, mix de embalagem e margem com giro, manutenção e expansão.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,296 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-27",
+    "manifest_sha256": "57831ad63d4e235002ce4d0943e5da5f902350160fd18ebee0f514ce5e81b59f",
+    "modelo_as_of": "2026-10-23"
+  },
+  "conviccao": 1,
+  "data": "2026-10-27",
+  "hashes": {
+    "contexto": "9e56a0e425653475015e1e0ef35ddda5786cba083bd041861e6b9393e987892c",
+    "factbook": "bf869460c1176c2748a6dae3ba1976bc6a0286a4a632e0d5960e0dedacdd16d8",
+    "nota_json": "f715ec5383a14b2470b49fc9b982d0ac07d49b130c0a1c9ee43ed20d2c7b7ea8"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_BANORTE",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-03",
+  "published_at": "2026-10-28T01:48:33.039621+00:00",
+  "rendered": {
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-04",
+        "descricao": "Conferência de resultados do grupo; confrontar margem, perdas, capital e lucro atribuível.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Lucro atribuível e capital condicionam o valor da diversificação. Base calculada: MXN 253,81.",
+      "otimista": "Relacionamento sustenta receitas recorrentes e retorno após risco. Cenário calculado: MXN 291,80.",
+      "pessimista": "Perdas, reservas e expansão consomem capital sem distribuição. Cenário calculado: MXN 220,11."
+    },
+    "comentario_valuation": "Preço de referência MXN 207,91, alvo MXN 253,81 e potencial +22,07%. Retorno esperado +29,87%, ke 11,11% e confiança B. Consenso público MXN 224,60; a diferença +13,00% não comprova o que está precificado. Métodos e cenários permanecem os calculados; a análise qualitativa não altera suas premissas.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A tese enfraquece se perdas e reservas absorverem a contribuição ou se o capital permanecer retido sem retorno adequado.",
+        "titulo": "Receita diversificada sem capital distribuível"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-27",
+    "dados_simulados": false,
+    "data": "2026-10-27",
+    "ficha": [
+      {
+        "fato": "val.MX_BANORTE.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 207,91"
+      },
+      {
+        "fato": "val.MX_BANORTE.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 253,81"
+      },
+      {
+        "fato": "val.MX_BANORTE.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+22,07%"
+      },
+      {
+        "fato": "val.MX_BANORTE.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_BANORTE.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_BANORTE.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 291,80"
+      },
+      {
+        "fato": "val.MX_BANORTE.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_BANORTE.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 220,11"
+      },
+      {
+        "fato": "val.MX_BANORTE.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_BANORTE.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,11%"
+      },
+      {
+        "fato": "val.MX_BANORTE.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_BANORTE.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_BANORTE.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+29,87%"
+      },
+      {
+        "fato": "val.MX_BANORTE.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-4,94%"
+      },
+      {
+        "fato": "val.MX_BANORTE.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,9x"
+      },
+      {
+        "fato": "val.MX_BANORTE.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,3x"
+      },
+      {
+        "fato": "val.MX_BANORTE.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 224,60"
+      },
+      {
+        "fato": "val.MX_BANORTE.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+13,00%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-27",
+        "id": "F1",
+        "instituicao": "BMV / Banco Mercantil del Norte",
+        "publicado_em": "2026-10-06",
+        "tipo": "Bolsa",
+        "titulo": "Aviso de adiamento da divulgação trimestral do banco",
+        "url": "https://www.bmv.com.mx/docs-pub/extempor/extempor_1593764_1.pdf"
+      },
+      {
+        "consultado_em": "2026-10-27",
+        "id": "F2",
+        "instituicao": "Grupo Financiero Banorte",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário da conferência de resultados do grupo",
+        "url": "https://investors.banorte.com/es/news-and-events/events-and-presentations"
+      },
+      {
+        "consultado_em": "2026-10-27",
+        "id": "F3",
+        "instituicao": "Grupo Financiero Banorte",
+        "publicado_em": "2026-07-21",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado semestral e negócios financeiros",
+        "url": "https://www.banorte.com/GFB/Boletines-de-prensa/Grupo-Financiero-Banorte-reporta-un-crecimiento-solido-en-sus-carteras-de-credito"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Recebimento do resultado e das orientações atuais.",
+      "Deterioração da margem após perdas ou restrição de capital."
+    ],
+    "governanca": "Distinguir grupo listado e Banco Mercantil del Norte; reservas, participações e capital regulatório limitam a distribuição por subsidiária.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Conferir margem após perdas, reservas de seguros e pensões, capital e transferências à companhia listada.",
+        "titulo": "Conciliação por negócio"
+      }
+    ],
+    "issuer_id": "MX_BANORTE",
+    "lacunas_de_dados": [
+      "Resultado do 3T26 não recebido; guidance atual não classificado.",
+      "Capital e retorno das iniciativas digitais não reconciliados.",
+      "WACC e probabilidades implícitas indisponíveis."
+    ],
+    "modelo_de_cobertura": "2026-10-27",
+    "negocio": "Grupo financeiro mexicano com banco, seguros, pensões e administração de recursos. Margem e capital têm perímetros próprios; recursos administrados de clientes não pertencem à controladora.",
+    "nome": "Grupo Financiero Banorte",
+    "o_que_mudou": "Desde 2026-10-11, o calendário primário foi conferido e foi documentado o adiamento da publicação do banco, além da conferência futura do grupo. A avaliação usa o retrato de 2026-10-27.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_BAJIO",
+        "nome": "Banco del Bajío"
+      },
+      {
+        "issuer_id": "MX_BMV",
+        "nome": "Bolsa Mexicana de Valores"
+      },
+      {
+        "issuer_id": "MX_GENTERA",
+        "nome": "Gentera"
+      },
+      {
+        "issuer_id": "MX_INBURSA",
+        "nome": "Grupo Financiero Inbursa"
+      },
+      {
+        "issuer_id": "MX_QUALITAS",
+        "nome": "Quálitas"
+      },
+      {
+        "issuer_id": "MX_REGIONAL",
+        "nome": "Regional (Banregio)"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O aviso do Banco Mercantil del Norte marca publicação em 2026-11-03. O calendário do Grupo Financiero Banorte confirma conferência em 2026-11-04. Nenhum desses eventos representa resultado já recebido.",
+        "titulo": "Calendário e perímetro"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese de diversificação depende de margem após perdas, reservas e custo das iniciativas digitais, com capital transferível à companhia listada.",
+        "titulo": "Rentabilidade atribuível"
+      }
+    ],
+    "publicada_em": "2026-10-28T01:48:33.039621+00:00",
+    "resumo": "O resultado recente ainda não foi recebido. A fonte primária indica divulgação futura e conferência em novembro; esta é atualização prospectiva. O modelo aponta alvo MXN 253,81 e potencial +22,07%. A tese exige retorno após perdas e capital por atividade.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Crédito, reservas e funding podem absorver receitas; capital de subsidiárias pode não ser livremente transferível."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Banorte — leitura prospectiva do resultado, com calendário primário confirmado",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A central primária apresenta o 2T26 como último trimestre disponível na consulta. A marcação da fila não comprova divulgação do 3T26. Guidance atual não avaliado até recebimento da informação recente.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Examinar contribuição por negócio e restrições prudenciais antes de inferir caixa distribuível.",
+        "vetor": "Margem após crédito e capital"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

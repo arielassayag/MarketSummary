@@ -1,0 +1,108 @@
+{
+  "avisos_tecnicos": [],
+  "dados_ate": "2026-10-27",
+  "data": "2026-10-27",
+  "fontes_sugeridas": [
+    {
+      "instituicao": "CMF Chile",
+      "tipo": "regulatorio",
+      "url": "https://www.cmfchile.cl/"
+    },
+    {
+      "instituicao": "Bolsa de Santiago",
+      "tipo": "bolsa",
+      "url": "https://www.bolsadesantiago.com/"
+    },
+    {
+      "instituicao": "Banco Central de Chile",
+      "tipo": "banco_central",
+      "url": "https://www.bcentral.cl/"
+    },
+    {
+      "instituicao": "INE Chile",
+      "tipo": "estatistica_oficial",
+      "url": "https://www.ine.gob.cl/"
+    },
+    {
+      "instituicao": "Damodaran Online (NYU Stern) — prêmios de risco, betas e múltiplos setoriais",
+      "tipo": "dados_publicos",
+      "url": "https://pages.stern.nyu.edu/~adamodar/"
+    },
+    {
+      "instituicao": "FRED (Federal Reserve Bank of St. Louis) — juros e indicadores dos EUA",
+      "tipo": "dados_publicos",
+      "url": "https://fred.stlouisfed.org/"
+    }
+  ],
+  "is_synthetic": false,
+  "issuer_id": "CL_ANDINA",
+  "lacunas": [
+    "Probabilidade implícita do otimista: sem dado na data.",
+    "Probabilidade implícita do pessimista: sem dado na data."
+  ],
+  "nome": "Embotelladora Andina",
+  "nomes": {
+    "AR_ADECOAGRO": "Adecoagro",
+    "BR_3TENTOS": "3tentos",
+    "BR_AMBEV": "Ambev",
+    "BR_ASSAI": "Assaí Atacadista",
+    "BR_JBS": "JBS N.V.",
+    "BR_MATEUS": "Grupo Mateus",
+    "BR_MDIAS": "M. Dias Branco",
+    "BR_NATURA": "Natura Cosméticos",
+    "CL_ANDINA": "Embotelladora Andina"
+  },
+  "nota_anterior": {
+    "autoria": "mente",
+    "conviccao": 1,
+    "data": "2026-10-11",
+    "proximo_resultado": "2026-10-27",
+    "stance": 0,
+    "tipo": "iniciacao",
+    "titulo": "Coca-Cola Andina — distribuição, preço real e caixa por classe"
+  },
+  "pais": "CL",
+  "pais_pt": "Chile",
+  "pares": [
+    "AR_ADECOAGRO",
+    "BR_3TENTOS",
+    "BR_AMBEV",
+    "BR_ASSAI",
+    "BR_JBS",
+    "BR_MATEUS",
+    "BR_MDIAS",
+    "BR_NATURA"
+  ],
+  "proximo_resultado": "2026-10-27",
+  "schema": "cdp.nota.contexto/v1",
+  "setor": "Consumer Staples",
+  "setor_pt": "Consumo básico",
+  "snapshot": {
+    "as_of": "2026-10-27",
+    "manifest_sha256": "57831ad63d4e235002ce4d0943e5da5f902350160fd18ebee0f514ce5e81b59f",
+    "modelo_as_of": "2026-10-27"
+  },
+  "tem_linha_eua": false,
+  "termos": [
+    "3tentos",
+    "ABEV3",
+    "ABEV3.SA",
+    "ASAI3",
+    "ASAI3.SA",
+    "GMAT3",
+    "GMAT3.SA",
+    "JBSS32",
+    "JBSS32.SA",
+    "MDIA3",
+    "MDIA3.SA",
+    "NATU3",
+    "NATU3.SA",
+    "TTEN3",
+    "TTEN3.SA"
+  ],
+  "tickers": [
+    "ANDINA-B.SN",
+    "ANDINA"
+  ],
+  "tipo_esperado": "atualizacao"
+}

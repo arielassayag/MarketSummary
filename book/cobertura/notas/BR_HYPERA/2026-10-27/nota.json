@@ -1,0 +1,113 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_HYPERA",
+  "data": "2026-10-27",
+  "tipo": "atualizacao",
+  "titulo": "Hypera — demanda final e caixa após juros continuam decisivos",
+  "resumo": "O retrato de 2026-10-27 aponta alvo {{fact:val.BR_HYPERA.preco_alvo}} e potencial {{fact:val.BR_HYPERA.upside}}. A pesquisa encontrou notícia do resultado de hoje, mas não recebeu o release primário completo. Mantemos visão neutra e baixa convicção, com atenção à demanda final, estoques e financiamento.",
+  "negocio": "Grupo farmacêutico com medicamentos de prescrição, produtos sem prescrição, genéricos, cuidados com a pele e canal institucional. Marcas, produção e distribuição precisam remunerar inovação e capital empregado.",
+  "pilares_tese": [
+    {
+      "titulo": "Portfólio exige conversão econômica",
+      "texto": "A estrutura pública descreve marcas, produção integrada e distribuição nacional. A hipótese favorável exige demanda final e caixa depois de marketing, giro e juros; escala não comprova retorno.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Resultado recebido de forma incompleta",
+      "texto": "A notícia de 2026-10-27 relata avanço do lucro e redução de dívida. Sem demonstrações primárias completas, não se certifica recorrência ou geração de caixa atribuível.",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Demanda final e estoque",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Confrontar vendas ao canal, demanda do varejo e giro; recomposição de estoques pode absorver caixa.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Concorrência, regulação e gasto comercial podem limitar retorno; estoques, intangíveis e juros podem consumir caixa.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Portfólio e execução sustentam margem e caixa após reinvestimento. Cenário calculado: {{fact:val.BR_HYPERA.alvo_otimista}}.",
+    "base": "A melhora precisa de confirmação na demanda e no fluxo após juros. Base calculada: {{fact:val.BR_HYPERA.preco_alvo}}.",
+    "pessimista": "Gasto comercial e giro absorvem retorno e elevam necessidade de financiamento. Cenário calculado: {{fact:val.BR_HYPERA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_HYPERA.preco}}, alvo {{fact:val.BR_HYPERA.preco_alvo}} e potencial {{fact:val.BR_HYPERA.upside}}. Retorno esperado {{fact:val.BR_HYPERA.etr}}, ke {{fact:val.BR_HYPERA.ke}} e confiança {{fact:val.BR_HYPERA.confianca_codigo}}. Consenso público {{fact:val.BR_HYPERA.consenso_alvo}}; a diferença {{fact:val.BR_HYPERA.diff_consenso}} não comprova o que está precificado. Métodos e cenários permanecem os calculados; a análise qualitativa não altera suas premissas.",
+  "ultimo_resultado": "Há notícia pública do 3T26 em 2026-10-27, mas a central de resultados consultada não entregou seu conteúdo completo. Não se declara leitura pós-resultado integral ou revisão de guidance. A pesquisa não adota alegações comerciais como evidência médica.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "O perfil informa participação da Votorantim no bloco de controle e conselho. Acompanhamento de partes relacionadas, diluição e capital deve distinguir aporte de geração operacional.",
+  "o_que_mudou": "Desde 2026-10-11, o modelo foi atualizado e há notícia do resultado de hoje. Preservam-se como pendentes a leitura primária do trimestre e a conciliação do fluxo após financiamento.",
+  "gatilhos_revisao": [
+    "Recebimento do release e das demonstrações primárias do trimestre.",
+    "Divergência persistente entre demanda final, vendas ao canal e caixa."
+  ],
+  "lacunas_de_dados": [
+    "Release primário completo do resultado de hoje não recebido.",
+    "Fluxo após juros, intangíveis e giro não reconciliado.",
+    "Guidance, tom agregado e retorno dos lançamentos não classificados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Hypera",
+      "titulo": "Perfil corporativo, portfólio e estrutura",
+      "url": "https://ri.hypera.com.br/hypera-pharma/perfil-corporativo/",
+      "publicado_em": "2026-06-18",
+      "consultado_em": "2026-10-27"
+    },
+    {
+      "id": "F2",
+      "tipo": "imprensa",
+      "instituicao": "UOL",
+      "titulo": "Notícia do resultado trimestral da Hypera",
+      "url": "https://economia.uol.com.br/noticias/redacao/2026/10/27/hypera-lucra-r-5270-milhoes-em-operacoes-continuadas-no-terceiro-trimestre-alta-de-161.amp.htm",
+      "publicado_em": "2026-10-27",
+      "consultado_em": "2026-10-27"
+    }
+  ],
+  "posicao_competitiva": {
+    "titulo": "Marcas e execução",
+    "texto": "A amplitude do portfólio e a integração industrial são capacidades descritas pela companhia; sua tradução em retorno continua hipótese a testar.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Escala sem conversão",
+    "texto": "A tese enfraquece se estoque e gasto comercial sustentarem receita sem demanda e caixa após financiamento.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Giro e financiamento",
+      "texto": "Conciliar estoque, recebíveis, marketing, investimento industrial e intangível, juros e efeito de aportes.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ]
+}

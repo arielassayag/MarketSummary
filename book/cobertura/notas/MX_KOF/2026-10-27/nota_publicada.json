@@ -1,0 +1,282 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-27",
+    "manifest_sha256": "57831ad63d4e235002ce4d0943e5da5f902350160fd18ebee0f514ce5e81b59f",
+    "modelo_as_of": "2026-10-27"
+  },
+  "conviccao": 1,
+  "data": "2026-10-27",
+  "hashes": {
+    "contexto": "556f5ffc528ce53f311c45af5cc03f8a31bc090c23dd129a2201bc394b4bb7b1",
+    "factbook": "4a8eb9bda40fa97073a0168405bf06091f976da2513854037b7c98c82a7f957e",
+    "nota_json": "7bbb06c342e48f5be754d9c16994855801cbc3e098820fceb99035dfcfc809ad"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_KOF",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-26",
+  "published_at": "2026-10-28T01:43:59.614062+00:00",
+  "rendered": {
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Melhora operacional exige confirmação na geração recorrente. Base calculada: MXN 183,67.",
+      "otimista": "Demanda e eficiência geram caixa depois da expansão. Cenário calculado: MXN 218,83.",
+      "pessimista": "Custos e financiamento absorvem a contribuição comercial. Cenário calculado: MXN 156,25."
+    },
+    "comentario_valuation": "Preço de referência MXN 210,44, alvo MXN 183,67 e potencial -12,72%. Retorno esperado -8,04%, ke 11,19% e confiança C. Consenso público MXN 225,67; a diferença -18,61% não comprova o que está precificado. Métodos e cenários permanecem os calculados; a análise qualitativa não altera suas premissas.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A expansão perde valor se concentrado, distribuição e capital absorverem a contribuição incremental.",
+        "titulo": "Volume sem retorno econômico"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-27",
+    "dados_simulados": false,
+    "data": "2026-10-27",
+    "ficha": [
+      {
+        "fato": "val.MX_KOF.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 210,44"
+      },
+      {
+        "fato": "val.MX_KOF.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 183,67"
+      },
+      {
+        "fato": "val.MX_KOF.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-12,72%"
+      },
+      {
+        "fato": "val.MX_KOF.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_KOF.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.MX_KOF.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 218,83"
+      },
+      {
+        "fato": "val.MX_KOF.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "49,46%"
+      },
+      {
+        "fato": "val.MX_KOF.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 156,25"
+      },
+      {
+        "fato": "val.MX_KOF.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "8,43%"
+      },
+      {
+        "fato": "val.MX_KOF.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,19%"
+      },
+      {
+        "fato": "val.MX_KOF.wacc",
+        "rotulo": "WACC",
+        "valor": "10,31%"
+      },
+      {
+        "fato": "val.MX_KOF.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_KOF.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-8,04%"
+      },
+      {
+        "fato": "val.MX_KOF.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-5,38%"
+      },
+      {
+        "fato": "val.MX_KOF.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "14,6x"
+      },
+      {
+        "fato": "val.MX_KOF.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "3,3x"
+      },
+      {
+        "fato": "val.MX_KOF.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 225,67"
+      },
+      {
+        "fato": "val.MX_KOF.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-18,61%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-27",
+        "id": "F1",
+        "instituicao": "FEMSA / Coca-Cola FEMSA",
+        "publicado_em": "2026-10-26",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado trimestral da engarrafadora",
+        "url": "https://www.femsa.com/en/press-room/press-release/coca-cola-femsa-third-quarter-2026-results/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Queda de volume ou contribuição após reajustes.",
+      "Deterioração de caixa após concentrado, investimento e financiamento."
+    ],
+    "governanca": "Franquia e controle exigem distinguir valor da marca e retorno da engarrafadora. Ações, unidades e ADSs não são bases intercambiáveis de lucro e remuneração.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Confrontar volume territorial, mix de embalagem e margem com giro, manutenção e expansão.",
+        "titulo": "Execução e caixa"
+      }
+    ],
+    "issuer_id": "MX_KOF",
+    "lacunas_de_dados": [
+      "Fluxo, investimento pago e lucro atribuível não integralmente reconciliados.",
+      "Participação de mercado sem confirmação independente.",
+      "Percepção de mercado e retorno realizado da expansão não demonstrados."
+    ],
+    "modelo_de_cobertura": "2026-10-27",
+    "negocio": "Engarrafadora e distribuidora de bebidas sob contratos territoriais da Coca-Cola. A economia depende de rotas, preço, embalagens, concentrado e capital necessário por território.",
+    "nome": "Coca-Cola FEMSA",
+    "o_que_mudou": "Desde 2026-10-12, o resultado primário do 3T26 substitui a dependência do semestre. A projeção de valor segue o retrato de 2026-10-27; confirmação de caixa e investimento permanece necessária.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_AC",
+        "nome": "Arca Continental"
+      },
+      {
+        "issuer_id": "MX_BIMBO",
+        "nome": "Grupo Bimbo"
+      },
+      {
+        "issuer_id": "MX_CHEDRAUI",
+        "nome": "Grupo Comercial Chedraui"
+      },
+      {
+        "issuer_id": "MX_FEMSA",
+        "nome": "FEMSA"
+      },
+      {
+        "issuer_id": "MX_GENOMMA",
+        "nome": "Genomma Lab"
+      },
+      {
+        "issuer_id": "MX_GRUMA",
+        "nome": "Gruma"
+      },
+      {
+        "issuer_id": "MX_KIMBER",
+        "nome": "Kimberly-Clark de México"
+      },
+      {
+        "issuer_id": "MX_SIGMA",
+        "nome": "Sigma Foods (ex-Alfa)"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A companhia relata expansão de volume nas operações no 3T26, mesmo com consumo mexicano desafiador. Alegação de ganho de participação permanece atribuída à administração.",
+        "titulo": "Demanda e execução comercial"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A melhora operacional foi parcialmente absorvida pelo resultado financeiro. A contribuição atribuível e o caixa após investimento devem sustentar a avaliação.",
+        "titulo": "Lucro e financiamento"
+      }
+    ],
+    "publicada_em": "2026-10-28T01:43:59.614062+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar efeito financeiro, moeda e perímetro antes de extrapolar a melhora operacional para caixa livre.",
+        "titulo": "Operação e atribuição"
+      }
+    ],
+    "resumo": "O resultado primário do 3T26 confirma crescimento de volume e resultado operacional, com pressão financeira sobre a transmissão ao lucro atribuível. O modelo indica potencial -12,72%. A leitura permanece neutra, sem equiparar força comercial a retorno após investimento.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Consumo, tributação e concentrado podem limitar acessibilidade e rentabilidade da engarrafadora."
+      }
+    ],
+    "setor": "Consumo básico",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Coca-Cola FEMSA — volume e operação avançam; caixa após investimento permanece o teste",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O comunicado de 2026-10-26 descreve expansão de volume e operação, parcialmente contrabalançada por despesa financeira no lucro majoritário. Não apresenta guidance agregado formal; não se transporta a revisão de projeções da The Coca-Cola Company para a engarrafadora.",
+    "vetores": [
+      {
+        "direcao": "positivo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar frequência, embalagem e margem após distribuição, sem confundir preço nominal com demanda.",
+        "vetor": "Volume e contribuição por território"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

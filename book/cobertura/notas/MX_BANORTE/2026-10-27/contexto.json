@@ -1,0 +1,89 @@
+{
+  "avisos_tecnicos": [],
+  "dados_ate": "2026-10-27",
+  "data": "2026-10-27",
+  "fontes_sugeridas": [
+    {
+      "instituicao": "CNBV",
+      "tipo": "regulatorio",
+      "url": "https://www.gob.mx/cnbv"
+    },
+    {
+      "instituicao": "BMV — emissoras",
+      "tipo": "bolsa",
+      "url": "https://www.bmv.com.mx/"
+    },
+    {
+      "instituicao": "Banxico (SIE)",
+      "tipo": "banco_central",
+      "url": "https://www.banxico.org.mx/"
+    },
+    {
+      "instituicao": "INEGI",
+      "tipo": "estatistica_oficial",
+      "url": "https://www.inegi.org.mx/"
+    },
+    {
+      "instituicao": "Damodaran Online (NYU Stern) — prêmios de risco, betas e múltiplos setoriais",
+      "tipo": "dados_publicos",
+      "url": "https://pages.stern.nyu.edu/~adamodar/"
+    },
+    {
+      "instituicao": "FRED (Federal Reserve Bank of St. Louis) — juros e indicadores dos EUA",
+      "tipo": "dados_publicos",
+      "url": "https://fred.stlouisfed.org/"
+    }
+  ],
+  "is_synthetic": false,
+  "issuer_id": "MX_BANORTE",
+  "lacunas": [
+    "Probabilidade implícita do otimista: sem dado na data.",
+    "Probabilidade implícita do pessimista: sem dado na data.",
+    "WACC: sem dado na data."
+  ],
+  "nome": "Grupo Financiero Banorte",
+  "nomes": {
+    "MX_BAJIO": "Banco del Bajío",
+    "MX_BANORTE": "Grupo Financiero Banorte",
+    "MX_BMV": "Bolsa Mexicana de Valores",
+    "MX_GENTERA": "Gentera",
+    "MX_INBURSA": "Grupo Financiero Inbursa",
+    "MX_QUALITAS": "Quálitas",
+    "MX_REGIONAL": "Regional (Banregio)"
+  },
+  "nota_anterior": {
+    "autoria": "mente",
+    "conviccao": 1,
+    "data": "2026-10-11",
+    "proximo_resultado": "2026-10-27",
+    "stance": 0,
+    "tipo": "iniciacao",
+    "titulo": "Banorte: receitas diversificadas e retorno após risco e capital"
+  },
+  "pais": "MX",
+  "pais_pt": "México",
+  "pares": [
+    "MX_BAJIO",
+    "MX_BMV",
+    "MX_GENTERA",
+    "MX_INBURSA",
+    "MX_QUALITAS",
+    "MX_REGIONAL"
+  ],
+  "proximo_resultado": "2026-11-03",
+  "schema": "cdp.nota.contexto/v1",
+  "setor": "Financials",
+  "setor_pt": "Financeiro",
+  "snapshot": {
+    "as_of": "2026-10-27",
+    "manifest_sha256": "57831ad63d4e235002ce4d0943e5da5f902350160fd18ebee0f514ce5e81b59f",
+    "modelo_as_of": "2026-10-23"
+  },
+  "tem_linha_eua": false,
+  "termos": [],
+  "tickers": [
+    "GFNORTEO.MX",
+    "GFNORTEO"
+  ],
+  "tipo_esperado": "atualizacao"
+}

@@ -1,0 +1,157 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_GOAU",
+  "data": "2026-10-27",
+  "tipo": "atualizacao",
+  "titulo": "Metalúrgica Gerdau — margem da investida melhora; caixa atribuível segue decisivo",
+  "resumo": "A melhora operacional da Gerdau no 3T26 reforça a exposição industrial da holding, mas não resolve a transmissão de caixa ao seu acionista. O alvo do modelo é {{fact:val.BR_GOAU.preco_alvo}}, com potencial {{fact:val.BR_GOAU.upside}} e confiança {{fact:val.BR_GOAU.confianca_codigo}}. Mantemos visão neutra e baixa convicção até reconciliar resultado individual, direitos e distribuição da Metalúrgica Gerdau.",
+  "negocio": "Holding controladora da Gerdau, com exposição a aço e mineração. Lucro consolidado inclui participações de não controladores; equivalência patrimonial e recebimentos individuais têm naturezas distintas.",
+  "pilares_tese": [
+    {
+      "titulo": "Melhora industrial com transmissão condicionada",
+      "texto": "O release da Gerdau de 2026-10-26 atribui a melhora da margem a preços realizados na América do Norte e relata fluxo livre positivo. É evidência da investida, sem comprovar caixa distribuível da holding.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Avaliação exige disciplina no perímetro",
+      "texto": "O retorno esperado é {{fact:val.BR_GOAU.etr}} e o alpha relativo é {{fact:val.BR_GOAU.alpha_rel}}. O desconto de negociação não assegura convergência nem substitui conciliação das participações.",
+      "evidencias": [
+        "val.BR_GOAU.etr",
+        "val.BR_GOAU.alpha_rel"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Margem e caixa da investida",
+      "direcao": "positivo",
+      "sensibilidade": "alta",
+      "texto": "Preços norte-americanos sustentam a rentabilidade; persistência depende de demanda, sucata e condições comerciais.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Transmissão à holding",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Recebimentos, despesas, minoritários e direitos de capital determinam o retorno efetivo do titular.",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Conciliação do resultado individual e da distribuição da holding após o resultado industrial.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Normalização de preços norte-americanos e persistência da competição no Brasil podem reduzir o caixa industrial.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "Custos, direitos de classes e retenção de caixa podem impedir transmissão proporcional de resultado.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Margens sustentáveis e recebimentos efetivos sustentariam o cenário {{fact:val.BR_GOAU.alvo_otimista}}.",
+    "base": "A base calculada é {{fact:val.BR_GOAU.preco_alvo}}; preserva-se a distinção entre resultado consolidado e retorno individual.",
+    "pessimista": "Normalização industrial e menor distribuição pressionariam o cenário {{fact:val.BR_GOAU.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço {{fact:val.BR_GOAU.preco}}, alvo {{fact:val.BR_GOAU.preco_alvo}} e ke {{fact:val.BR_GOAU.ke}}. O consenso público é {{fact:val.BR_GOAU.consenso_alvo}}; a diferença {{fact:val.BR_GOAU.diff_consenso}} não prova erro de mercado. Métodos e cenários permanecem os calculados. Não se recalcula desconto de holding com participações ou preços de cortes distintos.",
+  "ultimo_resultado": "A Gerdau divulgou o 3T26 em 2026-10-26: melhora de preços norte-americanos, fluxo livre positivo e menor consumo de giro. A leitura primária recebida é da investida; não se qualifica como análise completa do resultado individual da Metalúrgica Gerdau.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Preservar os direitos de ordinárias e preferenciais, participação econômica, tesouraria e despesas próprias. Dividendos aprovados da investida não equivalem a caixa recebido pela holding.",
+  "posicao_competitiva": {
+    "titulo": "Exposição industrial indireta",
+    "texto": "A presença regional da investida expõe a holding a preços, energia, sucata e comércio exterior; a holding não elimina os riscos industriais.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Caixa e atribuição",
+    "texto": "A melhora operacional e o menor consumo de giro são favoráveis na investida. Falta reconciliar sua recorrência e atribuição ao resultado e ao fluxo individual da holding.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Projetos e distribuição",
+    "texto": "A investida informa avanço de Miguel Burnier e início da reciclagem em Pindamonhangaba. Avanço físico não comprova retorno econômico ou crédito de dividendos da holding.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Margem sem distribuição",
+    "texto": "A hipótese de transmissão enfraquece se a margem normalizar ou a necessidade de capital absorver o caixa antes de chegar ao acionista da holding.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Ponte individual",
+      "texto": "Conferir equivalência, não controladores, proventos recebidos, despesas e remuneração por classe.",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "o_que_mudou": "Desde 2026-10-12, foi recebido o release primário da Gerdau referente ao 3T26, com melhora industrial e de caixa. A avaliação usa o retrato de 2026-10-27; a reconciliação integral do resultado individual da holding permanece aberta.",
+  "gatilhos_revisao": [
+    "Recebimento e reconciliação do resultado individual da holding.",
+    "Normalização de margem ou mudança nos direitos e na distribuição."
+  ],
+  "lacunas_de_dados": [
+    "Resultado individual recente da holding não reconciliado integralmente.",
+    "Desconto atual, tesouraria e direitos por classe não reavaliados em base homogênea.",
+    "Guidance e tom agregado da holding não classificados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "regulatorio",
+      "instituicao": "SEC / Gerdau",
+      "titulo": "Resultado trimestral da investida e mensagem da administração",
+      "url": "https://www.sec.gov/Archives/edgar/data/1073404/000110465926118862/tm2628297d1_ex99-1.htm",
+      "publicado_em": "2026-10-26",
+      "consultado_em": "2026-10-27"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Metalúrgica Gerdau",
+      "titulo": "Demonstrações individuais e consolidadas da holding",
+      "url": "https://api.mziq.com/mzfilemanager/v2/d/0e58d869-d438-4c13-9d23-c24d27e72c47/1ae00877-eabb-0bdc-8eac-eb57dd66ea7b?origin=2",
+      "publicado_em": "2026-08-04",
+      "consultado_em": "2026-10-27"
+    }
+  ]
+}

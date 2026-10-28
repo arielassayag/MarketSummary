@@ -1,0 +1,303 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-27",
+    "manifest_sha256": "57831ad63d4e235002ce4d0943e5da5f902350160fd18ebee0f514ce5e81b59f",
+    "modelo_as_of": "2026-10-27"
+  },
+  "conviccao": 1,
+  "data": "2026-10-27",
+  "hashes": {
+    "contexto": "cdf92ab67488d4fcc0a464a5b55c5ab9ce77420cc7235d2f3c754ad660e2e9f3",
+    "factbook": "4a8eb9bda40fa97073a0168405bf06091f976da2513854037b7c98c82a7f957e",
+    "nota_json": "ee343733bcce9b57b42db6fe1359d3a65ec7b8858c5e7413b000b03511794922"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_SIGMA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-27",
+  "published_at": "2026-10-28T01:50:26.342521+00:00",
+  "rendered": {
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-28",
+        "descricao": "Teleconferência para discutir resultado e perspectivas; conferir premissas do guidance elevado.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "A melhora requer comprovação após reinvestimento e financiamento. Base calculada: MXN 13,02.",
+      "otimista": "Recuperação industrial e eficiência geram caixa incremental. Cenário calculado: MXN 17,46.",
+      "pessimista": "Insumos, integração e demanda fraca reduzem o retorno atribuível. Cenário calculado: MXN 9,06."
+    },
+    "comentario_valuation": "Preço de referência MXN 19,17, alvo MXN 13,02 e potencial -32,09%. Retorno esperado -29,88%, ke 10,51% e confiança B. Consenso público MXN 22,21; a diferença -41,38% não comprova o que está precificado. Métodos e cenários permanecem os calculados; a análise qualitativa não altera suas premissas.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese enfraquece se a recuperação industrial exigir capital que absorva a contribuição adicional.",
+        "titulo": "Melhora sem caixa"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-27",
+    "dados_simulados": false,
+    "data": "2026-10-27",
+    "ficha": [
+      {
+        "fato": "val.MX_SIGMA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 19,17"
+      },
+      {
+        "fato": "val.MX_SIGMA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 13,02"
+      },
+      {
+        "fato": "val.MX_SIGMA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-32,09%"
+      },
+      {
+        "fato": "val.MX_SIGMA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_SIGMA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_SIGMA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 17,46"
+      },
+      {
+        "fato": "val.MX_SIGMA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_SIGMA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 9,06"
+      },
+      {
+        "fato": "val.MX_SIGMA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_SIGMA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,51%"
+      },
+      {
+        "fato": "val.MX_SIGMA.wacc",
+        "rotulo": "WACC",
+        "valor": "8,96%"
+      },
+      {
+        "fato": "val.MX_SIGMA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_SIGMA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-29,88%"
+      },
+      {
+        "fato": "val.MX_SIGMA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-27,30%"
+      },
+      {
+        "fato": "val.MX_SIGMA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "16,8x"
+      },
+      {
+        "fato": "val.MX_SIGMA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "6,9x"
+      },
+      {
+        "fato": "val.MX_SIGMA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 22,21"
+      },
+      {
+        "fato": "val.MX_SIGMA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-41,38%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-27",
+        "id": "F1",
+        "instituicao": "Sigma Foods",
+        "publicado_em": "2026-10-27",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado trimestral da holding e da subsidiária",
+        "url": "https://www.sigmafoods.com/wp-content/uploads/2026/10/SigmaFoods3Q26Results.pdf"
+      },
+      {
+        "consultado_em": "2026-10-27",
+        "id": "F2",
+        "instituicao": "Sigma Foods",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário da teleconferência de resultados",
+        "url": "https://www.sigmafoods.com/en/events/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Caixa após investimento não confirma a melhora comparável.",
+      "Recuperação industrial, perímetro ou guidance muda materialmente."
+    ],
+    "governanca": "Preservar a distinção entre Sigma Foods e Sigma Alimentos e reconciliar passivos e direitos por entidade. Operações descontinuadas e ajustes não são base automática de perpetuidade.",
+    "guidance": "elevado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar volume, preço local, caixa após giro e investimento e transferência de recursos à holding.",
+        "titulo": "Retorno por região"
+      }
+    ],
+    "issuer_id": "MX_SIGMA",
+    "lacunas_de_dados": [
+      "Fluxo atribuível, passivos por entidade e base diluída não integralmente reconciliados.",
+      "Retorno realizado dos projetos permanece a comprovar.",
+      "Probabilidades implícitas e percepção variante indisponíveis."
+    ],
+    "modelo_de_cobertura": "2026-10-27",
+    "negocio": "Sigma Foods atua por meio de Sigma Alimentos em alimentos de marca nas Américas e Europa. Holding e subsidiária têm demonstrações e direitos econômicos distintos.",
+    "nome": "Sigma Foods (ex-Alfa)",
+    "o_que_mudou": "Desde 2026-10-22, foi recebido o release do 3T26, que eleva guidance e atualiza a trajetória regional. O evento de 2026-10-28 segue futuro. A leitura passa a pós-resultado, sem alterar cenários do modelo.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_AC",
+        "nome": "Arca Continental"
+      },
+      {
+        "issuer_id": "MX_BIMBO",
+        "nome": "Grupo Bimbo"
+      },
+      {
+        "issuer_id": "MX_CHEDRAUI",
+        "nome": "Grupo Comercial Chedraui"
+      },
+      {
+        "issuer_id": "MX_FEMSA",
+        "nome": "FEMSA"
+      },
+      {
+        "issuer_id": "MX_GENOMMA",
+        "nome": "Genomma Lab"
+      },
+      {
+        "issuer_id": "MX_GRUMA",
+        "nome": "Gruma"
+      },
+      {
+        "issuer_id": "MX_KIMBER",
+        "nome": "Kimberly-Clark de México"
+      },
+      {
+        "issuer_id": "MX_KOF",
+        "nome": "Coca-Cola FEMSA"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O release de 2026-10-27 relata expansão no México e Europa, enquanto o volume norte-americano recua. A leitura regional importa mais que extrapolar o consolidado.",
+        "titulo": "Melhora operacional com heterogeneidade"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A administração elevou a projeção anual de EBITDA comparável. Sua realização continua estimativa; investimento e obrigações financeiras determinam a conversão em retorno.",
+        "titulo": "Guidance e caixa"
+      }
+    ],
+    "publicada_em": "2026-10-28T01:50:26.342521+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Conferir extraordinários, operações descontinuadas e resultado financeiro antes de extrapolar a rentabilidade.",
+        "titulo": "Comparável e atribuível"
+      }
+    ],
+    "resumo": "O release primário do 3T26 registra melhora operacional e guidance elevado de EBITDA comparável. A recuperação industrial precisa chegar ao caixa da holding após reinvestimento. O modelo indica potencial -32,09%; a visão qualitativa permanece neutra até reconciliar perímetro e retorno atribuível.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Consumo norte-americano, insumos e projetos podem absorver caixa e limitar a transmissão de melhora operacional à holding."
+      }
+    ],
+    "setor": "Consumo básico",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Sigma Foods — guidance elevado; caixa e perímetro condicionam a leitura",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O resultado primário do 3T26 foi recebido. O guidance anual de EBITDA comparável foi elevado. A companhia relata avanço da recuperação de capacidade espanhola e integração de Roger Wood; projeto em execução não equivale a capacidade concluída.",
+    "vetores": [
+      {
+        "direcao": "positivo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Conferir preço local, utilização, mix e contribuição após capital empregado, sem presumir capacidade futura já operante.",
+        "vetor": "Margem regional e recuperação industrial"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

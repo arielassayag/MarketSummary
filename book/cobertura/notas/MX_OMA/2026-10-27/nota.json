@@ -1,0 +1,121 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_OMA",
+  "data": "2026-10-27",
+  "tipo": "atualizacao",
+  "titulo": "OMA — concessão e margem exigem caixa após manutenção e desenvolvimento",
+  "resumo": "O alvo do modelo é {{fact:val.MX_OMA.preco_alvo}}, com potencial {{fact:val.MX_OMA.upside}}. A busca atual não recebeu o release primário do 3T26. Mantém-se atualização neutra, condicionada à remuneração do investimento e à conversão de margem ajustada em caixa.",
+  "negocio": "Operadora de concessões aeroportuárias no centro e norte do México, com receita aeronáutica, comercial e de diversificação. Tarifas e obrigações de desenvolvimento delimitam a remuneração.",
+  "pilares_tese": [
+    {
+      "titulo": "Margem ajustada não encerra o investimento",
+      "texto": "O release semestral separa receita de construção, provisão de manutenção e desempenho operacional. O teste é o caixa depois de desembolsos obrigatórios e financiamento.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Documento recente ainda pendente",
+      "texto": "A central consultada lista o trimestre, sem entregar seu conteúdo nesta pesquisa. A marcação da fila não substitui o release recebido.",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Manutenção e desenvolvimento",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Confrontar demanda, receita comercial e tarifas com investimento contratado e caixa após manutenção.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Tráfego insuficiente e investimento exigível podem reduzir caixa disponível mesmo com margem ajustada elevada.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Demanda e monetização remuneram investimento e manutenção. Cenário calculado: {{fact:val.MX_OMA.alvo_otimista}}.",
+    "base": "Concessões dependem de retorno depois das obrigações contratuais. Base calculada: {{fact:val.MX_OMA.preco_alvo}}.",
+    "pessimista": "Demanda e capital comprometido pressionam distribuição. Cenário calculado: {{fact:val.MX_OMA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.MX_OMA.preco}}, alvo {{fact:val.MX_OMA.preco_alvo}} e potencial {{fact:val.MX_OMA.upside}}. Retorno esperado {{fact:val.MX_OMA.etr}}, ke {{fact:val.MX_OMA.ke}} e confiança {{fact:val.MX_OMA.confianca_codigo}}. Consenso público {{fact:val.MX_OMA.consenso_alvo}}; a diferença {{fact:val.MX_OMA.diff_consenso}} não comprova o que está precificado. Métodos e cenários permanecem os calculados; a análise qualitativa não altera suas premissas.",
+  "ultimo_resultado": "A fonte primária financeira recebida é o 2T26, com crescimento de receitas aeronáuticas e comerciais. Não foi recebido o novo release do 3T26 nem requalificado guidance corrente. Construção e provisão de manutenção não equivalem a caixa livre.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A companhia anunciou troca de auditor externo em 2026-10-09. O acompanhamento deve verificar a transição e relatórios subsequentes; o anúncio não prova problema contábil.",
+  "o_que_mudou": "Desde 2026-10-22, atualiza-se a avaliação ao retrato de 2026-10-27 e reconfirma-se a documentação primária disponível. A busca atual mantém aberta a lacuna do resultado recente.",
+  "gatilhos_revisao": [
+    "Recebimento e conciliação do resultado atual.",
+    "Mudança na remuneração tarifária, investimento ou financiamento."
+  ],
+  "lacunas_de_dados": [
+    "Release primário do 3T26 e guidance atual não recebidos.",
+    "Caixa após manutenção, capital e direitos de classes não integralmente reconciliados.",
+    "Probabilidades implícitas e percepção variante indisponíveis."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "bolsa",
+      "instituicao": "BMV / OMA",
+      "titulo": "Resultado operacional e financeiro semestral",
+      "url": "https://www.bmv.com.mx/docs-pub/eventemi/eventemi_1577262_1.pdf",
+      "publicado_em": "2026-07-27",
+      "consultado_em": "2026-10-27"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "OMA",
+      "titulo": "Central de relatórios financeiros",
+      "url": "https://ir.oma.aero/es/reportes-financieros/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-27"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "OMA",
+      "titulo": "Comunicado de troca de auditor externo",
+      "url": "https://ir.oma.aero/wp-content/uploads/2026/10/Cambio-Auditor-externo-ESP_vf.pdf",
+      "publicado_em": "2026-10-09",
+      "consultado_em": "2026-10-27"
+    }
+  ],
+  "qualidade_resultados": {
+    "titulo": "Ajustes e desembolso",
+    "texto": "Separar receita de construção e provisão de manutenção da contribuição que efetivamente remunera o acionista.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Margem sem retorno do capital",
+    "texto": "A hipótese enfraquece se manutenção e expansão consumirem a contribuição ou a demanda não remunerar capacidade.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Concessão e caixa",
+      "texto": "Acompanhar tráfego, monetização comercial, tarifas, desembolso de manutenção e serviço da dívida.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ]
+}

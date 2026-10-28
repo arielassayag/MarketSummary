@@ -1,0 +1,130 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_ORBIA",
+  "data": "2026-10-27",
+  "tipo": "pos_resultado",
+  "titulo": "Orbia — EBITDA melhora, mas giro limita caixa e exige normalização por negócio",
+  "resumo": "O release primário do 3T26 registra melhora de EBITDA e menor caixa operacional na comparação anual. A leitura exige separar margem temporária, giro e dívida. O modelo aponta potencial {{fact:val.MX_ORBIA.upside}}; mantém-se visão neutra e baixa convicção.",
+  "negocio": "Portfólio de polímeros, soluções para água e infraestrutura, flúor, irrigação e conectividade. Os ciclos e a necessidade de capital variam por negócio.",
+  "pilares_tese": [
+    {
+      "titulo": "Margem e caixa divergem",
+      "texto": "No resultado de 2026-10-27, EBITDA cresce enquanto giro e impostos limitam caixa operacional. A melhora precisa sobreviver à reposição de insumos.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Benefícios temporários exigem normalização",
+      "texto": "O release identifica reversão da defasagem favorável em infraestrutura e irrigação e benefício temporário em parte dos propelentes. Não se perpetuam essas contribuições.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Capital empregado por negócio",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Confrontar preços, custo de reposição, utilização e giro antes de extrapolar margem consolidada.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Teleconferência para discutir caixa, premissas e perspectivas por negócio.",
+      "data": "2026-10-28",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Insumos, juros e demanda europeia podem consumir caixa; crescimento pode exigir giro antes de reduzir dívida.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Conectividade e flúor geram caixa normalizado após investimento. Cenário calculado: {{fact:val.MX_ORBIA.alvo_otimista}}.",
+    "base": "Rentabilidade por negócio precisa suportar capital empregado. Base calculada: {{fact:val.MX_ORBIA.preco_alvo}}.",
+    "pessimista": "Margem temporária reverte enquanto giro e dívida limitam distribuição. Cenário calculado: {{fact:val.MX_ORBIA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.MX_ORBIA.preco}}, alvo {{fact:val.MX_ORBIA.preco_alvo}} e potencial {{fact:val.MX_ORBIA.upside}}. Retorno esperado {{fact:val.MX_ORBIA.etr}}, ke {{fact:val.MX_ORBIA.ke}} e confiança {{fact:val.MX_ORBIA.confianca_codigo}}. Consenso público {{fact:val.MX_ORBIA.consenso_alvo}}; a diferença {{fact:val.MX_ORBIA.diff_consenso}} não comprova o que está precificado. Métodos e cenários permanecem os calculados; a análise qualitativa não altera suas premissas.",
+  "ultimo_resultado": "O resultado do 3T26 foi recebido. A classificação de guidance mantido refere-se ao capex explicitamente reafirmado. A estimativa anual de EBITDA passou de piso a estimativa pontual; isso não comprova, isoladamente, elevação inequívoca. A comparação anual e a sequencial de dívida têm movimentos distintos.",
+  "guidance": "mantido",
+  "tom_gestao": "nd",
+  "governanca": "Eliminar vendas internas e conciliar direitos, dívida e caixa por entidade. Não equiparar menor razão de alavancagem a redução de dívida em qualquer janela.",
+  "o_que_mudou": "Desde 2026-10-12, o release do 3T26 permite observar a reversão de margens temporárias e os limites do caixa. A orientação atual foi confrontada com o 2T26, preservando sua mudança de formulação.",
+  "gatilhos_revisao": [
+    "Giro não libera caixa ou margem normalizada perde rentabilidade.",
+    "Projetos e dívida consomem retorno econômico."
+  ],
+  "lacunas_de_dados": [
+    "Fluxo e capital por negócio não integralmente conciliados ao modelo.",
+    "Direitos, dívida e base diluída exigem reconciliação completa.",
+    "Probabilidades implícitas e percepção variante indisponíveis."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Orbia",
+      "titulo": "Resultado trimestral, negócios e perspectivas",
+      "url": "https://www.orbia.com/4aaba4/siteassets/5.-investor-relations/quarterly-earnings/2026/q3/orbia-q3-2026-earnings-release_vf-1.pdf",
+      "publicado_em": "2026-10-27",
+      "consultado_em": "2026-10-27"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Orbia",
+      "titulo": "Resultado semestral e orientação anterior",
+      "url": "https://www.orbia.com/4a1617/siteassets/5.-investor-relations/quarterly-earnings/2026/q2/orbia-q2-2026-earnings-release_vf1-1.pdf",
+      "publicado_em": "2026-07-22",
+      "consultado_em": "2026-10-27"
+    }
+  ],
+  "qualidade_resultados": {
+    "titulo": "Normalização do lucro",
+    "texto": "Separar tributos, base de alienações e margem transitória da geração recorrente; lucro não equivale a caixa livre.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Disciplina e obrigação",
+    "texto": "O capex reafirmado prioriza segurança, integridade e projetos selecionados. Sua remuneração deve ser demonstrada.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "contratese": {
+    "titulo": "Portfólio sem retorno de caixa",
+    "texto": "Diversificação não assegura retorno se segmentos exigirem capital simultaneamente e a margem não sobreviver à reposição.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Giro e dívida por janela",
+      "texto": "Acompanhar custo de reposição, giro, caixa após investimento e dívida em comparação anual e sequencial separadas.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ]
+}

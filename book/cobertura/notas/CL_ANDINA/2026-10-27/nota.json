@@ -1,0 +1,112 @@
+{
+  "mind": "codex",
+  "issuer_id": "CL_ANDINA",
+  "data": "2026-10-27",
+  "tipo": "atualizacao",
+  "titulo": "Coca-Cola Andina — preço real, caixa territorial e direitos por classe",
+  "resumo": "O modelo aponta alvo {{fact:val.CL_ANDINA.preco_alvo}} e potencial {{fact:val.CL_ANDINA.upside}}. A pesquisa não recebeu resultado primário do 3T26; mantém-se atualização com baixa convicção. O teste econômico continua sendo demanda rentável e caixa depois da rede e da franquia.",
+  "negocio": "Engarrafadora e distribuidora de bebidas na Argentina, Brasil, Chile e Paraguai. Desempenho em moeda local, conversão cambial e direitos econômicos das séries precisam de leitura separada.",
+  "pilares_tese": [
+    {
+      "titulo": "Distribuição precisa remunerar capital",
+      "texto": "A operação territorial permite escala, mas o retorno depende de volume, preço real, embalagem e custo logístico depois do reinvestimento.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Comparabilidade monetária",
+      "texto": "O release semestral separa efeitos de câmbio e inflação. Crescimento consolidado nominal não demonstra melhora homogênea de demanda ou caixa.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Preço real e volume",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Conferir elasticidade, embalagem e margem por território em bases monetárias compatíveis.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Insumos, moedas e dívida indexada podem impedir transmissão da margem ao acionista, mesmo com receita nominal maior.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Volume rentável e produtividade sustentam caixa depois da rede. Cenário calculado: {{fact:val.CL_ANDINA.alvo_otimista}}.",
+    "base": "A operação deve preservar retorno por território e direitos da classe avaliada. Base calculada: {{fact:val.CL_ANDINA.preco_alvo}}.",
+    "pessimista": "Reajustes reduzem demanda enquanto insumos e giro absorvem caixa. Cenário calculado: {{fact:val.CL_ANDINA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.CL_ANDINA.preco}}, alvo {{fact:val.CL_ANDINA.preco_alvo}} e potencial {{fact:val.CL_ANDINA.upside}}. Retorno esperado {{fact:val.CL_ANDINA.etr}}, ke {{fact:val.CL_ANDINA.ke}} e confiança {{fact:val.CL_ANDINA.confianca_codigo}}. Consenso público {{fact:val.CL_ANDINA.consenso_alvo}}; a diferença {{fact:val.CL_ANDINA.diff_consenso}} não comprova o que está precificado. Métodos e cenários permanecem os calculados; a análise qualitativa não altera suas premissas.",
+  "ultimo_resultado": "A evidência primária recebida é o release do 2T26 arquivado na SEC. A consulta da central financeira não entregou material atual do 3T26; um vínculo aberto correspondia a período histórico, sem ser tratado como nova divulgação. Guidance atual permanece não determinado.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "Conferir voto, preferência econômica e recibo correspondente à série coberta. Caixa de subsidiárias e dividendos anunciados exigem ponte até o acionista.",
+  "o_que_mudou": "Desde 2026-10-11, a avaliação usa o retrato de 2026-10-27. A nova busca preserva a lacuna do trimestre recente e evita transportar documentos históricos para a data atual.",
+  "gatilhos_revisao": [
+    "Recebimento e conciliação do resultado primário recente.",
+    "Perda de volume rentável ou mudança nos direitos de franquia e capital."
+  ],
+  "lacunas_de_dados": [
+    "Resultado primário do 3T26 não recebido.",
+    "Fluxo por subsidiária, derivativos e direitos de classes não conciliados integralmente.",
+    "Probabilidades implícitas, guidance e percepção de mercado indisponíveis."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "regulatorio",
+      "instituicao": "SEC / Coca-Cola Andina",
+      "titulo": "Resultado semestral e bases de comparação",
+      "url": "https://www.sec.gov/Archives/edgar/data/925261/000110465926087665/tm2621488d1_6k.htm",
+      "publicado_em": null,
+      "consultado_em": "2026-10-27"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Coca-Cola Andina",
+      "titulo": "Central pública de informação financeira",
+      "url": "https://www.koandina.com/inversionistas/informacion-financiera/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-27"
+    }
+  ],
+  "qualidade_resultados": {
+    "titulo": "Moeda e caixa",
+    "texto": "Separar inflação, tradução, dívida indexada e ajustes do resultado antes de extrapolar EBITDA para caixa distribuível.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Crescimento nominal sem retorno",
+    "texto": "A hipótese enfraquece se preço e mix ocultarem menor volume ou investimento maior sem contribuição econômica.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Territórios e classe",
+      "texto": "Acompanhar volume, preço real, embalagem, logística e giro; conciliar fluxo, dívida e remuneração da classe coberta.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ]
+}

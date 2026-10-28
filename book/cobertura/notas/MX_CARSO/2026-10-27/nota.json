@@ -1,0 +1,116 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_CARSO",
+  "data": "2026-10-27",
+  "tipo": "pos_resultado",
+  "titulo": "Grupo Carso — lucro cresce; retorno por segmento e caixa da holding exigem conciliação",
+  "resumo": "O resultado primário do 3T26 foi recebido. A melhora do lucro deve ser confrontada com base extraordinária, câmbio e retorno por unidade. O modelo mantém alvo e cenários {{fact:val.MX_CARSO.preco_alvo}}; a nota não atribui valor pontual aos projetos.",
+  "negocio": "Conglomerado mexicano com varejo, indústria, infraestrutura, construção, energia e hidrocarbonetos. Direitos de controladas, associadas e minoritários limitam a equivalência entre lucro consolidado e distribuição.",
+  "pilares_tese": [
+    {
+      "titulo": "Diversificação precisa remunerar capital",
+      "texto": "A composição por segmentos exige separar crescimento de receita, contribuição operacional e conversão em caixa. A diversidade de negócios, isoladamente, não comprova criação de valor.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Avaliação permanece aberta",
+      "texto": "O alvo é {{fact:val.MX_CARSO.preco_alvo}}. Comparar unidades heterogêneas exige perímetros, dívida e direitos econômicos conciliados.",
+      "evidencias": [
+        "val.MX_CARSO.preco_alvo",
+        "F2"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Retorno por negócio",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Observar contribuição recorrente, contratos recebidos e reinvestimento por unidade.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Projetos e capital de giro podem absorver resultado; efeitos financeiros e associadas podem reduzir a comparabilidade do lucro.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Hipótese de melhor execução e transferência de caixa; cenário calculado {{fact:val.MX_CARSO.alvo_otimista}}.",
+    "base": "Retorno por segmento precisa de conciliação; base {{fact:val.MX_CARSO.preco_alvo}}.",
+    "pessimista": "Atrasos e reinvestimento podem limitar distribuição; cenário {{fact:val.MX_CARSO.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço {{fact:val.MX_CARSO.preco}} e consenso público {{fact:val.MX_CARSO.consenso_alvo}}. Alvo, retorno esperado e cenários estão Em revisão. Ke {{fact:val.MX_CARSO.ke}} e múltiplos são referências do modelo, sem autorizar reconstrução de soma das partes ou de desconto de holding.",
+  "ultimo_resultado": "O release e a informação financeira primária do 3T26 foram recebidos, com detalhamento por segmento e evento de alienação de ativo em El Salvador. Essa mudança de perímetro exige cuidado ao comparar desempenho. Não foi identificada projeção formal de resultados no release consultado.",
+  "guidance": "sem_guidance",
+  "tom_gestao": "nd",
+  "governanca": "Separar caixa consolidado, direitos de associadas e recursos transferíveis ao acionista da holding. Condições de projetos e aquisições exigem confirmação documental própria.",
+  "o_que_mudou": "Desde 2026-10-12, foi recebido o resultado primário do 3T26 e nova evidência sobre perímetro. A publicação trimestral não encerra a revisão do valuation nem comprova recebimento de todos os contratos.",
+  "gatilhos_revisao": [
+    "Reconciliação de caixa por unidade e transferências à holding.",
+    "Alteração de perímetro, direitos ou condições dos projetos."
+  ],
+  "lacunas_de_dados": [
+    "Fluxo por unidade e retorno atribuível não integralmente reconciliados.",
+    "Alvo, cenários e retorno esperado permanecem Em revisão.",
+    "Fechamentos condicionados e percepção de mercado não confirmados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Carso",
+      "titulo": "Release trimestral por segmento",
+      "url": "https://www.carso.com.mx/wp-content/uploads/2026/10/GCarso-3T26-ESP.pdf",
+      "publicado_em": "2026-10-26",
+      "consultado_em": "2026-10-27"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Carso",
+      "titulo": "Informação financeira consolidada e notas",
+      "url": "https://www.carso.com.mx/wp-content/uploads/2026/10/Reporte-3T26-GCarso-1.pdf",
+      "publicado_em": "2026-10-27",
+      "consultado_em": "2026-10-27"
+    }
+  ],
+  "qualidade_resultados": {
+    "titulo": "Comparabilidade por segmento",
+    "texto": "Conferir base extraordinária, perímetro e resultado financeiro antes de atribuir a melhora do lucro a crescimento operacional recorrente.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "contratese": {
+    "titulo": "Diversidade sem caixa distribuível",
+    "texto": "A tese enfraquece se contratos e lucro de investidas não remunerarem capital nem gerarem transferências.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Contratos e retorno",
+      "texto": "Acompanhar marcos de execução, recebimento, giro, manutenção e caixa transferido por entidade.",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ]
+}

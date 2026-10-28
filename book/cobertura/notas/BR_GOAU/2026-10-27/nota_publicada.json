@@ -1,0 +1,362 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-27",
+    "manifest_sha256": "57831ad63d4e235002ce4d0943e5da5f902350160fd18ebee0f514ce5e81b59f",
+    "modelo_as_of": "2026-10-27"
+  },
+  "conviccao": 1,
+  "data": "2026-10-27",
+  "hashes": {
+    "contexto": "a8b8cbe9354aefe3b61b61114e9005e1f3abb4922422931f72f7239f309a4adf",
+    "factbook": "ecf8888c2449b328dbb444515a4b0c6820fc65175687c293332744f4399dff37",
+    "nota_json": "3808f2ea43b8c37a778f5d0656efaa218469fe281d2d2136343b0d2d80e7d518"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_GOAU",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-28T01:40:13.269124+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A investida informa avanço de Miguel Burnier e início da reciclagem em Pindamonhangaba. Avanço físico não comprova retorno econômico ou crédito de dividendos da holding.",
+        "titulo": "Projetos e distribuição"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Conciliação do resultado individual e da distribuição da holding após o resultado industrial.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "A base calculada é R$ 10,61; preserva-se a distinção entre resultado consolidado e retorno individual.",
+      "otimista": "Margens sustentáveis e recebimentos efetivos sustentariam o cenário R$ 11,34.",
+      "pessimista": "Normalização industrial e menor distribuição pressionariam o cenário R$ 9,89."
+    },
+    "comentario_valuation": "Preço R$ 11,00, alvo R$ 10,61 e ke 13,90%. O consenso público é R$ 12,72; a diferença -16,63% não prova erro de mercado. Métodos e cenários permanecem os calculados. Não se recalcula desconto de holding com participações ou preços de cortes distintos.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese de transmissão enfraquece se a margem normalizar ou a necessidade de capital absorver o caixa antes de chegar ao acionista da holding.",
+        "titulo": "Margem sem distribuição"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-27",
+    "dados_simulados": false,
+    "data": "2026-10-27",
+    "ficha": [
+      {
+        "fato": "val.BR_GOAU.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 11,00"
+      },
+      {
+        "fato": "val.BR_GOAU.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 10,61"
+      },
+      {
+        "fato": "val.BR_GOAU.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-3,56%"
+      },
+      {
+        "fato": "val.BR_GOAU.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_GOAU.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_GOAU.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 11,34"
+      },
+      {
+        "fato": "val.BR_GOAU.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "53,80%"
+      },
+      {
+        "fato": "val.BR_GOAU.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 9,89"
+      },
+      {
+        "fato": "val.BR_GOAU.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "29,19%"
+      },
+      {
+        "fato": "val.BR_GOAU.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "13,90%"
+      },
+      {
+        "fato": "val.BR_GOAU.wacc",
+        "rotulo": "WACC",
+        "valor": "9,70%"
+      },
+      {
+        "fato": "val.BR_GOAU.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_GOAU.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-0,19%"
+      },
+      {
+        "fato": "val.BR_GOAU.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-14,76%"
+      },
+      {
+        "fato": "val.BR_GOAU.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "18,3x"
+      },
+      {
+        "fato": "val.BR_GOAU.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,8x"
+      },
+      {
+        "fato": "val.BR_GOAU.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 12,72"
+      },
+      {
+        "fato": "val.BR_GOAU.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-16,63%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-27",
+        "id": "F1",
+        "instituicao": "SEC / Gerdau",
+        "publicado_em": "2026-10-26",
+        "tipo": "Regulador",
+        "titulo": "Resultado trimestral da investida e mensagem da administração",
+        "url": "https://www.sec.gov/Archives/edgar/data/1073404/000110465926118862/tm2628297d1_ex99-1.htm"
+      },
+      {
+        "consultado_em": "2026-10-27",
+        "id": "F2",
+        "instituicao": "Metalúrgica Gerdau",
+        "publicado_em": "2026-08-04",
+        "tipo": "Relações com investidores",
+        "titulo": "Demonstrações individuais e consolidadas da holding",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/0e58d869-d438-4c13-9d23-c24d27e72c47/1ae00877-eabb-0bdc-8eac-eb57dd66ea7b?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Recebimento e reconciliação do resultado individual da holding.",
+      "Normalização de margem ou mudança nos direitos e na distribuição."
+    ],
+    "governanca": "Preservar os direitos de ordinárias e preferenciais, participação econômica, tesouraria e despesas próprias. Dividendos aprovados da investida não equivalem a caixa recebido pela holding.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Conferir equivalência, não controladores, proventos recebidos, despesas e remuneração por classe.",
+        "titulo": "Ponte individual"
+      }
+    ],
+    "issuer_id": "BR_GOAU",
+    "lacunas_de_dados": [
+      "Resultado individual recente da holding não reconciliado integralmente.",
+      "Desconto atual, tesouraria e direitos por classe não reavaliados em base homogênea.",
+      "Guidance e tom agregado da holding não classificados."
+    ],
+    "modelo_de_cobertura": "2026-10-27",
+    "negocio": "Holding controladora da Gerdau, com exposição a aço e mineração. Lucro consolidado inclui participações de não controladores; equivalência patrimonial e recebimentos individuais têm naturezas distintas.",
+    "nome": "Metalúrgica Gerdau",
+    "o_que_mudou": "Desde 2026-10-12, foi recebido o release primário da Gerdau referente ao 3T26, com melhora industrial e de caixa. A avaliação usa o retrato de 2026-10-27; a reconciliação integral do resultado individual da holding permanece aberta.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CBA",
+        "nome": "Companhia Brasileira de Alumínio"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_SUZANO",
+        "nome": "Suzano"
+      },
+      {
+        "issuer_id": "BR_UNIPAR",
+        "nome": "Unipar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O release da Gerdau de 2026-10-26 atribui a melhora da margem a preços realizados na América do Norte e relata fluxo livre positivo. É evidência da investida, sem comprovar caixa distribuível da holding.",
+        "titulo": "Melhora industrial com transmissão condicionada"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_GOAU.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-0,19%"
+          },
+          {
+            "fato": "val.BR_GOAU.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "-14,76%"
+          }
+        ],
+        "texto": "O retorno esperado é -0,19% e o alpha relativo é -14,76%. O desconto de negociação não assegura convergência nem substitui conciliação das participações.",
+        "titulo": "Avaliação exige disciplina no perímetro"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A presença regional da investida expõe a holding a preços, energia, sucata e comércio exterior; a holding não elimina os riscos industriais.",
+        "titulo": "Exposição industrial indireta"
+      }
+    ],
+    "publicada_em": "2026-10-28T01:40:13.269124+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A melhora operacional e o menor consumo de giro são favoráveis na investida. Falta reconciliar sua recorrência e atribuição ao resultado e ao fluxo individual da holding.",
+        "titulo": "Caixa e atribuição"
+      }
+    ],
+    "resumo": "A melhora operacional da Gerdau no 3T26 reforça a exposição industrial da holding, mas não resolve a transmissão de caixa ao seu acionista. O alvo do modelo é R$ 10,61, com potencial -3,56% e confiança C. Mantemos visão neutra e baixa convicção até reconciliar resultado individual, direitos e distribuição da Metalúrgica Gerdau.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Normalização de preços norte-americanos e persistência da competição no Brasil podem reduzir o caixa industrial."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Custos, direitos de classes e retenção de caixa podem impedir transmissão proporcional de resultado."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Metalúrgica Gerdau — margem da investida melhora; caixa atribuível segue decisivo",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A Gerdau divulgou o 3T26 em 2026-10-26: melhora de preços norte-americanos, fluxo livre positivo e menor consumo de giro. A leitura primária recebida é da investida; não se qualifica como análise completa do resultado individual da Metalúrgica Gerdau.",
+    "vetores": [
+      {
+        "direcao": "positivo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Preços norte-americanos sustentam a rentabilidade; persistência depende de demanda, sucata e condições comerciais.",
+        "vetor": "Margem e caixa da investida"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Recebimentos, despesas, minoritários e direitos de capital determinam o retorno efetivo do titular.",
+        "vetor": "Transmissão à holding"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

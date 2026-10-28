@@ -1,0 +1,282 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-27",
+    "manifest_sha256": "57831ad63d4e235002ce4d0943e5da5f902350160fd18ebee0f514ce5e81b59f",
+    "modelo_as_of": "2026-10-27"
+  },
+  "conviccao": 1,
+  "data": "2026-10-27",
+  "hashes": {
+    "contexto": "e3837f7c6c61ee555a0fc725dcf85eab40e22ce645358f53d5cebee326600c77",
+    "factbook": "f313ec023eea7c4d7fbfa8176d0c3d36bede5c1737ca68bd95d2d5aa499db32d",
+    "nota_json": "fbbc12fdf47d286561ab2c613bb99f0157574ab10ef075fbcb6fa7251bdc7d89"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_WALMEX",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-27",
+  "published_at": "2026-10-28T01:45:55.658409+00:00",
+  "rendered": {
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Escala comercial exige recuperação da contribuição após despesas. Base calculada: MXN 38,14.",
+      "otimista": "Produtividade compensa investimento em preço e canais remuneram expansão. Cenário calculado: MXN 46,50.",
+      "pessimista": "Competição e custo de servir pressionam margens e caixa. Cenário calculado: MXN 31,23."
+    },
+    "comentario_valuation": "Preço de referência MXN 48,85, alvo MXN 38,14 e potencial -21,93%. Retorno esperado -17,78%, ke 11,50% e confiança B. Consenso público MXN 55,82; a diferença -31,69% não comprova o que está precificado. Métodos e cenários permanecem os calculados; a análise qualitativa não altera suas premissas.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A tese falha se custo de servir e expansão absorverem continuamente os ganhos de escala.",
+        "titulo": "Preço competitivo sem retorno"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-27",
+    "dados_simulados": false,
+    "data": "2026-10-27",
+    "ficha": [
+      {
+        "fato": "val.MX_WALMEX.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 48,85"
+      },
+      {
+        "fato": "val.MX_WALMEX.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 38,14"
+      },
+      {
+        "fato": "val.MX_WALMEX.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-21,93%"
+      },
+      {
+        "fato": "val.MX_WALMEX.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.MX_WALMEX.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_WALMEX.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 46,50"
+      },
+      {
+        "fato": "val.MX_WALMEX.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_WALMEX.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 31,23"
+      },
+      {
+        "fato": "val.MX_WALMEX.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_WALMEX.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,50%"
+      },
+      {
+        "fato": "val.MX_WALMEX.wacc",
+        "rotulo": "WACC",
+        "valor": "10,96%"
+      },
+      {
+        "fato": "val.MX_WALMEX.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_WALMEX.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-17,78%"
+      },
+      {
+        "fato": "val.MX_WALMEX.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-15,51%"
+      },
+      {
+        "fato": "val.MX_WALMEX.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "15,6x"
+      },
+      {
+        "fato": "val.MX_WALMEX.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "3,5x"
+      },
+      {
+        "fato": "val.MX_WALMEX.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 55,82"
+      },
+      {
+        "fato": "val.MX_WALMEX.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-31,69%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-27",
+        "id": "F1",
+        "instituicao": "Walmart de México y Centroamérica",
+        "publicado_em": "2026-10-27",
+        "tipo": "Relações com investidores",
+        "titulo": "Release trimestral e demonstrativos resumidos",
+        "url": "https://files.walmex.mx/upload/files/2026/ES/Trimestral/3T26/Walmex%203T26%20Reporte%20de%20Resultados.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Recuperação de produtividade sem perda de tráfego e competitividade.",
+      "Caixa após expansão e arrendamentos diverge da melhora comercial."
+    ],
+    "governanca": "Examinar arrendamentos e transações intragrupo na ponte de caixa e valor. Não duplicar obrigações ou tratar aprovação de distribuição como comprovação de crédito.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar tráfego, ticket, estoques, custo de entrega e caixa depois de compromissos de uso.",
+        "titulo": "Giro e contribuição"
+      }
+    ],
+    "issuer_id": "MX_WALMEX",
+    "lacunas_de_dados": [
+      "Contribuição econômica digital e retorno de novas lojas não reconciliados.",
+      "Fluxo completo e obrigações por entidade não integralmente conciliados.",
+      "Probabilidades implícitas indisponíveis; percepção de mercado não demonstrada."
+    ],
+    "modelo_de_cobertura": "2026-10-27",
+    "negocio": "Varejista no México e América Central com formatos de desconto, supermercados, clubes e operação digital. Preço, abastecimento, estoque e entrega determinam a conversão de escala em caixa.",
+    "nome": "Walmart de México",
+    "o_que_mudou": "Desde 2026-10-11, o release de hoje documenta a combinação de avanço comercial e pressão de margem. A avaliação usa o retrato de 2026-10-27 e preserva a lacuna de contribuição econômica por canal.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_AC",
+        "nome": "Arca Continental"
+      },
+      {
+        "issuer_id": "MX_BIMBO",
+        "nome": "Grupo Bimbo"
+      },
+      {
+        "issuer_id": "MX_CHEDRAUI",
+        "nome": "Grupo Comercial Chedraui"
+      },
+      {
+        "issuer_id": "MX_FEMSA",
+        "nome": "FEMSA"
+      },
+      {
+        "issuer_id": "MX_GENOMMA",
+        "nome": "Genomma Lab"
+      },
+      {
+        "issuer_id": "MX_GRUMA",
+        "nome": "Gruma"
+      },
+      {
+        "issuer_id": "MX_KIMBER",
+        "nome": "Kimberly-Clark de México"
+      },
+      {
+        "issuer_id": "MX_KOF",
+        "nome": "Coca-Cola FEMSA"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "No release de 2026-10-27, soluções comerciais ajudam a compensar investimento em preço, enquanto despesas de crescimento pressionam margem. A hipótese favorável exige eficiência persistente.",
+        "titulo": "Preço precisa de produtividade"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A expansão de entregas e comércio eletrônico deve remunerar logística e capital. Crescimento de vendas ou GMV não comprova caixa incremental.",
+        "titulo": "Canais digitais exigem contribuição"
+      }
+    ],
+    "publicada_em": "2026-10-28T01:45:55.658409+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar crescimento comercial de contribuição depois de gastos e de efeitos de moeda na América Central.",
+        "titulo": "Vendas e margem"
+      }
+    ],
+    "resumo": "O release primário do 3T26 mostra expansão comercial com pressão de despesas e margem. A hipótese de escala exige contribuição econômica dos canais após investimento. O modelo indica -21,93% de potencial; a leitura qualitativa segue neutra e de baixa convicção.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Competição e despesas podem absorver receita; expansão e estoque exigem caixa antes de remunerar o acionista."
+      }
+    ],
+    "setor": "Consumo básico",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Walmart de México — margem cede enquanto preço e expansão exigem produtividade",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O resultado primário do 3T26 foi recebido: margem bruta estável, pressão de despesas, contração de margem EBITDA e recuo de lucro. Tráfego mexicano permanece relativamente estável, com avanço digital. Não foi identificada projeção formal agregada no material consultado.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar tráfego mexicano, composição da cesta, despesa por loja e contribuição da entrega.",
+        "vetor": "Margem após investimento em preço"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,305 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-27",
+    "manifest_sha256": "57831ad63d4e235002ce4d0943e5da5f902350160fd18ebee0f514ce5e81b59f",
+    "modelo_as_of": "2026-10-27"
+  },
+  "conviccao": 1,
+  "data": "2026-10-27",
+  "hashes": {
+    "contexto": "e0a3de697a59583a03016eed1bc1e6606542bd35cd51f7b31eed7b1855a17375",
+    "factbook": "6ca9559770125f9e8828a1d60a5c7946e21ed4c540a8825aa65a82607132e6a3",
+    "nota_json": "2fa2463f8712e13bbcafe5bab4471da492dade064dde88984bf1192cb127011f"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_CARSO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-26",
+  "published_at": "2026-10-28T01:43:09.259305+00:00",
+  "rendered": {
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Retorno por segmento precisa de conciliação; base Em revisão.",
+      "otimista": "Hipótese de melhor execução e transferência de caixa; cenário calculado Em revisão.",
+      "pessimista": "Atrasos e reinvestimento podem limitar distribuição; cenário Em revisão."
+    },
+    "comentario_valuation": "Preço MXN 168,70 e consenso público MXN 130,00. Alvo, retorno esperado e cenários estão Em revisão. Ke 11,92% e múltiplos são referências do modelo, sem autorizar reconstrução de soma das partes ou de desconto de holding.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A tese enfraquece se contratos e lucro de investidas não remunerarem capital nem gerarem transferências.",
+        "titulo": "Diversidade sem caixa distribuível"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-27",
+    "dados_simulados": false,
+    "data": "2026-10-27",
+    "ficha": [
+      {
+        "fato": "val.MX_CARSO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 168,70"
+      },
+      {
+        "fato": "val.MX_CARSO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_CARSO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_CARSO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_CARSO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.MX_CARSO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_CARSO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_CARSO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_CARSO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_CARSO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,92%"
+      },
+      {
+        "fato": "val.MX_CARSO.wacc",
+        "rotulo": "WACC",
+        "valor": "11,22%"
+      },
+      {
+        "fato": "val.MX_CARSO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_CARSO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_CARSO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_CARSO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "42,4x"
+      },
+      {
+        "fato": "val.MX_CARSO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,8x"
+      },
+      {
+        "fato": "val.MX_CARSO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 130,00"
+      },
+      {
+        "fato": "val.MX_CARSO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-27",
+        "id": "F1",
+        "instituicao": "Grupo Carso",
+        "publicado_em": "2026-10-26",
+        "tipo": "Relações com investidores",
+        "titulo": "Release trimestral por segmento",
+        "url": "https://www.carso.com.mx/wp-content/uploads/2026/10/GCarso-3T26-ESP.pdf"
+      },
+      {
+        "consultado_em": "2026-10-27",
+        "id": "F2",
+        "instituicao": "Grupo Carso",
+        "publicado_em": "2026-10-27",
+        "tipo": "Relações com investidores",
+        "titulo": "Informação financeira consolidada e notas",
+        "url": "https://www.carso.com.mx/wp-content/uploads/2026/10/Reporte-3T26-GCarso-1.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Reconciliação de caixa por unidade e transferências à holding.",
+      "Alteração de perímetro, direitos ou condições dos projetos."
+    ],
+    "governanca": "Separar caixa consolidado, direitos de associadas e recursos transferíveis ao acionista da holding. Condições de projetos e aquisições exigem confirmação documental própria.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar marcos de execução, recebimento, giro, manutenção e caixa transferido por entidade.",
+        "titulo": "Contratos e retorno"
+      }
+    ],
+    "issuer_id": "MX_CARSO",
+    "lacunas_de_dados": [
+      "Fluxo por unidade e retorno atribuível não integralmente reconciliados.",
+      "Alvo, cenários e retorno esperado permanecem Em revisão.",
+      "Fechamentos condicionados e percepção de mercado não confirmados."
+    ],
+    "modelo_de_cobertura": "2026-10-27",
+    "negocio": "Conglomerado mexicano com varejo, indústria, infraestrutura, construção, energia e hidrocarbonetos. Direitos de controladas, associadas e minoritários limitam a equivalência entre lucro consolidado e distribuição.",
+    "nome": "Grupo Carso",
+    "o_que_mudou": "Desde 2026-10-12, foi recebido o resultado primário do 3T26 e nova evidência sobre perímetro. A publicação trimestral não encerra a revisão do valuation nem comprova recebimento de todos os contratos.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "BR_ECORODOVIAS",
+        "nome": "EcoRodovias"
+      },
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MARCOPOLO",
+        "nome": "Marcopolo"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A composição por segmentos exige separar crescimento de receita, contribuição operacional e conversão em caixa. A diversidade de negócios, isoladamente, não comprova criação de valor.",
+        "titulo": "Diversificação precisa remunerar capital"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_CARSO.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O alvo é Em revisão. Comparar unidades heterogêneas exige perímetros, dívida e direitos econômicos conciliados.",
+        "titulo": "Avaliação permanece aberta"
+      }
+    ],
+    "publicada_em": "2026-10-28T01:43:09.259305+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Conferir base extraordinária, perímetro e resultado financeiro antes de atribuir a melhora do lucro a crescimento operacional recorrente.",
+        "titulo": "Comparabilidade por segmento"
+      }
+    ],
+    "resumo": "O resultado primário do 3T26 foi recebido. A melhora do lucro deve ser confrontada com base extraordinária, câmbio e retorno por unidade. O modelo mantém alvo e cenários Em revisão; a nota não atribui valor pontual aos projetos.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Projetos e capital de giro podem absorver resultado; efeitos financeiros e associadas podem reduzir a comparabilidade do lucro."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Grupo Carso — lucro cresce; retorno por segmento e caixa da holding exigem conciliação",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O release e a informação financeira primária do 3T26 foram recebidos, com detalhamento por segmento e evento de alienação de ativo em El Salvador. Essa mudança de perímetro exige cuidado ao comparar desempenho. Não foi identificada projeção formal de resultados no release consultado.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Observar contribuição recorrente, contratos recebidos e reinvestimento por unidade.",
+        "vetor": "Retorno por negócio"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,317 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-27",
+    "manifest_sha256": "57831ad63d4e235002ce4d0943e5da5f902350160fd18ebee0f514ce5e81b59f",
+    "modelo_as_of": "2026-10-27"
+  },
+  "conviccao": 1,
+  "data": "2026-10-27",
+  "hashes": {
+    "contexto": "e6c2019dffbf0133bf190cbf46b350b2d53e1645b0134ee6b966cf60a6e6dafc",
+    "factbook": "55acbf9cc4de4a09f7950cf255a2858e7d9263b3e0eeafb13046354851e0fd54",
+    "nota_json": "f8f30ee63c9486777fb8c568427316a583dcf49b029e65a25741e90290294f78"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_ORBIA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-27",
+  "published_at": "2026-10-28T01:51:34.312043+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O capex reafirmado prioriza segurança, integridade e projetos selecionados. Sua remuneração deve ser demonstrada.",
+        "titulo": "Disciplina e obrigação"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-28",
+        "descricao": "Teleconferência para discutir caixa, premissas e perspectivas por negócio.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Rentabilidade por negócio precisa suportar capital empregado. Base calculada: MXN 13,02.",
+      "otimista": "Conectividade e flúor geram caixa normalizado após investimento. Cenário calculado: MXN 15,67.",
+      "pessimista": "Margem temporária reverte enquanto giro e dívida limitam distribuição. Cenário calculado: MXN 10,47."
+    },
+    "comentario_valuation": "Preço de referência MXN 23,14, alvo MXN 13,02 e potencial -43,73%. Retorno esperado -38,39%, ke 13,50% e confiança C. Consenso público MXN 29,15; a diferença -55,34% não comprova o que está precificado. Métodos e cenários permanecem os calculados; a análise qualitativa não altera suas premissas.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Diversificação não assegura retorno se segmentos exigirem capital simultaneamente e a margem não sobreviver à reposição.",
+        "titulo": "Portfólio sem retorno de caixa"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-27",
+    "dados_simulados": false,
+    "data": "2026-10-27",
+    "ficha": [
+      {
+        "fato": "val.MX_ORBIA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 23,14"
+      },
+      {
+        "fato": "val.MX_ORBIA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 13,02"
+      },
+      {
+        "fato": "val.MX_ORBIA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-43,73%"
+      },
+      {
+        "fato": "val.MX_ORBIA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_ORBIA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.MX_ORBIA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 15,67"
+      },
+      {
+        "fato": "val.MX_ORBIA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_ORBIA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 10,47"
+      },
+      {
+        "fato": "val.MX_ORBIA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_ORBIA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "13,50%"
+      },
+      {
+        "fato": "val.MX_ORBIA.wacc",
+        "rotulo": "WACC",
+        "valor": "10,16%"
+      },
+      {
+        "fato": "val.MX_ORBIA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_ORBIA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-38,39%"
+      },
+      {
+        "fato": "val.MX_ORBIA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-27,88%"
+      },
+      {
+        "fato": "val.MX_ORBIA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "18,7x"
+      },
+      {
+        "fato": "val.MX_ORBIA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,1x"
+      },
+      {
+        "fato": "val.MX_ORBIA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 29,15"
+      },
+      {
+        "fato": "val.MX_ORBIA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-55,34%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-27",
+        "id": "F1",
+        "instituicao": "Orbia",
+        "publicado_em": "2026-10-27",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado trimestral, negócios e perspectivas",
+        "url": "https://www.orbia.com/4aaba4/siteassets/5.-investor-relations/quarterly-earnings/2026/q3/orbia-q3-2026-earnings-release_vf-1.pdf"
+      },
+      {
+        "consultado_em": "2026-10-27",
+        "id": "F2",
+        "instituicao": "Orbia",
+        "publicado_em": "2026-07-22",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado semestral e orientação anterior",
+        "url": "https://www.orbia.com/4a1617/siteassets/5.-investor-relations/quarterly-earnings/2026/q2/orbia-q2-2026-earnings-release_vf1-1.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Giro não libera caixa ou margem normalizada perde rentabilidade.",
+      "Projetos e dívida consomem retorno econômico."
+    ],
+    "governanca": "Eliminar vendas internas e conciliar direitos, dívida e caixa por entidade. Não equiparar menor razão de alavancagem a redução de dívida em qualquer janela.",
+    "guidance": "mantido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar custo de reposição, giro, caixa após investimento e dívida em comparação anual e sequencial separadas.",
+        "titulo": "Giro e dívida por janela"
+      }
+    ],
+    "issuer_id": "MX_ORBIA",
+    "lacunas_de_dados": [
+      "Fluxo e capital por negócio não integralmente conciliados ao modelo.",
+      "Direitos, dívida e base diluída exigem reconciliação completa.",
+      "Probabilidades implícitas e percepção variante indisponíveis."
+    ],
+    "modelo_de_cobertura": "2026-10-27",
+    "negocio": "Portfólio de polímeros, soluções para água e infraestrutura, flúor, irrigação e conectividade. Os ciclos e a necessidade de capital variam por negócio.",
+    "nome": "Orbia",
+    "o_que_mudou": "Desde 2026-10-12, o release do 3T26 permite observar a reversão de margens temporárias e os limites do caixa. A orientação atual foi confrontada com o 2T26, preservando sua mudança de formulação.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_ALPEK",
+        "nome": "Alpek"
+      },
+      {
+        "issuer_id": "MX_CEMEX",
+        "nome": "Cemex"
+      },
+      {
+        "issuer_id": "MX_ENDEAVOUR",
+        "nome": "Endeavour Silver"
+      },
+      {
+        "issuer_id": "MX_FIRSTMAJ",
+        "nome": "First Majestic Silver"
+      },
+      {
+        "issuer_id": "MX_GCC",
+        "nome": "GCC"
+      },
+      {
+        "issuer_id": "MX_GMEXICO",
+        "nome": "Grupo México"
+      },
+      {
+        "issuer_id": "MX_PENOLES",
+        "nome": "Industrias Peñoles"
+      },
+      {
+        "issuer_id": "MX_TERNIUM",
+        "nome": "Ternium"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "No resultado de 2026-10-27, EBITDA cresce enquanto giro e impostos limitam caixa operacional. A melhora precisa sobreviver à reposição de insumos.",
+        "titulo": "Margem e caixa divergem"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O release identifica reversão da defasagem favorável em infraestrutura e irrigação e benefício temporário em parte dos propelentes. Não se perpetuam essas contribuições.",
+        "titulo": "Benefícios temporários exigem normalização"
+      }
+    ],
+    "publicada_em": "2026-10-28T01:51:34.312043+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar tributos, base de alienações e margem transitória da geração recorrente; lucro não equivale a caixa livre.",
+        "titulo": "Normalização do lucro"
+      }
+    ],
+    "resumo": "O release primário do 3T26 registra melhora de EBITDA e menor caixa operacional na comparação anual. A leitura exige separar margem temporária, giro e dívida. O modelo aponta potencial -43,73%; mantém-se visão neutra e baixa convicção.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Insumos, juros e demanda europeia podem consumir caixa; crescimento pode exigir giro antes de reduzir dívida."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Orbia — EBITDA melhora, mas giro limita caixa e exige normalização por negócio",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O resultado do 3T26 foi recebido. A classificação de guidance mantido refere-se ao capex explicitamente reafirmado. A estimativa anual de EBITDA passou de piso a estimativa pontual; isso não comprova, isoladamente, elevação inequívoca. A comparação anual e a sequencial de dívida têm movimentos distintos.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Confrontar preços, custo de reposição, utilização e giro antes de extrapolar margem consolidada.",
+        "vetor": "Capital empregado por negócio"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,102 @@
+{
+  "avisos_tecnicos": [],
+  "dados_ate": "2026-10-27",
+  "data": "2026-10-27",
+  "fontes_sugeridas": [
+    {
+      "instituicao": "SEC EDGAR — busca de documentos (20-F, 6-K, 10-K, 8-K)",
+      "tipo": "regulatorio",
+      "url": "https://www.sec.gov/edgar/search/"
+    },
+    {
+      "instituicao": "SEC EDGAR — dados XBRL por empresa (companyfacts)",
+      "tipo": "regulatorio",
+      "url": "https://www.sec.gov/search-filings/edgar-application-programming-interfaces"
+    },
+    {
+      "instituicao": "Damodaran Online (NYU Stern) — prêmios de risco, betas e múltiplos setoriais",
+      "tipo": "dados_publicos",
+      "url": "https://pages.stern.nyu.edu/~adamodar/"
+    },
+    {
+      "instituicao": "FRED (Federal Reserve Bank of St. Louis) — juros e indicadores dos EUA",
+      "tipo": "dados_publicos",
+      "url": "https://fred.stlouisfed.org/"
+    }
+  ],
+  "is_synthetic": false,
+  "issuer_id": "LA_BLADEX",
+  "lacunas": [
+    "Probabilidade implícita do otimista: sem dado na data.",
+    "Probabilidade implícita do pessimista: sem dado na data.",
+    "WACC: sem dado na data."
+  ],
+  "nome": "Bladex",
+  "nomes": {
+    "BR_ABC": "Banco ABC Brasil",
+    "BR_B3": "B3",
+    "BR_BANRISUL": "Banrisul",
+    "BR_BB": "Banco do Brasil",
+    "BR_BBSEG": "BB Seguridade",
+    "BR_BRADESCO": "Banco Bradesco",
+    "BR_BTG": "BTG Pactual",
+    "BR_CXSEG": "Caixa Seguridade",
+    "LA_BLADEX": "Bladex"
+  },
+  "nota_anterior": {
+    "autoria": "mente",
+    "conviccao": 1,
+    "data": "2026-10-11",
+    "proximo_resultado": "2026-10-28",
+    "stance": 0,
+    "tipo": "iniciacao",
+    "titulo": "Bladex — comércio regional, margem e capital atribuível"
+  },
+  "pais": "PA",
+  "pais_pt": "Panamá",
+  "pares": [
+    "BR_ABC",
+    "BR_B3",
+    "BR_BANRISUL",
+    "BR_BB",
+    "BR_BBSEG",
+    "BR_BRADESCO",
+    "BR_BTG",
+    "BR_CXSEG"
+  ],
+  "proximo_resultado": "2026-10-26",
+  "schema": "cdp.nota.contexto/v1",
+  "setor": "Financials",
+  "setor_pt": "Financeiro",
+  "snapshot": {
+    "as_of": "2026-10-27",
+    "manifest_sha256": "57831ad63d4e235002ce4d0943e5da5f902350160fd18ebee0f514ce5e81b59f",
+    "modelo_as_of": "2026-10-27"
+  },
+  "tem_linha_eua": true,
+  "termos": [
+    "ABCB4",
+    "ABCB4.SA",
+    "B3",
+    "B3SA3",
+    "B3SA3.SA",
+    "BBAS3",
+    "BBAS3.SA",
+    "BBDC3",
+    "BBDC3.SA",
+    "BBDC4",
+    "BBDC4.SA",
+    "BBSE3",
+    "BBSE3.SA",
+    "BPAC11",
+    "BPAC11.SA",
+    "BRSR6",
+    "BRSR6.SA",
+    "CXSE3",
+    "CXSE3.SA"
+  ],
+  "tickers": [
+    "BLX"
+  ],
+  "tipo_esperado": "atualizacao"
+}

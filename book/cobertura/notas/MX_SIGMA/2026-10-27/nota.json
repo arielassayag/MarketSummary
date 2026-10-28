@@ -1,0 +1,122 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_SIGMA",
+  "data": "2026-10-27",
+  "tipo": "pos_resultado",
+  "titulo": "Sigma Foods — guidance elevado; caixa e perímetro condicionam a leitura",
+  "resumo": "O release primário do 3T26 registra melhora operacional e guidance elevado de EBITDA comparável. A recuperação industrial precisa chegar ao caixa da holding após reinvestimento. O modelo indica potencial {{fact:val.MX_SIGMA.upside}}; a visão qualitativa permanece neutra até reconciliar perímetro e retorno atribuível.",
+  "negocio": "Sigma Foods atua por meio de Sigma Alimentos em alimentos de marca nas Américas e Europa. Holding e subsidiária têm demonstrações e direitos econômicos distintos.",
+  "pilares_tese": [
+    {
+      "titulo": "Melhora operacional com heterogeneidade",
+      "texto": "O release de 2026-10-27 relata expansão no México e Europa, enquanto o volume norte-americano recua. A leitura regional importa mais que extrapolar o consolidado.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Guidance e caixa",
+      "texto": "A administração elevou a projeção anual de EBITDA comparável. Sua realização continua estimativa; investimento e obrigações financeiras determinam a conversão em retorno.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Margem regional e recuperação industrial",
+      "direcao": "positivo",
+      "sensibilidade": "alta",
+      "texto": "Conferir preço local, utilização, mix e contribuição após capital empregado, sem presumir capacidade futura já operante.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Teleconferência para discutir resultado e perspectivas; conferir premissas do guidance elevado.",
+      "data": "2026-10-28",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Consumo norte-americano, insumos e projetos podem absorver caixa e limitar a transmissão de melhora operacional à holding.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Recuperação industrial e eficiência geram caixa incremental. Cenário calculado: {{fact:val.MX_SIGMA.alvo_otimista}}.",
+    "base": "A melhora requer comprovação após reinvestimento e financiamento. Base calculada: {{fact:val.MX_SIGMA.preco_alvo}}.",
+    "pessimista": "Insumos, integração e demanda fraca reduzem o retorno atribuível. Cenário calculado: {{fact:val.MX_SIGMA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.MX_SIGMA.preco}}, alvo {{fact:val.MX_SIGMA.preco_alvo}} e potencial {{fact:val.MX_SIGMA.upside}}. Retorno esperado {{fact:val.MX_SIGMA.etr}}, ke {{fact:val.MX_SIGMA.ke}} e confiança {{fact:val.MX_SIGMA.confianca_codigo}}. Consenso público {{fact:val.MX_SIGMA.consenso_alvo}}; a diferença {{fact:val.MX_SIGMA.diff_consenso}} não comprova o que está precificado. Métodos e cenários permanecem os calculados; a análise qualitativa não altera suas premissas.",
+  "ultimo_resultado": "O resultado primário do 3T26 foi recebido. O guidance anual de EBITDA comparável foi elevado. A companhia relata avanço da recuperação de capacidade espanhola e integração de Roger Wood; projeto em execução não equivale a capacidade concluída.",
+  "guidance": "elevado",
+  "tom_gestao": "positivo",
+  "governanca": "Preservar a distinção entre Sigma Foods e Sigma Alimentos e reconciliar passivos e direitos por entidade. Operações descontinuadas e ajustes não são base automática de perpetuidade.",
+  "o_que_mudou": "Desde 2026-10-22, foi recebido o release do 3T26, que eleva guidance e atualiza a trajetória regional. O evento de 2026-10-28 segue futuro. A leitura passa a pós-resultado, sem alterar cenários do modelo.",
+  "gatilhos_revisao": [
+    "Caixa após investimento não confirma a melhora comparável.",
+    "Recuperação industrial, perímetro ou guidance muda materialmente."
+  ],
+  "lacunas_de_dados": [
+    "Fluxo atribuível, passivos por entidade e base diluída não integralmente reconciliados.",
+    "Retorno realizado dos projetos permanece a comprovar.",
+    "Probabilidades implícitas e percepção variante indisponíveis."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Sigma Foods",
+      "titulo": "Resultado trimestral da holding e da subsidiária",
+      "url": "https://www.sigmafoods.com/wp-content/uploads/2026/10/SigmaFoods3Q26Results.pdf",
+      "publicado_em": "2026-10-27",
+      "consultado_em": "2026-10-27"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Sigma Foods",
+      "titulo": "Calendário da teleconferência de resultados",
+      "url": "https://www.sigmafoods.com/en/events/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-27"
+    }
+  ],
+  "qualidade_resultados": {
+    "titulo": "Comparável e atribuível",
+    "texto": "Conferir extraordinários, operações descontinuadas e resultado financeiro antes de extrapolar a rentabilidade.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Melhora sem caixa",
+    "texto": "A hipótese enfraquece se a recuperação industrial exigir capital que absorva a contribuição adicional.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Retorno por região",
+      "texto": "Acompanhar volume, preço local, caixa após giro e investimento e transferência de recursos à holding.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ]
+}

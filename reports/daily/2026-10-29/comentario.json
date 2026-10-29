@@ -1,0 +1,18 @@
+{
+  "mind": "codex",
+  "headline": "CDP avança {{fact:day.ret}}; lado vendido supera perdas das posições compradas",
+  "paragraphs": [
+    "No pregão de 29/10/2026, a carteira simulada avançou {{fact:day.ret}}, com P&L de {{fact:day.pnl_usd}}, NAV de {{fact:nav}} e retorno desde o início de {{fact:itd.ret}}. O lado vendido contribuiu {{fact:attr.short}}, superando a contribuição de {{fact:attr.long}} do lado comprado. O financiamento acrescentou {{fact:attr.financing}}.",
+    "A atribuição estimada aponta contribuição específica de {{fact:attr.specific}} e fatorial de {{fact:attr.factor}}. Estilos contribuíram {{fact:attr.factor_group.style}}, setores {{fact:attr.factor_group.sector}} e mercado {{fact:attr.factor_group.market}}. Por país, Brasil respondeu por {{fact:attr.country.BR}}, Argentina por {{fact:attr.country.AR}} e México por {{fact:attr.country.MX}}. Materiais contribuíram {{fact:attr.sector.Materials}}, enquanto consumo discricionário e industriais responderam por {{fact:attr.sector.Consumer_Discretionary}} e {{fact:attr.sector.Industrials}}. A decomposição fatorial é estimada e não demonstra causalidade econômica por emissor.",
+    "Sigma Lithium, Fleury e Gerdau foram os principais contribuidores, com {{fact:top.contrib.1.contrib}}, {{fact:top.contrib.2.contrib}} e {{fact:top.contrib.3.contrib}}, respectivamente. Embraer, Tenda e Riachuelo foram os maiores detratores, com {{fact:top.detract.1.contrib}}, {{fact:top.detract.2.contrib}} e {{fact:top.detract.3.contrib}}. Esses valores descrevem o efeito das posições na carteira, sem atribuir os movimentos individuais a notícias não comprovadas.",
+    "No contexto público de 29/10/2026, o BEA divulgou a estimativa inicial do PIB americano do trimestre, com expansão sustentada por investimento, consumo e gasto público. Nos fechamentos em USD, EWZ, EWW e ECH variaram {{fact:mkt.EWZ.ret_1d}}, {{fact:mkt.EWW.ret_1d}} e {{fact:mkt.ECH.ret_1d}}. O real e o peso mexicano variaram {{fact:fx.BRL.ret_1d}} e {{fact:fx.MXN.ret_1d}}, em USD por unidade local. Os futuros de Brent e cobre variaram {{fact:mkt.BZ_F.ret_1d}} e {{fact:mkt.HG_F.ret_1d}}, em USD. O contexto macroeconômico não estabelece causalidade para o resultado de cada posição.",
+    "A vol ex-ante de {{fact:risk.ex_ante_vol}} permanece abaixo da banda de {{fact:mandate.vol_band_min}} a {{fact:mandate.vol_band_max}}, indicando subutilização do orçamento de risco. O beta foi {{fact:risk.beta}}, a exposição bruta {{fact:risk.gross}}, a líquida {{fact:risk.net}}, o VaR diário {{fact:risk.var_1d}} e o drawdown {{fact:dd.current}}. A carteira encerrou com {{fact:risk.n_long}} posições compradas e {{fact:risk.n_short}} vendidas. Galicia mantém risco elevado de squeeze. O benchmark argentino segue ausente; fundamentos atuais, câmbio não oficial, paridades de ADRs e revisões históricas não aplicadas limitam a análise. Ausência de informação não equivale a risco zero."
+  ],
+  "risk_flags": [
+    "Vol ex-ante de {{fact:risk.ex_ante_vol}} abaixo da banda de {{fact:mandate.vol_band_min}} a {{fact:mandate.vol_band_max}}: subutilização do orçamento de risco.",
+    "Galicia permanece com risco de squeeze HIGH, ante MEDIUM na decisão; shorts com risco alto: {{fact:risk.squeeze_high_shorts}}.",
+    "Benchmark argentino ausente; atribuição fatorial estimada, fundamentos atuais e câmbio não oficial limitam a leitura.",
+    "Paridades ADR, revisões de fechamento e volume e barras históricas tardias não aplicadas permanecem limitações declaradas.",
+    "Alertas do sistema no dia: {{fact:day.n_alerts}}; consultar as limitações integrais do relatório."
+  ]
+}

@@ -1,0 +1,334 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-28",
+    "manifest_sha256": "7c200915e106c8eb6df9ba179db3a979acb641d6d6b8946fe6e4d9a60cba295b",
+    "modelo_as_of": "2026-10-28"
+  },
+  "conviccao": 1,
+  "data": "2026-10-28",
+  "hashes": {
+    "contexto": "37e65211d4e0b05b34bda4067921aeeb357a61b90d1bc90e97f63d4bf9976d61",
+    "factbook": "66a6a3395767d744dbf27ec691951ba94ef4d65f3727770b31a47e34548a018d",
+    "nota_json": "c1ce7a9444e46bb2369e75a7285c8de359cdc94f4bc9ec6a7356cac856bab93e"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_INBURSA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-10-29T01:39:52.317778+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A expansão patrimonial é ponto de partida para testar solvência e capacidade de distribuição, preservando restrições regulatórias e direitos de minoritários.",
+        "titulo": "Capital distribuível por entidade"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Publicação e conciliação integral das demonstrações e do capital por subsidiária.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "O modelo indica MXN 59,30; a hipótese depende de lucro recorrente após perdas e capital requerido.",
+      "otimista": "Funding estável e crédito rentável sustentam o cenário calculado em MXN 75,86.",
+      "pessimista": "Perdas e menor retorno dos ativos enfraquecem a tese; o cenário calculado é MXN 44,22."
+    },
+    "comentario_valuation": "O modelo usa ke 11,41% e P/L à frente 8,4x. O consenso público aponta MXN 43,29; a diferença para o alvo da casa não demonstra o que o mercado precifica. Banco e seguros exigem avaliar lucro sobre capital requerido, sem usar EBITDA industrial como substituto.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese perde força se expansão de crédito e despesas controladas não produzirem retorno recorrente após perdas ou se o capital permanecer retido nas subsidiárias.",
+        "titulo": "Consolidação pode esconder baixa rentabilidade"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-28",
+    "dados_simulados": false,
+    "data": "2026-10-28",
+    "ficha": [
+      {
+        "fato": "val.MX_INBURSA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 44,52"
+      },
+      {
+        "fato": "val.MX_INBURSA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 59,30"
+      },
+      {
+        "fato": "val.MX_INBURSA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+33,19%"
+      },
+      {
+        "fato": "val.MX_INBURSA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_INBURSA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_INBURSA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 75,86"
+      },
+      {
+        "fato": "val.MX_INBURSA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "2,72%"
+      },
+      {
+        "fato": "val.MX_INBURSA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 44,22"
+      },
+      {
+        "fato": "val.MX_INBURSA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "34,23%"
+      },
+      {
+        "fato": "val.MX_INBURSA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,41%"
+      },
+      {
+        "fato": "val.MX_INBURSA.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_INBURSA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_INBURSA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+33,19%"
+      },
+      {
+        "fato": "val.MX_INBURSA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "0,00%"
+      },
+      {
+        "fato": "val.MX_INBURSA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,4x"
+      },
+      {
+        "fato": "val.MX_INBURSA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,9x"
+      },
+      {
+        "fato": "val.MX_INBURSA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 43,29"
+      },
+      {
+        "fato": "val.MX_INBURSA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+36,99%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-28",
+        "id": "F1",
+        "instituicao": "BMV — Grupo Financiero Inbursa",
+        "publicado_em": "2026-10-26",
+        "tipo": "Bolsa",
+        "titulo": "Comentários da administração sobre resultado e situação financeira",
+        "url": "https://www.bmv.com.mx/docs-pub/infingps/infingps_1597792_2026-03_1.pdf"
+      },
+      {
+        "consultado_em": "2026-10-28",
+        "id": "F2",
+        "instituicao": "BMV — Grupo Financiero Inbursa",
+        "publicado_em": null,
+        "tipo": "Bolsa",
+        "titulo": "Perfil e entidades do grupo financeiro",
+        "url": "https://www.bmv.com.mx/es/Grupo_BMV/PerfilEmpresa/GFINBUR-5428"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Deterioração persistente do retorno após perdas ou encarecimento da captação.",
+      "Capital consolidado não se traduz em capacidade de distribuição atribuível."
+    ],
+    "governanca": "A estrutura de grupo requer separar direitos econômicos, minoritários e exigências de capital das subsidiárias. O perfil da BMV identifica banco, seguros, pensões e entidades de financiamento; não se presume transferência irrestrita de recursos.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar concentração e custo dos depósitos, perdas finais por carteira, lucro atribuível e distribuição efetiva das subsidiárias.",
+        "titulo": "Funding, perdas e capital transferível"
+      }
+    ],
+    "issuer_id": "MX_INBURSA",
+    "lacunas_de_dados": [
+      "Documento primário integral do 3T26 não recebido; leitura restrita a trechos indexados.",
+      "Margem após risco, recebimentos e capital definitivo por entidade não reconciliados.",
+      "Guidance e tom da gestão não classificados com material parcial.",
+      "Sem evidência pública suficiente para atribuir percepção variante ao mercado."
+    ],
+    "modelo_de_cobertura": "2026-10-28",
+    "negocio": "Grupo financeiro mexicano com banco, financiamento especializado, seguros, pensões e intermediação. A diversificação deve ser avaliada pelo lucro atribuível e pelo capital requerido de cada entidade; patrimônio consolidado não equivale a caixa livre da holding.",
+    "nome": "Grupo Financiero Inbursa",
+    "o_que_mudou": "Desde a iniciação de 2026-10-12, foi localizada informação primária do 3T26 na BMV e o modelo foi reavaliado em 2026-10-28. O recebimento parcial permite atualizar funding e patrimônio; preserva as lacunas de crédito, capital e distribuição.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_BAJIO",
+        "nome": "Banco del Bajío"
+      },
+      {
+        "issuer_id": "MX_BANORTE",
+        "nome": "Grupo Financiero Banorte"
+      },
+      {
+        "issuer_id": "MX_BMV",
+        "nome": "Bolsa Mexicana de Valores"
+      },
+      {
+        "issuer_id": "MX_GENTERA",
+        "nome": "Gentera"
+      },
+      {
+        "issuer_id": "MX_QUALITAS",
+        "nome": "Quálitas"
+      },
+      {
+        "issuer_id": "MX_REGIONAL",
+        "nome": "Regional (Banregio)"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A informação financeira do 3T26 disponibilizada pela BMV descreve expansão anual e sequencial dos depósitos de varejo e melhora da eficiência operacional. A hipótese exige verificar custo marginal da captação e retorno após risco, sem atribuir vantagem competitiva definitiva ao indicador consolidado.",
+        "titulo": "Funding e eficiência"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_INBURSA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "MXN 44,52"
+          },
+          {
+            "fato": "val.MX_INBURSA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "MXN 59,30"
+          }
+        ],
+        "texto": "O preço de referência é MXN 44,52 e o alvo MXN 59,30. A diferença depende da adequação do lucro normalizado e do custo do capital, não apenas da expansão patrimonial.",
+        "titulo": "Valor condicionado à rentabilidade sustentável"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O perfil societário reúne atividades financeiras distintas. A vantagem a testar é funding estável com precificação adequada ao risco; variedade de produtos, isoladamente, não prova superioridade de retorno.",
+        "titulo": "Diversificação e disciplina comercial"
+      }
+    ],
+    "publicada_em": "2026-10-29T01:39:52.317778+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A melhora de eficiência divulgada precisa ser conciliada com risco de crédito e resultado de mercado. O acesso parcial ao relatório mantém aberta essa diligência.",
+        "titulo": "Eficiência não substitui retorno após perdas"
+      }
+    ],
+    "resumo": "A informação financeira do 3T26 registrada na BMV confirma expansão dos depósitos de varejo e do patrimônio consolidado, com melhora da eficiência divulgada. Esses sinais sustentam a hipótese de franquia resiliente, mas não comprovam retorno após perdas nem capital distribuível. A leitura permanece neutra, com baixa convicção. O alvo do modelo é MXN 59,30, com potencial +33,19%.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Crescimento patrimonial consolidado pode coexistir com restrições prudenciais e menor retorno atribuível ao acionista."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Inbursa — funding de varejo e capital exigem reconciliação por entidade",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A BMV registra a informação do 3T26 em 2026-10-26. O trecho primário recebido evidencia funding, patrimônio e eficiência; o documento integral não abriu nesta consulta. Não se afirma reconciliação completa de margem, provisões, seguros, investimentos ou lucro atribuível.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A expansão dos depósitos precisa acompanhar reprificação dos ativos e perdas finais das carteiras. O relatório consultado parcialmente não permite reconciliar essa ponte nesta nota.",
+        "vetor": "Custo de funding e perdas de crédito"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

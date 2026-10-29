@@ -1,0 +1,347 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-28",
+    "manifest_sha256": "7c200915e106c8eb6df9ba179db3a979acb641d6d6b8946fe6e4d9a60cba295b",
+    "modelo_as_of": "2026-10-28"
+  },
+  "conviccao": 1,
+  "data": "2026-10-28",
+  "hashes": {
+    "contexto": "7962d31f11c36e6c91c7f98d4558505da37fca2d8930b8f9c0a96d5578848c8e",
+    "factbook": "136d80db7be5812f67303016ce43bfde406a921fe678ce81ce4fbb19a0a1a879",
+    "nota_json": "7e1442853a7bea16dfa40513556ef9678f01491e48bac9b62ab07590cd9a7243"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_FUNO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-28",
+  "published_at": "2026-10-29T01:53:40.926623+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A gestão de passivos deve ser confrontada com custos, garantias e desenvolvimento. Alongar vencimentos não comprova retorno do capital investido.",
+        "titulo": "Refinanciamento e compromissos"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-29",
+        "descricao": "Teleconferência do resultado anunciada no suplemento oficial.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Avaliação e retorno esperado permanecem Em revisão; não há alvo narrativo alternativo.",
+      "otimista": "Renda e eficiência geram caixa atribuível sustentável; o cenário quantitativo permanece Em revisão.",
+      "pessimista": "Financiamento e capital comprometido limitam distribuição econômica; cenário quantitativo Em revisão."
+    },
+    "comentario_valuation": "Preço de referência MXN 32,26, P/VP 0,6x e consenso público MXN 35,00. O modelo mantém alvo e cenários Em revisão. Múltiplo patrimonial não demonstra desconto econômico sem renda estabilizada, dívida e participações conciliadas; a nota não cria alvo substituto.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se manutenção, financiamento ou transferência de ativos absorverem os ganhos de aluguel e taxas.",
+        "titulo": "Renda nominal sem benefício ao certificado"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-28",
+    "dados_simulados": false,
+    "data": "2026-10-28",
+    "ficha": [
+      {
+        "fato": "val.MX_FUNO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 32,26"
+      },
+      {
+        "fato": "val.MX_FUNO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_FUNO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_FUNO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_FUNO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.MX_FUNO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_FUNO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_FUNO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_FUNO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_FUNO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,10%"
+      },
+      {
+        "fato": "val.MX_FUNO.wacc",
+        "rotulo": "WACC",
+        "valor": "9,40%"
+      },
+      {
+        "fato": "val.MX_FUNO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_FUNO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_FUNO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.MX_FUNO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "11,5x"
+      },
+      {
+        "fato": "val.MX_FUNO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,6x"
+      },
+      {
+        "fato": "val.MX_FUNO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 35,00"
+      },
+      {
+        "fato": "val.MX_FUNO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-28",
+        "id": "F1",
+        "instituicao": "Fibra Uno",
+        "publicado_em": "2026-10-28",
+        "tipo": "Relações com investidores",
+        "titulo": "Suplemento informativo trimestral",
+        "url": "https://funo.mx/site_media/uploads/documentos/documento-ayjjG-1793220887.pdf"
+      },
+      {
+        "consultado_em": "2026-10-28",
+        "id": "F2",
+        "instituicao": "Fibra Uno",
+        "publicado_em": "2026-10-28",
+        "tipo": "Relações com investidores",
+        "titulo": "Demonstrações financeiras e notas explicativas",
+        "url": "https://funo.mx/site_media/uploads/documentos/documento-bsnU2-1793221229.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Caixa recorrente não cobre manutenção, obrigações e distribuição.",
+      "Internalização ou participações não sustentam benefício líquido atribuível."
+    ],
+    "governanca": "A análise deve conferir relacionadas, comitês, internalização e participação em Fibra NEXT. A economia das transações e o denominador dos certificados precisam ser conciliados com direitos e fluxo atribuível, sem presumir alinhamento pela redução de taxas.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar ocupação, renovação líquida de incentivos, inadimplência, AFFO após manutenção, dívida e distribuição por certificado em base homogênea.",
+        "titulo": "Renda e distribuição econômica"
+      }
+    ],
+    "issuer_id": "MX_FUNO",
+    "lacunas_de_dados": [
+      "Ponte integral da internalização e das participações não concluída.",
+      "Bases de certificados, AFFO e distribuição exigem conciliação completa.",
+      "Alvo, cenários, probabilidades, rating e retorno esperado Em revisão.",
+      "Sem transcrição da teleconferência futura ou percepção de mercado comprovada."
+    ],
+    "modelo_de_cobertura": "2026-10-28",
+    "negocio": "Fideicomisso imobiliário mexicano com imóveis industriais, comerciais, escritórios e outros usos. Propriedades, direitos fiduciários e participações exigem atribuição econômica própria.",
+    "nome": "Fibra Uno",
+    "o_que_mudou": "A iniciação de 2026-10-12 foi atualizada com suplemento e demonstrações do 3T26. A leitura preserva diferenças de período e classificação da distribuição; o valuation continua Em revisão.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "BR_ALLOS",
+        "nome": "Allos"
+      },
+      {
+        "issuer_id": "BR_IGUATEMI",
+        "nome": "Iguatemi"
+      },
+      {
+        "issuer_id": "BR_JHSF",
+        "nome": "JHSF"
+      },
+      {
+        "issuer_id": "BR_MULTIPLAN",
+        "nome": "Multiplan"
+      },
+      {
+        "issuer_id": "CL_CENCOMALLS",
+        "nome": "Cencosud Shopping"
+      },
+      {
+        "issuer_id": "CL_MALLPLAZA",
+        "nome": "Plaza SA (Mallplaza)"
+      },
+      {
+        "issuer_id": "CL_PARAUCO",
+        "nome": "Parque Arauco"
+      },
+      {
+        "issuer_id": "MX_FIBRAPL",
+        "nome": "Fibra Prologis"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O suplemento descreve renovação contratual e ocupação em bases distintas por segmento e moeda. Nossa hipótese exige recebimento após incentivos e manutenção, além da expansão nominal.",
+        "titulo": "Renda recebida por segmento"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Taxas evitadas devem ser confrontadas com custos internos, renda de ativos transferidos e capital comprometido. A tese depende do ganho atribuível por certificado.",
+        "titulo": "Internalização precisa gerar benefício líquido"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Segmentos distintos podem reduzir dependência de ocupantes, mas escala deve aparecer em retenção e renda líquida após incentivos.",
+        "titulo": "Diversificação sem vantagem presumida"
+      }
+    ],
+    "publicada_em": "2026-10-29T01:53:40.926623+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "As demonstrações e o suplemento devem ser conciliados preservando valorização, direitos fiduciários e certificados médios ou elegíveis. Distribuição fiscal e caixa recorrente têm cortes próprios.",
+        "titulo": "Medidas gerenciais e base de certificados"
+      }
+    ],
+    "resumo": "O suplemento do 3T26 indica avanço da renda e distribuição, mas a tese exige caixa recorrente por certificado após manutenção, financiamento e mudanças de perímetro. Visão neutra e baixa convicção. Alvo, cenários e rating permanecem Em revisão; não se substituem por NAV ou pelo consenso.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Vacância, desenvolvimento e refinanciamento podem absorver renda; distribuição com reembolso de capital não equivale integralmente a lucro recorrente."
+      }
+    ],
+    "setor": "Imobiliário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Fibra Uno — renda e distribuição avançam, com avaliação ainda em revisão",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O suplemento de 2026-10-28 registra crescimento de renda, FFO e distribuição, com comparação anual e sequencial em colunas próprias. A distribuição inclui resultado fiscal e reembolso de capital. A mensagem atribui eficiência à internalização e descreve refinanciamento. Não foi recebida nova orientação financeira agregada quantitativa; sem guidance novo não significa retirada de metas.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Separar NOI, FFO, AFFO e distribuição com bases de certificados compatíveis; ganho patrimonial não é recebimento de aluguel.",
+        "vetor": "Caixa após manutenção e financiamento"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

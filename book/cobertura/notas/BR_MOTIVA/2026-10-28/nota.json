@@ -1,0 +1,150 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_MOTIVA",
+  "data": "2026-10-28",
+  "tipo": "pos_resultado",
+  "titulo": "Motiva — resultado melhora após venda de aeroportos, com capital comprometido nas concessões",
+  "resumo": "O 3T26 confirma avanço operacional e menor alavancagem após simplificação do portfólio. A tese depende do retorno das concessões depois de obras e financiamento; ganho de alienação não é recorrente. Visão neutra, baixa convicção; alvo {{fact:val.BR_MOTIVA.preco_alvo}} e potencial {{fact:val.BR_MOTIVA.upside}}.",
+  "negocio": "Concessões de rodovias e trilhos no Brasil. Tráfego, tarifas e capacidade de execução precisam remunerar obrigações contratuais e capital investido.",
+  "pilares_tese": [
+    {
+      "titulo": "Crescimento com perímetro comparável",
+      "texto": "O release atribui crescimento a novas operações, pórticos e tarifas, com evolução mais moderada do tráfego comparável. Expansão consolidada não equivale integralmente a crescimento orgânico.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Venda precisa financiar retorno futuro",
+      "texto": "A apresentação descreve simplificação e reciclagem de capital. Nossa hipótese exige que recursos liberados e menor dívida coexistam com retorno adequado dos projetos remanescentes.",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Obras, tarifas e custo financeiro",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Confrontar geração por concessão com investimento e serviço da dívida. Tráfego sem remuneração após obrigações não confirma criação de valor.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Videoconferência do 3T26 prevista no calendário oficial.",
+      "data": "2026-10-29",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Obras, financiamento e novos contratos podem consumir o benefício de liquidez da alienação.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Eficiência e contratos remuneram o capital; cenário {{fact:val.BR_MOTIVA.alvo_otimista}}.",
+    "base": "Alvo {{fact:val.BR_MOTIVA.preco_alvo}} condicionado ao caixa após obras e dívida.",
+    "pessimista": "Compromissos e custo financeiro absorvem retorno; cenário {{fact:val.BR_MOTIVA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço {{fact:val.BR_MOTIVA.preco}}, retorno esperado {{fact:val.BR_MOTIVA.etr}} e WACC {{fact:val.BR_MOTIVA.wacc}}. O rating {{fact:val.BR_MOTIVA.rating_codigo}} pertence ao modelo. Concessões exigem preservar prazos contratuais, obrigações e perímetro após a venda. O consenso {{fact:val.BR_MOTIVA.consenso_alvo}} não comprova expectativa implícita de mercado.",
+  "ultimo_resultado": "O release de 2026-10-28 mostra crescimento de receita, EBITDA e lucro ajustados e redução da alavancagem. As bases principais excluem aeroportos e construção; efeitos não recorrentes e medidas proporcionais precisam permanecer identificados. A melhora de lucro societário não deve ser confundida com recorrência. Não foi identificada nova orientação quantitativa nos materiais recebidos; sem guidance novo não significa retirada das metas anteriores.",
+  "guidance": "sem_guidance",
+  "tom_gestao": "positivo",
+  "governanca": "O uso de recursos da venda, amortização de dívida e remuneração do acionista deve ser conciliado com compromissos futuros. Medidas proporcionais de controladas em conjunto e ajustes de transações relacionadas exigem leitura própria.",
+  "posicao_competitiva": {
+    "titulo": "Experiência contratual precisa remunerar risco",
+    "texto": "A operação rodoviária e ferroviária permite testar escala e eficiência. Acesso a novos contratos não comprova retorno adequado do preço ofertado.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Continuadas e alienação",
+    "texto": "Separar ganho da venda, resultado ajustado, receita de construção e geração de caixa. A comparação deve usar o mesmo perímetro.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Menor dívida e obras futuras",
+    "texto": "Avaliar caixa disponível depois do capital comprometido, sem contar simultaneamente ativos alienados e recursos da transação.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "contratese": {
+    "titulo": "Liquidez transitória sem retorno sustentável",
+    "texto": "A hipótese enfraquece se novos contratos e obras absorverem os recursos sem remunerar risco e financiamento.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Retorno por concessão",
+      "texto": "Acompanhar tráfego comparável, tarifa efetiva, investimento contratado, cronograma, caixa após dívida e retorno dos projetos.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "o_que_mudou": "O resultado do 3T26 permite atualizar a iniciação de 2026-10-11 com leitura de operações remanescentes e menor alavancagem. A conciliação integral de recursos, passivos e retorno por contrato continua aberta.",
+  "gatilhos_revisao": [
+    "Obras e novos contratos não remuneram o custo de capital.",
+    "Caixa recorrente diverge persistentemente da melhora do resultado ajustado."
+  ],
+  "lacunas_de_dados": [
+    "Caixa por concessão e obrigações futuras não reconciliados integralmente.",
+    "Teleconferência futura e eventual atualização de metas ainda não recebidas.",
+    "Perímetro completo do valuation após alienação exige conciliação.",
+    "Sem evidência suficiente para atribuir percepção ao mercado."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Motiva",
+      "titulo": "Release de resultados trimestrais",
+      "url": "https://filemanager-cdn.mziq.com/published/8516d569-e11b-4864-a777-68eca8245423/3aa9a106-a6f5-48d2-9783-1bc027806bd3",
+      "publicado_em": "2026-10-28",
+      "consultado_em": "2026-10-28"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Motiva",
+      "titulo": "Apresentação de resultados",
+      "url": "https://filemanager-cdn.mziq.com/published/8516d569-e11b-4864-a777-68eca8245423/74946bb3-fdf8-4a54-9601-0a96e7abd32f",
+      "publicado_em": "2026-10-28",
+      "consultado_em": "2026-10-28"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Motiva",
+      "titulo": "Calendário de eventos",
+      "url": "https://ri.motiva.com.br/resultados/calendario-de-eventos/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-28"
+    }
+  ]
+}

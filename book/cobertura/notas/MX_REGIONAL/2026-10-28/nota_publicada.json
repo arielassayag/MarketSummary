@@ -1,0 +1,334 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-28",
+    "manifest_sha256": "7c200915e106c8eb6df9ba179db3a979acb641d6d6b8946fe6e4d9a60cba295b",
+    "modelo_as_of": "2026-10-28"
+  },
+  "conviccao": 1,
+  "data": "2026-10-28",
+  "hashes": {
+    "contexto": "857f543f690d977d0861a5252702ed0b2e98c6293b8703bfd5c16ef5e35d7f79",
+    "factbook": "66a6a3395767d744dbf27ec691951ba94ef4d65f3727770b31a47e34548a018d",
+    "nota_json": "0f95872ef6d731f3b68051517268d0bbb07753631d70e3e0779ad922f5c3c1f1"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_REGIONAL",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-26",
+  "published_at": "2026-10-29T01:46:03.056860+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Conferir capital requerido, despesas e lucro atribuível por subsidiária antes de inferir capacidade de distribuição da holding.",
+        "titulo": "Contribuição incremental de Hey"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-03",
+        "descricao": "Início da nova direção geral de Banco Regional conforme evento relevante.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "outro"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo calculado MXN 245,41, condicionado ao lucro atribuível após capital requerido.",
+      "otimista": "Crédito e despesas sustentam retorno recorrente; cenário MXN 297,42.",
+      "pessimista": "Funding, perdas e despesas pressionam retorno; cenário MXN 201,19."
+    },
+    "comentario_valuation": "Preço MXN 151,47, P/L à frente 7,1x e P/VP 1,1x. O consenso público aponta MXN 174,69; a divergência não revela por si só expectativas incorporadas ao preço. Probabilidades implícitas e WACC permanecem indisponíveis.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se expansão de ativos e despesas não sustentar retorno após perdas ou se a transição reduzir disciplina comercial.",
+        "titulo": "Crescimento sem remuneração do capital"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-28",
+    "dados_simulados": false,
+    "data": "2026-10-28",
+    "ficha": [
+      {
+        "fato": "val.MX_REGIONAL.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 151,47"
+      },
+      {
+        "fato": "val.MX_REGIONAL.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 245,41"
+      },
+      {
+        "fato": "val.MX_REGIONAL.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+62,02%"
+      },
+      {
+        "fato": "val.MX_REGIONAL.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.MX_REGIONAL.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_REGIONAL.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 297,42"
+      },
+      {
+        "fato": "val.MX_REGIONAL.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_REGIONAL.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 201,19"
+      },
+      {
+        "fato": "val.MX_REGIONAL.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_REGIONAL.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,41%"
+      },
+      {
+        "fato": "val.MX_REGIONAL.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_REGIONAL.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_REGIONAL.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+66,51%"
+      },
+      {
+        "fato": "val.MX_REGIONAL.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+33,48%"
+      },
+      {
+        "fato": "val.MX_REGIONAL.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "7,1x"
+      },
+      {
+        "fato": "val.MX_REGIONAL.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,1x"
+      },
+      {
+        "fato": "val.MX_REGIONAL.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 174,69"
+      },
+      {
+        "fato": "val.MX_REGIONAL.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+40,49%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-28",
+        "id": "F1",
+        "instituicao": "BMV — Regional",
+        "publicado_em": "2026-10-26",
+        "tipo": "Bolsa",
+        "titulo": "Mudança na estrutura organizacional",
+        "url": "https://bmv.com.mx/docs-pub/eventemi/eventemi_1597869_1.pdf"
+      },
+      {
+        "consultado_em": "2026-10-28",
+        "id": "F2",
+        "instituicao": "BMV — Regional",
+        "publicado_em": null,
+        "tipo": "Bolsa",
+        "titulo": "Registro de informações financeiras periódicas",
+        "url": "https://www.bmv.com.mx/es/emisoras/informacionfinanciera/R-7646-CGEN_CAPIT"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Novo relatório permite reconciliar retorno após perdas e capital por entidade.",
+      "Transição ou despesas alteram materialmente a rentabilidade atribuível."
+    ],
+    "governanca": "O evento primário define sucessão de Banco Regional, com permanência do executivo anterior no conselho e na assessoria. A separação entre decisão executiva, supervisão e capital por entidade deve ser acompanhada; não se infere alteração dos direitos da ação coberta.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar custo de depósitos, migração do crédito, eficiência por entidade, contribuição de Hey e execução da sucessão.",
+        "titulo": "Margem, risco e transição"
+      }
+    ],
+    "issuer_id": "MX_REGIONAL",
+    "lacunas_de_dados": [
+      "Conteúdo financeiro integral do 3T26 e transcrição não recebidos de forma suficiente.",
+      "Capital de Hey, contribuição incremental e fluxo à holding não reconciliados.",
+      "Guidance atual, probabilidades implícitas e WACC não disponíveis.",
+      "Sem evidência suficiente para atribuir percepção ao mercado."
+    ],
+    "modelo_de_cobertura": "2026-10-28",
+    "negocio": "Grupo financeiro mexicano com crédito empresarial, arrendamento e operação bancária digital. A avaliação precisa separar retorno e capital requerido de Banco Regional, Hey e demais subsidiárias.",
+    "nome": "Regional (Banregio)",
+    "o_que_mudou": "Desde 2026-10-26, a consulta confirmou o registro do 3T26 e recebeu o evento de sucessão. A reavaliação do modelo foi incorporada; a conciliação financeira permanece pendente.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_BAJIO",
+        "nome": "Banco del Bajío"
+      },
+      {
+        "issuer_id": "MX_BANORTE",
+        "nome": "Grupo Financiero Banorte"
+      },
+      {
+        "issuer_id": "MX_BMV",
+        "nome": "Bolsa Mexicana de Valores"
+      },
+      {
+        "issuer_id": "MX_GENTERA",
+        "nome": "Gentera"
+      },
+      {
+        "issuer_id": "MX_INBURSA",
+        "nome": "Grupo Financiero Inbursa"
+      },
+      {
+        "issuer_id": "MX_QUALITAS",
+        "nome": "Quálitas"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O conselho aprovou mudança na direção geral de Banco Regional com início em 2026-11-03. O executivo anterior permanece conselheiro e assessor. Trata-se da subsidiária bancária; não se presume mudança de controle da holding.",
+        "titulo": "Sucessão com data e perímetro definidos"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_REGIONAL.upside",
+            "nome": "Potencial até o preço-alvo",
+            "valor": "+62,02%"
+          },
+          {
+            "fato": "val.MX_REGIONAL.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "11,41%"
+          }
+        ],
+        "texto": "O modelo aponta potencial +62,02% e ke 11,41%. A diferença requer testar lucro normalizado e capital disponível, sem promover rating quantitativo a diligência concluída.",
+        "titulo": "Alvo exige rentabilidade sustentável"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese de vantagem na franquia empresarial exige retorno após perdas e custo de servir; o histórico de gestão não comprova superioridade futura.",
+        "titulo": "Relacionamento empresarial a comprovar"
+      }
+    ],
+    "publicada_em": "2026-10-29T01:46:03.056860+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Lucro trimestral, rentabilidade anualizada e capital regulatório exigem cortes homogêneos. O registro do relatório não encerra essas verificações.",
+        "titulo": "Não confundir registro com reconciliação"
+      }
+    ],
+    "resumo": "A BMV confirma o registro do 3T26 e a sucessão na direção de Banco Regional. O conteúdo financeiro não foi recebido de forma suficiente para reconciliar margem após perdas e contribuição de Hey. Mantemos visão neutra e baixa convicção, separada do rating Compra e do alvo MXN 245,41 do modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "A transição executiva pode elevar risco de execução; margem e perdas precisam ser avaliadas com capital e perímetro homogêneos."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Regional — sucessão no banco e resultado registrado exigem reconciliação do capital",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A BMV registra o 3T26 em 2026-10-26. O acesso às demonstrações foi intermitente e não entregou conteúdo suficiente para conciliar o novo resultado. A nota anterior analisava o 2T26; não extrapolamos sua decomposição para o trimestre atual. Guidance e tom permanecem não avaliados.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar migração de risco, depósitos e despesas por negócio. A publicação registrada não substitui a conciliação econômica do novo trimestre.",
+        "vetor": "Crédito e custo da captação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,155 @@
+{
+  "mind": "codex",
+  "issuer_id": "CL_COLBUN",
+  "data": "2026-10-28",
+  "tipo": "pos_resultado",
+  "titulo": "Colbún — melhora física no trimestre, com atenção à conversão em caixa",
+  "resumo": "A atualização favorece a leitura operacional, mas a recomendação permanece neutra. A recorrência dependerá da disponibilidade das usinas, da margem dos contratos e do retorno efetivo do armazenamento. A melhora de um trimestre não basta para sustentar o retorno relativo indicado pelo modelo.",
+  "negocio": "Geradora com operações no Chile e no Peru. A tese acompanha a energia disponível por horário, o atendimento dos contratos e o caixa que resta após manutenção e investimentos.",
+  "pilares_tese": [
+    {
+      "titulo": "Margem física antes de expansão nominal",
+      "texto": "No Chile, hidrologia, Horizonte e disponibilidade de Santa María favoreceram a geração e as vendas líquidas no mercado à vista. A hipótese é que a flexibilidade operacional preserve a margem contratada; a confirmação exige acompanhar custos e exposição por horário.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Execução do armazenamento",
+      "texto": "Celda Solar avançou em testes; Diego de Almagro Sur iniciou comissionamento a frio. A avaliação deve distinguir progresso físico de operação comercial e de remuneração efetivamente recebida.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Disponibilidade e hidrologia",
+      "direcao": "positivo",
+      "sensibilidade": "alta",
+      "texto": "A leitura operacional é favorável, condicionada à persistência da disponibilidade e à cobertura dos compromissos nos períodos de maior custo.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "vetor": "Capital empregado em armazenamento",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O avanço de obras só sustentará valor se conexão, utilização e remuneração compensarem investimento, manutenção e degradação.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Indisponibilidade térmica ou pior hidrologia podem tornar o atendimento dos contratos mais oneroso.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "texto": "Atrasos de conexão ou retorno inferior ao esperado nos projetos podem comprometer a conversão em caixa.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Disponibilidade elevada, contratos rentáveis e armazenamento remunerado sustentam caixa sem exigir deterioração financeira. É hipótese, não projeção adicional.",
+    "base": "Manter leitura neutra até observar persistência da margem física e conversão dos investimentos em caixa.",
+    "pessimista": "Compras de energia mais caras e projetos com retorno insuficiente comprimem caixa e aumentam a necessidade de financiamento."
+  },
+  "comentario_valuation": "O modelo registra preço de {{fact:val.CL_COLBUN.preco}}, preço-alvo de {{fact:val.CL_COLBUN.preco_alvo}} e potencial de {{fact:val.CL_COLBUN.upside}}, com confiança {{fact:val.CL_COLBUN.confianca_codigo}}. Esses valores são estimativas determinísticas e não incorporam uma projeção adicional desta nota. Não adoto o múltiplo agregado de valor da firma sem conciliar moeda e unidade. A comparabilidade com os pares requer ajustar exposição geográfica, contratos, disponibilidade e estágio dos investimentos; o potencial do modelo não sustenta isoladamente uma posição relativa positiva.",
+  "governanca": "A nota utiliza divulgação pública da companhia. A classificação de risco de crédito não substitui avaliação de retorno acionário. Não há neste material base suficiente para mudar a avaliação de transações com partes relacionadas ou direitos minoritários.",
+  "gatilhos_revisao": [
+    "Revisar após a teleconferência e eventual divulgação de novas projeções formais.",
+    "Reavaliar com a entrada comercial dos sistemas de armazenamento e evidência de remuneração.",
+    "Revisar se disponibilidade, margem contratada ou caixa após investimentos contrariar a hipótese de normalização."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "posicao_competitiva": {
+    "titulo": "Flexibilidade e contratos",
+    "texto": "O conjunto de tecnologias pode oferecer flexibilidade de fornecimento. A vantagem econômica depende de localização, disponibilidade e custo, e não apenas da capacidade instalada.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Operação e itens extraordinários",
+    "texto": "O EBITDA trimestral cresceu, mas o lucro acumulado recuou. O custo extraordinário de cancelamento de contratos de carvão e efeitos tributários exigem separação da operação recorrente; a avaliação prospectiva deve priorizar caixa normalizado.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Investimento condicionado ao retorno",
+    "texto": "A avaliação acompanhará caixa operacional, manutenção, desembolsos de expansão e vencimentos. Avanço físico não demonstra, por si só, criação de valor.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Recuperação insuficiente para retorno relativo",
+    "texto": "Mesmo com melhora operacional, preços, impostos e necessidades de investimento podem absorver o ganho. A tese positiva seria invalidada se a margem física não se convertesse em caixa disponível.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Da geração ao caixa",
+      "texto": "Monitorar balanço físico contratado, compras e vendas à vista, disponibilidade térmica, restrições de transmissão e caixa após investimento.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Teleconferência de resultados, ainda futura nesta data, para esclarecer recorrência e execução dos projetos.",
+      "data": "2026-10-30",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "o_que_mudou": "A nota anterior utilizava a divulgação semestral. Agora há material primário do 3T26, que permite atualizar a leitura física e operacional. Permanecem a postura neutra e a exigência de demonstrar retorno dos investimentos.",
+  "ultimo_resultado": "O material primário do 3T26 foi recebido. A melhora operacional convive com efeitos não recorrentes e diferenças entre trimestre e acumulado. A teleconferência ainda não ocorreu; não atribuo declarações futuras à administração.",
+  "guidance": "sem_guidance",
+  "tom_gestao": "neutro",
+  "lacunas_de_dados": [
+    "Sem nova projeção quantitativa agregada identificada no material consultado; sem_guidance não significa retirada de projeção anterior.",
+    "Teleconferência futura; esclarecimentos da administração ainda indisponíveis.",
+    "Múltiplo agregado de valor da firma exige conciliação de moeda e unidade antes de uso comparativo.",
+    "Sem comprovação de remuneração recorrente dos sistemas de armazenamento em comissionamento."
+  ],
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Colbún",
+      "titulo": "Análise dos resultados trimestrais",
+      "url": "https://www.colbun.cl/docs/default-source/resultados-trimestrales-2026/analisis-razonado-3t26.pdf",
+      "publicado_em": "2026-10-27",
+      "consultado_em": "2026-10-28"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Colbún",
+      "titulo": "Resultados e calendário financeiro",
+      "url": "https://www.colbun.cl/corporativo/inversionistas/informacion-financiera/resultados-trimestrales",
+      "publicado_em": null,
+      "consultado_em": "2026-10-28"
+    }
+  ]
+}

@@ -1,0 +1,348 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-28",
+    "manifest_sha256": "7c200915e106c8eb6df9ba179db3a979acb641d6d6b8946fe6e4d9a60cba295b",
+    "modelo_as_of": "2026-10-28"
+  },
+  "conviccao": 1,
+  "data": "2026-10-28",
+  "hashes": {
+    "contexto": "fb2cceb9ccdab6b8e54529298c94243e87d25e4db09460f5d907511b9d1659ba",
+    "factbook": "825805bdf8199c42256f97250934311d77a9492e643d0369eb1e6347302e51a6",
+    "nota_json": "0db6f6d5fdf211c484b88ce934122c8fdbb5473e9027a3027f03de567d409301"
+  },
+  "is_synthetic": false,
+  "issuer_id": "CL_COLBUN",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-27",
+  "published_at": "2026-10-29T02:00:43.758050+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A avaliação acompanhará caixa operacional, manutenção, desembolsos de expansão e vencimentos. Avanço físico não demonstra, por si só, criação de valor.",
+        "titulo": "Investimento condicionado ao retorno"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-30",
+        "descricao": "Teleconferência de resultados, ainda futura nesta data, para esclarecer recorrência e execução dos projetos.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Manter leitura neutra até observar persistência da margem física e conversão dos investimentos em caixa.",
+      "otimista": "Disponibilidade elevada, contratos rentáveis e armazenamento remunerado sustentam caixa sem exigir deterioração financeira. É hipótese, não projeção adicional.",
+      "pessimista": "Compras de energia mais caras e projetos com retorno insuficiente comprimem caixa e aumentam a necessidade de financiamento."
+    },
+    "comentario_valuation": "O modelo registra preço de CLP 152,50, preço-alvo de CLP 219,46 e potencial de +43,91%, com confiança C. Esses valores são estimativas determinísticas e não incorporam uma projeção adicional desta nota. Não adoto o múltiplo agregado de valor da firma sem conciliar moeda e unidade. A comparabilidade com os pares requer ajustar exposição geográfica, contratos, disponibilidade e estágio dos investimentos; o potencial do modelo não sustenta isoladamente uma posição relativa positiva.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Mesmo com melhora operacional, preços, impostos e necessidades de investimento podem absorver o ganho. A tese positiva seria invalidada se a margem física não se convertesse em caixa disponível.",
+        "titulo": "Recuperação insuficiente para retorno relativo"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-28",
+    "dados_simulados": false,
+    "data": "2026-10-28",
+    "ficha": [
+      {
+        "fato": "val.CL_COLBUN.preco",
+        "rotulo": "Preço de referência",
+        "valor": "CLP 152,50"
+      },
+      {
+        "fato": "val.CL_COLBUN.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "CLP 219,46"
+      },
+      {
+        "fato": "val.CL_COLBUN.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+43,91%"
+      },
+      {
+        "fato": "val.CL_COLBUN.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.CL_COLBUN.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.CL_COLBUN.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "CLP 267,14"
+      },
+      {
+        "fato": "val.CL_COLBUN.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_COLBUN.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "CLP 177,72"
+      },
+      {
+        "fato": "val.CL_COLBUN.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_COLBUN.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "8,83%"
+      },
+      {
+        "fato": "val.CL_COLBUN.wacc",
+        "rotulo": "WACC",
+        "valor": "7,70%"
+      },
+      {
+        "fato": "val.CL_COLBUN.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,09%"
+      },
+      {
+        "fato": "val.CL_COLBUN.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+49,44%"
+      },
+      {
+        "fato": "val.CL_COLBUN.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+46,19%"
+      },
+      {
+        "fato": "val.CL_COLBUN.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "10,1x"
+      },
+      {
+        "fato": "val.CL_COLBUN.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,8x"
+      },
+      {
+        "fato": "val.CL_COLBUN.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "CLP 169,13"
+      },
+      {
+        "fato": "val.CL_COLBUN.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+29,76%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-28",
+        "id": "F1",
+        "instituicao": "Colbún",
+        "publicado_em": "2026-10-27",
+        "tipo": "Relações com investidores",
+        "titulo": "Análise dos resultados trimestrais",
+        "url": "https://www.colbun.cl/docs/default-source/resultados-trimestrales-2026/analisis-razonado-3t26.pdf"
+      },
+      {
+        "consultado_em": "2026-10-28",
+        "id": "F2",
+        "instituicao": "Colbún",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Resultados e calendário financeiro",
+        "url": "https://www.colbun.cl/corporativo/inversionistas/informacion-financiera/resultados-trimestrales"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Revisar após a teleconferência e eventual divulgação de novas projeções formais.",
+      "Reavaliar com a entrada comercial dos sistemas de armazenamento e evidência de remuneração.",
+      "Revisar se disponibilidade, margem contratada ou caixa após investimentos contrariar a hipótese de normalização."
+    ],
+    "governanca": "A nota utiliza divulgação pública da companhia. A classificação de risco de crédito não substitui avaliação de retorno acionário. Não há neste material base suficiente para mudar a avaliação de transações com partes relacionadas ou direitos minoritários.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Monitorar balanço físico contratado, compras e vendas à vista, disponibilidade térmica, restrições de transmissão e caixa após investimento.",
+        "titulo": "Da geração ao caixa"
+      }
+    ],
+    "issuer_id": "CL_COLBUN",
+    "lacunas_de_dados": [
+      "Sem nova projeção quantitativa agregada identificada no material consultado; sem_guidance não significa retirada de projeção anterior.",
+      "Teleconferência futura; esclarecimentos da administração ainda indisponíveis.",
+      "Múltiplo agregado de valor da firma exige conciliação de moeda e unidade antes de uso comparativo.",
+      "Sem comprovação de remuneração recorrente dos sistemas de armazenamento em comissionamento."
+    ],
+    "modelo_de_cobertura": "2026-10-28",
+    "negocio": "Geradora com operações no Chile e no Peru. A tese acompanha a energia disponível por horário, o atendimento dos contratos e o caixa que resta após manutenção e investimentos.",
+    "nome": "Colbún",
+    "o_que_mudou": "A nota anterior utilizava a divulgação semestral. Agora há material primário do 3T26, que permite atualizar a leitura física e operacional. Permanecem a postura neutra e a exigência de demonstrar retorno dos investimentos.",
+    "pais": "Chile",
+    "pares": [
+      {
+        "issuer_id": "AR_PAMPA",
+        "nome": "Pampa Energía"
+      },
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "No Chile, hidrologia, Horizonte e disponibilidade de Santa María favoreceram a geração e as vendas líquidas no mercado à vista. A hipótese é que a flexibilidade operacional preserve a margem contratada; a confirmação exige acompanhar custos e exposição por horário.",
+        "titulo": "Margem física antes de expansão nominal"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Celda Solar avançou em testes; Diego de Almagro Sur iniciou comissionamento a frio. A avaliação deve distinguir progresso físico de operação comercial e de remuneração efetivamente recebida.",
+        "titulo": "Execução do armazenamento"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O conjunto de tecnologias pode oferecer flexibilidade de fornecimento. A vantagem econômica depende de localização, disponibilidade e custo, e não apenas da capacidade instalada.",
+        "titulo": "Flexibilidade e contratos"
+      }
+    ],
+    "publicada_em": "2026-10-29T02:00:43.758050+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O EBITDA trimestral cresceu, mas o lucro acumulado recuou. O custo extraordinário de cancelamento de contratos de carvão e efeitos tributários exigem separação da operação recorrente; a avaliação prospectiva deve priorizar caixa normalizado.",
+        "titulo": "Operação e itens extraordinários"
+      }
+    ],
+    "resumo": "A atualização favorece a leitura operacional, mas a recomendação permanece neutra. A recorrência dependerá da disponibilidade das usinas, da margem dos contratos e do retorno efetivo do armazenamento. A melhora de um trimestre não basta para sustentar o retorno relativo indicado pelo modelo.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Indisponibilidade térmica ou pior hidrologia podem tornar o atendimento dos contratos mais oneroso."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Atrasos de conexão ou retorno inferior ao esperado nos projetos podem comprometer a conversão em caixa."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Colbún — melhora física no trimestre, com atenção à conversão em caixa",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "O material primário do 3T26 foi recebido. A melhora operacional convive com efeitos não recorrentes e diferenças entre trimestre e acumulado. A teleconferência ainda não ocorreu; não atribuo declarações futuras à administração.",
+    "vetores": [
+      {
+        "direcao": "positivo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A leitura operacional é favorável, condicionada à persistência da disponibilidade e à cobertura dos compromissos nos períodos de maior custo.",
+        "vetor": "Disponibilidade e hidrologia"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O avanço de obras só sustentará valor se conexão, utilização e remuneração compensarem investimento, manutenção e degradação.",
+        "vetor": "Capital empregado em armazenamento"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,139 @@
+{
+  "mind": "codex",
+  "issuer_id": "AR_YPF",
+  "data": "2026-10-28",
+  "tipo": "atualizacao",
+  "titulo": "YPF — monetização exige caixa após infraestrutura e base por ADR coerente",
+  "resumo": "O calendário primário confirma webcast do 3T26 em 2026-10-29. O resultado integral não foi recebido nas páginas consultadas. Mantemos leitura neutra e baixa convicção; alvo {{fact:val.AR_YPF.preco_alvo}} e potencial {{fact:val.AR_YPF.upside}} dependem da remuneração do capital após infraestrutura, financiamento e direitos por instrumento.",
+  "negocio": "Companhia integrada argentina de petróleo e gás, com produção, refino, logística e comercialização. A hipótese de monetização dos recursos exige distinguir desempenho por segmento e compromissos de expansão.",
+  "pilares_tese": [
+    {
+      "titulo": "Monetização após compromissos completos",
+      "texto": "A tese exige que produção e acesso comercial gerem caixa depois de manutenção, infraestrutura e financiamento. O calendário do resultado é oportunidade de verificar essa ponte, sem antecipar realização operacional.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Unidade por ADR deve permanecer coerente",
+      "texto": "O RI explica o desdobramento local e a alteração da relação ADR/ação, preservando a quantidade equivalente de ADRs. O evento não representa criação de valor econômico por si só.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Petróleo, reinvestimento e financiamento",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Preço realizado, declínio e custo completo de desenvolvimento devem ser confrontados com caixa e capital atribuível.",
+      "evidencias": [
+        "val.AR_YPF.ke",
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Webcast do 3T26 confirmado no centro oficial de investidores.",
+      "data": "2026-10-29",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Projetos podem demandar capital antes de gerar caixa; erro de unidade entre ação local e ADR pode distorcer a interpretação da avaliação.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Produtividade e infraestrutura remuneram todo o capital; cenário {{fact:val.AR_YPF.alvo_otimista}}.",
+    "base": "Alvo calculado {{fact:val.AR_YPF.preco_alvo}}, condicionado ao caixa atribuível após compromissos.",
+    "pessimista": "Preço, custo e financiamento frustram monetização; cenário {{fact:val.AR_YPF.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço {{fact:val.AR_YPF.preco}}, retorno esperado {{fact:val.AR_YPF.etr}} e ke {{fact:val.AR_YPF.ke}}. O consenso {{fact:val.AR_YPF.consenso_alvo}} não comprova expectativa de mercado. A confiança {{fact:val.AR_YPF.confianca_codigo}} e a conciliação de unidade e perímetro limitam a conclusão qualitativa.",
+  "ultimo_resultado": "A CNV registra informação financeira do 3T26, mas o teor integral não foi recebido nesta consulta. As páginas do RI entregaram calendário e informações de capital, sem release ou demonstrações navegáveis. Não se extrapolam destaques antigos para o trimestre novo; guidance e tom atuais permanecem não avaliados.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "A estrutura por classes, direitos do ADR e capital nas subsidiárias exige análise própria. O desdobramento local não modifica a participação econômica pelo simples aumento de ações; não se presume caixa livremente transferível.",
+  "posicao_competitiva": {
+    "titulo": "Integração exige retorno verificável",
+    "texto": "A hipótese de vantagem por escala e logística deve aparecer em produtividade e custo completo, sem presumir que crescimento de volume garanta retorno por ação.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Perímetro e caixa ainda abertos",
+    "texto": "Separar resultado industrial, impostos, aquisições e fluxos de investimento antes de atribuir recorrência ao novo trimestre.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Infraestrutura e obrigações",
+    "texto": "Confrontar orçamento e funding dos projetos com participação econômica, maturação e caixa após dívida. Intenção de investir não comprova financiamento fechado.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Recursos sem caixa por ação",
+    "texto": "A hipótese enfraquece se a expansão consumir reinvestimento e financiamento persistentes sem retorno atribuível suficiente.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Operação, capital e direitos",
+      "texto": "Acompanhar produção, preço realizado, margem de refino, capex pago, infraestrutura, dívida e unidade por ADR.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "o_que_mudou": "A atualização substitui o calendário indefinido da iniciação por webcast primário confirmado e incorpora o modelo corrente. O teor integral do novo trimestre continua pendente de recebimento.",
+  "gatilhos_revisao": [
+    "Resultado esclarece caixa após todos os compromissos.",
+    "Mudança de perímetro, financiamento ou direitos altera retorno atribuível."
+  ],
+  "lacunas_de_dados": [
+    "Release e demonstrações integrais do 3T26 não recebidos.",
+    "Guidance e tom atuais não avaliados.",
+    "Capital, projetos, contingências e retorno por instrumento não reconciliados integralmente.",
+    "Sem suporte suficiente para atribuir percepção variante ao mercado."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "YPF",
+      "titulo": "Centro de investidores e informação sobre capital",
+      "url": "https://investors.ypf.com/",
+      "publicado_em": null,
+      "consultado_em": "2026-10-28"
+    },
+    {
+      "id": "F2",
+      "tipo": "regulatorio",
+      "instituicao": "CNV — YPF",
+      "titulo": "Registro de informação financeira e fatos relevantes",
+      "url": "https://www.cnv.gov.ar/SitioWeb/Empresas/Empresa/30546689979?fdesde=28%2F1%2F2021",
+      "publicado_em": null,
+      "consultado_em": "2026-10-28"
+    }
+  ]
+}

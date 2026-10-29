@@ -1,0 +1,326 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-28",
+    "manifest_sha256": "7c200915e106c8eb6df9ba179db3a979acb641d6d6b8946fe6e4d9a60cba295b",
+    "modelo_as_of": "2026-10-28"
+  },
+  "conviccao": 1,
+  "data": "2026-10-28",
+  "hashes": {
+    "contexto": "1096ae8d30d70f3bd1f13def3eaf0dd746214d87d9e3e888796a124fb8a41f31",
+    "factbook": "1f3f010f7b08db0836a17b6759f958c7cdc2e1a1f857c39bca0ebbfd0fdabfde",
+    "nota_json": "8168b125bb5d135899e4462ee6948cf8ab67a855905e5f4681a1a170fee8f044"
+  },
+  "is_synthetic": false,
+  "issuer_id": "CL_ENELCHILE",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-28",
+  "published_at": "2026-10-29T01:55:24.447757+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Armazenamento e redes devem remunerar capital após execução e funding. Construção iniciada não comprova benefício comercial disponível.",
+        "titulo": "Projetos e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-29",
+        "descricao": "Teleconferência dos resultados acumulados até setembro no calendário primário.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo e retorno esperado permanecem Em revisão, sem avaliação narrativa substituta.",
+      "otimista": "Contratos e recebimentos geram caixa após compromissos; cenário quantitativo Em revisão.",
+      "pessimista": "Suprimento e atraso de recebimentos pressionam caixa; cenário quantitativo Em revisão."
+    },
+    "comentario_valuation": "Preço CLP 82,99 e consenso público CLP 95,72. Alvo e cenários continuam Em revisão. Geração e rede exigem bases próprias de fluxo, moeda e capital; múltiplos e consenso não substituem esse exame.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A tese enfraquece se recebíveis e investimento mantiverem necessidade de financiamento sem geração atribuível suficiente.",
+        "titulo": "Reconhecimento sem monetização"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-28",
+    "dados_simulados": false,
+    "data": "2026-10-28",
+    "ficha": [
+      {
+        "fato": "val.CL_ENELCHILE.preco",
+        "rotulo": "Preço de referência",
+        "valor": "CLP 82,99"
+      },
+      {
+        "fato": "val.CL_ENELCHILE.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_ENELCHILE.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_ENELCHILE.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_ENELCHILE.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.CL_ENELCHILE.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_ENELCHILE.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_ENELCHILE.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_ENELCHILE.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_ENELCHILE.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "9,29%"
+      },
+      {
+        "fato": "val.CL_ENELCHILE.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_ENELCHILE.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,09%"
+      },
+      {
+        "fato": "val.CL_ENELCHILE.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_ENELCHILE.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CL_ENELCHILE.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "12,3x"
+      },
+      {
+        "fato": "val.CL_ENELCHILE.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,2x"
+      },
+      {
+        "fato": "val.CL_ENELCHILE.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "CLP 95,72"
+      },
+      {
+        "fato": "val.CL_ENELCHILE.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-28",
+        "id": "F1",
+        "instituicao": "Enel Chile",
+        "publicado_em": "2026-10-28",
+        "tipo": "Relações com investidores",
+        "titulo": "Análise das demonstrações financeiras até setembro",
+        "url": "https://www.enel.cl/content/dam/enel-cl/inversionistas/enel-chile/informacion-para-el-accionista/resultados-trimestrales/analisis-razonado/2026/Analisis-Razonado-Enel-Chile-Septiembre-2026.pdf"
+      },
+      {
+        "consultado_em": "2026-10-28",
+        "id": "F2",
+        "instituicao": "Enel Chile",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário financeiro",
+        "url": "https://www.enel.cl/es/inversionistas/inversionistas-enel-chile/informacion-para-accionista/calendario-financiero.html"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Recebimentos regulatórios demoram ou custam mais que a base econômica.",
+      "Suprimento e capital comprometido comprimem retorno atribuível."
+    ],
+    "governanca": "Examinar dívida relacionada, derivativos e dividendos por entidade. Linha comprometida disponível não equivale a caixa; participação consolidada não garante transferência irrestrita à holding.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar compras de energia, margem contratada, recebimentos regulatórios, perdas na rede, capex pago e dívida por entidade.",
+        "titulo": "Suprimento e ponte de caixa"
+      }
+    ],
+    "issuer_id": "CL_ENELCHILE",
+    "lacunas_de_dados": [
+      "Ponte integral de recebíveis, instrumentos e caixa não concluída.",
+      "Alvo, rating, cenários, probabilidades e retorno esperado Em revisão; WACC ausente.",
+      "Retorno por projeto e recursos distribuíveis por entidade não reconciliados.",
+      "Teleconferência futura e percepção de mercado não recebidas."
+    ],
+    "modelo_de_cobertura": "2026-10-28",
+    "negocio": "Geração e distribuição elétrica no Chile, com contratos e exposições distintas. A vantagem a testar é margem após suprimento e remuneração do capital, preservando participação atribuível.",
+    "nome": "Enel Chile",
+    "o_que_mudou": "O resultado acumulado até setembro substitui a leitura semestral da iniciação. A atualização preserva a divergência entre trimestre e acumulado e mantém o valuation Em revisão.",
+    "pais": "Chile",
+    "pares": [
+      {
+        "issuer_id": "AR_PAMPA",
+        "nome": "Pampa Energía"
+      },
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A melhora acumulada não permite extrapolar recuperação uniforme do trimestre. A hipótese exige contribuição operacional sustentável e não apenas efeito financeiro favorável.",
+        "titulo": "Cortes de resultado distintos"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Recebíveis regulatórios exigem conciliar prazo, instrumentos, financiamento e efetivo recebimento. A tese depende de recursos após investimento e obrigações.",
+        "titulo": "Reconhecimento precisa virar caixa"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Diversidade de fontes pode proteger atendimento, mas exige margem após compras, restrições e obrigações comerciais.",
+        "titulo": "Portfólio e contratos"
+      }
+    ],
+    "publicada_em": "2026-10-29T01:55:24.447757+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Confrontar efeitos cambiais e financeiros com recorrência operacional; preservar moeda de apresentação e comparação por período.",
+        "titulo": "Resultado operacional e financeiro"
+      }
+    ],
+    "resumo": "A análise primária de setembro distingue lucro acumulado maior de EBITDA trimestral menor. A tese exige caixa após suprimento, investimento e financiamento. Visão neutra, baixa convicção; alvo, cenários e rating permanecem Em revisão.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Hidrologia, suprimento e monetização regulatória podem exigir dívida enquanto investimento limita recursos distribuíveis."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Enel Chile — lucro acumulado melhora, mas suprimento e recebimentos seguem decisivos",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A análise divulgada em 2026-10-28 mostra lucro atribuível e EBITDA maiores no acumulado, enquanto o EBITDA do 3T26 recua. O trimestre teve geração maior, mas contribuições distintas entre geração e redes. Não foi identificada nova orientação financeira quantitativa no material recebido; sem guidance novo não significa retirada das metas anteriores.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar geração disponível, compras e vendas por contrato para testar custo líquido de atendimento.",
+        "vetor": "Hidrologia e cumprimento contratual"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

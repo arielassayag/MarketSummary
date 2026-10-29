@@ -1,0 +1,144 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_FUNO",
+  "data": "2026-10-28",
+  "tipo": "pos_resultado",
+  "titulo": "Fibra Uno — renda e distribuição avançam, com avaliação ainda em revisão",
+  "resumo": "O suplemento do 3T26 indica avanço da renda e distribuição, mas a tese exige caixa recorrente por certificado após manutenção, financiamento e mudanças de perímetro. Visão neutra e baixa convicção. Alvo, cenários e rating permanecem Em revisão; não se substituem por NAV ou pelo consenso.",
+  "negocio": "Fideicomisso imobiliário mexicano com imóveis industriais, comerciais, escritórios e outros usos. Propriedades, direitos fiduciários e participações exigem atribuição econômica própria.",
+  "pilares_tese": [
+    {
+      "titulo": "Renda recebida por segmento",
+      "texto": "O suplemento descreve renovação contratual e ocupação em bases distintas por segmento e moeda. Nossa hipótese exige recebimento após incentivos e manutenção, além da expansão nominal.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Internalização precisa gerar benefício líquido",
+      "texto": "Taxas evitadas devem ser confrontadas com custos internos, renda de ativos transferidos e capital comprometido. A tese depende do ganho atribuível por certificado.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Caixa após manutenção e financiamento",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Separar NOI, FFO, AFFO e distribuição com bases de certificados compatíveis; ganho patrimonial não é recebimento de aluguel.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Teleconferência do resultado anunciada no suplemento oficial.",
+      "data": "2026-10-29",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Vacância, desenvolvimento e refinanciamento podem absorver renda; distribuição com reembolso de capital não equivale integralmente a lucro recorrente.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Renda e eficiência geram caixa atribuível sustentável; o cenário quantitativo permanece Em revisão.",
+    "base": "Avaliação e retorno esperado permanecem Em revisão; não há alvo narrativo alternativo.",
+    "pessimista": "Financiamento e capital comprometido limitam distribuição econômica; cenário quantitativo Em revisão."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.MX_FUNO.preco}}, P/VP {{fact:val.MX_FUNO.pb}} e consenso público {{fact:val.MX_FUNO.consenso_alvo}}. O modelo mantém alvo e cenários Em revisão. Múltiplo patrimonial não demonstra desconto econômico sem renda estabilizada, dívida e participações conciliadas; a nota não cria alvo substituto.",
+  "ultimo_resultado": "O suplemento de 2026-10-28 registra crescimento de renda, FFO e distribuição, com comparação anual e sequencial em colunas próprias. A distribuição inclui resultado fiscal e reembolso de capital. A mensagem atribui eficiência à internalização e descreve refinanciamento. Não foi recebida nova orientação financeira agregada quantitativa; sem guidance novo não significa retirada de metas.",
+  "guidance": "sem_guidance",
+  "tom_gestao": "positivo",
+  "governanca": "A análise deve conferir relacionadas, comitês, internalização e participação em Fibra NEXT. A economia das transações e o denominador dos certificados precisam ser conciliados com direitos e fluxo atribuível, sem presumir alinhamento pela redução de taxas.",
+  "posicao_competitiva": {
+    "titulo": "Diversificação sem vantagem presumida",
+    "texto": "Segmentos distintos podem reduzir dependência de ocupantes, mas escala deve aparecer em retenção e renda líquida após incentivos.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Medidas gerenciais e base de certificados",
+    "texto": "As demonstrações e o suplemento devem ser conciliados preservando valorização, direitos fiduciários e certificados médios ou elegíveis. Distribuição fiscal e caixa recorrente têm cortes próprios.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Refinanciamento e compromissos",
+    "texto": "A gestão de passivos deve ser confrontada com custos, garantias e desenvolvimento. Alongar vencimentos não comprova retorno do capital investido.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "contratese": {
+    "titulo": "Renda nominal sem benefício ao certificado",
+    "texto": "A hipótese enfraquece se manutenção, financiamento ou transferência de ativos absorverem os ganhos de aluguel e taxas.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Renda e distribuição econômica",
+      "texto": "Acompanhar ocupação, renovação líquida de incentivos, inadimplência, AFFO após manutenção, dívida e distribuição por certificado em base homogênea.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "o_que_mudou": "A iniciação de 2026-10-12 foi atualizada com suplemento e demonstrações do 3T26. A leitura preserva diferenças de período e classificação da distribuição; o valuation continua Em revisão.",
+  "gatilhos_revisao": [
+    "Caixa recorrente não cobre manutenção, obrigações e distribuição.",
+    "Internalização ou participações não sustentam benefício líquido atribuível."
+  ],
+  "lacunas_de_dados": [
+    "Ponte integral da internalização e das participações não concluída.",
+    "Bases de certificados, AFFO e distribuição exigem conciliação completa.",
+    "Alvo, cenários, probabilidades, rating e retorno esperado Em revisão.",
+    "Sem transcrição da teleconferência futura ou percepção de mercado comprovada."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Fibra Uno",
+      "titulo": "Suplemento informativo trimestral",
+      "url": "https://funo.mx/site_media/uploads/documentos/documento-ayjjG-1793220887.pdf",
+      "publicado_em": "2026-10-28",
+      "consultado_em": "2026-10-28"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Fibra Uno",
+      "titulo": "Demonstrações financeiras e notas explicativas",
+      "url": "https://funo.mx/site_media/uploads/documentos/documento-bsnU2-1793221229.pdf",
+      "publicado_em": "2026-10-28",
+      "consultado_em": "2026-10-28"
+    }
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_VISTA",
+  "data": "2026-10-28",
+  "tipo": "pos_resultado",
+  "titulo": "Vista — produção e caixa avançam, com aquisição e participação econômica em bases distintas",
+  "resumo": "O resultado do 3T26 sustenta crescimento de produção e geração de caixa, mas exige distinguir aquisição, desempenho orgânico e participação atribuível. A leitura permanece neutra e de baixa convicção. O alvo {{fact:val.MX_VISTA.preco_alvo}} implica potencial {{fact:val.MX_VISTA.upside}}; crescimento operacional não elimina a sensibilidade do retorno ao petróleo e reinvestimento.",
+  "negocio": "Produtora de petróleo e gás concentrada em Vaca Muerta, com áreas operadas e participações não operadas. Aprendizado e escala precisam se traduzir em caixa por ação após declínio, infraestrutura e financiamento.",
+  "pilares_tese": [
+    {
+      "titulo": "Crescimento exige preservar os perímetros",
+      "texto": "O release separa expansão orgânica e incorporação dos ativos adquiridos. Os resultados ajustam a participação não controladora em Bandurria Sur; consolidado e atribuível não devem ser tratados como a mesma base.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Caixa após desenvolvimento é o teste decisivo",
+      "texto": "A tese exige produtividade sustentada depois de perfuração, completação e infraestrutura. O resultado positivo do trimestre deve ser confrontado com declínio das safras e necessidade recorrente de reinvestimento.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Preço realizado e produtividade",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Separar petróleo, mix de ativos e desempenho dos poços de ganhos de escala logística; custo de extração não representa o custo econômico completo.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Teleconferência do 3T26 anunciada no portal de investidores.",
+      "data": "2026-10-29",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Petróleo, declínio e investimento podem reduzir caixa por ação; bases pro forma podem esconder diferenças de consolidação histórica.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Produtividade e monetização remuneram todo o desenvolvimento; cenário {{fact:val.MX_VISTA.alvo_otimista}}.",
+    "base": "Alvo calculado {{fact:val.MX_VISTA.preco_alvo}}, condicionado a caixa atribuível após reinvestimento.",
+    "pessimista": "Petróleo e declínio absorvem margem e investimento; cenário {{fact:val.MX_VISTA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço {{fact:val.MX_VISTA.preco}}, retorno esperado {{fact:val.MX_VISTA.etr}} e ke {{fact:val.MX_VISTA.ke}}. A dispersão {{fact:val.MX_VISTA.cv_metodos}} reforça a sensibilidade às premissas. O consenso público {{fact:val.MX_VISTA.consenso_alvo}} não revela o que está precificado. A unidade do ADS deve permanecer coerente com valor por ação e participação econômica.",
+  "ultimo_resultado": "O relatório de 2026-10-28 mostra expansão anual e sequencial da produção, receita e EBITDA ajustado maiores no ano e caixa livre positivo no trimestre. O lucro líquido caiu diante de impostos e base anterior com ganho de aquisição. Receita líquida de contratos de risco e frete, capex reconhecido e desembolso têm definições distintas. Não foi identificada nova orientação quantitativa no release recebido; sem guidance novo nesta nota não significa retirada das projeções anteriores.",
+  "guidance": "sem_guidance",
+  "tom_gestao": "nd",
+  "governanca": "As demonstrações consolidadas e a leitura ajustada à participação exigem ponte para minoritários e capital atribuível. Obrigações das áreas não operadas e direitos do ADS devem ser preservados antes de inferir disponibilidade da holding.",
+  "posicao_competitiva": {
+    "titulo": "Escala depende de custo completo",
+    "texto": "Diluição dos custos de transporte descrita no release sustenta hipótese de escala; a vantagem precisa persistir depois de reinvestimento e declínio.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Lucro ajustado e caixa não são equivalentes",
+    "texto": "Confrontar ajustes de aquisição, impostos, capital de giro e fluxo de investimento com o lucro atribuível. O resultado ajustado não substitui as demonstrações consolidadas.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Aquisição e dívida em bases próprias",
+    "texto": "Comparar financiamento e caixa com participação adquirida, minoritários e reinvestimento necessário. Alavancagem pro forma não equivale ao histórico consolidado.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "contratese": {
+    "titulo": "Volume sem retorno por ação",
+    "texto": "A hipótese falha se novas safras e aquisições exigirem capital persistente sem caixa atribuível suficiente, mesmo com custo operacional unitário favorável.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Safras, realização e caixa",
+      "texto": "Acompanhar produtividade por área, declínio, realização após frete e contratos, desembolso completo, dívida e retorno por ação.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "o_que_mudou": "A iniciação de 2026-10-11 aguardava o resultado. O 3T26 foi recebido, com expansão, caixa trimestral positivo e explicitação dos ajustes de participação. A teleconferência permanece futura; não se antecipa sua orientação.",
+  "gatilhos_revisao": [
+    "Produtividade não repõe declínio com reinvestimento remunerador.",
+    "Dívida e participações reduzem transmissão do caixa ao acionista."
+  ],
+  "lacunas_de_dados": [
+    "Produtividade por safra e retorno integral por poço não reconciliados.",
+    "Transcrição do webcast futuro não disponível no corte da nota.",
+    "Comparação integral das projeções anteriores e atuais permanece aberta.",
+    "Ponte completa de minoritários, capex e caixa por ação não concluída."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Vista Energy",
+      "titulo": "Relatório de resultados trimestrais",
+      "url": "https://www.vistaenergy.com/docs/vista-earningsrelease-q32026-5i7cse.pdf",
+      "publicado_em": "2026-10-28",
+      "consultado_em": "2026-10-28"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Vista Energy",
+      "titulo": "Demonstrações financeiras consolidadas intermediárias",
+      "url": "https://www.vistaenergy.com/docs/vista-interimcondensedconsolidatedfinancialstatementsasof-september30-2026-mo0irc.pdf",
+      "publicado_em": "2026-10-28",
+      "consultado_em": "2026-10-28"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Vista Energy",
+      "titulo": "Calendário e documentos do investidor",
+      "url": "https://www.vistaenergy.com/en/investors",
+      "publicado_em": null,
+      "consultado_em": "2026-10-28"
+    }
+  ]
+}

@@ -1,0 +1,349 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-28",
+    "manifest_sha256": "7c200915e106c8eb6df9ba179db3a979acb641d6d6b8946fe6e4d9a60cba295b",
+    "modelo_as_of": "2026-10-28"
+  },
+  "conviccao": 1,
+  "data": "2026-10-28",
+  "hashes": {
+    "contexto": "601891e72badb82fd3671458f1f83a344010837dfb54bb2c581eb9f0ca26bc2e",
+    "factbook": "2fc5dd665af8185d55c0ba5f743872b51ac41bda19bc0e6688dc1e61dc158837",
+    "nota_json": "5921ea82715dbc0b35dd36e203f57d884872be23acc07008bb56c9b30ddc3a77"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_VISTA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-28",
+  "published_at": "2026-10-29T01:47:39.684687+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Comparar financiamento e caixa com participação adquirida, minoritários e reinvestimento necessário. Alavancagem pro forma não equivale ao histórico consolidado.",
+        "titulo": "Aquisição e dívida em bases próprias"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-29",
+        "descricao": "Teleconferência do 3T26 anunciada no portal de investidores.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo calculado US$ 64,48, condicionado a caixa atribuível após reinvestimento.",
+      "otimista": "Produtividade e monetização remuneram todo o desenvolvimento; cenário US$ 83,71.",
+      "pessimista": "Petróleo e declínio absorvem margem e investimento; cenário US$ 45,12."
+    },
+    "comentario_valuation": "Preço US$ 72,27, retorno esperado -10,78% e ke 16,19%. A dispersão 38,54% reforça a sensibilidade às premissas. O consenso público US$ 91,75 não revela o que está precificado. A unidade do ADS deve permanecer coerente com valor por ação e participação econômica.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese falha se novas safras e aquisições exigirem capital persistente sem caixa atribuível suficiente, mesmo com custo operacional unitário favorável.",
+        "titulo": "Volume sem retorno por ação"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-28",
+    "dados_simulados": false,
+    "data": "2026-10-28",
+    "ficha": [
+      {
+        "fato": "val.MX_VISTA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 72,27"
+      },
+      {
+        "fato": "val.MX_VISTA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 64,48"
+      },
+      {
+        "fato": "val.MX_VISTA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-10,78%"
+      },
+      {
+        "fato": "val.MX_VISTA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_VISTA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.MX_VISTA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 83,71"
+      },
+      {
+        "fato": "val.MX_VISTA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "42,78%"
+      },
+      {
+        "fato": "val.MX_VISTA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 45,12"
+      },
+      {
+        "fato": "val.MX_VISTA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "10,67%"
+      },
+      {
+        "fato": "val.MX_VISTA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "16,19%"
+      },
+      {
+        "fato": "val.MX_VISTA.wacc",
+        "rotulo": "WACC",
+        "valor": "13,50%"
+      },
+      {
+        "fato": "val.MX_VISTA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.MX_VISTA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-10,78%"
+      },
+      {
+        "fato": "val.MX_VISTA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-35,44%"
+      },
+      {
+        "fato": "val.MX_VISTA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "7,0x"
+      },
+      {
+        "fato": "val.MX_VISTA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,4x"
+      },
+      {
+        "fato": "val.MX_VISTA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 91,75"
+      },
+      {
+        "fato": "val.MX_VISTA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-29,72%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-28",
+        "id": "F1",
+        "instituicao": "Vista Energy",
+        "publicado_em": "2026-10-28",
+        "tipo": "Relações com investidores",
+        "titulo": "Relatório de resultados trimestrais",
+        "url": "https://www.vistaenergy.com/docs/vista-earningsrelease-q32026-5i7cse.pdf"
+      },
+      {
+        "consultado_em": "2026-10-28",
+        "id": "F2",
+        "instituicao": "Vista Energy",
+        "publicado_em": "2026-10-28",
+        "tipo": "Relações com investidores",
+        "titulo": "Demonstrações financeiras consolidadas intermediárias",
+        "url": "https://www.vistaenergy.com/docs/vista-interimcondensedconsolidatedfinancialstatementsasof-september30-2026-mo0irc.pdf"
+      },
+      {
+        "consultado_em": "2026-10-28",
+        "id": "F3",
+        "instituicao": "Vista Energy",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário e documentos do investidor",
+        "url": "https://www.vistaenergy.com/en/investors"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Produtividade não repõe declínio com reinvestimento remunerador.",
+      "Dívida e participações reduzem transmissão do caixa ao acionista."
+    ],
+    "governanca": "As demonstrações consolidadas e a leitura ajustada à participação exigem ponte para minoritários e capital atribuível. Obrigações das áreas não operadas e direitos do ADS devem ser preservados antes de inferir disponibilidade da holding.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar produtividade por área, declínio, realização após frete e contratos, desembolso completo, dívida e retorno por ação.",
+        "titulo": "Safras, realização e caixa"
+      }
+    ],
+    "issuer_id": "MX_VISTA",
+    "lacunas_de_dados": [
+      "Produtividade por safra e retorno integral por poço não reconciliados.",
+      "Transcrição do webcast futuro não disponível no corte da nota.",
+      "Comparação integral das projeções anteriores e atuais permanece aberta.",
+      "Ponte completa de minoritários, capex e caixa por ação não concluída."
+    ],
+    "modelo_de_cobertura": "2026-10-28",
+    "negocio": "Produtora de petróleo e gás concentrada em Vaca Muerta, com áreas operadas e participações não operadas. Aprendizado e escala precisam se traduzir em caixa por ação após declínio, infraestrutura e financiamento.",
+    "nome": "Vista Energy",
+    "o_que_mudou": "A iniciação de 2026-10-11 aguardava o resultado. O 3T26 foi recebido, com expansão, caixa trimestral positivo e explicitação dos ajustes de participação. A teleconferência permanece futura; não se antecipa sua orientação.",
+    "pais": "Argentina",
+    "pares": [
+      {
+        "issuer_id": "BR_COSAN",
+        "nome": "Cosan"
+      },
+      {
+        "issuer_id": "BR_PETROBRAS",
+        "nome": "Petrobras"
+      },
+      {
+        "issuer_id": "BR_PRIO",
+        "nome": "PRIO"
+      },
+      {
+        "issuer_id": "BR_RECV",
+        "nome": "PetroRecôncavo"
+      },
+      {
+        "issuer_id": "BR_ULTRAPAR",
+        "nome": "Ultrapar"
+      },
+      {
+        "issuer_id": "BR_VIBRA",
+        "nome": "Vibra Energia"
+      },
+      {
+        "issuer_id": "CO_ECOPETROL",
+        "nome": "Ecopetrol"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O release separa expansão orgânica e incorporação dos ativos adquiridos. Os resultados ajustam a participação não controladora em Bandurria Sur; consolidado e atribuível não devem ser tratados como a mesma base.",
+        "titulo": "Crescimento exige preservar os perímetros"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A tese exige produtividade sustentada depois de perfuração, completação e infraestrutura. O resultado positivo do trimestre deve ser confrontado com declínio das safras e necessidade recorrente de reinvestimento.",
+        "titulo": "Caixa após desenvolvimento é o teste decisivo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Diluição dos custos de transporte descrita no release sustenta hipótese de escala; a vantagem precisa persistir depois de reinvestimento e declínio.",
+        "titulo": "Escala depende de custo completo"
+      }
+    ],
+    "publicada_em": "2026-10-29T01:47:39.684687+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Confrontar ajustes de aquisição, impostos, capital de giro e fluxo de investimento com o lucro atribuível. O resultado ajustado não substitui as demonstrações consolidadas.",
+        "titulo": "Lucro ajustado e caixa não são equivalentes"
+      }
+    ],
+    "resumo": "O resultado do 3T26 sustenta crescimento de produção e geração de caixa, mas exige distinguir aquisição, desempenho orgânico e participação atribuível. A leitura permanece neutra e de baixa convicção. O alvo US$ 64,48 implica potencial -10,78%; crescimento operacional não elimina a sensibilidade do retorno ao petróleo e reinvestimento.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Petróleo, declínio e investimento podem reduzir caixa por ação; bases pro forma podem esconder diferenças de consolidação histórica."
+      }
+    ],
+    "setor": "Energia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Vista — produção e caixa avançam, com aquisição e participação econômica em bases distintas",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O relatório de 2026-10-28 mostra expansão anual e sequencial da produção, receita e EBITDA ajustado maiores no ano e caixa livre positivo no trimestre. O lucro líquido caiu diante de impostos e base anterior com ganho de aquisição. Receita líquida de contratos de risco e frete, capex reconhecido e desembolso têm definições distintas. Não foi identificada nova orientação quantitativa no release recebido; sem guidance novo nesta nota não significa retirada das projeções anteriores.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Separar petróleo, mix de ativos e desempenho dos poços de ganhos de escala logística; custo de extração não representa o custo econômico completo.",
+        "vetor": "Preço realizado e produtividade"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

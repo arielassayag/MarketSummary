@@ -1,0 +1,137 @@
+{
+  "mind": "codex",
+  "issuer_id": "CL_ENELCHILE",
+  "data": "2026-10-28",
+  "tipo": "pos_resultado",
+  "titulo": "Enel Chile — lucro acumulado melhora, mas suprimento e recebimentos seguem decisivos",
+  "resumo": "A análise primária de setembro distingue lucro acumulado maior de EBITDA trimestral menor. A tese exige caixa após suprimento, investimento e financiamento. Visão neutra, baixa convicção; alvo, cenários e rating permanecem Em revisão.",
+  "negocio": "Geração e distribuição elétrica no Chile, com contratos e exposições distintas. A vantagem a testar é margem após suprimento e remuneração do capital, preservando participação atribuível.",
+  "pilares_tese": [
+    {
+      "titulo": "Cortes de resultado distintos",
+      "texto": "A melhora acumulada não permite extrapolar recuperação uniforme do trimestre. A hipótese exige contribuição operacional sustentável e não apenas efeito financeiro favorável.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Reconhecimento precisa virar caixa",
+      "texto": "Recebíveis regulatórios exigem conciliar prazo, instrumentos, financiamento e efetivo recebimento. A tese depende de recursos após investimento e obrigações.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Hidrologia e cumprimento contratual",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar geração disponível, compras e vendas por contrato para testar custo líquido de atendimento.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Teleconferência dos resultados acumulados até setembro no calendário primário.",
+      "data": "2026-10-29",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Hidrologia, suprimento e monetização regulatória podem exigir dívida enquanto investimento limita recursos distribuíveis.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Contratos e recebimentos geram caixa após compromissos; cenário quantitativo Em revisão.",
+    "base": "Alvo e retorno esperado permanecem Em revisão, sem avaliação narrativa substituta.",
+    "pessimista": "Suprimento e atraso de recebimentos pressionam caixa; cenário quantitativo Em revisão."
+  },
+  "comentario_valuation": "Preço {{fact:val.CL_ENELCHILE.preco}} e consenso público {{fact:val.CL_ENELCHILE.consenso_alvo}}. Alvo e cenários continuam Em revisão. Geração e rede exigem bases próprias de fluxo, moeda e capital; múltiplos e consenso não substituem esse exame.",
+  "ultimo_resultado": "A análise divulgada em 2026-10-28 mostra lucro atribuível e EBITDA maiores no acumulado, enquanto o EBITDA do 3T26 recua. O trimestre teve geração maior, mas contribuições distintas entre geração e redes. Não foi identificada nova orientação financeira quantitativa no material recebido; sem guidance novo não significa retirada das metas anteriores.",
+  "guidance": "sem_guidance",
+  "tom_gestao": "nd",
+  "governanca": "Examinar dívida relacionada, derivativos e dividendos por entidade. Linha comprometida disponível não equivale a caixa; participação consolidada não garante transferência irrestrita à holding.",
+  "posicao_competitiva": {
+    "titulo": "Portfólio e contratos",
+    "texto": "Diversidade de fontes pode proteger atendimento, mas exige margem após compras, restrições e obrigações comerciais.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Resultado operacional e financeiro",
+    "texto": "Confrontar efeitos cambiais e financeiros com recorrência operacional; preservar moeda de apresentação e comparação por período.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Projetos e financiamento",
+    "texto": "Armazenamento e redes devem remunerar capital após execução e funding. Construção iniciada não comprova benefício comercial disponível.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Reconhecimento sem monetização",
+    "texto": "A tese enfraquece se recebíveis e investimento mantiverem necessidade de financiamento sem geração atribuível suficiente.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Suprimento e ponte de caixa",
+      "texto": "Acompanhar compras de energia, margem contratada, recebimentos regulatórios, perdas na rede, capex pago e dívida por entidade.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "o_que_mudou": "O resultado acumulado até setembro substitui a leitura semestral da iniciação. A atualização preserva a divergência entre trimestre e acumulado e mantém o valuation Em revisão.",
+  "gatilhos_revisao": [
+    "Recebimentos regulatórios demoram ou custam mais que a base econômica.",
+    "Suprimento e capital comprometido comprimem retorno atribuível."
+  ],
+  "lacunas_de_dados": [
+    "Ponte integral de recebíveis, instrumentos e caixa não concluída.",
+    "Alvo, rating, cenários, probabilidades e retorno esperado Em revisão; WACC ausente.",
+    "Retorno por projeto e recursos distribuíveis por entidade não reconciliados.",
+    "Teleconferência futura e percepção de mercado não recebidas."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Enel Chile",
+      "titulo": "Análise das demonstrações financeiras até setembro",
+      "url": "https://www.enel.cl/content/dam/enel-cl/inversionistas/enel-chile/informacion-para-el-accionista/resultados-trimestrales/analisis-razonado/2026/Analisis-Razonado-Enel-Chile-Septiembre-2026.pdf",
+      "publicado_em": "2026-10-28",
+      "consultado_em": "2026-10-28"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Enel Chile",
+      "titulo": "Calendário financeiro",
+      "url": "https://www.enel.cl/es/inversionistas/inversionistas-enel-chile/informacion-para-accionista/calendario-financiero.html",
+      "publicado_em": null,
+      "consultado_em": "2026-10-28"
+    }
+  ]
+}

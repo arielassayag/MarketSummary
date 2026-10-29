@@ -1,0 +1,339 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-28",
+    "manifest_sha256": "7c200915e106c8eb6df9ba179db3a979acb641d6d6b8946fe6e4d9a60cba295b",
+    "modelo_as_of": "2026-10-28"
+  },
+  "conviccao": 1,
+  "data": "2026-10-28",
+  "hashes": {
+    "contexto": "c61026c19bf68dfb17b2b2b260fba023dc0f42b03bba2a0f355a535d5bf1cda0",
+    "factbook": "e9050821376e43672d6135764efb70444448fea519bec9a070d708304414cf40",
+    "nota_json": "6a29a24266beeef4b88b1e130d1b070ea7150f5f05a44f47d1da74502ea5770b"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_MOTIVA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-28",
+  "published_at": "2026-10-29T01:49:18.697851+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Avaliar caixa disponível depois do capital comprometido, sem contar simultaneamente ativos alienados e recursos da transação.",
+        "titulo": "Menor dívida e obras futuras"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-29",
+        "descricao": "Videoconferência do 3T26 prevista no calendário oficial.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo R$ 10,83 condicionado ao caixa após obras e dívida.",
+      "otimista": "Eficiência e contratos remuneram o capital; cenário R$ 15,65.",
+      "pessimista": "Compromissos e custo financeiro absorvem retorno; cenário R$ 6,13."
+    },
+    "comentario_valuation": "Preço R$ 14,45, retorno esperado -22,75% e WACC 9,89%. O rating Venda pertence ao modelo. Concessões exigem preservar prazos contratuais, obrigações e perímetro após a venda. O consenso R$ 19,54 não comprova expectativa implícita de mercado.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se novos contratos e obras absorverem os recursos sem remunerar risco e financiamento.",
+        "titulo": "Liquidez transitória sem retorno sustentável"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-28",
+    "dados_simulados": false,
+    "data": "2026-10-28",
+    "ficha": [
+      {
+        "fato": "val.BR_MOTIVA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 14,45"
+      },
+      {
+        "fato": "val.BR_MOTIVA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 10,83"
+      },
+      {
+        "fato": "val.BR_MOTIVA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-25,08%"
+      },
+      {
+        "fato": "val.BR_MOTIVA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_MOTIVA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_MOTIVA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 15,65"
+      },
+      {
+        "fato": "val.BR_MOTIVA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "45,85%"
+      },
+      {
+        "fato": "val.BR_MOTIVA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 6,13"
+      },
+      {
+        "fato": "val.BR_MOTIVA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "2,04%"
+      },
+      {
+        "fato": "val.BR_MOTIVA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "15,27%"
+      },
+      {
+        "fato": "val.BR_MOTIVA.wacc",
+        "rotulo": "WACC",
+        "valor": "9,89%"
+      },
+      {
+        "fato": "val.BR_MOTIVA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_MOTIVA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-22,75%"
+      },
+      {
+        "fato": "val.BR_MOTIVA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-66,30%"
+      },
+      {
+        "fato": "val.BR_MOTIVA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "9,8x"
+      },
+      {
+        "fato": "val.BR_MOTIVA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,6x"
+      },
+      {
+        "fato": "val.BR_MOTIVA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 19,54"
+      },
+      {
+        "fato": "val.BR_MOTIVA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-44,60%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-28",
+        "id": "F1",
+        "instituicao": "Motiva",
+        "publicado_em": "2026-10-28",
+        "tipo": "Relações com investidores",
+        "titulo": "Release de resultados trimestrais",
+        "url": "https://filemanager-cdn.mziq.com/published/8516d569-e11b-4864-a777-68eca8245423/3aa9a106-a6f5-48d2-9783-1bc027806bd3"
+      },
+      {
+        "consultado_em": "2026-10-28",
+        "id": "F2",
+        "instituicao": "Motiva",
+        "publicado_em": "2026-10-28",
+        "tipo": "Relações com investidores",
+        "titulo": "Apresentação de resultados",
+        "url": "https://filemanager-cdn.mziq.com/published/8516d569-e11b-4864-a777-68eca8245423/74946bb3-fdf8-4a54-9601-0a96e7abd32f"
+      },
+      {
+        "consultado_em": "2026-10-28",
+        "id": "F3",
+        "instituicao": "Motiva",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário de eventos",
+        "url": "https://ri.motiva.com.br/resultados/calendario-de-eventos/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Obras e novos contratos não remuneram o custo de capital.",
+      "Caixa recorrente diverge persistentemente da melhora do resultado ajustado."
+    ],
+    "governanca": "O uso de recursos da venda, amortização de dívida e remuneração do acionista deve ser conciliado com compromissos futuros. Medidas proporcionais de controladas em conjunto e ajustes de transações relacionadas exigem leitura própria.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar tráfego comparável, tarifa efetiva, investimento contratado, cronograma, caixa após dívida e retorno dos projetos.",
+        "titulo": "Retorno por concessão"
+      }
+    ],
+    "issuer_id": "BR_MOTIVA",
+    "lacunas_de_dados": [
+      "Caixa por concessão e obrigações futuras não reconciliados integralmente.",
+      "Teleconferência futura e eventual atualização de metas ainda não recebidas.",
+      "Perímetro completo do valuation após alienação exige conciliação.",
+      "Sem evidência suficiente para atribuir percepção ao mercado."
+    ],
+    "modelo_de_cobertura": "2026-10-28",
+    "negocio": "Concessões de rodovias e trilhos no Brasil. Tráfego, tarifas e capacidade de execução precisam remunerar obrigações contratuais e capital investido.",
+    "nome": "Motiva (ex-CCR)",
+    "o_que_mudou": "O resultado do 3T26 permite atualizar a iniciação de 2026-10-11 com leitura de operações remanescentes e menor alavancagem. A conciliação integral de recursos, passivos e retorno por contrato continua aberta.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MARCOPOLO",
+        "nome": "Marcopolo"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_RUMO",
+        "nome": "Rumo"
+      },
+      {
+        "issuer_id": "BR_TUPY",
+        "nome": "Tupy"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O release atribui crescimento a novas operações, pórticos e tarifas, com evolução mais moderada do tráfego comparável. Expansão consolidada não equivale integralmente a crescimento orgânico.",
+        "titulo": "Crescimento com perímetro comparável"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A apresentação descreve simplificação e reciclagem de capital. Nossa hipótese exige que recursos liberados e menor dívida coexistam com retorno adequado dos projetos remanescentes.",
+        "titulo": "Venda precisa financiar retorno futuro"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A operação rodoviária e ferroviária permite testar escala e eficiência. Acesso a novos contratos não comprova retorno adequado do preço ofertado.",
+        "titulo": "Experiência contratual precisa remunerar risco"
+      }
+    ],
+    "publicada_em": "2026-10-29T01:49:18.697851+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar ganho da venda, resultado ajustado, receita de construção e geração de caixa. A comparação deve usar o mesmo perímetro.",
+        "titulo": "Continuadas e alienação"
+      }
+    ],
+    "resumo": "O 3T26 confirma avanço operacional e menor alavancagem após simplificação do portfólio. A tese depende do retorno das concessões depois de obras e financiamento; ganho de alienação não é recorrente. Visão neutra, baixa convicção; alvo R$ 10,83 e potencial -25,08%.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Obras, financiamento e novos contratos podem consumir o benefício de liquidez da alienação."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Motiva — resultado melhora após venda de aeroportos, com capital comprometido nas concessões",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O release de 2026-10-28 mostra crescimento de receita, EBITDA e lucro ajustados e redução da alavancagem. As bases principais excluem aeroportos e construção; efeitos não recorrentes e medidas proporcionais precisam permanecer identificados. A melhora de lucro societário não deve ser confundida com recorrência. Não foi identificada nova orientação quantitativa nos materiais recebidos; sem guidance novo não significa retirada das metas anteriores.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Confrontar geração por concessão com investimento e serviço da dívida. Tráfego sem remuneração após obrigações não confirma criação de valor.",
+        "vetor": "Obras, tarifas e custo financeiro"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

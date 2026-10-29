@@ -1,0 +1,338 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-28",
+    "manifest_sha256": "7c200915e106c8eb6df9ba179db3a979acb641d6d6b8946fe6e4d9a60cba295b",
+    "modelo_as_of": "2026-10-28"
+  },
+  "conviccao": 1,
+  "data": "2026-10-28",
+  "hashes": {
+    "contexto": "8ae8e376745c46f19479955b84c6808bc34ed9fdaea32edb40160541298a7a9b",
+    "factbook": "804f6a5d47afb05d52e34ab67e34bbdd92c0962ffa608814ef7a520e5165ab0f",
+    "nota_json": "4f3a371e5c126fa134d7b9ff4bed9e5c3e1d595945bb8c164e1dafa491735751"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_CHEDRAUI",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-27",
+  "published_at": "2026-10-29T01:41:45.893012+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Confrontar a expansão pretendida com maturação, aluguel, estoques e caixa atribuível. Caixa bancário não substitui análise completa dos compromissos.",
+        "titulo": "Retorno das lojas após obrigações"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próxima atualização de metas e retorno das lojas abertas, sem data primária confirmada nesta consulta.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "guidance"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo calculado MXN 73,93; a tese exige caixa após investimento e imóveis.",
+      "otimista": "Recuperação de tráfego e produtividade sustentam o cenário do modelo em MXN 103,64.",
+      "pessimista": "Demanda e custos pressionam geração econômica; cenário calculado MXN 46,57."
+    },
+    "comentario_valuation": "Preço MXN 89,68, alvo MXN 73,93 e retorno esperado -15,22%. O consenso público de MXN 119,93 não prova percepção do mercado. Comparações exigem harmonizar arrendamentos e geografia; fabricantes de alimentos não constituem equivalentes operacionais diretos.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se a demanda permanecer fraca e a expansão elevar compromissos mais rapidamente que a contribuição econômica das lojas.",
+        "titulo": "Produtividade insuficiente diante do consumo"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-28",
+    "dados_simulados": false,
+    "data": "2026-10-28",
+    "ficha": [
+      {
+        "fato": "val.MX_CHEDRAUI.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 89,68"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 73,93"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-17,56%"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 103,64"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "38,18%"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 46,57"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "0,06%"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,57%"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.wacc",
+        "rotulo": "WACC",
+        "valor": "9,87%"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-15,22%"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "0,00%"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "13,6x"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,6x"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 119,93"
+      },
+      {
+        "fato": "val.MX_CHEDRAUI.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-38,36%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-28",
+        "id": "F1",
+        "instituicao": "Grupo Comercial Chedraui / PR Newswire",
+        "publicado_em": "2026-10-27",
+        "tipo": "Relações com investidores",
+        "titulo": "Comunicado de resultados trimestrais",
+        "url": "https://www.prnewswire.com/news-releases/grupo-comercial-chedraui-sab-de-cv-third-quarter-2026-results-302921570.html"
+      },
+      {
+        "consultado_em": "2026-10-28",
+        "id": "F2",
+        "instituicao": "Grupo Comercial Chedraui",
+        "publicado_em": "2026-01-12",
+        "tipo": "Relações com investidores",
+        "titulo": "Orientação anual e calendário",
+        "url": "https://inversionistas.grupochedraui.com.mx/wp-content/uploads/2026/01/01122026-Guia-GCChedraui-2026.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Eficiências deixam de compensar pressão de tráfego e custos.",
+      "Lojas novas não remuneram capital após imóveis e giro."
+    ],
+    "governanca": "Separar caixa por território, obrigações imobiliárias e direitos do acionista. Não foi recebida nova decisão societária que permita alterar a leitura anterior de controle e relacionadas.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar tráfego, compra média, vendas comparáveis, giro, margem após distribuição e caixa depois de investimento e arrendamentos.",
+        "titulo": "Caixa por território"
+      }
+    ],
+    "issuer_id": "MX_CHEDRAUI",
+    "lacunas_de_dados": [
+      "Demonstrações completas e transcrição primária não reconciliadas integralmente.",
+      "Sem confirmação de manutenção ou alteração de todas as metas anuais.",
+      "Caixa por território, arrendamentos e maturação das lojas exigem reconciliação.",
+      "Percepção variante do mercado não demonstrada."
+    ],
+    "modelo_de_cobertura": "2026-10-28",
+    "negocio": "Autosserviço no México e nos Estados Unidos, com formatos e moedas distintos. Preço competitivo e distribuição precisam remunerar lojas, capital de giro e obrigações imobiliárias.",
+    "nome": "Grupo Comercial Chedraui",
+    "o_que_mudou": "A nota de 2026-10-20 preservava a divulgação futura. Agora o comunicado primário do 3T26 foi recebido e o modelo foi reavaliado. A melhora de margem coexistiu com pressão na demanda; permanece aberta a conciliação do caixa econômico.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_AC",
+        "nome": "Arca Continental"
+      },
+      {
+        "issuer_id": "MX_BIMBO",
+        "nome": "Grupo Bimbo"
+      },
+      {
+        "issuer_id": "MX_GENOMMA",
+        "nome": "Genomma Lab"
+      },
+      {
+        "issuer_id": "MX_GRUMA",
+        "nome": "Gruma"
+      },
+      {
+        "issuer_id": "MX_KIMBER",
+        "nome": "Kimberly-Clark de México"
+      },
+      {
+        "issuer_id": "MX_KOF",
+        "nome": "Coca-Cola FEMSA"
+      },
+      {
+        "issuer_id": "MX_SIGMA",
+        "nome": "Sigma Foods (ex-Alfa)"
+      },
+      {
+        "issuer_id": "MX_WALMEX",
+        "nome": "Walmart de México"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O comunicado primário do 3T26 atribui melhora de margem às eficiências de compras e distribuição nos Estados Unidos, enquanto transações continuam fracas. A hipótese exige persistência operacional sem deterioração da proposta comercial.",
+        "titulo": "Produtividade não elimina a pressão de demanda"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A orientação anual inclui investimento e expansão, mas o indicador de caixa bancário não mede todos os compromissos. A diligência deve incorporar arrendamentos e maturação das lojas antes de inferir excedente distribuível.",
+        "titulo": "Expansão precisa produzir caixa econômico"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A administração mantém preço, sortimento e experiência como pilares comerciais. Nossa hipótese exige que a frequência de compra remunere a estrutura logística e imobiliária.",
+        "titulo": "Preço e distribuição"
+      }
+    ],
+    "publicada_em": "2026-10-29T01:41:45.893012+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A melhora de margem não permite inferir aceleração de caixa livre sem conciliar giro, investimentos e arrendamentos por território.",
+        "titulo": "Margem e caixa têm testes diferentes"
+      }
+    ],
+    "resumo": "O 3T26 confirma melhora da margem consolidada com eficiência logística, apesar da fraqueza do consumo. A hipótese depende de caixa depois de expansão, estoques e imóveis. Visão neutra e de baixa convicção; alvo do modelo MXN 73,93, com potencial -17,56%.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "alta",
+        "texto": "Demanda fraca pode absorver economias logísticas e alongar a maturação do capital investido."
+      }
+    ],
+    "setor": "Consumo básico",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Chedraui — eficiência logística amortece demanda fraca, sem resolver o retorno da expansão",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "O comunicado da companhia de 2026-10-27 confirma pressão de consumo no sudeste mexicano e nas transações americanas, melhora da margem consolidada e efeitos da conversão cambial. Não apresenta nova orientação anual quantitativa no material recebido; classificamos o comunicado como sem guidance novo, sem afirmar retirada ou manutenção das metas anteriores.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Separar demanda orgânica, eficiência de distribuição e conversão cambial para testar a sustentabilidade da margem.",
+        "vetor": "Tráfego e produtividade logística"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

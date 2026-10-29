@@ -1,0 +1,334 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-28",
+    "manifest_sha256": "7c200915e106c8eb6df9ba179db3a979acb641d6d6b8946fe6e4d9a60cba295b",
+    "modelo_as_of": "2026-10-28"
+  },
+  "conviccao": 1,
+  "data": "2026-10-28",
+  "hashes": {
+    "contexto": "2173961f6012ec0bf992243ecea6c3fc3d2a6287fd96a2ee9715d7bf6109e64d",
+    "factbook": "a887fda77394b38ac5613d3c5340b56803aa15d4f3cd0ed50908b53497667931",
+    "nota_json": "02b53a4a9b7dcce2484ee45c778fb575a5a470402a9f3481dfba403faa266613"
+  },
+  "is_synthetic": false,
+  "issuer_id": "AR_YPF",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-28",
+  "published_at": "2026-10-29T01:52:16.066700+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Confrontar orçamento e funding dos projetos com participação econômica, maturação e caixa após dívida. Intenção de investir não comprova financiamento fechado.",
+        "titulo": "Infraestrutura e obrigações"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-29",
+        "descricao": "Webcast do 3T26 confirmado no centro oficial de investidores.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo calculado US$ 50,48, condicionado ao caixa atribuível após compromissos.",
+      "otimista": "Produtividade e infraestrutura remuneram todo o capital; cenário US$ 68,17.",
+      "pessimista": "Preço, custo e financiamento frustram monetização; cenário US$ 33,62."
+    },
+    "comentario_valuation": "Preço US$ 49,34, retorno esperado +2,31% e ke 15,92%. O consenso US$ 61,97 não comprova expectativa de mercado. A confiança C e a conciliação de unidade e perímetro limitam a conclusão qualitativa.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese enfraquece se a expansão consumir reinvestimento e financiamento persistentes sem retorno atribuível suficiente.",
+        "titulo": "Recursos sem caixa por ação"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-28",
+    "dados_simulados": false,
+    "data": "2026-10-28",
+    "ficha": [
+      {
+        "fato": "val.AR_YPF.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 49,34"
+      },
+      {
+        "fato": "val.AR_YPF.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 50,48"
+      },
+      {
+        "fato": "val.AR_YPF.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+2,31%"
+      },
+      {
+        "fato": "val.AR_YPF.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.AR_YPF.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.AR_YPF.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 68,17"
+      },
+      {
+        "fato": "val.AR_YPF.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "26,54%"
+      },
+      {
+        "fato": "val.AR_YPF.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 33,62"
+      },
+      {
+        "fato": "val.AR_YPF.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "10,18%"
+      },
+      {
+        "fato": "val.AR_YPF.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "15,92%"
+      },
+      {
+        "fato": "val.AR_YPF.wacc",
+        "rotulo": "WACC",
+        "valor": "13,86%"
+      },
+      {
+        "fato": "val.AR_YPF.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.AR_YPF.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+2,31%"
+      },
+      {
+        "fato": "val.AR_YPF.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-21,83%"
+      },
+      {
+        "fato": "val.AR_YPF.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,5x"
+      },
+      {
+        "fato": "val.AR_YPF.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,8x"
+      },
+      {
+        "fato": "val.AR_YPF.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 61,97"
+      },
+      {
+        "fato": "val.AR_YPF.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-18,54%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-28",
+        "id": "F1",
+        "instituicao": "YPF",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Centro de investidores e informação sobre capital",
+        "url": "https://investors.ypf.com/"
+      },
+      {
+        "consultado_em": "2026-10-28",
+        "id": "F2",
+        "instituicao": "CNV — YPF",
+        "publicado_em": null,
+        "tipo": "Regulador",
+        "titulo": "Registro de informação financeira e fatos relevantes",
+        "url": "https://www.cnv.gov.ar/SitioWeb/Empresas/Empresa/30546689979?fdesde=28%2F1%2F2021"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultado esclarece caixa após todos os compromissos.",
+      "Mudança de perímetro, financiamento ou direitos altera retorno atribuível."
+    ],
+    "governanca": "A estrutura por classes, direitos do ADR e capital nas subsidiárias exige análise própria. O desdobramento local não modifica a participação econômica pelo simples aumento de ações; não se presume caixa livremente transferível.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar produção, preço realizado, margem de refino, capex pago, infraestrutura, dívida e unidade por ADR.",
+        "titulo": "Operação, capital e direitos"
+      }
+    ],
+    "issuer_id": "AR_YPF",
+    "lacunas_de_dados": [
+      "Release e demonstrações integrais do 3T26 não recebidos.",
+      "Guidance e tom atuais não avaliados.",
+      "Capital, projetos, contingências e retorno por instrumento não reconciliados integralmente.",
+      "Sem suporte suficiente para atribuir percepção variante ao mercado."
+    ],
+    "modelo_de_cobertura": "2026-10-28",
+    "negocio": "Companhia integrada argentina de petróleo e gás, com produção, refino, logística e comercialização. A hipótese de monetização dos recursos exige distinguir desempenho por segmento e compromissos de expansão.",
+    "nome": "YPF",
+    "o_que_mudou": "A atualização substitui o calendário indefinido da iniciação por webcast primário confirmado e incorpora o modelo corrente. O teor integral do novo trimestre continua pendente de recebimento.",
+    "pais": "Argentina",
+    "pares": [
+      {
+        "issuer_id": "BR_COSAN",
+        "nome": "Cosan"
+      },
+      {
+        "issuer_id": "BR_PETROBRAS",
+        "nome": "Petrobras"
+      },
+      {
+        "issuer_id": "BR_PRIO",
+        "nome": "PRIO"
+      },
+      {
+        "issuer_id": "BR_RECV",
+        "nome": "PetroRecôncavo"
+      },
+      {
+        "issuer_id": "BR_ULTRAPAR",
+        "nome": "Ultrapar"
+      },
+      {
+        "issuer_id": "BR_VIBRA",
+        "nome": "Vibra Energia"
+      },
+      {
+        "issuer_id": "CO_ECOPETROL",
+        "nome": "Ecopetrol"
+      },
+      {
+        "issuer_id": "MX_VISTA",
+        "nome": "Vista Energy"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A tese exige que produção e acesso comercial gerem caixa depois de manutenção, infraestrutura e financiamento. O calendário do resultado é oportunidade de verificar essa ponte, sem antecipar realização operacional.",
+        "titulo": "Monetização após compromissos completos"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O RI explica o desdobramento local e a alteração da relação ADR/ação, preservando a quantidade equivalente de ADRs. O evento não representa criação de valor econômico por si só.",
+        "titulo": "Unidade por ADR deve permanecer coerente"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese de vantagem por escala e logística deve aparecer em produtividade e custo completo, sem presumir que crescimento de volume garanta retorno por ação.",
+        "titulo": "Integração exige retorno verificável"
+      }
+    ],
+    "publicada_em": "2026-10-29T01:52:16.066700+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Separar resultado industrial, impostos, aquisições e fluxos de investimento antes de atribuir recorrência ao novo trimestre.",
+        "titulo": "Perímetro e caixa ainda abertos"
+      }
+    ],
+    "resumo": "O calendário primário confirma webcast do 3T26 em 2026-10-29. O resultado integral não foi recebido nas páginas consultadas. Mantemos leitura neutra e baixa convicção; alvo US$ 50,48 e potencial +2,31% dependem da remuneração do capital após infraestrutura, financiamento e direitos por instrumento.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Projetos podem demandar capital antes de gerar caixa; erro de unidade entre ação local e ADR pode distorcer a interpretação da avaliação."
+      }
+    ],
+    "setor": "Energia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "YPF — monetização exige caixa após infraestrutura e base por ADR coerente",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A CNV registra informação financeira do 3T26, mas o teor integral não foi recebido nesta consulta. As páginas do RI entregaram calendário e informações de capital, sem release ou demonstrações navegáveis. Não se extrapolam destaques antigos para o trimestre novo; guidance e tom atuais permanecem não avaliados.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.AR_YPF.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "15,92%"
+          },
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Preço realizado, declínio e custo completo de desenvolvimento devem ser confrontados com caixa e capital atribuível.",
+        "vetor": "Petróleo, reinvestimento e financiamento"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

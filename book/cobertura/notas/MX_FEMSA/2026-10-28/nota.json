@@ -1,0 +1,140 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_FEMSA",
+  "data": "2026-10-28",
+  "tipo": "pos_resultado",
+  "titulo": "FEMSA — melhora comercial requer caixa atribuível e disciplina de distribuição",
+  "resumo": "O 3T26 confirma melhora comercial em OXXO México e contribuição de Coca-Cola FEMSA, com pressão em outros negócios. A leitura permanece neutra, com baixa convicção. Alvo {{fact:val.MX_FEMSA.preco_alvo}} e potencial {{fact:val.MX_FEMSA.upside}} exigem conciliar participações e unidade negociada antes de interpretação direcional.",
+  "negocio": "Holding de varejo de proximidade, saúde, bebidas e serviços digitais. Segmentos consolidados têm participações econômicas, moedas e necessidades de capital próprias.",
+  "pilares_tese": [
+    {
+      "titulo": "Recuperação precisa chegar ao acionista",
+      "texto": "O comunicado confirma melhora de tráfego em OXXO México. A hipótese exige retorno após custos, maturação e capital empregado; avanço comercial não garante caixa atribuível à holding.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Separar valor e participação",
+      "texto": "O alvo do modelo é {{fact:val.MX_FEMSA.preco_alvo}}, com confiança {{fact:val.MX_FEMSA.confianca_codigo}}. O exame da unidade mexicana, ADS e participação nas subsidiárias antecede conclusão sobre desconto.",
+      "evidencias": [
+        "val.MX_FEMSA.preco_alvo",
+        "val.MX_FEMSA.confianca_codigo"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Conversão do crescimento em caixa",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar contribuição por loja e segmento após investimento, financiamento e minoritários.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Liquidação final da recompra acelerada prevista até o encerramento de 2026, sujeita aos termos contratuais.",
+      "data": null,
+      "tipo": "capital",
+      "direcao": "incerto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Expansão e distribuições podem elevar dívida sem retorno atribuível suficiente; usuários digitais não equivalem a lucro.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Retorno das operações financia distribuição sustentável; cenário {{fact:val.MX_FEMSA.alvo_otimista}}.",
+    "base": "Alvo {{fact:val.MX_FEMSA.preco_alvo}}, sujeito à conciliação de perímetro e direitos.",
+    "pessimista": "Capital e financiamento absorvem resultado; cenário {{fact:val.MX_FEMSA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço {{fact:val.MX_FEMSA.preco}} e consenso {{fact:val.MX_FEMSA.consenso_alvo}}. A diferença para o modelo exige conferir classes, unidade e participações, evitando dupla contagem de Coca-Cola FEMSA. Não é evidência de expectativa do mercado; probabilidades implícitas permanecem ausentes.",
+  "ultimo_resultado": "O comunicado de 2026-10-28 mostra crescimento operacional com contribuição desigual entre segmentos. O lucro líquido contém efeitos de câmbio e comparação com operações descontinuadas; o acumulado inclui ganho extraordinário ligado a ImperialBrady. Não foi recebida nova orientação financeira agregada quantitativa no comunicado, classificado como sem guidance novo, sem inferir retirada de metas.",
+  "guidance": "sem_guidance",
+  "tom_gestao": "positivo",
+  "governanca": "Preservar direitos por classe, minoritários e caixa recebido pela controladora. A divulgação confirma liquidação da emissão suíça em 2026-10-14, enquanto o acerto final da recompra segue previsto; estados distintos não devem ser confundidos.",
+  "posicao_competitiva": {
+    "titulo": "Rede física e monetização",
+    "texto": "A hipótese de vantagem da rede OXXO exige contribuição incremental de vendas e serviços, sem transformar alcance e usuários em rentabilidade presumida.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Lucro normalizado",
+    "texto": "Separar efeitos de câmbio, alienações e associadas da geração recorrente. O resultado da investida Coca-Cola FEMSA é suporte operacional, sem substituir atribuição econômica à holding.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Distribuição e dívida",
+    "texto": "Comparar recompras com reinvestimento e caixa após minoritários; liquidez das subsidiárias não é disponibilidade irrestrita.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Escala sem caixa distribuível",
+    "texto": "A hipótese perde força se crescimento comercial demandar capital persistente sem retorno por unidade ou reduzir a flexibilidade financeira.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Retorno incremental",
+      "texto": "Monitorar tráfego, margem, maturação, capital por segmento, dívida ex-KOF e caixa recebido pela holding.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "o_que_mudou": "O trimestre que era futuro na nota de 2026-10-21 foi divulgado. A melhora comercial coexistiu com pressão em segmentos e efeitos não recorrentes; permanece aberta a conciliação da avaliação agregada.",
+  "gatilhos_revisao": [
+    "Classes e participações alteram a leitura econômica do alvo.",
+    "Distribuições consomem flexibilidade sem melhora do retorno incremental."
+  ],
+  "lacunas_de_dados": [
+    "Participações, direitos por unidade e perímetro do valuation não reconciliados integralmente.",
+    "Probabilidades implícitas indisponíveis.",
+    "Transcrição primária e atualização dos controles financeiros não recebidas.",
+    "Sem comprovação de percepção variante do mercado."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "FEMSA",
+      "titulo": "Resultados trimestrais e alocação de capital",
+      "url": "https://www.femsa.com/en/press-room/press-release/femsa-3q-2026-results/",
+      "publicado_em": "2026-10-28",
+      "consultado_em": "2026-10-28"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Coca-Cola FEMSA",
+      "titulo": "Resultados da operação de bebidas",
+      "url": "https://www.femsa.com/en/press-room/press-release/coca-cola-femsa-third-quarter-2026-results/",
+      "publicado_em": "2026-10-26",
+      "consultado_em": "2026-10-28"
+    }
+  ]
+}

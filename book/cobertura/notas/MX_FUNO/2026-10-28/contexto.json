@@ -1,0 +1,113 @@
+{
+  "avisos_tecnicos": [],
+  "dados_ate": "2026-10-28",
+  "data": "2026-10-28",
+  "fontes_sugeridas": [
+    {
+      "instituicao": "CNBV",
+      "tipo": "regulatorio",
+      "url": "https://www.gob.mx/cnbv"
+    },
+    {
+      "instituicao": "BMV — emissoras",
+      "tipo": "bolsa",
+      "url": "https://www.bmv.com.mx/"
+    },
+    {
+      "instituicao": "Banxico (SIE)",
+      "tipo": "banco_central",
+      "url": "https://www.banxico.org.mx/"
+    },
+    {
+      "instituicao": "INEGI",
+      "tipo": "estatistica_oficial",
+      "url": "https://www.inegi.org.mx/"
+    },
+    {
+      "instituicao": "Damodaran Online (NYU Stern) — prêmios de risco, betas e múltiplos setoriais",
+      "tipo": "dados_publicos",
+      "url": "https://pages.stern.nyu.edu/~adamodar/"
+    },
+    {
+      "instituicao": "FRED (Federal Reserve Bank of St. Louis) — juros e indicadores dos EUA",
+      "tipo": "dados_publicos",
+      "url": "https://fred.stlouisfed.org/"
+    }
+  ],
+  "is_synthetic": false,
+  "issuer_id": "MX_FUNO",
+  "lacunas": [
+    "Preço-alvo de 12 meses: sem dado na data.",
+    "Potencial até o alvo: sem dado na data.",
+    "Rating da cobertura: sem dado na data.",
+    "Cenário otimista: sem dado na data.",
+    "Probabilidade implícita do otimista: sem dado na data.",
+    "Cenário pessimista: sem dado na data.",
+    "Probabilidade implícita do pessimista: sem dado na data.",
+    "Retorno total esperado: sem dado na data.",
+    "Alpha relativo aos pares: sem dado na data.",
+    "Alvo da casa contra o consenso: sem dado na data."
+  ],
+  "nome": "Fibra Uno",
+  "nomes": {
+    "BR_ALLOS": "Allos",
+    "BR_IGUATEMI": "Iguatemi",
+    "BR_JHSF": "JHSF",
+    "BR_MULTIPLAN": "Multiplan",
+    "CL_CENCOMALLS": "Cencosud Shopping",
+    "CL_MALLPLAZA": "Plaza SA (Mallplaza)",
+    "CL_PARAUCO": "Parque Arauco",
+    "MX_FIBRAPL": "Fibra Prologis",
+    "MX_FUNO": "Fibra Uno"
+  },
+  "nota_anterior": {
+    "autoria": "mente",
+    "conviccao": 1,
+    "data": "2026-10-12",
+    "proximo_resultado": "2026-10-28",
+    "stance": 0,
+    "tipo": "iniciacao",
+    "titulo": "Fibra Uno — renda por segmento e efeito da internalização"
+  },
+  "pais": "MX",
+  "pais_pt": "México",
+  "pares": [
+    "BR_ALLOS",
+    "BR_IGUATEMI",
+    "BR_JHSF",
+    "BR_MULTIPLAN",
+    "CL_CENCOMALLS",
+    "CL_MALLPLAZA",
+    "CL_PARAUCO",
+    "MX_FIBRAPL"
+  ],
+  "proximo_resultado": "2026-10-28",
+  "schema": "cdp.nota.contexto/v1",
+  "setor": "Real Estate",
+  "setor_pt": "Imobiliário",
+  "snapshot": {
+    "as_of": "2026-10-28",
+    "manifest_sha256": "7c200915e106c8eb6df9ba179db3a979acb641d6d6b8946fe6e4d9a60cba295b",
+    "modelo_as_of": "2026-10-28"
+  },
+  "tem_linha_eua": false,
+  "termos": [
+    "ALOS3",
+    "ALOS3.SA",
+    "FIBRAPL14",
+    "FIBRAPL14.MX",
+    "FUNO11",
+    "FUNO11.MX",
+    "IGTI11",
+    "IGTI11.SA",
+    "JHSF3",
+    "JHSF3.SA",
+    "MULT3",
+    "MULT3.SA"
+  ],
+  "tickers": [
+    "FUNO11.MX",
+    "FUNO11"
+  ],
+  "tipo_esperado": "atualizacao"
+}

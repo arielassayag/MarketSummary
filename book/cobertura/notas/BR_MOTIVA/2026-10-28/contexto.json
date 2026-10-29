@@ -1,0 +1,105 @@
+{
+  "avisos_tecnicos": [],
+  "dados_ate": "2026-10-28",
+  "data": "2026-10-28",
+  "fontes_sugeridas": [
+    {
+      "instituicao": "CVM — RAD (fatos relevantes, ITR, DFP, formulário de referência)",
+      "tipo": "regulatorio",
+      "url": "https://www.rad.cvm.gov.br/ENET/frmConsultaExternaCVM.aspx"
+    },
+    {
+      "instituicao": "CVM — dados abertos (DFP, ITR, FRE, IPE)",
+      "tipo": "regulatorio",
+      "url": "https://dados.cvm.gov.br/"
+    },
+    {
+      "instituicao": "B3 — empresas listadas",
+      "tipo": "bolsa",
+      "url": "https://www.b3.com.br/"
+    },
+    {
+      "instituicao": "Banco Central do Brasil (Focus, SGS)",
+      "tipo": "banco_central",
+      "url": "https://www.bcb.gov.br/"
+    },
+    {
+      "instituicao": "IBGE",
+      "tipo": "estatistica_oficial",
+      "url": "https://www.ibge.gov.br/"
+    },
+    {
+      "instituicao": "Damodaran Online (NYU Stern) — prêmios de risco, betas e múltiplos setoriais",
+      "tipo": "dados_publicos",
+      "url": "https://pages.stern.nyu.edu/~adamodar/"
+    },
+    {
+      "instituicao": "FRED (Federal Reserve Bank of St. Louis) — juros e indicadores dos EUA",
+      "tipo": "dados_publicos",
+      "url": "https://fred.stlouisfed.org/"
+    }
+  ],
+  "is_synthetic": false,
+  "issuer_id": "BR_MOTIVA",
+  "lacunas": [],
+  "nome": "Motiva (ex-CCR)",
+  "nomes": {
+    "BR_GPS": "GPS Participações",
+    "BR_LOCALIZA": "Localiza",
+    "BR_MARCOPOLO": "Marcopolo",
+    "BR_MILLS": "Mills",
+    "BR_MOTIVA": "Motiva (ex-CCR)",
+    "BR_RUMO": "Rumo",
+    "BR_TUPY": "Tupy"
+  },
+  "nota_anterior": {
+    "autoria": "mente",
+    "conviccao": 1,
+    "data": "2026-10-11",
+    "proximo_resultado": "2026-10-28",
+    "stance": 0,
+    "tipo": "iniciacao",
+    "titulo": "Motiva: retorno das concessões após a simplificação do portfólio"
+  },
+  "pais": "BR",
+  "pais_pt": "Brasil",
+  "pares": [
+    "BR_GPS",
+    "BR_LOCALIZA",
+    "BR_MARCOPOLO",
+    "BR_MILLS",
+    "BR_RUMO",
+    "BR_TUPY"
+  ],
+  "proximo_resultado": "2026-10-28",
+  "schema": "cdp.nota.contexto/v1",
+  "setor": "Industrials",
+  "setor_pt": "Industriais",
+  "snapshot": {
+    "as_of": "2026-10-28",
+    "manifest_sha256": "7c200915e106c8eb6df9ba179db3a979acb641d6d6b8946fe6e4d9a60cba295b",
+    "modelo_as_of": "2026-10-28"
+  },
+  "tem_linha_eua": false,
+  "termos": [
+    "GGPS3",
+    "GGPS3.SA",
+    "MILS3",
+    "MILS3.SA",
+    "MOTV3",
+    "MOTV3.SA",
+    "POMO4",
+    "POMO4.SA",
+    "RAIL3",
+    "RAIL3.SA",
+    "RENT3",
+    "RENT3.SA",
+    "TUPY3",
+    "TUPY3.SA"
+  ],
+  "tickers": [
+    "MOTV3.SA",
+    "MOTV3"
+  ],
+  "tipo_esperado": "atualizacao"
+}

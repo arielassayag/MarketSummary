@@ -1,0 +1,97 @@
+{
+  "avisos_tecnicos": [],
+  "dados_ate": "2026-10-28",
+  "data": "2026-10-28",
+  "fontes_sugeridas": [
+    {
+      "instituicao": "CNBV",
+      "tipo": "regulatorio",
+      "url": "https://www.gob.mx/cnbv"
+    },
+    {
+      "instituicao": "BMV — emissoras",
+      "tipo": "bolsa",
+      "url": "https://www.bmv.com.mx/"
+    },
+    {
+      "instituicao": "Banxico (SIE)",
+      "tipo": "banco_central",
+      "url": "https://www.banxico.org.mx/"
+    },
+    {
+      "instituicao": "INEGI",
+      "tipo": "estatistica_oficial",
+      "url": "https://www.inegi.org.mx/"
+    },
+    {
+      "instituicao": "SEC EDGAR — busca de documentos (20-F, 6-K, 10-K, 8-K)",
+      "tipo": "regulatorio",
+      "url": "https://www.sec.gov/edgar/search/"
+    },
+    {
+      "instituicao": "SEC EDGAR — dados XBRL por empresa (companyfacts)",
+      "tipo": "regulatorio",
+      "url": "https://www.sec.gov/search-filings/edgar-application-programming-interfaces"
+    },
+    {
+      "instituicao": "Damodaran Online (NYU Stern) — prêmios de risco, betas e múltiplos setoriais",
+      "tipo": "dados_publicos",
+      "url": "https://pages.stern.nyu.edu/~adamodar/"
+    },
+    {
+      "instituicao": "FRED (Federal Reserve Bank of St. Louis) — juros e indicadores dos EUA",
+      "tipo": "dados_publicos",
+      "url": "https://fred.stlouisfed.org/"
+    }
+  ],
+  "is_synthetic": false,
+  "issuer_id": "MX_TELEVISA",
+  "lacunas": [],
+  "nome": "Grupo Televisa",
+  "nomes": {
+    "BR_TIM": "TIM Brasil",
+    "BR_VIVO": "Telefônica Brasil (Vivo)",
+    "MX_AMX": "América Móvil",
+    "MX_MEGACABLE": "Megacable",
+    "MX_TELEVISA": "Grupo Televisa"
+  },
+  "nota_anterior": {
+    "autoria": "mente",
+    "conviccao": 1,
+    "data": "2026-10-12",
+    "proximo_resultado": "2026-10-28",
+    "stance": 0,
+    "tipo": "iniciacao",
+    "titulo": "Televisa — caixa da rede, associadas e diluição futura"
+  },
+  "pais": "MX",
+  "pais_pt": "México",
+  "pares": [
+    "BR_TIM",
+    "BR_VIVO",
+    "MX_AMX",
+    "MX_MEGACABLE"
+  ],
+  "proximo_resultado": "2026-10-29",
+  "schema": "cdp.nota.contexto/v1",
+  "setor": "Communication Services",
+  "setor_pt": "Comunicações",
+  "snapshot": {
+    "as_of": "2026-10-28",
+    "manifest_sha256": "7c200915e106c8eb6df9ba179db3a979acb641d6d6b8946fe6e4d9a60cba295b",
+    "modelo_as_of": "2026-10-28"
+  },
+  "tem_linha_eua": true,
+  "termos": [
+    "TIMS3",
+    "TIMS3.SA",
+    "VIVT3",
+    "VIVT3.SA"
+  ],
+  "tickers": [
+    "TLEVISACPO.MX",
+    "TLEVISACPO",
+    "TV"
+  ],
+  "tipo_esperado": "atualizacao"
+}

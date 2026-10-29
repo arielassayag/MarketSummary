@@ -1,0 +1,141 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_REGIONAL",
+  "data": "2026-10-28",
+  "tipo": "atualizacao",
+  "titulo": "Regional — sucessão no banco e resultado registrado exigem reconciliação do capital",
+  "resumo": "A BMV confirma o registro do 3T26 e a sucessão na direção de Banco Regional. O conteúdo financeiro não foi recebido de forma suficiente para reconciliar margem após perdas e contribuição de Hey. Mantemos visão neutra e baixa convicção, separada do rating {{fact:val.MX_REGIONAL.rating_codigo}} e do alvo {{fact:val.MX_REGIONAL.preco_alvo}} do modelo.",
+  "negocio": "Grupo financeiro mexicano com crédito empresarial, arrendamento e operação bancária digital. A avaliação precisa separar retorno e capital requerido de Banco Regional, Hey e demais subsidiárias.",
+  "pilares_tese": [
+    {
+      "titulo": "Sucessão com data e perímetro definidos",
+      "texto": "O conselho aprovou mudança na direção geral de Banco Regional com início em 2026-11-03. O executivo anterior permanece conselheiro e assessor. Trata-se da subsidiária bancária; não se presume mudança de controle da holding.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Alvo exige rentabilidade sustentável",
+      "texto": "O modelo aponta potencial {{fact:val.MX_REGIONAL.upside}} e ke {{fact:val.MX_REGIONAL.ke}}. A diferença requer testar lucro normalizado e capital disponível, sem promover rating quantitativo a diligência concluída.",
+      "evidencias": [
+        "val.MX_REGIONAL.upside",
+        "val.MX_REGIONAL.ke"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Crédito e custo da captação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Acompanhar migração de risco, depósitos e despesas por negócio. A publicação registrada não substitui a conciliação econômica do novo trimestre.",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Início da nova direção geral de Banco Regional conforme evento relevante.",
+      "data": "2026-11-03",
+      "tipo": "outro",
+      "direcao": "incerto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "A transição executiva pode elevar risco de execução; margem e perdas precisam ser avaliadas com capital e perímetro homogêneos.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Crédito e despesas sustentam retorno recorrente; cenário {{fact:val.MX_REGIONAL.alvo_otimista}}.",
+    "base": "Alvo calculado {{fact:val.MX_REGIONAL.preco_alvo}}, condicionado ao lucro atribuível após capital requerido.",
+    "pessimista": "Funding, perdas e despesas pressionam retorno; cenário {{fact:val.MX_REGIONAL.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço {{fact:val.MX_REGIONAL.preco}}, P/L à frente {{fact:val.MX_REGIONAL.pl_fwd}} e P/VP {{fact:val.MX_REGIONAL.pb}}. O consenso público aponta {{fact:val.MX_REGIONAL.consenso_alvo}}; a divergência não revela por si só expectativas incorporadas ao preço. Probabilidades implícitas e WACC permanecem indisponíveis.",
+  "ultimo_resultado": "A BMV registra o 3T26 em 2026-10-26. O acesso às demonstrações foi intermitente e não entregou conteúdo suficiente para conciliar o novo resultado. A nota anterior analisava o 2T26; não extrapolamos sua decomposição para o trimestre atual. Guidance e tom permanecem não avaliados.",
+  "guidance": "nd",
+  "tom_gestao": "nd",
+  "governanca": "O evento primário define sucessão de Banco Regional, com permanência do executivo anterior no conselho e na assessoria. A separação entre decisão executiva, supervisão e capital por entidade deve ser acompanhada; não se infere alteração dos direitos da ação coberta.",
+  "posicao_competitiva": {
+    "titulo": "Relacionamento empresarial a comprovar",
+    "texto": "A hipótese de vantagem na franquia empresarial exige retorno após perdas e custo de servir; o histórico de gestão não comprova superioridade futura.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Não confundir registro com reconciliação",
+    "texto": "Lucro trimestral, rentabilidade anualizada e capital regulatório exigem cortes homogêneos. O registro do relatório não encerra essas verificações.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Contribuição incremental de Hey",
+    "texto": "Conferir capital requerido, despesas e lucro atribuível por subsidiária antes de inferir capacidade de distribuição da holding.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "contratese": {
+    "titulo": "Crescimento sem remuneração do capital",
+    "texto": "A hipótese enfraquece se expansão de ativos e despesas não sustentar retorno após perdas ou se a transição reduzir disciplina comercial.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Margem, risco e transição",
+      "texto": "Acompanhar custo de depósitos, migração do crédito, eficiência por entidade, contribuição de Hey e execução da sucessão.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "o_que_mudou": "Desde 2026-10-26, a consulta confirmou o registro do 3T26 e recebeu o evento de sucessão. A reavaliação do modelo foi incorporada; a conciliação financeira permanece pendente.",
+  "gatilhos_revisao": [
+    "Novo relatório permite reconciliar retorno após perdas e capital por entidade.",
+    "Transição ou despesas alteram materialmente a rentabilidade atribuível."
+  ],
+  "lacunas_de_dados": [
+    "Conteúdo financeiro integral do 3T26 e transcrição não recebidos de forma suficiente.",
+    "Capital de Hey, contribuição incremental e fluxo à holding não reconciliados.",
+    "Guidance atual, probabilidades implícitas e WACC não disponíveis.",
+    "Sem evidência suficiente para atribuir percepção ao mercado."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "bolsa",
+      "instituicao": "BMV — Regional",
+      "titulo": "Mudança na estrutura organizacional",
+      "url": "https://bmv.com.mx/docs-pub/eventemi/eventemi_1597869_1.pdf",
+      "publicado_em": "2026-10-26",
+      "consultado_em": "2026-10-28"
+    },
+    {
+      "id": "F2",
+      "tipo": "bolsa",
+      "instituicao": "BMV — Regional",
+      "titulo": "Registro de informações financeiras periódicas",
+      "url": "https://www.bmv.com.mx/es/emisoras/informacionfinanciera/R-7646-CGEN_CAPIT",
+      "publicado_em": null,
+      "consultado_em": "2026-10-28"
+    }
+  ]
+}

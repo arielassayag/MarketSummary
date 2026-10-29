@@ -1,0 +1,141 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_CHEDRAUI",
+  "data": "2026-10-28",
+  "tipo": "pos_resultado",
+  "titulo": "Chedraui — eficiência logística amortece demanda fraca, sem resolver o retorno da expansão",
+  "resumo": "O 3T26 confirma melhora da margem consolidada com eficiência logística, apesar da fraqueza do consumo. A hipótese depende de caixa depois de expansão, estoques e imóveis. Visão neutra e de baixa convicção; alvo do modelo {{fact:val.MX_CHEDRAUI.preco_alvo}}, com potencial {{fact:val.MX_CHEDRAUI.upside}}.",
+  "negocio": "Autosserviço no México e nos Estados Unidos, com formatos e moedas distintos. Preço competitivo e distribuição precisam remunerar lojas, capital de giro e obrigações imobiliárias.",
+  "pilares_tese": [
+    {
+      "titulo": "Produtividade não elimina a pressão de demanda",
+      "texto": "O comunicado primário do 3T26 atribui melhora de margem às eficiências de compras e distribuição nos Estados Unidos, enquanto transações continuam fracas. A hipótese exige persistência operacional sem deterioração da proposta comercial.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Expansão precisa produzir caixa econômico",
+      "texto": "A orientação anual inclui investimento e expansão, mas o indicador de caixa bancário não mede todos os compromissos. A diligência deve incorporar arrendamentos e maturação das lojas antes de inferir excedente distribuível.",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Tráfego e produtividade logística",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Separar demanda orgânica, eficiência de distribuição e conversão cambial para testar a sustentabilidade da margem.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Próxima atualização de metas e retorno das lojas abertas, sem data primária confirmada nesta consulta.",
+      "data": null,
+      "tipo": "guidance",
+      "direcao": "incerto",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Demanda fraca pode absorver economias logísticas e alongar a maturação do capital investido.",
+      "probabilidade": "alta",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Recuperação de tráfego e produtividade sustentam o cenário do modelo em {{fact:val.MX_CHEDRAUI.alvo_otimista}}.",
+    "base": "Alvo calculado {{fact:val.MX_CHEDRAUI.preco_alvo}}; a tese exige caixa após investimento e imóveis.",
+    "pessimista": "Demanda e custos pressionam geração econômica; cenário calculado {{fact:val.MX_CHEDRAUI.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço {{fact:val.MX_CHEDRAUI.preco}}, alvo {{fact:val.MX_CHEDRAUI.preco_alvo}} e retorno esperado {{fact:val.MX_CHEDRAUI.etr}}. O consenso público de {{fact:val.MX_CHEDRAUI.consenso_alvo}} não prova percepção do mercado. Comparações exigem harmonizar arrendamentos e geografia; fabricantes de alimentos não constituem equivalentes operacionais diretos.",
+  "ultimo_resultado": "O comunicado da companhia de 2026-10-27 confirma pressão de consumo no sudeste mexicano e nas transações americanas, melhora da margem consolidada e efeitos da conversão cambial. Não apresenta nova orientação anual quantitativa no material recebido; classificamos o comunicado como sem guidance novo, sem afirmar retirada ou manutenção das metas anteriores.",
+  "guidance": "sem_guidance",
+  "tom_gestao": "neutro",
+  "governanca": "Separar caixa por território, obrigações imobiliárias e direitos do acionista. Não foi recebida nova decisão societária que permita alterar a leitura anterior de controle e relacionadas.",
+  "posicao_competitiva": {
+    "titulo": "Preço e distribuição",
+    "texto": "A administração mantém preço, sortimento e experiência como pilares comerciais. Nossa hipótese exige que a frequência de compra remunere a estrutura logística e imobiliária.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Margem e caixa têm testes diferentes",
+    "texto": "A melhora de margem não permite inferir aceleração de caixa livre sem conciliar giro, investimentos e arrendamentos por território.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno das lojas após obrigações",
+    "texto": "Confrontar a expansão pretendida com maturação, aluguel, estoques e caixa atribuível. Caixa bancário não substitui análise completa dos compromissos.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "contratese": {
+    "titulo": "Produtividade insuficiente diante do consumo",
+    "texto": "A hipótese enfraquece se a demanda permanecer fraca e a expansão elevar compromissos mais rapidamente que a contribuição econômica das lojas.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Caixa por território",
+      "texto": "Acompanhar tráfego, compra média, vendas comparáveis, giro, margem após distribuição e caixa depois de investimento e arrendamentos.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "o_que_mudou": "A nota de 2026-10-20 preservava a divulgação futura. Agora o comunicado primário do 3T26 foi recebido e o modelo foi reavaliado. A melhora de margem coexistiu com pressão na demanda; permanece aberta a conciliação do caixa econômico.",
+  "gatilhos_revisao": [
+    "Eficiências deixam de compensar pressão de tráfego e custos.",
+    "Lojas novas não remuneram capital após imóveis e giro."
+  ],
+  "lacunas_de_dados": [
+    "Demonstrações completas e transcrição primária não reconciliadas integralmente.",
+    "Sem confirmação de manutenção ou alteração de todas as metas anuais.",
+    "Caixa por território, arrendamentos e maturação das lojas exigem reconciliação.",
+    "Percepção variante do mercado não demonstrada."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Comercial Chedraui / PR Newswire",
+      "titulo": "Comunicado de resultados trimestrais",
+      "url": "https://www.prnewswire.com/news-releases/grupo-comercial-chedraui-sab-de-cv-third-quarter-2026-results-302921570.html",
+      "publicado_em": "2026-10-27",
+      "consultado_em": "2026-10-28"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Comercial Chedraui",
+      "titulo": "Orientação anual e calendário",
+      "url": "https://inversionistas.grupochedraui.com.mx/wp-content/uploads/2026/01/01122026-Guia-GCChedraui-2026.pdf",
+      "publicado_em": "2026-01-12",
+      "consultado_em": "2026-10-28"
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_GCC",
+  "data": "2026-10-28",
+  "tipo": "pos_resultado",
+  "titulo": "GCC — revisão de perspectiva e Odessa deslocam o foco para retorno após expansão",
+  "resumo": "O 3T26 trouxe pressão sobre margem e volumes americanos; a perspectiva foi revista e o investimento esperado reduzido. A entrada comercial de Odessa precisa melhorar custo entregue e caixa após expansão. Visão neutra, baixa convicção; alvo {{fact:val.MX_GCC.preco_alvo}} e potencial {{fact:val.MX_GCC.upside}}.",
+  "negocio": "Produtora de cimento, concreto e agregados nos Estados Unidos e México. Integração industrial e logística pode sustentar retorno regional, condicionado a preço, utilização e frete.",
+  "pilares_tese": [
+    {
+      "titulo": "Odessa precisa remunerar o capital aplicado",
+      "texto": "A transcrição primária descreve maturação gradual conforme a demanda e substituição de embarques mais caros. Capacidade comercial iniciada não comprova contribuição estabilizada.",
+      "evidencias": [
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Caixa gerencial preserva exclusões relevantes",
+      "texto": "O fluxo livre divulgado antecede capex de crescimento e estratégico. A avaliação exige caixa depois de todos os investimentos e aquisições, sem confundir conversão operacional com disponibilidade distribuível.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Preço e logística regional",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Frete, diesel e competição devem ser confrontados com contribuição por mercado. Reajuste anunciado não equivale a preço realizado.",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Entrada em vigor do reajuste de cimento anunciado pela administração, sujeita à realização comercial.",
+      "data": "2027-01-01",
+      "tipo": "outro",
+      "direcao": "positivo",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Demanda e competição podem impedir captura de economias de Odessa e pressionar retorno da capacidade.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Maturação e logística remuneram o capital; cenário {{fact:val.MX_GCC.alvo_otimista}}.",
+    "base": "Alvo {{fact:val.MX_GCC.preco_alvo}} condicionado a caixa após compromissos completos.",
+    "pessimista": "Preço e custo entregue absorvem ganhos de volume; cenário {{fact:val.MX_GCC.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço {{fact:val.MX_GCC.preco}} e retorno esperado {{fact:val.MX_GCC.etr}}, com ke {{fact:val.MX_GCC.ke}}. O alvo público de consenso {{fact:val.MX_GCC.consenso_alvo}} não demonstra percepção do mercado. Comparar cimento exige harmonizar geografia, dívida e capex de manutenção; mineradoras entre os pares não são equivalentes diretos.",
+  "ultimo_resultado": "O relatório de 2026-10-27 mostra queda de vendas e EBITDA no trimestre, com trajetórias distintas no acumulado. A teleconferência de 2026-10-28 revisa volumes de cimento e preços de concreto americanos e crescimento esperado do EBITDA consolidado. Guidance reduzido nesta nota refere-se ao capex anual, com manutenção preservada e redução concentrada no investimento estratégico; não constitui corte uniforme de todos os indicadores.",
+  "guidance": "reduzido",
+  "tom_gestao": "neutro",
+  "governanca": "Confrontar aquisições e recompras com retorno econômico e interesses minoritários. O comunicado de 2026-10-19 informa acordo e recebimento ligado à arbitragem da venda da SOBOCE; esse ingresso extraordinário deve ser separado da geração industrial recorrente.",
+  "posicao_competitiva": {
+    "titulo": "Vantagem regional sujeita a preço entregue",
+    "texto": "A rede interiorizada pode proteger relativamente da competição importada, segundo a administração. A tese exige comprovar essa proteção em contribuição e custo entregue.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Recorrência e perímetros de caixa",
+    "texto": "Separar fluxo livre antes de crescimento do caixa final e distinguir o acordo arbitral extraordinário do desempenho industrial.",
+    "evidencias": [
+      "F1",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Menor desembolso não garante retorno",
+    "texto": "Economias de investimento precisam coexistir com confiabilidade e vendas rentáveis da nova linha. Avaliar aquisições e recompras após necessidades operacionais.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "contratese": {
+    "titulo": "Capacidade sem contribuição suficiente",
+    "texto": "A hipótese enfraquece se o ganho logístico for absorvido por preço, diesel e utilização baixa, enquanto investimentos e compras de ativos consomem caixa.",
+    "evidencias": [
+      "F1",
+      "F2"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Odessa e caixa completo",
+      "texto": "Acompanhar utilização vendida, preço efetivo, frete, contribuição das aquisições e caixa depois de crescimento, manutenção e remuneração do acionista.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "o_que_mudou": "Desde a iniciação, foram recebidos resultado e transcrição do 3T26, com novas vendas de Odessa e revisão de perspectiva. O acordo arbitral foi encerrado com recebimento; não se presume receita industrial recorrente.",
+  "gatilhos_revisao": [
+    "Maturação não reduz custo entregue nem sustenta contribuição.",
+    "Caixa após todos os desembolsos diverge persistentemente do fluxo gerencial."
+  ],
+  "lacunas_de_dados": [
+    "Retorno por projeto e conciliação integral de caixa após aquisições permanecem abertos.",
+    "Sem comparação numérica integral de cada componente da perspectiva anterior.",
+    "Percepção variante do mercado não demonstrada."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "GCC",
+      "titulo": "Relatório de resultados trimestrais",
+      "url": "https://cdn.investorcloud.net/gcc/InformacionFinanciera/InformacionTrimestral/GCC-3T2026-en.pdf",
+      "publicado_em": "2026-10-27",
+      "consultado_em": "2026-10-28"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "GCC",
+      "titulo": "Transcrição da teleconferência de resultados",
+      "url": "https://cdn.investorcloud.net/gcc/InformacionFinanciera/InformacionTrimestral/ConferenceCall/GCC-Q3-2026-Call-Transcript.pdf",
+      "publicado_em": "2026-10-28",
+      "consultado_em": "2026-10-28"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "GCC / GlobeNewswire",
+      "titulo": "Acordo e recebimento relativos à arbitragem",
+      "url": "https://www.globenewswire.com/news-release/2026/10/19/3383965/0/en/gcc-announces-settlement-and-payment-in-connection-with-favorable-arbitral-award.html",
+      "publicado_em": "2026-10-19",
+      "consultado_em": "2026-10-28"
+    }
+  ]
+}

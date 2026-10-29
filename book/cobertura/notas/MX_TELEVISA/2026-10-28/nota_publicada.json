@@ -1,0 +1,322 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-28",
+    "manifest_sha256": "7c200915e106c8eb6df9ba179db3a979acb641d6d6b8946fe6e4d9a60cba295b",
+    "modelo_as_of": "2026-10-28"
+  },
+  "conviccao": 1,
+  "data": "2026-10-28",
+  "hashes": {
+    "contexto": "5b5c92a02508160ef1501f6daa444339b5712bb95ac7a57f0625d0215ab38a98",
+    "factbook": "4444dabce5ac9aa01a3a4ee2c3856c9044f41d0928a92c86797b34e0a7b3e765",
+    "nota_json": "0a0be97492885050a1b1a0e96a6c7d9e02fd5b9779814325e30d545c2d4b868e"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_TELEVISA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-29",
+  "published_at": "2026-10-29T01:56:50.928665+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Confrontar participação no consórcio, caixa, garantias e obrigações com o retorno da rede existente e o capital plenamente diluído.",
+        "titulo": "Aquisição, fibra e diluição"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Análise regulatória e eventual fechamento do acordo anunciado, sem data exata confirmada.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "m_a"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo MXN 9,90 condicionado a caixa após obrigações e participações.",
+      "otimista": "Retenção e capital remunerador sustentam caixa por instrumento; cenário MXN 12,96.",
+      "pessimista": "Reinvestimento e compromissos superam eficiência; cenário MXN 6,78."
+    },
+    "comentario_valuation": "Preço MXN 8,07, retorno esperado +22,71% e dispersão 64,46%. Separar operação de telecom, valor das associadas, dívida e diluição por certificado. O consenso MXN 13,62 não comprova percepção de mercado; não se presumem efeitos da transação incorporados ao modelo.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese falha se novos compromissos e perdas operacionais consumirem eficiência e liquidez sem remuneração suficiente por instrumento.",
+        "titulo": "Escala comprada sem retorno atribuível"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-28",
+    "dados_simulados": false,
+    "data": "2026-10-28",
+    "ficha": [
+      {
+        "fato": "val.MX_TELEVISA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 8,07"
+      },
+      {
+        "fato": "val.MX_TELEVISA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 9,90"
+      },
+      {
+        "fato": "val.MX_TELEVISA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+22,71%"
+      },
+      {
+        "fato": "val.MX_TELEVISA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_TELEVISA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.MX_TELEVISA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 12,96"
+      },
+      {
+        "fato": "val.MX_TELEVISA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "15,87%"
+      },
+      {
+        "fato": "val.MX_TELEVISA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 6,78"
+      },
+      {
+        "fato": "val.MX_TELEVISA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "27,70%"
+      },
+      {
+        "fato": "val.MX_TELEVISA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "14,94%"
+      },
+      {
+        "fato": "val.MX_TELEVISA.wacc",
+        "rotulo": "WACC",
+        "valor": "11,32%"
+      },
+      {
+        "fato": "val.MX_TELEVISA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_TELEVISA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+22,71%"
+      },
+      {
+        "fato": "val.MX_TELEVISA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+14,32%"
+      },
+      {
+        "fato": "val.MX_TELEVISA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,3x"
+      },
+      {
+        "fato": "val.MX_TELEVISA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,2x"
+      },
+      {
+        "fato": "val.MX_TELEVISA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 13,62"
+      },
+      {
+        "fato": "val.MX_TELEVISA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-27,32%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-28",
+        "id": "F1",
+        "instituicao": "Grupo Televisa",
+        "publicado_em": "2026-10-13",
+        "tipo": "Relações com investidores",
+        "titulo": "Acordo com Fintech para adquirir operação móvel",
+        "url": "https://www.televisair.com/~/media/Files/T/Televisa-IR/press-release-gtv-october-13-2026-eng.pdf"
+      },
+      {
+        "consultado_em": "2026-10-28",
+        "id": "F2",
+        "instituicao": "Grupo Televisa",
+        "publicado_em": "2026-07-23",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado semestral e medidas gerenciais",
+        "url": "https://www.televisair.com/~/media/Files/T/Televisa-IR/260723-gtv-pr-en-2q26.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Termos finais aumentam capital requerido ou reduzem retorno por instrumento.",
+      "Eficiência não compensa desconexões e reinvestimento."
+    ],
+    "governanca": "Revisar direitos por ação, certificado e recibo, instrumentos conversíveis e relações com o consórcio. A transação anunciada prevê sociedade com Fintech e condições regulatórias; dívida sem recurso não elimina o capital comprometido pela holding.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar desconexões, contribuição de banda larga, capex pago, caixa integral, autorizações e termos finais do acordo.",
+        "titulo": "Cliente, caixa e fechamento"
+      }
+    ],
+    "issuer_id": "MX_TELEVISA",
+    "lacunas_de_dados": [
+      "Resultado integral do 3T26 e guidance atual não recebidos.",
+      "Termos completos, autorizações e fechamento do acordo permanecem pendentes.",
+      "Fluxo IFRS, diluição e retorno atribuível das associadas não reconciliados integralmente.",
+      "Sem comprovação de percepção variante do mercado."
+    ],
+    "modelo_de_cobertura": "2026-10-28",
+    "negocio": "Grupo mexicano de telecomunicações com rede residencial, serviços empresariais, satélite e participação em TelevisaUnivision. Operação consolidada e associadas exigem fluxos e direitos distintos.",
+    "nome": "Grupo Televisa",
+    "o_que_mudou": "Desde a iniciação de 2026-10-12, foi anunciado o acordo para adquirir AT&T México. A leitura atualiza compromissos potenciais; não assume fechamento ou resultado trimestral novo.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "BR_TIM",
+        "nome": "TIM Brasil"
+      },
+      {
+        "issuer_id": "BR_VIVO",
+        "nome": "Telefônica Brasil (Vivo)"
+      },
+      {
+        "issuer_id": "MX_AMX",
+        "nome": "América Móvil"
+      },
+      {
+        "issuer_id": "MX_MEGACABLE",
+        "nome": "Megacable"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O comunicado de 2026-10-13 prevê financiamento com caixa e dívida garantida sem recurso e contabilização por equivalência patrimonial. Aprovações e condições de fechamento permanecem necessárias.",
+        "titulo": "Acordo não equivale a aquisição concluída"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O último release recebido, do 2T26, combina margem de segmento maior e receita menor. A hipótese exige contribuição depois de fibra, despesas corporativas, giro, impostos e juros.",
+        "titulo": "Eficiência precisa gerar caixa integral"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O acordo pode ampliar opções comerciais, mas exige retenção, preço realizado e custo de atendimento compatíveis com retorno incremental.",
+        "titulo": "Convergência condicionada à economia do cliente"
+      }
+    ],
+    "publicada_em": "2026-10-29T01:56:50.928665+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O caixa gerencial do release deduz capex do resultado de segmento; não equivale ao fluxo completo após giro, juros e impostos.",
+        "titulo": "Margem de segmento e caixa IFRS"
+      }
+    ],
+    "resumo": "O acordo para adquirir AT&T México com Fintech altera a agenda de capital, mas depende de aprovações e fechamento. A tese exige retorno por instrumento depois de fibra, financiamento e participações. Visão neutra, baixa convicção; alvo MXN 9,90 e potencial +22,71%.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Aquisição e migração de rede podem absorver recursos enquanto satélite perde receita; equivalência patrimonial não garante caixa distribuído."
+      }
+    ],
+    "setor": "Comunicações",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Televisa — acordo móvel amplia compromissos antes da comprovação do retorno",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O 2T26 é o último release recebido na consulta ao RI. Eficiência operacional coexistia com queda do satélite e prejuízo atribuível, com efeitos de associadas e tributos. Não foi recebido resultado primário do 3T26; o evento previsto de TelevisaUnivision tem perímetro distinto e não substitui o resultado do Grupo Televisa.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar obrigações, garantias e retorno incremental do acordo. Sinergia pretendida não constitui geração de caixa realizada.",
+        "vetor": "Compromisso de capital e integração móvel"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

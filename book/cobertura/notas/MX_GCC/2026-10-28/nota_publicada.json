@@ -1,0 +1,335 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-28",
+    "manifest_sha256": "7c200915e106c8eb6df9ba179db3a979acb641d6d6b8946fe6e4d9a60cba295b",
+    "modelo_as_of": "2026-10-28"
+  },
+  "conviccao": 1,
+  "data": "2026-10-28",
+  "hashes": {
+    "contexto": "9d858c415eab0f3f2e008de496f67edef6600957c35dac92210fdf52f12a2960",
+    "factbook": "6bc12e82e57cdfa05bcc366d552c55662ff6d42a28845bd4dbd3bbfa189e7c35",
+    "nota_json": "80496841df4d069417b2a2540766384d53f8c9acb51db63e88f393570fe10b20"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_GCC",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-27",
+  "published_at": "2026-10-29T01:43:56.595412+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Economias de investimento precisam coexistir com confiabilidade e vendas rentáveis da nova linha. Avaliar aquisições e recompras após necessidades operacionais.",
+        "titulo": "Menor desembolso não garante retorno"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2027-01-01",
+        "descricao": "Entrada em vigor do reajuste de cimento anunciado pela administração, sujeita à realização comercial.",
+        "direcao": "positivo",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "outro"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo MXN 191,16 condicionado a caixa após compromissos completos.",
+      "otimista": "Maturação e logística remuneram o capital; cenário MXN 224,04.",
+      "pessimista": "Preço e custo entregue absorvem ganhos de volume; cenário MXN 163,74."
+    },
+    "comentario_valuation": "Preço MXN 172,72 e retorno esperado +11,60%, com ke 12,43%. O alvo público de consenso MXN 260,25 não demonstra percepção do mercado. Comparar cimento exige harmonizar geografia, dívida e capex de manutenção; mineradoras entre os pares não são equivalentes diretos.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se o ganho logístico for absorvido por preço, diesel e utilização baixa, enquanto investimentos e compras de ativos consomem caixa.",
+        "titulo": "Capacidade sem contribuição suficiente"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-28",
+    "dados_simulados": false,
+    "data": "2026-10-28",
+    "ficha": [
+      {
+        "fato": "val.MX_GCC.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 172,72"
+      },
+      {
+        "fato": "val.MX_GCC.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 191,16"
+      },
+      {
+        "fato": "val.MX_GCC.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+10,68%"
+      },
+      {
+        "fato": "val.MX_GCC.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_GCC.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_GCC.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 224,04"
+      },
+      {
+        "fato": "val.MX_GCC.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "25,75%"
+      },
+      {
+        "fato": "val.MX_GCC.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 163,74"
+      },
+      {
+        "fato": "val.MX_GCC.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "32,74%"
+      },
+      {
+        "fato": "val.MX_GCC.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,43%"
+      },
+      {
+        "fato": "val.MX_GCC.wacc",
+        "rotulo": "WACC",
+        "valor": "11,33%"
+      },
+      {
+        "fato": "val.MX_GCC.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_GCC.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+11,60%"
+      },
+      {
+        "fato": "val.MX_GCC.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "0,00%"
+      },
+      {
+        "fato": "val.MX_GCC.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,9x"
+      },
+      {
+        "fato": "val.MX_GCC.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,3x"
+      },
+      {
+        "fato": "val.MX_GCC.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 260,25"
+      },
+      {
+        "fato": "val.MX_GCC.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-26,55%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-28",
+        "id": "F1",
+        "instituicao": "GCC",
+        "publicado_em": "2026-10-27",
+        "tipo": "Relações com investidores",
+        "titulo": "Relatório de resultados trimestrais",
+        "url": "https://cdn.investorcloud.net/gcc/InformacionFinanciera/InformacionTrimestral/GCC-3T2026-en.pdf"
+      },
+      {
+        "consultado_em": "2026-10-28",
+        "id": "F2",
+        "instituicao": "GCC",
+        "publicado_em": "2026-10-28",
+        "tipo": "Relações com investidores",
+        "titulo": "Transcrição da teleconferência de resultados",
+        "url": "https://cdn.investorcloud.net/gcc/InformacionFinanciera/InformacionTrimestral/ConferenceCall/GCC-Q3-2026-Call-Transcript.pdf"
+      },
+      {
+        "consultado_em": "2026-10-28",
+        "id": "F3",
+        "instituicao": "GCC / GlobeNewswire",
+        "publicado_em": "2026-10-19",
+        "tipo": "Relações com investidores",
+        "titulo": "Acordo e recebimento relativos à arbitragem",
+        "url": "https://www.globenewswire.com/news-release/2026/10/19/3383965/0/en/gcc-announces-settlement-and-payment-in-connection-with-favorable-arbitral-award.html"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Maturação não reduz custo entregue nem sustenta contribuição.",
+      "Caixa após todos os desembolsos diverge persistentemente do fluxo gerencial."
+    ],
+    "governanca": "Confrontar aquisições e recompras com retorno econômico e interesses minoritários. O comunicado de 2026-10-19 informa acordo e recebimento ligado à arbitragem da venda da SOBOCE; esse ingresso extraordinário deve ser separado da geração industrial recorrente.",
+    "guidance": "reduzido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar utilização vendida, preço efetivo, frete, contribuição das aquisições e caixa depois de crescimento, manutenção e remuneração do acionista.",
+        "titulo": "Odessa e caixa completo"
+      }
+    ],
+    "issuer_id": "MX_GCC",
+    "lacunas_de_dados": [
+      "Retorno por projeto e conciliação integral de caixa após aquisições permanecem abertos.",
+      "Sem comparação numérica integral de cada componente da perspectiva anterior.",
+      "Percepção variante do mercado não demonstrada."
+    ],
+    "modelo_de_cobertura": "2026-10-28",
+    "negocio": "Produtora de cimento, concreto e agregados nos Estados Unidos e México. Integração industrial e logística pode sustentar retorno regional, condicionado a preço, utilização e frete.",
+    "nome": "GCC",
+    "o_que_mudou": "Desde a iniciação, foram recebidos resultado e transcrição do 3T26, com novas vendas de Odessa e revisão de perspectiva. O acordo arbitral foi encerrado com recebimento; não se presume receita industrial recorrente.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_CEMEX",
+        "nome": "Cemex"
+      },
+      {
+        "issuer_id": "MX_ENDEAVOUR",
+        "nome": "Endeavour Silver"
+      },
+      {
+        "issuer_id": "MX_GMEXICO",
+        "nome": "Grupo México"
+      },
+      {
+        "issuer_id": "MX_ORBIA",
+        "nome": "Orbia"
+      },
+      {
+        "issuer_id": "MX_PENOLES",
+        "nome": "Industrias Peñoles"
+      },
+      {
+        "issuer_id": "MX_TERNIUM",
+        "nome": "Ternium"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A transcrição primária descreve maturação gradual conforme a demanda e substituição de embarques mais caros. Capacidade comercial iniciada não comprova contribuição estabilizada.",
+        "titulo": "Odessa precisa remunerar o capital aplicado"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O fluxo livre divulgado antecede capex de crescimento e estratégico. A avaliação exige caixa depois de todos os investimentos e aquisições, sem confundir conversão operacional com disponibilidade distribuível.",
+        "titulo": "Caixa gerencial preserva exclusões relevantes"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A rede interiorizada pode proteger relativamente da competição importada, segundo a administração. A tese exige comprovar essa proteção em contribuição e custo entregue.",
+        "titulo": "Vantagem regional sujeita a preço entregue"
+      }
+    ],
+    "publicada_em": "2026-10-29T01:43:56.595412+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Separar fluxo livre antes de crescimento do caixa final e distinguir o acordo arbitral extraordinário do desempenho industrial.",
+        "titulo": "Recorrência e perímetros de caixa"
+      }
+    ],
+    "resumo": "O 3T26 trouxe pressão sobre margem e volumes americanos; a perspectiva foi revista e o investimento esperado reduzido. A entrada comercial de Odessa precisa melhorar custo entregue e caixa após expansão. Visão neutra, baixa convicção; alvo MXN 191,16 e potencial +10,68%.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Demanda e competição podem impedir captura de economias de Odessa e pressionar retorno da capacidade."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "GCC — revisão de perspectiva e Odessa deslocam o foco para retorno após expansão",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "O relatório de 2026-10-27 mostra queda de vendas e EBITDA no trimestre, com trajetórias distintas no acumulado. A teleconferência de 2026-10-28 revisa volumes de cimento e preços de concreto americanos e crescimento esperado do EBITDA consolidado. Guidance reduzido nesta nota refere-se ao capex anual, com manutenção preservada e redução concentrada no investimento estratégico; não constitui corte uniforme de todos os indicadores.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Frete, diesel e competição devem ser confrontados com contribuição por mercado. Reajuste anunciado não equivale a preço realizado.",
+        "vetor": "Preço e logística regional"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,360 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-28",
+    "manifest_sha256": "7c200915e106c8eb6df9ba179db3a979acb641d6d6b8946fe6e4d9a60cba295b",
+    "modelo_as_of": "2026-10-28"
+  },
+  "conviccao": 1,
+  "data": "2026-10-29",
+  "hashes": {
+    "contexto": "8bb91450950f24369eb2f0ab691c0764bb5974350fa1fe94b18ac68b910b0c46",
+    "factbook": "29c50e7f6792221245db7d2d6205299ef69b617ef7c40dff8192636634f7bc2d",
+    "nota_json": "bd3ea770167c9a937b51b39811e43625ac03c9fc5ae74ce6fc16cf9846f633ff"
+  },
+  "is_synthetic": false,
+  "issuer_id": "PE_HUDBAY",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-12",
+  "published_at": "2026-10-30T01:47:21.479891+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Examinar compromissos da construção, financiamento esperado e aportes antes de atribuir retorno por ação à expansão.",
+        "titulo": "Decisão aprovada exige disciplina"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-12",
+        "descricao": "Divulgação de 3T26 e teleconferência; conferir caixa disponível, custos e compromissos de investimento.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Contratação do financiamento e evolução da construção de Copper World.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "capital"
+      }
+    ],
+    "cenarios": {
+      "base": "Disciplina de construção e liquidez condicionam o valor; alvo US$ 12,61.",
+      "otimista": "Operação financia expansão com retorno após direitos dos sócios; alvo US$ 17,18.",
+      "pessimista": "Capital adicional e preços minerais comprimem caixa residual; alvo US$ 7,75."
+    },
+    "comentario_valuation": "Preço US$ 23,60, retorno esperado -45,96%, alpha relativo -49,54% e ke 12,50%. Confiança B e dispersão 45,05% não substituem diligência de projeto. Consenso US$ 34,77, diferença -63,72%; sem prova de percepção variante. Não inferimos incorporação integral da decisão de investimento pelo retrato de 2026-10-28. Probabilidades implícitas ausentes.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Se operação e financiamento não suportarem os aportes sem diluição econômica relevante, crescimento mineral poderá não se converter em retorno residual.",
+        "titulo": "Invalidação da hipótese"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-29",
+    "dados_simulados": false,
+    "data": "2026-10-29",
+    "ficha": [
+      {
+        "fato": "val.PE_HUDBAY.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 23,60"
+      },
+      {
+        "fato": "val.PE_HUDBAY.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 12,61"
+      },
+      {
+        "fato": "val.PE_HUDBAY.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-46,55%"
+      },
+      {
+        "fato": "val.PE_HUDBAY.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.PE_HUDBAY.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.PE_HUDBAY.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 17,18"
+      },
+      {
+        "fato": "val.PE_HUDBAY.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.PE_HUDBAY.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 7,75"
+      },
+      {
+        "fato": "val.PE_HUDBAY.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.PE_HUDBAY.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,50%"
+      },
+      {
+        "fato": "val.PE_HUDBAY.wacc",
+        "rotulo": "WACC",
+        "valor": "11,68%"
+      },
+      {
+        "fato": "val.PE_HUDBAY.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.PE_HUDBAY.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-45,96%"
+      },
+      {
+        "fato": "val.PE_HUDBAY.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-49,54%"
+      },
+      {
+        "fato": "val.PE_HUDBAY.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "12,3x"
+      },
+      {
+        "fato": "val.PE_HUDBAY.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,9x"
+      },
+      {
+        "fato": "val.PE_HUDBAY.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 34,77"
+      },
+      {
+        "fato": "val.PE_HUDBAY.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-63,72%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-29",
+        "id": "F1",
+        "instituicao": "Hudbay Minerals",
+        "publicado_em": "2026-10-21",
+        "tipo": "Relações com investidores",
+        "titulo": "Aprovação da construção e plano financeiro de Copper World",
+        "url": "https://hudbayminerals.com/investors/press-releases/press-release-details/2026/Hudbay-and-Mitsubishi-Approve-Copper-World-Project-Construction-Advancing-Next-Major-U-S--Copper-Mine-Towards-First-Production-in-2029/default.aspx"
+      },
+      {
+        "consultado_em": "2026-10-29",
+        "id": "F2",
+        "instituicao": "Hudbay Minerals",
+        "publicado_em": "2026-10-15",
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário de resultado e teleconferência",
+        "url": "https://hudbayminerals.com/investors/press-releases/press-release-details/2026/Hudbay-to-Host-Conference-Call-for-Third-Quarter-2026-Results/default.aspx"
+      },
+      {
+        "consultado_em": "2026-10-29",
+        "id": "F3",
+        "instituicao": "Hudbay Minerals",
+        "publicado_em": "2026-07-29",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado financeiro e medidas ajustadas",
+        "url": "https://hudbayminerals.com/investors/press-releases/press-release-details/2026/Hudbay-Delivers-Strong-Second-Quarter-2026-Results-and-Improves-Cash-Cost-Guidance/default.aspx"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultado trimestral altera caixa disponível e custos completos.",
+      "Financiamento efetivo modifica aportes e riscos do projeto.",
+      "Construção altera custo ou prazo econômico."
+    ],
+    "governanca": "Copper World possui sócio e contrato de metais preciosos. Avaliar direitos de decisão, restrições de recursos, aportes e distribuição; extensão de crédito anunciada não comprova fechamento da operação.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Acompanhar custo contratado, cronograma, recursos restritos, dívida efetivamente fechada e direitos dos sócios.",
+        "titulo": "Capital e execução"
+      }
+    ],
+    "issuer_id": "PE_HUDBAY",
+    "lacunas_de_dados": [
+      "Resultado de 3T26 previsto para 2026-11-12.",
+      "Contratação integral da dívida do projeto e fechamento do crédito ampliado não confirmados.",
+      "Reconciliação completa de caixa restrito, direitos dos sócios e retorno por ação pendente.",
+      "Probabilidades implícitas ausentes; percepção variante não comprovada."
+    ],
+    "modelo_de_cobertura": "2026-10-28",
+    "negocio": "Hudbay é uma mineradora de cobre com exposição a ouro, operações no Canadá e Peru e projetos nos Estados Unidos. A tese exige avaliar recursos disponíveis e direitos dos sócios antes de atribuir valor residual à expansão.",
+    "nome": "Hudbay Minerals",
+    "o_que_mudou": "A decisão final de Copper World deixou de ser futura e foi formalmente aprovada. Incorporamos o plano de financiamento anunciado e o calendário confirmado de 3T26. Mantemos separados decisão, contratação e produção.",
+    "pais": "Peru",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_UNIPAR",
+        "nome": "Unipar"
+      },
+      {
+        "issuer_id": "BR_VALE",
+        "nome": "Vale"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Hudbay, 2026-10-21: a decisão final de investimento de Copper World foi aprovada. O início de produção é projetado para 2029. Aprovação transforma o risco de decisão em risco de execução, sem comprovar entrega econômica.",
+        "titulo": "Decisão tomada, produção futura"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O plano combina recursos do sócio, contrato de metais preciosos, dívida de projeto esperada e aportes futuros. Avaliar contratação, restrições e obrigações antes de tratar a estrutura como financiamento concluído.",
+        "titulo": "Plano financeiro condicionado"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Reservas e estudos podem sustentar a hipótese de expansão; vantagem econômica depende de execução e preço realizado. A atratividade descrita pelo emissor não comprova superioridade relativa.",
+        "titulo": "Recurso mineral e retorno"
+      }
+    ],
+    "publicada_em": "2026-10-30T01:47:21.479891+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Conciliar caixa contábil, recursos restritos e medidas ajustadas antes de anualizar geração ou concluir desalavancagem orgânica.",
+        "titulo": "Caixa disponível"
+      }
+    ],
+    "resumo": "A decisão de investimento em Copper World foi aprovada por Hudbay e Mitsubishi em 2026-10-21. Isso substitui a condição ainda futura da nota anterior, sem equivaler a produção ou financiamento integral contratado. Mantemos neutralidade e convicção baixa. Alvo US$ 12,61, potencial -46,55% e rating Venda.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Custo de construção, licenças e financiamento podem reduzir o retorno residual, mesmo com a decisão de investimento aprovada."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Créditos de subprodutos e medidas ajustadas podem sugerir custo baixo sem demonstrar caixa livre após todo o investimento."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "evento",
+    "tipo_pt": "Evento",
+    "titulo": "Hudbay: Copper World aprovado, com financiamento e execução ainda condicionantes",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O resultado financeiro consultado permanece 2T26. O release distingue custos líquidos e medidas ajustadas de medidas contábeis. A divulgação de 3T26 está prevista para 2026-11-12; não tratamos o disparo da fila como comprovação de resultado já divulgado.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Testar custo, cronograma e direitos sobre caixa do projeto; a expansão não é geração atual.",
+        "vetor": "Construção e capital residual"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

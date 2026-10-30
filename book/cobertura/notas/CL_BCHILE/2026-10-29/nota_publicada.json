@@ -1,0 +1,358 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-28",
+    "manifest_sha256": "7c200915e106c8eb6df9ba179db3a979acb641d6d6b8946fe6e4d9a60cba295b",
+    "modelo_as_of": "2026-10-28"
+  },
+  "conviccao": 1,
+  "data": "2026-10-29",
+  "hashes": {
+    "contexto": "60c16c3633463c3e37cb0cdc0889ea92e9e4c955fe83f8f803e63b6a9aec87f8",
+    "factbook": "a183548e87f119e4e10dbb70516fabd838b782f6efb0a3609853835d7073948e",
+    "nota_json": "f0ed405d2943b19e84afb3446c5abc85cbd27c8fa345e164664fbf1469d34fcd"
+  },
+  "is_synthetic": false,
+  "issuer_id": "CL_BCHILE",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-30",
+  "published_at": "2026-10-30T01:51:02.197710+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Confrontar capacidade de remuneração com perdas esperadas e exigências de capital; lucro e provisão de dividendo não equivalem a pagamento.",
+        "titulo": "Distribuição e prudência"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2027-04-03",
+        "descricao": "Posse anunciada de Hernán Arellano na presidência executiva; monitorar continuidade e prioridades.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "outro"
+      },
+      {
+        "data": "2026-10-30",
+        "descricao": "Próxima divulgação registrada no calendário do modelo; data sujeita a confirmação documental do emissor.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "evento.CL_BCHILE.proximo_resultado",
+            "nome": "Próxima divulgação de resultado",
+            "valor": "2026-10-30"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Funding, crédito e capital seguem condicionantes; alvo CLP 138,09.",
+      "otimista": "Relacionamento e eficiência sustentam retorno após perdas; alvo CLP 159,11.",
+      "pessimista": "Menor margem e maior risco consomem retorno atribuível; alvo CLP 120,77."
+    },
+    "comentario_valuation": "Preço CLP 192,40, retorno esperado -23,66%, alpha relativo -42,48% e ke 9,60%. P/VP 3,5x exige testar rentabilidade persistente. Consenso CLP 186,40, diferença -25,92%; não prova percepção variante. Seguradoras e infraestrutura financeira entre os pares não têm o mesmo risco bancário. Probabilidades e WACC ausentes; não foram preenchidos.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Se retorno depender de efeitos de balanço sem margem recorrente após perdas, a hipótese de franquia remuneradora perde suporte.",
+        "titulo": "Persistência da rentabilidade"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-29",
+    "dados_simulados": false,
+    "data": "2026-10-29",
+    "ficha": [
+      {
+        "fato": "val.CL_BCHILE.preco",
+        "rotulo": "Preço de referência",
+        "valor": "CLP 192,40"
+      },
+      {
+        "fato": "val.CL_BCHILE.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "CLP 138,09"
+      },
+      {
+        "fato": "val.CL_BCHILE.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-28,23%"
+      },
+      {
+        "fato": "val.CL_BCHILE.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.CL_BCHILE.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.CL_BCHILE.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "CLP 159,11"
+      },
+      {
+        "fato": "val.CL_BCHILE.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_BCHILE.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "CLP 120,77"
+      },
+      {
+        "fato": "val.CL_BCHILE.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_BCHILE.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "9,60%"
+      },
+      {
+        "fato": "val.CL_BCHILE.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_BCHILE.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,09%"
+      },
+      {
+        "fato": "val.CL_BCHILE.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-23,66%"
+      },
+      {
+        "fato": "val.CL_BCHILE.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-42,48%"
+      },
+      {
+        "fato": "val.CL_BCHILE.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "14,3x"
+      },
+      {
+        "fato": "val.CL_BCHILE.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "3,5x"
+      },
+      {
+        "fato": "val.CL_BCHILE.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "CLP 186,40"
+      },
+      {
+        "fato": "val.CL_BCHILE.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-25,92%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-29",
+        "id": "F1",
+        "instituicao": "SEC / Banco de Chile",
+        "publicado_em": "2026-10-29",
+        "tipo": "Regulador",
+        "titulo": "Comunicado de sucessão na presidência executiva",
+        "url": "https://www.sec.gov/Archives/edgar/data/1161125/000121390026113818/ea0310207-6k_bankofchile.htm"
+      },
+      {
+        "consultado_em": "2026-10-29",
+        "id": "F2",
+        "instituicao": "SEC / Banco de Chile",
+        "publicado_em": null,
+        "tipo": "Regulador",
+        "titulo": "Relatório financeiro e comentário da administração",
+        "url": "https://www.sec.gov/Archives/edgar/data/1161125/000121390026083593/ea029975801ex99-1.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultado completo muda leitura da margem e do risco de crédito.",
+      "Transição modifica disciplina de capital e prioridades.",
+      "Bases homogêneas alteram retorno relativo."
+    ],
+    "governanca": "O conselho aceitou a renúncia com eficácia futura e nomeou o sucessor. A avaliação de direitos dos acionistas, controle, partes relacionadas e instrumento depositário permanece necessária; continuidade declarada não é garantia de desempenho.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Monitorar margem com clientes, depósitos, comissões, perdas, capital e prioridades divulgadas durante a transição.",
+        "titulo": "Crédito, funding e sucessão"
+      }
+    ],
+    "issuer_id": "CL_BCHILE",
+    "lacunas_de_dados": [
+      "Resultado completo de 3T26 não recebido; calendário do modelo sujeito a confirmação.",
+      "Reconciliação de margem, perdas esperadas e capital ainda pendente.",
+      "Probabilidades implícitas e WACC indisponíveis.",
+      "Direitos atuais por instrumento e percepção variante não comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-28",
+    "negocio": "Banco comercial chileno com crédito, depósitos e serviços financeiros. A tese depende de relacionamento que sustente margem e comissões após perdas e capital, além dos efeitos de inflação e tesouraria.",
+    "nome": "Banco de Chile",
+    "o_que_mudou": "Acrescentamos o comunicado regulatório de sucessão e os fatos atuais do valuation. A fila sugeria pós-resultado, mas não recebemos resultado completo recente; a nota trata o evento de governança.",
+    "pais": "Chile",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      },
+      {
+        "issuer_id": "BR_IRB",
+        "nome": "IRB Brasil RE"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Banco de Chile, SEC, 2026-10-29: Eduardo Ebensperger deixa a presidência executiva em 2027-04-02; Hernán Arellano assume em 2027-04-03. Avaliar continuidade de disciplina de crédito e capital, sem antecipar resultado da sucessão.",
+        "titulo": "Transição com efeito futuro"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O relatório de 2T26 distingue informação contábil e gerencial. Testar margem com clientes, comissões e perdas em bases comparáveis, sem transformar retorno elevado em vantagem recorrente presumida.",
+        "titulo": "Retorno exige base homogênea"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Testar retenção de depósitos e geração de comissões com custo de servir e risco comparáveis, sem presumir liderança econômica por reputação.",
+        "titulo": "Franquia sob teste"
+      }
+    ],
+    "publicada_em": "2026-10-30T01:51:02.197710+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fato": "val.CL_BCHILE.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "9,60%"
+          }
+        ],
+        "texto": "Conciliar patrimônio, capital e reservas e separar componentes de margem antes de comparar retorno com custo de capital.",
+        "titulo": "Bases de retorno"
+      }
+    ],
+    "resumo": "Visão neutra e convicção baixa. O conselho anunciou sucessão na presidência executiva para 2027. A mudança é futura e não demonstra alteração imediata do retorno econômico. Alvo CLP 138,09, potencial -28,23% e rating Venda. O resultado completo de 3T26 não foi recebido nesta consulta.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Inflação, juros e perdas de crédito podem reduzir o retorno recorrente; comparações com bases distintas podem exagerar a força da franquia."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "Transição executiva pode alterar prioridades e execução; a nomeação futura não assegura continuidade econômica."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "evento",
+    "tipo_pt": "Evento",
+    "titulo": "Banco de Chile: sucessão anunciada preserva a necessidade de testar retorno recorrente",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O material financeiro recebido permanece o relatório de 2T26. A reconciliação de inflação, tesouraria, provisões e retorno em base homogênea continua pendente. O anúncio de sucessão não é divulgação de resultado trimestral.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar margem com clientes e perdas por segmento antes de extrapolar retorno patrimonial.",
+        "vetor": "Retorno depois do crédito"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

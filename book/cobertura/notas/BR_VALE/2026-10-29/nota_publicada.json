@@ -1,0 +1,367 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-28",
+    "manifest_sha256": "7c200915e106c8eb6df9ba179db3a979acb641d6d6b8946fe6e4d9a60cba295b",
+    "modelo_as_of": "2026-10-28"
+  },
+  "conviccao": 1,
+  "data": "2026-10-29",
+  "hashes": {
+    "contexto": "bc0dc8c93715cbdf4132b569e3bbdb1046e8078e2ab278a183d5dcf72ff565fa",
+    "factbook": "4a8608933ba43e633d0f4cf242337adf247be815c22eac91d3096f9bd4822a2c",
+    "nota_json": "f4e1537b8efcb80b4e50c38d494f8a4362a8891b2117f57288e2a589c7abe516"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_VALE",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-29",
+  "published_at": "2026-10-30T01:42:25.080130+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Exigir retorno após capital empregado e reparação antes de atribuir valor adicional à expansão. O avanço operacional, isoladamente, não comprova criação de valor.",
+        "titulo": "Projetos e obrigações"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-30",
+        "descricao": "Teleconferência do resultado integrado; avaliar conciliação de custos, caixa e obrigações.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Disciplina de capital e custos sustentam o alvo R$ 58,07 do retrato anterior ao resultado.",
+      "otimista": "Melhor realização e retorno após obrigações sustentam o alvo R$ 90,33, com probabilidade implícita 8,15%.",
+      "pessimista": "Pressão de custos e compromissos limita o valor ao alvo R$ 25,46, com probabilidade implícita 0,07%."
+    },
+    "comentario_valuation": "Rating Neutro, confiança A e WACC 12,44%. O alvo varia -11,18% contra o anterior de R$ 65,38. Consenso público em R$ 86,53; diferença -32,89%. A divergência não comprova expectativas incorporadas ao preço. Pares de siderurgia, químicos e participações têm exposições distintas; não inferimos vantagem operacional dessa comparação. Modelo de 2026-10-28, anterior à divulgação de 3T26.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fato": "val.BR_VALE.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 58,07"
+          }
+        ],
+        "texto": "A neutralidade perde suporte se houver melhora persistente de caixa após obrigações ou deterioração que invalide as premissas do modelo.",
+        "titulo": "Critério de invalidação"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-29",
+    "dados_simulados": false,
+    "data": "2026-10-29",
+    "ficha": [
+      {
+        "fato": "val.BR_VALE.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 61,38"
+      },
+      {
+        "fato": "val.BR_VALE.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 58,07"
+      },
+      {
+        "fato": "val.BR_VALE.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-5,40%"
+      },
+      {
+        "fato": "val.BR_VALE.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_VALE.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_VALE.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 90,33"
+      },
+      {
+        "fato": "val.BR_VALE.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "8,15%"
+      },
+      {
+        "fato": "val.BR_VALE.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 25,46"
+      },
+      {
+        "fato": "val.BR_VALE.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "0,07%"
+      },
+      {
+        "fato": "val.BR_VALE.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "15,10%"
+      },
+      {
+        "fato": "val.BR_VALE.wacc",
+        "rotulo": "WACC",
+        "valor": "12,44%"
+      },
+      {
+        "fato": "val.BR_VALE.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_VALE.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+5,70%"
+      },
+      {
+        "fato": "val.BR_VALE.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-0,52%"
+      },
+      {
+        "fato": "val.BR_VALE.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "6,2x"
+      },
+      {
+        "fato": "val.BR_VALE.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,3x"
+      },
+      {
+        "fato": "val.BR_VALE.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 86,53"
+      },
+      {
+        "fato": "val.BR_VALE.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-32,89%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-29",
+        "id": "F1",
+        "instituicao": "Vale",
+        "publicado_em": "2026-10-29",
+        "tipo": "Relações com investidores",
+        "titulo": "Destaques financeiros, operacionais e de reparação",
+        "url": "https://saladeimprensa.vale.com/pt/confira-os-resultados-financeiros-do-3t26"
+      },
+      {
+        "consultado_em": "2026-10-29",
+        "id": "F2",
+        "instituicao": "Vale",
+        "publicado_em": "2026-10-01",
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário do relatório integrado e teleconferência",
+        "url": "https://www.vale.com/pt/w/vale-divulga-resultados-3t26-29-outubro-1/-/categories/64940"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Relatório completo e teleconferência mudam a leitura de custos e conversão de caixa.",
+      "Reavaliação do modelo altera retorno relativo e sensibilidade ao capital.",
+      "Reparação e investimentos modificam o caixa atribuível."
+    ],
+    "governanca": "A avaliação de caixa atribuível deve considerar reparação, descaracterização e compromissos dos projetos. Não presumimos que avanço físico ou redução do nível de emergência elimine passivos remanescentes.",
+    "guidance": "mantido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Conciliar realização, custos, frete, hedge, capital de giro e caixa após investimentos.",
+        "titulo": "Margem econômica"
+      }
+    ],
+    "issuer_id": "BR_VALE",
+    "lacunas_de_dados": [
+      "Relatório financeiro completo e reconciliação das medidas ajustadas ainda não recebidos nesta leitura.",
+      "Destaques do emissor recebidos por indexação pública; abertura direta indisponível.",
+      "Valuation de 2026-10-28 antecede o resultado consultado.",
+      "Percepção variante e retorno por projeto não comprovados."
+    ],
+    "modelo_de_cobertura": "2026-10-28",
+    "negocio": "Vale produz minério de ferro, cobre e níquel, com infraestrutura logística. A tese depende da realização líquida de frete, da disponibilidade das minas e do caixa após reinvestimento e reparação.",
+    "nome": "Vale",
+    "o_que_mudou": "A nota anterior antecedia a divulgação. Incorporamos os destaques oficiais de 3T26 e a reafirmação das faixas de produção, sem apresentar o valuation anterior como modelo pós-resultado.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_UNIPAR",
+        "nome": "Unipar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Vale, 2026-10-29: menor preço realizado de minério e maiores custos pressionaram o EBITDA proforma. O teste da tese é recuperar margem após frete e reinvestimento, sem extrapolar benefícios de proteção financeira.",
+        "titulo": "Realização e custo completo"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "As faixas de produção de 2026 foram reafirmadas. Cobre e níquel apontam para a metade superior; minério para a parte inferior. Essa assimetria exige avaliar a contribuição econômica de cada negócio.",
+        "titulo": "Produção reafirmada"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_VALE.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+5,70%"
+          },
+          {
+            "fato": "val.BR_VALE.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "-0,52%"
+          }
+        ],
+        "texto": "O retorno esperado do modelo é +5,70%, com alpha relativo de -0,52%. A distância para o consenso não demonstra retorno superior sustentável.",
+        "titulo": "Valor depende de retorno após obrigações"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar se flexibilidade operacional e qualidade mineral se convertem em realização líquida e caixa, após frete e investimentos. É um critério de diligência, sem vantagem relativa demonstrada nesta leitura.",
+        "titulo": "Qualidade precisa remunerar logística"
+      }
+    ],
+    "publicada_em": "2026-10-30T01:42:25.080130+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O benefício de hedge foi reconhecido no resultado financeiro. Separar esse efeito do custo operacional e testar a persistência da conversão de caixa.",
+        "titulo": "Caixa e proteção financeira"
+      }
+    ],
+    "resumo": "Mantemos visão neutra e baixa convicção. O resultado de 3T26 registra pressão de realização e custos no minério, parcialmente compensada por proteção financeira e capital de giro. O alvo de R$ 58,07 ante preço de R$ 61,38 implica -5,40%. O retrato de valuation antecede a divulgação; não representa incorporação do resultado recém-consultado.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Preços minerais, câmbio e frete podem absorver ganhos operacionais e exigir disciplina adicional de capital."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Reparação e projetos podem reduzir caixa distribuível; a leitura resumida não encerra a avaliação das obrigações."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Vale: pressão no minério exige separar proteção financeira de produtividade",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "Destaques oficiais de 3T26: EBITDA proforma e caixa recorrente recuaram na comparação anual. Proteção financeira e capital de giro compensaram parcialmente a pressão operacional; dívida líquida expandida diminuiu sequencialmente. Leitura baseada nos destaques indexados do emissor, sem reconciliação integral das demonstrações.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Testar recuperação de margem após frete, câmbio e combustível; proteção financeira não deve ser confundida com produtividade permanente.",
+        "vetor": "Realização líquida e frete"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_VALE.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "15,10%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O ke de 15,10% limita a leitura de múltiplos isolados.",
+        "vetor": "Custo de capital"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

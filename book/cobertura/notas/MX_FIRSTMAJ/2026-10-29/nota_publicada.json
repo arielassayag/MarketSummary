@@ -1,0 +1,326 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-28",
+    "manifest_sha256": "7c200915e106c8eb6df9ba179db3a979acb641d6d6b8946fe6e4d9a60cba295b",
+    "modelo_as_of": "2026-10-28"
+  },
+  "conviccao": 1,
+  "data": "2026-10-29",
+  "hashes": {
+    "contexto": "a60dad6cdf0322b6caecf29a29ea3ee3b090d61da869da08bfd2e540e5c8a181",
+    "factbook": "3ef68b1a7a7a52754280763f49be689f99b0c0abcc9b7249e3eacf3ecd7473c7",
+    "nota_json": "f35e24dadba571a81eab1d9beaae5f0098fcb9d6af71d998418c8ec292da5aba"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_FIRSTMAJ",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-05",
+  "published_at": "2026-10-30T01:45:48.000381+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Confrontar desembolsos de expansão e retomada com eventual recompra. Autorização de capital não equivale a retorno realizado.",
+        "titulo": "Retomada e recompra"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-05",
+        "descricao": "Divulgação financeira e teleconferência de 3T26; confrontar produção com custos e caixa atribuível.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Execução e custos permanecem condicionantes; alvo US$ 6,86.",
+      "otimista": "Normalização e disciplina de investimento sustentam alvo US$ 8,23.",
+      "pessimista": "Interrupções e capital adicional absorvem retorno; alvo US$ 5,54."
+    },
+    "comentario_valuation": "Rating Neutro, retorno esperado -56,24% e alpha relativo -68,89%. O consenso público é US$ 24,00, com diferença -71,40%; isso não demonstra expectativa incorporada ao preço. Ke 12,61%. Probabilidades implícitas ausentes. Pares de cimento, químicos e metais têm exposições diferentes e não comprovam prêmio econômico da prata.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Normalização sustentada com caixa após investimento ou deterioração persistente das minas invalida a neutralidade preliminar.",
+        "titulo": "Condição de revisão"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-29",
+    "dados_simulados": false,
+    "data": "2026-10-29",
+    "ficha": [
+      {
+        "fato": "val.MX_FIRSTMAJ.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 15,80"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 6,86"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-56,56%"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 8,23"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 5,54"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,61%"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.wacc",
+        "rotulo": "WACC",
+        "valor": "12,32%"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-56,24%"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-68,89%"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "16,1x"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,6x"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 24,00"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-71,40%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-29",
+        "id": "F1",
+        "instituicao": "First Majestic Silver",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Produção, projetos, disputa trabalhista e agenda financeira",
+        "url": "https://firstmajestic.com/investors/news-releases/first-majestic-reports-q3-2026-production-results-announces-q3-conference-call-details-and-renewal-of-share-repurchase-program"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultado financeiro altera leitura de custo e caixa após desenvolvimento.",
+      "Resolução da disputa e normalização de San Dimas são comprovadas.",
+      "Expansões ou retomada exigem capital adicional."
+    ],
+    "governanca": "O programa renovado de recompra deve ser avaliado por execução e cancelamento efetivos. Em Los Gatos, preservar a distinção entre números integrais e atribuíveis aos acionistas da First Majestic.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar San Dimas, teor, recuperação, custo completo, capital de desenvolvimento e parcela atribuível de Los Gatos.",
+        "titulo": "Execução e caixa atribuível"
+      }
+    ],
+    "issuer_id": "MX_FIRSTMAJ",
+    "lacunas_de_dados": [
+      "Resultado financeiro de 3T26 ainda futuro no calendário oficial.",
+      "Resolução atual da disputa trabalhista não confirmada nesta consulta.",
+      "Probabilidades implícitas dos cenários indisponíveis.",
+      "Retorno integral de projetos, caixa atribuível e percepção variante não demonstrados."
+    ],
+    "modelo_de_cobertura": "2026-10-28",
+    "negocio": "First Majestic explora minas de prata e ouro no México, com participação em Los Gatos e preparação de retomada de Jerritt Canyon nos Estados Unidos. A leitura econômica deve separar produção integral e atribuível.",
+    "nome": "First Majestic Silver",
+    "o_que_mudou": "Atualizamos os fatos do valuation e conferimos novamente o comunicado operacional e a data de divulgação financeira. A fila sugeria pós-resultado, mas o resultado financeiro permanece futuro; publicamos atualização.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_CEMEX",
+        "nome": "Cemex"
+      },
+      {
+        "issuer_id": "MX_ENDEAVOUR",
+        "nome": "Endeavour Silver"
+      },
+      {
+        "issuer_id": "MX_GCC",
+        "nome": "GCC"
+      },
+      {
+        "issuer_id": "MX_GMEXICO",
+        "nome": "Grupo México"
+      },
+      {
+        "issuer_id": "MX_ORBIA",
+        "nome": "Orbia"
+      },
+      {
+        "issuer_id": "MX_PENOLES",
+        "nome": "Industrias Peñoles"
+      },
+      {
+        "issuer_id": "MX_TERNIUM",
+        "nome": "Ternium"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O comunicado operacional atribui menor produção de prata à disputa trabalhista em San Dimas. A resolução e a normalização econômica precisam ser comprovadas, sem presumir retomada pelo calendário estimado.",
+        "titulo": "Interrupção permanece risco específico"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A companhia informa avanço das expansões de Santa Elena e Los Gatos e preparação de Jerritt Canyon. O teste de valor exige retorno após desenvolvimento, manutenção e financiamento.",
+        "titulo": "Expansão não equivale a caixa"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Testar se ganhos de processamento compensam teor e recuperação após custos e investimentos; volume isolado não demonstra vantagem competitiva.",
+        "titulo": "Qualidade econômica por mina"
+      }
+    ],
+    "publicada_em": "2026-10-30T01:45:48.000381+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A avaliação financeira deve conciliar vendas, custos completos e desembolsos. A prévia operacional não permite concluir recorrência do caixa.",
+        "titulo": "Produção e conversão"
+      }
+    ],
+    "resumo": "Mantemos neutralidade e convicção baixa. O comunicado operacional de 3T26 mantém o foco em San Dimas e na execução de expansões. O resultado financeiro está previsto para 2026-11-05. O modelo aponta alvo US$ 6,86, ante preço US$ 15,80, com potencial -56,56% e confiança C.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "alta",
+        "texto": "Disputa trabalhista, teores e execução das expansões podem limitar conversão de produção em caixa."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.MX_FIRSTMAJ.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "48,64%"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "alta",
+        "texto": "Dispersão entre métodos de 48,64% exige cautela ao interpretar o alvo."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "First Majestic: resultado financeiro ainda futuro e execução operacional sob teste",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O documento consultado apresenta produção de 3T26, e não o resultado financeiro completo. A divulgação financeira está prevista para 2026-11-05. Não classificamos o comunicado operacional como divulgação integral de lucro, custo e caixa.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Avaliar alimentação, recuperação e teor por mina, separando efeitos da disputa trabalhista e de paradas planejadas.",
+        "vetor": "Disponibilidade e teor"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

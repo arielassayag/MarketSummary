@@ -1,0 +1,338 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-28",
+    "manifest_sha256": "7c200915e106c8eb6df9ba179db3a979acb641d6d6b8946fe6e4d9a60cba295b",
+    "modelo_as_of": "2026-10-28"
+  },
+  "conviccao": 1,
+  "data": "2026-10-29",
+  "hashes": {
+    "contexto": "f097fc384ce3e579c0c33889c4ae97e0fd8167f32012aca1588bf7119142e04f",
+    "factbook": "d9e57faf4b96261de187ae16dff531b9a5b432e1f70c238f5591f9c92f5b9374",
+    "nota_json": "436ce4a99bfb4b6b4e8d4ac9976a757786a7ec324c6c0f48d230f419e44378c0"
+  },
+  "is_synthetic": false,
+  "issuer_id": "CL_ENELAM",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-29",
+  "published_at": "2026-10-30T02:02:28.721222+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Reconciliar ativos físicos e intangíveis de concessão, dívida e remuneração antes de inferir retorno à holding. A linha resumida de investimento não substitui a ponte integral.",
+        "titulo": "Compromissos completos"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-30",
+        "descricao": "Teleconferência de 3T26; esclarecer investimento completo, dívida e caixa disponível por entidade.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Investimento e recursos atribuíveis condicionam o valor; alvo CLP 182,03.",
+      "otimista": "Remuneração e eficiência geram caixa após obrigações; alvo CLP 218,22.",
+      "pessimista": "Custos, dívida e exigências de serviço limitam distribuição; alvo CLP 153,43."
+    },
+    "comentario_valuation": "Preço CLP 81,99, retorno esperado +127,04%, alpha relativo +126,28% e ke 8,84%. Rating Neutro e confiança C devem acompanhar a leitura do potencial calculado. Consenso público CLP 116,02, diferença +56,90%; não prova percepção variante. Modelo de 2026-10-28 anterior ao resultado. Pares de saneamento, gás e eletricidade têm regulação e capital distintos; probabilidades implícitas ausentes.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Se dívida e obrigações de rede absorverem a melhora operacional, o crescimento consolidado poderá não remunerar proporcionalmente o acionista.",
+        "titulo": "Resultado sem distribuição sustentável"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-29",
+    "dados_simulados": false,
+    "data": "2026-10-29",
+    "ficha": [
+      {
+        "fato": "val.CL_ENELAM.preco",
+        "rotulo": "Preço de referência",
+        "valor": "CLP 81,99"
+      },
+      {
+        "fato": "val.CL_ENELAM.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "CLP 182,03"
+      },
+      {
+        "fato": "val.CL_ENELAM.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+122,02%"
+      },
+      {
+        "fato": "val.CL_ENELAM.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.CL_ENELAM.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.CL_ENELAM.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "CLP 218,22"
+      },
+      {
+        "fato": "val.CL_ENELAM.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_ENELAM.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "CLP 153,43"
+      },
+      {
+        "fato": "val.CL_ENELAM.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_ENELAM.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "8,84%"
+      },
+      {
+        "fato": "val.CL_ENELAM.wacc",
+        "rotulo": "WACC",
+        "valor": "7,24%"
+      },
+      {
+        "fato": "val.CL_ENELAM.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,09%"
+      },
+      {
+        "fato": "val.CL_ENELAM.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+127,04%"
+      },
+      {
+        "fato": "val.CL_ENELAM.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+126,28%"
+      },
+      {
+        "fato": "val.CL_ENELAM.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,3x"
+      },
+      {
+        "fato": "val.CL_ENELAM.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,5x"
+      },
+      {
+        "fato": "val.CL_ENELAM.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "CLP 116,02"
+      },
+      {
+        "fato": "val.CL_ENELAM.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+56,90%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-29",
+        "id": "F1",
+        "instituicao": "Enel Américas",
+        "publicado_em": "2026-10-29",
+        "tipo": "Relações com investidores",
+        "titulo": "Análise das demonstrações trimestrais e acumuladas",
+        "url": "https://www.enelamericas.com/content/dam/enel-americas/investor/presentaciones-de-resultados/resultados-trimestrales/an%C3%A1lisis-razonado/2026/Analisis-Razonado-Q39M-2026.pdf"
+      },
+      {
+        "consultado_em": "2026-10-29",
+        "id": "F2",
+        "instituicao": "Enel Américas",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Convite da teleconferência de resultados",
+        "url": "https://www.enelamericas.com/content/dam/enel-americas/investor/presentaciones-de-resultados/resultados-trimestrales/invitaciones-conference-call/2026/Enel-Americas-Q3-9M-2026-Results-Conference-Call-Invitation.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Reconciliação do investimento completo altera retorno residual.",
+      "Dívida e distribuição por entidade mudam disponibilidade na holding.",
+      "Tarifas, perdas e serviço modificam geração recorrente."
+    ],
+    "governanca": "Separar dívida, garantias, recursos relacionados e minoritários por entidade antes de avaliar caixa distribuível. A recompra precisa ser confrontada com capital necessário para serviço e manutenção das concessões.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Monitorar tarifa, perdas, cobrança, investimento total, dívida, juros e distribuições das controladas à holding.",
+        "titulo": "Retorno por entidade"
+      }
+    ],
+    "issuer_id": "CL_ENELAM",
+    "lacunas_de_dados": [
+      "Demonstrações completas, unidades e direitos por ação ainda não integralmente reconciliados.",
+      "Quadro de investimentos traz marca de elaboração pendente; confirmar contra demonstrações.",
+      "Condições intragrupo, caixa atribuível e retorno por concessão exigem diligência adicional.",
+      "Probabilidades implícitas ausentes; percepção variante não comprovada.",
+      "Retrato de 2026-10-28 antecede o resultado consultado."
+    ],
+    "modelo_de_cobertura": "2026-10-28",
+    "negocio": "Enel Américas combina geração, transmissão e distribuição por controladas regionais. A renda econômica depende de concessões, participação e transmissão de recursos à holding após investimento e financiamento.",
+    "nome": "Enel Américas",
+    "o_que_mudou": "Incorporamos a análise trimestral e acumulada de 2026, distinguindo crescimento sem câmbio, evolução da dívida e fluxo líquido. Registramos a necessidade de confirmar o quadro de investimento nas demonstrações completas.",
+    "pais": "Chile",
+    "pares": [
+      {
+        "issuer_id": "AR_PAMPA",
+        "nome": "Pampa Energía"
+      },
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Enel Américas, análise de 3T26: EBITDA cresceu também sem o efeito cambial, porém em ritmo inferior ao divulgado em dólares. Separar eficiência, indexação tarifária e conversão monetária.",
+        "titulo": "Crescimento com moeda favorável"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A dívida líquida aumentou frente ao encerramento de 2025, com maior dívida em controladas e menor caixa da holding após remuneração e recompra. Crescimento consolidado não comprova disponibilidade para distribuição futura.",
+        "titulo": "Caixa e capital por entidade"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Testar qualidade, perdas e tarifa reconhecida contra o capital empregado. Escala regional e indexação não demonstram vantagem econômica sem remuneração após obrigações.",
+        "titulo": "Concessão e retorno"
+      }
+    ],
+    "publicada_em": "2026-10-30T02:02:28.721222+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Conciliar conversão cambial e geração recorrente antes de extrapolar crescimento em dólares. O quadro de investimentos contém marca de elaboração pendente; requer confirmação nas demonstrações.",
+        "titulo": "Moeda, caixa e perímetro"
+      }
+    ],
+    "resumo": "Mantemos visão neutra e baixa convicção. A análise de 3T26 mostra melhora de EBITDA e lucro atribuível, com efeito cambial favorável e dívida maior. O alvo CLP 182,03, potencial +122,02% e confiança C pertencem ao retrato anterior à divulgação e não encerram a diligência de caixa por entidade.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Moeda, remuneração regulada, perdas e qualidade de serviço podem alterar o retorno após capital necessário."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Dívida e caixa retido nas controladas podem limitar transmissão do resultado ao acionista da holding."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Enel Américas: melhora operacional exige conciliar câmbio, investimento e dívida",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A análise trimestral e acumulada de 2026 distingue melhora por país, câmbio e caixa. Fluxo operacional acumulado aumentou, enquanto o fluxo líquido permaneceu negativo após investimento e financiamento. O documento consultado não apresenta novo guidance formal; essa classificação não significa retirada de plano estratégico anterior.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Testar retorno após investimento completo e financiamento, preservando direitos por concessão e participação.",
+        "vetor": "Redes, geração e financiamento"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,314 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-28",
+    "manifest_sha256": "7c200915e106c8eb6df9ba179db3a979acb641d6d6b8946fe6e4d9a60cba295b",
+    "modelo_as_of": "2026-10-28"
+  },
+  "conviccao": 1,
+  "data": "2026-10-29",
+  "hashes": {
+    "contexto": "cbd67607587151ba636345ff0bdd8e0fbd649f9088b1de07f304c7b4568bfef0",
+    "factbook": "e24b172c81d60c33f8873ba439f96f8cb24276684422aedcd6a74d5c32ee75d6",
+    "nota_json": "812e26ea29329ed127ae23cb2c3b151f822907f876614325c1060c3b8301910e"
+  },
+  "is_synthetic": false,
+  "issuer_id": "CL_PARAUCO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-29",
+  "published_at": "2026-10-30T01:52:54.020526+00:00",
+  "rendered": {
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Recebimento do relatório trimestral previsto no calendário oficial; confirmação financeira permanece pendente.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Conversão de renda em caixa atribuível condiciona o valor; alvo CLP 2.470,41.",
+      "otimista": "Renda recebida e expansão remuneram capital após obrigações; alvo CLP 2.965,69.",
+      "pessimista": "Recebimento e investimento não sustentam retorno residual; alvo CLP 2.037,68."
+    },
+    "comentario_valuation": "Preço CLP 3.647,00, retorno esperado -30,77%, confiança B e dispersão 8,86%. Consenso público CLP 4.228,70; não constitui prova do que está precificado. Modelo de 2026-10-28, sem incorporação demonstrada da divulgação programada. Pares de shoppings e logística em moedas distintas exigem comparação por participação e financiamento. Probabilidades implícitas ausentes.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_PARAUCO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "9,02%"
+          },
+          {
+            "fato": "val.CL_PARAUCO.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "CLP 2.470,41"
+          }
+        ],
+        "texto": "A neutralidade preliminar deve ser revista se a renda recebida por participação não remunerar o custo de capital ou se documentação nova demonstrar melhora persistente após reinvestimento.",
+        "titulo": "Condição de invalidação"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-29",
+    "dados_simulados": false,
+    "data": "2026-10-29",
+    "ficha": [
+      {
+        "fato": "val.CL_PARAUCO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "CLP 3.647,00"
+      },
+      {
+        "fato": "val.CL_PARAUCO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "CLP 2.470,41"
+      },
+      {
+        "fato": "val.CL_PARAUCO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-32,26%"
+      },
+      {
+        "fato": "val.CL_PARAUCO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.CL_PARAUCO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.CL_PARAUCO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "CLP 2.965,69"
+      },
+      {
+        "fato": "val.CL_PARAUCO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_PARAUCO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "CLP 2.037,68"
+      },
+      {
+        "fato": "val.CL_PARAUCO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_PARAUCO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "9,02%"
+      },
+      {
+        "fato": "val.CL_PARAUCO.wacc",
+        "rotulo": "WACC",
+        "valor": "7,92%"
+      },
+      {
+        "fato": "val.CL_PARAUCO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,09%"
+      },
+      {
+        "fato": "val.CL_PARAUCO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-30,77%"
+      },
+      {
+        "fato": "val.CL_PARAUCO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-33,46%"
+      },
+      {
+        "fato": "val.CL_PARAUCO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "20,2x"
+      },
+      {
+        "fato": "val.CL_PARAUCO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,8x"
+      },
+      {
+        "fato": "val.CL_PARAUCO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "CLP 4.228,70"
+      },
+      {
+        "fato": "val.CL_PARAUCO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-41,58%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-29",
+        "id": "F1",
+        "instituicao": "Parque Arauco",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário oficial de publicações financeiras",
+        "url": "https://www.parauco.com/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Recebimento do relatório permite conciliar renda, financiamento e caixa.",
+      "Documentos de aquisições e capital modificam direitos por ação.",
+      "Revisão do modelo altera retorno relativo."
+    ],
+    "governanca": "A diligência deve reconciliar associadas, minoritários e base por ação. Aquisições condicionadas e captação, quando documentadas, precisam ser distinguidas de renda operacional; não confirmamos novos eventos societários nesta atualização.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Na próxima divulgação recebida, conferir recebimento, vacância, incentivos, manutenção, dívida e retorno por ação. São critérios de análise, sem afirmação de desempenho atual.",
+        "titulo": "Diligência de renda e capital"
+      }
+    ],
+    "issuer_id": "CL_PARAUCO",
+    "lacunas_de_dados": [
+      "Resultado completo de 3T26 não recebido.",
+      "RI recusou abertura direta; calendário disponível apenas por indexação pública.",
+      "Relatório anterior excedeu limite de recebimento; suas conclusões não foram revalidadas.",
+      "Retorno por ação, aquisições, covenants e caixa disponível permanecem a conciliar.",
+      "Probabilidades implícitas ausentes; percepção variante não demonstrada."
+    ],
+    "modelo_de_cobertura": "2026-10-28",
+    "negocio": "Parque Arauco é uma plataforma imobiliária regional. A hipótese de investimento exige renda atribuível que remunere manutenção, expansão e financiamento, preservando direitos econômicos por participação.",
+    "nome": "Parque Arauco",
+    "o_que_mudou": "Atualizamos os fatos do modelo e conferimos o calendário oficial indexado. Preservamos as lacunas da nota anterior e não produzimos leitura pós-resultado sem o documento recente.",
+    "pais": "Chile",
+    "pares": [
+      {
+        "issuer_id": "BR_ALLOS",
+        "nome": "Allos"
+      },
+      {
+        "issuer_id": "BR_IGUATEMI",
+        "nome": "Iguatemi"
+      },
+      {
+        "issuer_id": "BR_JHSF",
+        "nome": "JHSF"
+      },
+      {
+        "issuer_id": "BR_MULTIPLAN",
+        "nome": "Multiplan"
+      },
+      {
+        "issuer_id": "CL_CENCOMALLS",
+        "nome": "Cencosud Shopping"
+      },
+      {
+        "issuer_id": "CL_MALLPLAZA",
+        "nome": "Plaza SA (Mallplaza)"
+      },
+      {
+        "issuer_id": "MX_FIBRAPL",
+        "nome": "Fibra Prologis"
+      },
+      {
+        "issuer_id": "MX_VESTA",
+        "nome": "Corporación Inmobiliaria Vesta"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O calendário oficial consultado por indexação pública registra o resultado para 2026-10-29. Sem recebimento do documento, não classificamos crescimento, guidance ou geração de caixa do período.",
+        "titulo": "Divulgação não presumida"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_PARAUCO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-30,77%"
+          },
+          {
+            "fato": "val.CL_PARAUCO.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "-33,46%"
+          }
+        ],
+        "texto": "O retorno esperado é -30,77% e o alpha relativo -33,46%. A hipótese qualitativa exige comprovar renda recebida após reinvestimento, sem substituir as premissas quantitativas.",
+        "titulo": "Retorno residual como condição"
+      }
+    ],
+    "publicada_em": "2026-10-30T01:52:54.020526+00:00",
+    "resumo": "Mantemos visão neutra e baixa convicção. O calendário oficial indexado indica divulgação em 2026-10-29, mas o relatório completo de 3T26 não foi recebido. O modelo aponta alvo CLP 2.470,41, potencial -32,26% e rating Venda. Não inferimos desempenho a partir da data programada.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fato": "val.CL_PARAUCO.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-41,58%"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "A diferença de -41,58% para o consenso não demonstra erro de preço nem elimina risco das premissas de renda e capital."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "alta",
+        "texto": "A ausência do relatório recente impede avaliar mudanças em vacância, recebimento, investimentos e obrigações de financiamento."
+      }
+    ],
+    "setor": "Imobiliário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Parque Arauco: calendário confirmado, leitura do resultado permanece pendente",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A nota anterior discutia o reporte de 2T26. Nesta consulta, o acesso direto ao RI foi recusado e o documento anterior excedeu o limite de recebimento. Não renovamos conclusões financeiras específicas nem tratamos a agenda como confirmação de resultado publicado.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.CL_PARAUCO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "9,02%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O ke é 9,02%. Testar se aluguel recebido e retorno por participação remuneram esse custo após financiamento e manutenção.",
+        "vetor": "Custo de capital e renda atribuível"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

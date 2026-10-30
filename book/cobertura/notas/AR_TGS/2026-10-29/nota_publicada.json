@@ -1,0 +1,352 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-28",
+    "manifest_sha256": "7c200915e106c8eb6df9ba179db3a979acb641d6d6b8946fe6e4d9a60cba295b",
+    "modelo_as_of": "2026-10-28"
+  },
+  "conviccao": 1,
+  "data": "2026-10-29",
+  "hashes": {
+    "contexto": "cb93343f513bf65dd20bed3bc1cb776f8f833fb5179be901b9dc91d1314ede37",
+    "factbook": "2b11a396e3e9df5e2985ccac1be65026295ba3c8e9e867ef96ff50180ed59d02",
+    "nota_json": "a83417789c6d65d5d182f3cc2a12a94e2a755d8e773007ca4d99a633f60cc373"
+  },
+  "is_synthetic": false,
+  "issuer_id": "AR_TGS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-29",
+  "published_at": "2026-10-30T02:00:06.776935+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Exigir cronograma, contratos e financiamento compatíveis com retorno depois de manutenção. A expansão anunciada não comprova valor realizado.",
+        "titulo": "Decisão e entrega"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-30",
+        "descricao": "Teleconferência de 3T26; receber o relatório correto e confrontar geração, tarifas e projetos.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Disciplina de execução e financiamento condiciona o valor. Alvo base Em revisão.",
+      "otimista": "Contratos e disponibilidade sustentam retorno após expansão. Alvo otimista Em revisão.",
+      "pessimista": "Tarifa real, margem e obras limitam caixa atribuível. Alvo pessimista Em revisão."
+    },
+    "comentario_valuation": "Preço US$ 25,30, ke 15,43%, P/L à frente 9,0x e dispersão 36,68%. Confiança C; alvo, rating, retorno e probabilidades em revisão. Consenso US$ 40,50 não supre o alvo ausente. Produtoras de petróleo, distribuidoras e holdings entre os pares não são equivalentes ao transporte regulado. Retrato de 2026-10-28, sem incorporação demonstrada de resultado novo.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese perde suporte se obras absorverem caixa sem remuneração adequada ou se a melhora depender de eventos não recorrentes.",
+        "titulo": "Capital sem retorno contratado"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-29",
+    "dados_simulados": false,
+    "data": "2026-10-29",
+    "ficha": [
+      {
+        "fato": "val.AR_TGS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 25,30"
+      },
+      {
+        "fato": "val.AR_TGS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_TGS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_TGS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_TGS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.AR_TGS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_TGS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_TGS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_TGS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_TGS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "15,43%"
+      },
+      {
+        "fato": "val.AR_TGS.wacc",
+        "rotulo": "WACC",
+        "valor": "14,71%"
+      },
+      {
+        "fato": "val.AR_TGS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.AR_TGS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_TGS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_TGS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "9,0x"
+      },
+      {
+        "fato": "val.AR_TGS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,6x"
+      },
+      {
+        "fato": "val.AR_TGS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 40,50"
+      },
+      {
+        "fato": "val.AR_TGS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-29",
+        "id": "F1",
+        "instituicao": "Transportadora de Gas del Sur",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Central de resultados e agenda financeira",
+        "url": "https://www.tgs.com.ar/en/investors/"
+      },
+      {
+        "consultado_em": "2026-10-29",
+        "id": "F2",
+        "instituicao": "SEC / Transportadora de Gas del Sur",
+        "publicado_em": "2026-08-03",
+        "tipo": "Regulador",
+        "titulo": "Comunicado de resultados e efeitos monetários",
+        "url": "https://www.sec.gov/Archives/edgar/data/931427/000093142726000010/tgs.htm"
+      },
+      {
+        "consultado_em": "2026-10-29",
+        "id": "F3",
+        "instituicao": "Transportadora de Gas del Sur",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Negócios e decisão de investimento em líquidos",
+        "url": "https://www.tgs.com.ar/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Recebimento do resultado correto altera leitura de margem e recorrência.",
+      "Contratos e financiamento mudam retorno da expansão.",
+      "Tarifas e disponibilidade alteram caixa após manutenção."
+    ],
+    "governanca": "O projeto de líquidos tem decisão de investimento anunciada pelo emissor. A avaliação deve preservar financiamento, garantias, direitos e retorno residual, sem equiparar decisão a início de operação.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Monitorar capacidade contratada, disponibilidade, tarifa real, margem de líquidos, manutenção e desembolsos de expansão.",
+        "titulo": "Operação e compromissos"
+      }
+    ],
+    "issuer_id": "AR_TGS",
+    "lacunas_de_dados": [
+      "Resultado completo de 3T26 não recebido; vínculo do RI direcionou para documento de 2T26.",
+      "Alvo, rating, cenários, probabilidades, retorno e alpha em revisão.",
+      "Financiamento, garantias e retorno integral dos projetos não reconciliados.",
+      "Controle, direitos por instrumento e percepção variante permanecem a comprovar."
+    ],
+    "modelo_de_cobertura": "2026-10-28",
+    "negocio": "Transportadora de Gas del Sur atua em transporte de gás, produção e comercialização de líquidos e serviços de infraestrutura na Argentina. Cada atividade tem contratos, riscos e necessidades de capital diferentes.",
+    "nome": "Transportadora de Gas del Sur",
+    "o_que_mudou": "Atualizamos fatos e confirmamos a agenda primária. O vínculo de resultados apresenta divergência entre rótulo e destino; preservamos 2T26 como período consultado e as lacunas de projetos e retorno.",
+    "pais": "Argentina",
+    "pares": [
+      {
+        "issuer_id": "BR_COSAN",
+        "nome": "Cosan"
+      },
+      {
+        "issuer_id": "BR_PETROBRAS",
+        "nome": "Petrobras"
+      },
+      {
+        "issuer_id": "BR_PRIO",
+        "nome": "PRIO"
+      },
+      {
+        "issuer_id": "BR_RECV",
+        "nome": "PetroRecôncavo"
+      },
+      {
+        "issuer_id": "BR_ULTRAPAR",
+        "nome": "Ultrapar"
+      },
+      {
+        "issuer_id": "BR_VIBRA",
+        "nome": "Vibra Energia"
+      },
+      {
+        "issuer_id": "CO_ECOPETROL",
+        "nome": "Ecopetrol"
+      },
+      {
+        "issuer_id": "MX_VISTA",
+        "nome": "Vista Energy"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O RI confirma a agenda de 3T26. O vínculo identificado como resultado atual direcionou para um documento de 2T26 sem recebimento completo; não o tratamos como leitura do novo trimestre.",
+        "titulo": "Calendário não substitui documento"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O comunicado regulatório de 2T26 separa efeitos do evento climático em Cerri, seguros, provisões e atualização monetária. A melhora comparativa exige testar a geração recorrente, sem repetir esses efeitos como operação normal.",
+        "titulo": "Recorrência exige conciliação"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Testar se conexão com a produção sustenta contratação e serviço confiável após capital necessário; crescimento da bacia não assegura retorno atribuível.",
+        "titulo": "Infraestrutura e remuneração"
+      }
+    ],
+    "publicada_em": "2026-10-30T02:00:06.776935+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Conciliar atualização monetária, seguros e provisões com caixa antes de extrapolar a comparação operacional.",
+        "titulo": "Base monetária e itens específicos"
+      }
+    ],
+    "resumo": "Mantemos visão neutra e baixa convicção. O emissor confirma divulgação de 3T26 em 2026-10-29 e teleconferência em 2026-10-30, mas o resultado completo recente não foi recebido. Alvo e retorno seguem em revisão. A tese exige contratos remuneradores e caixa após manutenção e expansão.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Tarifa real, preços dos líquidos e indisponibilidade podem reduzir caixa; seguros e efeitos de base podem distorcer comparações."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Expansões podem consumir capital antes de contratos e operação remunerarem o investimento."
+      }
+    ],
+    "setor": "Energia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "TGS: agenda financeira confirmada, sem confundir expansão com retorno realizado",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "O resultado financeiro efetivamente consultado continua 2T26. O comunicado da SEC mostra efeitos monetários, seguro e base de comparação na leitura do transporte. Não classificamos guidance de 3T26 nem inferimos desempenho pela data da divulgação.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Testar remuneração contratada, disponibilidade e margem de líquidos após custos e manutenção, preservando a base monetária.",
+        "vetor": "Contratos, tarifas e líquidos"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,375 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-28",
+    "manifest_sha256": "7c200915e106c8eb6df9ba179db3a979acb641d6d6b8946fe6e4d9a60cba295b",
+    "modelo_as_of": "2026-10-28"
+  },
+  "conviccao": 1,
+  "data": "2026-10-29",
+  "hashes": {
+    "contexto": "a2f8ee1d5fc05285f99e1b03fe72b0a0d01e315dc3e15beb91e2ae896abe8236",
+    "factbook": "c280dcbc0ce1d1cccbb08b124f95fccaa1b87983702c0fb476fc125bbef63ac8",
+    "nota_json": "33b87a005c62d28263b8f6256c81a4641d52d971c749e5223dd796b35bcfe2c3"
+  },
+  "is_synthetic": false,
+  "issuer_id": "PE_NEXA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-10-29",
+  "published_at": "2026-10-30T01:56:28.916085+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Avaliar capital de minas separadamente do preço eventual da oferta; expectativa de aquisição não elimina obrigações operacionais.",
+        "titulo": "Investimento e opção societária"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-10-30",
+        "descricao": "Teleconferência de 3T26; conciliar geração, investimento e condições de controle.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": null,
+        "descricao": "Aprovações e fechamento da transação; examinar depois os direitos de cada instrumento.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "m_a"
+      }
+    ],
+    "cenarios": {
+      "base": "Exigir conciliação de caixa, capital e transação. Alvo base Em revisão.",
+      "otimista": "Operação integrada gera caixa após sustentação e preserva direitos. Alvo otimista Em revisão.",
+      "pessimista": "Capital e condições societárias limitam retorno residual. Alvo pessimista Em revisão."
+    },
+    "comentario_valuation": "Preço US$ 11,82, ke 14,62%, P/L à frente 3,7x e dispersão 56,71%. Confiança C; alvo e retorno em revisão. Consenso US$ 14,04 não supre o modelo ausente nem demonstra preço de oferta. Pares com outras exposições minerais não resolvem vida útil, passivos e margem de fundição. Retrato de 2026-10-28 anterior à divulgação.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese perde suporte se recuperação operacional exigir capital que absorva o caixa ou se as condições societárias não preservarem retorno por ação.",
+        "titulo": "Volume sem caixa residual"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-29",
+    "dados_simulados": false,
+    "data": "2026-10-29",
+    "ficha": [
+      {
+        "fato": "val.PE_NEXA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 11,82"
+      },
+      {
+        "fato": "val.PE_NEXA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.PE_NEXA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.PE_NEXA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.PE_NEXA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.PE_NEXA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.PE_NEXA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.PE_NEXA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.PE_NEXA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.PE_NEXA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "14,62%"
+      },
+      {
+        "fato": "val.PE_NEXA.wacc",
+        "rotulo": "WACC",
+        "valor": "9,29%"
+      },
+      {
+        "fato": "val.PE_NEXA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.PE_NEXA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.PE_NEXA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.PE_NEXA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "3,7x"
+      },
+      {
+        "fato": "val.PE_NEXA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,3x"
+      },
+      {
+        "fato": "val.PE_NEXA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 14,04"
+      },
+      {
+        "fato": "val.PE_NEXA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-29",
+        "id": "F1",
+        "instituicao": "Nexa Resources",
+        "publicado_em": "2026-10-29",
+        "tipo": "Relações com investidores",
+        "titulo": "Destaques trimestrais, investimento e risco de crédito",
+        "url": "https://www.nexaresources.com/en/nexa-reports-3q26-adjusted-ebitda-of-us301-million-aripuana-plant-utilization-reaches-90-in-september/"
+      },
+      {
+        "consultado_em": "2026-10-29",
+        "id": "F2",
+        "instituicao": "Boliden",
+        "publicado_em": "2026-08-27",
+        "tipo": "Relações com investidores",
+        "titulo": "Acordo condicionado de aquisição do controle da Nexa",
+        "url": "https://investors.boliden.com/en/press/boliden-acquire-controlling-stake-nexa-resources"
+      },
+      {
+        "consultado_em": "2026-10-29",
+        "id": "F3",
+        "instituicao": "Nexa Resources",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário de divulgação e teleconferência",
+        "url": "https://ri.nexaresources.com/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Conciliação completa altera leitura de caixa após investimento.",
+      "Direitos e financiamento modificam remuneração dos minoritários.",
+      "Retomada e custos mudam economia integrada."
+    ],
+    "governanca": "Separar a operação entre controlador e comprador, a oferta futura para ações da Nexa e ofertas em subsidiárias. Financiamento do comprador não é caixa próprio da Nexa; fechamento e estrutura de governança futura continuam condicionados.",
+    "guidance": "elevado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Monitorar estoque, vendas, utilização, sustentação, crédito e condições efetivas das ofertas de cada instrumento.",
+        "titulo": "Operação e direitos"
+      }
+    ],
+    "issuer_id": "PE_NEXA",
+    "lacunas_de_dados": [
+      "Alvo, cenários, probabilidades e retorno esperado em revisão.",
+      "Destaques atuais recebidos por indexação; release financeiro integral e conciliações pendentes.",
+      "Contratos, fechamento e valores futuros das ofertas não comprovados.",
+      "Vida útil, passivos e percepção variante exigem diligência adicional."
+    ],
+    "modelo_de_cobertura": "2026-10-28",
+    "negocio": "Nexa integra mineração e fundição de zinco e outros metais no Brasil e Peru. A integração deve ser avaliada após eliminação de operações internas e capital de sustentação.",
+    "nome": "Nexa Resources",
+    "o_que_mudou": "Incorporamos destaques de 3T26: recuperação operacional, prejuízo contábil, revisão de investimento e risco de crédito. Mantemos a transação condicionada e o valuation em revisão.",
+    "pais": "Peru",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_UNIPAR",
+        "nome": "Unipar"
+      },
+      {
+        "issuer_id": "BR_VALE",
+        "nome": "Vale"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Nexa, 2026-10-29: EBITDA ajustado melhorou, mas houve prejuízo com impairment e remensuração de contrato de prata sem desembolso. Caixa e resultado contábil exigem pontes distintas.",
+        "titulo": "Operação e resultado contábil distintos"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A recuperação de Cajamarquilla e maior utilização de Aripuanã apoiaram a operação. A projeção de investimento foi elevada. Testar caixa após sustentação antes de atribuir retorno à expansão.",
+        "titulo": "Recuperação com reinvestimento"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Boliden, 2026-08-27: aquisição de controle depende de condições e aprovações. A oferta posterior aos minoritários terá referência de preço futura; não equivale à troca concedida à Votorantim.",
+        "titulo": "Controle e oferta condicionados"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Verificar se flexibilidade de suprimento melhora retorno após tratamento, transporte e capital. Integração isolada não comprova vantagem de custo completo.",
+        "titulo": "Integração sob teste"
+      }
+    ],
+    "publicada_em": "2026-10-30T01:56:28.916085+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Conciliar impairment e remensuração sem desembolso com giro, tributos, juros e sustentação. Não tratar EBITDA como caixa atribuível.",
+        "titulo": "Pontes de caixa e lucro"
+      }
+    ],
+    "resumo": "Mantemos visão neutra e convicção baixa. Os destaques de 3T26 mostram EBITDA e caixa livre positivos, mas prejuízo com efeitos sem desembolso. A necessidade de capital cresceu e a transação de controle segue condicionada. Alvo, cenários e retorno esperado permanecem em revisão.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Capital adicional, execução das minas e exposição climática podem absorver recuperação operacional."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Financiamento e direitos na mudança de controle podem alterar retorno do minoritário; preço futuro da oferta não é garantido."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Nexa: melhora operacional convive com perda contábil e maior necessidade de investimento",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "Guidance elevado refere-se ao investimento. Produção e vendas foram mantidas, custo líquido de mineração reduzido e custo de fundição elevado. Não agregamos essas direções. O emissor também informa rebaixamento de crédito e obrigação condicionada de oferta aos detentores de dívida após fechamento da transação.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Avaliar margens de mineração e fundição após coprodutos, giro e reinvestimento, sem dupla contagem interna.",
+        "vetor": "Integração e capital"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

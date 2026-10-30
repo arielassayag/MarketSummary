@@ -1,0 +1,343 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-10-28",
+    "manifest_sha256": "7c200915e106c8eb6df9ba179db3a979acb641d6d6b8946fe6e4d9a60cba295b",
+    "modelo_as_of": "2026-10-28"
+  },
+  "conviccao": 1,
+  "data": "2026-10-29",
+  "hashes": {
+    "contexto": "677f2df400dddb4ae95c6faec351f4a66213bcd562cbaad672552aa4f1e5ac4f",
+    "factbook": "8065b47a6dd178c2c95cb12617e04dd2cf5a08e3912f7dfea08131869402aaf2",
+    "nota_json": "58bb4cccc9e266afcc4df706c11f79eb0d16ba2786a08a56b842866ef7110abb"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_LOGCP",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-09",
+  "published_at": "2026-10-30T01:58:05.485103+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Confrontar recursos realizados com renda cedida, novas obras e distribuição. A análise deve verificar liquidez dos títulos e obrigações retidas.",
+        "titulo": "Capital reciclado"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-09",
+        "descricao": "Data de divulgação registrada no modelo; confrontar a informação com confirmação primária antes do evento.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "evento.BR_LOGCP.proximo_resultado",
+            "nome": "Próxima divulgação de resultado",
+            "valor": "2026-11-09"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Exigir recebimento e retorno por projeto. Alvo base Em revisão.",
+      "otimista": "Locação e reciclagem remuneram construção e capital após obrigações. Alvo otimista Em revisão.",
+      "pessimista": "Capital e liquidez dos recebíveis limitam expansão e distribuição. Alvo pessimista Em revisão."
+    },
+    "comentario_valuation": "Preço R$ 21,53, P/VP 0,5x, P/L à frente 3,4x e ke 13,56%. Desconto patrimonial não comprova valor realizável após dívida, impostos e obras. Consenso R$ 30,61 não substitui o alvo em revisão. Renda, serviços e desenvolvimento exigem avaliações coerentes; pares de shopping centers não comprovam comparabilidade dos galpões. Retrato de 2026-10-28, sem novo resultado integral recebido.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Se distribuição e obras dependerem de antecipações que reduzam retorno líquido, crescimento da atividade não comprovará criação de valor por ação.",
+        "titulo": "Expansão dependente de antecipação"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-10-29",
+    "dados_simulados": false,
+    "data": "2026-10-29",
+    "ficha": [
+      {
+        "fato": "val.BR_LOGCP.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 21,53"
+      },
+      {
+        "fato": "val.BR_LOGCP.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_LOGCP.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_LOGCP.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_LOGCP.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_LOGCP.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_LOGCP.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_LOGCP.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_LOGCP.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_LOGCP.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "13,56%"
+      },
+      {
+        "fato": "val.BR_LOGCP.wacc",
+        "rotulo": "WACC",
+        "valor": "9,24%"
+      },
+      {
+        "fato": "val.BR_LOGCP.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_LOGCP.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_LOGCP.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_LOGCP.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "3,4x"
+      },
+      {
+        "fato": "val.BR_LOGCP.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,5x"
+      },
+      {
+        "fato": "val.BR_LOGCP.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 30,61"
+      },
+      {
+        "fato": "val.BR_LOGCP.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-10-29",
+        "id": "F1",
+        "instituicao": "LOG Commercial Properties",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Central oficial de resultados",
+        "url": "https://ri.logcp.com.br/"
+      },
+      {
+        "consultado_em": "2026-10-29",
+        "id": "F2",
+        "instituicao": "LOG / CNN Brasil",
+        "publicado_em": null,
+        "tipo": "Imprensa",
+        "titulo": "Matéria reproduzida sobre resultado e reciclagem de capital",
+        "url": "https://logcp.com.br/log-registra-receita-liquida-de-r-66-milhoes-no-2o-trimestre/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resultado completo altera renda recorrente e conversão de caixa.",
+      "Recebimento de parcelas e títulos muda disponibilidade financeira.",
+      "Obras, locação e financiamento modificam retorno por projeto."
+    ],
+    "governanca": "Conferir participação econômica, termos das vendas e recursos livres antes de consolidar retorno. Distribuição aprovada e estimativa de financiamento devem ser distinguidas de pagamento e crédito efetivo.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Monitorar aluguel recebido, vacância por coorte, custo remanescente, dívida, recebíveis, títulos e caixa após investimento.",
+        "titulo": "Renda, projetos e liquidez"
+      }
+    ],
+    "issuer_id": "BR_LOGCP",
+    "lacunas_de_dados": [
+      "Alvo, rating, cenários, probabilidades e retorno em revisão.",
+      "Release e demonstrações completos recentes não recebidos; central consultada ainda em 2T26.",
+      "Termos atuais de recebíveis, cotas e parcelas exigem reconciliação documental.",
+      "Financiamento regional efetivo e retorno por projeto não comprovados.",
+      "Percepção variante não demonstrada."
+    ],
+    "modelo_de_cobertura": "2026-10-28",
+    "negocio": "LOG desenvolve, loca e administra galpões logísticos, com reciclagem de ativos. Renda própria, receita de administração e ganho de venda remuneram capitais distintos.",
+    "nome": "LOG Commercial Properties",
+    "o_que_mudou": "Atualizamos fatos e agenda do modelo e conferimos a central oficial. Não recebemos release integral recente nem novo documento de recebimentos para renovar as conclusões contratuais da iniciação.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ALLOS",
+        "nome": "Allos"
+      },
+      {
+        "issuer_id": "BR_IGUATEMI",
+        "nome": "Iguatemi"
+      },
+      {
+        "issuer_id": "BR_JHSF",
+        "nome": "JHSF"
+      },
+      {
+        "issuer_id": "BR_MULTIPLAN",
+        "nome": "Multiplan"
+      },
+      {
+        "issuer_id": "CL_CENCOMALLS",
+        "nome": "Cencosud Shopping"
+      },
+      {
+        "issuer_id": "CL_MALLPLAZA",
+        "nome": "Plaza SA (Mallplaza)"
+      },
+      {
+        "issuer_id": "CL_PARAUCO",
+        "nome": "Parque Arauco"
+      },
+      {
+        "issuer_id": "MX_FIBRAPL",
+        "nome": "Fibra Prologis"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A matéria reproduzida no site da LOG relata vendas de ativos, recursos em caixa e títulos e monetização antecipada de recebíveis. Essas entradas não comprovam geração recorrente da locação.",
+        "titulo": "Reciclagem e liquidez distintas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A central oficial consultada apresenta 2T26 como período mais recente. Não classificamos o disparo da fila como divulgação financeira completa de 3T26.",
+        "titulo": "Resultado recente não recebido"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Testar se execução e locação remuneram terrenos e construção após juros. Escala de reciclagem não demonstra, isoladamente, vantagem de custo ou crédito dos locatários.",
+        "titulo": "Implantação e retorno"
+      }
+    ],
+    "publicada_em": "2026-10-30T01:58:05.485103+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Conciliar locação, vendas, títulos recebidos e antecipação de parcelas antes de concluir geração recorrente.",
+        "titulo": "Receita e recebimento"
+      }
+    ],
+    "resumo": "Mantemos visão neutra e convicção baixa. A central de resultados consultada ainda apresenta 2T26; a próxima divulgação registrada pelo modelo é 2026-11-09. A análise exige separar locação, venda de ativos e antecipação de recebíveis. Alvo, cenários e retorno esperado permanecem em revisão.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Vendas, antecipações e títulos recebidos podem sustentar liquidez sem comprovar renda recorrente suficiente após construção e financiamento."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Financiamento regional esperado não equivale a contratação e desembolso; projetos podem consumir capital antes da locação."
+      }
+    ],
+    "setor": "Imobiliário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "LOG: reciclagem de ativos exige distinguir recebíveis, títulos e caixa operacional",
+    "tom_gestao": "não avaliado",
+    "ultimo_resultado": "A comunicação disponível sobre 2T26 destaca expansão de receita e reciclagem. O material consultado é matéria de imprensa reproduzida pelo emissor, sem substituição do release e das demonstrações completos. Não renovamos a classificação de guidance ou tom da gestão.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Testar locação, custo de construção e recebimento líquido após juros; volume vendido não basta para demonstrar retorno por ação.",
+        "vetor": "Absorção e capital por projeto"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,320 @@
+{
+  "$defs": {
+    "Ajuste": {
+      "additionalProperties": false,
+      "properties": {
+        "descricao": {
+          "maxLength": 1200,
+          "minLength": 10,
+          "title": "Descricao",
+          "type": "string"
+        },
+        "evidencias": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Evidencias",
+          "type": "array"
+        },
+        "prioridade": {
+          "enum": [
+            "alta",
+            "media",
+            "baixa"
+          ],
+          "title": "Prioridade",
+          "type": "string"
+        },
+        "referencia": {
+          "anyOf": [
+            {
+              "maxLength": 64,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "id do item da lista de verificação ou IID",
+          "title": "Referencia"
+        },
+        "tipo": {
+          "enum": [
+            "parametro",
+            "metodo",
+            "insumo",
+            "processo",
+            "modelo"
+          ],
+          "title": "Tipo",
+          "type": "string"
+        },
+        "titulo": {
+          "maxLength": 160,
+          "minLength": 3,
+          "title": "Titulo",
+          "type": "string"
+        }
+      },
+      "required": [
+        "titulo",
+        "descricao",
+        "prioridade",
+        "tipo",
+        "evidencias"
+      ],
+      "title": "Ajuste",
+      "type": "object"
+    },
+    "Fonte": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^F([1-9]|1[0-9]|20)$",
+          "title": "Id",
+          "type": "string"
+        },
+        "instituicao": {
+          "maxLength": 120,
+          "minLength": 2,
+          "title": "Instituicao",
+          "type": "string"
+        },
+        "publicado_em": {
+          "format": "date",
+          "title": "Publicado Em",
+          "type": "string"
+        },
+        "titulo": {
+          "maxLength": 200,
+          "minLength": 3,
+          "title": "Titulo",
+          "type": "string"
+        },
+        "url": {
+          "maxLength": 500,
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "instituicao",
+        "titulo",
+        "url",
+        "publicado_em"
+      ],
+      "title": "Fonte",
+      "type": "object"
+    },
+    "ModeloReavaliado": {
+      "additionalProperties": false,
+      "properties": {
+        "conclusao": {
+          "enum": [
+            "manter",
+            "acompanhar",
+            "revisar_insumo",
+            "revisar_parametro",
+            "revisar_metodo"
+          ],
+          "title": "Conclusao",
+          "type": "string"
+        },
+        "evidencias": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "minItems": 1,
+          "title": "Evidencias",
+          "type": "array"
+        },
+        "issuer_id": {
+          "pattern": "^[A-Z][A-Z0-9_]{1,63}$",
+          "title": "Issuer Id",
+          "type": "string"
+        },
+        "leitura": {
+          "maxLength": 1200,
+          "minLength": 10,
+          "title": "Leitura",
+          "type": "string"
+        }
+      },
+      "required": [
+        "issuer_id",
+        "leitura",
+        "conclusao",
+        "evidencias"
+      ],
+      "title": "ModeloReavaliado",
+      "type": "object"
+    },
+    "ParametroRevisado": {
+      "additionalProperties": false,
+      "properties": {
+        "comentario": {
+          "maxLength": 800,
+          "minLength": 3,
+          "title": "Comentario",
+          "type": "string"
+        },
+        "evidencias": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Evidencias",
+          "type": "array"
+        },
+        "item": {
+          "maxLength": 64,
+          "title": "Item",
+          "type": "string"
+        },
+        "situacao": {
+          "enum": [
+            "em_dia",
+            "atualizar",
+            "revisar",
+            "sem_fonte"
+          ],
+          "title": "Situacao",
+          "type": "string"
+        }
+      },
+      "required": [
+        "item",
+        "situacao",
+        "comentario"
+      ],
+      "title": "ParametroRevisado",
+      "type": "object"
+    },
+    "RiscoProcesso": {
+      "additionalProperties": false,
+      "properties": {
+        "descricao": {
+          "maxLength": 1000,
+          "minLength": 10,
+          "title": "Descricao",
+          "type": "string"
+        },
+        "evidencias": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8,
+          "title": "Evidencias",
+          "type": "array"
+        },
+        "mitigacao": {
+          "maxLength": 600,
+          "minLength": 3,
+          "title": "Mitigacao",
+          "type": "string"
+        },
+        "titulo": {
+          "maxLength": 160,
+          "minLength": 3,
+          "title": "Titulo",
+          "type": "string"
+        }
+      },
+      "required": [
+        "titulo",
+        "descricao",
+        "mitigacao"
+      ],
+      "title": "RiscoProcesso",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Leitura da gestão sobre a revisão mensal dos modelos (números só como ``{{fact:id}}``).",
+  "properties": {
+    "ajustes_recomendados": {
+      "items": {
+        "$ref": "#/$defs/Ajuste"
+      },
+      "maxItems": 12,
+      "title": "Ajustes Recomendados",
+      "type": "array"
+    },
+    "data": {
+      "format": "date",
+      "title": "Data",
+      "type": "string"
+    },
+    "fontes": {
+      "items": {
+        "$ref": "#/$defs/Fonte"
+      },
+      "maxItems": 20,
+      "title": "Fontes",
+      "type": "array"
+    },
+    "mind": {
+      "title": "Mind",
+      "type": "string"
+    },
+    "modelo_ia": {
+      "anyOf": [
+        {
+          "maxLength": 80,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Modelo Ia"
+    },
+    "modelos_reavaliados": {
+      "items": {
+        "$ref": "#/$defs/ModeloReavaliado"
+      },
+      "maxItems": 30,
+      "title": "Modelos Reavaliados",
+      "type": "array"
+    },
+    "parametros_revisados": {
+      "items": {
+        "$ref": "#/$defs/ParametroRevisado"
+      },
+      "maxItems": 20,
+      "minItems": 1,
+      "title": "Parametros Revisados",
+      "type": "array"
+    },
+    "resumo": {
+      "maxLength": 2000,
+      "minLength": 40,
+      "title": "Resumo",
+      "type": "string"
+    },
+    "riscos_do_processo": {
+      "items": {
+        "$ref": "#/$defs/RiscoProcesso"
+      },
+      "maxItems": 8,
+      "minItems": 1,
+      "title": "Riscos Do Processo",
+      "type": "array"
+    }
+  },
+  "required": [
+    "mind",
+    "data",
+    "resumo",
+    "parametros_revisados",
+    "riscos_do_processo"
+  ],
+  "title": "RevisaoMensal",
+  "type": "object"
+}

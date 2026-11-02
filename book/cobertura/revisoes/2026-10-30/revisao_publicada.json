@@ -1,0 +1,157 @@
+{
+  "autoria": "mente",
+  "data": "2026-10-30",
+  "hashes": {
+    "factbook": "87b0cc518b0a3485da37b6ce1f33ed93437d00d32d46259f2f26c67b7c69fc63",
+    "pacote": "49d84c2cefb8a2914eed5240363f44832771213844bfde9b74d52c7dab6df70d",
+    "revisao_json": "c989ab59889dbe785a9c93241f14ddf0ff319f3530dc67114db6f1576aec26aa"
+  },
+  "is_synthetic": false,
+  "mind": "codex",
+  "modelo_ia": null,
+  "periodo": {
+    "fim": "2026-10-30",
+    "inicio": "2026-09-26"
+  },
+  "problems": [],
+  "programada": true,
+  "published_at": "2026-11-02T22:44:24.088591+00:00",
+  "rendered": {
+    "ajustes_recomendados": [
+      {
+        "descricao": "As maiores mudanças apresentam decomposição indisponível; conferir fundamentos e métodos antes de atribuir a variação a resultados ou juros.",
+        "prioridade": "alta",
+        "referencia": null,
+        "tipo": "processo",
+        "titulo": "Priorizar a reconciliação das pontes de preço-alvo"
+      },
+      {
+        "descricao": "A cobertura parcial dos constituintes limita a avaliação agregada. Priorizar os fundos com menor cobertura, preservando os ativos sem avaliação disponível.",
+        "prioridade": "alta",
+        "referencia": "etf_composicao",
+        "tipo": "insumo",
+        "titulo": "Revisar a cobertura das composições de ETFs"
+      }
+    ],
+    "fontes": [],
+    "modelos_reavaliados": [
+      {
+        "conclusao": "revisar_insumo",
+        "issuer_id": "MX_ALPEK",
+        "leitura": "Alpek apresenta variação do alvo de +71,1%, para MXN 22,25. A ponte de estimativas está n/d; não é possível atribuir a mudança a melhora operacional. Conferir os insumos e a comparabilidade dos métodos."
+      },
+      {
+        "conclusao": "revisar_insumo",
+        "issuer_id": "AR_CRESUD",
+        "leitura": "Cresud apresenta variação de +65,1% e alvo de US$ 12,32. A ponte de estimativas está n/d. A presença de balanço defasado na relação de insumos exige conferir a data-base antes de interpretar a valorização do modelo."
+      },
+      {
+        "conclusao": "revisar_insumo",
+        "issuer_id": "MX_VESTA",
+        "leitura": "Vesta apresenta variação de +56,0%, alvo de US$ 68,51 e divergência ao consenso público de +83,2%. A ponte de estimativas está n/d. A divergência justifica revisão de premissas e comparabilidade, sem adoção automática do consenso."
+      },
+      {
+        "conclusao": "revisar_insumo",
+        "issuer_id": "MX_ASUR",
+        "leitura": "ASUR apresenta variação de −36,7%, para MXN 211,23. A ponte de estimativas está n/d; conferir os insumos e a aplicação das premissas de concessão antes de concluir sobre deterioração econômica."
+      },
+      {
+        "conclusao": "revisar_insumo",
+        "issuer_id": "BR_AUREN",
+        "leitura": "Auren Energia apresenta variação de −36,6%, para R$ 7,37. A ponte de estimativas está n/d. Conferir estrutura de capital e perímetro das demonstrações sem presumir causa para a redução do alvo."
+      }
+    ],
+    "parametros_revisados": [
+      {
+        "comentario": "Idade de 121 dias, dentro da janela semestral indicada; manter acompanhamento do prêmio de risco-país.",
+        "item": "damodaran_crp",
+        "situacao": "em_dia"
+      },
+      {
+        "comentario": "Idade de 29 dias, dentro da janela mensal; conferir a próxima divulgação pelo fluxo regular.",
+        "item": "damodaran_erp",
+        "situacao": "em_dia"
+      },
+      {
+        "comentario": "Idade de 296 dias, dentro da janela anual; sem evidência para substituição discricionária.",
+        "item": "damodaran_betas",
+        "situacao": "em_dia"
+      },
+      {
+        "comentario": "Idade de 296 dias, dentro da janela anual definida.",
+        "item": "damodaran_impostos",
+        "situacao": "em_dia"
+      },
+      {
+        "comentario": "Idade de 296 dias, dentro da janela anual; preservar a associação entre cobertura de juros e spread.",
+        "item": "damodaran_ratings",
+        "situacao": "em_dia"
+      },
+      {
+        "comentario": "Idade de 296 dias, dentro da janela anual; manter coerência por moeda.",
+        "item": "damodaran_inflacao",
+        "situacao": "em_dia"
+      },
+      {
+        "comentario": "Idade de 3 dias na revisão; acompanhar a atualização diária sem preencher ausência.",
+        "item": "taxa_livre_risco",
+        "situacao": "em_dia"
+      },
+      {
+        "comentario": "A lista de verificação indica reestimação a cada retrato completo. Isso não elimina a limitação de fundamentos atuais nem comprova estabilidade fora da amostra.",
+        "item": "persistencia_painel",
+        "situacao": "em_dia"
+      },
+      {
+        "comentario": "A lista de verificação indica regularidade das referências; nas maiores mudanças, conferir a aplicação das premissas antes de propor alteração de método.",
+        "item": "arquetipos",
+        "situacao": "em_dia"
+      },
+      {
+        "comentario": "Idade de 177 dias, dentro da janela prevista; preservar a conferência das participações por documento.",
+        "item": "sotp_participacoes",
+        "situacao": "em_dia"
+      },
+      {
+        "comentario": "Dispersão mediana de 25,4% e pontes indisponíveis recomendam revisão diagnóstica. O placar ainda não sustenta recalibração automática dos pesos.",
+        "item": "pesos_metodos",
+        "situacao": "revisar"
+      },
+      {
+        "comentario": "Cobertura de 10,2% no fundo argentino e 39,3% no peruano limita a representatividade. Priorizar insumos ausentes.",
+        "item": "etf_composicao",
+        "situacao": "revisar"
+      },
+      {
+        "comentario": "A lista de verificação confirma correspondência entre a metodologia do retrato e a vigente; isso não substitui a atualização do retrato pendente.",
+        "item": "versao_metodologia",
+        "situacao": "em_dia"
+      }
+    ],
+    "resumo": "Revisão de outubro de 2026 com retrato de 28/10/2026: 190 emissores com alvo citável entre 233 cobertos. A confiança C responde por 47,6%, e os emissores em revisão, por 15,9%. A leitura exige cautela diante das pontes de preço-alvo indisponíveis, das lacunas de fundamentos e do placar ainda em maturação. As propostas abaixo dependem de decisão humana, sem alteração de parâmetros nesta revisão.",
+    "riscos_do_processo": [
+      {
+        "descricao": "Há 12 emissores com balanço defasado e 95 notas além do prazo. A revisão usa o retrato disponível de 28/10/2026.",
+        "mitigacao": "Priorizar atualização após resultados e notas vencidas pela agenda oficial; explicitar a data-base.",
+        "titulo": "Defasagem dos fundamentos e das notas"
+      },
+      {
+        "descricao": "O placar reúne 1.198 previsões, mas apenas 0 vencidas. O IC médio de 0,028 em 5 semanas não permite conclusão robusta sobre eficácia.",
+        "mitigacao": "Aguardar maturação e ampliar o histórico antes de propor recalibração com base no desempenho.",
+        "titulo": "Validação preditiva ainda imatura"
+      },
+      {
+        "descricao": "A lacuna de reinvestimento afeta 191 emissores; a confiança C representa 47,6%. As pontes indisponíveis impedem atribuir as maiores mudanças a causas específicas.",
+        "mitigacao": "Preservar ausências, conferir demonstrações públicas e condicionar conclusões aos insumos disponíveis.",
+        "titulo": "Lacunas e confiança restrita"
+      }
+    ]
+  },
+  "retrato": {
+    "data": "2026-10-28",
+    "parcial": false,
+    "sintetico": false,
+    "versao_metodologia": "2026-10.8"
+  },
+  "schema": "cdp.cobertura.revisao.publicada/v1"
+}

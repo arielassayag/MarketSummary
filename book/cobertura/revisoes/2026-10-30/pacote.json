@@ -1,0 +1,2542 @@
+{
+  "consenso": {
+    "maiores_divergencias": [
+      {
+        "diff": 0.831688,
+        "fato": "rev.consenso.MX_VESTA.diff",
+        "issuer_id": "MX_VESTA",
+        "n_analistas": 1.0,
+        "nome": "Corporación Inmobiliaria Vesta"
+      },
+      {
+        "diff": 0.793946,
+        "fato": "rev.consenso.BR_BANRISUL.diff",
+        "issuer_id": "BR_BANRISUL",
+        "n_analistas": 5.0,
+        "nome": "Banrisul"
+      },
+      {
+        "diff": -0.744763,
+        "fato": "rev.consenso.BR_TOTVS.diff",
+        "issuer_id": "BR_TOTVS",
+        "n_analistas": 3.0,
+        "nome": "Totvs"
+      },
+      {
+        "diff": -0.714028,
+        "fato": "rev.consenso.MX_FIRSTMAJ.diff",
+        "issuer_id": "MX_FIRSTMAJ",
+        "n_analistas": 3.0,
+        "nome": "First Majestic Silver"
+      },
+      {
+        "diff": -0.692663,
+        "fato": "rev.consenso.MX_FEMSA.diff",
+        "issuer_id": "MX_FEMSA",
+        "n_analistas": 6.0,
+        "nome": "FEMSA"
+      },
+      {
+        "diff": -0.676045,
+        "fato": "rev.consenso.BR_EQUATORIAL.diff",
+        "issuer_id": "BR_EQUATORIAL",
+        "n_analistas": 2.0,
+        "nome": "Equatorial"
+      },
+      {
+        "diff": -0.665049,
+        "fato": "rev.consenso.AR_CAAP.diff",
+        "issuer_id": "AR_CAAP",
+        "n_analistas": 5.0,
+        "nome": "Corporación América Airports"
+      },
+      {
+        "diff": -0.659847,
+        "fato": "rev.consenso.BR_NU.diff",
+        "issuer_id": "BR_NU",
+        "n_analistas": 17.0,
+        "nome": "Nu Holdings"
+      },
+      {
+        "diff": -0.65559,
+        "fato": "rev.consenso.MX_ENDEAVOUR.diff",
+        "issuer_id": "MX_ENDEAVOUR",
+        "n_analistas": 4.0,
+        "nome": "Endeavour Silver"
+      },
+      {
+        "diff": 0.653705,
+        "fato": "rev.consenso.CO_ECOPETROL.diff",
+        "issuer_id": "CO_ECOPETROL",
+        "n_analistas": 7.0,
+        "nome": "Ecopetrol"
+      }
+    ],
+    "n": 186
+  },
+  "data": "2026-10-30",
+  "distribuicao": {
+    "alertas": [
+      "mediana de α em AR = −10,9% fora de ±5%",
+      "Em revisão: 16% acima de 12%",
+      "confiança C: 48% acima de 35%",
+      "ajuste de nível do modelo em AR no limite (−1,50%): viés dos fluxos da casa não absorvido",
+      "viés de nível do modelo em AR: mediana de V0 ÷ P0 sem o ajuste = 0,827 (fora de 0,85–1,15)",
+      "ajuste de nível do modelo em BR no limite (+1,50%): viés dos fluxos da casa não absorvido",
+      "viés de nível do modelo em BR: mediana de V0 ÷ P0 sem o ajuste = 1,158 (fora de 0,85–1,15)"
+    ],
+    "confianca": [
+      {
+        "confianca": "A",
+        "fatos": [
+          "rev.confianca.a.n",
+          "rev.confianca.a.pct"
+        ],
+        "n": 18
+      },
+      {
+        "confianca": "B",
+        "fatos": [
+          "rev.confianca.b.n",
+          "rev.confianca.b.pct"
+        ],
+        "n": 98
+      },
+      {
+        "confianca": "C",
+        "fatos": [
+          "rev.confianca.c.n",
+          "rev.confianca.c.pct"
+        ],
+        "n": 111
+      }
+    ],
+    "rating": [
+      {
+        "fatos": [
+          "rev.rating.compra.n",
+          "rev.rating.compra.pct"
+        ],
+        "n": 30,
+        "rating": "Compra"
+      },
+      {
+        "fatos": [
+          "rev.rating.neutro.n",
+          "rev.rating.neutro.pct"
+        ],
+        "n": 125,
+        "rating": "Neutro"
+      },
+      {
+        "fatos": [
+          "rev.rating.venda.n",
+          "rev.rating.venda.pct"
+        ],
+        "n": 35,
+        "rating": "Venda"
+      },
+      {
+        "fatos": [
+          "rev.rating.em_revisao.n",
+          "rev.rating.em_revisao.pct"
+        ],
+        "n": 37,
+        "rating": "Em revisão"
+      },
+      {
+        "fatos": [
+          "rev.rating.sem_alvo.n",
+          "rev.rating.sem_alvo.pct"
+        ],
+        "n": 6,
+        "rating": "Sem preço-alvo"
+      }
+    ]
+  },
+  "emissores": [
+    "AR_ADECOAGRO",
+    "AR_BBVA",
+    "AR_CAAP",
+    "AR_CEPU",
+    "AR_CRESUD",
+    "AR_GALICIA",
+    "AR_GLOBANT",
+    "AR_IRSA",
+    "AR_LAR",
+    "AR_LOMA",
+    "AR_MACRO",
+    "AR_PAMPA",
+    "AR_SUPERVIELLE",
+    "AR_TEO",
+    "AR_TGS",
+    "AR_YPF",
+    "BR_3TENTOS",
+    "BR_ABC",
+    "BR_AFYA",
+    "BR_ALLOS",
+    "BR_ALPARGATAS",
+    "BR_ALUPAR",
+    "BR_AMBEV",
+    "BR_ANIMA",
+    "BR_ASSAI",
+    "BR_AURA",
+    "BR_AUREN",
+    "BR_AXIA",
+    "BR_AZZAS",
+    "BR_B3",
+    "BR_BANRISUL",
+    "BR_BB",
+    "BR_BBSEG",
+    "BR_BEMOBI",
+    "BR_BRADESCO",
+    "BR_BRADESPAR",
+    "BR_BRADSAUDE",
+    "BR_BRASKEM",
+    "BR_BRAVA",
+    "BR_BTG",
+    "BR_CBA",
+    "BR_CEA",
+    "BR_CEMIG",
+    "BR_CMIN",
+    "BR_COGNA",
+    "BR_COMPASS",
+    "BR_COPASA",
+    "BR_COPEL",
+    "BR_COSAN",
+    "BR_CPFL",
+    "BR_CSN",
+    "BR_CURY",
+    "BR_CVC",
+    "BR_CXSEG",
+    "BR_CYRELA",
+    "BR_DIRECIONAL",
+    "BR_ECORODOVIAS",
+    "BR_EMBRAER",
+    "BR_ENERGISA",
+    "BR_ENEVA",
+    "BR_ENGIE",
+    "BR_EQUATORIAL",
+    "BR_ERO",
+    "BR_EZTEC",
+    "BR_FLEURY",
+    "BR_GERDAU",
+    "BR_GOAU",
+    "BR_GPA",
+    "BR_GPS",
+    "BR_GRENDENE",
+    "BR_HAPVIDA",
+    "BR_HYPERA",
+    "BR_IGUATEMI",
+    "BR_INTELBRAS",
+    "BR_INTER",
+    "BR_IRB",
+    "BR_ISAENERGIA",
+    "BR_ITAU",
+    "BR_ITAUSA",
+    "BR_JBS",
+    "BR_JHSF",
+    "BR_KLABIN",
+    "BR_LOCALIZA",
+    "BR_LOCAWEB",
+    "BR_LOGCP",
+    "BR_MAGALU",
+    "BR_MARCOPOLO",
+    "BR_MATEUS",
+    "BR_MBRF",
+    "BR_MDIAS",
+    "BR_MILLS",
+    "BR_MINERVA",
+    "BR_MOTIVA",
+    "BR_MOURADUBEUX",
+    "BR_MOVIDA",
+    "BR_MRV",
+    "BR_MULTIPLAN",
+    "BR_NATURA",
+    "BR_NU",
+    "BR_ONCOCLINICAS",
+    "BR_ORIZON",
+    "BR_PAGS",
+    "BR_PAGUEMENOS",
+    "BR_PATRIA",
+    "BR_PETROBRAS",
+    "BR_PETZCOBASI",
+    "BR_PICPAY",
+    "BR_PINE",
+    "BR_PLANO",
+    "BR_PORTO",
+    "BR_PRIO",
+    "BR_RAIADROGASIL",
+    "BR_RANDON",
+    "BR_RECV",
+    "BR_REDEDOR",
+    "BR_RENNER",
+    "BR_RIACHUELO",
+    "BR_RUMO",
+    "BR_SABESP",
+    "BR_SANEPAR",
+    "BR_SANTANDER",
+    "BR_SAOMARTINHO",
+    "BR_SBF",
+    "BR_SER",
+    "BR_SIGMALITH",
+    "BR_SIMPAR",
+    "BR_SLC",
+    "BR_SMARTFIT",
+    "BR_STONE",
+    "BR_SUZANO",
+    "BR_TAESA",
+    "BR_TENDA",
+    "BR_TIM",
+    "BR_TOTVS",
+    "BR_TUPY",
+    "BR_ULTRAPAR",
+    "BR_UNIPAR",
+    "BR_USIMINAS",
+    "BR_VALE",
+    "BR_VAMOS",
+    "BR_VIBRA",
+    "BR_VIVARA",
+    "BR_VIVO",
+    "BR_VTEX",
+    "BR_VULCABRAS",
+    "BR_WEG",
+    "BR_XP",
+    "BR_YDUQS",
+    "CL_ANDINA",
+    "CL_BCHILE",
+    "CL_BCI",
+    "CL_BSAC",
+    "CL_CENCOMALLS",
+    "CL_CENCOSUD",
+    "CL_CMPC",
+    "CL_COLBUN",
+    "CL_COPEC",
+    "CL_ECL",
+    "CL_EISA",
+    "CL_ENELAM",
+    "CL_ENELCHILE",
+    "CL_FALABELLA",
+    "CL_ITAU",
+    "CL_LATAM",
+    "CL_MALLPLAZA",
+    "CL_PARAUCO",
+    "CL_SQM",
+    "CO_CEMARGOS",
+    "CO_CIBEST",
+    "CO_ECOPETROL",
+    "CO_GEOPARK",
+    "CO_GRANTIERRA",
+    "CO_GRUPOARGOS",
+    "CO_ISA",
+    "CO_SURA",
+    "CO_TECNOGLASS",
+    "LA_ARCOS",
+    "LA_BLADEX",
+    "LA_COPA",
+    "LA_DLOCAL",
+    "LA_FORTUNA",
+    "LA_LILA",
+    "LA_MELI",
+    "LA_MILLICOM",
+    "LA_PAAS",
+    "MX_AC",
+    "MX_AEROMEXICO",
+    "MX_ALPEK",
+    "MX_ALSEA",
+    "MX_AMX",
+    "MX_ASUR",
+    "MX_BAJIO",
+    "MX_BANORTE",
+    "MX_BIMBO",
+    "MX_BMV",
+    "MX_CARSO",
+    "MX_CEMEX",
+    "MX_CHEDRAUI",
+    "MX_ENDEAVOUR",
+    "MX_FEMSA",
+    "MX_FIBRAPL",
+    "MX_FIRSTMAJ",
+    "MX_FMTY",
+    "MX_FUNO",
+    "MX_GAP",
+    "MX_GCC",
+    "MX_GENOMMA",
+    "MX_GENTERA",
+    "MX_GMEXICO",
+    "MX_GRUMA",
+    "MX_INBURSA",
+    "MX_KIMBER",
+    "MX_KOF",
+    "MX_MEGACABLE",
+    "MX_OMA",
+    "MX_ORBIA",
+    "MX_PENOLES",
+    "MX_PINFRA",
+    "MX_QUALITAS",
+    "MX_REGIONAL",
+    "MX_SIGMA",
+    "MX_TELEVISA",
+    "MX_TERNIUM",
+    "MX_VESTA",
+    "MX_VISTA",
+    "MX_VOLARIS",
+    "MX_WALMEX",
+    "PE_BVN",
+    "PE_CREDICORP",
+    "PE_HUDBAY",
+    "PE_IFS",
+    "PE_NEXA",
+    "PE_SCCO"
+  ],
+  "etfs": [
+    {
+      "cobertura": 0.1024,
+      "fato": "rev.etf.ETF_ARGT.cobertura",
+      "iid": "ETF_ARGT",
+      "tem_alvo": true,
+      "ticker": "ARGT"
+    },
+    {
+      "cobertura": 0.392921,
+      "fato": "rev.etf.ETF_EPU.cobertura",
+      "iid": "ETF_EPU",
+      "tem_alvo": true,
+      "ticker": "EPU"
+    },
+    {
+      "cobertura": 0.457097,
+      "fato": "rev.etf.ETF_COLO.cobertura",
+      "iid": "ETF_COLO",
+      "tem_alvo": true,
+      "ticker": "COLO"
+    },
+    {
+      "cobertura": 0.5267,
+      "fato": "rev.etf.ETF_ECH.cobertura",
+      "iid": "ETF_ECH",
+      "tem_alvo": true,
+      "ticker": "ECH"
+    },
+    {
+      "cobertura": 0.557411,
+      "fato": "rev.etf.ETF_EWW.cobertura",
+      "iid": "ETF_EWW",
+      "tem_alvo": true,
+      "ticker": "EWW"
+    },
+    {
+      "cobertura": 0.70537,
+      "fato": "rev.etf.ETF_BOVA11.cobertura",
+      "iid": "ETF_BOVA11",
+      "tem_alvo": true,
+      "ticker": "BOVA11.SA"
+    },
+    {
+      "cobertura": 0.707717,
+      "fato": "rev.etf.ETF_ILF.cobertura",
+      "iid": "ETF_ILF",
+      "tem_alvo": true,
+      "ticker": "ILF"
+    },
+    {
+      "cobertura": 0.755227,
+      "fato": "rev.etf.ETF_EWZ.cobertura",
+      "iid": "ETF_EWZ",
+      "tem_alvo": true,
+      "ticker": "EWZ"
+    }
+  ],
+  "eventos_do_periodo": {
+    "INICIACAO": 233,
+    "MUDANCA_RATING": 90,
+    "REITERACAO": 396,
+    "RETOMADA": 11,
+    "REVISAO": 692,
+    "SUSPENSAO": 21
+  },
+  "insumos": {
+    "balanco_defasado": [
+      "AR_BBVA",
+      "AR_CEPU",
+      "AR_CRESUD",
+      "AR_GALICIA",
+      "AR_IRSA",
+      "AR_LOMA",
+      "AR_MACRO",
+      "AR_SUPERVIELLE",
+      "AR_TEO",
+      "AR_TGS",
+      "AR_YPF",
+      "CL_ENELCHILE"
+    ],
+    "em_revisao": [
+      "AR_BBVA",
+      "AR_CEPU",
+      "AR_GALICIA",
+      "AR_LAR",
+      "AR_LOMA",
+      "AR_MACRO",
+      "AR_SUPERVIELLE",
+      "AR_TGS",
+      "BR_ANIMA",
+      "BR_AURA",
+      "BR_CVC",
+      "BR_ECORODOVIAS",
+      "BR_ENEVA",
+      "BR_HAPVIDA",
+      "BR_KLABIN",
+      "BR_LOGCP",
+      "BR_MBRF",
+      "BR_MINERVA",
+      "BR_MOVIDA",
+      "BR_ORIZON",
+      "BR_RIACHUELO",
+      "BR_SIGMALITH",
+      "BR_SIMPAR",
+      "BR_SLC",
+      "BR_VAMOS",
+      "CL_CMPC",
+      "CL_ENELCHILE",
+      "CL_LATAM",
+      "CO_GEOPARK",
+      "LA_LILA",
+      "LA_MELI",
+      "MX_CARSO",
+      "MX_FMTY",
+      "MX_FUNO",
+      "MX_GAP",
+      "PE_BVN",
+      "PE_NEXA"
+    ],
+    "lacunas": [
+      {
+        "fato": "rev.lacuna.reinvestimento.n",
+        "insumo": "reinvestimento",
+        "n": 191
+      },
+      {
+        "fato": "rev.lacuna.margem_historica.n",
+        "insumo": "margem_historica",
+        "n": 49
+      },
+      {
+        "fato": "rev.lacuna.g_receita_historico.n",
+        "insumo": "g_receita_historico",
+        "n": 44
+      },
+      {
+        "fato": "rev.lacuna.margem.n",
+        "insumo": "margem",
+        "n": 39
+      },
+      {
+        "fato": "rev.lacuna.recompras.n",
+        "insumo": "recompras",
+        "n": 28
+      },
+      {
+        "fato": "rev.lacuna.provisao_credito.n",
+        "insumo": "provisao_credito",
+        "n": 25
+      },
+      {
+        "fato": "rev.lacuna.acoes_em_circulacao.n",
+        "insumo": "acoes_em_circulacao",
+        "n": 24
+      },
+      {
+        "fato": "rev.lacuna.arrendamentos_pagos.n",
+        "insumo": "arrendamentos_pagos",
+        "n": 24
+      },
+      {
+        "fato": "rev.lacuna.adicoes_direito_uso.n",
+        "insumo": "adicoes_direito_uso",
+        "n": 23
+      },
+      {
+        "fato": "rev.lacuna.depreciacao_direito_uso.n",
+        "insumo": "depreciacao_direito_uso",
+        "n": 19
+      }
+    ],
+    "sem_preco_alvo": [
+      "AR_TEO",
+      "BR_BRASKEM",
+      "BR_GPA",
+      "BR_ONCOCLINICAS",
+      "MX_AEROMEXICO",
+      "MX_VOLARIS"
+    ]
+  },
+  "mudancas_alvo": [
+    {
+      "alvo_fim": 22.2459,
+      "alvo_inicio": 13.0004,
+      "data_fim": "2026-10-28",
+      "data_inicio": "2026-10-07",
+      "desde_iniciacao": true,
+      "fatos": {
+        "alvo_fim": "rev.mov.MX_ALPEK.alvo_fim",
+        "alvo_inicio": "rev.mov.MX_ALPEK.alvo_inicio",
+        "ponte.cambio": "rev.mov.MX_ALPEK.ponte.cambio",
+        "ponte.estimativas": "rev.mov.MX_ALPEK.ponte.estimativas",
+        "ponte.estrutura_capital": "rev.mov.MX_ALPEK.ponte.estrutura_capital",
+        "ponte.metodos": "rev.mov.MX_ALPEK.ponte.metodos",
+        "ponte.parametros": "rev.mov.MX_ALPEK.ponte.parametros",
+        "ponte.preco": "rev.mov.MX_ALPEK.ponte.preco",
+        "ponte.residuo": "rev.mov.MX_ALPEK.ponte.residuo",
+        "ponte.rolagem": "rev.mov.MX_ALPEK.ponte.rolagem",
+        "var_alvo": "rev.mov.MX_ALPEK.var_alvo"
+      },
+      "issuer_id": "MX_ALPEK",
+      "moeda": "MXN",
+      "motivos": [
+        "None"
+      ],
+      "n_eventos": 6,
+      "nome": "Alpek",
+      "pais": "MX",
+      "ponte": {
+        "cambio": null,
+        "estimativas": null,
+        "estrutura_capital": null,
+        "metodos": null,
+        "parametros": null,
+        "preco": null,
+        "residuo": null,
+        "rolagem": null
+      },
+      "rating_fim": "Neutro",
+      "rating_inicio": "Neutro",
+      "setor": "Materials",
+      "var_alvo": 0.7111704255253684,
+      "vetor_dominante": null
+    },
+    {
+      "alvo_fim": 12.3245,
+      "alvo_inicio": 7.46265,
+      "data_fim": "2026-10-28",
+      "data_inicio": "2026-10-07",
+      "desde_iniciacao": true,
+      "fatos": {
+        "alvo_fim": "rev.mov.AR_CRESUD.alvo_fim",
+        "alvo_inicio": "rev.mov.AR_CRESUD.alvo_inicio",
+        "ponte.cambio": "rev.mov.AR_CRESUD.ponte.cambio",
+        "ponte.estimativas": "rev.mov.AR_CRESUD.ponte.estimativas",
+        "ponte.estrutura_capital": "rev.mov.AR_CRESUD.ponte.estrutura_capital",
+        "ponte.metodos": "rev.mov.AR_CRESUD.ponte.metodos",
+        "ponte.parametros": "rev.mov.AR_CRESUD.ponte.parametros",
+        "ponte.preco": "rev.mov.AR_CRESUD.ponte.preco",
+        "ponte.residuo": "rev.mov.AR_CRESUD.ponte.residuo",
+        "ponte.rolagem": "rev.mov.AR_CRESUD.ponte.rolagem",
+        "var_alvo": "rev.mov.AR_CRESUD.var_alvo"
+      },
+      "issuer_id": "AR_CRESUD",
+      "moeda": "USD",
+      "motivos": [
+        "None"
+      ],
+      "n_eventos": 5,
+      "nome": "Cresud",
+      "pais": "AR",
+      "ponte": {
+        "cambio": null,
+        "estimativas": null,
+        "estrutura_capital": null,
+        "metodos": null,
+        "parametros": null,
+        "preco": null,
+        "residuo": null,
+        "rolagem": null
+      },
+      "rating_fim": "Neutro",
+      "rating_inicio": "Neutro",
+      "setor": "Real Estate",
+      "var_alvo": 0.6514910923063524,
+      "vetor_dominante": null
+    },
+    {
+      "alvo_fim": 68.5051,
+      "alvo_inicio": 43.9163,
+      "data_fim": "2026-10-28",
+      "data_inicio": "2026-10-07",
+      "desde_iniciacao": true,
+      "fatos": {
+        "alvo_fim": "rev.mov.MX_VESTA.alvo_fim",
+        "alvo_inicio": "rev.mov.MX_VESTA.alvo_inicio",
+        "ponte.cambio": "rev.mov.MX_VESTA.ponte.cambio",
+        "ponte.estimativas": "rev.mov.MX_VESTA.ponte.estimativas",
+        "ponte.estrutura_capital": "rev.mov.MX_VESTA.ponte.estrutura_capital",
+        "ponte.metodos": "rev.mov.MX_VESTA.ponte.metodos",
+        "ponte.parametros": "rev.mov.MX_VESTA.ponte.parametros",
+        "ponte.preco": "rev.mov.MX_VESTA.ponte.preco",
+        "ponte.residuo": "rev.mov.MX_VESTA.ponte.residuo",
+        "ponte.rolagem": "rev.mov.MX_VESTA.ponte.rolagem",
+        "var_alvo": "rev.mov.MX_VESTA.var_alvo"
+      },
+      "issuer_id": "MX_VESTA",
+      "moeda": "USD",
+      "motivos": [
+        "None"
+      ],
+      "n_eventos": 5,
+      "nome": "Corporación Inmobiliaria Vesta",
+      "pais": "MX",
+      "ponte": {
+        "cambio": null,
+        "estimativas": null,
+        "estrutura_capital": null,
+        "metodos": null,
+        "parametros": null,
+        "preco": null,
+        "residuo": null,
+        "rolagem": null
+      },
+      "rating_fim": "Neutro",
+      "rating_inicio": "Neutro",
+      "setor": "Real Estate",
+      "var_alvo": 0.5599014488925524,
+      "vetor_dominante": null
+    },
+    {
+      "alvo_fim": 211.226,
+      "alvo_inicio": 333.728,
+      "data_fim": "2026-10-28",
+      "data_inicio": "2026-10-07",
+      "desde_iniciacao": true,
+      "fatos": {
+        "alvo_fim": "rev.mov.MX_ASUR.alvo_fim",
+        "alvo_inicio": "rev.mov.MX_ASUR.alvo_inicio",
+        "ponte.cambio": "rev.mov.MX_ASUR.ponte.cambio",
+        "ponte.estimativas": "rev.mov.MX_ASUR.ponte.estimativas",
+        "ponte.estrutura_capital": "rev.mov.MX_ASUR.ponte.estrutura_capital",
+        "ponte.metodos": "rev.mov.MX_ASUR.ponte.metodos",
+        "ponte.parametros": "rev.mov.MX_ASUR.ponte.parametros",
+        "ponte.preco": "rev.mov.MX_ASUR.ponte.preco",
+        "ponte.residuo": "rev.mov.MX_ASUR.ponte.residuo",
+        "ponte.rolagem": "rev.mov.MX_ASUR.ponte.rolagem",
+        "var_alvo": "rev.mov.MX_ASUR.var_alvo"
+      },
+      "issuer_id": "MX_ASUR",
+      "moeda": "MXN",
+      "motivos": [
+        "None"
+      ],
+      "n_eventos": 5,
+      "nome": "Grupo Aeroportuario del Sureste",
+      "pais": "MX",
+      "ponte": {
+        "cambio": null,
+        "estimativas": null,
+        "estrutura_capital": null,
+        "metodos": null,
+        "parametros": null,
+        "preco": null,
+        "residuo": null,
+        "rolagem": null
+      },
+      "rating_fim": "Neutro",
+      "rating_inicio": "Neutro",
+      "setor": "Industrials",
+      "var_alvo": -0.367071387477227,
+      "vetor_dominante": null
+    },
+    {
+      "alvo_fim": 7.37016,
+      "alvo_inicio": 11.6297,
+      "data_fim": "2026-10-28",
+      "data_inicio": "2026-10-07",
+      "desde_iniciacao": true,
+      "fatos": {
+        "alvo_fim": "rev.mov.BR_AUREN.alvo_fim",
+        "alvo_inicio": "rev.mov.BR_AUREN.alvo_inicio",
+        "ponte.cambio": "rev.mov.BR_AUREN.ponte.cambio",
+        "ponte.estimativas": "rev.mov.BR_AUREN.ponte.estimativas",
+        "ponte.estrutura_capital": "rev.mov.BR_AUREN.ponte.estrutura_capital",
+        "ponte.metodos": "rev.mov.BR_AUREN.ponte.metodos",
+        "ponte.parametros": "rev.mov.BR_AUREN.ponte.parametros",
+        "ponte.preco": "rev.mov.BR_AUREN.ponte.preco",
+        "ponte.residuo": "rev.mov.BR_AUREN.ponte.residuo",
+        "ponte.rolagem": "rev.mov.BR_AUREN.ponte.rolagem",
+        "var_alvo": "rev.mov.BR_AUREN.var_alvo"
+      },
+      "issuer_id": "BR_AUREN",
+      "moeda": "BRL",
+      "motivos": [
+        "None"
+      ],
+      "n_eventos": 5,
+      "nome": "Auren Energia",
+      "pais": "BR",
+      "ponte": {
+        "cambio": null,
+        "estimativas": null,
+        "estrutura_capital": null,
+        "metodos": null,
+        "parametros": null,
+        "preco": null,
+        "residuo": null,
+        "rolagem": null
+      },
+      "rating_fim": "Neutro",
+      "rating_inicio": "Neutro",
+      "setor": "Utilities",
+      "var_alvo": -0.3662639620970446,
+      "vetor_dominante": null
+    },
+    {
+      "alvo_fim": 17.1016,
+      "alvo_inicio": 26.778,
+      "data_fim": "2026-10-28",
+      "data_inicio": "2026-10-07",
+      "desde_iniciacao": true,
+      "fatos": {
+        "alvo_fim": "rev.mov.BR_EQUATORIAL.alvo_fim",
+        "alvo_inicio": "rev.mov.BR_EQUATORIAL.alvo_inicio",
+        "ponte.cambio": "rev.mov.BR_EQUATORIAL.ponte.cambio",
+        "ponte.estimativas": "rev.mov.BR_EQUATORIAL.ponte.estimativas",
+        "ponte.estrutura_capital": "rev.mov.BR_EQUATORIAL.ponte.estrutura_capital",
+        "ponte.metodos": "rev.mov.BR_EQUATORIAL.ponte.metodos",
+        "ponte.parametros": "rev.mov.BR_EQUATORIAL.ponte.parametros",
+        "ponte.preco": "rev.mov.BR_EQUATORIAL.ponte.preco",
+        "ponte.residuo": "rev.mov.BR_EQUATORIAL.ponte.residuo",
+        "ponte.rolagem": "rev.mov.BR_EQUATORIAL.ponte.rolagem",
+        "var_alvo": "rev.mov.BR_EQUATORIAL.var_alvo"
+      },
+      "issuer_id": "BR_EQUATORIAL",
+      "moeda": "BRL",
+      "motivos": [
+        "None"
+      ],
+      "n_eventos": 5,
+      "nome": "Equatorial",
+      "pais": "BR",
+      "ponte": {
+        "cambio": null,
+        "estimativas": null,
+        "estrutura_capital": null,
+        "metodos": null,
+        "parametros": null,
+        "preco": null,
+        "residuo": null,
+        "rolagem": null
+      },
+      "rating_fim": "Venda",
+      "rating_inicio": "Venda",
+      "setor": "Utilities",
+      "var_alvo": -0.3613563372918066,
+      "vetor_dominante": null
+    },
+    {
+      "alvo_fim": 13.0331,
+      "alvo_inicio": 20.2466,
+      "data_fim": "2026-10-28",
+      "data_inicio": "2026-10-07",
+      "desde_iniciacao": true,
+      "fatos": {
+        "alvo_fim": "rev.mov.BR_PLANO.alvo_fim",
+        "alvo_inicio": "rev.mov.BR_PLANO.alvo_inicio",
+        "ponte.cambio": "rev.mov.BR_PLANO.ponte.cambio",
+        "ponte.estimativas": "rev.mov.BR_PLANO.ponte.estimativas",
+        "ponte.estrutura_capital": "rev.mov.BR_PLANO.ponte.estrutura_capital",
+        "ponte.metodos": "rev.mov.BR_PLANO.ponte.metodos",
+        "ponte.parametros": "rev.mov.BR_PLANO.ponte.parametros",
+        "ponte.preco": "rev.mov.BR_PLANO.ponte.preco",
+        "ponte.residuo": "rev.mov.BR_PLANO.ponte.residuo",
+        "ponte.rolagem": "rev.mov.BR_PLANO.ponte.rolagem",
+        "var_alvo": "rev.mov.BR_PLANO.var_alvo"
+      },
+      "issuer_id": "BR_PLANO",
+      "moeda": "BRL",
+      "motivos": [
+        "None"
+      ],
+      "n_eventos": 5,
+      "nome": "Plano & Plano",
+      "pais": "BR",
+      "ponte": {
+        "cambio": null,
+        "estimativas": null,
+        "estrutura_capital": null,
+        "metodos": null,
+        "parametros": null,
+        "preco": null,
+        "residuo": null,
+        "rolagem": null
+      },
+      "rating_fim": "Neutro",
+      "rating_inicio": "Neutro",
+      "setor": "Consumer Discretionary",
+      "var_alvo": -0.35628204241699846,
+      "vetor_dominante": null
+    },
+    {
+      "alvo_fim": 34.4029,
+      "alvo_inicio": 53.3064,
+      "data_fim": "2026-10-28",
+      "data_inicio": "2026-10-07",
+      "desde_iniciacao": true,
+      "fatos": {
+        "alvo_fim": "rev.mov.BR_MOURADUBEUX.alvo_fim",
+        "alvo_inicio": "rev.mov.BR_MOURADUBEUX.alvo_inicio",
+        "ponte.cambio": "rev.mov.BR_MOURADUBEUX.ponte.cambio",
+        "ponte.estimativas": "rev.mov.BR_MOURADUBEUX.ponte.estimativas",
+        "ponte.estrutura_capital": "rev.mov.BR_MOURADUBEUX.ponte.estrutura_capital",
+        "ponte.metodos": "rev.mov.BR_MOURADUBEUX.ponte.metodos",
+        "ponte.parametros": "rev.mov.BR_MOURADUBEUX.ponte.parametros",
+        "ponte.preco": "rev.mov.BR_MOURADUBEUX.ponte.preco",
+        "ponte.residuo": "rev.mov.BR_MOURADUBEUX.ponte.residuo",
+        "ponte.rolagem": "rev.mov.BR_MOURADUBEUX.ponte.rolagem",
+        "var_alvo": "rev.mov.BR_MOURADUBEUX.var_alvo"
+      },
+      "issuer_id": "BR_MOURADUBEUX",
+      "moeda": "BRL",
+      "motivos": [
+        "None"
+      ],
+      "n_eventos": 5,
+      "nome": "Moura Dubeux",
+      "pais": "BR",
+      "ponte": {
+        "cambio": null,
+        "estimativas": null,
+        "estrutura_capital": null,
+        "metodos": null,
+        "parametros": null,
+        "preco": null,
+        "residuo": null,
+        "rolagem": null
+      },
+      "rating_fim": "Neutro",
+      "rating_inicio": "Compra",
+      "setor": "Consumer Discretionary",
+      "var_alvo": -0.35461970795251596,
+      "vetor_dominante": null
+    },
+    {
+      "alvo_fim": 5.61149,
+      "alvo_inicio": 8.53222,
+      "data_fim": "2026-10-28",
+      "data_inicio": "2026-10-07",
+      "desde_iniciacao": true,
+      "fatos": {
+        "alvo_fim": "rev.mov.BR_INTER.alvo_fim",
+        "alvo_inicio": "rev.mov.BR_INTER.alvo_inicio",
+        "ponte.cambio": "rev.mov.BR_INTER.ponte.cambio",
+        "ponte.estimativas": "rev.mov.BR_INTER.ponte.estimativas",
+        "ponte.estrutura_capital": "rev.mov.BR_INTER.ponte.estrutura_capital",
+        "ponte.metodos": "rev.mov.BR_INTER.ponte.metodos",
+        "ponte.parametros": "rev.mov.BR_INTER.ponte.parametros",
+        "ponte.preco": "rev.mov.BR_INTER.ponte.preco",
+        "ponte.residuo": "rev.mov.BR_INTER.ponte.residuo",
+        "ponte.rolagem": "rev.mov.BR_INTER.ponte.rolagem",
+        "var_alvo": "rev.mov.BR_INTER.var_alvo"
+      },
+      "issuer_id": "BR_INTER",
+      "moeda": "USD",
+      "motivos": [
+        "None"
+      ],
+      "n_eventos": 6,
+      "nome": "Inter&Co",
+      "pais": "BR",
+      "ponte": {
+        "cambio": null,
+        "estimativas": null,
+        "estrutura_capital": null,
+        "metodos": null,
+        "parametros": null,
+        "preco": null,
+        "residuo": null,
+        "rolagem": null
+      },
+      "rating_fim": "Neutro",
+      "rating_inicio": "Neutro",
+      "setor": "Financials",
+      "var_alvo": -0.34231770863854905,
+      "vetor_dominante": null
+    },
+    {
+      "alvo_fim": 19.0051,
+      "alvo_inicio": 28.4771,
+      "data_fim": "2026-10-28",
+      "data_inicio": "2026-10-07",
+      "desde_iniciacao": true,
+      "fatos": {
+        "alvo_fim": "rev.mov.BR_XP.alvo_fim",
+        "alvo_inicio": "rev.mov.BR_XP.alvo_inicio",
+        "ponte.cambio": "rev.mov.BR_XP.ponte.cambio",
+        "ponte.estimativas": "rev.mov.BR_XP.ponte.estimativas",
+        "ponte.estrutura_capital": "rev.mov.BR_XP.ponte.estrutura_capital",
+        "ponte.metodos": "rev.mov.BR_XP.ponte.metodos",
+        "ponte.parametros": "rev.mov.BR_XP.ponte.parametros",
+        "ponte.preco": "rev.mov.BR_XP.ponte.preco",
+        "ponte.residuo": "rev.mov.BR_XP.ponte.residuo",
+        "ponte.rolagem": "rev.mov.BR_XP.ponte.rolagem",
+        "var_alvo": "rev.mov.BR_XP.var_alvo"
+      },
+      "issuer_id": "BR_XP",
+      "moeda": "USD",
+      "motivos": [
+        "None"
+      ],
+      "n_eventos": 5,
+      "nome": "XP Inc",
+      "pais": "BR",
+      "ponte": {
+        "cambio": null,
+        "estimativas": null,
+        "estrutura_capital": null,
+        "metodos": null,
+        "parametros": null,
+        "preco": null,
+        "residuo": null,
+        "rolagem": null
+      },
+      "rating_fim": "Neutro",
+      "rating_inicio": "Venda",
+      "setor": "Financials",
+      "var_alvo": -0.3326181387851994,
+      "vetor_dominante": null
+    },
+    {
+      "alvo_fim": 3.797,
+      "alvo_inicio": 5.62558,
+      "data_fim": "2026-10-28",
+      "data_inicio": "2026-10-07",
+      "desde_iniciacao": true,
+      "fatos": {
+        "alvo_fim": "rev.mov.BR_CBA.alvo_fim",
+        "alvo_inicio": "rev.mov.BR_CBA.alvo_inicio",
+        "ponte.cambio": "rev.mov.BR_CBA.ponte.cambio",
+        "ponte.estimativas": "rev.mov.BR_CBA.ponte.estimativas",
+        "ponte.estrutura_capital": "rev.mov.BR_CBA.ponte.estrutura_capital",
+        "ponte.metodos": "rev.mov.BR_CBA.ponte.metodos",
+        "ponte.parametros": "rev.mov.BR_CBA.ponte.parametros",
+        "ponte.preco": "rev.mov.BR_CBA.ponte.preco",
+        "ponte.residuo": "rev.mov.BR_CBA.ponte.residuo",
+        "ponte.rolagem": "rev.mov.BR_CBA.ponte.rolagem",
+        "var_alvo": "rev.mov.BR_CBA.var_alvo"
+      },
+      "issuer_id": "BR_CBA",
+      "moeda": "BRL",
+      "motivos": [
+        "None"
+      ],
+      "n_eventos": 5,
+      "nome": "Companhia Brasileira de Alumínio",
+      "pais": "BR",
+      "ponte": {
+        "cambio": null,
+        "estimativas": null,
+        "estrutura_capital": null,
+        "metodos": null,
+        "parametros": null,
+        "preco": null,
+        "residuo": null,
+        "rolagem": null
+      },
+      "rating_fim": "Neutro",
+      "rating_inicio": "Neutro",
+      "setor": "Materials",
+      "var_alvo": -0.32504737289310615,
+      "vetor_dominante": null
+    },
+    {
+      "alvo_fim": 13.3583,
+      "alvo_inicio": 19.7731,
+      "data_fim": "2026-10-28",
+      "data_inicio": "2026-10-07",
+      "desde_iniciacao": true,
+      "fatos": {
+        "alvo_fim": "rev.mov.BR_PAGS.alvo_fim",
+        "alvo_inicio": "rev.mov.BR_PAGS.alvo_inicio",
+        "ponte.cambio": "rev.mov.BR_PAGS.ponte.cambio",
+        "ponte.estimativas": "rev.mov.BR_PAGS.ponte.estimativas",
+        "ponte.estrutura_capital": "rev.mov.BR_PAGS.ponte.estrutura_capital",
+        "ponte.metodos": "rev.mov.BR_PAGS.ponte.metodos",
+        "ponte.parametros": "rev.mov.BR_PAGS.ponte.parametros",
+        "ponte.preco": "rev.mov.BR_PAGS.ponte.preco",
+        "ponte.residuo": "rev.mov.BR_PAGS.ponte.residuo",
+        "ponte.rolagem": "rev.mov.BR_PAGS.ponte.rolagem",
+        "var_alvo": "rev.mov.BR_PAGS.var_alvo"
+      },
+      "issuer_id": "BR_PAGS",
+      "moeda": "USD",
+      "motivos": [
+        "None"
+      ],
+      "n_eventos": 5,
+      "nome": "PagSeguro Digital",
+      "pais": "BR",
+      "ponte": {
+        "cambio": null,
+        "estimativas": null,
+        "estrutura_capital": null,
+        "metodos": null,
+        "parametros": null,
+        "preco": null,
+        "residuo": null,
+        "rolagem": null
+      },
+      "rating_fim": "Compra",
+      "rating_inicio": "Compra",
+      "setor": "Financials",
+      "var_alvo": -0.32442055115282886,
+      "vetor_dominante": null
+    }
+  ],
+  "mudancas_rating": [
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "AR_BBVA",
+      "nome": "BBVA Argentina",
+      "para": "Em revisão"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Em revisão",
+      "issuer_id": "AR_CAAP",
+      "nome": "Corporación América Airports",
+      "para": "Neutro"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "AR_CEPU",
+      "nome": "Central Puerto",
+      "para": "Em revisão"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "AR_MACRO",
+      "nome": "Banco Macro",
+      "para": "Em revisão"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "AR_TEO",
+      "nome": "Telecom Argentina",
+      "para": "Sem preço-alvo"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "AR_TGS",
+      "nome": "Transportadora de Gas del Sur",
+      "para": "Em revisão"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Em revisão",
+      "issuer_id": "AR_YPF",
+      "nome": "YPF",
+      "para": "Neutro"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Compra",
+      "issuer_id": "BR_AFYA",
+      "nome": "Afya",
+      "para": "Neutro"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "BR_AMBEV",
+      "nome": "Ambev",
+      "para": "Venda"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Compra",
+      "issuer_id": "BR_BB",
+      "nome": "Banco do Brasil",
+      "para": "Neutro"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "BR_BRASKEM",
+      "nome": "Braskem",
+      "para": "Sem preço-alvo"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Compra",
+      "issuer_id": "BR_CEA",
+      "nome": "C&A Modas",
+      "para": "Neutro"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Compra",
+      "issuer_id": "BR_CYRELA",
+      "nome": "Cyrela",
+      "para": "Neutro"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "BR_ECORODOVIAS",
+      "nome": "EcoRodovias",
+      "para": "Em revisão"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Venda",
+      "issuer_id": "BR_EMBRAER",
+      "nome": "Embraer",
+      "para": "Neutro"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Venda",
+      "issuer_id": "BR_ENERGISA",
+      "nome": "Energisa",
+      "para": "Neutro"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "BR_ENEVA",
+      "nome": "Eneva",
+      "para": "Em revisão"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Compra",
+      "issuer_id": "BR_EZTEC",
+      "nome": "EZTec",
+      "para": "Neutro"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "BR_GPS",
+      "nome": "GPS Participações",
+      "para": "Compra"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Venda",
+      "issuer_id": "BR_ITAUSA",
+      "nome": "Itaúsa",
+      "para": "Neutro"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Em revisão",
+      "issuer_id": "BR_JBS",
+      "nome": "JBS N.V.",
+      "para": "Neutro"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Em revisão",
+      "issuer_id": "BR_JHSF",
+      "nome": "JHSF",
+      "para": "Compra"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Venda",
+      "issuer_id": "BR_LOCALIZA",
+      "nome": "Localiza",
+      "para": "Neutro"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "BR_MBRF",
+      "nome": "MBRF (Marfrig+BRF)",
+      "para": "Em revisão"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Compra",
+      "issuer_id": "BR_MILLS",
+      "nome": "Mills",
+      "para": "Neutro"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Compra",
+      "issuer_id": "BR_MOURADUBEUX",
+      "nome": "Moura Dubeux",
+      "para": "Neutro"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "BR_ORIZON",
+      "nome": "Orizon",
+      "para": "Em revisão"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "BR_PETROBRAS",
+      "nome": "Petrobras",
+      "para": "Compra"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "BR_PORTO",
+      "nome": "Porto Seguro",
+      "para": "Venda"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "BR_PRIO",
+      "nome": "PRIO",
+      "para": "Venda"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "BR_RAIADROGASIL",
+      "nome": "Raia Drogasil",
+      "para": "Venda"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Em revisão",
+      "issuer_id": "BR_RUMO",
+      "nome": "Rumo",
+      "para": "Neutro"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Compra",
+      "issuer_id": "BR_SANTANDER",
+      "nome": "Banco Santander Brasil",
+      "para": "Neutro"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "BR_SIMPAR",
+      "nome": "Simpar",
+      "para": "Em revisão"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "BR_SLC",
+      "nome": "SLC Agrícola",
+      "para": "Em revisão"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "BR_TIM",
+      "nome": "TIM Brasil",
+      "para": "Venda"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "BR_ULTRAPAR",
+      "nome": "Ultrapar",
+      "para": "Venda"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "BR_VIVARA",
+      "nome": "Vivara",
+      "para": "Compra"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Venda",
+      "issuer_id": "BR_WEG",
+      "nome": "WEG",
+      "para": "Neutro"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Venda",
+      "issuer_id": "BR_XP",
+      "nome": "XP Inc",
+      "para": "Neutro"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "CL_ANDINA",
+      "nome": "Embotelladora Andina",
+      "para": "Compra"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "CL_BSAC",
+      "nome": "Banco Santander-Chile",
+      "para": "Venda"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Venda",
+      "issuer_id": "CL_EISA",
+      "nome": "Echeverría Izquierdo",
+      "para": "Neutro"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Compra",
+      "issuer_id": "CL_ENELCHILE",
+      "nome": "Enel Chile",
+      "para": "Em revisão"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "CL_ITAU",
+      "nome": "Banco Itaú Chile",
+      "para": "Compra"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "CO_CIBEST",
+      "nome": "Grupo Cibest (ex-Bancolombia)",
+      "para": "Venda"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "LA_ARCOS",
+      "nome": "Arcos Dorados",
+      "para": "Venda"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Compra",
+      "issuer_id": "LA_BLADEX",
+      "nome": "Bladex",
+      "para": "Neutro"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "LA_COPA",
+      "nome": "Copa Holdings",
+      "para": "Compra"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "LA_MELI",
+      "nome": "MercadoLibre",
+      "para": "Em revisão"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Em revisão",
+      "issuer_id": "MX_AEROMEXICO",
+      "nome": "Grupo Aeroméxico",
+      "para": "Sem preço-alvo"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Venda",
+      "issuer_id": "MX_ENDEAVOUR",
+      "nome": "Endeavour Silver",
+      "para": "Neutro"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Compra",
+      "issuer_id": "MX_PINFRA",
+      "nome": "Pinfra",
+      "para": "Neutro"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "MX_QUALITAS",
+      "nome": "Quálitas",
+      "para": "Venda"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "PE_BVN",
+      "nome": "Buenaventura",
+      "para": "Em revisão"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "PE_CREDICORP",
+      "nome": "Credicorp",
+      "para": "Venda"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Neutro",
+      "issuer_id": "PE_NEXA",
+      "nome": "Nexa Resources",
+      "para": "Em revisão"
+    },
+    {
+      "data": "2026-10-28",
+      "de": "Em revisão",
+      "issuer_id": "PE_SCCO",
+      "nome": "Southern Copper",
+      "para": "Neutro"
+    }
+  ],
+  "notas": {
+    "sem_nota": [],
+    "sla_dias": {
+      "candidato": 14,
+      "demais": 90,
+      "posicao": 7
+    },
+    "vencidas": [
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "AR_ADECOAGRO",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "AR_BBVA",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "AR_CEPU",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "AR_GALICIA",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "AR_IRSA",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "AR_LAR",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "AR_MACRO",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_ALPARGATAS",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_ALUPAR",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_BANRISUL",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_BBSEG",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_BRAVA",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_CEMIG",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_CURY",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_CXSEG",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_ENERGISA",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_ENEVA",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_ERO",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_FLEURY",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_ISAENERGIA",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_MARCOPOLO",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_MOURADUBEUX",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_ORIZON",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_PAGS",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_PICPAY",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_PINE",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_PORTO",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_REDEDOR",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_RIACHUELO",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_RUMO",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_SANEPAR",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_SAOMARTINHO",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_SIGMALITH",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_STONE",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_SUZANO",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_TENDA",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_TIM",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_TOTVS",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_VIVO",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "BR_VTEX",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "CL_LATAM",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "CO_CIBEST",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "CO_GEOPARK",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "LA_ARCOS",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "LA_COPA",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "LA_FORTUNA",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "LA_LILA",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "LA_MILLICOM",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 19,
+        "issuer_id": "PE_CREDICORP",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 18,
+        "issuer_id": "AR_PAMPA",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-12"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 18,
+        "issuer_id": "AR_TEO",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-12"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 18,
+        "issuer_id": "BR_AUREN",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-12"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 18,
+        "issuer_id": "BR_BRADESPAR",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-12"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 11,
+        "issuer_id": "BR_AXIA",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-19"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 11,
+        "issuer_id": "BR_EQUATORIAL",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-19"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 11,
+        "issuer_id": "BR_SABESP",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-19"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 11,
+        "issuer_id": "MX_AEROMEXICO",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-19"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 10,
+        "issuer_id": "BR_JBS",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-20"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 10,
+        "issuer_id": "BR_PRIO",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-20"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 10,
+        "issuer_id": "BR_ULTRAPAR",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-20"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 10,
+        "issuer_id": "MX_AMX",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-20"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 10,
+        "issuer_id": "MX_GAP",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-20"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 9,
+        "issuer_id": "BR_VIBRA",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-21"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 9,
+        "issuer_id": "MX_GENOMMA",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-21"
+      },
+      {
+        "classe": "posicao",
+        "idade_dias": 8,
+        "issuer_id": "MX_ASUR",
+        "prazo_dias": 7,
+        "ultima_nota": "2026-10-22"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "BR_ABC",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "BR_B3",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "BR_BTG",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "BR_CMIN",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "BR_COPASA",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "BR_COPEL",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "BR_CPFL",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "BR_GPS",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "BR_GRENDENE",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "BR_MATEUS",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "BR_MRV",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "BR_PATRIA",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "BR_PETZCOBASI",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "BR_RAIADROGASIL",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "BR_SER",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "BR_TAESA",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "BR_UNIPAR",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "BR_VULCABRAS",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "CL_BSAC",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "CL_ECL",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "CL_FALABELLA",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "CO_CEMARGOS",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "CO_SURA",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "CO_TECNOGLASS",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "LA_PAAS",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "MX_AC",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 19,
+        "issuer_id": "PE_IFS",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-11"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 18,
+        "issuer_id": "BR_JHSF",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-12"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 18,
+        "issuer_id": "BR_VIVARA",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-12"
+      },
+      {
+        "classe": "candidato",
+        "idade_dias": 18,
+        "issuer_id": "CL_ITAU",
+        "prazo_dias": 14,
+        "ultima_nota": "2026-10-12"
+      }
+    ]
+  },
+  "parametros": [
+    {
+      "data_referencia": "2026-07-01",
+      "documento": "Damodaran, Country Default Spreads and Risk Premiums (julho de 2026; spreads corrigidos em 2026-07-09)",
+      "fato": "rev.param.damodaran_crp.idade_dias",
+      "fonte": "https://pages.stern.nyu.edu/~adamodar/pc/datasets/ctrypremJuly26.xlsx",
+      "id": "damodaran_crp",
+      "idade_dias": 121,
+      "regra": "Damodaran publica em janeiro e em julho; atenção depois de 184 dias, vencido depois de 214",
+      "situacao_codigo": "em_dia",
+      "titulo": "Prêmio de risco-país e prêmio maduro (Damodaran, semestral)"
+    },
+    {
+      "data_referencia": "2026-10-01",
+      "documento": "Damodaran, Implied ERP by month (linha de 2026-10-01)",
+      "fato": "rev.param.damodaran_erp.idade_dias",
+      "fonte": "https://pages.stern.nyu.edu/~adamodar/pc/implprem/ERPbymonth.xlsx",
+      "id": "damodaran_erp",
+      "idade_dias": 29,
+      "regra": "atenção depois de 31 dias, vencido depois de 45",
+      "situacao_codigo": "em_dia",
+      "titulo": "Prêmio de risco de mercado contemporâneo (Damodaran, mensal)"
+    },
+    {
+      "data_referencia": "2026-01-07",
+      "documento": "Damodaran, Betas by sector (Global), janeiro de 2026 — beta desalavancado corrigido por caixa",
+      "fato": "rev.param.damodaran_betas.idade_dias",
+      "fonte": "https://pages.stern.nyu.edu/~adamodar/pc/datasets/betaGlobal.xls",
+      "id": "damodaran_betas",
+      "idade_dias": 296,
+      "regra": "atenção depois de 365 dias, vencido depois de 400",
+      "situacao_codigo": "em_dia",
+      "titulo": "Betas setoriais desalavancados (Damodaran, anual)"
+    },
+    {
+      "data_referencia": "2026-01-07",
+      "documento": "Damodaran, Corporate marginal tax rates by country (2025/26)",
+      "fato": "rev.param.damodaran_impostos.idade_dias",
+      "fonte": "https://pages.stern.nyu.edu/~adamodar/pc/datasets/countrytaxrates.xls",
+      "id": "damodaran_impostos",
+      "idade_dias": 296,
+      "regra": "atenção depois de 365 dias, vencido depois de 400",
+      "situacao_codigo": "em_dia",
+      "titulo": "Alíquotas marginais por país (Damodaran, anual)"
+    },
+    {
+      "data_referencia": "2026-01-07",
+      "documento": "Damodaran, Ratings, Interest Coverage Ratios and Default Spread (empresas não financeiras de grande porte), janeiro de 2026",
+      "fato": "rev.param.damodaran_ratings.idade_dias",
+      "fonte": "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ratings.html",
+      "id": "damodaran_ratings",
+      "idade_dias": 296,
+      "regra": "atenção depois de 365 dias, vencido depois de 400",
+      "situacao_codigo": "em_dia",
+      "titulo": "Spreads por cobertura de juros (Damodaran, anual)"
+    },
+    {
+      "data_referencia": "2026-01-07",
+      "documento": "Damodaran, Inflation differential risk-free rates 2026 (inflação esperada 2026-31)",
+      "fato": "rev.param.damodaran_inflacao.idade_dias",
+      "fonte": "https://pages.stern.nyu.edu/~adamodar/pc/blog/DiffInflationRiskfree26.xlsx",
+      "id": "damodaran_inflacao",
+      "idade_dias": 296,
+      "regra": "atenção depois de 365 dias, vencido depois de 400",
+      "situacao_codigo": "em_dia",
+      "titulo": "Inflação esperada por moeda (Damodaran, anual)"
+    },
+    {
+      "data_referencia": "2026-10-27",
+      "documento": null,
+      "fato": "rev.param.taxa_livre_risco.idade_dias",
+      "fonte": "https://fred.stlouisfed.org/series/DGS10",
+      "id": "taxa_livre_risco",
+      "idade_dias": 3,
+      "regra": "série diária; atenção depois de 3 dias, vencido depois de 7",
+      "situacao_codigo": "em_dia",
+      "titulo": "Taxa livre de risco em dólar (FRED DGS10)"
+    },
+    {
+      "data_referencia": "2026-10-28",
+      "documento": "Painel de ROE dos emissores cobertos (histórico anual público arquivado em cada snapshot: CVM DFP, SEC companyfacts, Yahoo Finance), com a persistência do desvio ao setor estimada em código a cada execução (cdp.cobertura.contexto.persistencia_painel; contexto.json, persistencia_roe_painel)",
+      "fonte": null,
+      "id": "persistencia_painel",
+      "idade_dias": null,
+      "regra": "reestimado em código a cada retrato completo; ausente no retrato ⇒ sem data",
+      "situacao_codigo": "em_dia",
+      "titulo": "Painel de persistência do ROE (reestimado a cada retrato completo)"
+    },
+    {
+      "data_referencia": null,
+      "documento": null,
+      "fonte": null,
+      "id": "arquetipos",
+      "idade_dias": null,
+      "pendencias": [],
+      "regra": "toda concessão com prazo precisa citar o documento público",
+      "situacao_codigo": "em_dia",
+      "titulo": "Arquétipos e prazos de concessão com fonte"
+    },
+    {
+      "data_referencia": "2026-05-06",
+      "documento": null,
+      "fato": "rev.param.sotp_participacoes.idade_dias",
+      "fonte": null,
+      "id": "sotp_participacoes",
+      "idade_dias": 177,
+      "pendencias": [],
+      "regra": "participação não conferida ou documento com mais de 365 dias ⇒ atenção",
+      "situacao_codigo": "em_dia",
+      "titulo": "Participações das holdings (soma das partes) com documento público"
+    },
+    {
+      "arquetipos": [
+        "banco",
+        "commodity",
+        "concessao",
+        "corporativo",
+        "holding",
+        "imobiliario",
+        "seguradora",
+        "utilidade_regulada"
+      ],
+      "data_referencia": null,
+      "documento": null,
+      "fonte": null,
+      "id": "pesos_metodos",
+      "idade_dias": null,
+      "regra": "política da casa; revisar com a dispersão entre métodos e o placar",
+      "situacao_codigo": "em_dia",
+      "titulo": "Pesos dos métodos por arquétipo (política)"
+    },
+    {
+      "data_referencia": "2026-10-28",
+      "documento": null,
+      "fonte": null,
+      "id": "etf_composicao",
+      "idade_dias": null,
+      "pendencias": [
+        "ETF_ARGT",
+        "ETF_BOVA11",
+        "ETF_COLO",
+        "ETF_ECH",
+        "ETF_EPU",
+        "ETF_EWW",
+        "ETF_EWZ",
+        "ETF_ILF"
+      ],
+      "regra": "peso coberto por modelos da casa abaixo da cobertura plena ⇒ atenção",
+      "situacao_codigo": "atencao",
+      "titulo": "Cobertura da composição dos ETFs pelos modelos"
+    },
+    {
+      "data_referencia": null,
+      "documento": null,
+      "fonte": null,
+      "id": "versao_metodologia",
+      "idade_dias": null,
+      "regra": "retrato gravado com versão diferente da do repositório ⇒ atenção (o próximo retrato completo usa a versão nova)",
+      "situacao_codigo": "em_dia",
+      "titulo": "Versão da metodologia do retrato × do repositório",
+      "versao_repositorio": "2026-10.8",
+      "versao_retrato": "2026-10.8"
+    }
+  ],
+  "periodo": {
+    "fim": "2026-10-30",
+    "inicio": "2026-09-26"
+  },
+  "placar": {
+    "acerto_vencimento": {
+      "ic90": null,
+      "n": 0,
+      "taxa": null
+    },
+    "em_maturacao": true,
+    "exibir_taxas": false,
+    "ic": {
+      "icir_anual": 4.48197,
+      "media": 0.0283118,
+      "semanas": 5,
+      "t_newey_west": 1.55384
+    },
+    "n_previsoes": 1198,
+    "n_vencidas": 0,
+    "primeiro_vencimento": "2027-10-07"
+  },
+  "portoes": [
+    {
+      "aviso": 21,
+      "bloqueio": 23,
+      "codigo": "G11",
+      "fatos": [
+        "rev.portao.G11.bloqueio",
+        "rev.portao.G11.aviso"
+      ]
+    },
+    {
+      "aviso": 33,
+      "bloqueio": 0,
+      "codigo": "G20",
+      "fatos": [
+        "rev.portao.G20.bloqueio",
+        "rev.portao.G20.aviso"
+      ]
+    },
+    {
+      "aviso": 27,
+      "bloqueio": 0,
+      "codigo": "G18",
+      "fatos": [
+        "rev.portao.G18.bloqueio",
+        "rev.portao.G18.aviso"
+      ]
+    },
+    {
+      "aviso": 0,
+      "bloqueio": 15,
+      "codigo": "G9",
+      "fatos": [
+        "rev.portao.G9.bloqueio",
+        "rev.portao.G9.aviso"
+      ]
+    },
+    {
+      "aviso": 14,
+      "bloqueio": 0,
+      "codigo": "G5",
+      "fatos": [
+        "rev.portao.G5.bloqueio",
+        "rev.portao.G5.aviso"
+      ]
+    },
+    {
+      "aviso": 12,
+      "bloqueio": 0,
+      "codigo": "G17",
+      "fatos": [
+        "rev.portao.G17.bloqueio",
+        "rev.portao.G17.aviso"
+      ]
+    },
+    {
+      "aviso": 5,
+      "bloqueio": 7,
+      "codigo": "G19",
+      "fatos": [
+        "rev.portao.G19.bloqueio",
+        "rev.portao.G19.aviso"
+      ]
+    },
+    {
+      "aviso": 10,
+      "bloqueio": 0,
+      "codigo": "G16",
+      "fatos": [
+        "rev.portao.G16.bloqueio",
+        "rev.portao.G16.aviso"
+      ]
+    },
+    {
+      "aviso": 8,
+      "bloqueio": 1,
+      "codigo": "G13c",
+      "fatos": [
+        "rev.portao.G13c.bloqueio",
+        "rev.portao.G13c.aviso"
+      ]
+    },
+    {
+      "aviso": 0,
+      "bloqueio": 6,
+      "codigo": "G13",
+      "fatos": [
+        "rev.portao.G13.bloqueio",
+        "rev.portao.G13.aviso"
+      ]
+    },
+    {
+      "aviso": 0,
+      "bloqueio": 3,
+      "codigo": "G13b",
+      "fatos": [
+        "rev.portao.G13b.bloqueio",
+        "rev.portao.G13b.aviso"
+      ]
+    },
+    {
+      "aviso": 1,
+      "bloqueio": 0,
+      "codigo": "G1",
+      "fatos": [
+        "rev.portao.G1.bloqueio",
+        "rev.portao.G1.aviso"
+      ]
+    }
+  ],
+  "programada": true,
+  "reavaliacao_obrigatoria": [
+    "MX_ALPEK",
+    "AR_CRESUD",
+    "MX_VESTA",
+    "MX_ASUR",
+    "BR_AUREN"
+  ],
+  "retrato": {
+    "data": "2026-10-28",
+    "parcial": false,
+    "sintetico": false,
+    "versao_metodologia": "2026-10.8"
+  },
+  "retratos_do_periodo": [
+    {
+      "data": "2026-10-07",
+      "n_emissores": 233,
+      "parcial": false
+    },
+    {
+      "data": "2026-10-09",
+      "n_emissores": 233,
+      "parcial": false
+    },
+    {
+      "data": "2026-10-14",
+      "n_emissores": 233,
+      "parcial": false
+    },
+    {
+      "data": "2026-10-16",
+      "n_emissores": 233,
+      "parcial": false
+    },
+    {
+      "data": "2026-10-19",
+      "n_emissores": 1,
+      "parcial": true
+    },
+    {
+      "data": "2026-10-20",
+      "n_emissores": 6,
+      "parcial": true
+    },
+    {
+      "data": "2026-10-21",
+      "n_emissores": 13,
+      "parcial": true
+    },
+    {
+      "data": "2026-10-23",
+      "n_emissores": 233,
+      "parcial": false
+    },
+    {
+      "data": "2026-10-26",
+      "n_emissores": 8,
+      "parcial": true
+    },
+    {
+      "data": "2026-10-27",
+      "n_emissores": 17,
+      "parcial": true
+    },
+    {
+      "data": "2026-10-28",
+      "n_emissores": 233,
+      "parcial": false
+    }
+  ],
+  "schema": "cdp.cobertura.revisao.pacote/v1"
+}

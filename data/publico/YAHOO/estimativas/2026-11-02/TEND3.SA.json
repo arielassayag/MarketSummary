@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 20.01,
+  "high": 58.0,
+  "low": 29.0,
+  "mean": 45.45833,
+  "median": 45.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.40616,
+   "currency": "BRL",
+   "growth": 0.6543,
+   "high": 1.51,
+   "low": 1.24367,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.85
+  },
+  "+1y": {
+   "avg": 6.74223,
+   "currency": "BRL",
+   "growth": 0.2603,
+   "high": 7.42,
+   "low": 6.01242,
+   "numberOfAnalysts": 9,
+   "yearAgoEps": 5.34955
+  },
+  "0q": {
+   "avg": 1.1819,
+   "currency": "BRL",
+   "growth": 0.27969998,
+   "high": 1.36763,
+   "low": 1.09,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.9236
+  },
+  "0y": {
+   "avg": 5.34955,
+   "currency": "BRL",
+   "growth": 0.2953,
+   "high": 5.78582,
+   "low": 4.93,
+   "numberOfAnalysts": 9,
+   "yearAgoEps": 4.13
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1381869840,
+   "currency": "BRL",
+   "growth": 0.1698,
+   "high": 1419489760,
+   "low": 1365622590,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 1181300000
+  },
+  "+1y": {
+   "avg": 6099557460,
+   "currency": "BRL",
+   "growth": 0.1586,
+   "high": 6451713150,
+   "low": 5645116000,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 5264683300
+  },
+  "0q": {
+   "avg": 1272959260,
+   "currency": "BRL",
+   "growth": 0.121199995,
+   "high": 1346679120,
+   "low": 1175107000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 1135356000
+  },
+  "0y": {
+   "avg": 5264683300,
+   "currency": "BRL",
+   "growth": 0.2615,
+   "high": 6107000000,
+   "low": 5019818000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 4173400000
+  }
+ },
+ "ticker": "TEND3.SA",
+ "url": "https://finance.yahoo.com/quote/TEND3.SA"
+}

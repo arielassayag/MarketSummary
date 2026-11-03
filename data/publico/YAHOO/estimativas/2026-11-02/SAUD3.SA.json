@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 14.1,
+  "high": 20.0,
+  "low": 13.1,
+  "mean": 18.1625,
+  "median": 19.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.545,
+   "currency": "BRL",
+   "growth": 0.9528,
+   "high": 0.56,
+   "low": 0.53,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.27909
+  },
+  "+1y": {
+   "avg": 1.70527,
+   "currency": "BRL",
+   "growth": 0.1344,
+   "high": 1.85,
+   "low": 1.39,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 1.50321
+  },
+  "0q": {
+   "avg": 0.38,
+   "currency": "BRL",
+   "growth": 0.8756,
+   "high": 0.38,
+   "low": 0.38,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.2026
+  },
+  "0y": {
+   "avg": 1.50321,
+   "currency": "BRL",
+   "growth": 0.4734,
+   "high": 1.57,
+   "low": 1.27,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 1.0202
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 14675746180,
+   "currency": "BRL",
+   "growth": 22.690802,
+   "high": 14693129360,
+   "low": 14658363000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 619471000
+  },
+  "+1y": {
+   "avg": 60664193640,
+   "currency": "BRL",
+   "growth": 0.11,
+   "high": 67065731850,
+   "low": 53528000000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 54650371350
+  },
+  "0q": {
+   "avg": 14914972100,
+   "currency": "BRL",
+   "growth": 24.054298,
+   "high": 15766856880,
+   "low": 14263612000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 595306000
+  },
+  "0y": {
+   "avg": 54650371350,
+   "currency": "BRL",
+   "growth": 21.8673,
+   "high": 56092000000,
+   "low": 48993000000,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 2389891000
+  }
+ },
+ "ticker": "SAUD3.SA",
+ "url": "https://finance.yahoo.com/quote/SAUD3.SA"
+}

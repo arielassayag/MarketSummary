@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 15.33,
+  "high": 18.7,
+  "low": 15.0,
+  "mean": 16.74545,
+  "median": 16.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.22791,
+   "currency": "MXN",
+   "growth": 0.026199998,
+   "high": 0.25,
+   "low": 0.184,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.2221
+  },
+  "+1y": {
+   "avg": 1.19141,
+   "currency": "MXN",
+   "growth": 0.1754,
+   "high": 1.62,
+   "low": 1.04,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 1.0136
+  },
+  "0q": {
+   "avg": 0.23596,
+   "currency": "MXN",
+   "growth": -0.32560003,
+   "high": 0.23596,
+   "low": 0.23596,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.3499
+  },
+  "0y": {
+   "avg": 1.0136,
+   "currency": "MXN",
+   "growth": 12.372,
+   "high": 1.11,
+   "low": 0.9,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 0.0758
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 2264477340,
+   "currency": "MXN",
+   "growth": 1.7879,
+   "high": 2350958720,
+   "low": 2199837310,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 812252000
+  },
+  "+1y": {
+   "avg": 9213753320,
+   "currency": "MXN",
+   "growth": 0.4703,
+   "high": 9700178700,
+   "low": 8608000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 6266620510
+  },
+  "0q": {
+   "avg": 2142732410,
+   "currency": "MXN",
+   "growth": 1.5774001,
+   "high": 2142732410,
+   "low": 2142732410,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 831347000
+  },
+  "0y": {
+   "avg": 6266620510,
+   "currency": "MXN",
+   "growth": 0.865,
+   "high": 6266620510,
+   "low": 6266620510,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 3360084000
+  }
+ },
+ "ticker": "FMTY14.MX",
+ "url": "https://finance.yahoo.com/quote/FMTY14.MX"
+}

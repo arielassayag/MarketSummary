@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 4632.5,
+  "high": 12300.0,
+  "low": 6192.5,
+  "mean": 8597.5,
+  "median": 7300.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": null,
+   "currency": "ARS",
+   "growth": null,
+   "high": null,
+   "low": null,
+   "numberOfAnalysts": null,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 820.24,
+   "currency": "ARS",
+   "growth": 0.2926,
+   "high": 820.24,
+   "low": 820.24,
+   "numberOfAnalysts": 1.0,
+   "yearAgoEps": 634.58
+  },
+  "0q": {
+   "avg": 88.91,
+   "currency": "ARS",
+   "growth": -0.4723,
+   "high": 88.91,
+   "low": 88.91,
+   "numberOfAnalysts": 1.0,
+   "yearAgoEps": 168.48
+  },
+  "0y": {
+   "avg": 634.58,
+   "currency": "ARS",
+   "growth": 0.6376,
+   "high": 634.58,
+   "low": 634.58,
+   "numberOfAnalysts": 1.0,
+   "yearAgoEps": 387.504
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "ARS",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 4756165734310,
+   "currency": "ARS",
+   "growth": 0.0581,
+   "high": 6363652687630,
+   "low": 4227244368450,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 4494860938160.0
+  },
+  "0q": {
+   "avg": 1120233136000,
+   "currency": "ARS",
+   "growth": 0.5737,
+   "high": 1274609000000,
+   "low": 965857272000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 711828000000.0
+  },
+  "0y": {
+   "avg": 4494860938160,
+   "currency": "ARS",
+   "growth": 0.6023,
+   "high": 4494860938160,
+   "low": 4494860938160,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 2805192000000.0
+  }
+ },
+ "ticker": "PAMP.BA",
+ "url": "https://finance.yahoo.com/quote/PAMP.BA"
+}

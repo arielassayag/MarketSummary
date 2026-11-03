@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 12.44,
+  "high": 19.708641,
+  "low": 14.0308275,
+  "mean": 17.159378,
+  "median": 17.211676
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.68,
+   "currency": "BRL",
+   "growth": -0.45240003,
+   "high": 2.751,
+   "low": 0.202,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 3.06816
+  },
+  "+1y": {
+   "avg": 7.03188,
+   "currency": "BRL",
+   "growth": 0.6946,
+   "high": 10.011,
+   "low": 3.63,
+   "numberOfAnalysts": 8,
+   "yearAgoEps": 4.14957
+  },
+  "0q": {
+   "avg": 1.11133,
+   "currency": "BRL",
+   "growth": -0.6124,
+   "high": 1.669,
+   "low": -0.07,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 2.86715
+  },
+  "0y": {
+   "avg": 4.14957,
+   "currency": "BRL",
+   "growth": -0.6353,
+   "high": 6.057,
+   "low": 2.16,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 11.37751
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 126092696570,
+   "currency": "BRL",
+   "growth": 0.0469,
+   "high": 131774953420,
+   "low": 120574511000,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 120444280840
+  },
+  "+1y": {
+   "avg": 488314764100,
+   "currency": "BRL",
+   "growth": 0.0167,
+   "high": 524571000000,
+   "low": 468705175000,
+   "numberOfAnalysts": 15,
+   "yearAgoRevenue": 480294585230
+  },
+  "0q": {
+   "avg": 117869777400,
+   "currency": "BRL",
+   "growth": -0.0425,
+   "high": 125643378000,
+   "low": 112525371000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 123099514000
+  },
+  "0y": {
+   "avg": 480294585230,
+   "currency": "BRL",
+   "growth": 0.0671,
+   "high": 506871736490,
+   "low": 458307684000,
+   "numberOfAnalysts": 14,
+   "yearAgoRevenue": 450087927340
+  }
+ },
+ "ticker": "JBS",
+ "url": "https://finance.yahoo.com/quote/JBS"
+}

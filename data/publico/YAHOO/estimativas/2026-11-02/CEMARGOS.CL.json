@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 10700.0,
+  "high": 13700.0,
+  "low": 11000.0,
+  "mean": 12325.556,
+  "median": 12330.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 111.98222,
+   "currency": "COP",
+   "growth": null,
+   "high": 111.98222,
+   "low": 111.98222,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 554.236,
+   "currency": "COP",
+   "growth": 0.1851,
+   "high": 651.0,
+   "low": 449.90808,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 467.65076
+  },
+  "0q": {
+   "avg": 96.22865,
+   "currency": "COP",
+   "growth": null,
+   "high": 96.22865,
+   "low": 96.22865,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 467.65076,
+   "currency": "COP",
+   "growth": -0.246,
+   "high": 595.95,
+   "low": 354.7423,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 620.2536
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1333155065740,
+   "currency": "COP",
+   "growth": 0.0458,
+   "high": 1333155065740,
+   "low": 1333155065740,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 1274809000000
+  },
+  "+1y": {
+   "avg": 5644851157770,
+   "currency": "COP",
+   "growth": 0.071,
+   "high": 5769000000000,
+   "low": 5372376672030,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 5270393809110
+  },
+  "0q": {
+   "avg": 1327862814800,
+   "currency": "COP",
+   "growth": -0.0279,
+   "high": 1344000000000,
+   "low": 1311725629590,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 1366000000000
+  },
+  "0y": {
+   "avg": 5270393809110,
+   "currency": "COP",
+   "growth": 0.0222,
+   "high": 5374000000000,
+   "low": 5190714695330,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 5155682000000
+  }
+ },
+ "ticker": "CEMARGOS.CL",
+ "url": "https://finance.yahoo.com/quote/CEMARGOS.CL"
+}

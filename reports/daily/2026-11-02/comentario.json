@@ -1,0 +1,17 @@
+{
+  "mind": "codex",
+  "headline": "CDP avança {{fact:day.ret}}; financiamento sustenta o resultado",
+  "paragraphs": [
+    "Em 02/11/2026, a carteira simulada com preços reais registrou retorno de {{fact:day.ret}}, equivalente a {{fact:day.pnl_usd}}, com NAV de {{fact:nav}}. O acumulado desde o início ficou em {{fact:itd.ret}}. O financiamento contribuiu {{fact:attr.financing}}, enquanto ações responderam por {{fact:attr.equity}} e aluguel por {{fact:attr.borrow}}.",
+    "O lado comprado contribuiu {{fact:attr.long}} e o vendido {{fact:attr.short}}. A parcela específica respondeu por {{fact:attr.specific}} e a fatorial por {{fact:attr.factor}}; essa decomposição descreve a atribuição, sem estabelecer causalidade macroeconômica. Sigma Lithium contribuiu {{fact:top.contrib.1.contrib}}, Copa {{fact:top.contrib.2.contrib}} e Fortuna {{fact:top.contrib.3.contrib}}. Entre os detratores, IRSA respondeu por {{fact:top.detract.1.contrib}}, GeoPark por {{fact:top.detract.2.contrib}} e Petrobras por {{fact:top.detract.3.contrib}}.",
+    "A B3 informou, em 30/10/2026, a suspensão das negociações em 02/11/2026 pelo feriado de Finados. As linhas sem negociação mantiveram a marcação anterior, conforme os alertas de dados. Nos mercados externos, o fundo de ações brasileiras negociado nos Estados Unidos variou {{fact:mkt.EWZ.ret_1d}}, o fundo de ações mexicanas {{fact:mkt.EWW.ret_1d}} e o fundo de ações argentinas {{fact:mkt.ARGT.ret_1d}}. O futuro de Brent apresentou {{fact:mkt.BZ_F.ret_1d}} e o de ouro {{fact:mkt.GC_F.ret_1d}}. Não se atribui a esses movimentos uma causa noticiosa sem confirmação independente.",
+    "A vol ex-ante de {{fact:risk.ex_ante_vol}} permaneceu abaixo da banda de {{fact:mandate.vol_band_min}} a {{fact:mandate.vol_band_max}}, com beta de {{fact:risk.beta}}, exposição bruta de {{fact:risk.gross}} e líquida de {{fact:risk.net}}. A exposição líquida excede o limite do mandato. O VaR diário ficou em {{fact:risk.var_1d}}. O short em Grupo Financiero Galicia segue com risco alto de squeeze e demanda reavaliação no processo de gestão."
+  ],
+  "risk_flags": [
+    "Vol ex-ante de {{fact:risk.ex_ante_vol}} abaixo da banda do mandato; orçamento de risco subutilizado.",
+    "Exposição líquida de {{fact:risk.net}} fora do limite do mandato.",
+    "Grupo Financiero Galicia com risco alto de squeeze no short.",
+    "Linhas sem negociação mantêm valores anteriores; benchmarks sem barra e aluguel B3 sem publicação nova limitam a leitura do dia.",
+    "Retornos fatoriais estimados por regressão; a parcela específica não comprova causalidade nem habilidade de gestão."
+  ]
+}

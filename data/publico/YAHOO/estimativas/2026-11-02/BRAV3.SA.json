@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 18.42,
+  "high": 25.0,
+  "low": 17.8,
+  "mean": 22.57273,
+  "median": 23.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.29212,
+   "currency": "BRL",
+   "growth": 2.5605,
+   "high": 1.29212,
+   "low": 1.29212,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -0.828
+  },
+  "+1y": {
+   "avg": 2.84178,
+   "currency": "BRL",
+   "growth": 0.3415,
+   "high": 3.55233,
+   "low": 1.5,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 2.11843
+  },
+  "0q": {
+   "avg": -0.47449,
+   "currency": "BRL",
+   "growth": -0.5655,
+   "high": -0.47449,
+   "low": -0.47449,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -0.3031
+  },
+  "0y": {
+   "avg": 2.11843,
+   "currency": "BRL",
+   "growth": -0.2224,
+   "high": 2.799,
+   "low": 1.43786,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 2.7243
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 3447624980,
+   "currency": "BRL",
+   "growth": 0.3531,
+   "high": 4188491000,
+   "low": 2651000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 2548000000
+  },
+  "+1y": {
+   "avg": 13814524720,
+   "currency": "BRL",
+   "growth": 0.0123000005,
+   "high": 17313949580,
+   "low": 11132306950,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 13647121170
+  },
+  "0q": {
+   "avg": 3304492160,
+   "currency": "BRL",
+   "growth": 0.0804,
+   "high": 3648629000,
+   "low": 2640000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 3058639000
+  },
+  "0y": {
+   "avg": 13647121170,
+   "currency": "BRL",
+   "growth": 0.1741,
+   "high": 14569719000,
+   "low": 12401309660,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 11623000000
+  }
+ },
+ "ticker": "BRAV3.SA",
+ "url": "https://finance.yahoo.com/quote/BRAV3.SA"
+}

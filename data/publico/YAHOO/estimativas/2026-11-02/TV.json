@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 2.02,
+  "high": 9.888268,
+  "low": 2.4596238,
+  "mean": 3.8516896,
+  "median": 3.1185796
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.12,
+   "currency": "MXN",
+   "growth": -0.9385,
+   "high": 0.12,
+   "low": 0.12,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 1.95
+  },
+  "+1y": {
+   "avg": 3.8251,
+   "currency": "MXN",
+   "growth": 0.1514,
+   "high": 7.39195,
+   "low": 1.97746,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 3.32217
+  },
+  "0q": {
+   "avg": 1.13882,
+   "currency": "MXN",
+   "growth": 1.5235001,
+   "high": 2.34344,
+   "low": 0.46,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": -2.1755
+  },
+  "0y": {
+   "avg": 3.32217,
+   "currency": "MXN",
+   "growth": 1.7735001,
+   "high": 5.15336,
+   "low": 2.035,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": -4.2949
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 14175944840,
+   "currency": "MXN",
+   "growth": -0.0232,
+   "high": 14277374670,
+   "low": 14074515000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 14512500000
+  },
+  "+1y": {
+   "avg": 55514499810,
+   "currency": "MXN",
+   "growth": -0.019199999,
+   "high": 60138712000,
+   "low": 52276763360,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 56601700000
+  },
+  "0q": {
+   "avg": 14314076040,
+   "currency": "MXN",
+   "growth": -0.0161,
+   "high": 14968135000,
+   "low": 14004425000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 14548200000
+  },
+  "0y": {
+   "avg": 56601700000,
+   "currency": "MXN",
+   "growth": -0.0387,
+   "high": 56839400000,
+   "low": 56364000000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 58878200000
+  }
+ },
+ "ticker": "TV",
+ "url": "https://finance.yahoo.com/quote/TV"
+}

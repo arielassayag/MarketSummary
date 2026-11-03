@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 14.0,
+  "high": 23.0,
+  "low": 15.0,
+  "mean": 19.06667,
+  "median": 19.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.28,
+   "currency": "BRL",
+   "growth": -0.1244,
+   "high": 0.28,
+   "low": 0.28,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.31978
+  },
+  "+1y": {
+   "avg": 1.47447,
+   "currency": "BRL",
+   "growth": 0.1609,
+   "high": 1.59,
+   "low": 1.28,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 1.27016
+  },
+  "0q": {
+   "avg": 0.36078,
+   "currency": "BRL",
+   "growth": 0.1974,
+   "high": 0.36078,
+   "low": 0.36078,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.3013
+  },
+  "0y": {
+   "avg": 1.27016,
+   "currency": "BRL",
+   "growth": 0.14770001,
+   "high": 1.28,
+   "low": 1.26031,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 1.1067
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 3986429730,
+   "currency": "BRL",
+   "growth": 0.1982,
+   "high": 4152706000,
+   "low": 3788583200,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 3327000000
+  },
+  "+1y": {
+   "avg": 16641384630,
+   "currency": "BRL",
+   "growth": 0.081099994,
+   "high": 17039597610,
+   "low": 16406000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 15393544710
+  },
+  "0q": {
+   "avg": 4007411000,
+   "currency": "BRL",
+   "growth": -0.0098,
+   "high": 4098000000,
+   "low": 3935982010,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 4047000000
+  },
+  "0y": {
+   "avg": 15393544710,
+   "currency": "BRL",
+   "growth": 0.0064,
+   "high": 16523000000,
+   "low": 14967000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 15296000000
+  }
+ },
+ "ticker": "MOTV3.SA",
+ "url": "https://finance.yahoo.com/quote/MOTV3.SA"
+}

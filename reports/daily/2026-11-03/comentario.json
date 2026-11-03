@@ -1,0 +1,14 @@
+{
+  "mind": "codex",
+  "headline": "Carteira recua {{fact:day.ret}} com contribuição negativa das posições compradas",
+  "paragraphs": [
+    "A carteira simulada recuou {{fact:day.ret}} ({{fact:day.pnl_usd}}) no pregão de 03/11/2026. O patrimônio líquido encerrou em {{fact:nav}}, com retorno acumulado de {{fact:itd.ret}} desde o início do mandato.",
+    "O lado vendido contribuiu {{fact:attr.short}} e compensou parte da perda do lado comprado, de {{fact:attr.long}}. A contribuição específica foi de {{fact:attr.specific}}, ante {{fact:attr.factor}} da parcela fatorial. Brava Energia ({{fact:top.contrib.1.contrib}}), Sanepar ({{fact:top.contrib.2.contrib}}) e Ultrapar ({{fact:top.contrib.3.contrib}}) lideraram as contribuições. PRIO ({{fact:top.detract.1.contrib}}), Sigma Lithium ({{fact:top.detract.2.contrib}}) e Cury ({{fact:top.detract.3.contrib}}) foram os maiores detratores.",
+    "Na volta do feriado de Finados, conforme o calendário divulgado pela B3 em 30/10/2026, o Ibovespa variou {{fact:mkt.BVSP.ret_1d}} em moeda local. A sessão coincidiu com o início da reunião do Copom, conforme o calendário do Banco Central do Brasil.",
+    "A vol ex-ante encerrou em {{fact:risk.ex_ante_vol}}, abaixo da banda de {{fact:mandate.vol_band_min}} a {{fact:mandate.vol_band_max}}. O beta ficou em {{fact:risk.beta}} e a exposição líquida de {{fact:risk.net}} excedeu o limite do mandato."
+  ],
+  "risk_flags": [
+    "A posição vendida em Grupo Financiero Galicia segue com risco alto de squeeze.",
+    "O índice de referência argentino ficou sem barra no pregão. O saldo de aluguel da B3 segue sujeito à defasagem de publicação."
+  ]
+}

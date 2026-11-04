@@ -1,0 +1,148 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_BBSEG",
+  "data": "2026-11-03",
+  "tipo": "pos_resultado",
+  "titulo": "BB Seguridade reduz projeção de prêmios da Brasilseg",
+  "resumo": "O lucro recorrente gerencial caiu na comparação anual do trimestre e ficou praticamente estável no acumulado. A recuperação da captação em previdência e o resultado financeiro da holding amorteceram a pressão em seguros e corretagem. O alvo do modelo é {{fact:val.BR_BBSEG.preco_alvo}} ante {{fact:val.BR_BBSEG.preco}}, com rating {{fact:val.BR_BBSEG.rating_codigo}} e confiança {{fact:val.BR_BBSEG.confianca_codigo}}.",
+  "negocio": "Holding controlada pelo Banco do Brasil com participações em seguros, previdência, capitalização e odontologia, além de corretagem apoiada na rede bancária do controlador.",
+  "pilares_tese": [
+    {
+      "titulo": "Prêmios enfraquecem em linhas relevantes",
+      "texto": "A menor emissão em rural, prestamista e vida levou à redução da faixa anual da Brasilseg. No trimestre, prêmios ganhos menores, índice combinado maior e menor resultado financeiro pressionaram o lucro da investida.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "titulo": "Previdência recupera captação",
+      "texto": "A Brasilprev avançou no acumulado com captação líquida, receitas de taxa de gestão e maior eficiência. Separar captação e rentabilidade das reservas para testar recorrência.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Emissão de seguros e comissões",
+      "direcao": "negativo",
+      "sensibilidade": "alta",
+      "texto": "A menor emissão tende a pressionar o prêmio ganho e a corretagem com defasagens próprias. Acompanhar conversão por linha e persistência da sinistralidade.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Reunião virtual de resultados prevista no calendário do RI.",
+      "data": "2026-11-04",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F3"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Persistência da fraqueza no rural, prestamista e vida pode reduzir geração das investidas e comissões. Normalização do resultado financeiro ou da sinistralidade reduz a compensação.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Captação de previdência e recuperação de emissão sustentam geração após despesas. Alvo de {{fact:val.BR_BBSEG.alvo_otimista}}.",
+    "base": "Previdência e resultado financeiro compensam parte da pressão em seguros. Alvo de {{fact:val.BR_BBSEG.preco_alvo}}.",
+    "pessimista": "Emissão fraca e maior sinistralidade reduzem lucro e distribuição das investidas. Alvo de {{fact:val.BR_BBSEG.alvo_pessimista}}."
+  },
+  "comentario_valuation": "P/VP de {{fact:val.BR_BBSEG.pb}} e diferença de {{fact:val.BR_BBSEG.diff_consenso}} frente ao consenso público. A leitura depende da recorrência da geração das investidas e do caixa transferível à holding. Potencial de {{fact:val.BR_BBSEG.upside}}, retorno total esperado de {{fact:val.BR_BBSEG.etr}} e alpha relativo aos pares de {{fact:val.BR_BBSEG.alpha_rel}}.",
+  "ultimo_resultado": "O lucro líquido recorrente gerencial do 3T26 caiu ante o 3T25 e cresceu ante o 2T26. O acumulado ficou praticamente estável. O fato relevante reduziu o guidance de prêmios emitidos da Brasilseg e manteve as faixas do resultado operacional sem juros, excluída a holding, e das reservas de previdência abrangidas pela projeção.",
+  "guidance": "reduzido",
+  "tom_gestao": "neutro",
+  "governanca": "A corretora utiliza a rede do Banco do Brasil e remunera serviços bancários conforme contrato. O relatório distingue comissões de corretagem e remuneração ao controlador, relevantes para a comparação entre investidas.",
+  "posicao_competitiva": {
+    "titulo": "Distribuição pelo canal bancário",
+    "texto": "A rede do Banco do Brasil amplia o alcance comercial. O valor da distribuição depende de renovação, conversão e remuneração líquida após o custo do canal.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Lucro recorrente e normalização financeira",
+    "texto": "A análise da companhia distingue resultado recorrente e normalização do descasamento temporal do índice de preços. Separar prêmios ganhos, sinistralidade e resultado financeiro por entidade.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Capital e dividendos recebidos",
+    "texto": "Acompanhar capital requerido das investidas e distribuição recebida pela holding. A elevação do resultado financeiro da holding tem base distinta de expansão da subscrição.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Captação pode compensar sem reverter subscrição",
+    "texto": "O crescimento de reservas não elimina o risco de menor emissão da Brasilseg. A hipótese de recuperação depende da evolução de prêmios e comissões após defasagens de reconhecimento.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Emissão, sinistralidade e captação",
+      "texto": "Acompanhar prêmios por linha, índice combinado da Brasilseg, receita de corretagem, captação líquida da Brasilprev e geração sem juros.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "o_que_mudou": "O resultado de 2026-11-03 traz recuperação da captação líquida em previdência no acumulado e revisão para baixo da faixa de prêmios da Brasilseg. A nota separa estabilidade acumulada e queda anual no trimestre.",
+  "gatilhos_revisao": [
+    "Prêmios emitidos divergem da faixa revisada.",
+    "Sinistralidade aumenta com menor prêmio ganho.",
+    "Captação líquida perde força e reduz a contribuição de taxas de gestão."
+  ],
+  "lacunas_de_dados": [
+    "Probabilidades implícitas dos cenários indisponíveis.",
+    "Normalização de receitas financeiras e capacidade de distribuição requerem acompanhamento."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "BB Seguridade",
+      "titulo": "Análise de desempenho trimestral",
+      "url": "https://www.bbseguridaderi.com.br/docs/bb-seguridade-2026-09-30-mGHjhQkr.pdf",
+      "publicado_em": "2026-11-03",
+      "consultado_em": "2026-11-03"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "BB Seguridade",
+      "titulo": "Fato relevante sobre a revisão das projeções",
+      "url": "https://www.bbseguridaderi.com.br/docs/bb-seguridade-2026-11-03-mwBtmNBb.pdf",
+      "publicado_em": "2026-11-03",
+      "consultado_em": "2026-11-03"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "BB Seguridade",
+      "titulo": "Calendário de divulgação e reunião de resultados",
+      "url": "https://www.bbseguridaderi.com.br/informacoes-ao-mercado/calendario-de-eventos/2026",
+      "publicado_em": null,
+      "consultado_em": "2026-11-03"
+    }
+  ]
+}

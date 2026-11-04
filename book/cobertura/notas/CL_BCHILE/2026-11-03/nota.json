@@ -1,0 +1,136 @@
+{
+  "mind": "codex",
+  "issuer_id": "CL_BCHILE",
+  "data": "2026-11-03",
+  "tipo": "pos_resultado",
+  "titulo": "Banco de Chile revê margem enquanto perdas de crédito pressionam lucro",
+  "resumo": "A receita de clientes cresceu, mas despesas de pessoal e perdas no varejo comprimiram o lucro trimestral. A melhora da margem projetada depende em parte da inflação e exige separação da geração recorrente. O alvo do modelo é {{fact:val.CL_BCHILE.preco_alvo}} ante {{fact:val.CL_BCHILE.preco}}, com rating {{fact:val.CL_BCHILE.rating_codigo}} e confiança {{fact:val.CL_BCHILE.confianca_codigo}}.",
+  "negocio": "Banco comercial chileno que capta depósitos e oferece crédito, cartões, meios de pagamento e serviços de investimento a pessoas e empresas.",
+  "pilares_tese": [
+    {
+      "titulo": "Receita com clientes resiste",
+      "texto": "Comissões de cartões e de administração de fundos sustentaram a expansão da receita com clientes. A contribuição dos depósitos à vista para o custo de funding diminuiu.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Provisões e pessoal absorvem o ganho",
+      "texto": "O custo de crédito aumentou com a inadimplência no varejo. Despesas de pessoal refletiram reajustes inflacionários e parte do bônus da negociação coletiva.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Posição indexada à inflação",
+      "direcao": "positivo",
+      "sensibilidade": "alta",
+      "texto": "A gestão elevou a projeção de margem de juros para 2026, apoiada em parte na exposição estrutural a ativos indexados. A revisão da expansão do crédito teve direção distinta.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Posse anunciada de Hernán Arellano na presidência executiva.",
+      "data": "2027-04-03",
+      "tipo": "outro",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Deterioração do varejo e menor contribuição dos depósitos à vista podem comprimir o retorno mesmo com crescimento de comissões.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Comissões e carteira comercial crescem com normalização de perdas. Alvo de {{fact:val.CL_BCHILE.alvo_otimista}}.",
+    "base": "Margem com clientes resiste, com pressão de crédito e despesas. Alvo de {{fact:val.CL_BCHILE.preco_alvo}}.",
+    "pessimista": "Perdas do varejo e custo de captação consomem o benefício da indexação. Alvo de {{fact:val.CL_BCHILE.alvo_pessimista}}."
+  },
+  "comentario_valuation": "O P/VP de {{fact:val.CL_BCHILE.pb}} exige testar o retorno recorrente sobre patrimônio. A diferença de {{fact:val.CL_BCHILE.diff_consenso}} frente ao consenso público convive com projeção gerencial mais favorável para margem e exposição a componentes voláteis. Potencial de {{fact:val.CL_BCHILE.upside}}, retorno total esperado de {{fact:val.CL_BCHILE.etr}} e alpha relativo aos pares de {{fact:val.CL_BCHILE.alpha_rel}}.",
+  "ultimo_resultado": "No 3T26, o lucro caiu em relação ao 3T25 apesar do aumento da receita operacional. O lucro acumulado de 2026 cresceu. O guidance de margem foi elevado, a projeção de crescimento do crédito foi moderada e a meta de eficiência melhorou. A gestão incluiu o efeito tributário diferido estimado na projeção de retorno anual.",
+  "guidance": "elevado",
+  "tom_gestao": "neutro",
+  "governanca": "O controle passa pela LQIF, sociedade da Quiñenco com o Citigroup sob acordo que atribui controle à Quiñenco. A troca de presidência executiva segue o calendário anunciado. Acompanhar disciplina de crédito e capital na transição.",
+  "posicao_competitiva": {
+    "titulo": "Depósitos e relacionamento",
+    "texto": "A base de depósitos à vista apoia a franquia. A redução da sua contribuição no trimestre mostra que a vantagem de captação depende do nível de juros e da retenção dos saldos.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Separação de receitas recorrentes",
+    "texto": "O recebimento ligado a cláusulas contingentes da venda da Nexus compensou parte da queda de receitas financeiras de tesouraria. Comissões de cartões e fundos têm motor distinto.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Capital e resultado distribuível",
+    "texto": "Acompanhar o efeito da reavaliação de ativos fiscais diferidos no patrimônio e confrontar a distribuição com capital regulatório e perdas esperadas.",
+    "evidencias": [
+      "F2"
+    ]
+  },
+  "contratese": {
+    "titulo": "Retorno após perdas",
+    "texto": "O fortalecimento de comissões pode perder relevância se a inadimplência de varejo seguir em alta e a captação migrar para depósitos a prazo.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Crédito, funding e margem",
+      "texto": "Acompanhar inadimplência no varejo, provisões, receita com clientes e contribuição de depósitos à vista. A estabilidade da margem total pode ocultar piora na margem com clientes.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "o_que_mudou": "A divulgação financeira de 2026-10-30 permite avançar da leitura da sucessão para a análise de lucro, provisões e projeções de margem. A sucessão permanece evento futuro.",
+  "gatilhos_revisao": [
+    "Alta persistente da inadimplência no varejo.",
+    "Redução da contribuição dos depósitos à vista para a margem.",
+    "Revisão das projeções após o reconhecimento do efeito fiscal."
+  ],
+  "lacunas_de_dados": [
+    "Probabilidades implícitas dos cenários indisponíveis.",
+    "Atribuição integral do efeito tributário sobre o capital distribuível pendente."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "regulatorio",
+      "instituicao": "Banco de Chile / SEC",
+      "titulo": "Relatório financeiro da administração",
+      "url": "https://www.sec.gov/Archives/edgar/data/1161125/000121390026114044/ea030987901ex99-1.htm",
+      "publicado_em": "2026-10-30",
+      "consultado_em": "2026-11-03"
+    },
+    {
+      "id": "F2",
+      "tipo": "regulatorio",
+      "instituicao": "Banco de Chile / SEC",
+      "titulo": "Demonstrações financeiras consolidadas e eventos subsequentes",
+      "url": "https://www.sec.gov/Archives/edgar/data/1161125/000121390026114043/ea030989201ex99-1.htm",
+      "publicado_em": "2026-10-30",
+      "consultado_em": "2026-11-03"
+    }
+  ]
+}

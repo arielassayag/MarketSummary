@@ -1,0 +1,121 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_USIMINAS",
+  "data": "2026-11-03",
+  "tipo": "pos_resultado",
+  "titulo": "Usiminas perde margem no aço apesar do avanço do volume",
+  "resumo": "A queda sequencial do EBITDA ajustado e o fluxo de caixa livre negativo reduzem a força do sinal de valuation. O modelo aponta {{fact:val.BR_USIMINAS.preco_alvo}} ante {{fact:val.BR_USIMINAS.preco}}, com confiança {{fact:val.BR_USIMINAS.confianca_codigo}}. A recuperação depende do preço realizado frente ao custo industrial e da liberação de giro.",
+  "negocio": "A Usiminas produz aços planos para a indústria e opera mineração de ferro. A siderurgia concentra a geração operacional do trimestre. Na mineração, a rentabilidade das vendas depende do preço do minério entregue e do frete.",
+  "pilares_tese": [
+    {
+      "titulo": "Volume sem recuperação da margem",
+      "texto": "No release de 2026-10-30, o volume de aço cresceu frente ao trimestre anterior, mas o preço por tonelada caiu e o custo por tonelada subiu. O aumento de produção precisa se traduzir em margem antes de sustentar uma tese de recuperação.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Minério e frete limitam a contribuição",
+      "texto": "A administração interrompeu temporariamente uma planta diante de preços menores do minério e do frete marítimo elevado. A retomada requer melhora do preço líquido de frete e disciplina de produção.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Mix de vendas de aço",
+      "direcao": "negativo",
+      "sensibilidade": "alta",
+      "texto": "A gestão espera maior participação das exportações em meio à sazonalidade doméstica e pressão sobre o preço realizado por tonelada.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "A próxima divulgação permite testar preço realizado, custo unitário e giro diante da perspectiva operacional da administração para o 4T26.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Importações diretas e indiretas podem restringir o repasse de custos domésticos. Energia, insumos e frete pressionam a geração de caixa quando o mix se desloca para exportações.",
+      "probabilidade": "alta",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Recuperação do preço líquido e da utilização, com normalização de estoques, aproxima a operação do cenário de {{fact:val.BR_USIMINAS.alvo_otimista}}.",
+    "base": "A evolução do custo e do giro condiciona o alvo de {{fact:val.BR_USIMINAS.preco_alvo}}.",
+    "pessimista": "Compressão prolongada da margem e consumo de caixa pelo giro e manutenção sustentam a leitura de cauda de {{fact:val.BR_USIMINAS.alvo_pessimista}}."
+  },
+  "comentario_valuation": "O potencial até o alvo é de {{fact:val.BR_USIMINAS.upside}}, com rating {{fact:val.BR_USIMINAS.rating_codigo}} e dispersão entre métodos de {{fact:val.BR_USIMINAS.cv_metodos}}. O alvo fica {{fact:val.BR_USIMINAS.diff_consenso}} frente ao consenso público. O alpha relativo aos pares de {{fact:val.BR_USIMINAS.alpha_rel}} tem leitura condicionada à conversão de margem em caixa.",
+  "ultimo_resultado": "O EBITDA ajustado recuou sequencialmente, embora tenha crescido frente ao 3T25. O lucro recuou ante o 2T26. A companhia encerrou o trimestre com caixa líquido, mas o aumento do capital de giro reduziu o caixa operacional e o fluxo livre ficou negativo. A gestão antevê pressão de mix e custos na siderurgia e menor volume de minério no 4T26. O release apresenta perspectiva operacional qualitativa.",
+  "guidance": "sem_guidance",
+  "tom_gestao": "negativo",
+  "governanca": "A análise usa o consolidado. A leitura do retorno ao acionista requer separar os interesses de minoritários, os direitos por classe e as transações com partes relacionadas. A atualização se concentra no desempenho operacional divulgado à CVM.",
+  "qualidade_resultados": {
+    "titulo": "Caixa enfraquece com a recomposição do giro",
+    "texto": "A redução de contas a pagar e de operações de forfaiting, somada ao aumento de estoques de laminados, elevou o capital de giro. A análise acompanha o caixa após capex e separa o efeito de financiamento a fornecedores.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Manutenção em Ipatinga",
+    "texto": "O capex inclui o início da reconstrução parcial de uma bateria da coqueria em Ipatinga. A avaliação deve acompanhar a disponibilidade do equipamento e a eficiência dos insumos após a intervenção.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Mais produção pode reter caixa",
+    "texto": "Se o crescimento do volume vier com menor preço realizado e maior estoque, a diluição de custos fixos terá valor limitado. Caixa líquido oferece flexibilidade, mas o giro e a manutenção determinam a geração disponível.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Margem unitária e capital de giro",
+      "texto": "Acompanhar preço e custo por tonelada, participação de exportações, estoques de laminados e caixa livre. A recuperação perde força se a margem seguir comprimida com aumento do giro.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "o_que_mudou": "A nota anterior monitorava a conversão em caixa da melhora de margem ajustada. No 3T26, a siderurgia vendeu mais aço na comparação sequencial com margem menor, enquanto o giro e o capex levaram o fluxo livre a terreno negativo.",
+  "gatilhos_revisao": [
+    "Recuperação do preço por tonelada frente ao custo industrial.",
+    "Liberação de capital de giro com melhora do caixa livre.",
+    "Retomada de produção mineral com melhora do preço líquido de frete."
+  ],
+  "lacunas_de_dados": [
+    "O release traz perspectiva operacional qualitativa, sem faixa financeira formal verificada.",
+    "Probabilidade implícita do cenário pessimista indisponível no modelo.",
+    "Retorno econômico da intervenção na coqueria e termos de partes relacionadas requerem diligência adicional."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "regulatorio",
+      "instituicao": "Usiminas / CVM",
+      "titulo": "Release de resultados da Usiminas",
+      "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1581949&numSequencia=1106655&numVersao=1",
+      "publicado_em": "2026-10-30",
+      "consultado_em": "2026-11-03"
+    }
+  ]
+}

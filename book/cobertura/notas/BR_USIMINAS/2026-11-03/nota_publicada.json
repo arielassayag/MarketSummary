@@ -1,0 +1,306 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-03",
+    "manifest_sha256": "141e8e9014e0583e69db7a2f207e9ee648625c25bd24bc75473b24ee80c6aba4",
+    "modelo_as_of": "2026-11-02"
+  },
+  "conviccao": 1,
+  "data": "2026-11-03",
+  "hashes": {
+    "contexto": "bd1c1f9e662dd6139d899da9148a99d17fbfe25f3e64c9e86046f59d318bb67d",
+    "factbook": "12f2e7eec306e5a60950ee62fca0e61779aa4982ea076fb86a7bad424c2b7a5e",
+    "nota_json": "32b01e4b84838ddc53fef6a132a0cdc465d5a6ddc404cb78ef806522a704a8f2"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_USIMINAS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-11-04T01:43:14.536159+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O capex inclui o início da reconstrução parcial de uma bateria da coqueria em Ipatinga. A avaliação deve acompanhar a disponibilidade do equipamento e a eficiência dos insumos após a intervenção.",
+        "titulo": "Manutenção em Ipatinga"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "A próxima divulgação permite testar preço realizado, custo unitário e giro diante da perspectiva operacional da administração para o 4T26.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "A evolução do custo e do giro condiciona o alvo de R$ 7,64.",
+      "otimista": "Recuperação do preço líquido e da utilização, com normalização de estoques, aproxima a operação do cenário de R$ 18,34.",
+      "pessimista": "Compressão prolongada da margem e consumo de caixa pelo giro e manutenção sustentam a leitura de cauda de R$ 0,00."
+    },
+    "comentario_valuation": "O potencial até o alvo é de +52,86%, com rating Neutro e dispersão entre métodos de 45,27%. O alvo fica -11,20% frente ao consenso público. O alpha relativo aos pares de +66,16% tem leitura condicionada à conversão de margem em caixa.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Se o crescimento do volume vier com menor preço realizado e maior estoque, a diluição de custos fixos terá valor limitado. Caixa líquido oferece flexibilidade, mas o giro e a manutenção determinam a geração disponível.",
+        "titulo": "Mais produção pode reter caixa"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-03",
+    "dados_simulados": false,
+    "data": "2026-11-03",
+    "ficha": [
+      {
+        "fato": "val.BR_USIMINAS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 5,00"
+      },
+      {
+        "fato": "val.BR_USIMINAS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 7,64"
+      },
+      {
+        "fato": "val.BR_USIMINAS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+52,86%"
+      },
+      {
+        "fato": "val.BR_USIMINAS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_USIMINAS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_USIMINAS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 18,34"
+      },
+      {
+        "fato": "val.BR_USIMINAS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "0,47%"
+      },
+      {
+        "fato": "val.BR_USIMINAS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 0,00"
+      },
+      {
+        "fato": "val.BR_USIMINAS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_USIMINAS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "15,38%"
+      },
+      {
+        "fato": "val.BR_USIMINAS.wacc",
+        "rotulo": "WACC",
+        "valor": "10,66%"
+      },
+      {
+        "fato": "val.BR_USIMINAS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_USIMINAS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+52,86%"
+      },
+      {
+        "fato": "val.BR_USIMINAS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+66,16%"
+      },
+      {
+        "fato": "val.BR_USIMINAS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "4,0x"
+      },
+      {
+        "fato": "val.BR_USIMINAS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,3x"
+      },
+      {
+        "fato": "val.BR_USIMINAS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 8,61"
+      },
+      {
+        "fato": "val.BR_USIMINAS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-11,20%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-03",
+        "id": "F1",
+        "instituicao": "Usiminas / CVM",
+        "publicado_em": "2026-10-30",
+        "tipo": "Regulador",
+        "titulo": "Release de resultados da Usiminas",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1581949&numSequencia=1106655&numVersao=1"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Recuperação do preço por tonelada frente ao custo industrial.",
+      "Liberação de capital de giro com melhora do caixa livre.",
+      "Retomada de produção mineral com melhora do preço líquido de frete."
+    ],
+    "governanca": "A análise usa o consolidado. A leitura do retorno ao acionista requer separar os interesses de minoritários, os direitos por classe e as transações com partes relacionadas. A atualização se concentra no desempenho operacional divulgado à CVM.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar preço e custo por tonelada, participação de exportações, estoques de laminados e caixa livre. A recuperação perde força se a margem seguir comprimida com aumento do giro.",
+        "titulo": "Margem unitária e capital de giro"
+      }
+    ],
+    "issuer_id": "BR_USIMINAS",
+    "lacunas_de_dados": [
+      "O release traz perspectiva operacional qualitativa, sem faixa financeira formal verificada.",
+      "Probabilidade implícita do cenário pessimista indisponível no modelo.",
+      "Retorno econômico da intervenção na coqueria e termos de partes relacionadas requerem diligência adicional."
+    ],
+    "modelo_de_cobertura": "2026-11-03",
+    "negocio": "A Usiminas produz aços planos para a indústria e opera mineração de ferro. A siderurgia concentra a geração operacional do trimestre. Na mineração, a rentabilidade das vendas depende do preço do minério entregue e do frete.",
+    "nome": "Usiminas",
+    "o_que_mudou": "A nota anterior monitorava a conversão em caixa da melhora de margem ajustada. No 3T26, a siderurgia vendeu mais aço na comparação sequencial com margem menor, enquanto o giro e o capex levaram o fluxo livre a terreno negativo.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_KLABIN",
+        "nome": "Klabin"
+      },
+      {
+        "issuer_id": "BR_SUZANO",
+        "nome": "Suzano"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "No release de 2026-10-30, o volume de aço cresceu frente ao trimestre anterior, mas o preço por tonelada caiu e o custo por tonelada subiu. O aumento de produção precisa se traduzir em margem antes de sustentar uma tese de recuperação.",
+        "titulo": "Volume sem recuperação da margem"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A administração interrompeu temporariamente uma planta diante de preços menores do minério e do frete marítimo elevado. A retomada requer melhora do preço líquido de frete e disciplina de produção.",
+        "titulo": "Minério e frete limitam a contribuição"
+      }
+    ],
+    "publicada_em": "2026-11-04T01:43:14.536159+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A redução de contas a pagar e de operações de forfaiting, somada ao aumento de estoques de laminados, elevou o capital de giro. A análise acompanha o caixa após capex e separa o efeito de financiamento a fornecedores.",
+        "titulo": "Caixa enfraquece com a recomposição do giro"
+      }
+    ],
+    "resumo": "A queda sequencial do EBITDA ajustado e o fluxo de caixa livre negativo reduzem a força do sinal de valuation. O modelo aponta R$ 7,64 ante R$ 5,00, com confiança C. A recuperação depende do preço realizado frente ao custo industrial e da liberação de giro.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "alta",
+        "texto": "Importações diretas e indiretas podem restringir o repasse de custos domésticos. Energia, insumos e frete pressionam a geração de caixa quando o mix se desloca para exportações."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Usiminas perde margem no aço apesar do avanço do volume",
+    "tom_gestao": "negativo",
+    "ultimo_resultado": "O EBITDA ajustado recuou sequencialmente, embora tenha crescido frente ao 3T25. O lucro recuou ante o 2T26. A companhia encerrou o trimestre com caixa líquido, mas o aumento do capital de giro reduziu o caixa operacional e o fluxo livre ficou negativo. A gestão antevê pressão de mix e custos na siderurgia e menor volume de minério no 4T26. O release apresenta perspectiva operacional qualitativa.",
+    "vetores": [
+      {
+        "direcao": "negativo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A gestão espera maior participação das exportações em meio à sazonalidade doméstica e pressão sobre o preço realizado por tonelada.",
+        "vetor": "Mix de vendas de aço"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

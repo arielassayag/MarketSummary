@@ -1,0 +1,305 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-03",
+    "manifest_sha256": "141e8e9014e0583e69db7a2f207e9ee648625c25bd24bc75473b24ee80c6aba4",
+    "modelo_as_of": "2026-11-03"
+  },
+  "conviccao": 1,
+  "data": "2026-11-03",
+  "hashes": {
+    "contexto": "64ad72cc9ee847b3a2adba80370080fcf138062e1e261cf4798e35f81d5d3a6f",
+    "factbook": "617c87d5cd3c18f1cc2926f530f17432b1fb3a9d9243813fd1f9bbd16b7b8ee4",
+    "nota_json": "2147486c923324b3f184b0ff29ab832b0aae663f4ed38ced575ec0c9a8d01181"
+  },
+  "is_synthetic": false,
+  "issuer_id": "AR_PAMPA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-02",
+  "published_at": "2026-11-04T01:53:15.942788+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O projeto de ureia recebeu aprovação no regime de incentivo e contratou financiamento após o fechamento do trimestre. Acompanhar desembolsos, garantias e execução da obra antes de projetar o retorno.",
+        "titulo": "Ureia e infraestrutura"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Início da operação comercial da etapa inicial do oleoduto do consórcio, previsto para o primeiro trimestre de 2027.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "outro"
+      }
+    ],
+    "cenarios": {
+      "base": "A margem térmica sustenta geração, enquanto projetos elevam a necessidade de financiamento. Alvo de US$ 74,05.",
+      "otimista": "Integração de gás e geração amplia margem, com capex e garantias sob controle. Alvo de US$ 85,56.",
+      "pessimista": "Atrasos, menor realização de petróleo e maior custo de financiamento pressionam o caixa. Alvo de US$ 63,24."
+    },
+    "comentario_valuation": "A diferença para o consenso público é -39,53% e o WACC é 13,16%. Distinguir dívida consolidada, dívida de projetos e participação nas afiliadas antes de atribuir valor à expansão. Potencial de +8,09%, retorno total esperado de +8,13% e alpha relativo aos pares de -6,57%.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O valor da integração diminui se o transporte e a infraestrutura atrasarem ou se o aumento do endividamento absorver a melhora da margem térmica.",
+        "titulo": "Integração pode elevar risco de execução"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-03",
+    "dados_simulados": false,
+    "data": "2026-11-03",
+    "ficha": [
+      {
+        "fato": "val.AR_PAMPA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 68,51"
+      },
+      {
+        "fato": "val.AR_PAMPA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 74,05"
+      },
+      {
+        "fato": "val.AR_PAMPA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+8,09%"
+      },
+      {
+        "fato": "val.AR_PAMPA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.AR_PAMPA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.AR_PAMPA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 85,56"
+      },
+      {
+        "fato": "val.AR_PAMPA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "35,34%"
+      },
+      {
+        "fato": "val.AR_PAMPA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 63,24"
+      },
+      {
+        "fato": "val.AR_PAMPA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "27,92%"
+      },
+      {
+        "fato": "val.AR_PAMPA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "15,38%"
+      },
+      {
+        "fato": "val.AR_PAMPA.wacc",
+        "rotulo": "WACC",
+        "valor": "13,16%"
+      },
+      {
+        "fato": "val.AR_PAMPA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.AR_PAMPA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+8,13%"
+      },
+      {
+        "fato": "val.AR_PAMPA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-6,57%"
+      },
+      {
+        "fato": "val.AR_PAMPA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "5,8x"
+      },
+      {
+        "fato": "val.AR_PAMPA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,9x"
+      },
+      {
+        "fato": "val.AR_PAMPA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 122,45"
+      },
+      {
+        "fato": "val.AR_PAMPA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-39,53%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-03",
+        "id": "F1",
+        "instituicao": "Pampa Energía / SEC",
+        "publicado_em": "2026-11-02",
+        "tipo": "Regulador",
+        "titulo": "Relatório trimestral de resultados e eventos relevantes",
+        "url": "https://www.sec.gov/Archives/edgar/data/1469395/000129281426005118/ex99-1.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Aumento da dívida líquida sem melhora proporcional de geração operacional.",
+      "Atraso na capacidade de transporte ou no cronograma de ureia.",
+      "Revisão do preço realizado de petróleo após efeitos de hedge."
+    ],
+    "governanca": "O EBITDA ajustado incorpora a parcela proporcional das afiliadas, enquanto a receita consolidada exclui essas entidades. Tratar dividendos recebidos, aportes e dívida de cada perímetro de forma separada.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar margem térmica, produção e preço de petróleo após hedge, transporte contratado, garantias e dívida líquida após aportes.",
+        "titulo": "Margem de geração e dívida por perímetro"
+      }
+    ],
+    "issuer_id": "AR_PAMPA",
+    "lacunas_de_dados": [
+      "Retorno estabilizado dos projetos e capacidade de repasse de caixa das afiliadas pendentes.",
+      "Regras de comercialização analisadas com base na descrição do emissor."
+    ],
+    "modelo_de_cobertura": "2026-11-03",
+    "negocio": "Grupo argentino de petróleo e gás, geração elétrica e petroquímica. Mantém participações em transmissão e transporte de gás com tratamento por equivalência nas demonstrações.",
+    "nome": "Pampa Energía",
+    "o_que_mudou": "O resultado de 2026-11-02 confirma o ganho de margem térmica e informa aumento sequencial da dívida líquida, avanço no financiamento de ureia e atualização das regras do mercado elétrico.",
+    "pais": "Argentina",
+    "pares": [
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      },
+      {
+        "issuer_id": "BR_CPFL",
+        "nome": "CPFL Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Preços no mercado de curto prazo e vendas diretas a empresas apoiaram a receita de geração. A disponibilidade de gás próprio e transporte firme condiciona o benefício econômico após o custo do combustível.",
+        "titulo": "Integração sustenta margem de geração"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Rincón de Aranda elevou a produção anual, mas interrupções durante perfuração e completação reduziram o volume na comparação sequencial. O hedge de Brent reduziu o preço realizado e exigiu garantias.",
+        "titulo": "Crescimento de petróleo e hedge têm efeitos distintos"
+      }
+    ],
+    "publicada_em": "2026-11-04T01:53:15.942788+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar margem térmica e geração de caixa do efeito de imposto diferido, preço realizado de petróleo e garantias de hedge. O lucro contábil e o caixa disponível têm condicionantes distintos.",
+        "titulo": "Margem, imposto e derivativos"
+      }
+    ],
+    "resumo": "A integração do gás próprio com a geração térmica e a normalização do mercado elétrico sustentaram o EBITDA ajustado. O aumento da dívida, os desembolsos de projetos e as garantias de hedge limitam a transmissão do resultado para caixa disponível. O alvo do modelo é US$ 74,05 ante US$ 68,51, com rating Neutro e confiança C.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Capex e aportes em projetos podem superar a geração operacional. A disponibilidade de transporte, a regulação de energia e a liquidez exigida por derivativos condicionam a trajetória de dívida."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Pampa Energía amplia margem térmica enquanto investimentos elevam a dívida",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "No 3T26, vendas e EBITDA ajustado cresceram frente ao 3T25. O lucro atribuível avançou com maior margem operacional e menor despesa de imposto diferido. A dívida líquida subiu ante o 2T26. O release traz cronogramas de projetos, sem guidance financeiro consolidado formal identificado.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O transporte adicional pode ampliar a utilização de gás próprio e a comercialização de energia. A revisão das regras reportada em outubro muda limites de declaração de custo e flexibiliza contratos com grandes usuários.",
+        "vetor": "Capacidade firme e regras de comercialização"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

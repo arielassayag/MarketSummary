@@ -1,0 +1,305 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-03",
+    "manifest_sha256": "141e8e9014e0583e69db7a2f207e9ee648625c25bd24bc75473b24ee80c6aba4",
+    "modelo_as_of": "2026-11-03"
+  },
+  "conviccao": 1,
+  "data": "2026-11-03",
+  "hashes": {
+    "contexto": "d1285a69991b07394c0fdcbf36ea507ea8bbfd97cda2bc093bc04041b7372cd4",
+    "factbook": "483c19dea7dc8a9ef540c1aa28e0b417090a6be267674f1fa44f5ec75b655383",
+    "nota_json": "c2228862c30f5d88cdc9846ffe2b4e1b3fd3475e39f10b92f786a0d35ae40755"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_ERO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-02",
+  "published_at": "2026-11-04T01:54:09.766173+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar amortização da dívida, desembolso de filtros e estudos de Furnas. A conclusão da sondagem é um marco de exploração, e o retorno econômico depende da avaliação e das etapas seguintes.",
+        "titulo": "Dívida, filtros e Furnas"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Instalação e comissionamento de filtros modulares de rejeitos em Tucumã previstos para o 4T26.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "outro"
+      }
+    ],
+    "cenarios": {
+      "base": "Produção atende à projeção, com custos mais altos e contribuição transitória de estoque de ouro. Alvo de US$ 26,47.",
+      "otimista": "Tucumã e Caraíba sustentam volume, com menor custo e redução adicional da dívida. Alvo de US$ 33,31.",
+      "pessimista": "Filtragem ou teores limitam produção enquanto a queda do estoque histórico pressiona caixa. Alvo de US$ 18,59."
+    },
+    "comentario_valuation": "O alvo fica -37,57% frente ao consenso público. A avaliação separa fluxo das operações correntes, participação condicionada em Furnas e caixa após investimento. Potencial de -13,05%, retorno total esperado de -13,05% e alpha relativo aos pares de +1,34%.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Se o ouro lavrado não recuperar teor e produtividade após a redução do estoque histórico, a melhora de caixa pode perder força apesar de maior produção de cobre.",
+        "titulo": "Resultado favorecido por estoque finito"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-03",
+    "dados_simulados": false,
+    "data": "2026-11-03",
+    "ficha": [
+      {
+        "fato": "val.BR_ERO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 30,44"
+      },
+      {
+        "fato": "val.BR_ERO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 26,47"
+      },
+      {
+        "fato": "val.BR_ERO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-13,05%"
+      },
+      {
+        "fato": "val.BR_ERO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_ERO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_ERO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 33,31"
+      },
+      {
+        "fato": "val.BR_ERO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "40,43%"
+      },
+      {
+        "fato": "val.BR_ERO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 18,59"
+      },
+      {
+        "fato": "val.BR_ERO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "24,80%"
+      },
+      {
+        "fato": "val.BR_ERO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "13,68%"
+      },
+      {
+        "fato": "val.BR_ERO.wacc",
+        "rotulo": "WACC",
+        "valor": "12,32%"
+      },
+      {
+        "fato": "val.BR_ERO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.BR_ERO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-13,05%"
+      },
+      {
+        "fato": "val.BR_ERO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+1,34%"
+      },
+      {
+        "fato": "val.BR_ERO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "6,4x"
+      },
+      {
+        "fato": "val.BR_ERO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,6x"
+      },
+      {
+        "fato": "val.BR_ERO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 42,40"
+      },
+      {
+        "fato": "val.BR_ERO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-37,57%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-03",
+        "id": "F1",
+        "instituicao": "Ero Copper / SEC",
+        "publicado_em": "2026-11-02",
+        "tipo": "Regulador",
+        "titulo": "Release trimestral e projeções operacionais",
+        "url": "https://www.sec.gov/Archives/edgar/data/1853860/000162828026068971/erocopper-pressreleasex202.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Falha no comissionamento ou ganho de capacidade abaixo do esperado em Tucumã.",
+      "Ouro lavrado fica abaixo da projeção revisada.",
+      "Alta persistente de custo reportado apesar de maior produção de cobre."
+    ],
+    "governanca": "A administração destinou caixa à redução de dívida. A etapa de sondagem concluída cumpre a exigência de exploração do acordo de Furnas com a Vale Base Metals. Avaliar os marcos restantes antes de incorporar participação econômica.",
+    "guidance": "mantido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar custo unitário antes de proteção cambial, ouro lavrado e de estoque, capacidade de filtragem de Tucumã e caixa disponível para desalavancagem.",
+        "titulo": "Custo de cobre e ouro lavrado"
+      }
+    ],
+    "issuer_id": "BR_ERO",
+    "lacunas_de_dados": [
+      "A categoria de guidance se refere à produção consolidada de cobre.",
+      "Retorno incremental dos filtros e valor econômico atribuível de Furnas pendentes."
+    ],
+    "modelo_de_cobertura": "2026-11-03",
+    "negocio": "Produtora de cobre em Caraíba e Tucumã e de ouro em Xavantina, com operações no Brasil. Furnas é projeto de cobre e ouro sob acordo de aquisição de participação por etapas.",
+    "nome": "Ero Copper",
+    "o_que_mudou": "O resultado de 2026-11-02 confirma redução de dívida e quantifica a revisão de custos e a separação entre ouro lavrado e estoque histórico. A nota anterior acompanhava esses mecanismos sem o resultado do 3T26.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CBA",
+        "nome": "Companhia Brasileira de Alumínio"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_KLABIN",
+        "nome": "Klabin"
+      },
+      {
+        "issuer_id": "BR_SUZANO",
+        "nome": "Suzano"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O caixa operacional cresceu ante o trimestre anterior e a dívida líquida caiu. A leitura de geração normalizada separa maiores vendas de metal, preços e ganhos realizados com proteção cambial.",
+        "titulo": "Caixa financia desalavancagem"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A recuperação de concentrado histórico elevou o ouro total de Xavantina. A projeção para ouro lavrado caiu com paradas anteriores e teores menores, enquanto o estoque ampliou o total esperado.",
+        "titulo": "Ouro de estoque e ouro lavrado têm economias distintas"
+      }
+    ],
+    "publicada_em": "2026-11-04T01:54:09.766173+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Comparar custo caixa reportado com os ganhos cambiais realizados em rubrica separada. Distinguir o custo do ouro de estoque histórico do custo de lavra corrente.",
+        "titulo": "Geração antes e depois de proteção cambial"
+      }
+    ],
+    "resumo": "Maior volume vendido e preços favoráveis elevaram caixa e EBITDA ajustado. A alta da projeção de custo do cobre e o peso do estoque histórico de ouro limitam a extrapolação da melhora. O alvo do modelo é US$ 26,47 ante US$ 30,44, com rating Neutro e confiança B.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "A combinação de custo unitário maior e esgotamento do concentrado histórico pode reduzir caixa. A capacidade adicional de filtragem depende de comissionamento e desempenho efetivo."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Ero Copper reduz dívida e revê custos com produção de cobre mantida",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "No 3T26, produção de cobre, caixa operacional, lucro atribuível e EBITDA ajustado avançaram frente ao 2T26. A companhia manteve as projeções de produção consolidada de cobre e capex, elevou a faixa de custo caixa do cobre e reduziu a projeção de ouro lavrado em Xavantina, com inclusão de concentrado histórico na projeção de ouro total.",
+    "vetores": [
+      {
+        "direcao": "negativo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A companhia elevou a faixa de custo caixa consolidado do cobre, com pressão de câmbio e insumos. Os ganhos realizados de proteção cambial têm apresentação separada dos custos operacionais reportados.",
+        "vetor": "Custo unitário do cobre"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,314 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-03",
+    "manifest_sha256": "141e8e9014e0583e69db7a2f207e9ee648625c25bd24bc75473b24ee80c6aba4",
+    "modelo_as_of": "2026-11-02"
+  },
+  "conviccao": 1,
+  "data": "2026-11-03",
+  "hashes": {
+    "contexto": "dcb086c89c009db63ecc47e0234cb47338a8443586d74040ed672c408cc5af69",
+    "factbook": "85ddb7f084997338b17edaa89609988863ac2d059b9a7fbdfd85ac5eeab7f934",
+    "nota_json": "f893de1597c866417d55d0f20b93c9fcc387d3abdf09b0445e17960e4e7e7be3"
+  },
+  "is_synthetic": false,
+  "issuer_id": "CL_BSAC",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2027-01-28",
+  "published_at": "2026-11-04T01:47:06.588681+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A maior provisão de dividendos afeta o capital principal. A emissão perpétua subscrita pelo grupo integra outra camada de capital. Acompanhar folga regulatória após crescimento de ativos ponderados.",
+        "titulo": "Capital regulatório e distribuição"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-04",
+        "descricao": "Teleconferência de resultados anunciada pelo banco para discutir desempenho e perspectivas.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "A margem normaliza após a oscilação dos reajustes, com expansão seletiva do crédito. Alvo de CLP 68,75.",
+      "otimista": "Crédito comercial e receitas de clientes sustentam retorno com provisões controladas. Alvo de CLP 79,93.",
+      "pessimista": "Custo de crédito e captação comprimem o retorno enquanto o uso de cartões permanece fraco. Alvo de CLP 59,86."
+    },
+    "comentario_valuation": "O P/VP de 3,0x pressupõe persistência da rentabilidade para sustentar a avaliação. O modelo registra diferença de -16,42% frente ao consenso público. Potencial de -12,19%, retorno total esperado de -7,19% e alpha relativo aos pares de -31,80%.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O crescimento da base de clientes perde força econômica se o uso de cartões e as comissões caírem enquanto sobe o custo do crédito.",
+        "titulo": "Clientes e receitas podem divergir"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-03",
+    "dados_simulados": false,
+    "data": "2026-11-03",
+    "ficha": [
+      {
+        "fato": "val.CL_BSAC.preco",
+        "rotulo": "Preço de referência",
+        "valor": "CLP 78,30"
+      },
+      {
+        "fato": "val.CL_BSAC.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "CLP 68,75"
+      },
+      {
+        "fato": "val.CL_BSAC.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-12,19%"
+      },
+      {
+        "fato": "val.CL_BSAC.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.CL_BSAC.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.CL_BSAC.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "CLP 79,93"
+      },
+      {
+        "fato": "val.CL_BSAC.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "48,52%"
+      },
+      {
+        "fato": "val.CL_BSAC.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "CLP 59,86"
+      },
+      {
+        "fato": "val.CL_BSAC.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "13,91%"
+      },
+      {
+        "fato": "val.CL_BSAC.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "9,44%"
+      },
+      {
+        "fato": "val.CL_BSAC.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_BSAC.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,09%"
+      },
+      {
+        "fato": "val.CL_BSAC.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-7,19%"
+      },
+      {
+        "fato": "val.CL_BSAC.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-31,80%"
+      },
+      {
+        "fato": "val.CL_BSAC.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "11,7x"
+      },
+      {
+        "fato": "val.CL_BSAC.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "3,0x"
+      },
+      {
+        "fato": "val.CL_BSAC.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "CLP 82,26"
+      },
+      {
+        "fato": "val.CL_BSAC.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-16,42%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-03",
+        "id": "F1",
+        "instituicao": "Banco Santander Chile / SEC",
+        "publicado_em": "2026-10-30",
+        "tipo": "Regulador",
+        "titulo": "Comentário trimestral da administração",
+        "url": "https://www.sec.gov/Archives/edgar/data/1027552/000102755226000127/mncsept26.htm"
+      },
+      {
+        "consultado_em": "2026-11-03",
+        "id": "F2",
+        "instituicao": "Banco Santander Chile",
+        "publicado_em": "2026-09-25",
+        "tipo": "Relações com investidores",
+        "titulo": "Convite para teleconferência de resultados",
+        "url": "https://www.globenewswire.com/news-release/2026/09/25/3369140/0/en/banco-santander-chile-third-quarter-2026-analyst-and-investor-webcast-conference-call.html"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Revisão da projeção de ROAE após a normalização dos reajustes.",
+      "Aumento persistente do custo de crédito ou recuo de comissões.",
+      "Redução da folga de capital principal após crescimento de ativos."
+    ],
+    "governanca": "O banco elevou a provisão de dividendos sobre o lucro do exercício. Em outubro, uma empresa do Grupo Santander subscreveu a emissão de capital adicional que financiou o resgate da emissão anterior. Provisão de dividendos e pagamento têm etapas próprias.",
+    "guidance": "mantido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar receita de juros sem reajustes, uso de cartões, perdas de crédito e capital principal após provisão de dividendos.",
+        "titulo": "Margem, comissões e capital principal"
+      }
+    ],
+    "issuer_id": "CL_BSAC",
+    "lacunas_de_dados": [
+      "Recorrência da receita financeira e efeito tributário diferido requerem acompanhamento.",
+      "WACC indisponível na ficha do modelo."
+    ],
+    "modelo_de_cobertura": "2026-11-03",
+    "negocio": "Banco chileno do Grupo Santander, com crédito comercial, hipotecário e ao consumo, captação, investimentos e serviços de pagamentos.",
+    "nome": "Banco Santander-Chile",
+    "o_que_mudou": "A divulgação confirma a sensibilidade à indexação discutida na nota anterior, explicita a manutenção da projeção de retorno e acrescenta a revisão da provisão de dividendos e a substituição do instrumento de capital.",
+    "pais": "Chile",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      },
+      {
+        "issuer_id": "BR_IRB",
+        "nome": "IRB Brasil RE"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A receita de reajustes perdeu força frente ao trimestre anterior. Os juros líquidos sem reajustes ficaram próximos do nível anterior, enquanto comissões menores e provisões maiores pressionaram o lucro.",
+        "titulo": "Indexação explica parte da oscilação"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Os depósitos a prazo explicaram o avanço desde dezembro, enquanto depósitos à vista recuaram nessa base. Avaliar o custo do funding à medida que o crédito comercial volta a crescer.",
+        "titulo": "Captação cresce com mudança de mix"
+      }
+    ],
+    "publicada_em": "2026-11-04T01:47:06.588681+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O avanço acumulado se beneficia de reajustes inflacionários. A leitura trimestral exige decompor juros, reajustes, comissões e provisões para avaliar recorrência.",
+        "titulo": "Lucro acumulado e lucro trimestral"
+      }
+    ],
+    "resumo": "O lucro acumulado aumentou, mas a comparação trimestral expõe a sensibilidade à inflação, a comissões e a provisões. O banco manteve a projeção anual de retorno sobre patrimônio. O alvo do modelo é CLP 68,75 ante CLP 78,30, com rating Venda e confiança B.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Pressão sobre comissões e provisões pode persistir mesmo com aumento do crédito comercial. Depósitos a prazo em maior proporção elevam a sensibilidade ao custo marginal de funding."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Santander Chile mantém projeção de retorno após queda do lucro trimestral",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "No 3T26, o lucro atribuível caiu ante 2T26 e 3T25. O lucro acumulado cresceu, com maior receita de juros e reajustes, melhora em operações financeiras e menores despesas. A administração manteve a projeção de ROAE de 2026.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A exposição a instrumentos indexados amplia a sensibilidade da margem à inflação. Separar o efeito de reajustes da margem com clientes.",
+        "vetor": "Receita líquida de reajustes"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

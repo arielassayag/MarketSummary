@@ -1,0 +1,120 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_ERO",
+  "data": "2026-11-03",
+  "tipo": "pos_resultado",
+  "titulo": "Ero Copper reduz dívida e revê custos com produção de cobre mantida",
+  "resumo": "Maior volume vendido e preços favoráveis elevaram caixa e EBITDA ajustado. A alta da projeção de custo do cobre e o peso do estoque histórico de ouro limitam a extrapolação da melhora. O alvo do modelo é {{fact:val.BR_ERO.preco_alvo}} ante {{fact:val.BR_ERO.preco}}, com rating {{fact:val.BR_ERO.rating_codigo}} e confiança {{fact:val.BR_ERO.confianca_codigo}}.",
+  "negocio": "Produtora de cobre em Caraíba e Tucumã e de ouro em Xavantina, com operações no Brasil. Furnas é projeto de cobre e ouro sob acordo de aquisição de participação por etapas.",
+  "pilares_tese": [
+    {
+      "titulo": "Caixa financia desalavancagem",
+      "texto": "O caixa operacional cresceu ante o trimestre anterior e a dívida líquida caiu. A leitura de geração normalizada separa maiores vendas de metal, preços e ganhos realizados com proteção cambial.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Ouro de estoque e ouro lavrado têm economias distintas",
+      "texto": "A recuperação de concentrado histórico elevou o ouro total de Xavantina. A projeção para ouro lavrado caiu com paradas anteriores e teores menores, enquanto o estoque ampliou o total esperado.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Custo unitário do cobre",
+      "direcao": "negativo",
+      "sensibilidade": "alta",
+      "texto": "A companhia elevou a faixa de custo caixa consolidado do cobre, com pressão de câmbio e insumos. Os ganhos realizados de proteção cambial têm apresentação separada dos custos operacionais reportados.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Instalação e comissionamento de filtros modulares de rejeitos em Tucumã previstos para o 4T26.",
+      "data": null,
+      "tipo": "outro",
+      "direcao": "incerto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "A combinação de custo unitário maior e esgotamento do concentrado histórico pode reduzir caixa. A capacidade adicional de filtragem depende de comissionamento e desempenho efetivo.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Tucumã e Caraíba sustentam volume, com menor custo e redução adicional da dívida. Alvo de {{fact:val.BR_ERO.alvo_otimista}}.",
+    "base": "Produção atende à projeção, com custos mais altos e contribuição transitória de estoque de ouro. Alvo de {{fact:val.BR_ERO.preco_alvo}}.",
+    "pessimista": "Filtragem ou teores limitam produção enquanto a queda do estoque histórico pressiona caixa. Alvo de {{fact:val.BR_ERO.alvo_pessimista}}."
+  },
+  "comentario_valuation": "O alvo fica {{fact:val.BR_ERO.diff_consenso}} frente ao consenso público. A avaliação separa fluxo das operações correntes, participação condicionada em Furnas e caixa após investimento. Potencial de {{fact:val.BR_ERO.upside}}, retorno total esperado de {{fact:val.BR_ERO.etr}} e alpha relativo aos pares de {{fact:val.BR_ERO.alpha_rel}}.",
+  "ultimo_resultado": "No 3T26, produção de cobre, caixa operacional, lucro atribuível e EBITDA ajustado avançaram frente ao 2T26. A companhia manteve as projeções de produção consolidada de cobre e capex, elevou a faixa de custo caixa do cobre e reduziu a projeção de ouro lavrado em Xavantina, com inclusão de concentrado histórico na projeção de ouro total.",
+  "guidance": "mantido",
+  "tom_gestao": "positivo",
+  "governanca": "A administração destinou caixa à redução de dívida. A etapa de sondagem concluída cumpre a exigência de exploração do acordo de Furnas com a Vale Base Metals. Avaliar os marcos restantes antes de incorporar participação econômica.",
+  "qualidade_resultados": {
+    "titulo": "Geração antes e depois de proteção cambial",
+    "texto": "Comparar custo caixa reportado com os ganhos cambiais realizados em rubrica separada. Distinguir o custo do ouro de estoque histórico do custo de lavra corrente.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Dívida, filtros e Furnas",
+    "texto": "Acompanhar amortização da dívida, desembolso de filtros e estudos de Furnas. A conclusão da sondagem é um marco de exploração, e o retorno econômico depende da avaliação e das etapas seguintes.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Resultado favorecido por estoque finito",
+    "texto": "Se o ouro lavrado não recuperar teor e produtividade após a redução do estoque histórico, a melhora de caixa pode perder força apesar de maior produção de cobre.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Custo de cobre e ouro lavrado",
+      "texto": "Acompanhar custo unitário antes de proteção cambial, ouro lavrado e de estoque, capacidade de filtragem de Tucumã e caixa disponível para desalavancagem.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "o_que_mudou": "O resultado de 2026-11-02 confirma redução de dívida e quantifica a revisão de custos e a separação entre ouro lavrado e estoque histórico. A nota anterior acompanhava esses mecanismos sem o resultado do 3T26.",
+  "gatilhos_revisao": [
+    "Falha no comissionamento ou ganho de capacidade abaixo do esperado em Tucumã.",
+    "Ouro lavrado fica abaixo da projeção revisada.",
+    "Alta persistente de custo reportado apesar de maior produção de cobre."
+  ],
+  "lacunas_de_dados": [
+    "A categoria de guidance se refere à produção consolidada de cobre.",
+    "Retorno incremental dos filtros e valor econômico atribuível de Furnas pendentes."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "regulatorio",
+      "instituicao": "Ero Copper / SEC",
+      "titulo": "Release trimestral e projeções operacionais",
+      "url": "https://www.sec.gov/Archives/edgar/data/1853860/000162828026068971/erocopper-pressreleasex202.htm",
+      "publicado_em": "2026-11-02",
+      "consultado_em": "2026-11-03"
+    }
+  ]
+}

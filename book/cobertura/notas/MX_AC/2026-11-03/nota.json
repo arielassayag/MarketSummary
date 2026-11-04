@@ -1,0 +1,127 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_AC",
+  "data": "2026-11-03",
+  "tipo": "pos_resultado",
+  "titulo": "Arca Continental amplia volume e EBITDA enquanto lucro líquido recua",
+  "resumo": "O avanço de volume e EBITDA consolidado conviveu com menor lucro líquido. O desempenho dos Estados Unidos melhora em moeda local, mas apresenta contração de margem e redução do EBITDA reportado em pesos mexicanos. O alvo do modelo é {{fact:val.MX_AC.preco_alvo}} ante {{fact:val.MX_AC.preco}}, com rating {{fact:val.MX_AC.rating_codigo}} e confiança {{fact:val.MX_AC.confianca_codigo}}.",
+  "negocio": "Engarrafadora e distribuidora de bebidas da Coca-Cola, com operações no México, Estados Unidos e América do Sul e exposição adicional a alimentos e serviços de distribuição.",
+  "pilares_tese": [
+    {
+      "titulo": "México sustenta margem com preço e embalagem",
+      "texto": "O preço médio por caixa sem água em garrafão aumentou e a margem EBITDA mexicana cresceu. Embalagens retornáveis e individuais ganharam participação, com movimentos distintos entre categorias de volume.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "América do Sul compensa parte da pressão americana",
+      "texto": "Peru e Equador contribuíram para o crescimento de volume na região. Nos Estados Unidos, o EBITDA cresceu em moeda local, mas caiu convertido em pesos mexicanos, com margem menor.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Preço, mix e elasticidade",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "A maior participação de formatos retornáveis e de consumo individual pode apoiar acessibilidade. A tese exige preservar rentabilidade por caixa e volume sem dependência crescente de promoções.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Próxima divulgação trimestral para acompanhar a expansão da planta de San Antonio e a margem americana.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Despesas comerciais e administrativas podem absorver o ganho bruto. Câmbio e custos de distribuição podem restringir a conversão de EBITDA em lucro.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Mix e execução elevam margem regional e caixa após capex. Alvo de {{fact:val.MX_AC.alvo_otimista}}.",
+    "base": "Volume e preço sustentam EBITDA, com oscilação de câmbio e despesas. Alvo de {{fact:val.MX_AC.preco_alvo}}.",
+    "pessimista": "Promoções e custos de distribuição corroem margem e lucro recorrente. Alvo de {{fact:val.MX_AC.alvo_pessimista}}."
+  },
+  "comentario_valuation": "O P/L à frente de {{fact:val.MX_AC.pl_fwd}} e a diferença de {{fact:val.MX_AC.diff_consenso}} frente ao consenso público pedem confirmação da conversão de volume em lucro e caixa. Potencial de {{fact:val.MX_AC.upside}}, retorno total esperado de {{fact:val.MX_AC.etr}} e alpha relativo aos pares de {{fact:val.MX_AC.alpha_rel}}.",
+  "ultimo_resultado": "No 3T26, receita, volume consolidado e EBITDA cresceram na comparação anual. A margem operacional caiu com despesas crescendo acima da receita. O lucro líquido caiu no trimestre e no acumulado. O relatório não trouxe guidance financeiro formal identificado.",
+  "guidance": "sem_guidance",
+  "tom_gestao": "neutro",
+  "governanca": "A análise de capital separa caixa, dívida e investimentos no consolidado. A relação com a Coca-Cola sustenta o portfólio e exige acompanhar os termos comerciais e a geração atribuível por região.",
+  "posicao_competitiva": {
+    "titulo": "Execução por embalagem e canal",
+    "texto": "A distribuição, a arquitetura de preço e a disponibilidade de produtos apoiam a execução. A diferença entre volume total e volume sem garrafões importa para comparar a operação mexicana.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "EBITDA e lucro seguem trajetórias distintas",
+    "texto": "A leitura separa EBITDA em moeda constante, margem operacional reportada e lucro após custo financeiro e impostos. O crescimento do EBITDA no trimestre não se repetiu no lucro líquido.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Capacidade de produção e distribuição",
+    "texto": "O investimento em expansão da planta de San Antonio pode melhorar a rede americana. Acompanhar utilização, custo unitário e desembolso antes de atribuir ganho de margem.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Volumes sem melhora no lucro",
+    "texto": "Se despesas de venda e administração continuarem acima do crescimento da receita, os ganhos de volume e margem bruta podem ter efeito limitado no retorno ao acionista.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Volume, despesa comercial e conversão",
+      "texto": "Acompanhar preço por caixa e volume sem garrafões no México, EBITDA americano em moeda local, margem consolidada e caixa após investimento.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "o_que_mudou": "A divulgação trimestral detalha a aceleração de volume consolidado, a diferença de tradução cambial nos Estados Unidos e o recuo do lucro líquido apesar da alta do EBITDA.",
+  "gatilhos_revisao": [
+    "Margem americana volta a crescer com utilização da capacidade.",
+    "Despesas comerciais continuam acima do crescimento da receita.",
+    "Convergência entre crescimento do EBITDA e do lucro líquido."
+  ],
+  "lacunas_de_dados": [
+    "Probabilidades implícitas dos cenários indisponíveis.",
+    "Retorno incremental da expansão de San Antonio ainda pendente de comprovação."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Arca Continental",
+      "titulo": "Relatório trimestral de resultados",
+      "url": "https://fdecorpwsprdeus2-bfb4cgcde4ftcff6.a01.azurefd.net/files/2026-10/AC_3Q26_Eng.pdf",
+      "publicado_em": "2026-10-30",
+      "consultado_em": "2026-11-03"
+    }
+  ]
+}

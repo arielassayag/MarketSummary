@@ -1,0 +1,305 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-03",
+    "manifest_sha256": "141e8e9014e0583e69db7a2f207e9ee648625c25bd24bc75473b24ee80c6aba4",
+    "modelo_as_of": "2026-11-02"
+  },
+  "conviccao": 1,
+  "data": "2026-11-03",
+  "hashes": {
+    "contexto": "c22846ea621f792404a8cb18d7a5d5d9a2cfed117c66789036c7a49550401c1b",
+    "factbook": "8cf3d62700a5f959e4f6abfaccb3b8be1ec2f120f9a12182133d34abc217da80",
+    "nota_json": "fa1c17727d19e789c063dc176e7407ef77e10f3ec6e95e713619bc47d25b64a2"
+  },
+  "is_synthetic": false,
+  "issuer_id": "CL_BCI",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-11-04T01:46:07.987651+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A expansão internacional exige comparar o retorno após perdas com capital requerido e capacidade de remessa das subsidiárias, especialmente na Flórida.",
+        "titulo": "Capital por jurisdição"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próxima divulgação para testar perdas, captação e evolução societária.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Eficiência melhora, mas crédito e captação limitam a expansão do retorno. Alvo de CLP 75.303,50.",
+      "otimista": "Captação à vista e comissões sustentam expansão com perdas controladas. Alvo de CLP 92.244,30.",
+      "pessimista": "Custo de risco e captação sobem enquanto o resultado financeiro permanece volátil. Alvo de CLP 60.589,50."
+    },
+    "comentario_valuation": "O P/VP é 1,7x. O alvo do modelo supera o consenso público em termos representados por +10,21%. Avaliar retorno sobre capital por jurisdição antes de atribuir valor à reorganização. Potencial de +21,26%, retorno total esperado de +23,71% e alpha relativo aos pares de -0,59%.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A queda de despesas operacionais perde relevância se o custo de risco seguir acima da melhora recorrente de margem e comissões.",
+        "titulo": "Eficiência pode ser absorvida por perdas"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-03",
+    "dados_simulados": false,
+    "data": "2026-11-03",
+    "ficha": [
+      {
+        "fato": "val.CL_BCI.preco",
+        "rotulo": "Preço de referência",
+        "valor": "CLP 62.100,00"
+      },
+      {
+        "fato": "val.CL_BCI.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "CLP 75.303,50"
+      },
+      {
+        "fato": "val.CL_BCI.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+21,26%"
+      },
+      {
+        "fato": "val.CL_BCI.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.CL_BCI.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.CL_BCI.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "CLP 92.244,30"
+      },
+      {
+        "fato": "val.CL_BCI.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "10,80%"
+      },
+      {
+        "fato": "val.CL_BCI.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "CLP 60.589,50"
+      },
+      {
+        "fato": "val.CL_BCI.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "43,42%"
+      },
+      {
+        "fato": "val.CL_BCI.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "9,44%"
+      },
+      {
+        "fato": "val.CL_BCI.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_BCI.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,09%"
+      },
+      {
+        "fato": "val.CL_BCI.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+23,71%"
+      },
+      {
+        "fato": "val.CL_BCI.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-0,59%"
+      },
+      {
+        "fato": "val.CL_BCI.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "11,1x"
+      },
+      {
+        "fato": "val.CL_BCI.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,7x"
+      },
+      {
+        "fato": "val.CL_BCI.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "CLP 68.326,70"
+      },
+      {
+        "fato": "val.CL_BCI.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+10,21%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-03",
+        "id": "F1",
+        "instituicao": "Banco de Crédito e Inversiones",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Relatório financeiro trimestral",
+        "url": "https://cdn3.bci.cl/uploads/c66143b6-661f-4f79-885c-7523043c03f4/original/Informe_Financiero_3T_2026.pdf"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Mudança de direitos ou capital disponível com a reorganização.",
+      "Persistência de custo de risco elevado após expansão do crédito.",
+      "Deterioração da composição da captação ou do capital regulatório."
+    ],
+    "governanca": "O controlador transferiu parte da participação para Bci Group e informou participação direta e indireta combinada estável. A transferência é etapa da reorganização. Acompanhar seus efeitos sobre direitos e acesso ao capital das subsidiárias.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Monitorar composição dos depósitos, custo de risco, cobertura e capital. Separar expansão do crédito em moeda constante e efeitos da consolidação.",
+        "titulo": "Depósitos, provisões e adequação de capital"
+      }
+    ],
+    "issuer_id": "CL_BCI",
+    "lacunas_de_dados": [
+      "Data exata de publicação no RI não identificada no relatório.",
+      "Conciliação integral do capital distribuível por entidade pendente."
+    ],
+    "modelo_de_cobertura": "2026-11-03",
+    "negocio": "O Banco de Crédito e Inversiones reúne varejo, pequenas empresas, atacado e gestão de recursos no Chile, além de operações no Peru e nos Estados Unidos, entre elas o City National Bank of Florida.",
+    "nome": "Banco de Crédito e Inversiones",
+    "o_que_mudou": "O relatório trimestral quantifica a divergência entre ganho de eficiência e queda do lucro e registra avanço da reorganização com participação combinada do controlador estável.",
+    "pais": "Chile",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      },
+      {
+        "issuer_id": "BR_IRB",
+        "nome": "IRB Brasil RE"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "As carteiras comercial e de consumo sustentaram o crescimento anual. Na comparação sequencial, depósitos a prazo do atacado tiveram peso no avanço da captação, enquanto a operação da Flórida impulsionou depósitos à vista.",
+        "titulo": "Expansão com fontes de captação distintas"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A receita antes de perdas cresceu na comparação anual, com menor despesa operacional. O aumento das perdas de crédito e dos impostos e a queda do resultado financeiro limitaram o lucro.",
+        "titulo": "Eficiência antecede o teste de crédito"
+      }
+    ],
+    "publicada_em": "2026-11-04T01:46:07.987651+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O relatório reconcilia a operação da Flórida sob normas americanas e chilenas. Comparar lucro em bases homogêneas e separar variação cambial do desempenho operacional.",
+        "titulo": "Resultado local e normas de consolidação"
+      }
+    ],
+    "resumo": "A alta anual de margem de juros e comissões e a redução de despesas não se traduziram em lucro trimestral maior. Provisões, resultado financeiro e impostos condicionam o retorno do crescimento, inclusive na operação da Flórida. O alvo do modelo é CLP 75.303,50 ante CLP 62.100,00, com rating Neutro e confiança B.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Crescimento comercial financiado com depósitos a prazo e despesas de crédito elevadas pode reduzir o retorno após capital. A operação externa amplia a sensibilidade ao câmbio e a regras locais."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Bci amplia crédito, com menor lucro trimestral e maior custo de risco",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "No 3T26, juros e reajustes e comissões cresceram na comparação anual, enquanto o resultado financeiro passou a negativo. O lucro caiu frente ao 3T25 e ao 2T26. No acumulado anual, o lucro cresceu. O relatório apresenta projeções macroeconômicas, com guidance financeiro próprio não identificado no material consultado.",
+    "vetores": [
+      {
+        "direcao": "negativo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo de risco aumentou ante o trimestre anterior e o mesmo período de 2025, embora o indicador de inadimplência consolidada tenha recuado. Acompanhar a evolução das perdas e da cobertura.",
+        "vetor": "Custo de risco consolidado"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

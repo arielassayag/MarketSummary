@@ -1,0 +1,120 @@
+{
+  "mind": "codex",
+  "issuer_id": "CL_BCI",
+  "data": "2026-11-03",
+  "tipo": "pos_resultado",
+  "titulo": "Bci amplia crédito, com menor lucro trimestral e maior custo de risco",
+  "resumo": "A alta anual de margem de juros e comissões e a redução de despesas não se traduziram em lucro trimestral maior. Provisões, resultado financeiro e impostos condicionam o retorno do crescimento, inclusive na operação da Flórida. O alvo do modelo é {{fact:val.CL_BCI.preco_alvo}} ante {{fact:val.CL_BCI.preco}}, com rating {{fact:val.CL_BCI.rating_codigo}} e confiança {{fact:val.CL_BCI.confianca_codigo}}.",
+  "negocio": "O Banco de Crédito e Inversiones reúne varejo, pequenas empresas, atacado e gestão de recursos no Chile, além de operações no Peru e nos Estados Unidos, entre elas o City National Bank of Florida.",
+  "pilares_tese": [
+    {
+      "titulo": "Expansão com fontes de captação distintas",
+      "texto": "As carteiras comercial e de consumo sustentaram o crescimento anual. Na comparação sequencial, depósitos a prazo do atacado tiveram peso no avanço da captação, enquanto a operação da Flórida impulsionou depósitos à vista.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Eficiência antecede o teste de crédito",
+      "texto": "A receita antes de perdas cresceu na comparação anual, com menor despesa operacional. O aumento das perdas de crédito e dos impostos e a queda do resultado financeiro limitaram o lucro.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Custo de risco consolidado",
+      "direcao": "negativo",
+      "sensibilidade": "alta",
+      "texto": "O custo de risco aumentou ante o trimestre anterior e o mesmo período de 2025, embora o indicador de inadimplência consolidada tenha recuado. Acompanhar a evolução das perdas e da cobertura.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Próxima divulgação para testar perdas, captação e evolução societária.",
+      "data": null,
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Crescimento comercial financiado com depósitos a prazo e despesas de crédito elevadas pode reduzir o retorno após capital. A operação externa amplia a sensibilidade ao câmbio e a regras locais.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Captação à vista e comissões sustentam expansão com perdas controladas. Alvo de {{fact:val.CL_BCI.alvo_otimista}}.",
+    "base": "Eficiência melhora, mas crédito e captação limitam a expansão do retorno. Alvo de {{fact:val.CL_BCI.preco_alvo}}.",
+    "pessimista": "Custo de risco e captação sobem enquanto o resultado financeiro permanece volátil. Alvo de {{fact:val.CL_BCI.alvo_pessimista}}."
+  },
+  "comentario_valuation": "O P/VP é {{fact:val.CL_BCI.pb}}. O alvo do modelo supera o consenso público em termos representados por {{fact:val.CL_BCI.diff_consenso}}. Avaliar retorno sobre capital por jurisdição antes de atribuir valor à reorganização. Potencial de {{fact:val.CL_BCI.upside}}, retorno total esperado de {{fact:val.CL_BCI.etr}} e alpha relativo aos pares de {{fact:val.CL_BCI.alpha_rel}}.",
+  "ultimo_resultado": "No 3T26, juros e reajustes e comissões cresceram na comparação anual, enquanto o resultado financeiro passou a negativo. O lucro caiu frente ao 3T25 e ao 2T26. No acumulado anual, o lucro cresceu. O relatório apresenta projeções macroeconômicas, com guidance financeiro próprio não identificado no material consultado.",
+  "guidance": "sem_guidance",
+  "tom_gestao": "neutro",
+  "governanca": "O controlador transferiu parte da participação para Bci Group e informou participação direta e indireta combinada estável. A transferência é etapa da reorganização. Acompanhar seus efeitos sobre direitos e acesso ao capital das subsidiárias.",
+  "qualidade_resultados": {
+    "titulo": "Resultado local e normas de consolidação",
+    "texto": "O relatório reconcilia a operação da Flórida sob normas americanas e chilenas. Comparar lucro em bases homogêneas e separar variação cambial do desempenho operacional.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Capital por jurisdição",
+    "texto": "A expansão internacional exige comparar o retorno após perdas com capital requerido e capacidade de remessa das subsidiárias, especialmente na Flórida.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Eficiência pode ser absorvida por perdas",
+    "texto": "A queda de despesas operacionais perde relevância se o custo de risco seguir acima da melhora recorrente de margem e comissões.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Depósitos, provisões e adequação de capital",
+      "texto": "Monitorar composição dos depósitos, custo de risco, cobertura e capital. Separar expansão do crédito em moeda constante e efeitos da consolidação.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "o_que_mudou": "O relatório trimestral quantifica a divergência entre ganho de eficiência e queda do lucro e registra avanço da reorganização com participação combinada do controlador estável.",
+  "gatilhos_revisao": [
+    "Mudança de direitos ou capital disponível com a reorganização.",
+    "Persistência de custo de risco elevado após expansão do crédito.",
+    "Deterioração da composição da captação ou do capital regulatório."
+  ],
+  "lacunas_de_dados": [
+    "Data exata de publicação no RI não identificada no relatório.",
+    "Conciliação integral do capital distribuível por entidade pendente."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Banco de Crédito e Inversiones",
+      "titulo": "Relatório financeiro trimestral",
+      "url": "https://cdn3.bci.cl/uploads/c66143b6-661f-4f79-885c-7523043c03f4/original/Informe_Financiero_3T_2026.pdf",
+      "publicado_em": null,
+      "consultado_em": "2026-11-03"
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+{
+  "mind": "codex",
+  "issuer_id": "CL_BSAC",
+  "data": "2026-11-03",
+  "tipo": "pos_resultado",
+  "titulo": "Santander Chile mantém projeção de retorno após queda do lucro trimestral",
+  "resumo": "O lucro acumulado aumentou, mas a comparação trimestral expõe a sensibilidade à inflação, a comissões e a provisões. O banco manteve a projeção anual de retorno sobre patrimônio. O alvo do modelo é {{fact:val.CL_BSAC.preco_alvo}} ante {{fact:val.CL_BSAC.preco}}, com rating {{fact:val.CL_BSAC.rating_codigo}} e confiança {{fact:val.CL_BSAC.confianca_codigo}}.",
+  "negocio": "Banco chileno do Grupo Santander, com crédito comercial, hipotecário e ao consumo, captação, investimentos e serviços de pagamentos.",
+  "pilares_tese": [
+    {
+      "titulo": "Indexação explica parte da oscilação",
+      "texto": "A receita de reajustes perdeu força frente ao trimestre anterior. Os juros líquidos sem reajustes ficaram próximos do nível anterior, enquanto comissões menores e provisões maiores pressionaram o lucro.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Captação cresce com mudança de mix",
+      "texto": "Os depósitos a prazo explicaram o avanço desde dezembro, enquanto depósitos à vista recuaram nessa base. Avaliar o custo do funding à medida que o crédito comercial volta a crescer.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Receita líquida de reajustes",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "A exposição a instrumentos indexados amplia a sensibilidade da margem à inflação. Separar o efeito de reajustes da margem com clientes.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Teleconferência de resultados anunciada pelo banco para discutir desempenho e perspectivas.",
+      "data": "2026-11-04",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Pressão sobre comissões e provisões pode persistir mesmo com aumento do crédito comercial. Depósitos a prazo em maior proporção elevam a sensibilidade ao custo marginal de funding.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Crédito comercial e receitas de clientes sustentam retorno com provisões controladas. Alvo de {{fact:val.CL_BSAC.alvo_otimista}}.",
+    "base": "A margem normaliza após a oscilação dos reajustes, com expansão seletiva do crédito. Alvo de {{fact:val.CL_BSAC.preco_alvo}}.",
+    "pessimista": "Custo de crédito e captação comprimem o retorno enquanto o uso de cartões permanece fraco. Alvo de {{fact:val.CL_BSAC.alvo_pessimista}}."
+  },
+  "comentario_valuation": "O P/VP de {{fact:val.CL_BSAC.pb}} pressupõe persistência da rentabilidade para sustentar a avaliação. O modelo registra diferença de {{fact:val.CL_BSAC.diff_consenso}} frente ao consenso público. Potencial de {{fact:val.CL_BSAC.upside}}, retorno total esperado de {{fact:val.CL_BSAC.etr}} e alpha relativo aos pares de {{fact:val.CL_BSAC.alpha_rel}}.",
+  "ultimo_resultado": "No 3T26, o lucro atribuível caiu ante 2T26 e 3T25. O lucro acumulado cresceu, com maior receita de juros e reajustes, melhora em operações financeiras e menores despesas. A administração manteve a projeção de ROAE de 2026.",
+  "guidance": "mantido",
+  "tom_gestao": "neutro",
+  "governanca": "O banco elevou a provisão de dividendos sobre o lucro do exercício. Em outubro, uma empresa do Grupo Santander subscreveu a emissão de capital adicional que financiou o resgate da emissão anterior. Provisão de dividendos e pagamento têm etapas próprias.",
+  "alocacao_capital": {
+    "titulo": "Capital regulatório e distribuição",
+    "texto": "A maior provisão de dividendos afeta o capital principal. A emissão perpétua subscrita pelo grupo integra outra camada de capital. Acompanhar folga regulatória após crescimento de ativos ponderados.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Lucro acumulado e lucro trimestral",
+    "texto": "O avanço acumulado se beneficia de reajustes inflacionários. A leitura trimestral exige decompor juros, reajustes, comissões e provisões para avaliar recorrência.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Clientes e receitas podem divergir",
+    "texto": "O crescimento da base de clientes perde força econômica se o uso de cartões e as comissões caírem enquanto sobe o custo do crédito.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Margem, comissões e capital principal",
+      "texto": "Acompanhar receita de juros sem reajustes, uso de cartões, perdas de crédito e capital principal após provisão de dividendos.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "o_que_mudou": "A divulgação confirma a sensibilidade à indexação discutida na nota anterior, explicita a manutenção da projeção de retorno e acrescenta a revisão da provisão de dividendos e a substituição do instrumento de capital.",
+  "gatilhos_revisao": [
+    "Revisão da projeção de ROAE após a normalização dos reajustes.",
+    "Aumento persistente do custo de crédito ou recuo de comissões.",
+    "Redução da folga de capital principal após crescimento de ativos."
+  ],
+  "lacunas_de_dados": [
+    "Recorrência da receita financeira e efeito tributário diferido requerem acompanhamento.",
+    "WACC indisponível na ficha do modelo."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "regulatorio",
+      "instituicao": "Banco Santander Chile / SEC",
+      "titulo": "Comentário trimestral da administração",
+      "url": "https://www.sec.gov/Archives/edgar/data/1027552/000102755226000127/mncsept26.htm",
+      "publicado_em": "2026-10-30",
+      "consultado_em": "2026-11-03"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Banco Santander Chile",
+      "titulo": "Convite para teleconferência de resultados",
+      "url": "https://www.globenewswire.com/news-release/2026/09/25/3369140/0/en/banco-santander-chile-third-quarter-2026-analyst-and-investor-webcast-conference-call.html",
+      "publicado_em": "2026-09-25",
+      "consultado_em": "2026-11-03"
+    }
+  ]
+}

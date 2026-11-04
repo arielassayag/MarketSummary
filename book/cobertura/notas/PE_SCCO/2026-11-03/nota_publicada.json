@@ -1,0 +1,315 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-03",
+    "manifest_sha256": "141e8e9014e0583e69db7a2f207e9ee648625c25bd24bc75473b24ee80c6aba4",
+    "modelo_as_of": "2026-11-02"
+  },
+  "conviccao": 1,
+  "data": "2026-11-03",
+  "hashes": {
+    "contexto": "6605487baac2e9ac28da4de99497fb00825c958a7bde46cc50e93bd73eff611f",
+    "factbook": "da18c5258a30b4af5b360809869f86e94d0c8449e0930bdeec572216c83f446b",
+    "nota_json": "5e0acf31dfe67b0a3d4b6789ea92954835c7301c7741584ddf10dbfb0599294a"
+  },
+  "is_synthetic": false,
+  "issuer_id": "PE_SCCO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2027-01-26",
+  "published_at": "2026-11-04T01:52:25.121750+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A empresa reportou avanço das obras de Tía María e início de atividades de El Pilar. Acompanhar execução física, desembolso e geração incremental antes de atribuir volumes de projetos ao caixa corrente.",
+        "titulo": "Tía María e El Pilar"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-19",
+        "descricao": "Pagamento anunciado de dividendos em dinheiro e ações.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "dividendos"
+      }
+    ],
+    "cenarios": {
+      "base": "Preços sustentam caixa, enquanto a expansão consome parte da geração. Alvo de US$ 74,71.",
+      "otimista": "Recuperação de teor e execução dos projetos sustentam geração após capex. Alvo de US$ 92,23.",
+      "pessimista": "Menores preços de cobre e subprodutos comprimem caixa antes da entrada de projetos. Alvo de US$ 57,83."
+    },
+    "comentario_valuation": "O P/L à frente é 23,3x e a diferença para o consenso público é -58,07%. O rating neutro e a confiança baixa do modelo coexistem com a distância entre alvo e preço. O teste econômico é a margem após capex de manutenção e expansão ao longo do ciclo. Potencial de -58,35%, retorno total esperado de -55,86% e alpha relativo aos pares de -43,00%.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Se preços realizados normalizarem antes de recuperar teores, o ganho de margem pode se dissipar ainda durante o pico de investimento.",
+        "titulo": "Preço pode ocultar menor produtividade"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-03",
+    "dados_simulados": false,
+    "data": "2026-11-03",
+    "ficha": [
+      {
+        "fato": "val.PE_SCCO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 179,36"
+      },
+      {
+        "fato": "val.PE_SCCO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 74,71"
+      },
+      {
+        "fato": "val.PE_SCCO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-58,35%"
+      },
+      {
+        "fato": "val.PE_SCCO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.PE_SCCO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.PE_SCCO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 92,23"
+      },
+      {
+        "fato": "val.PE_SCCO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.PE_SCCO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 57,83"
+      },
+      {
+        "fato": "val.PE_SCCO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.PE_SCCO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,32%"
+      },
+      {
+        "fato": "val.PE_SCCO.wacc",
+        "rotulo": "WACC",
+        "valor": "11,99%"
+      },
+      {
+        "fato": "val.PE_SCCO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.PE_SCCO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-55,86%"
+      },
+      {
+        "fato": "val.PE_SCCO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-43,00%"
+      },
+      {
+        "fato": "val.PE_SCCO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "23,3x"
+      },
+      {
+        "fato": "val.PE_SCCO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "11,2x"
+      },
+      {
+        "fato": "val.PE_SCCO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 178,19"
+      },
+      {
+        "fato": "val.PE_SCCO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-58,07%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-03",
+        "id": "F1",
+        "instituicao": "Southern Copper / SEC",
+        "publicado_em": "2026-10-20",
+        "tipo": "Regulador",
+        "titulo": "Release de resultados e projetos",
+        "url": "https://www.sec.gov/Archives/edgar/data/1001838/000110465926117588/scco-ex99d1.htm"
+      },
+      {
+        "consultado_em": "2026-11-03",
+        "id": "F2",
+        "instituicao": "Southern Copper / SEC",
+        "publicado_em": "2026-10-30",
+        "tipo": "Regulador",
+        "titulo": "Relatório trimestral consolidado",
+        "url": "https://www.sec.gov/Archives/edgar/data/1001838/000110465926120639/scco-20260930x10q.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Persistência de teores menores nas operações do Peru.",
+      "Queda de preços realizados reduz créditos e caixa após capex.",
+      "Revisão de cronograma ou orçamento de Tía María e El Pilar."
+    ],
+    "governanca": "O Grupo México controla indiretamente a Southern Copper por meio da Americas Mining Corporation. O relatório trimestral divulga operações com partes relacionadas. O conselho autorizou distribuição em dinheiro e ações.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar teores e produção por mina, custo antes dos créditos de subprodutos, caixa após investimentos e marcos de Tía María e El Pilar.",
+        "titulo": "Cobre, custo bruto e capex"
+      }
+    ],
+    "issuer_id": "PE_SCCO",
+    "lacunas_de_dados": [
+      "Probabilidades implícitas dos cenários indisponíveis.",
+      "Metas plurianuais de expansão têm escopo distinto de guidance anual.",
+      "Retorno de projetos segue condicionado a execução e preços."
+    ],
+    "modelo_de_cobertura": "2026-11-03",
+    "negocio": "Produtora integrada de cobre, com mineração, fundição e refino no Peru e México. Prata, zinco e molibdênio são subprodutos com efeitos sobre receita e custo líquido.",
+    "nome": "Southern Copper",
+    "o_que_mudou": "O release e o relatório trimestral foram consultados diretamente na SEC. A nota complementa a leitura anterior com a base anual da produção, o mecanismo dos créditos de subprodutos e a data da distribuição.",
+    "pais": "Peru",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_CSN",
+        "nome": "CSN Siderúrgica Nacional"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_KLABIN",
+        "nome": "Klabin"
+      },
+      {
+        "issuer_id": "BR_SUZANO",
+        "nome": "Suzano"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Vendas e lucro aumentaram mesmo com menor volume comercializado de cobre, molibdênio e prata. A produção de cobre recuou no comparativo anual indicado no relatório trimestral à SEC, com queda no Peru.",
+        "titulo": "Preços sustentam crescimento de receita"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A queda do custo caixa líquido decorreu em grande parte de créditos de subprodutos com preços mais altos. Separar custo antes dos créditos e produtividade física.",
+        "titulo": "Créditos de subprodutos alteram leitura de custo"
+      }
+    ],
+    "publicada_em": "2026-11-04T01:52:25.121750+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Conciliar o benefício do preço de subprodutos com custos antes dos créditos e caixa operacional. A alta da margem líquida de créditos tem sensibilidade a preços próprios de prata, zinco e molibdênio.",
+        "titulo": "Custo bruto, créditos e caixa"
+      }
+    ],
+    "resumo": "Preços realizados mais altos sustentaram o lucro e o caixa operacional. A queda da produção de cobre no Peru por menor teor e a dependência de créditos de subprodutos limitam a extrapolação da margem. O alvo do modelo é US$ 74,71 ante US$ 179,36, com rating Neutro e confiança C.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Menor teor pode pressionar volume e custo. Reversão de preços dos subprodutos amplia custo líquido, enquanto projetos no Peru e México exigem capital antes de gerar receita."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Southern Copper ganha caixa com preços mais altos apesar de menor produção",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O release de 2026-10-20 reportou altas anuais de vendas, EBITDA ajustado, lucro e caixa operacional. O relatório trimestral de 2026-10-30 esclarece a base anual da queda da produção de cobre. O comunicado descreve metas de projetos e ambição plurianual, sem revisão formal de guidance anual identificada.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O benefício de preços realizados mais altos pode reverter sem melhora do teor ou da produtividade. Acompanhar custo bruto e custo líquido em paralelo.",
+        "vetor": "Teores e créditos de subprodutos"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

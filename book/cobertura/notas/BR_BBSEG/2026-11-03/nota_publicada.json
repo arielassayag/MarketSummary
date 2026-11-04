@@ -1,0 +1,343 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-03",
+    "manifest_sha256": "141e8e9014e0583e69db7a2f207e9ee648625c25bd24bc75473b24ee80c6aba4",
+    "modelo_as_of": "2026-11-03"
+  },
+  "conviccao": 1,
+  "data": "2026-11-03",
+  "hashes": {
+    "contexto": "f745887f175f6b28029977d81e207f7a833a11310b6d928050dfc44143aba761",
+    "factbook": "14f6f4846efce16d2fd502e961b7ebce603f7ba4de9a3f4cdd9d51369ccd3394",
+    "nota_json": "6f0e60815c76eea0b97e0c3eab706c6f662f7856be07c79490161cd6607398c0"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_BBSEG",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-03",
+  "published_at": "2026-11-04T01:55:01.754793+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar capital requerido das investidas e distribuição recebida pela holding. A elevação do resultado financeiro da holding tem base distinta de expansão da subscrição.",
+        "titulo": "Capital e dividendos recebidos"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-04",
+        "descricao": "Reunião virtual de resultados prevista no calendário do RI.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Previdência e resultado financeiro compensam parte da pressão em seguros. Alvo de R$ 34,78.",
+      "otimista": "Captação de previdência e recuperação de emissão sustentam geração após despesas. Alvo de R$ 36,73.",
+      "pessimista": "Emissão fraca e maior sinistralidade reduzem lucro e distribuição das investidas. Alvo de R$ 32,98."
+    },
+    "comentario_valuation": "P/VP de 7,3x e diferença de -9,06% frente ao consenso público. A leitura depende da recorrência da geração das investidas e do caixa transferível à holding. Potencial de -14,73%, retorno total esperado de -5,58% e alpha relativo aos pares de -49,28%.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O crescimento de reservas não elimina o risco de menor emissão da Brasilseg. A hipótese de recuperação depende da evolução de prêmios e comissões após defasagens de reconhecimento.",
+        "titulo": "Captação pode compensar sem reverter subscrição"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-03",
+    "dados_simulados": false,
+    "data": "2026-11-03",
+    "ficha": [
+      {
+        "fato": "val.BR_BBSEG.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 40,79"
+      },
+      {
+        "fato": "val.BR_BBSEG.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 34,78"
+      },
+      {
+        "fato": "val.BR_BBSEG.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-14,73%"
+      },
+      {
+        "fato": "val.BR_BBSEG.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_BBSEG.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_BBSEG.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 36,73"
+      },
+      {
+        "fato": "val.BR_BBSEG.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BBSEG.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 32,98"
+      },
+      {
+        "fato": "val.BR_BBSEG.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BBSEG.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "14,82%"
+      },
+      {
+        "fato": "val.BR_BBSEG.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BBSEG.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_BBSEG.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-5,58%"
+      },
+      {
+        "fato": "val.BR_BBSEG.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-49,28%"
+      },
+      {
+        "fato": "val.BR_BBSEG.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "9,3x"
+      },
+      {
+        "fato": "val.BR_BBSEG.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "7,3x"
+      },
+      {
+        "fato": "val.BR_BBSEG.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 38,25"
+      },
+      {
+        "fato": "val.BR_BBSEG.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-9,06%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-03",
+        "id": "F1",
+        "instituicao": "BB Seguridade",
+        "publicado_em": "2026-11-03",
+        "tipo": "Relações com investidores",
+        "titulo": "Análise de desempenho trimestral",
+        "url": "https://www.bbseguridaderi.com.br/docs/bb-seguridade-2026-09-30-mGHjhQkr.pdf"
+      },
+      {
+        "consultado_em": "2026-11-03",
+        "id": "F2",
+        "instituicao": "BB Seguridade",
+        "publicado_em": "2026-11-03",
+        "tipo": "Relações com investidores",
+        "titulo": "Fato relevante sobre a revisão das projeções",
+        "url": "https://www.bbseguridaderi.com.br/docs/bb-seguridade-2026-11-03-mwBtmNBb.pdf"
+      },
+      {
+        "consultado_em": "2026-11-03",
+        "id": "F3",
+        "instituicao": "BB Seguridade",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário de divulgação e reunião de resultados",
+        "url": "https://www.bbseguridaderi.com.br/informacoes-ao-mercado/calendario-de-eventos/2026"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Prêmios emitidos divergem da faixa revisada.",
+      "Sinistralidade aumenta com menor prêmio ganho.",
+      "Captação líquida perde força e reduz a contribuição de taxas de gestão."
+    ],
+    "governanca": "A corretora utiliza a rede do Banco do Brasil e remunera serviços bancários conforme contrato. O relatório distingue comissões de corretagem e remuneração ao controlador, relevantes para a comparação entre investidas.",
+    "guidance": "reduzido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar prêmios por linha, índice combinado da Brasilseg, receita de corretagem, captação líquida da Brasilprev e geração sem juros.",
+        "titulo": "Emissão, sinistralidade e captação"
+      }
+    ],
+    "issuer_id": "BR_BBSEG",
+    "lacunas_de_dados": [
+      "Probabilidades implícitas dos cenários indisponíveis.",
+      "Normalização de receitas financeiras e capacidade de distribuição requerem acompanhamento."
+    ],
+    "modelo_de_cobertura": "2026-11-03",
+    "negocio": "Holding controlada pelo Banco do Brasil com participações em seguros, previdência, capitalização e odontologia, além de corretagem apoiada na rede bancária do controlador.",
+    "nome": "BB Seguridade",
+    "o_que_mudou": "O resultado de 2026-11-03 traz recuperação da captação líquida em previdência no acumulado e revisão para baixo da faixa de prêmios da Brasilseg. A nota separa estabilidade acumulada e queda anual no trimestre.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BANRISUL",
+        "nome": "Banrisul"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A menor emissão em rural, prestamista e vida levou à redução da faixa anual da Brasilseg. No trimestre, prêmios ganhos menores, índice combinado maior e menor resultado financeiro pressionaram o lucro da investida.",
+        "titulo": "Prêmios enfraquecem em linhas relevantes"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A Brasilprev avançou no acumulado com captação líquida, receitas de taxa de gestão e maior eficiência. Separar captação e rentabilidade das reservas para testar recorrência.",
+        "titulo": "Previdência recupera captação"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A rede do Banco do Brasil amplia o alcance comercial. O valor da distribuição depende de renovação, conversão e remuneração líquida após o custo do canal.",
+        "titulo": "Distribuição pelo canal bancário"
+      }
+    ],
+    "publicada_em": "2026-11-04T01:55:01.754793+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A análise da companhia distingue resultado recorrente e normalização do descasamento temporal do índice de preços. Separar prêmios ganhos, sinistralidade e resultado financeiro por entidade.",
+        "titulo": "Lucro recorrente e normalização financeira"
+      }
+    ],
+    "resumo": "O lucro recorrente gerencial caiu na comparação anual do trimestre e ficou praticamente estável no acumulado. A recuperação da captação em previdência e o resultado financeiro da holding amorteceram a pressão em seguros e corretagem. O alvo do modelo é R$ 34,78 ante R$ 40,79, com rating Neutro e confiança B.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Persistência da fraqueza no rural, prestamista e vida pode reduzir geração das investidas e comissões. Normalização do resultado financeiro ou da sinistralidade reduz a compensação."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "BB Seguridade reduz projeção de prêmios da Brasilseg",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "O lucro líquido recorrente gerencial do 3T26 caiu ante o 3T25 e cresceu ante o 2T26. O acumulado ficou praticamente estável. O fato relevante reduziu o guidance de prêmios emitidos da Brasilseg e manteve as faixas do resultado operacional sem juros, excluída a holding, e das reservas de previdência abrangidas pela projeção.",
+    "vetores": [
+      {
+        "direcao": "negativo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A menor emissão tende a pressionar o prêmio ganho e a corretagem com defasagens próprias. Acompanhar conversão por linha e persistência da sinistralidade.",
+        "vetor": "Emissão de seguros e comissões"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

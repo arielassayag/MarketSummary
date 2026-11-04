@@ -1,0 +1,315 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-03",
+    "manifest_sha256": "141e8e9014e0583e69db7a2f207e9ee648625c25bd24bc75473b24ee80c6aba4",
+    "modelo_as_of": "2026-11-02"
+  },
+  "conviccao": 1,
+  "data": "2026-11-03",
+  "hashes": {
+    "contexto": "02f633ff5f86c28737fa71c021e24366e7bb9be2f06eae420f0d3382a020e7e5",
+    "factbook": "3e37014ccb786c2f5fd0202daf3d575c42d742f8d27c9a653c84aa5a8971d1d7",
+    "nota_json": "e14dbf07fa3b7bab8fbe8ad0cfc3a9f011ede6a058b9da1ec17139c39d6bc276"
+  },
+  "is_synthetic": false,
+  "issuer_id": "CL_ITAU",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-11-04T01:48:21.486215+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O índice de capital caiu ante o trimestre anterior com o crescimento de ativos ponderados pelo risco, permanecendo acima dos requerimentos conforme o banco.",
+        "titulo": "Expansão e ativos ponderados"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-09",
+        "descricao": "Teleconferência de resultados anunciada para discutir desempenho e guidance.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "O ganho de eficiência no Chile compensa parte da pressão sobre margem e do menor retorno colombiano. Alvo de CLP 32.790,50.",
+      "otimista": "Crédito chileno cresce com margem estabilizada e melhora do retorno corporativo colombiano. Alvo de CLP 40.635,90.",
+      "pessimista": "Custo de crédito e capital absorvem a expansão enquanto a margem com clientes segue pressionada. Alvo de CLP 25.243,20."
+    },
+    "comentario_valuation": "P/VP de 1,1x e diferença de +28,65% frente ao consenso público. O sinal exige verificar o retorno tangível do Chile separado da Colômbia e após capital regulatório. Potencial de +48,04%, retorno total esperado de +50,94% e alpha relativo aos pares de +25,96%.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A tese de recuperação perde suporte se o crescimento da carteira chilena elevar ativos ponderados mais rapidamente do que o lucro após perdas.",
+        "titulo": "Crescer com menor margem"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-03",
+    "dados_simulados": false,
+    "data": "2026-11-03",
+    "ficha": [
+      {
+        "fato": "val.CL_ITAU.preco",
+        "rotulo": "Preço de referência",
+        "valor": "CLP 22.150,00"
+      },
+      {
+        "fato": "val.CL_ITAU.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "CLP 32.790,50"
+      },
+      {
+        "fato": "val.CL_ITAU.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+48,04%"
+      },
+      {
+        "fato": "val.CL_ITAU.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.CL_ITAU.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.CL_ITAU.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "CLP 40.635,90"
+      },
+      {
+        "fato": "val.CL_ITAU.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_ITAU.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "CLP 25.243,20"
+      },
+      {
+        "fato": "val.CL_ITAU.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_ITAU.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "9,44%"
+      },
+      {
+        "fato": "val.CL_ITAU.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_ITAU.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,09%"
+      },
+      {
+        "fato": "val.CL_ITAU.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+50,94%"
+      },
+      {
+        "fato": "val.CL_ITAU.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+25,96%"
+      },
+      {
+        "fato": "val.CL_ITAU.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "9,7x"
+      },
+      {
+        "fato": "val.CL_ITAU.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,1x"
+      },
+      {
+        "fato": "val.CL_ITAU.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "CLP 25.487,40"
+      },
+      {
+        "fato": "val.CL_ITAU.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+28,65%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-03",
+        "id": "F1",
+        "instituicao": "Banco Itaú Chile",
+        "publicado_em": "2026-10-30",
+        "tipo": "Relações com investidores",
+        "titulo": "Relatório financeiro e comentário da administração",
+        "url": "https://filemanager-cdn.mziq.com/published/4a2da77a-1e3e-41d5-8eb2-01dc7b15a10f/edae914f-83e3-4343-9c49-9616c39bbc32"
+      },
+      {
+        "consultado_em": "2026-11-03",
+        "id": "F2",
+        "instituicao": "Banco Itaú Chile",
+        "publicado_em": "2026-10-30",
+        "tipo": "Relações com investidores",
+        "titulo": "Comunicado de resultados e teleconferência",
+        "url": "https://www.globenewswire.com/news-release/2026/10/30/3392128/0/en/banco-ita%C3%BA-chile-announces-third-quarter-2026-management-commentary.html"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Persistência de margem com clientes abaixo da expectativa revisada.",
+      "Aumento das perdas na Colômbia após a cessão do varejo.",
+      "Erosão da folga de capital diante da expansão do crédito."
+    ],
+    "governanca": "As divulgações conciliam resultado gerencial e contábil. A análise da cessão colombiana acompanha separadamente a operação corporativa remanescente, seu patrimônio e o capital disponível no Chile.",
+    "guidance": "reduzido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar margem com clientes e custo de crédito no Chile, retorno tangível colombiano e índice de capital principal. Acompanhar separadamente a reavaliação de ativos fiscais diferidos.",
+        "titulo": "Margem, retorno tangível e custo de crédito"
+      }
+    ],
+    "issuer_id": "CL_ITAU",
+    "lacunas_de_dados": [
+      "A categoria de guidance se refere à margem com clientes no Chile.",
+      "Probabilidades implícitas dos cenários indisponíveis.",
+      "Retorno recorrente da Colômbia ainda sujeito à transição de perímetro."
+    ],
+    "modelo_de_cobertura": "2026-11-03",
+    "negocio": "Banco universal com crédito, depósitos e serviços de investimento no Chile e operação colombiana voltada a empresas após a transferência da carteira de varejo ao Banco de Bogotá.",
+    "nome": "Banco Itaú Chile",
+    "o_que_mudou": "O relatório do 3T26 traz a primeira leitura desta nota do trimestre seguinte à cessão, explicita revisões divergentes no guidance chileno e separa as contribuições de Chile e Colômbia.",
+    "pais": "Chile",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      },
+      {
+        "issuer_id": "BR_IRB",
+        "nome": "IRB Brasil RE"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Maior geração de receita e contenção de despesas melhoraram a eficiência no Chile. O custo de crédito local recuou no trimestre, enquanto o indicador consolidado subiu frente ao 2T26.",
+        "titulo": "Chile melhora na comparação sequencial"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A cessão do varejo reduz despesas, mas altera a base de margens e receitas. O menor resultado de tesouraria e provisões relacionadas ao risco-país condicionaram o desempenho trimestral.",
+        "titulo": "Colômbia opera com outro perímetro"
+      }
+    ],
+    "publicada_em": "2026-11-04T01:48:21.486215+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O relatório distingue resultado contábil e recorrente, além de divulgar séries da Colômbia em moeda constante. Separar tesouraria, custos de transformação e provisões de risco-país.",
+        "titulo": "Lucro e perímetro em bases comparáveis"
+      }
+    ],
+    "resumo": "O lucro recorrente gerencial consolidado cresceu, com melhora sequencial da operação chilena. O guidance combina expansão de crédito mais alta e margem com clientes menor. A comparação colombiana exige ajustar o perímetro após a cessão do varejo. O alvo do modelo é CLP 32.790,50 ante CLP 22.150,00, com rating Compra e confiança B.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Expansão da carteira pode consumir capital sem elevar a margem com clientes. Na Colômbia, o novo perímetro pode concentrar exposições e retardar a recuperação do retorno."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Itaú Chile eleva projeção de crédito e reduz expectativa de margem",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "O resultado líquido recorrente gerencial consolidado subiu ante o 2T26 e o 3T25, com margem financeira gerencial consolidada menor nessas bases. No Chile, a administração elevou a previsão de crescimento do crédito, reduziu margem com clientes e crescimento de comissões, manteve a previsão de despesas e passou a indicar retorno tangível próximo ao topo da faixa anterior.",
+    "vetores": [
+      {
+        "direcao": "negativo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A projeção anual de margem com clientes foi reduzida, apesar da revisão positiva de crescimento da carteira. Acompanhar preço de originação e custo da captação.",
+        "vetor": "Margem com clientes no Chile"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

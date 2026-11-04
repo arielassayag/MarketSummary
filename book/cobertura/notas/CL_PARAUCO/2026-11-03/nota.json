@@ -1,0 +1,130 @@
+{
+  "mind": "codex",
+  "issuer_id": "CL_PARAUCO",
+  "data": "2026-11-03",
+  "tipo": "pos_resultado",
+  "titulo": "Parque Arauco amplia geração imobiliária com vendas comparáveis fracas no Chile",
+  "resumo": "O EBITDA e o FFO atribuível cresceram com a expansão regional. No Chile, a queda de vendas em áreas comparáveis diante da alta de aluguéis e do custo de ocupação torna a capacidade de pagamento dos lojistas central para a tese. O alvo do modelo é {{fact:val.CL_PARAUCO.preco_alvo}} ante {{fact:val.CL_PARAUCO.preco}}, com rating {{fact:val.CL_PARAUCO.rating_codigo}} e confiança {{fact:val.CL_PARAUCO.confianca_codigo}}.",
+  "negocio": "Operadora e proprietária de centros comerciais no Chile, Peru e Colômbia, com renda de locação, receitas de serviços e participação em empreendimentos com sócios.",
+  "pilares_tese": [
+    {
+      "titulo": "Desempenho regional diverge",
+      "texto": "Peru e Colômbia sustentaram a alta de vendas dos lojistas em moeda local. A conversão cambial ampliou o crescimento consolidado reportado. No Chile, vendas em áreas comparáveis recuaram, com fraqueza em Parque Arauco Kennedy.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Aluguel e custo de ocupação",
+      "texto": "O aluguel comparável chileno cresceu com vendas comparáveis menores. Acompanhar capacidade de repasse nas renovações, inadimplência e retenção de lojistas.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Expansão de portfólio",
+      "direcao": "positivo",
+      "sensibilidade": "alta",
+      "texto": "A integração de novos centros contribuiu para o EBITDA. Paseo Quilín entra no consolidado a partir de outubro, com retorno ainda dependente da integração e do financiamento.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Divulgação de resultados prevista no calendário do emissor, com primeira leitura consolidada de Paseo Quilín.",
+      "data": "2027-01-28",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "A pressão do custo de ocupação no Chile pode aparecer em concessões, vacância ou inadimplência. Dívida indexada e refinanciamento condicionam o FFO atribuível.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Integração amplia NOI e a melhora nas vendas dos lojistas preserva reajustes. Alvo de {{fact:val.CL_PARAUCO.alvo_otimista}}.",
+    "base": "Crescimento regional sustenta FFO, com pressão de ocupação no Chile. Alvo de {{fact:val.CL_PARAUCO.preco_alvo}}.",
+    "pessimista": "Vendas fracas e custo financeiro maior corroem o retorno após investimentos. Alvo de {{fact:val.CL_PARAUCO.alvo_pessimista}}."
+  },
+  "comentario_valuation": "O alvo do modelo fica {{fact:val.CL_PARAUCO.diff_consenso}} frente ao consenso público. A diferença deve ser lida à luz do retorno após capex, custo de capital e direitos econômicos em ativos compartilhados. Potencial de {{fact:val.CL_PARAUCO.upside}}, retorno total esperado de {{fact:val.CL_PARAUCO.etr}} e alpha relativo aos pares de {{fact:val.CL_PARAUCO.alpha_rel}}.",
+  "ultimo_resultado": "No 3T26, receitas, EBITDA e FFO da controladora cresceram em relação ao 3T25. A margem EBITDA reportada caiu, enquanto a margem ajustada pelo efeito de contratos com tarifa simplificada subiu. O relatório apresenta calendário e projetos, com guidance financeiro consolidado formal não identificado.",
+  "guidance": "sem_guidance",
+  "tom_gestao": "neutro",
+  "governanca": "O relatório separa FFO atribuível à controladora e aos minoritários. A participação em ativos como Grupo Marina requer distinguir a geração do empreendimento e a parcela econômica atribuível.",
+  "qualidade_resultados": {
+    "titulo": "Perímetro e tarifas",
+    "texto": "A tarifa simplificada agrupa aluguel, despesas comuns e promoção. Separar a margem reportada da ajustada e distinguir caixa operacional, FFO e receitas financeiras sobre recursos do aumento de capital.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Paseo Quilín entra após o trimestre",
+    "texto": "A companhia informa controle e consolidação desde 2026-10-01. Avaliar retorno incremental sobre capital investido e financiamento quando o ativo entrar nos resultados.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Pressão sobre os lojistas chilenos",
+    "texto": "A expansão de aluguel comparável perde sustentação se as vendas em áreas comparáveis seguirem fracas e o custo de ocupação limitar renovações.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Vendas, renovação e renda atribuível",
+      "texto": "Acompanhar vendas comparáveis e custo de ocupação no Chile, renda e vacância por ativo, FFO após reajustes e contribuição de Paseo Quilín.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "o_que_mudou": "O relatório entregue à CMF resolve a lacuna de resultado da nota anterior. O quadro agora distingue a alta de EBITDA regional da fraqueza de vendas comparáveis chilenas e confirma a data de consolidação de Paseo Quilín.",
+  "gatilhos_revisao": [
+    "Persistência de vendas comparáveis fracas e custo de ocupação crescente no Chile.",
+    "Retorno de Paseo Quilín abaixo do custo de financiamento após integração.",
+    "Deterioração do FFO atribuível após reajustes e custos financeiros."
+  ],
+  "lacunas_de_dados": [
+    "Probabilidades implícitas dos cenários indisponíveis.",
+    "Retorno estabilizado de Paseo Quilín e conciliação com caixa após capex pendentes."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "regulatorio",
+      "instituicao": "Parque Arauco / CMF Chile",
+      "titulo": "Relatório trimestral e análise da administração",
+      "url": "https://www.cmfchile.cl/institucional/inc/inf_financiera/ifrs/safec_ifrs_verarchivo.php?auth=YWE3N2M0NWQ5ODAzZGE3OTc2MjhjZDQzOGUyMDU1MTU%3D&send=xpISqrrdba0lUoLgoU0Y6OgGzy5z2pCuEp7SlWBEGyM61aOKLEY3GNbmjedfG1BlGpcJ0+PtnOdA8PaRNzCIOMjELsgyZlWMSaNU2PtRhgP4H2oI+tPct2EQYA9Xz8UUWPZOZxwWYOz23KUqRAssUR+eMde6t28L9p0%3D",
+      "publicado_em": "2026-10-29",
+      "consultado_em": "2026-11-03"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Parque Arauco",
+      "titulo": "Calendário de divulgação de resultados",
+      "url": "https://www.parauco.com/parque-arauco-corporativo-en",
+      "publicado_em": null,
+      "consultado_em": "2026-11-03"
+    }
+  ]
+}

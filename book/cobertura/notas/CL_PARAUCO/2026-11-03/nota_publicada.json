@@ -1,0 +1,317 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-03",
+    "manifest_sha256": "141e8e9014e0583e69db7a2f207e9ee648625c25bd24bc75473b24ee80c6aba4",
+    "modelo_as_of": "2026-11-02"
+  },
+  "conviccao": 1,
+  "data": "2026-11-03",
+  "hashes": {
+    "contexto": "7ec6f3e5d652a97e434ad4e0c080840703b10abb7767f58b44e8d755cb9b7f33",
+    "factbook": "b432fefaac75dd9f496ca2a633f08a47b72b8cac502bf20d230bec44d95cb895",
+    "nota_json": "cfa5d29413fa9807f002cd20214afd3c4bc5cf80407ef97f9fe963992af89bd8"
+  },
+  "is_synthetic": false,
+  "issuer_id": "CL_PARAUCO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2027-01-28",
+  "published_at": "2026-11-04T01:49:14.323863+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A companhia informa controle e consolidação desde 2026-10-01. Avaliar retorno incremental sobre capital investido e financiamento quando o ativo entrar nos resultados.",
+        "titulo": "Paseo Quilín entra após o trimestre"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2027-01-28",
+        "descricao": "Divulgação de resultados prevista no calendário do emissor, com primeira leitura consolidada de Paseo Quilín.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Crescimento regional sustenta FFO, com pressão de ocupação no Chile. Alvo de CLP 2.474,11.",
+      "otimista": "Integração amplia NOI e a melhora nas vendas dos lojistas preserva reajustes. Alvo de CLP 3.001,14.",
+      "pessimista": "Vendas fracas e custo financeiro maior corroem o retorno após investimentos. Alvo de CLP 2.004,19."
+    },
+    "comentario_valuation": "O alvo do modelo fica -41,49% frente ao consenso público. A diferença deve ser lida à luz do retorno após capex, custo de capital e direitos econômicos em ativos compartilhados. Potencial de -28,76%, retorno total esperado de -27,19% e alpha relativo aos pares de -35,84%.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A expansão de aluguel comparável perde sustentação se as vendas em áreas comparáveis seguirem fracas e o custo de ocupação limitar renovações.",
+        "titulo": "Pressão sobre os lojistas chilenos"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-03",
+    "dados_simulados": false,
+    "data": "2026-11-03",
+    "ficha": [
+      {
+        "fato": "val.CL_PARAUCO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "CLP 3.473,00"
+      },
+      {
+        "fato": "val.CL_PARAUCO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "CLP 2.474,11"
+      },
+      {
+        "fato": "val.CL_PARAUCO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-28,76%"
+      },
+      {
+        "fato": "val.CL_PARAUCO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.CL_PARAUCO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.CL_PARAUCO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "CLP 3.001,14"
+      },
+      {
+        "fato": "val.CL_PARAUCO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_PARAUCO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "CLP 2.004,19"
+      },
+      {
+        "fato": "val.CL_PARAUCO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.CL_PARAUCO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "8,95%"
+      },
+      {
+        "fato": "val.CL_PARAUCO.wacc",
+        "rotulo": "WACC",
+        "valor": "7,70%"
+      },
+      {
+        "fato": "val.CL_PARAUCO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,09%"
+      },
+      {
+        "fato": "val.CL_PARAUCO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-27,19%"
+      },
+      {
+        "fato": "val.CL_PARAUCO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-35,84%"
+      },
+      {
+        "fato": "val.CL_PARAUCO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "19,2x"
+      },
+      {
+        "fato": "val.CL_PARAUCO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,6x"
+      },
+      {
+        "fato": "val.CL_PARAUCO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "CLP 4.228,70"
+      },
+      {
+        "fato": "val.CL_PARAUCO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-41,49%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-03",
+        "id": "F1",
+        "instituicao": "Parque Arauco / CMF Chile",
+        "publicado_em": "2026-10-29",
+        "tipo": "Regulador",
+        "titulo": "Relatório trimestral e análise da administração",
+        "url": "https://www.cmfchile.cl/institucional/inc/inf_financiera/ifrs/safec_ifrs_verarchivo.php?auth=YWE3N2M0NWQ5ODAzZGE3OTc2MjhjZDQzOGUyMDU1MTU%3D&send=xpISqrrdba0lUoLgoU0Y6OgGzy5z2pCuEp7SlWBEGyM61aOKLEY3GNbmjedfG1BlGpcJ0+PtnOdA8PaRNzCIOMjELsgyZlWMSaNU2PtRhgP4H2oI+tPct2EQYA9Xz8UUWPZOZxwWYOz23KUqRAssUR+eMde6t28L9p0%3D"
+      },
+      {
+        "consultado_em": "2026-11-03",
+        "id": "F2",
+        "instituicao": "Parque Arauco",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário de divulgação de resultados",
+        "url": "https://www.parauco.com/parque-arauco-corporativo-en"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Persistência de vendas comparáveis fracas e custo de ocupação crescente no Chile.",
+      "Retorno de Paseo Quilín abaixo do custo de financiamento após integração.",
+      "Deterioração do FFO atribuível após reajustes e custos financeiros."
+    ],
+    "governanca": "O relatório separa FFO atribuível à controladora e aos minoritários. A participação em ativos como Grupo Marina requer distinguir a geração do empreendimento e a parcela econômica atribuível.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar vendas comparáveis e custo de ocupação no Chile, renda e vacância por ativo, FFO após reajustes e contribuição de Paseo Quilín.",
+        "titulo": "Vendas, renovação e renda atribuível"
+      }
+    ],
+    "issuer_id": "CL_PARAUCO",
+    "lacunas_de_dados": [
+      "Probabilidades implícitas dos cenários indisponíveis.",
+      "Retorno estabilizado de Paseo Quilín e conciliação com caixa após capex pendentes."
+    ],
+    "modelo_de_cobertura": "2026-11-03",
+    "negocio": "Operadora e proprietária de centros comerciais no Chile, Peru e Colômbia, com renda de locação, receitas de serviços e participação em empreendimentos com sócios.",
+    "nome": "Parque Arauco",
+    "o_que_mudou": "O relatório entregue à CMF resolve a lacuna de resultado da nota anterior. O quadro agora distingue a alta de EBITDA regional da fraqueza de vendas comparáveis chilenas e confirma a data de consolidação de Paseo Quilín.",
+    "pais": "Chile",
+    "pares": [
+      {
+        "issuer_id": "BR_ALLOS",
+        "nome": "Allos"
+      },
+      {
+        "issuer_id": "BR_IGUATEMI",
+        "nome": "Iguatemi"
+      },
+      {
+        "issuer_id": "BR_JHSF",
+        "nome": "JHSF"
+      },
+      {
+        "issuer_id": "BR_MULTIPLAN",
+        "nome": "Multiplan"
+      },
+      {
+        "issuer_id": "CL_CENCOMALLS",
+        "nome": "Cencosud Shopping"
+      },
+      {
+        "issuer_id": "CL_MALLPLAZA",
+        "nome": "Plaza SA (Mallplaza)"
+      },
+      {
+        "issuer_id": "MX_FIBRAPL",
+        "nome": "Fibra Prologis"
+      },
+      {
+        "issuer_id": "MX_FUNO",
+        "nome": "Fibra Uno"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Peru e Colômbia sustentaram a alta de vendas dos lojistas em moeda local. A conversão cambial ampliou o crescimento consolidado reportado. No Chile, vendas em áreas comparáveis recuaram, com fraqueza em Parque Arauco Kennedy.",
+        "titulo": "Desempenho regional diverge"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O aluguel comparável chileno cresceu com vendas comparáveis menores. Acompanhar capacidade de repasse nas renovações, inadimplência e retenção de lojistas.",
+        "titulo": "Aluguel e custo de ocupação"
+      }
+    ],
+    "publicada_em": "2026-11-04T01:49:14.323863+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A tarifa simplificada agrupa aluguel, despesas comuns e promoção. Separar a margem reportada da ajustada e distinguir caixa operacional, FFO e receitas financeiras sobre recursos do aumento de capital.",
+        "titulo": "Perímetro e tarifas"
+      }
+    ],
+    "resumo": "O EBITDA e o FFO atribuível cresceram com a expansão regional. No Chile, a queda de vendas em áreas comparáveis diante da alta de aluguéis e do custo de ocupação torna a capacidade de pagamento dos lojistas central para a tese. O alvo do modelo é CLP 2.474,11 ante CLP 3.473,00, com rating Venda e confiança B.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "A pressão do custo de ocupação no Chile pode aparecer em concessões, vacância ou inadimplência. Dívida indexada e refinanciamento condicionam o FFO atribuível."
+      }
+    ],
+    "setor": "Imobiliário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Parque Arauco amplia geração imobiliária com vendas comparáveis fracas no Chile",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "No 3T26, receitas, EBITDA e FFO da controladora cresceram em relação ao 3T25. A margem EBITDA reportada caiu, enquanto a margem ajustada pelo efeito de contratos com tarifa simplificada subiu. O relatório apresenta calendário e projetos, com guidance financeiro consolidado formal não identificado.",
+    "vetores": [
+      {
+        "direcao": "positivo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A integração de novos centros contribuiu para o EBITDA. Paseo Quilín entra no consolidado a partir de outubro, com retorno ainda dependente da integração e do financiamento.",
+        "vetor": "Expansão de portfólio"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

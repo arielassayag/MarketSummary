@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 2.57,
+  "high": 9.1,
+  "low": 3.1,
+  "mean": 5.75385,
+  "median": 5.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.12,
+   "currency": "BRL",
+   "growth": 0.4764,
+   "high": 0.12,
+   "low": 0.12,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.08128
+  },
+  "+1y": {
+   "avg": 0.61872,
+   "currency": "BRL",
+   "growth": 0.5274,
+   "high": 0.76,
+   "low": 0.54763,
+   "numberOfAnalysts": 8,
+   "yearAgoEps": 0.40509
+  },
+  "0q": {
+   "avg": 0.12986,
+   "currency": "BRL",
+   "growth": 0.7668,
+   "high": 0.14,
+   "low": 0.11945,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.0735
+  },
+  "0y": {
+   "avg": 0.40509,
+   "currency": "BRL",
+   "growth": 0.3422,
+   "high": 0.42,
+   "low": 0.38317,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 0.3018
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1972394210,
+   "currency": "BRL",
+   "growth": 0.2173,
+   "high": 1972394210,
+   "low": 1972394210,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 1620290000
+  },
+  "+1y": {
+   "avg": 7238443890,
+   "currency": "BRL",
+   "growth": 0.1018,
+   "high": 8088749750,
+   "low": 6767000000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 6569590090
+  },
+  "0q": {
+   "avg": 1656756430,
+   "currency": "BRL",
+   "growth": 0.1172,
+   "high": 1656756430,
+   "low": 1656756430,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 1483000000
+  },
+  "0y": {
+   "avg": 6569590090,
+   "currency": "BRL",
+   "growth": 0.14140001,
+   "high": 6794000000,
+   "low": 6485636510,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 5755700000
+  }
+ },
+ "ticker": "VAMO3.SA",
+ "url": "https://finance.yahoo.com/quote/VAMO3.SA"
+}

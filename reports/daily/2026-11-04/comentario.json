@@ -1,0 +1,14 @@
+{
+  "mind": "codex",
+  "headline": "Lado vendido concentra a pressão sobre o resultado",
+  "paragraphs": [
+    "A carteira simulada registrou retorno de {{fact:day.ret}} em dólar, com resultado de {{fact:day.pnl_usd}}. A contribuição do lado vendido, de {{fact:attr.short}}, superou em magnitude o ganho do lado comprado, de {{fact:attr.long}}. O componente específico respondeu por {{fact:attr.specific}}, e o fatorial, por {{fact:attr.factor}}.",
+    "Energia respondeu por {{fact:attr.sector.Energy}}, e o Brasil contribuiu com {{fact:attr.country.BR}} no recorte por país. PRIO e GeoPark foram os maiores detratores, com {{fact:top.detract.1.contrib}} e {{fact:top.detract.2.contrib}}, respectivamente. Fortuna Mining e Aeroméxico lideraram as contribuições positivas, com {{fact:top.contrib.1.contrib}} e {{fact:top.contrib.2.contrib}}, respectivamente.",
+    "O Ibovespa avançou {{fact:mkt.BVSP.ret_1d}} em moeda local, enquanto o futuro de Brent recuou {{fact:mkt.BZ_F.ret_1d}}. O calendário do Banco Central do Brasil previa o encerramento da reunião do Copom em 04/11/2026; na mesma data, a agenda de relações com investidores da PRIO previa a divulgação de resultados após o fechamento do mercado."
+  ],
+  "risk_flags": [
+    "A vol ex-ante de {{fact:risk.ex_ante_vol}} ficou abaixo do piso de {{fact:mandate.vol_band_min}}. O beta ao mercado latino-americano encerrou em {{fact:risk.beta}}.",
+    "As posições vendidas em Orizon e Grupo Financiero Galicia apresentaram risco alto de squeeze.",
+    "O índice Merval ficou sem cotação para o pregão na fonte consultada."
+  ]
+}

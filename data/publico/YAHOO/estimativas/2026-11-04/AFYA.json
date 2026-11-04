@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 10.5,
+  "high": 18.481722,
+  "low": 13.996885,
+  "mean": 16.00282,
+  "median": 15.714155
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.99966,
+   "currency": "BRL",
+   "growth": -0.1113,
+   "high": 2.1183,
+   "low": 1.86609,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 2.25
+  },
+  "+1y": {
+   "avg": 10.07774,
+   "currency": "BRL",
+   "growth": 0.074200004,
+   "high": 11.34192,
+   "low": 9.27548,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 9.3819
+  },
+  "0q": {
+   "avg": 2.04306,
+   "currency": "BRL",
+   "growth": -0.0178,
+   "high": 2.34656,
+   "low": 1.75,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 2.08
+  },
+  "0y": {
+   "avg": 9.3819,
+   "currency": "BRL",
+   "growth": -0.0417,
+   "high": 9.95404,
+   "low": 9.01,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 9.79
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 984184170,
+   "currency": "BRL",
+   "growth": 0.078,
+   "high": 994814660,
+   "low": 976710000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 912990000
+  },
+  "+1y": {
+   "avg": 4253609260,
+   "currency": "BRL",
+   "growth": 0.0701,
+   "high": 4407709220,
+   "low": 4184108040,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 3975113510
+  },
+  "0q": {
+   "avg": 995062460,
+   "currency": "BRL",
+   "growth": 0.0717,
+   "high": 1022822070,
+   "low": 983700000,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 928505000
+  },
+  "0y": {
+   "avg": 3975113510,
+   "currency": "BRL",
+   "growth": 0.0752,
+   "high": 4011449000,
+   "low": 3949788000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 3697255000
+  }
+ },
+ "ticker": "AFYA",
+ "url": "https://finance.yahoo.com/quote/AFYA"
+}

@@ -1,0 +1,117 @@
+{
+  "mind": "codex",
+  "issuer_id": "LA_MELI",
+  "data": "2026-11-04",
+  "tipo": "pos_resultado",
+  "titulo": "MercadoLibre: maior engajamento convive com menor margem operacional",
+  "resumo": "Receita e pagamentos avançaram, com maior frequência de compra e integração entre comércio e serviços financeiros. A margem operacional caiu na sequência, sob investimento em logística, frete gratuito e marketing. A tese depende de retorno após incentivos e perdas de crédito.",
+  "negocio": "Plataforma latino-americana que integra comércio eletrônico, logística, publicidade, pagamentos, poupança e crédito.",
+  "pilares_tese": [
+    {
+      "titulo": "Frequência e integração comercial",
+      "texto": "Usuários que compram e usam Mercado Pago cresceram mais rápido. A maior frequência de compra melhora densidade logística, sujeita ao custo dos incentivos.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Receita não se traduz integralmente em lucro operacional",
+      "texto": "Maior oferta de frete grátis, expansão da capacidade logística e marketing no Brasil pressionaram a margem sequencial. Provisões também cresceram em valor anual.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Margem incremental após frete e crédito",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Publicidade e serviços podem diluir custos, enquanto subsídios logísticos e perdas de crédito exigem reinvestimento.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "A expansão da carteira e da capacidade logística pode exigir recursos antes de a frequência e a monetização sustentarem margem. Caixa restrito e recursos de clientes têm disponibilidade própria.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Frequência e publicidade diluem custos, com perdas controladas nas coortes de crédito.",
+    "base": "Receita avança com investimento em logística e subsídios ainda pressionando margem.",
+    "pessimista": "Custo de aquisição, frete e perdas crescem antes da monetização."
+  },
+  "comentario_valuation": "Modelo em revisão; alvo e cenários de preço indisponíveis. Rating {{fact:val.LA_MELI.rating_codigo}} e confiança {{fact:val.LA_MELI.confianca_codigo}}. Sem usar consenso como substituto do alvo, a leitura exige margem após crédito e caixa disponível após logística, recursos restritos e financiamento.",
+  "ultimo_resultado": "No 3T26, receita e renda financeira cresceram em base anual e margem operacional recuou frente ao trimestre anterior. O lucro líquido cresceu em base anual apesar do menor resultado operacional, com despesa tributária menor. Não foi apresentada faixa formal consolidada na carta consultada.",
+  "guidance": "sem_guidance",
+  "tom_gestao": "neutro",
+  "governanca": "A carta distingue caixa e recursos restritos e registra valores a pagar a clientes. A alocação de capital deve ser avaliada sem tratar saldos de clientes como caixa disponível.",
+  "o_que_mudou": "O balanço de 2026-11-04 substitui a leitura prospectiva. O crescimento de receita veio com menor margem sequencial, e a tese de retorno das novas coortes continua condicionada a perdas e financiamento.",
+  "gatilhos_revisao": [
+    "Maior frequência não reduz custo logístico por unidade.",
+    "Provisões absorvem o crescimento da receita de crédito.",
+    "Caixa disponível após financiamento e investimento perde força."
+  ],
+  "lacunas_de_dados": [
+    "O retorno por coorte e a ponte de caixa livre atribuível exigem conciliação adicional.",
+    "Preço-alvo e cenários permanecem em revisão."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "regulatorio",
+      "instituicao": "SEC",
+      "titulo": "Carta trimestral aos acionistas",
+      "url": "https://www.sec.gov/Archives/edgar/data/1099590/000109959026000027/meli-20260930xex991.htm",
+      "publicado_em": "2026-11-04",
+      "consultado_em": "2026-11-04"
+    }
+  ],
+  "posicao_competitiva": {
+    "titulo": "Integração de compras e pagamentos",
+    "texto": "A combinação aumenta frequência e uso de serviços financeiros. O teste é a persistência do engajamento após redução de incentivos.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Receita, margem e tributação",
+    "texto": "Separar crescimento comercial, provisões e efeito tributário para avaliar a direção econômica do resultado.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Logística e financiamento de crédito",
+    "texto": "Novos centros e crescimento de recebíveis concorrem por capital. Recursos restritos não equivalem a caixa atribuível.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Frequência pode depender do subsídio",
+    "texto": "Se os clientes forem sensíveis a frete e descontos, o volume adicional pode não diluir custos de forma sustentável.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Frequência, perdas e caixa",
+      "texto": "Acompanhar itens por comprador, margem operacional, provisões, custo de frete e caixa após investimento.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ]
+}

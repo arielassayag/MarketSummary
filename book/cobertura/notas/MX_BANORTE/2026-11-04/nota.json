@@ -1,0 +1,137 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_BANORTE",
+  "data": "2026-11-04",
+  "tipo": "pos_resultado",
+  "titulo": "Banorte: margem e crédito sustentam resultado, com atenção ao custo de risco",
+  "resumo": "O lucro do grupo avançou na comparação anual, com gestão do custo de captação e crescimento do crédito. A comparação sequencial do banco foi mais contida que a do grupo. Acompanhar a margem do banco junto com provisões e capital antes de extrapolar o retorno consolidado.",
+  "negocio": "Grupo financeiro mexicano com banco comercial, seguros, previdência e intermediação. A franquia de depósitos financia carteiras de varejo, empresas e setor público.",
+  "pilares_tese": [
+    {
+      "titulo": "Captação e composição do crédito",
+      "texto": "O custo de captação e a composição das originações ajudaram a margem. A continuidade depende de depósitos e precificação ajustada ao risco em cada carteira.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Lucro do grupo e do banco têm bases distintas",
+      "texto": "O lucro anual do consolidado avançou mais do que o do banco. Separar as contribuições das subsidiárias e a base de comparação antes de inferir tendência.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Margem após perdas de crédito",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Crescimento de carteira e captação favorece receita; provisões no alto da faixa discutida pela administração reduzem espaço para ganhos adicionais.",
+      "evidencias": [
+        "F1",
+        "F2"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "O custo de risco pode permanecer elevado se a originação de consumo crescer mais que a capacidade de absorção do balanço. Separar inadimplência observada de formação de provisões.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "A expansão da carteira mantém a qualidade de ativos e a captação preserva margem. Alvo de {{fact:val.MX_BANORTE.alvo_otimista}}.",
+    "base": "Margem e crescimento sustentam o lucro, com parte da melhora absorvida por provisões. Alvo de {{fact:val.MX_BANORTE.preco_alvo}}.",
+    "pessimista": "Perdas de crédito e concorrência por depósitos reduzem retorno sobre o capital. Alvo de {{fact:val.MX_BANORTE.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Alvo de {{fact:val.MX_BANORTE.preco_alvo}} ante {{fact:val.MX_BANORTE.preco}}. Rating {{fact:val.MX_BANORTE.rating_codigo}} e confiança {{fact:val.MX_BANORTE.confianca_codigo}}. Potencial de {{fact:val.MX_BANORTE.upside}} sobre o preço de referência. A leitura do valor patrimonial depende de retorno após provisões, estabilidade da captação e capital disponível para distribuição. O P/VP é {{fact:val.MX_BANORTE.pb}}; o alvo supera o consenso público em {{fact:val.MX_BANORTE.diff_consenso}}, com alpha relativo do modelo de {{fact:val.MX_BANORTE.alpha_rel}}.",
+  "ultimo_resultado": "No 3T26, o lucro consolidado cresceu na comparação anual e pouco ante o trimestre anterior. O lucro do banco cresceu em base anual e recuou levemente na sequência. Na conferência, a gestão manteve as projeções anuais e indicou crescimento da carteira próximo ao topo da faixa.",
+  "guidance": "mantido",
+  "tom_gestao": "neutro",
+  "governanca": "O relatório distingue banco, seguradora e outras entidades do grupo. A leitura de distribuição deve considerar a posição prudencial por entidade e a deliberação societária aplicável.",
+  "o_que_mudou": "O relatório do 3T26 e a conferência de 2026-11-04 substituem a leitura anterior de calendário. A margem permanece sustentada pela captação e pela composição da carteira, com custo de risco perto do limite superior discutido pela gestão.",
+  "gatilhos_revisao": [
+    "Margem cai sem redução compensatória de provisões.",
+    "Piora da inadimplência em consumo ou no crédito comercial.",
+    "Distribuições comprimem capital para crescimento."
+  ],
+  "lacunas_de_dados": [
+    "A sensibilidade do custo de captação à trajetória dos juros exige confirmação nos próximos balanços.",
+    "Falta uma ponte independente do retorno por carteira após perdas ao longo do ciclo."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Grupo Financiero Banorte",
+      "titulo": "Relatório trimestral",
+      "url": "https://investors.banorte.com/~/media/Files/B/Banorte-IR/financial-information/quarterly-results/es/2026/3T26/3T26.pdf",
+      "publicado_em": "2026-11-03",
+      "consultado_em": "2026-11-04"
+    },
+    {
+      "id": "F2",
+      "tipo": "imprensa",
+      "instituicao": "Investing.com",
+      "titulo": "Transcrição pública da conferência de resultados",
+      "url": "https://www.investing.com/news/transcripts/earnings-call-transcript-grupo-financiero-banorte-posts-mixed-q3-2026-results-93CH-5000841",
+      "publicado_em": "2026-11-04",
+      "consultado_em": "2026-11-04"
+    },
+    {
+      "id": "F3",
+      "tipo": "bolsa",
+      "instituicao": "Bolsa Mexicana de Valores",
+      "titulo": "Registro de resultados do grupo",
+      "url": "https://www.bmv.com.mx/es/emisoras/informacionfinanciera/GFNORTE-5433-CGEN_CAPIT",
+      "publicado_em": null,
+      "consultado_em": "2026-11-04"
+    }
+  ],
+  "posicao_competitiva": {
+    "titulo": "Franquia de depósitos",
+    "texto": "A captação tradicional amplia a capacidade de originar crédito. O custo de financiamento em relação à margem da carteira é o teste econômico da vantagem.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Consolidado e resultado bancário",
+    "texto": "Ler a evolução do lucro com margem, comissões, seguros e provisões em separado, distinguindo crescimento anual e sequência trimestral.",
+    "evidencias": [
+      "F1",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Crescimento e capital regulatório",
+    "texto": "Avaliar a expansão de ativos ponderados pelo risco e a capacidade de manter distribuição com folga prudencial.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Crescimento pode elevar perdas com defasagem",
+    "texto": "Uma margem mais alta no trimestre pode coexistir com perdas posteriores em novas safras de crédito.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Captação, margem e crédito",
+      "texto": "Acompanhar depósitos, margem do banco, inadimplência, custo de risco e capital.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ]
+}

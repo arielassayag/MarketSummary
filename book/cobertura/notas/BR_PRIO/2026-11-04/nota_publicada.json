@@ -1,0 +1,329 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-04",
+    "manifest_sha256": "88e4dbb61abe0e425424189c9c90ad13ac5816783f5b48f91711756b32316ec3",
+    "modelo_as_of": "2026-11-04"
+  },
+  "conviccao": 1,
+  "data": "2026-11-04",
+  "hashes": {
+    "contexto": "b418762ed220c1f77a01275ac3f7e5142da0b5adb9368fb231a4b059af3a2b71",
+    "factbook": "509be614939bb2b5f538c3bbc4d59bf10da1c13fe7c9af0a3c65eec71b7b0f18",
+    "nota_json": "f0ee8bbc3ef1255bfb9f0d22064fe94323c2e5673f78efca563b0a6f46d90051"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_PRIO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-04",
+  "published_at": "2026-11-05T01:47:47.899990+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A nota do imobilizado identifica desembolsos em campos distintos. Testar caixa após desenvolvimento, manutenção e obrigações de abandono.",
+        "titulo": "Reposição e obrigações"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-05",
+        "descricao": "Teleconferência com acompanhamento da produção e do investimento.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Mais produção sustenta resultado, mas capex e giro limitam a conversão imediata em caixa. Alvo de R$ 69,13.",
+      "otimista": "Wahoo opera com regularidade e o aumento de volume dilui custos, com menor dívida líquida. Alvo de R$ 92,27.",
+      "pessimista": "Paradas, declínio de poços e preço menor reduzem caixa enquanto a reposição de reservas consome capital. Alvo de R$ 44,54."
+    },
+    "comentario_valuation": "Alvo de R$ 69,13 ante R$ 62,14. Rating Neutro e confiança B. Potencial de +11,25% sobre o preço de referência. O alvo fica próximo do consenso público, com diferença de -2,57%. O teste de valor é o caixa atribuível depois de reinvestimento, arrendamentos e obrigações de abandono.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Se declínio e intervenções exigirem reinvestimento crescente, a diluição de custo fixo pode ser temporária.",
+        "titulo": "Produção maior pode exigir mais capital"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-04",
+    "dados_simulados": false,
+    "data": "2026-11-04",
+    "ficha": [
+      {
+        "fato": "val.BR_PRIO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 62,14"
+      },
+      {
+        "fato": "val.BR_PRIO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 69,13"
+      },
+      {
+        "fato": "val.BR_PRIO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+11,25%"
+      },
+      {
+        "fato": "val.BR_PRIO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_PRIO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_PRIO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 92,27"
+      },
+      {
+        "fato": "val.BR_PRIO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "19,32%"
+      },
+      {
+        "fato": "val.BR_PRIO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 44,54"
+      },
+      {
+        "fato": "val.BR_PRIO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "14,25%"
+      },
+      {
+        "fato": "val.BR_PRIO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "14,01%"
+      },
+      {
+        "fato": "val.BR_PRIO.wacc",
+        "rotulo": "WACC",
+        "valor": "11,22%"
+      },
+      {
+        "fato": "val.BR_PRIO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_PRIO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+11,25%"
+      },
+      {
+        "fato": "val.BR_PRIO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-10,49%"
+      },
+      {
+        "fato": "val.BR_PRIO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "6,1x"
+      },
+      {
+        "fato": "val.BR_PRIO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,8x"
+      },
+      {
+        "fato": "val.BR_PRIO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 70,96"
+      },
+      {
+        "fato": "val.BR_PRIO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-2,57%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-04",
+        "id": "F1",
+        "instituicao": "PRIO",
+        "publicado_em": "2026-11-04",
+        "tipo": "Relações com investidores",
+        "titulo": "Informações financeiras trimestrais e notas explicativas",
+        "url": "https://filemanager-cdn.mziq.com/published/cecb3d3e-6bd6-4edd-b9b3-3cacde780cac/a042a94f-9276-4978-a126-787aee54b397"
+      },
+      {
+        "consultado_em": "2026-11-04",
+        "id": "F2",
+        "instituicao": "PRIO",
+        "publicado_em": "2026-11-04",
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário de divulgação e teleconferência",
+        "url": "https://ri.prio3.com.br/popup_home/divulgacao-de-resultados-do-3t26/"
+      },
+      {
+        "consultado_em": "2026-11-04",
+        "id": "F3",
+        "instituicao": "Reuters",
+        "publicado_em": "2026-11-04",
+        "tipo": "Imprensa",
+        "titulo": "Resultados, produção e vendas de petróleo",
+        "url": "https://economia.uol.com.br/noticias/reuters/2026/11/04/prio-tem-lucro-8-vezes-maior-no-3-tri-com-recorde-de-producao-e-avanco-de-wahoo.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Disponibilidade dos ativos cai sem compensação de novos poços.",
+      "Custo por barril e capex de manutenção sobem juntos.",
+      "Conversão de recebíveis ou redução de dívida perde força."
+    ],
+    "governanca": "A documentação discrimina participações na concessão e direitos de produção do programa de Wahoo. A análise de caixa deve preservar obrigações por campo e direitos dos parceiros.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar produção atribuível, disponibilidade, embarques, custo completo e fluxo após capex.",
+        "titulo": "Produção, recebimento e dívida"
+      }
+    ],
+    "issuer_id": "BR_PRIO",
+    "lacunas_de_dados": [
+      "A ponte integral entre caixa por campo, arrendamentos e obrigações de abandono não foi reconciliada.",
+      "Custos e direitos de futuras fases de Wahoo não foram extrapolados."
+    ],
+    "modelo_de_cobertura": "2026-11-04",
+    "negocio": "Produtora independente focada em desenvolvimento e revitalização de campos marítimos, com instalações compartilhadas e venda de petróleo.",
+    "nome": "PRIO",
+    "o_que_mudou": "O ITR atual substitui a referência anterior ao calendário e permite distinguir o desempenho de Wahoo, Frade e Peregrino da geração de caixa recebida.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRAVA",
+        "nome": "Brava Energia"
+      },
+      {
+        "issuer_id": "BR_COSAN",
+        "nome": "Cosan"
+      },
+      {
+        "issuer_id": "BR_PETROBRAS",
+        "nome": "Petrobras"
+      },
+      {
+        "issuer_id": "BR_RECV",
+        "nome": "PetroRecôncavo"
+      },
+      {
+        "issuer_id": "BR_ULTRAPAR",
+        "nome": "Ultrapar"
+      },
+      {
+        "issuer_id": "BR_VIBRA",
+        "nome": "Vibra Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A conexão ao FPSO Valente permite operar os campos em conjunto. As demonstrações distinguem participação na concessão e direito à produção dos poços do programa atual.",
+        "titulo": "Wahoo utiliza estrutura de Frade"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Receita e lucro cresceram com mais produção, vendas e preço. O contas a receber inclui vendas concentradas no fim do trimestre, portanto faturamento não equivale a caixa imediato.",
+        "titulo": "Produção e embarques têm tempos distintos"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Conectar Wahoo à estrutura de Frade reduz a necessidade de instalação dedicada, com maior dependência da disponibilidade da unidade compartilhada.",
+        "titulo": "Infraestrutura compartilhada"
+      }
+    ],
+    "publicada_em": "2026-11-05T01:47:47.899990+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar produção, embarques e recebíveis. O lucro contábil não mede caixa recebido após investimento e arrendamento.",
+        "titulo": "Lucro, venda e recebimento"
+      }
+    ],
+    "resumo": "A entrada dos poços de Wahoo, a produção de Peregrino e o avanço de Frade elevaram vendas e lucro. A melhora ainda precisa aparecer em caixa após manutenção, dívida e reposição de reservas. Direitos sobre produção de Wahoo diferem da participação na concessão.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Paradas em instalações compartilhadas podem afetar mais de um campo. Menor Brent, licenciamento e custo de manutenção podem reduzir caixa apesar do volume maior."
+      }
+    ],
+    "setor": "Energia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "PRIO: Wahoo e Peregrino ampliam produção e resultado",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "O 3T26 registrou crescimento anual de receita e lucro, com produção maior de Wahoo e contribuição de Frade e Peregrino. As demonstrações consultadas não trazem nova faixa formal consolidada. A teleconferência estava prevista para 2026-11-05.",
+    "vetores": [
+      {
+        "direcao": "positivo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O aumento de produção pode diluir custos fixos. A leitura depende de disponibilidade, embarques, royalties e reinvestimento.",
+        "vetor": "Produção atribuível e custo completo"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,313 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-04",
+    "manifest_sha256": "88e4dbb61abe0e425424189c9c90ad13ac5816783f5b48f91711756b32316ec3",
+    "modelo_as_of": "2026-11-04"
+  },
+  "conviccao": 1,
+  "data": "2026-11-04",
+  "hashes": {
+    "contexto": "51076eb0c9b47d348aadd219b7636f0b42e61b6a510a5e57c0e387123087a51e",
+    "factbook": "358c1a6aabdd43673b19b1907b1c372e448dafd00827581b35e2662d884116d7",
+    "nota_json": "7bfc54c22fcbe928f4538ec407ae6c4d0502782bbc617d356401022f9d02c4cc"
+  },
+  "is_synthetic": false,
+  "issuer_id": "CO_GEOPARK",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-03",
+  "published_at": "2026-11-05T01:43:15.983399+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A emissão refinanciou vencimentos e financia parte do programa argentino. Acompanhar custo de juros e caixa residual após capex.",
+        "titulo": "Alongamento de dívida e suspensão de dividendos"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Aumento de produção e refinanciamento sustentam a fase de investimento, ainda com pressão sobre caixa.",
+      "otimista": "Vaca Muerta aumenta produção econômica e descontos locais se normalizam.",
+      "pessimista": "Descontos, custos e atrasos consomem liquidez mesmo após o alongamento."
+    },
+    "comentario_valuation": "Modelo em revisão; alvo e cenários de preço indisponíveis. Rating Em revisão e confiança C. O teste de valor usa preços realizados, capital de manutenção e desenvolvimento e caixa atribuível por ação após a emissão.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A antecipação de desenvolvimento pode elevar produção enquanto preços realizados e capital por poço deprimem caixa.",
+        "titulo": "Crescimento físico pode piorar retorno"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-04",
+    "dados_simulados": false,
+    "data": "2026-11-04",
+    "ficha": [
+      {
+        "fato": "val.CO_GEOPARK.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 9,43"
+      },
+      {
+        "fato": "val.CO_GEOPARK.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CO_GEOPARK.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CO_GEOPARK.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CO_GEOPARK.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.CO_GEOPARK.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CO_GEOPARK.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CO_GEOPARK.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CO_GEOPARK.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CO_GEOPARK.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "11,46%"
+      },
+      {
+        "fato": "val.CO_GEOPARK.wacc",
+        "rotulo": "WACC",
+        "valor": "8,16%"
+      },
+      {
+        "fato": "val.CO_GEOPARK.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.CO_GEOPARK.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CO_GEOPARK.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.CO_GEOPARK.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "6,6x"
+      },
+      {
+        "fato": "val.CO_GEOPARK.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,8x"
+      },
+      {
+        "fato": "val.CO_GEOPARK.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 11,22"
+      },
+      {
+        "fato": "val.CO_GEOPARK.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-04",
+        "id": "F1",
+        "instituicao": "GeoPark",
+        "publicado_em": "2026-11-03",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultados trimestrais e refinanciamento",
+        "url": "https://www.geo-park.com/press_releases/3q2026-results/"
+      },
+      {
+        "consultado_em": "2026-11-04",
+        "id": "F2",
+        "instituicao": "GeoPark",
+        "publicado_em": "2026-11-02",
+        "tipo": "Relações com investidores",
+        "titulo": "Conclusão da entrada na Venezuela",
+        "url": "https://www.geo-park.com/press_releases/geopark-completes-strategic-venezuela-entry-transaction/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Descontos locais continuam se ampliando apesar das proteções.",
+      "Novos poços não convertem produção em caixa.",
+      "Capital necessário ao bloco Bare muda o perfil de risco."
+    ],
+    "governanca": "O Grupo Gilinski tornou-se controlador após a transação. Revisar direitos econômicos, termos da operação e exposição dos minoritários ao novo perímetro.",
+    "guidance": "mantido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Monitorar diferenciais de preço, custo por barril, capex, caixa livre antes da dívida e produção por região.",
+        "titulo": "Economia por barril e liquidez"
+      }
+    ],
+    "issuer_id": "CO_GEOPARK",
+    "lacunas_de_dados": [
+      "Economia do bloco Bare e cronograma detalhado de retomada ainda exigem confirmação.",
+      "Alvos e probabilidades indisponíveis no retrato."
+    ],
+    "modelo_de_cobertura": "2026-11-04",
+    "negocio": "Exploradora e produtora independente de petróleo e gás com operação na Colômbia e na Argentina e entrada contratual na Venezuela.",
+    "nome": "GeoPark",
+    "o_que_mudou": "O refinanciamento foi concluído após o trimestre, e o acordo venezuelano tornou-se eficaz. A suspensão de dividendos passou a valer com o resultado, preservando caixa durante o investimento.",
+    "pais": "Colômbia",
+    "pares": [
+      {
+        "issuer_id": "AR_YPF",
+        "nome": "YPF"
+      },
+      {
+        "issuer_id": "BR_BRAVA",
+        "nome": "Brava Energia"
+      },
+      {
+        "issuer_id": "BR_COSAN",
+        "nome": "Cosan"
+      },
+      {
+        "issuer_id": "BR_PETROBRAS",
+        "nome": "Petrobras"
+      },
+      {
+        "issuer_id": "BR_PRIO",
+        "nome": "PRIO"
+      },
+      {
+        "issuer_id": "BR_RECV",
+        "nome": "PetroRecôncavo"
+      },
+      {
+        "issuer_id": "BR_ULTRAPAR",
+        "nome": "Ultrapar"
+      },
+      {
+        "issuer_id": "BR_VIBRA",
+        "nome": "Vibra Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Produção estável na Colômbia e maior em Vaca Muerta coexistiu com vendas menores, descontos mais amplos e custo unitário maior.",
+        "titulo": "Volume e preço realizado divergem"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O contrato do bloco Bare tornou-se eficaz e a emissão associada tornou o Grupo Gilinski controlador. O efeito econômico depende de reabilitação e execução.",
+        "titulo": "Projeto venezuelano altera controle"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A base colombiana dá suporte à expansão argentina, mas descontos e custos de escoamento limitam a vantagem do crescimento físico.",
+        "titulo": "Transição da carteira de produção"
+      }
+    ],
+    "publicada_em": "2026-11-05T01:43:15.983399+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A geração operacional perdeu força com menor rentabilidade e consumo no giro. Benefício tributário diferido não representa entrada de caixa.",
+        "titulo": "Caixa e benefício fiscal"
+      }
+    ],
+    "resumo": "A produção argentina aumentou, mas diferenciais de preço e custos reduziram o EBITDA ajustado. O caixa livre antes do serviço da dívida ficou negativo. O refinanciamento alonga vencimentos; o novo controle e a entrada na Venezuela ampliam o risco de execução.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Capex antecipado, custos unitários e riscos contratuais podem prolongar o consumo de caixa. Alongar vencimentos reduz risco imediato sem reduzir automaticamente a dívida."
+      }
+    ],
+    "setor": "Energia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "GeoPark: descontos no petróleo e capex pressionam caixa",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "No 3T26, receita, EBITDA ajustado e caixa operacional caíram frente ao trimestre anterior. A companhia manteve a expectativa de resultado anual dentro do guidance, apoiada em volumes e ajuste das proteções. O lucro incluiu benefício tributário diferido.",
+    "vetores": [
+      {
+        "direcao": "negativo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O hedge reduz parte da exposição ao Brent, mas não elimina descontos locais nem custos de energia e intervenções.",
+        "vetor": "Preço líquido após diferenciais e proteção"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

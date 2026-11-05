@@ -1,0 +1,316 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-04",
+    "manifest_sha256": "88e4dbb61abe0e425424189c9c90ad13ac5816783f5b48f91711756b32316ec3",
+    "modelo_as_of": "2026-11-04"
+  },
+  "conviccao": 1,
+  "data": "2026-11-04",
+  "hashes": {
+    "contexto": "a39eb3dd75bf16e54e272d7838a2fd2a7b21a8696ab302f91528feb4ce37db18",
+    "factbook": "155529ae53c7c94863058acf37d8bf9af4b8e102356eac25c17e80a3fad15a4f",
+    "nota_json": "ef90414750e3add02de2a7c9b13bededfd179a7d5d9a4b608429ebb131e4b8ac"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_MARCOPOLO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-11-05T01:41:11.426760+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Investimentos industriais recuaram em base anual. Dívida do Banco Moneo tem contrapartida em recebíveis e exige avaliação separada.",
+        "titulo": "Capex industrial e crédito a clientes"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Acompanhar pedidos e entregas da etapa homologada do Caminho da Escola.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "outro"
+      }
+    ],
+    "cenarios": {
+      "base": "A recuperação de utilização é gradual, com mercados externos heterogêneos. Alvo de R$ 7,20.",
+      "otimista": "Entregas escolares e carteira australiana elevam utilização e caixa industrial. Alvo de R$ 10,14.",
+      "pessimista": "Atrasos em pedidos e retração de urbanos mantêm fábricas ociosas e margem pressionada. Alvo de R$ 4,12."
+    },
+    "comentario_valuation": "Alvo de R$ 7,20 ante R$ 3,54. Rating Neutro e confiança C. Potencial de +103,29% sobre o preço de referência. A leitura do alvo exige normalizar utilização e separar o passivo do financiamento a clientes da dívida industrial.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A retomada pode gerar volume sem recompor rentabilidade se a composição de entregas ou o custo de produção piorarem.",
+        "titulo": "Homologação não assegura margem"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-04",
+    "dados_simulados": false,
+    "data": "2026-11-04",
+    "ficha": [
+      {
+        "fato": "val.BR_MARCOPOLO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 3,54"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 7,20"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+103,29%"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 10,14"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 4,12"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "14,66%"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.wacc",
+        "rotulo": "WACC",
+        "valor": "10,65%"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+116,50%"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+85,22%"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "3,9x"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,0x"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 7,13"
+      },
+      {
+        "fato": "val.BR_MARCOPOLO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+0,93%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-04",
+        "id": "F1",
+        "instituicao": "Marcopolo",
+        "publicado_em": "2026-11-03",
+        "tipo": "Relações com investidores",
+        "titulo": "Release de resultados",
+        "url": "https://filemanager-cdn.mziq.com/published/1d587592-1c8f-4722-9db0-d79a28b81387/58ce053f-d51b-4308-86eb-af0aa4c7a573"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Adesões públicas demoram a se converter em pedidos.",
+      "Utilização fabril não reage após o início da produção escolar.",
+      "Margem e caixa industrial continuam a cair."
+    ],
+    "governanca": "O release distingue o passivo industrial do financiamento a clientes no Banco Moneo. Acompanhar separadamente direitos das ações ordinárias e preferenciais.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar adesões, produção, margem bruta, estoques e caixa industrial.",
+        "titulo": "Pedidos firmes e execução"
+      }
+    ],
+    "issuer_id": "BR_MARCOPOLO",
+    "lacunas_de_dados": [
+      "Não há cronograma firme de adesões e recebimentos por ente público.",
+      "A rentabilidade por mercado e o caixa industrial recorrente ainda exigem conciliação."
+    ],
+    "modelo_de_cobertura": "2026-11-04",
+    "negocio": "Fabricante de carrocerias e ônibus, com operações no Brasil e no exterior, exportações e financiamento a clientes pelo Banco Moneo.",
+    "nome": "Marcopolo",
+    "o_que_mudou": "Na nota anterior a receita havia crescido com lucro menor; o novo trimestre mostra retração também na receita e quantifica a ociosidade e o hiato de encomendas públicas.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_MOTIVA",
+        "nome": "Motiva (ex-CCR)"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_RUMO",
+        "nome": "Rumo"
+      },
+      {
+        "issuer_id": "BR_TUPY",
+        "nome": "Tupy"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O intervalo entre fases do Caminho da Escola e a retração de ônibus urbanos reduziram utilização. Homologação abre espaço para produção, sem garantir adesão ou faturamento.",
+        "titulo": "Hiato de compras públicas pesa na produção"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Austrália sustentou desempenho, enquanto México, Argentina e África do Sul tiveram menores volumes. A composição importa tanto quanto as entregas.",
+        "titulo": "Geografias seguem em ritmos distintos"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A operação australiana amortece parte da fraqueza de outras geografias, mas não substitui a recuperação de utilização no Brasil.",
+        "titulo": "Produção em vários mercados"
+      }
+    ],
+    "publicada_em": "2026-11-05T01:41:11.426760+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A contração mais forte do resultado operacional mostra sensibilidade a escala e composição. Menor dívida industrial no trimestre exige leitura junto ao giro.",
+        "titulo": "Receita cai menos que o EBITDA"
+      }
+    ],
+    "resumo": "A menor utilização das fábricas e a retração em mercados internacionais pesaram no EBITDA. A retomada da produção para o Caminho da Escola pode melhorar a absorção de custos, mas adesões e entregas efetivas definem o impacto.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Crédito restrito, demora em adesões públicas e ociosidade em unidades externas podem prolongar a pressão de margem."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Marcopolo: ociosidade e volumes menores pressionam a margem",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "O 3T26 registrou queda anual de produção, receita, EBITDA e lucro. A administração relatou o início da produção de modelos homologados do programa escolar no 4T26, condicionado a adesões. O release não trouxe faixa formal consolidada de resultados.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Retomada de ônibus escolares pode diluir custos fixos, mas o efeito depende de adesão e do mix.",
+        "vetor": "Utilização e composição das entregas"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

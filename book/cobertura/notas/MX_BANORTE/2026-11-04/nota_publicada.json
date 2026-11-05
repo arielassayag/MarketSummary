@@ -1,0 +1,320 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-04",
+    "manifest_sha256": "88e4dbb61abe0e425424189c9c90ad13ac5816783f5b48f91711756b32316ec3",
+    "modelo_as_of": "2026-11-04"
+  },
+  "conviccao": 1,
+  "data": "2026-11-04",
+  "hashes": {
+    "contexto": "8d37370f85d046b40c8d17b77199dc99217b8380baacc2746480e066ba69fdf5",
+    "factbook": "851adf8e513087aec063b712fa518a2c0f9c7d375541b68a5ed00e9fc7ba0248",
+    "nota_json": "ee1c05ada39aa74d1950f89e632e1e7ee97e97aa1acfb402d67a9ff58b388a1e"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_BANORTE",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-03",
+  "published_at": "2026-11-05T01:43:46.448151+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Avaliar a expansão de ativos ponderados pelo risco e a capacidade de manter distribuição com folga prudencial.",
+        "titulo": "Crescimento e capital regulatório"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Margem e crescimento sustentam o lucro, com parte da melhora absorvida por provisões. Alvo de MXN 258,66.",
+      "otimista": "A expansão da carteira mantém a qualidade de ativos e a captação preserva margem. Alvo de MXN 298,03.",
+      "pessimista": "Perdas de crédito e concorrência por depósitos reduzem retorno sobre o capital. Alvo de MXN 225,49."
+    },
+    "comentario_valuation": "Alvo de MXN 258,66 ante MXN 206,13. Rating Neutro e confiança B. Potencial de +25,49% sobre o preço de referência. A leitura do valor patrimonial depende de retorno após provisões, estabilidade da captação e capital disponível para distribuição. O P/VP é 2,3x; o alvo supera o consenso público em +15,17%, com alpha relativo do modelo de -7,25%.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Uma margem mais alta no trimestre pode coexistir com perdas posteriores em novas safras de crédito.",
+        "titulo": "Crescimento pode elevar perdas com defasagem"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-04",
+    "dados_simulados": false,
+    "data": "2026-11-04",
+    "ficha": [
+      {
+        "fato": "val.MX_BANORTE.preco",
+        "rotulo": "Preço de referência",
+        "valor": "MXN 206,13"
+      },
+      {
+        "fato": "val.MX_BANORTE.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "MXN 258,66"
+      },
+      {
+        "fato": "val.MX_BANORTE.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+25,49%"
+      },
+      {
+        "fato": "val.MX_BANORTE.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_BANORTE.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.MX_BANORTE.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "MXN 298,03"
+      },
+      {
+        "fato": "val.MX_BANORTE.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_BANORTE.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "MXN 225,49"
+      },
+      {
+        "fato": "val.MX_BANORTE.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_BANORTE.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "10,87%"
+      },
+      {
+        "fato": "val.MX_BANORTE.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_BANORTE.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,28%"
+      },
+      {
+        "fato": "val.MX_BANORTE.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+33,36%"
+      },
+      {
+        "fato": "val.MX_BANORTE.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-7,25%"
+      },
+      {
+        "fato": "val.MX_BANORTE.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,8x"
+      },
+      {
+        "fato": "val.MX_BANORTE.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,3x"
+      },
+      {
+        "fato": "val.MX_BANORTE.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "MXN 224,60"
+      },
+      {
+        "fato": "val.MX_BANORTE.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+15,17%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-04",
+        "id": "F1",
+        "instituicao": "Grupo Financiero Banorte",
+        "publicado_em": "2026-11-03",
+        "tipo": "Relações com investidores",
+        "titulo": "Relatório trimestral",
+        "url": "https://investors.banorte.com/~/media/Files/B/Banorte-IR/financial-information/quarterly-results/es/2026/3T26/3T26.pdf"
+      },
+      {
+        "consultado_em": "2026-11-04",
+        "id": "F2",
+        "instituicao": "Investing.com",
+        "publicado_em": "2026-11-04",
+        "tipo": "Imprensa",
+        "titulo": "Transcrição pública da conferência de resultados",
+        "url": "https://www.investing.com/news/transcripts/earnings-call-transcript-grupo-financiero-banorte-posts-mixed-q3-2026-results-93CH-5000841"
+      },
+      {
+        "consultado_em": "2026-11-04",
+        "id": "F3",
+        "instituicao": "Bolsa Mexicana de Valores",
+        "publicado_em": null,
+        "tipo": "Bolsa",
+        "titulo": "Registro de resultados do grupo",
+        "url": "https://www.bmv.com.mx/es/emisoras/informacionfinanciera/GFNORTE-5433-CGEN_CAPIT"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Margem cai sem redução compensatória de provisões.",
+      "Piora da inadimplência em consumo ou no crédito comercial.",
+      "Distribuições comprimem capital para crescimento."
+    ],
+    "governanca": "O relatório distingue banco, seguradora e outras entidades do grupo. A leitura de distribuição deve considerar a posição prudencial por entidade e a deliberação societária aplicável.",
+    "guidance": "mantido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar depósitos, margem do banco, inadimplência, custo de risco e capital.",
+        "titulo": "Captação, margem e crédito"
+      }
+    ],
+    "issuer_id": "MX_BANORTE",
+    "lacunas_de_dados": [
+      "A sensibilidade do custo de captação à trajetória dos juros exige confirmação nos próximos balanços.",
+      "Falta uma ponte independente do retorno por carteira após perdas ao longo do ciclo."
+    ],
+    "modelo_de_cobertura": "2026-11-04",
+    "negocio": "Grupo financeiro mexicano com banco comercial, seguros, previdência e intermediação. A franquia de depósitos financia carteiras de varejo, empresas e setor público.",
+    "nome": "Grupo Financiero Banorte",
+    "o_que_mudou": "O relatório do 3T26 e a conferência de 2026-11-04 substituem a leitura anterior de calendário. A margem permanece sustentada pela captação e pela composição da carteira, com custo de risco perto do limite superior discutido pela gestão.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_BAJIO",
+        "nome": "Banco del Bajío"
+      },
+      {
+        "issuer_id": "MX_BMV",
+        "nome": "Bolsa Mexicana de Valores"
+      },
+      {
+        "issuer_id": "MX_GENTERA",
+        "nome": "Gentera"
+      },
+      {
+        "issuer_id": "MX_INBURSA",
+        "nome": "Grupo Financiero Inbursa"
+      },
+      {
+        "issuer_id": "MX_QUALITAS",
+        "nome": "Quálitas"
+      },
+      {
+        "issuer_id": "MX_REGIONAL",
+        "nome": "Regional (Banregio)"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O custo de captação e a composição das originações ajudaram a margem. A continuidade depende de depósitos e precificação ajustada ao risco em cada carteira.",
+        "titulo": "Captação e composição do crédito"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O lucro anual do consolidado avançou mais do que o do banco. Separar as contribuições das subsidiárias e a base de comparação antes de inferir tendência.",
+        "titulo": "Lucro do grupo e do banco têm bases distintas"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A captação tradicional amplia a capacidade de originar crédito. O custo de financiamento em relação à margem da carteira é o teste econômico da vantagem.",
+        "titulo": "Franquia de depósitos"
+      }
+    ],
+    "publicada_em": "2026-11-05T01:43:46.448151+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Ler a evolução do lucro com margem, comissões, seguros e provisões em separado, distinguindo crescimento anual e sequência trimestral.",
+        "titulo": "Consolidado e resultado bancário"
+      }
+    ],
+    "resumo": "O lucro do grupo avançou na comparação anual, com gestão do custo de captação e crescimento do crédito. A comparação sequencial do banco foi mais contida que a do grupo. Acompanhar a margem do banco junto com provisões e capital antes de extrapolar o retorno consolidado.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "O custo de risco pode permanecer elevado se a originação de consumo crescer mais que a capacidade de absorção do balanço. Separar inadimplência observada de formação de provisões."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Banorte: margem e crédito sustentam resultado, com atenção ao custo de risco",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "No 3T26, o lucro consolidado cresceu na comparação anual e pouco ante o trimestre anterior. O lucro do banco cresceu em base anual e recuou levemente na sequência. Na conferência, a gestão manteve as projeções anuais e indicou crescimento da carteira próximo ao topo da faixa.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Crescimento de carteira e captação favorece receita; provisões no alto da faixa discutida pela administração reduzem espaço para ganhos adicionais.",
+        "vetor": "Margem após perdas de crédito"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

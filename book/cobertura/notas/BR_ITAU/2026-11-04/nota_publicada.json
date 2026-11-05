@@ -1,0 +1,325 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-04",
+    "manifest_sha256": "88e4dbb61abe0e425424189c9c90ad13ac5816783f5b48f91711756b32316ec3",
+    "modelo_as_of": "2026-11-04"
+  },
+  "conviccao": 1,
+  "data": "2026-11-04",
+  "hashes": {
+    "contexto": "715dac48953b40a31a19c1963aaeece83d0d3bbdc8c2b2927bc0a8e77d86757c",
+    "factbook": "e87903b180b931bccb4a125ac875567faf29a670f1d045ef747191613485b57a",
+    "nota_json": "e48c7374da7657deda35c08a5273dc2e7a71ed1f47176fb284add5fd3a492c12"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_ITAU",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-11-05T01:40:18.103500+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Testar a folga do capital principal frente a ativos ponderados pelo risco e à capacidade de distribuição.",
+        "titulo": "Capital frente à expansão da carteira"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2027-02-03",
+        "descricao": "Divulgação prevista no calendário de relações com investidores.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "A margem avança, com serviços mais lentos e absorção de parte do ganho pelo custo de crédito. Alvo de R$ 37,88.",
+      "otimista": "Crescimento seletivo e disciplina de custos elevam o retorno após perdas. Alvo de R$ 43,69.",
+      "pessimista": "Deterioração da carteira e custos de captação mais altos reduzem o retorno sobre o capital. Alvo de R$ 32,87."
+    },
+    "comentario_valuation": "Alvo de R$ 37,88 ante R$ 39,71. Rating Venda e confiança A. Potencial de -4,61% sobre o preço de referência. O modelo situa o alvo abaixo do preço de referência e do consenso público. O P/VP é 2,0x, e a divergência ante o consenso é -23,77%. O teste é a persistência do retorno após perdas e capital requerido.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A inadimplência longa no recorte da apresentação subiu na comparação sequencial. O crescimento do lucro não elimina perdas que podem aparecer com defasagem.",
+        "titulo": "O lucro pode crescer com piora de risco"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-04",
+    "dados_simulados": false,
+    "data": "2026-11-04",
+    "ficha": [
+      {
+        "fato": "val.BR_ITAU.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 39,71"
+      },
+      {
+        "fato": "val.BR_ITAU.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 37,88"
+      },
+      {
+        "fato": "val.BR_ITAU.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-4,61%"
+      },
+      {
+        "fato": "val.BR_ITAU.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_ITAU.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_ITAU.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 43,69"
+      },
+      {
+        "fato": "val.BR_ITAU.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "41,49%"
+      },
+      {
+        "fato": "val.BR_ITAU.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 32,87"
+      },
+      {
+        "fato": "val.BR_ITAU.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "24,09%"
+      },
+      {
+        "fato": "val.BR_ITAU.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "14,83%"
+      },
+      {
+        "fato": "val.BR_ITAU.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_ITAU.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_ITAU.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+2,54%"
+      },
+      {
+        "fato": "val.BR_ITAU.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-40,79%"
+      },
+      {
+        "fato": "val.BR_ITAU.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,0x"
+      },
+      {
+        "fato": "val.BR_ITAU.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,0x"
+      },
+      {
+        "fato": "val.BR_ITAU.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 49,69"
+      },
+      {
+        "fato": "val.BR_ITAU.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-23,77%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-04",
+        "id": "F1",
+        "instituicao": "Itaú Unibanco",
+        "publicado_em": "2026-11-03",
+        "tipo": "Relações com investidores",
+        "titulo": "Apresentação institucional de resultados",
+        "url": "https://filemanager-cdn.mziq.com/published/42787847-4cf6-4461-94a5-40ed237dca33/73694d49-62ad-490f-90ea-0ab2c2a5071e"
+      },
+      {
+        "consultado_em": "2026-11-04",
+        "id": "F2",
+        "instituicao": "Itaú Unibanco",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário de eventos",
+        "url": "https://www.itau.com.br/relacoes-com-investidores/servicos-ao-investidor/calendario-de-eventos/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Margem após perdas recua de forma persistente.",
+      "Serviços e seguros ficam abaixo da faixa vigente.",
+      "A expansão consome a folga de capital."
+    ],
+    "governanca": "O acompanhamento de distribuição deve separar lucro gerencial, capital regulatório e direitos por classe. O índice de capital divulgado avançou em relação ao trimestre anterior na base comparável apresentada.",
+    "guidance": "reduzido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar margem com clientes, inadimplência, custo de crédito, serviços e capital.",
+        "titulo": "Receita recorrente e perdas"
+      }
+    ],
+    "issuer_id": "BR_ITAU",
+    "lacunas_de_dados": [
+      "WACC indisponível no retrato.",
+      "A leitura de perdas por safra e a conciliação de capital distribuível seguem pendentes."
+    ],
+    "modelo_de_cobertura": "2026-11-04",
+    "negocio": "Banco diversificado em crédito, serviços, seguros e operações de mercado no Brasil e no exterior.",
+    "nome": "Itaú Unibanco",
+    "o_que_mudou": "A nota anterior acompanhava a redução da projeção de serviços e seguros. A atualização atual é na alíquota efetiva, enquanto a margem com clientes cresceu e serviços e seguros permaneceram com pouca expansão.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BANRISUL",
+        "nome": "Banrisul"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A margem com clientes cresceu em base anual e sequencial, enquanto serviços e seguros ficaram próximos da estabilidade.",
+        "titulo": "Margem e serviços divergem"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O custo de crédito em valor absoluto avançou. A redução da projeção de alíquota ajuda o resultado líquido sem alterar o retorno operacional antes de tributos.",
+        "titulo": "Perdas e tributos exigem leitura separada"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O crescimento da margem com clientes contrasta com a baixa expansão de serviços. A profundidade do relacionamento precisa aparecer em receitas após risco.",
+        "titulo": "Relacionamento sustenta receitas diversificadas"
+      }
+    ],
+    "publicada_em": "2026-11-05T01:40:18.103500+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A margem de mercado cresceu e a faixa tributária caiu. Nenhum desses itens substitui a análise de margem com clientes líquida de perdas.",
+        "titulo": "Separar clientes, tesouraria e tributos"
+      }
+    ],
+    "resumo": "A margem com clientes sustentou o crescimento do lucro recorrente gerencial, enquanto serviços e seguros pouco avançaram. O trimestre também teve melhora na margem com mercado. A gestão reduziu a faixa de alíquota efetiva e manteve as demais projeções vigentes.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Piora de safras recentes pode pressionar provisões quando o crescimento da carteira desacelerar. A melhora de tesouraria não deve ser tratada como margem recorrente com clientes."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Itaú Unibanco: margem com clientes avança e projeção tributária cai",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "No 3T26, lucro recorrente gerencial e margem com clientes cresceram em base anual e sequencial. Serviços e seguros avançaram pouco. A apresentação reduziu a faixa de alíquota efetiva e manteve as demais linhas vigentes, inclusive a faixa já revisada de serviços e seguros.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O avanço da carteira e da receita de juros precisa superar a despesa de perda esperada e a recuperação mais lenta de serviços.",
+        "vetor": "Margem com clientes após perdas"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

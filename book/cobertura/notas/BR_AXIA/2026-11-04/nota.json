@@ -1,0 +1,135 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_AXIA",
+  "data": "2026-11-04",
+  "tipo": "pos_resultado",
+  "titulo": "Axia Energia: EBITDA regulatório cresce e lucro ajustado recua no trimestre",
+  "resumo": "Eficiência operacional apoiou o EBITDA regulatório. O lucro societário ajustado caiu no trimestre ante o ano anterior, apesar do avanço acumulado. Capex maior e aprovações para remuneração exigem conciliar caixa e compromissos antes de inferir capacidade de distribuição.",
+  "negocio": "Grupo brasileiro de geração, comercialização e transmissão. O desempenho combina margem de energia contratada, disponibilidade de rede e investimentos em expansão e modernização.",
+  "pilares_tese": [
+    {
+      "titulo": "Eficiência melhora EBITDA regulatório",
+      "texto": "A redução de despesas operacionais apoiou a expansão do EBITDA regulatório ajustado. Esse indicador tem base distinta do lucro societário.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Investimento e remuneração disputam caixa",
+      "texto": "A companhia elevou o investimento no acumulado e informou aprovações do conselho para capital destinado a acionistas. Aprovação não confirma pagamento nem caixa recorrente.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Caixa após modernização e expansão",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Redução de despesas pode compensar parte do capex, mas é preciso separar economia recorrente e compromissos históricos.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Pressão de despesas financeiras, investimentos e obrigações históricas pode reduzir caixa atribuível mesmo com melhora operacional.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Eficiência e geração de receita regulada sustentam caixa após expansão. Alvo de {{fact:val.BR_AXIA.alvo_otimista}}.",
+    "base": "Operação melhora, com capex e encargos limitando o caixa incremental. Alvo de {{fact:val.BR_AXIA.preco_alvo}}.",
+    "pessimista": "Custos, obrigações e atraso de obras absorvem a melhora operacional. Alvo de {{fact:val.BR_AXIA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Alvo de {{fact:val.BR_AXIA.preco_alvo}} ante {{fact:val.BR_AXIA.preco}}. Rating {{fact:val.BR_AXIA.rating_codigo}} e confiança {{fact:val.BR_AXIA.confianca_codigo}}. Potencial de {{fact:val.BR_AXIA.upside}} sobre o preço de referência. O alvo fica abaixo da cotação de referência e do consenso público, com diferença de {{fact:val.BR_AXIA.diff_consenso}} frente ao consenso. O retorno depende da conversão de resultado regulatório em caixa por classe.",
+  "ultimo_resultado": "No 3T26, o EBITDA regulatório ajustado cresceu na comparação anual, enquanto o lucro societário ajustado caiu. No acumulado, o lucro ajustado e o investimento cresceram. O comunicado consultado não apresentou nova faixa formal consolidada.",
+  "guidance": "sem_guidance",
+  "tom_gestao": "neutro",
+  "governanca": "O RI informa listagem no Novo Mercado e mantém seção para conversão ou resgate das preferenciais específicas. A leitura de aprovações do conselho deve distinguir destinação, declaração e pagamento efetivo.",
+  "o_que_mudou": "O resultado novo distingue queda anual do lucro ajustado no trimestre de melhora no acumulado. Avanço operacional e aumento de investimentos reforçam a necessidade de conciliar o caixa por classe.",
+  "gatilhos_revisao": [
+    "Economia operacional não persiste.",
+    "Investimento ou obrigações superam o caixa recorrente.",
+    "Mudanças societárias alteram o fluxo por classe."
+  ],
+  "lacunas_de_dados": [
+    "Conciliação integral entre base regulatória, societária e fluxo de caixa por classe permanece pendente.",
+    "O comunicado resumido não esclarece todos os compromissos e pagamentos. "
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Axia Energia",
+      "titulo": "Comunicado de resultados e investimentos",
+      "url": "https://axia.com.br/w/resultados-3-trimestre-2026",
+      "publicado_em": "2026-11-04",
+      "consultado_em": "2026-11-04"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Axia Energia",
+      "titulo": "Central de resultados e documentação societária",
+      "url": "https://ri.axia.com.br/informacoes-ao-mercado/central-de-resultados-axia-energia-4/",
+      "publicado_em": null,
+      "consultado_em": "2026-11-04"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Axia Energia",
+      "titulo": "Informações sobre segmento de listagem",
+      "url": "https://ri.axia.com.br/servicos-de-ri/perguntas-frequentes/",
+      "publicado_em": null,
+      "consultado_em": "2026-11-04"
+    }
+  ],
+  "posicao_competitiva": {
+    "titulo": "Escala de geração e transmissão",
+    "texto": "A rede de ativos permite ganhos de compras e manutenção. A vantagem exige que a economia de despesas preserve disponibilidade e qualidade.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Bases regulatória e societária",
+    "texto": "EBITDA regulatório e lucro ajustado trimestral seguiram direções diferentes. Separar efeito financeiro e comparar cada indicador na mesma base.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Capex e decisões de proventos",
+    "texto": "Acompanhar desembolsos de modernização e expansão junto a dívida e desembolsos efetivos aos acionistas.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Eficiência pode não chegar ao caixa por ação",
+    "texto": "Encargos e capex podem absorver a melhora do EBITDA, mesmo com despesas operacionais menores.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Eficiência, disponibilidade e caixa",
+      "texto": "Monitorar despesas operacionais, margem de geração, disponibilidade da rede e caixa após capex e encargos.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ]
+}

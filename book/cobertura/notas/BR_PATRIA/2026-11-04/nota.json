@@ -1,0 +1,127 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_PATRIA",
+  "data": "2026-11-04",
+  "tipo": "pos_resultado",
+  "titulo": "Patria: taxas avançam, com conversão de compromissos em foco",
+  "resumo": "O resultado relacionado a taxas cresceu no 3T26. A administração reafirmou a expectativa anual dessa métrica. O teste é converter ativos comprometidos em base pagante e renda distribuível sem depender da realização de performance.",
+  "negocio": "Gestora de alternativos com estratégias de infraestrutura, crédito, imobiliário, participações privadas e soluções para investidores institucionais.",
+  "pilares_tese": [
+    {
+      "titulo": "Taxas recorrentes avançam",
+      "texto": "O resultado relacionado a taxas cresceu ante o mesmo trimestre do ano anterior. Ativos pendentes de ativação não integram automaticamente a base pagante.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Resultados têm bases distintas",
+      "texto": "Lucro contábil atribuível, resultado relacionado a taxas e lucro distribuível medem perímetros diferentes. O dividendo declarado não equivale ao total de ganhos distribuíveis.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Ativação de ativos que geram taxas",
+      "direcao": "positivo",
+      "sensibilidade": "alta",
+      "texto": "Novos compromissos apoiam crescimento quando começam a gerar receita; acompanhar prazos e taxas líquidas.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Pagamento previsto do dividendo trimestral declarado.",
+      "data": "2026-12-11",
+      "tipo": "dividendos",
+      "direcao": "incerto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Atraso no investimento de compromissos e compressão de taxas podem reduzir crescimento, sobretudo se despesas de distribuição e integração avançarem.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Compromissos entram na base pagante e diluem custos. Alvo de {{fact:val.BR_PATRIA.alvo_otimista}}.",
+    "base": "Taxas crescem conforme o capital é ativado, com realização de performance irregular. Alvo de {{fact:val.BR_PATRIA.preco_alvo}}.",
+    "pessimista": "Captação ou ativação atrasam e reduzem ganhos distribuíveis. Alvo de {{fact:val.BR_PATRIA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Alvo de {{fact:val.BR_PATRIA.preco_alvo}} ante {{fact:val.BR_PATRIA.preco}}. Rating {{fact:val.BR_PATRIA.rating_codigo}} e confiança {{fact:val.BR_PATRIA.confianca_codigo}}. Potencial de {{fact:val.BR_PATRIA.upside}} sobre o preço de referência. O valor da gestora depende de fluxos de taxas atribuíveis e sustentáveis. O alvo fica abaixo do consenso público em {{fact:val.BR_PATRIA.diff_consenso}}; a diferença não demonstra expectativa implícita.",
+  "ultimo_resultado": "O 3T26 mostrou crescimento anual do resultado relacionado a taxas, lucro contábil atribuível positivo e declaração de dividendo. A gestão reafirmou a expectativa de alcançar a projeção anual de resultado relacionado a taxas.",
+  "guidance": "mantido",
+  "tom_gestao": "neutro",
+  "governanca": "Acompanhar a destinação de caixa entre dividendos, compromissos da gestora e aquisições. O anúncio distingue data de registro e data de pagamento.",
+  "o_que_mudou": "A divulgação ocorreu antes da data estimada na nota anterior. O release confirma crescimento de taxas no trimestre e reafirma a projeção anual dessa métrica.",
+  "gatilhos_revisao": [
+    "Capital comprometido demora a se tornar pagante.",
+    "Margem de taxas perde força durante a expansão.",
+    "Distribuição exige realização de performance ou venda de ativos."
+  ],
+  "lacunas_de_dados": [
+    "Cronograma de ativação por estratégia e reconciliação de caixa por veículo permanecem pendentes.",
+    "Probabilidades implícitas dos cenários indisponíveis."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Patria Investments",
+      "titulo": "Comunicado de resultados trimestrais",
+      "url": "https://ir.patria.com/news-releases/news-release-details/patria-reports-third-quarter-2026-earnings-results",
+      "publicado_em": "2026-11-03",
+      "consultado_em": "2026-11-04"
+    }
+  ],
+  "posicao_competitiva": {
+    "titulo": "Captação institucional em alternativos",
+    "texto": "Estratégias e geografias distintas ampliam a capacidade de captar, mas desempenho e retenção determinam a base efetiva de taxas.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Taxas, lucro e distribuição",
+    "texto": "Manter a reconciliação entre lucro atribuível, taxas e lucro distribuível sem tratar medidas gerenciais como caixa.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Compromissos e remuneração",
+    "texto": "Acompanhar dividendos junto a compromissos de investimento e capital para novas estratégias.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Ativos sob gestão não equivalem a receita",
+    "texto": "Se os ativos aguardarem alocação ou tiverem taxas menores, crescimento de patrimônio administrado não se traduz no mesmo crescimento dos ganhos.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Ativação e margem",
+      "texto": "Monitorar ativos pagantes, captação líquida, margem de taxas, realização de performance e dividendos.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ]
+}

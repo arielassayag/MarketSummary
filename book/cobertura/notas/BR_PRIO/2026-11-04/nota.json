@@ -1,0 +1,146 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_PRIO",
+  "data": "2026-11-04",
+  "tipo": "pos_resultado",
+  "titulo": "PRIO: Wahoo e Peregrino ampliam produção e resultado",
+  "resumo": "A entrada dos poços de Wahoo, a produção de Peregrino e o avanço de Frade elevaram vendas e lucro. A melhora ainda precisa aparecer em caixa após manutenção, dívida e reposição de reservas. Direitos sobre produção de Wahoo diferem da participação na concessão.",
+  "negocio": "Produtora independente focada em desenvolvimento e revitalização de campos marítimos, com instalações compartilhadas e venda de petróleo.",
+  "pilares_tese": [
+    {
+      "titulo": "Wahoo utiliza estrutura de Frade",
+      "texto": "A conexão ao FPSO Valente permite operar os campos em conjunto. As demonstrações distinguem participação na concessão e direito à produção dos poços do programa atual.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Produção e embarques têm tempos distintos",
+      "texto": "Receita e lucro cresceram com mais produção, vendas e preço. O contas a receber inclui vendas concentradas no fim do trimestre, portanto faturamento não equivale a caixa imediato.",
+      "evidencias": [
+        "F1",
+        "F3"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Produção atribuível e custo completo",
+      "direcao": "positivo",
+      "sensibilidade": "alta",
+      "texto": "O aumento de produção pode diluir custos fixos. A leitura depende de disponibilidade, embarques, royalties e reinvestimento.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Teleconferência com acompanhamento da produção e do investimento.",
+      "data": "2026-11-05",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Paradas em instalações compartilhadas podem afetar mais de um campo. Menor Brent, licenciamento e custo de manutenção podem reduzir caixa apesar do volume maior.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Wahoo opera com regularidade e o aumento de volume dilui custos, com menor dívida líquida. Alvo de {{fact:val.BR_PRIO.alvo_otimista}}.",
+    "base": "Mais produção sustenta resultado, mas capex e giro limitam a conversão imediata em caixa. Alvo de {{fact:val.BR_PRIO.preco_alvo}}.",
+    "pessimista": "Paradas, declínio de poços e preço menor reduzem caixa enquanto a reposição de reservas consome capital. Alvo de {{fact:val.BR_PRIO.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Alvo de {{fact:val.BR_PRIO.preco_alvo}} ante {{fact:val.BR_PRIO.preco}}. Rating {{fact:val.BR_PRIO.rating_codigo}} e confiança {{fact:val.BR_PRIO.confianca_codigo}}. Potencial de {{fact:val.BR_PRIO.upside}} sobre o preço de referência. O alvo fica próximo do consenso público, com diferença de {{fact:val.BR_PRIO.diff_consenso}}. O teste de valor é o caixa atribuível depois de reinvestimento, arrendamentos e obrigações de abandono.",
+  "ultimo_resultado": "O 3T26 registrou crescimento anual de receita e lucro, com produção maior de Wahoo e contribuição de Frade e Peregrino. As demonstrações consultadas não trazem nova faixa formal consolidada. A teleconferência estava prevista para 2026-11-05.",
+  "guidance": "sem_guidance",
+  "tom_gestao": "neutro",
+  "governanca": "A documentação discrimina participações na concessão e direitos de produção do programa de Wahoo. A análise de caixa deve preservar obrigações por campo e direitos dos parceiros.",
+  "o_que_mudou": "O ITR atual substitui a referência anterior ao calendário e permite distinguir o desempenho de Wahoo, Frade e Peregrino da geração de caixa recebida.",
+  "gatilhos_revisao": [
+    "Disponibilidade dos ativos cai sem compensação de novos poços.",
+    "Custo por barril e capex de manutenção sobem juntos.",
+    "Conversão de recebíveis ou redução de dívida perde força."
+  ],
+  "lacunas_de_dados": [
+    "A ponte integral entre caixa por campo, arrendamentos e obrigações de abandono não foi reconciliada.",
+    "Custos e direitos de futuras fases de Wahoo não foram extrapolados."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "PRIO",
+      "titulo": "Informações financeiras trimestrais e notas explicativas",
+      "url": "https://filemanager-cdn.mziq.com/published/cecb3d3e-6bd6-4edd-b9b3-3cacde780cac/a042a94f-9276-4978-a126-787aee54b397",
+      "publicado_em": "2026-11-04",
+      "consultado_em": "2026-11-04"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "PRIO",
+      "titulo": "Calendário de divulgação e teleconferência",
+      "url": "https://ri.prio3.com.br/popup_home/divulgacao-de-resultados-do-3t26/",
+      "publicado_em": "2026-11-04",
+      "consultado_em": "2026-11-04"
+    },
+    {
+      "id": "F3",
+      "tipo": "imprensa",
+      "instituicao": "Reuters",
+      "titulo": "Resultados, produção e vendas de petróleo",
+      "url": "https://economia.uol.com.br/noticias/reuters/2026/11/04/prio-tem-lucro-8-vezes-maior-no-3-tri-com-recorde-de-producao-e-avanco-de-wahoo.htm",
+      "publicado_em": "2026-11-04",
+      "consultado_em": "2026-11-04"
+    }
+  ],
+  "posicao_competitiva": {
+    "titulo": "Infraestrutura compartilhada",
+    "texto": "Conectar Wahoo à estrutura de Frade reduz a necessidade de instalação dedicada, com maior dependência da disponibilidade da unidade compartilhada.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Lucro, venda e recebimento",
+    "texto": "Separar produção, embarques e recebíveis. O lucro contábil não mede caixa recebido após investimento e arrendamento.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Reposição e obrigações",
+    "texto": "A nota do imobilizado identifica desembolsos em campos distintos. Testar caixa após desenvolvimento, manutenção e obrigações de abandono.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Produção maior pode exigir mais capital",
+    "texto": "Se declínio e intervenções exigirem reinvestimento crescente, a diluição de custo fixo pode ser temporária.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Produção, recebimento e dívida",
+      "texto": "Acompanhar produção atribuível, disponibilidade, embarques, custo completo e fluxo após capex.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ]
+}

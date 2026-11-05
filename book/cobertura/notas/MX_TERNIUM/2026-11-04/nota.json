@@ -1,0 +1,135 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_TERNIUM",
+  "data": "2026-11-04",
+  "tipo": "pos_resultado",
+  "titulo": "Ternium: margem siderúrgica melhora e caixa sustenta investimento",
+  "resumo": "O EBITDA ajustado avançou na sequência trimestral, enquanto o lucro líquido recuou. A expectativa de estabilidade do EBITDA no trimestre seguinte depende de maior margem por tonelada compensar a sazonalidade dos embarques e custos mais altos.",
+  "negocio": "Siderúrgica com operações no México, Brasil e região sul, incluindo mineração e produção de aço plano para indústria e construção. A capacidade integrada no México altera exposição a placas e à utilização das plantas.",
+  "pilares_tese": [
+    {
+      "titulo": "Preço por tonelada e custo de insumos",
+      "texto": "A gestão espera que a receita por tonelada compense o custo maior de matérias-primas e placas. A margem unitária é mais informativa que o volume isolado.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Caixa operacional cobre investimento no trimestre",
+      "texto": "A melhora sequencial do fluxo operacional e o recuo do capex ampliaram a folga trimestral. A leitura depende do cronograma industrial e do giro.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Margem por tonelada",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O efeito de preço esperado enfrenta aumento de custo e menor volume sazonal. O desempenho difere por região.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Pagamento do dividendo intermediário aprovado pelo conselho.",
+      "data": "2026-11-17",
+      "tipo": "outro",
+      "direcao": "incerto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Importações pressionam demanda e preços em segmentos industriais. A nova capacidade pode elevar custo fixo e capital empregado durante a rampa.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "A margem por tonelada melhora, com execução industrial no prazo e melhor absorção dos custos fixos. Alvo de {{fact:val.MX_TERNIUM.alvo_otimista}}.",
+    "base": "Preços compensam custos maiores, enquanto embarques sazonais e investimento moderam caixa. Alvo de {{fact:val.MX_TERNIUM.preco_alvo}}.",
+    "pessimista": "Demanda fraca, importações e custos de placas comprimem margem e caixa durante a expansão. Alvo de {{fact:val.MX_TERNIUM.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Alvo de {{fact:val.MX_TERNIUM.preco_alvo}} ante {{fact:val.MX_TERNIUM.preco}}. Rating {{fact:val.MX_TERNIUM.rating_codigo}} e confiança {{fact:val.MX_TERNIUM.confianca_codigo}}. Potencial de {{fact:val.MX_TERNIUM.upside}} sobre o preço de referência. O alvo deve ser lido à luz da margem normalizada e do investimento para integração no México. O EBITDA trimestral não substitui o caixa após capex. O alvo fica abaixo do consenso público em {{fact:val.MX_TERNIUM.diff_consenso}}; a distância entre cenários reforça a sensibilidade à margem normalizada.",
+  "ultimo_resultado": "No 3T26, embarques de aço, margem de EBITDA ajustado e caixa operacional avançaram ante o 2T26, e lucro líquido recuou. Para o 4T26, a companhia indicou EBITDA ajustado próximo ao do trimestre recém-divulgado, com menor volume sazonal e maior margem unitária. O release apresentou essa perspectiva trimestral, sem faixa formal anual.",
+  "guidance": "sem_guidance",
+  "tom_gestao": "neutro",
+  "governanca": "O conselho aprovou dividendo intermediário e divulgou a data de pagamento. A avaliação do caixa atribuível requer separar operações consolidadas e participações de terceiros.",
+  "o_que_mudou": "O release de 2026-11-03 substitui a referência ao balanço anterior e acrescenta uma perspectiva para o 4T26. A projeção indica estabilidade sequencial de EBITDA ajustado, sem caracterizar revisão de faixa anual.",
+  "gatilhos_revisao": [
+    "A margem por tonelada não compensa insumos e placas.",
+    "O cronograma industrial exige capital adicional.",
+    "O caixa operacional perde força após reversão de giro."
+  ],
+  "lacunas_de_dados": [
+    "A perspectiva trimestral não equivale a uma faixa anual. A leitura de caixa após a expansão depende de custos, ocupação e cronograma."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "regulatorio",
+      "instituicao": "SEC",
+      "titulo": "Release trimestral da Ternium",
+      "url": "https://www.sec.gov/Archives/edgar/data/1342874/000134287426000050/prternium3q2026.htm",
+      "publicado_em": "2026-11-03",
+      "consultado_em": "2026-11-04"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Ternium",
+      "titulo": "Calendário de eventos corporativos",
+      "url": "https://investors.ternium.com/es/eventos/",
+      "publicado_em": null,
+      "consultado_em": "2026-11-04"
+    }
+  ],
+  "posicao_competitiva": {
+    "titulo": "Produção integrada e proximidade do cliente",
+    "texto": "A integração pode reduzir dependência de placas e ampliar o controle de especificações. O benefício depende de utilização e custos de produção.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "EBITDA ajustado, lucro e caixa",
+    "texto": "A direção sequencial do lucro não acompanhou a do EBITDA ajustado. Conferir itens abaixo do EBITDA e variação do giro antes de projetar geração recorrente.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Investimento industrial e distribuição",
+    "texto": "O capex se concentrou na nova aciaria de placas em Pesquería. O dividendo intermediário compete com esse investimento pela folga de caixa; acompanhar desembolsos e início de operação.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Capacidade nova não garante margem",
+    "texto": "Se a demanda permanecer fraca, maior capacidade pode pressionar utilização e caixa, mesmo com menor dependência de placas.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Volume, margem unitária e investimento",
+      "texto": "Acompanhar embarques por região, preço e custo por tonelada, EBITDA ajustado, giro e capex.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ]
+}

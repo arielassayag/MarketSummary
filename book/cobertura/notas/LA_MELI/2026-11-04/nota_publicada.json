@@ -1,0 +1,304 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-04",
+    "manifest_sha256": "88e4dbb61abe0e425424189c9c90ad13ac5816783f5b48f91711756b32316ec3",
+    "modelo_as_of": "2026-11-04"
+  },
+  "conviccao": 1,
+  "data": "2026-11-04",
+  "hashes": {
+    "contexto": "1410cb4433ad4fac43b608cac187998d9e3a93ea5849641803bb49dfdde9fc64",
+    "factbook": "3dec92133b1d0560043a261ab9898d3e9c767188b3c17547e47a1966515171ce",
+    "nota_json": "ef3a8c308eeeefb117ad3e4c53dd6fbb561fb90ef787c566000da8cb61db82dd"
+  },
+  "is_synthetic": false,
+  "issuer_id": "LA_MELI",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-04",
+  "published_at": "2026-11-05T01:45:41.925117+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Novos centros e crescimento de recebíveis concorrem por capital. Recursos restritos não equivalem a caixa atribuível.",
+        "titulo": "Logística e financiamento de crédito"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Receita avança com investimento em logística e subsídios ainda pressionando margem.",
+      "otimista": "Frequência e publicidade diluem custos, com perdas controladas nas coortes de crédito.",
+      "pessimista": "Custo de aquisição, frete e perdas crescem antes da monetização."
+    },
+    "comentario_valuation": "Modelo em revisão; alvo e cenários de preço indisponíveis. Rating Em revisão e confiança C. Sem usar consenso como substituto do alvo, a leitura exige margem após crédito e caixa disponível após logística, recursos restritos e financiamento.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Se os clientes forem sensíveis a frete e descontos, o volume adicional pode não diluir custos de forma sustentável.",
+        "titulo": "Frequência pode depender do subsídio"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-04",
+    "dados_simulados": false,
+    "data": "2026-11-04",
+    "ficha": [
+      {
+        "fato": "val.LA_MELI.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 1.739,88"
+      },
+      {
+        "fato": "val.LA_MELI.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.LA_MELI.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "13,11%"
+      },
+      {
+        "fato": "val.LA_MELI.wacc",
+        "rotulo": "WACC",
+        "valor": "12,07%"
+      },
+      {
+        "fato": "val.LA_MELI.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.LA_MELI.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "33,1x"
+      },
+      {
+        "fato": "val.LA_MELI.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "11,3x"
+      },
+      {
+        "fato": "val.LA_MELI.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 2.271,93"
+      },
+      {
+        "fato": "val.LA_MELI.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-04",
+        "id": "F1",
+        "instituicao": "SEC",
+        "publicado_em": "2026-11-04",
+        "tipo": "Regulador",
+        "titulo": "Carta trimestral aos acionistas",
+        "url": "https://www.sec.gov/Archives/edgar/data/1099590/000109959026000027/meli-20260930xex991.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Maior frequência não reduz custo logístico por unidade.",
+      "Provisões absorvem o crescimento da receita de crédito.",
+      "Caixa disponível após financiamento e investimento perde força."
+    ],
+    "governanca": "A carta distingue caixa e recursos restritos e registra valores a pagar a clientes. A alocação de capital deve ser avaliada sem tratar saldos de clientes como caixa disponível.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar itens por comprador, margem operacional, provisões, custo de frete e caixa após investimento.",
+        "titulo": "Frequência, perdas e caixa"
+      }
+    ],
+    "issuer_id": "LA_MELI",
+    "lacunas_de_dados": [
+      "O retorno por coorte e a ponte de caixa livre atribuível exigem conciliação adicional.",
+      "Preço-alvo e cenários permanecem em revisão."
+    ],
+    "modelo_de_cobertura": "2026-11-04",
+    "negocio": "Plataforma latino-americana que integra comércio eletrônico, logística, publicidade, pagamentos, poupança e crédito.",
+    "nome": "MercadoLibre",
+    "o_que_mudou": "O balanço de 2026-11-04 substitui a leitura prospectiva. O crescimento de receita veio com menor margem sequencial, e a tese de retorno das novas coortes continua condicionada a perdas e financiamento.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_AZZAS",
+        "nome": "Azzas 2154"
+      },
+      {
+        "issuer_id": "BR_COGNA",
+        "nome": "Cogna"
+      },
+      {
+        "issuer_id": "BR_CURY",
+        "nome": "Cury"
+      },
+      {
+        "issuer_id": "BR_CYRELA",
+        "nome": "Cyrela"
+      },
+      {
+        "issuer_id": "BR_DIRECIONAL",
+        "nome": "Direcional"
+      },
+      {
+        "issuer_id": "BR_EZTEC",
+        "nome": "EZTec"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Usuários que compram e usam Mercado Pago cresceram mais rápido. A maior frequência de compra melhora densidade logística, sujeita ao custo dos incentivos.",
+        "titulo": "Frequência e integração comercial"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Maior oferta de frete grátis, expansão da capacidade logística e marketing no Brasil pressionaram a margem sequencial. Provisões também cresceram em valor anual.",
+        "titulo": "Receita não se traduz integralmente em lucro operacional"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A combinação aumenta frequência e uso de serviços financeiros. O teste é a persistência do engajamento após redução de incentivos.",
+        "titulo": "Integração de compras e pagamentos"
+      }
+    ],
+    "publicada_em": "2026-11-05T01:45:41.925117+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar crescimento comercial, provisões e efeito tributário para avaliar a direção econômica do resultado.",
+        "titulo": "Receita, margem e tributação"
+      }
+    ],
+    "resumo": "Receita e pagamentos avançaram, com maior frequência de compra e integração entre comércio e serviços financeiros. A margem operacional caiu na sequência, sob investimento em logística, frete gratuito e marketing. A tese depende de retorno após incentivos e perdas de crédito.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "A expansão da carteira e da capacidade logística pode exigir recursos antes de a frequência e a monetização sustentarem margem. Caixa restrito e recursos de clientes têm disponibilidade própria."
+      }
+    ],
+    "setor": "Consumo discricionário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "MercadoLibre: maior engajamento convive com menor margem operacional",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "No 3T26, receita e renda financeira cresceram em base anual e margem operacional recuou frente ao trimestre anterior. O lucro líquido cresceu em base anual apesar do menor resultado operacional, com despesa tributária menor. Não foi apresentada faixa formal consolidada na carta consultada.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Publicidade e serviços podem diluir custos, enquanto subsídios logísticos e perdas de crédito exigem reinvestimento.",
+        "vetor": "Margem incremental após frete e crédito"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

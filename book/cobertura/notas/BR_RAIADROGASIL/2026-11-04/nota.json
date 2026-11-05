@@ -1,0 +1,145 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_RAIADROGASIL",
+  "data": "2026-11-04",
+  "tipo": "pos_resultado",
+  "titulo": "RD Saúde: expansão comercial avança, mas giro reduz caixa livre",
+  "resumo": "As vendas maduras e a participação de mercado avançaram no 3T26. O caixa livre caiu na comparação anual: a absorção no giro e investimentos maiores limitam a leitura do crescimento do lucro ajustado.",
+  "negocio": "Rede de varejo farmacêutico com as bandeiras Raia e Drogasil. Combina capilaridade de lojas, vendas digitais e serviços de saúde, além de programas de fidelidade.",
+  "pilares_tese": [
+    {
+      "titulo": "Vendas maduras sustentam crescimento",
+      "texto": "O avanço das lojas maduras acima do reajuste regulado e o ganho de participação indicam crescimento além das novas aberturas. Comparar margem por canal antes de inferir retorno incremental.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Giro explica divergência de caixa",
+      "texto": "O ciclo de caixa passou de contribuição para consumo de recursos na comparação anual. Mais investimento também pressionou o caixa livre.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Capital de giro e maturação das lojas",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "A expansão cria espaço para vendas futuras, mas exige estoques e investimento antes de plena maturação.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Investor Day com discussão de expansão e execução operacional.",
+      "data": "2026-12-07",
+      "tipo": "outro",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "O crescimento da rede pode preservar participação à custa de caixa se estoques, despesas de loja e investimento avançarem mais do que a geração operacional.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Vendas maduras e novos pontos de venda elevam produtividade, com normalização do giro. Alvo de {{fact:val.BR_RAIADROGASIL.alvo_otimista}}.",
+    "base": "A expansão permanece no ritmo projetado, com parte da geração consumida por giro e investimento. Alvo de {{fact:val.BR_RAIADROGASIL.preco_alvo}}.",
+    "pessimista": "Competição em preço e crescimento do giro comprimem retorno sobre a rede. Alvo de {{fact:val.BR_RAIADROGASIL.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Alvo de {{fact:val.BR_RAIADROGASIL.preco_alvo}} ante {{fact:val.BR_RAIADROGASIL.preco}}. Rating {{fact:val.BR_RAIADROGASIL.rating_codigo}} e confiança {{fact:val.BR_RAIADROGASIL.confianca_codigo}}. Potencial de {{fact:val.BR_RAIADROGASIL.upside}} sobre o preço de referência. Testar o alvo contra caixa por loja madura e retorno incremental das aberturas, separando variação sazonal de giro e consumo persistente de capital. O modelo situa o alvo abaixo do preço de referência e do consenso público; a diferença frente ao consenso é {{fact:val.BR_RAIADROGASIL.diff_consenso}}.",
+  "ultimo_resultado": "No 3T26, receita bruta, vendas maduras e lucro ajustado cresceram em base anual; caixa operacional e caixa livre caíram. A administração reiterou a faixa anual de aberturas brutas.",
+  "guidance": "mantido",
+  "tom_gestao": "neutro",
+  "governanca": "O RI publicou a ata de aprovação dos resultados pelo conselho. A aquisição da participação remanescente na Stix altera o controle do programa de fidelidade e merece acompanhamento de governança e capital empregado.",
+  "o_que_mudou": "O 3T26 acrescenta evidência de ganho de participação e manutenção do plano de aberturas, acompanhados de deterioração anual da conversão em caixa. A comparação de caixa mantém separado o perímetro da 4Bio, cuja venda foi discutida na nota anterior.",
+  "gatilhos_revisao": [
+    "Vendas maduras passam a acompanhar apenas o reajuste regulado.",
+    "Consumo de giro persiste após o período de expansão sazonal.",
+    "Margem ou retorno das novas lojas enfraquece."
+  ],
+  "lacunas_de_dados": [
+    "A contribuição líquida da fidelidade e do canal digital para retorno por cliente requer divulgação adicional.",
+    "Falta decompor a reversibilidade do consumo de giro por coorte de lojas."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "RD Saúde",
+      "titulo": "Release trimestral",
+      "url": "https://ri.rdsaude.com.br/Download.aspx?Arquivo=qMx8l+yEDVlhl3fmCMUXmA%3D%3D",
+      "publicado_em": "2026-11-03",
+      "consultado_em": "2026-11-04"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "RD Saúde",
+      "titulo": "Central de resultados e calendário",
+      "url": "https://ri.rdsaude.com.br/",
+      "publicado_em": null,
+      "consultado_em": "2026-11-04"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "RD Saúde",
+      "titulo": "Atas e documentos societários",
+      "url": "https://ri.rdsaude.com.br/central-de-downloads",
+      "publicado_em": null,
+      "consultado_em": "2026-11-04"
+    }
+  ],
+  "posicao_competitiva": {
+    "titulo": "Densidade de rede e canal digital",
+    "texto": "A rede física sustenta conveniência e atendimento digital. Participação maior com vendas maduras em expansão dá evidência mais direta de tração que a contagem de aberturas.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Lucro e caixa têm sinais diferentes",
+    "texto": "O lucro ajustado avançou, mas o caixa livre caiu. A leitura prioriza a ponte do resultado ao caixa, inclusive giro e investimento.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Aberturas e fidelidade",
+    "texto": "A companhia manteve a meta de abertura bruta e passou a controlar a Stix. Testar maturação do investimento físico e retorno econômico da fidelidade separadamente.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Escala não elimina intensidade de capital",
+    "texto": "Se o ganho de participação exigir estoques e capex persistentemente maiores, a expansão comercial pode elevar lucro com retorno incremental menor.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Produtividade e giro",
+      "texto": "Acompanhar vendas maduras, margem por canal, estoques, caixa livre e fechamentos de lojas.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ]
+}

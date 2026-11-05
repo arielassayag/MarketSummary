@@ -1,0 +1,349 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-04",
+    "manifest_sha256": "88e4dbb61abe0e425424189c9c90ad13ac5816783f5b48f91711756b32316ec3",
+    "modelo_as_of": "2026-11-04"
+  },
+  "conviccao": 1,
+  "data": "2026-11-04",
+  "hashes": {
+    "contexto": "ef4991756c42e0db1fc1a1f8626bfd1fbbb59cef24c22342f8cdf00907259e9c",
+    "factbook": "39b3bc75624903567cc7c32fbdc42613f2c09aabb32e0fd9b66b65190a849d47",
+    "nota_json": "0b31df1d241f36e8cd4ba98be8f84c39b40f1c9723b025de0a14424f3de245df"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_ISAENERGIA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-11-05T01:38:59.987076+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A incorporação de Madeira e as emissões alteram a base de dívida. Avaliar maturidades e desembolsos diante da entrada de receita.",
+        "titulo": "Dívida para expansão"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-18",
+        "descricao": "Investor Day previsto no calendário do RI.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "dia_do_investidor"
+      }
+    ],
+    "cenarios": {
+      "base": "Madeira amplia a geração recorrente, com absorção parcial por investimento e custo financeiro. Alvo de R$ 36,09.",
+      "otimista": "Entrada de projetos e disponibilidade sustentam maior caixa após investimentos. Alvo de R$ 42,90.",
+      "pessimista": "Custo de dívida, atrasos e menor conversão em caixa reduzem retorno por ação. Alvo de R$ 30,18."
+    },
+    "comentario_valuation": "Alvo de R$ 36,09 ante R$ 25,67. Rating Neutro e confiança C. Potencial de +40,57% sobre o preço de referência. O alvo excede o consenso público em +15,94%, com dispersão entre métodos de 51,94%. O teste econômico é a conversão da receita em caixa após capex e dívida.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Se capex e custo da dívida absorverem a receita adicional, o lucro regulatório maior não se converte em retorno para o acionista.",
+        "titulo": "Lucro contábil não paga expansão"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-04",
+    "dados_simulados": false,
+    "data": "2026-11-04",
+    "ficha": [
+      {
+        "fato": "val.BR_ISAENERGIA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 25,67"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 36,09"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+40,57%"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 42,90"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 30,18"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "13,45%"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.wacc",
+        "rotulo": "WACC",
+        "valor": "9,45%"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+46,22%"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+50,05%"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "9,1x"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,8x"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 31,12"
+      },
+      {
+        "fato": "val.BR_ISAENERGIA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+15,94%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-04",
+        "id": "F1",
+        "instituicao": "ISA Energia Brasil",
+        "publicado_em": "2026-11-03",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultados regulatórios e efeitos da aquisição",
+        "url": "https://www.isaenergiabrasil.com.br/centro-de-midia/noticias/isa-energia-brasil-registra-lucro-liquido-regulatorio-de-r-19-bilhao-no-3t26-excluindo-efeitos-nao-recorrentes-lucro-pro-forma-cresce-14/"
+      },
+      {
+        "consultado_em": "2026-11-04",
+        "id": "F2",
+        "instituicao": "ISA Energia Brasil",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Central de resultados e calendário",
+        "url": "https://ri.isaenergiabrasil.com.br/pt"
+      },
+      {
+        "consultado_em": "2026-11-04",
+        "id": "F3",
+        "instituicao": "ISA Energia Brasil",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Composição e custo do endividamento",
+        "url": "https://ri.isaenergiabrasil.com.br/pt/informacoes-financeiras/endividamento"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Atraso de entrada em operação reduz receita regulada.",
+      "Investimento ou custo de dívida supera a capacidade de conversão de caixa.",
+      "Mudanças na administração alteram a disciplina de alocação."
+    ],
+    "governanca": "A controladora é a ISA Capital do Brasil. A leitura por ação deve considerar a base após a oferta e os direitos da classe. O comunicado distingue lucro regulatório e a base de distribuição.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Acompanhar entrada de projetos, receita recorrente, caixa depois de investimento e dívida por indexador.",
+        "titulo": "Disponibilidade, dívida e caixa"
+      }
+    ],
+    "issuer_id": "BR_ISAENERGIA",
+    "lacunas_de_dados": [
+      "A ponte de caixa por concessão e os efeitos por ação ainda exigem conciliação.",
+      "Não foram estimadas probabilidades implícitas dos cenários."
+    ],
+    "modelo_de_cobertura": "2026-11-04",
+    "negocio": "Transmissora brasileira que recebe receita regulada pela disponibilidade da rede e investe em novas concessões e reforços. Madeira amplia a operação em corrente contínua.",
+    "nome": "ISA Energia Brasil",
+    "o_que_mudou": "A nota anterior acompanhava a troca como evento posterior ao balanço. O 3T26 incorpora Madeira e quantifica separadamente o efeito contábil. A nova leitura distingue resultado comparável e dívida consolidada.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      },
+      {
+        "issuer_id": "BR_CPFL",
+        "nome": "CPFL Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Remensuração de Madeira, compra vantajosa e venda de Garanhuns geraram efeito positivo sem caixa e excluído da base de proventos.",
+        "titulo": "Lucro regulatório precisa de ajuste"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Emissões de debêntures e incorporação da dívida de Madeira aumentaram o saldo bruto, apesar de menor custo médio nominal da dívida frente ao fechamento anual.",
+        "titulo": "Financiamento e perímetro ampliam dívida"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Madeira amplia experiência em transmissão em corrente contínua. O valor da escala depende de disponibilidade e da remuneração após investimento.",
+        "titulo": "Execução de redes de longa distância"
+      }
+    ],
+    "publicada_em": "2026-11-05T01:38:59.987076+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar o lucro regulatório comparável da remensuração, compra vantajosa e alienação que não integram a base de proventos.",
+        "titulo": "Resultado pró-forma e distribuição"
+      }
+    ],
+    "resumo": "O primeiro trimestre com consolidação de Madeira trouxe ganho contábil sem caixa, excluído da base de proventos. O lucro regulatório cresceu também em base comparável, mas a alta da dívida pede confirmação do retorno atribuível por ação.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "A expansão de rede e a dívida podem consumir caixa antes da plena remuneração dos projetos. O lucro regulatório inclui efeitos que não financiam distribuição."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "ISA Energia Brasil: Madeira amplia receita e gera ganho sem caixa",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "No 3T26, o lucro regulatório avançou em comparação anual, inclusive na base pró-forma sem o efeito não recorrente. A companhia excluiu o ganho sem caixa da base de proventos. O comunicado consultado não apresentou nova projeção formal consolidada.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A nova participação amplia a geração atribuível antes de dívida e capex. O teste é o caixa líquido que resta por ação.",
+        "vetor": "Caixa recorrente por ação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

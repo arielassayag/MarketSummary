@@ -1,0 +1,356 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-04",
+    "manifest_sha256": "88e4dbb61abe0e425424189c9c90ad13ac5816783f5b48f91711756b32316ec3",
+    "modelo_as_of": "2026-11-04"
+  },
+  "conviccao": 1,
+  "data": "2026-11-04",
+  "hashes": {
+    "contexto": "a4e7054d819de436d8f081c5b63101b6ecd043d8f272c894eaed4063f32afe91",
+    "factbook": "509be614939bb2b5f538c3bbc4d59bf10da1c13fe7c9af0a3c65eec71b7b0f18",
+    "nota_json": "5fd7d4474899c7937523a5cba60cadef4b35ef44ea5f7db9af069bf306a471e9"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_VIBRA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-04",
+  "published_at": "2026-11-05T01:48:47.671481+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A queda sequencial da dívida relatada deve ser confrontada com desembolsos, juros e captação. A aprovação de debêntures não mede caixa livre.",
+        "titulo": "Dívida e necessidade de caixa"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-05",
+        "descricao": "Teleconferência prevista no calendário oficial para conferir margem, caixa e energia.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Distribuição mantém ganho operacional parcial, com giro e financiamento condicionando o caixa. Alvo de R$ 39,57.",
+      "otimista": "Rede e vendas empresariais sustentam margem recorrente, enquanto a Comerc melhora caixa. Alvo de R$ 58,51.",
+      "pessimista": "Normalização de margens e pressão de giro reduzem caixa e interrompem a queda da dívida. Alvo de R$ 21,53."
+    },
+    "comentario_valuation": "Alvo de R$ 39,57 ante R$ 29,25. Rating Compra e confiança A. Potencial de +35,30% sobre o preço de referência. O alvo fica abaixo do consenso público em -5,11%. Testar caixa recorrente de distribuição e energia, separando financiamentos e itens temporários.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Se itens não recorrentes ou condições temporárias explicarem parte da alta, volumes maiores não garantem retorno incremental.",
+        "titulo": "Melhora de margem pode ser temporária"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-04",
+    "dados_simulados": false,
+    "data": "2026-11-04",
+    "ficha": [
+      {
+        "fato": "val.BR_VIBRA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 29,25"
+      },
+      {
+        "fato": "val.BR_VIBRA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 39,57"
+      },
+      {
+        "fato": "val.BR_VIBRA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+35,30%"
+      },
+      {
+        "fato": "val.BR_VIBRA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.BR_VIBRA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_VIBRA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 58,51"
+      },
+      {
+        "fato": "val.BR_VIBRA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "1,87%"
+      },
+      {
+        "fato": "val.BR_VIBRA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 21,53"
+      },
+      {
+        "fato": "val.BR_VIBRA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "12,33%"
+      },
+      {
+        "fato": "val.BR_VIBRA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "13,73%"
+      },
+      {
+        "fato": "val.BR_VIBRA.wacc",
+        "rotulo": "WACC",
+        "valor": "10,58%"
+      },
+      {
+        "fato": "val.BR_VIBRA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_VIBRA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+39,15%"
+      },
+      {
+        "fato": "val.BR_VIBRA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+18,64%"
+      },
+      {
+        "fato": "val.BR_VIBRA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "7,1x"
+      },
+      {
+        "fato": "val.BR_VIBRA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,5x"
+      },
+      {
+        "fato": "val.BR_VIBRA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 41,71"
+      },
+      {
+        "fato": "val.BR_VIBRA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-5,11%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-04",
+        "id": "F1",
+        "instituicao": "Vibra Energia",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário de resultados e teleconferência",
+        "url": "https://ri.vibraenergia.com.br/servicos-aos-investidores/calendario-de-r-i/"
+      },
+      {
+        "consultado_em": "2026-11-04",
+        "id": "F2",
+        "instituicao": "Estadão Conteúdo via CNN Brasil",
+        "publicado_em": "2026-11-04",
+        "tipo": "Imprensa",
+        "titulo": "Cobertura do balanço trimestral",
+        "url": "https://www.cnnbrasil.com.br/economia/money/negocios/vibra-tem-lucro-de-r-24-bi-no-3-trimestre-alta-de-504/"
+      },
+      {
+        "consultado_em": "2026-11-04",
+        "id": "F3",
+        "instituicao": "Visno Invest",
+        "publicado_em": "2026-11-04",
+        "tipo": "Imprensa",
+        "titulo": "Síntese pública de margem, segmentos e caixa",
+        "url": "https://visnoinvest.com.br/news/16105/vibra-vbbr3-registra-lucro-liquido-de-r-25-bi-no-3t26"
+      },
+      {
+        "consultado_em": "2026-11-04",
+        "id": "F4",
+        "instituicao": "CVM",
+        "publicado_em": "2026-09-04",
+        "tipo": "Regulador",
+        "titulo": "Fato relevante sobre emissão de debêntures",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1565350&numSequencia=1090056&numVersao=1"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Margem recorrente por volume recua.",
+      "Giro continua a consumir caixa apesar de lucro maior.",
+      "Comerc não converte a melhora operacional em caixa."
+    ],
+    "governanca": "O fato relevante da CVM registra aprovação de emissão de debêntures. Separar condições aprovadas, desembolsos e amortizações na leitura da estrutura de capital.",
+    "guidance": "não avaliado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "Acompanhar margem por volume, estoques, recebíveis, caixa operacional, dívida e contribuição de energia.",
+        "titulo": "Margem recorrente, giro e Comerc"
+      }
+    ],
+    "issuer_id": "BR_VIBRA",
+    "lacunas_de_dados": [
+      "Release integral e ITR do trimestre não foram obtidos nesta consulta.",
+      "Faltam conciliar giro, itens não recorrentes e contribuição líquida de caixa da Comerc."
+    ],
+    "modelo_de_cobertura": "2026-11-04",
+    "negocio": "Distribuidora de combustíveis para postos e empresas, com atuação em energia por meio da Comerc.",
+    "nome": "Vibra Energia",
+    "o_que_mudou": "A nota anterior antecedia o balanço. A cobertura pública agora indica aumento do lucro e retração anual do caixa operacional. A revisão documental da composição de margem e caixa fica pendente.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRAVA",
+        "nome": "Brava Energia"
+      },
+      {
+        "issuer_id": "BR_COSAN",
+        "nome": "Cosan"
+      },
+      {
+        "issuer_id": "BR_PETROBRAS",
+        "nome": "Petrobras"
+      },
+      {
+        "issuer_id": "BR_PRIO",
+        "nome": "PRIO"
+      },
+      {
+        "issuer_id": "BR_RECV",
+        "nome": "PetroRecôncavo"
+      },
+      {
+        "issuer_id": "BR_ULTRAPAR",
+        "nome": "Ultrapar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A cobertura pública distingue margem de distribuição ajustada e recorrente. A avaliação depende de identificar componentes temporários antes de projetar o trimestre.",
+        "titulo": "Margem recorrente e margem ajustada"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A cobertura aponta dívida líquida menor ante o trimestre anterior, mas fluxo operacional inferior ao do ano anterior. As duas comparações não demonstram, por si, melhora permanente do caixa.",
+        "titulo": "Dívida e caixa usam comparações distintas"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Escala de rede e volume podem reduzir custo unitário, desde que novas bandeiras e contratos preservem margem recorrente.",
+        "titulo": "Rede e clientes empresariais"
+      }
+    ],
+    "publicada_em": "2026-11-05T01:48:47.671481+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A alta anual do lucro reportada na imprensa veio com menor caixa operacional. A decomposição do giro fica pendente.",
+        "titulo": "Lucro e fluxo operacional"
+      }
+    ],
+    "resumo": "A cobertura pública do balanço aponta lucro e EBITDA ajustado maiores em base anual, com fluxo operacional menor. A atualização preserva a distinção entre distribuição e Comerc e deixa pendente a conciliação no documento integral do emissor.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Ajustes e itens temporários podem elevar a margem publicada sem melhorar caixa. Dívida e risco da comercialização de energia exigem avaliação separada."
+      }
+    ],
+    "setor": "Energia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Vibra: lucro reportado cresce, com conversão de caixa a conferir",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "A imprensa de 2026-11-04 reportou lucro, volumes e EBITDA ajustado maiores na comparação anual do 3T26, além de queda anual do fluxo operacional. O release integral e a confirmação de guidance não foram obtidos nas fontes primárias acessadas.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Rede de postos e vendas empresariais podem sustentar escala; a margem precisa resistir à normalização de estoques, preços e giro.",
+        "vetor": "Margem recorrente por volume distribuído"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

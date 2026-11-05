@@ -1,0 +1,150 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_ISAENERGIA",
+  "data": "2026-11-04",
+  "tipo": "pos_resultado",
+  "titulo": "ISA Energia Brasil: Madeira amplia receita e gera ganho sem caixa",
+  "resumo": "O primeiro trimestre com consolidação de Madeira trouxe ganho contábil sem caixa, excluído da base de proventos. O lucro regulatório cresceu também em base comparável, mas a alta da dívida pede confirmação do retorno atribuível por ação.",
+  "negocio": "Transmissora brasileira que recebe receita regulada pela disponibilidade da rede e investe em novas concessões e reforços. Madeira amplia a operação em corrente contínua.",
+  "pilares_tese": [
+    {
+      "titulo": "Lucro regulatório precisa de ajuste",
+      "texto": "Remensuração de Madeira, compra vantajosa e venda de Garanhuns geraram efeito positivo sem caixa e excluído da base de proventos.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Financiamento e perímetro ampliam dívida",
+      "texto": "Emissões de debêntures e incorporação da dívida de Madeira aumentaram o saldo bruto, apesar de menor custo médio nominal da dívida frente ao fechamento anual.",
+      "evidencias": [
+        "F3"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Caixa recorrente por ação",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "A nova participação amplia a geração atribuível antes de dívida e capex. O teste é o caixa líquido que resta por ação.",
+      "evidencias": [
+        "F1",
+        "F3"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Investor Day previsto no calendário do RI.",
+      "data": "2026-11-18",
+      "tipo": "dia_do_investidor",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "A expansão de rede e a dívida podem consumir caixa antes da plena remuneração dos projetos. O lucro regulatório inclui efeitos que não financiam distribuição.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1",
+        "F3"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Entrada de projetos e disponibilidade sustentam maior caixa após investimentos. Alvo de {{fact:val.BR_ISAENERGIA.alvo_otimista}}.",
+    "base": "Madeira amplia a geração recorrente, com absorção parcial por investimento e custo financeiro. Alvo de {{fact:val.BR_ISAENERGIA.preco_alvo}}.",
+    "pessimista": "Custo de dívida, atrasos e menor conversão em caixa reduzem retorno por ação. Alvo de {{fact:val.BR_ISAENERGIA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Alvo de {{fact:val.BR_ISAENERGIA.preco_alvo}} ante {{fact:val.BR_ISAENERGIA.preco}}. Rating {{fact:val.BR_ISAENERGIA.rating_codigo}} e confiança {{fact:val.BR_ISAENERGIA.confianca_codigo}}. Potencial de {{fact:val.BR_ISAENERGIA.upside}} sobre o preço de referência. O alvo excede o consenso público em {{fact:val.BR_ISAENERGIA.diff_consenso}}, com dispersão entre métodos de {{fact:val.BR_ISAENERGIA.cv_metodos}}. O teste econômico é a conversão da receita em caixa após capex e dívida.",
+  "ultimo_resultado": "No 3T26, o lucro regulatório avançou em comparação anual, inclusive na base pró-forma sem o efeito não recorrente. A companhia excluiu o ganho sem caixa da base de proventos. O comunicado consultado não apresentou nova projeção formal consolidada.",
+  "guidance": "sem_guidance",
+  "tom_gestao": "neutro",
+  "governanca": "A controladora é a ISA Capital do Brasil. A leitura por ação deve considerar a base após a oferta e os direitos da classe. O comunicado distingue lucro regulatório e a base de distribuição.",
+  "o_que_mudou": "A nota anterior acompanhava a troca como evento posterior ao balanço. O 3T26 incorpora Madeira e quantifica separadamente o efeito contábil. A nova leitura distingue resultado comparável e dívida consolidada.",
+  "gatilhos_revisao": [
+    "Atraso de entrada em operação reduz receita regulada.",
+    "Investimento ou custo de dívida supera a capacidade de conversão de caixa.",
+    "Mudanças na administração alteram a disciplina de alocação."
+  ],
+  "lacunas_de_dados": [
+    "A ponte de caixa por concessão e os efeitos por ação ainda exigem conciliação.",
+    "Não foram estimadas probabilidades implícitas dos cenários."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "ISA Energia Brasil",
+      "titulo": "Resultados regulatórios e efeitos da aquisição",
+      "url": "https://www.isaenergiabrasil.com.br/centro-de-midia/noticias/isa-energia-brasil-registra-lucro-liquido-regulatorio-de-r-19-bilhao-no-3t26-excluindo-efeitos-nao-recorrentes-lucro-pro-forma-cresce-14/",
+      "publicado_em": "2026-11-03",
+      "consultado_em": "2026-11-04"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "ISA Energia Brasil",
+      "titulo": "Central de resultados e calendário",
+      "url": "https://ri.isaenergiabrasil.com.br/pt",
+      "publicado_em": null,
+      "consultado_em": "2026-11-04"
+    },
+    {
+      "id": "F3",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "ISA Energia Brasil",
+      "titulo": "Composição e custo do endividamento",
+      "url": "https://ri.isaenergiabrasil.com.br/pt/informacoes-financeiras/endividamento",
+      "publicado_em": null,
+      "consultado_em": "2026-11-04"
+    }
+  ],
+  "posicao_competitiva": {
+    "titulo": "Execução de redes de longa distância",
+    "texto": "Madeira amplia experiência em transmissão em corrente contínua. O valor da escala depende de disponibilidade e da remuneração após investimento.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Resultado pró-forma e distribuição",
+    "texto": "Separar o lucro regulatório comparável da remensuração, compra vantajosa e alienação que não integram a base de proventos.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Dívida para expansão",
+    "texto": "A incorporação de Madeira e as emissões alteram a base de dívida. Avaliar maturidades e desembolsos diante da entrada de receita.",
+    "evidencias": [
+      "F1",
+      "F3"
+    ]
+  },
+  "contratese": {
+    "titulo": "Lucro contábil não paga expansão",
+    "texto": "Se capex e custo da dívida absorverem a receita adicional, o lucro regulatório maior não se converte em retorno para o acionista.",
+    "evidencias": [
+      "F1",
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Disponibilidade, dívida e caixa",
+      "texto": "Acompanhar entrada de projetos, receita recorrente, caixa depois de investimento e dívida por indexador.",
+      "evidencias": [
+        "F1",
+        "F3"
+      ]
+    }
+  ]
+}

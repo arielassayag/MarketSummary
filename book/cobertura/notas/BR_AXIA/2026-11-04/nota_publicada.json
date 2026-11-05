@@ -1,0 +1,322 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-04",
+    "manifest_sha256": "88e4dbb61abe0e425424189c9c90ad13ac5816783f5b48f91711756b32316ec3",
+    "modelo_as_of": "2026-11-04"
+  },
+  "conviccao": 1,
+  "data": "2026-11-04",
+  "hashes": {
+    "contexto": "ba498de709379898533bd2c11bf7c737975015515c65712c869e6d71f644047f",
+    "factbook": "4bc44bc8e03acee49c588649d075b155ff92e8b83846afab5d68c27b40c338e3",
+    "nota_json": "4b47925ea091f54c78b8189681aae41aa5096bf2c1e2516b796532acc4ee18eb"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_AXIA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-04",
+  "published_at": "2026-11-05T01:46:44.169455+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar desembolsos de modernização e expansão junto a dívida e desembolsos efetivos aos acionistas.",
+        "titulo": "Capex e decisões de proventos"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Operação melhora, com capex e encargos limitando o caixa incremental. Alvo de R$ 41,06.",
+      "otimista": "Eficiência e geração de receita regulada sustentam caixa após expansão. Alvo de R$ 49,47.",
+      "pessimista": "Custos, obrigações e atraso de obras absorvem a melhora operacional. Alvo de R$ 33,47."
+    },
+    "comentario_valuation": "Alvo de R$ 41,06 ante R$ 47,58. Rating Neutro e confiança C. Potencial de -13,70% sobre o preço de referência. O alvo fica abaixo da cotação de referência e do consenso público, com diferença de -41,15% frente ao consenso. O retorno depende da conversão de resultado regulatório em caixa por classe.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Encargos e capex podem absorver a melhora do EBITDA, mesmo com despesas operacionais menores.",
+        "titulo": "Eficiência pode não chegar ao caixa por ação"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-04",
+    "dados_simulados": false,
+    "data": "2026-11-04",
+    "ficha": [
+      {
+        "fato": "val.BR_AXIA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 47,58"
+      },
+      {
+        "fato": "val.BR_AXIA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 41,06"
+      },
+      {
+        "fato": "val.BR_AXIA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-13,70%"
+      },
+      {
+        "fato": "val.BR_AXIA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_AXIA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_AXIA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 49,47"
+      },
+      {
+        "fato": "val.BR_AXIA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "46,20%"
+      },
+      {
+        "fato": "val.BR_AXIA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 33,47"
+      },
+      {
+        "fato": "val.BR_AXIA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "20,51%"
+      },
+      {
+        "fato": "val.BR_AXIA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "13,05%"
+      },
+      {
+        "fato": "val.BR_AXIA.wacc",
+        "rotulo": "WACC",
+        "valor": "10,92%"
+      },
+      {
+        "fato": "val.BR_AXIA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_AXIA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-9,53%"
+      },
+      {
+        "fato": "val.BR_AXIA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-6,55%"
+      },
+      {
+        "fato": "val.BR_AXIA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,4x"
+      },
+      {
+        "fato": "val.BR_AXIA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,1x"
+      },
+      {
+        "fato": "val.BR_AXIA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 69,78"
+      },
+      {
+        "fato": "val.BR_AXIA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-41,15%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-04",
+        "id": "F1",
+        "instituicao": "Axia Energia",
+        "publicado_em": "2026-11-04",
+        "tipo": "Relações com investidores",
+        "titulo": "Comunicado de resultados e investimentos",
+        "url": "https://axia.com.br/w/resultados-3-trimestre-2026"
+      },
+      {
+        "consultado_em": "2026-11-04",
+        "id": "F2",
+        "instituicao": "Axia Energia",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Central de resultados e documentação societária",
+        "url": "https://ri.axia.com.br/informacoes-ao-mercado/central-de-resultados-axia-energia-4/"
+      },
+      {
+        "consultado_em": "2026-11-04",
+        "id": "F3",
+        "instituicao": "Axia Energia",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Informações sobre segmento de listagem",
+        "url": "https://ri.axia.com.br/servicos-de-ri/perguntas-frequentes/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Economia operacional não persiste.",
+      "Investimento ou obrigações superam o caixa recorrente.",
+      "Mudanças societárias alteram o fluxo por classe."
+    ],
+    "governanca": "O RI informa listagem no Novo Mercado e mantém seção para conversão ou resgate das preferenciais específicas. A leitura de aprovações do conselho deve distinguir destinação, declaração e pagamento efetivo.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Monitorar despesas operacionais, margem de geração, disponibilidade da rede e caixa após capex e encargos.",
+        "titulo": "Eficiência, disponibilidade e caixa"
+      }
+    ],
+    "issuer_id": "BR_AXIA",
+    "lacunas_de_dados": [
+      "Conciliação integral entre base regulatória, societária e fluxo de caixa por classe permanece pendente.",
+      "O comunicado resumido não esclarece todos os compromissos e pagamentos. "
+    ],
+    "modelo_de_cobertura": "2026-11-04",
+    "negocio": "Grupo brasileiro de geração, comercialização e transmissão. O desempenho combina margem de energia contratada, disponibilidade de rede e investimentos em expansão e modernização.",
+    "nome": "Axia Energia (ex-Eletrobras)",
+    "o_que_mudou": "O resultado novo distingue queda anual do lucro ajustado no trimestre de melhora no acumulado. Avanço operacional e aumento de investimentos reforçam a necessidade de conciliar o caixa por classe.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      },
+      {
+        "issuer_id": "BR_CPFL",
+        "nome": "CPFL Energia"
+      },
+      {
+        "issuer_id": "BR_ENERGISA",
+        "nome": "Energisa"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A redução de despesas operacionais apoiou a expansão do EBITDA regulatório ajustado. Esse indicador tem base distinta do lucro societário.",
+        "titulo": "Eficiência melhora EBITDA regulatório"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A companhia elevou o investimento no acumulado e informou aprovações do conselho para capital destinado a acionistas. Aprovação não confirma pagamento nem caixa recorrente.",
+        "titulo": "Investimento e remuneração disputam caixa"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A rede de ativos permite ganhos de compras e manutenção. A vantagem exige que a economia de despesas preserve disponibilidade e qualidade.",
+        "titulo": "Escala de geração e transmissão"
+      }
+    ],
+    "publicada_em": "2026-11-05T01:46:44.169455+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "EBITDA regulatório e lucro ajustado trimestral seguiram direções diferentes. Separar efeito financeiro e comparar cada indicador na mesma base.",
+        "titulo": "Bases regulatória e societária"
+      }
+    ],
+    "resumo": "Eficiência operacional apoiou o EBITDA regulatório. O lucro societário ajustado caiu no trimestre ante o ano anterior, apesar do avanço acumulado. Capex maior e aprovações para remuneração exigem conciliar caixa e compromissos antes de inferir capacidade de distribuição.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Pressão de despesas financeiras, investimentos e obrigações históricas pode reduzir caixa atribuível mesmo com melhora operacional."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Axia Energia: EBITDA regulatório cresce e lucro ajustado recua no trimestre",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "No 3T26, o EBITDA regulatório ajustado cresceu na comparação anual, enquanto o lucro societário ajustado caiu. No acumulado, o lucro ajustado e o investimento cresceram. O comunicado consultado não apresentou nova faixa formal consolidada.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Redução de despesas pode compensar parte do capex, mas é preciso separar economia recorrente e compromissos históricos.",
+        "vetor": "Caixa após modernização e expansão"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

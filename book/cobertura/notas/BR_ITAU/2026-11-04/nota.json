@@ -1,0 +1,136 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_ITAU",
+  "data": "2026-11-04",
+  "tipo": "pos_resultado",
+  "titulo": "Itaú Unibanco: margem com clientes avança e projeção tributária cai",
+  "resumo": "A margem com clientes sustentou o crescimento do lucro recorrente gerencial, enquanto serviços e seguros pouco avançaram. O trimestre também teve melhora na margem com mercado. A gestão reduziu a faixa de alíquota efetiva e manteve as demais projeções vigentes.",
+  "negocio": "Banco diversificado em crédito, serviços, seguros e operações de mercado no Brasil e no exterior.",
+  "pilares_tese": [
+    {
+      "titulo": "Margem e serviços divergem",
+      "texto": "A margem com clientes cresceu em base anual e sequencial, enquanto serviços e seguros ficaram próximos da estabilidade.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Perdas e tributos exigem leitura separada",
+      "texto": "O custo de crédito em valor absoluto avançou. A redução da projeção de alíquota ajuda o resultado líquido sem alterar o retorno operacional antes de tributos.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Margem com clientes após perdas",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O avanço da carteira e da receita de juros precisa superar a despesa de perda esperada e a recuperação mais lenta de serviços.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Divulgação prevista no calendário de relações com investidores.",
+      "data": "2027-02-03",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Piora de safras recentes pode pressionar provisões quando o crescimento da carteira desacelerar. A melhora de tesouraria não deve ser tratada como margem recorrente com clientes.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Crescimento seletivo e disciplina de custos elevam o retorno após perdas. Alvo de {{fact:val.BR_ITAU.alvo_otimista}}.",
+    "base": "A margem avança, com serviços mais lentos e absorção de parte do ganho pelo custo de crédito. Alvo de {{fact:val.BR_ITAU.preco_alvo}}.",
+    "pessimista": "Deterioração da carteira e custos de captação mais altos reduzem o retorno sobre o capital. Alvo de {{fact:val.BR_ITAU.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Alvo de {{fact:val.BR_ITAU.preco_alvo}} ante {{fact:val.BR_ITAU.preco}}. Rating {{fact:val.BR_ITAU.rating_codigo}} e confiança {{fact:val.BR_ITAU.confianca_codigo}}. Potencial de {{fact:val.BR_ITAU.upside}} sobre o preço de referência. O modelo situa o alvo abaixo do preço de referência e do consenso público. O P/VP é {{fact:val.BR_ITAU.pb}}, e a divergência ante o consenso é {{fact:val.BR_ITAU.diff_consenso}}. O teste é a persistência do retorno após perdas e capital requerido.",
+  "ultimo_resultado": "No 3T26, lucro recorrente gerencial e margem com clientes cresceram em base anual e sequencial. Serviços e seguros avançaram pouco. A apresentação reduziu a faixa de alíquota efetiva e manteve as demais linhas vigentes, inclusive a faixa já revisada de serviços e seguros.",
+  "guidance": "reduzido",
+  "tom_gestao": "neutro",
+  "governanca": "O acompanhamento de distribuição deve separar lucro gerencial, capital regulatório e direitos por classe. O índice de capital divulgado avançou em relação ao trimestre anterior na base comparável apresentada.",
+  "o_que_mudou": "A nota anterior acompanhava a redução da projeção de serviços e seguros. A atualização atual é na alíquota efetiva, enquanto a margem com clientes cresceu e serviços e seguros permaneceram com pouca expansão.",
+  "gatilhos_revisao": [
+    "Margem após perdas recua de forma persistente.",
+    "Serviços e seguros ficam abaixo da faixa vigente.",
+    "A expansão consome a folga de capital."
+  ],
+  "lacunas_de_dados": [
+    "WACC indisponível no retrato.",
+    "A leitura de perdas por safra e a conciliação de capital distribuível seguem pendentes."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Itaú Unibanco",
+      "titulo": "Apresentação institucional de resultados",
+      "url": "https://filemanager-cdn.mziq.com/published/42787847-4cf6-4461-94a5-40ed237dca33/73694d49-62ad-490f-90ea-0ab2c2a5071e",
+      "publicado_em": "2026-11-03",
+      "consultado_em": "2026-11-04"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Itaú Unibanco",
+      "titulo": "Calendário de eventos",
+      "url": "https://www.itau.com.br/relacoes-com-investidores/servicos-ao-investidor/calendario-de-eventos/",
+      "publicado_em": null,
+      "consultado_em": "2026-11-04"
+    }
+  ],
+  "posicao_competitiva": {
+    "titulo": "Relacionamento sustenta receitas diversificadas",
+    "texto": "O crescimento da margem com clientes contrasta com a baixa expansão de serviços. A profundidade do relacionamento precisa aparecer em receitas após risco.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Separar clientes, tesouraria e tributos",
+    "texto": "A margem de mercado cresceu e a faixa tributária caiu. Nenhum desses itens substitui a análise de margem com clientes líquida de perdas.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Capital frente à expansão da carteira",
+    "texto": "Testar a folga do capital principal frente a ativos ponderados pelo risco e à capacidade de distribuição.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "O lucro pode crescer com piora de risco",
+    "texto": "A inadimplência longa no recorte da apresentação subiu na comparação sequencial. O crescimento do lucro não elimina perdas que podem aparecer com defasagem.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Receita recorrente e perdas",
+      "texto": "Acompanhar margem com clientes, inadimplência, custo de crédito, serviços e capital.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ]
+}

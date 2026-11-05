@@ -1,0 +1,334 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-04",
+    "manifest_sha256": "88e4dbb61abe0e425424189c9c90ad13ac5816783f5b48f91711756b32316ec3",
+    "modelo_as_of": "2026-11-04"
+  },
+  "conviccao": 1,
+  "data": "2026-11-04",
+  "hashes": {
+    "contexto": "a9b81cacf63b40415bd453cfdc5aedff7b09b6df1caac6a4ff01b366c9664b85",
+    "factbook": "a09f9f5e0490fbe1dd4142128d58b7de860740718db5737c7e5c6b5b4edcbcd3",
+    "nota_json": "7deb25107b76e34363965af528b77e7e863c22b5582ea2ba05d33f869990e9ec"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_RAIADROGASIL",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-03",
+  "published_at": "2026-11-05T01:42:30.761391+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A companhia manteve a meta de abertura bruta e passou a controlar a Stix. Testar maturação do investimento físico e retorno econômico da fidelidade separadamente.",
+        "titulo": "Aberturas e fidelidade"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-12-07",
+        "descricao": "Investor Day com discussão de expansão e execução operacional.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "outro"
+      }
+    ],
+    "cenarios": {
+      "base": "A expansão permanece no ritmo projetado, com parte da geração consumida por giro e investimento. Alvo de R$ 9,45.",
+      "otimista": "Vendas maduras e novos pontos de venda elevam produtividade, com normalização do giro. Alvo de R$ 11,90.",
+      "pessimista": "Competição em preço e crescimento do giro comprimem retorno sobre a rede. Alvo de R$ 7,40."
+    },
+    "comentario_valuation": "Alvo de R$ 9,45 ante R$ 15,44. Rating Venda e confiança B. Potencial de -38,78% sobre o preço de referência. Testar o alvo contra caixa por loja madura e retorno incremental das aberturas, separando variação sazonal de giro e consumo persistente de capital. O modelo situa o alvo abaixo do preço de referência e do consenso público; a diferença frente ao consenso é -63,32%.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Se o ganho de participação exigir estoques e capex persistentemente maiores, a expansão comercial pode elevar lucro com retorno incremental menor.",
+        "titulo": "Escala não elimina intensidade de capital"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-04",
+    "dados_simulados": false,
+    "data": "2026-11-04",
+    "ficha": [
+      {
+        "fato": "val.BR_RAIADROGASIL.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 15,44"
+      },
+      {
+        "fato": "val.BR_RAIADROGASIL.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 9,45"
+      },
+      {
+        "fato": "val.BR_RAIADROGASIL.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-38,78%"
+      },
+      {
+        "fato": "val.BR_RAIADROGASIL.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_RAIADROGASIL.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_RAIADROGASIL.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 11,90"
+      },
+      {
+        "fato": "val.BR_RAIADROGASIL.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_RAIADROGASIL.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 7,40"
+      },
+      {
+        "fato": "val.BR_RAIADROGASIL.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_RAIADROGASIL.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "14,35%"
+      },
+      {
+        "fato": "val.BR_RAIADROGASIL.wacc",
+        "rotulo": "WACC",
+        "valor": "12,24%"
+      },
+      {
+        "fato": "val.BR_RAIADROGASIL.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_RAIADROGASIL.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-35,27%"
+      },
+      {
+        "fato": "val.BR_RAIADROGASIL.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-74,34%"
+      },
+      {
+        "fato": "val.BR_RAIADROGASIL.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "14,1x"
+      },
+      {
+        "fato": "val.BR_RAIADROGASIL.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "3,7x"
+      },
+      {
+        "fato": "val.BR_RAIADROGASIL.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 25,77"
+      },
+      {
+        "fato": "val.BR_RAIADROGASIL.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-63,32%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-04",
+        "id": "F1",
+        "instituicao": "RD Saúde",
+        "publicado_em": "2026-11-03",
+        "tipo": "Relações com investidores",
+        "titulo": "Release trimestral",
+        "url": "https://ri.rdsaude.com.br/Download.aspx?Arquivo=qMx8l+yEDVlhl3fmCMUXmA%3D%3D"
+      },
+      {
+        "consultado_em": "2026-11-04",
+        "id": "F2",
+        "instituicao": "RD Saúde",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Central de resultados e calendário",
+        "url": "https://ri.rdsaude.com.br/"
+      },
+      {
+        "consultado_em": "2026-11-04",
+        "id": "F3",
+        "instituicao": "RD Saúde",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Atas e documentos societários",
+        "url": "https://ri.rdsaude.com.br/central-de-downloads"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Vendas maduras passam a acompanhar apenas o reajuste regulado.",
+      "Consumo de giro persiste após o período de expansão sazonal.",
+      "Margem ou retorno das novas lojas enfraquece."
+    ],
+    "governanca": "O RI publicou a ata de aprovação dos resultados pelo conselho. A aquisição da participação remanescente na Stix altera o controle do programa de fidelidade e merece acompanhamento de governança e capital empregado.",
+    "guidance": "mantido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar vendas maduras, margem por canal, estoques, caixa livre e fechamentos de lojas.",
+        "titulo": "Produtividade e giro"
+      }
+    ],
+    "issuer_id": "BR_RAIADROGASIL",
+    "lacunas_de_dados": [
+      "A contribuição líquida da fidelidade e do canal digital para retorno por cliente requer divulgação adicional.",
+      "Falta decompor a reversibilidade do consumo de giro por coorte de lojas."
+    ],
+    "modelo_de_cobertura": "2026-11-04",
+    "negocio": "Rede de varejo farmacêutico com as bandeiras Raia e Drogasil. Combina capilaridade de lojas, vendas digitais e serviços de saúde, além de programas de fidelidade.",
+    "nome": "Raia Drogasil",
+    "o_que_mudou": "O 3T26 acrescenta evidência de ganho de participação e manutenção do plano de aberturas, acompanhados de deterioração anual da conversão em caixa. A comparação de caixa mantém separado o perímetro da 4Bio, cuja venda foi discutida na nota anterior.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_3TENTOS",
+        "nome": "3tentos"
+      },
+      {
+        "issuer_id": "BR_AMBEV",
+        "nome": "Ambev"
+      },
+      {
+        "issuer_id": "BR_ASSAI",
+        "nome": "Assaí Atacadista"
+      },
+      {
+        "issuer_id": "BR_JBS",
+        "nome": "JBS N.V."
+      },
+      {
+        "issuer_id": "BR_MATEUS",
+        "nome": "Grupo Mateus"
+      },
+      {
+        "issuer_id": "BR_MDIAS",
+        "nome": "M. Dias Branco"
+      },
+      {
+        "issuer_id": "BR_NATURA",
+        "nome": "Natura Cosméticos"
+      },
+      {
+        "issuer_id": "BR_SAOMARTINHO",
+        "nome": "São Martinho"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O avanço das lojas maduras acima do reajuste regulado e o ganho de participação indicam crescimento além das novas aberturas. Comparar margem por canal antes de inferir retorno incremental.",
+        "titulo": "Vendas maduras sustentam crescimento"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O ciclo de caixa passou de contribuição para consumo de recursos na comparação anual. Mais investimento também pressionou o caixa livre.",
+        "titulo": "Giro explica divergência de caixa"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A rede física sustenta conveniência e atendimento digital. Participação maior com vendas maduras em expansão dá evidência mais direta de tração que a contagem de aberturas.",
+        "titulo": "Densidade de rede e canal digital"
+      }
+    ],
+    "publicada_em": "2026-11-05T01:42:30.761391+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O lucro ajustado avançou, mas o caixa livre caiu. A leitura prioriza a ponte do resultado ao caixa, inclusive giro e investimento.",
+        "titulo": "Lucro e caixa têm sinais diferentes"
+      }
+    ],
+    "resumo": "As vendas maduras e a participação de mercado avançaram no 3T26. O caixa livre caiu na comparação anual: a absorção no giro e investimentos maiores limitam a leitura do crescimento do lucro ajustado.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "O crescimento da rede pode preservar participação à custa de caixa se estoques, despesas de loja e investimento avançarem mais do que a geração operacional."
+      }
+    ],
+    "setor": "Consumo básico",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "RD Saúde: expansão comercial avança, mas giro reduz caixa livre",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "No 3T26, receita bruta, vendas maduras e lucro ajustado cresceram em base anual; caixa operacional e caixa livre caíram. A administração reiterou a faixa anual de aberturas brutas.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A expansão cria espaço para vendas futuras, mas exige estoques e investimento antes de plena maturação.",
+        "vetor": "Capital de giro e maturação das lojas"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

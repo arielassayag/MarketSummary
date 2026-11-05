@@ -1,0 +1,126 @@
+{
+  "mind": "codex",
+  "issuer_id": "CO_GEOPARK",
+  "data": "2026-11-04",
+  "tipo": "pos_resultado",
+  "titulo": "GeoPark: descontos no petróleo e capex pressionam caixa",
+  "resumo": "A produção argentina aumentou, mas diferenciais de preço e custos reduziram o EBITDA ajustado. O caixa livre antes do serviço da dívida ficou negativo. O refinanciamento alonga vencimentos; o novo controle e a entrada na Venezuela ampliam o risco de execução.",
+  "negocio": "Exploradora e produtora independente de petróleo e gás com operação na Colômbia e na Argentina e entrada contratual na Venezuela.",
+  "pilares_tese": [
+    {
+      "titulo": "Volume e preço realizado divergem",
+      "texto": "Produção estável na Colômbia e maior em Vaca Muerta coexistiu com vendas menores, descontos mais amplos e custo unitário maior.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Projeto venezuelano altera controle",
+      "texto": "O contrato do bloco Bare tornou-se eficaz e a emissão associada tornou o Grupo Gilinski controlador. O efeito econômico depende de reabilitação e execução.",
+      "evidencias": [
+        "F2"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Preço líquido após diferenciais e proteção",
+      "direcao": "negativo",
+      "sensibilidade": "alta",
+      "texto": "O hedge reduz parte da exposição ao Brent, mas não elimina descontos locais nem custos de energia e intervenções.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [],
+  "riscos": [
+    {
+      "texto": "Capex antecipado, custos unitários e riscos contratuais podem prolongar o consumo de caixa. Alongar vencimentos reduz risco imediato sem reduzir automaticamente a dívida.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Vaca Muerta aumenta produção econômica e descontos locais se normalizam.",
+    "base": "Aumento de produção e refinanciamento sustentam a fase de investimento, ainda com pressão sobre caixa.",
+    "pessimista": "Descontos, custos e atrasos consomem liquidez mesmo após o alongamento."
+  },
+  "comentario_valuation": "Modelo em revisão; alvo e cenários de preço indisponíveis. Rating {{fact:val.CO_GEOPARK.rating_codigo}} e confiança {{fact:val.CO_GEOPARK.confianca_codigo}}. O teste de valor usa preços realizados, capital de manutenção e desenvolvimento e caixa atribuível por ação após a emissão.",
+  "ultimo_resultado": "No 3T26, receita, EBITDA ajustado e caixa operacional caíram frente ao trimestre anterior. A companhia manteve a expectativa de resultado anual dentro do guidance, apoiada em volumes e ajuste das proteções. O lucro incluiu benefício tributário diferido.",
+  "guidance": "mantido",
+  "tom_gestao": "neutro",
+  "governanca": "O Grupo Gilinski tornou-se controlador após a transação. Revisar direitos econômicos, termos da operação e exposição dos minoritários ao novo perímetro.",
+  "o_que_mudou": "O refinanciamento foi concluído após o trimestre, e o acordo venezuelano tornou-se eficaz. A suspensão de dividendos passou a valer com o resultado, preservando caixa durante o investimento.",
+  "gatilhos_revisao": [
+    "Descontos locais continuam se ampliando apesar das proteções.",
+    "Novos poços não convertem produção em caixa.",
+    "Capital necessário ao bloco Bare muda o perfil de risco."
+  ],
+  "lacunas_de_dados": [
+    "Economia do bloco Bare e cronograma detalhado de retomada ainda exigem confirmação.",
+    "Alvos e probabilidades indisponíveis no retrato."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "GeoPark",
+      "titulo": "Resultados trimestrais e refinanciamento",
+      "url": "https://www.geo-park.com/press_releases/3q2026-results/",
+      "publicado_em": "2026-11-03",
+      "consultado_em": "2026-11-04"
+    },
+    {
+      "id": "F2",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "GeoPark",
+      "titulo": "Conclusão da entrada na Venezuela",
+      "url": "https://www.geo-park.com/press_releases/geopark-completes-strategic-venezuela-entry-transaction/",
+      "publicado_em": "2026-11-02",
+      "consultado_em": "2026-11-04"
+    }
+  ],
+  "posicao_competitiva": {
+    "titulo": "Transição da carteira de produção",
+    "texto": "A base colombiana dá suporte à expansão argentina, mas descontos e custos de escoamento limitam a vantagem do crescimento físico.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Caixa e benefício fiscal",
+    "texto": "A geração operacional perdeu força com menor rentabilidade e consumo no giro. Benefício tributário diferido não representa entrada de caixa.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Alongamento de dívida e suspensão de dividendos",
+    "texto": "A emissão refinanciou vencimentos e financia parte do programa argentino. Acompanhar custo de juros e caixa residual após capex.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Crescimento físico pode piorar retorno",
+    "texto": "A antecipação de desenvolvimento pode elevar produção enquanto preços realizados e capital por poço deprimem caixa.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Economia por barril e liquidez",
+      "texto": "Monitorar diferenciais de preço, custo por barril, capex, caixa livre antes da dívida e produção por região.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ]
+}

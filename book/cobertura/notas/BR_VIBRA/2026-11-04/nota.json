@@ -1,0 +1,161 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_VIBRA",
+  "data": "2026-11-04",
+  "tipo": "atualizacao",
+  "titulo": "Vibra: lucro reportado cresce, com conversão de caixa a conferir",
+  "resumo": "A cobertura pública do balanço aponta lucro e EBITDA ajustado maiores em base anual, com fluxo operacional menor. A atualização preserva a distinção entre distribuição e Comerc e deixa pendente a conciliação no documento integral do emissor.",
+  "negocio": "Distribuidora de combustíveis para postos e empresas, com atuação em energia por meio da Comerc.",
+  "pilares_tese": [
+    {
+      "titulo": "Margem recorrente e margem ajustada",
+      "texto": "A cobertura pública distingue margem de distribuição ajustada e recorrente. A avaliação depende de identificar componentes temporários antes de projetar o trimestre.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "titulo": "Dívida e caixa usam comparações distintas",
+      "texto": "A cobertura aponta dívida líquida menor ante o trimestre anterior, mas fluxo operacional inferior ao do ano anterior. As duas comparações não demonstram, por si, melhora permanente do caixa.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Margem recorrente por volume distribuído",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "Rede de postos e vendas empresariais podem sustentar escala; a margem precisa resistir à normalização de estoques, preços e giro.",
+      "evidencias": [
+        "F2",
+        "F3"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Teleconferência prevista no calendário oficial para conferir margem, caixa e energia.",
+      "data": "2026-11-05",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Ajustes e itens temporários podem elevar a margem publicada sem melhorar caixa. Dívida e risco da comercialização de energia exigem avaliação separada.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F2",
+        "F4"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Rede e vendas empresariais sustentam margem recorrente, enquanto a Comerc melhora caixa. Alvo de {{fact:val.BR_VIBRA.alvo_otimista}}.",
+    "base": "Distribuição mantém ganho operacional parcial, com giro e financiamento condicionando o caixa. Alvo de {{fact:val.BR_VIBRA.preco_alvo}}.",
+    "pessimista": "Normalização de margens e pressão de giro reduzem caixa e interrompem a queda da dívida. Alvo de {{fact:val.BR_VIBRA.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Alvo de {{fact:val.BR_VIBRA.preco_alvo}} ante {{fact:val.BR_VIBRA.preco}}. Rating {{fact:val.BR_VIBRA.rating_codigo}} e confiança {{fact:val.BR_VIBRA.confianca_codigo}}. Potencial de {{fact:val.BR_VIBRA.upside}} sobre o preço de referência. O alvo fica abaixo do consenso público em {{fact:val.BR_VIBRA.diff_consenso}}. Testar caixa recorrente de distribuição e energia, separando financiamentos e itens temporários.",
+  "ultimo_resultado": "A imprensa de 2026-11-04 reportou lucro, volumes e EBITDA ajustado maiores na comparação anual do 3T26, além de queda anual do fluxo operacional. O release integral e a confirmação de guidance não foram obtidos nas fontes primárias acessadas.",
+  "guidance": "nd",
+  "tom_gestao": "neutro",
+  "governanca": "O fato relevante da CVM registra aprovação de emissão de debêntures. Separar condições aprovadas, desembolsos e amortizações na leitura da estrutura de capital.",
+  "o_que_mudou": "A nota anterior antecedia o balanço. A cobertura pública agora indica aumento do lucro e retração anual do caixa operacional. A revisão documental da composição de margem e caixa fica pendente.",
+  "gatilhos_revisao": [
+    "Margem recorrente por volume recua.",
+    "Giro continua a consumir caixa apesar de lucro maior.",
+    "Comerc não converte a melhora operacional em caixa."
+  ],
+  "lacunas_de_dados": [
+    "Release integral e ITR do trimestre não foram obtidos nesta consulta.",
+    "Faltam conciliar giro, itens não recorrentes e contribuição líquida de caixa da Comerc."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Vibra Energia",
+      "titulo": "Calendário de resultados e teleconferência",
+      "url": "https://ri.vibraenergia.com.br/servicos-aos-investidores/calendario-de-r-i/",
+      "publicado_em": null,
+      "consultado_em": "2026-11-04"
+    },
+    {
+      "id": "F2",
+      "tipo": "imprensa",
+      "instituicao": "Estadão Conteúdo via CNN Brasil",
+      "titulo": "Cobertura do balanço trimestral",
+      "url": "https://www.cnnbrasil.com.br/economia/money/negocios/vibra-tem-lucro-de-r-24-bi-no-3-trimestre-alta-de-504/",
+      "publicado_em": "2026-11-04",
+      "consultado_em": "2026-11-04"
+    },
+    {
+      "id": "F3",
+      "tipo": "imprensa",
+      "instituicao": "Visno Invest",
+      "titulo": "Síntese pública de margem, segmentos e caixa",
+      "url": "https://visnoinvest.com.br/news/16105/vibra-vbbr3-registra-lucro-liquido-de-r-25-bi-no-3t26",
+      "publicado_em": "2026-11-04",
+      "consultado_em": "2026-11-04"
+    },
+    {
+      "id": "F4",
+      "tipo": "regulatorio",
+      "instituicao": "CVM",
+      "titulo": "Fato relevante sobre emissão de debêntures",
+      "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1565350&numSequencia=1090056&numVersao=1",
+      "publicado_em": "2026-09-04",
+      "consultado_em": "2026-11-04"
+    }
+  ],
+  "posicao_competitiva": {
+    "titulo": "Rede e clientes empresariais",
+    "texto": "Escala de rede e volume podem reduzir custo unitário, desde que novas bandeiras e contratos preservem margem recorrente.",
+    "evidencias": [
+      "F3"
+    ]
+  },
+  "qualidade_resultados": {
+    "titulo": "Lucro e fluxo operacional",
+    "texto": "A alta anual do lucro reportada na imprensa veio com menor caixa operacional. A decomposição do giro fica pendente.",
+    "evidencias": [
+      "F2",
+      "F3"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Dívida e necessidade de caixa",
+    "texto": "A queda sequencial da dívida relatada deve ser confrontada com desembolsos, juros e captação. A aprovação de debêntures não mede caixa livre.",
+    "evidencias": [
+      "F3",
+      "F4"
+    ]
+  },
+  "contratese": {
+    "titulo": "Melhora de margem pode ser temporária",
+    "texto": "Se itens não recorrentes ou condições temporárias explicarem parte da alta, volumes maiores não garantem retorno incremental.",
+    "evidencias": [
+      "F3"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Margem recorrente, giro e Comerc",
+      "texto": "Acompanhar margem por volume, estoques, recebíveis, caixa operacional, dívida e contribuição de energia.",
+      "evidencias": [
+        "F3",
+        "F4"
+      ]
+    }
+  ]
+}

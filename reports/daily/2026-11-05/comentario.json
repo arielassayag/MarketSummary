@@ -1,0 +1,16 @@
+{
+ "mind":"codex",
+ "headline":"Perdas no lado comprado superam a proteção das posições vendidas",
+ "paragraphs":[
+ "A carteira simulada registrou retorno de {{fact:day.ret}}, com resultado de {{fact:day.pnl_usd}} e acumulado de {{fact:itd.ret}} desde o início. O lado comprado contribuiu com {{fact:attr.long}}, enquanto o vendido compensou parcialmente as perdas, com {{fact:attr.short}}. A atribuição específica respondeu por {{fact:attr.specific}}, e a fatorial, por {{fact:attr.factor}}.",
+ "Mercado Livre e Embraer lideraram as contribuições positivas, com {{fact:top.contrib.1.contrib}} e {{fact:top.contrib.2.contrib}}, respectivamente. Tenda, Ero Copper e Vista foram os maiores detratores, com {{fact:top.detract.1.contrib}}, {{fact:top.detract.2.contrib}} e {{fact:top.detract.3.contrib}}. Energia contribuiu com {{fact:attr.sector.Energy}}, e materiais, com {{fact:attr.sector.Materials}}.",
+ "O Ibovespa recuou {{fact:mkt.BVSP.ret_1d}} em reais. O índice mexicano avançou {{fact:mkt.MXX.ret_1d}} em pesos mexicanos. Os calendários públicos do Banco Central do Brasil e do Banco de México situam o pregão após a reunião do Copom encerrada em 04/11/2026 e na data prevista para a decisão monetária mexicana de 05/11/2026. Essa coincidência de calendário não estabelece causalidade para os resultados por emissor.",
+ "A vol ex-ante encerrou em {{fact:risk.ex_ante_vol}}, abaixo da banda de {{fact:mandate.vol_band_min}} a {{fact:mandate.vol_band_max}}, com beta de {{fact:risk.beta}}. A exposição bruta ficou em {{fact:risk.gross}}, a líquida em {{fact:risk.net}} e o VaR diário em {{fact:risk.var_1d}}. O drawdown alcançou {{fact:dd.current}}."
+ ],
+ "risk_flags":[
+ "A volatilidade prevista permanece abaixo da banda, indicando subutilização do orçamento de risco.",
+ "Orizon e Grupo Financiero Galicia mantêm risco alto de squeeze nas posições vendidas.",
+ "O índice Merval ficou sem cotação no pregão. A consulta do aluguel B3 referente a 04/11/2026 falhou por indisponibilidade de rede; a lacuna permanece explícita.",
+ "Paridades de ADRs e revisões históricas não aplicadas limitam a interpretação dos dados."
+ ]
+}

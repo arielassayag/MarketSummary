@@ -1,0 +1,305 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-04",
+    "manifest_sha256": "88e4dbb61abe0e425424189c9c90ad13ac5816783f5b48f91711756b32316ec3",
+    "modelo_as_of": "2026-11-02"
+  },
+  "conviccao": 1,
+  "data": "2026-11-05",
+  "hashes": {
+    "contexto": "88594fc776be73d6c224ce2469f3d224f9a6ed26204111460d6249bce5664028",
+    "factbook": "f2c33095e1c88dc93916baf3f8bf831da2e0795f1a999eaf2c6d844329063ba7",
+    "nota_json": "9b41dfe7ea68fb6d91b0e245833d0e505f0e544889d1e5f39d8116a3e0fe2d6d"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_SABESP",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-05",
+  "published_at": "2026-11-06T01:40:12.052058+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A dívida aumentou frente ao fechamento anual. Acompanhar liquidez e maturidade das obrigações antes de ampliar convicção.",
+        "titulo": "Investimento e dívida"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-06",
+        "descricao": "Conferência de resultados: esclarecer financiamento, caixa e metas.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Remuneração contratual e financiamento equilibrados; alvo de R$ 22,41 no modelo anterior ao balanço.",
+      "otimista": "Obras remuneradas e disciplina financeira sustentam o alvo de R$ 26,13.",
+      "pessimista": "Custos e atrasos comprimem retorno; alvo de R$ 19,03."
+    },
+    "comentario_valuation": "Preço de referência R$ 24,70, ke 12,64% e consenso público R$ 34,26. A comparação com energia e gás exige ajustar obrigações de investimento. Não atribuímos a divergência frente ao consenso a expectativas específicas sem evidência.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Ganhos persistentes de caixa após investimento e juros enfraqueceriam a cautela; crescimento apenas contábil não bastaria.",
+        "titulo": "Teste de invalidação"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-05",
+    "dados_simulados": false,
+    "data": "2026-11-05",
+    "ficha": [
+      {
+        "fato": "val.BR_SABESP.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 24,70"
+      },
+      {
+        "fato": "val.BR_SABESP.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 22,41"
+      },
+      {
+        "fato": "val.BR_SABESP.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-9,27%"
+      },
+      {
+        "fato": "val.BR_SABESP.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_SABESP.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_SABESP.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 26,13"
+      },
+      {
+        "fato": "val.BR_SABESP.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "47,34%"
+      },
+      {
+        "fato": "val.BR_SABESP.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 19,03"
+      },
+      {
+        "fato": "val.BR_SABESP.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "22,15%"
+      },
+      {
+        "fato": "val.BR_SABESP.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,64%"
+      },
+      {
+        "fato": "val.BR_SABESP.wacc",
+        "rotulo": "WACC",
+        "valor": "10,03%"
+      },
+      {
+        "fato": "val.BR_SABESP.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_SABESP.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-6,95%"
+      },
+      {
+        "fato": "val.BR_SABESP.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-6,85%"
+      },
+      {
+        "fato": "val.BR_SABESP.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "10,7x"
+      },
+      {
+        "fato": "val.BR_SABESP.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,9x"
+      },
+      {
+        "fato": "val.BR_SABESP.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 34,26"
+      },
+      {
+        "fato": "val.BR_SABESP.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-34,59%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-05",
+        "id": "F1",
+        "instituicao": "Sabesp",
+        "publicado_em": "2026-11-05",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado trimestral e demonstrações consolidadas",
+        "url": "https://filemanager-cdn.mziq.com/published/9e47ee51-f833-4a23-af98-2bac9e54e0b3/0893b718-acaa-4fb8-af6e-629cd24dd620"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Reavaliação do modelo após o balanço.",
+      "Mudanças na remuneração regulatória e no financiamento."
+    ],
+    "governanca": "Examinar contratos e atos regulatórios antes de concluir sobre liberdade de distribuição e remuneração das obras. Preservar base por ação ajustada ao desdobramento informado pelo emissor.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Monitorar recebimento, qualidade, reconhecimento dos ativos e financiamento; atrasos sem compensação tarifária deteriorariam a hipótese.",
+        "titulo": "Execução e retorno"
+      }
+    ],
+    "issuer_id": "BR_SABESP",
+    "lacunas_de_dados": [
+      "Modelo de 2026-11-04 anterior ao resultado corrente.",
+      "ITR e contratos regulatórios não conciliados integralmente.",
+      "Sem evidência suficiente sobre expectativas precificadas pelo mercado."
+    ],
+    "modelo_de_cobertura": "2026-11-04",
+    "negocio": "Prestadora de água e esgotamento sanitário em São Paulo. A tese depende da remuneração contratual das obras, qualidade do serviço e disciplina financeira.",
+    "nome": "Sabesp",
+    "o_que_mudou": "Desde 2026-10-19, incorporamos a leitura primária de 3T26. Melhora operacional convive com pressão financeira. A atualização qualitativa não altera o valuation anterior ao balanço.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      },
+      {
+        "issuer_id": "BR_CPFL",
+        "nome": "CPFL Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Sabesp, 2026-11-05: receita e EBITDA ajustados avançaram, com tarifa e novas economias; chuvas prejudicaram o mix. Julgamos necessário testar a persistência após custos comerciais.",
+        "titulo": "Crescimento operacional"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O lucro ajustado recuou e a despesa de juros aumentou com o financiamento das obras. A hipótese exige retorno depois do serviço da dívida.",
+        "titulo": "Financiamento limita o lucro"
+      }
+    ],
+    "publicada_em": "2026-11-06T01:40:12.052058+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Créditos tributários e diferenças de perímetro exigem conciliação. Nossa análise prioriza caixa após juros e obras para avaliar a remuneração do acionista.",
+        "titulo": "Resultado e caixa"
+      }
+    ],
+    "resumo": "Mantemos neutralidade e baixa convicção. O resultado de 3T26 melhora a leitura operacional, mas financiamento e investimento limitam a conversão ao acionista. O modelo anterior ao balanço aponta alvo de R$ 22,41 e potencial de -9,27%; não representa reavaliação deste resultado.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Maior dívida e custo financeiro podem absorver ganhos operacionais."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Sabesp — avanço operacional e pressão do financiamento",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "No release de 3T26, a Sabesp separa construção, ativo financeiro, EMAE e efeitos não recorrentes, incluindo crédito tributário e Jaguaré. Receita e EBITDA ajustados cresceram; lucro ajustado caiu. O documento não explicita revisão formal de guidance anual nesta leitura; sem_guidance descreve essa ausência, não retirada.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O investimento aumentou e a carteira contratada avançou. Avaliar prazo até remuneração e geração de caixa, sem equiparar contratação a entrega.",
+        "vetor": "Reconhecimento e execução das obras"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

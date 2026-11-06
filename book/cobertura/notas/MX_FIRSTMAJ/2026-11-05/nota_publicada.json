@@ -1,0 +1,302 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-04",
+    "manifest_sha256": "88e4dbb61abe0e425424189c9c90ad13ac5816783f5b48f91711756b32316ec3",
+    "modelo_as_of": "2026-11-02"
+  },
+  "conviccao": 1,
+  "data": "2026-11-05",
+  "hashes": {
+    "contexto": "18c03ed6456384203ee34fb3e693b090e4ecfa5e519e5d6051ca71fbf305debe",
+    "factbook": "a3ef3c49785ac8aae6d3fad0728acf2aacca01ced3a6d13cabff893ae975544f",
+    "nota_json": "0c0a0a8524fc5905a3e38c5674bfcb00172301aa70766b5fbfcd0b75a56bd068"
+  },
+  "is_synthetic": false,
+  "issuer_id": "MX_FIRSTMAJ",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-05",
+  "published_at": "2026-11-06T01:41:43.175093+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Investimentos aumentaram, incluindo Jerritt Canyon. Nossa hipótese exige retorno após desenvolvimento e manutenção.",
+        "titulo": "Retorno após investimento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Decisão judicial e negociação trabalhista podem alterar a visibilidade de retomada, sem prazo confirmado.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "outro"
+      }
+    ],
+    "cenarios": {
+      "base": "Disciplina de capital e custos condiciona alvo US$ 6,86.",
+      "otimista": "Normalização operacional sustentada; alvo US$ 8,24.",
+      "pessimista": "Interrupções e capital adicional pressionam o alvo de US$ 5,46."
+    },
+    "comentario_valuation": "Preço US$ 14,32, ke 12,14% e consenso público US$ 24,00. Probabilidades implícitas indisponíveis. Pares de materiais têm exposições distintas; a divergência do consenso não identifica o que está precificado.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Retomada sustentada e caixa após desenvolvimento fortaleceriam a tese; maior exposição ao preço dos metais isoladamente seria insuficiente.",
+        "titulo": "Condição para ampliar convicção"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-05",
+    "dados_simulados": false,
+    "data": "2026-11-05",
+    "ficha": [
+      {
+        "fato": "val.MX_FIRSTMAJ.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 14,32"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 6,86"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-52,09%"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 8,24"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 5,46"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,14%"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.wacc",
+        "rotulo": "WACC",
+        "valor": "11,84%"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-51,74%"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-60,38%"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "14,6x"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,4x"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 24,00"
+      },
+      {
+        "fato": "val.MX_FIRSTMAJ.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-71,42%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-05",
+        "id": "F1",
+        "instituicao": "First Majestic Silver",
+        "publicado_em": "2026-11-05",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado financeiro, dividendos e atualização operacional",
+        "url": "https://www.firstmajestic.com/investors/news-releases/first-majestic-announces-q3-2026-financial-results-and-quarterly-dividend-payment"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Resolução trabalhista e reabertura segura de San Dimas.",
+      "Reavaliação do modelo após o balanço."
+    ],
+    "governanca": "Separar caixa restrito de liquidez disponível e preservar a participação atribuível de Los Gatos. Não tratar distribuição como caixa livre integralmente disponível.",
+    "guidance": "retirado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar disponibilidade de San Dimas, teores, recuperação, custos, capital de desenvolvimento e caixa atribuível.",
+        "titulo": "Operação e retorno"
+      }
+    ],
+    "issuer_id": "MX_FIRSTMAJ",
+    "lacunas_de_dados": [
+      "Modelo anterior ao resultado corrente.",
+      "Demonstrações completas e conciliação de medidas não examinadas integralmente.",
+      "Probabilidades implícitas indisponíveis.",
+      "Percepção de mercado não demonstrada."
+    ],
+    "modelo_de_cobertura": "2026-11-04",
+    "negocio": "Produtora de prata e ouro com operações mexicanas e projetos de desenvolvimento. A comparação econômica deve preservar a parcela atribuível de Los Gatos.",
+    "nome": "First Majestic Silver",
+    "o_que_mudou": "Desde 2026-10-29, recebemos resultado financeiro e retirada formal das metas de San Dimas. Mantemos prudência qualitativa até reavaliação do modelo e maior visibilidade operacional.",
+    "pais": "México",
+    "pares": [
+      {
+        "issuer_id": "MX_CEMEX",
+        "nome": "Cemex"
+      },
+      {
+        "issuer_id": "MX_ENDEAVOUR",
+        "nome": "Endeavour Silver"
+      },
+      {
+        "issuer_id": "MX_GCC",
+        "nome": "GCC"
+      },
+      {
+        "issuer_id": "MX_GMEXICO",
+        "nome": "Grupo México"
+      },
+      {
+        "issuer_id": "MX_ORBIA",
+        "nome": "Orbia"
+      },
+      {
+        "issuer_id": "MX_PENOLES",
+        "nome": "Industrias Peñoles"
+      },
+      {
+        "issuer_id": "MX_TERNIUM",
+        "nome": "Ternium"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "First Majestic, 2026-11-05: operações de San Dimas permanecem suspensas por disputa trabalhista; guidance anual de produção e custos da mina foi retirado.",
+        "titulo": "Evento operacional material"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Receita e lucro cresceram com preços realizados maiores. Julgamos necessário testar geração após investimento sem extrapolar o ciclo dos metais.",
+        "titulo": "Metais e recorrência"
+      }
+    ],
+    "publicada_em": "2026-11-06T01:41:43.175093+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O caixa livre divulgado caiu na comparação anual apesar do avanço do lucro; avaliar conciliação entre medidas ajustadas e contabilidade.",
+        "titulo": "Caixa e medidas ajustadas"
+      }
+    ],
+    "resumo": "Neutralidade com convicção baixa. A melhora financeira não elimina a incerteza operacional. Alvo de US$ 6,86 e potencial de -52,09% vêm do modelo anterior ao balanço; a retirada de guidance de San Dimas exige reavaliação.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "alta",
+        "texto": "Paralisação prolongada e investimentos podem limitar retorno atribuível."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "First Majestic — San Dimas perde guidance apesar de metais favoráveis",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O release financeiro de 3T26 substitui a prévia operacional como base desta leitura. Custos por prata equivalente aumentaram, afetados também pela conversão entre metais. A retirada de guidance refere-se a San Dimas, sem presumir retirada integral das metas corporativas.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A duração da paralisação condiciona o retorno econômico; não presumimos data de normalização.",
+        "vetor": "Retomada de San Dimas"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

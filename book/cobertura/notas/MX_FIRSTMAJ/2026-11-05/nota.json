@@ -1,0 +1,121 @@
+{
+  "mind": "codex",
+  "issuer_id": "MX_FIRSTMAJ",
+  "data": "2026-11-05",
+  "tipo": "pos_resultado",
+  "titulo": "First Majestic — San Dimas perde guidance apesar de metais favoráveis",
+  "resumo": "Neutralidade com convicção baixa. A melhora financeira não elimina a incerteza operacional. Alvo de {{fact:val.MX_FIRSTMAJ.preco_alvo}} e potencial de {{fact:val.MX_FIRSTMAJ.upside}} vêm do modelo anterior ao balanço; a retirada de guidance de San Dimas exige reavaliação.",
+  "negocio": "Produtora de prata e ouro com operações mexicanas e projetos de desenvolvimento. A comparação econômica deve preservar a parcela atribuível de Los Gatos.",
+  "pilares_tese": [
+    {
+      "titulo": "Evento operacional material",
+      "texto": "First Majestic, 2026-11-05: operações de San Dimas permanecem suspensas por disputa trabalhista; guidance anual de produção e custos da mina foi retirado.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Metais e recorrência",
+      "texto": "Receita e lucro cresceram com preços realizados maiores. Julgamos necessário testar geração após investimento sem extrapolar o ciclo dos metais.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Retomada de San Dimas",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "A duração da paralisação condiciona o retorno econômico; não presumimos data de normalização.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Decisão judicial e negociação trabalhista podem alterar a visibilidade de retomada, sem prazo confirmado.",
+      "data": null,
+      "tipo": "outro",
+      "direcao": "incerto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Paralisação prolongada e investimentos podem limitar retorno atribuível.",
+      "probabilidade": "alta",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Normalização operacional sustentada; alvo {{fact:val.MX_FIRSTMAJ.alvo_otimista}}.",
+    "base": "Disciplina de capital e custos condiciona alvo {{fact:val.MX_FIRSTMAJ.preco_alvo}}.",
+    "pessimista": "Interrupções e capital adicional pressionam o alvo de {{fact:val.MX_FIRSTMAJ.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço {{fact:val.MX_FIRSTMAJ.preco}}, ke {{fact:val.MX_FIRSTMAJ.ke}} e consenso público {{fact:val.MX_FIRSTMAJ.consenso_alvo}}. Probabilidades implícitas indisponíveis. Pares de materiais têm exposições distintas; a divergência do consenso não identifica o que está precificado.",
+  "ultimo_resultado": "O release financeiro de 3T26 substitui a prévia operacional como base desta leitura. Custos por prata equivalente aumentaram, afetados também pela conversão entre metais. A retirada de guidance refere-se a San Dimas, sem presumir retirada integral das metas corporativas.",
+  "guidance": "retirado",
+  "tom_gestao": "positivo",
+  "governanca": "Separar caixa restrito de liquidez disponível e preservar a participação atribuível de Los Gatos. Não tratar distribuição como caixa livre integralmente disponível.",
+  "qualidade_resultados": {
+    "titulo": "Caixa e medidas ajustadas",
+    "texto": "O caixa livre divulgado caiu na comparação anual apesar do avanço do lucro; avaliar conciliação entre medidas ajustadas e contabilidade.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Retorno após investimento",
+    "texto": "Investimentos aumentaram, incluindo Jerritt Canyon. Nossa hipótese exige retorno após desenvolvimento e manutenção.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Condição para ampliar convicção",
+    "texto": "Retomada sustentada e caixa após desenvolvimento fortaleceriam a tese; maior exposição ao preço dos metais isoladamente seria insuficiente.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Operação e retorno",
+      "texto": "Acompanhar disponibilidade de San Dimas, teores, recuperação, custos, capital de desenvolvimento e caixa atribuível.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "o_que_mudou": "Desde 2026-10-29, recebemos resultado financeiro e retirada formal das metas de San Dimas. Mantemos prudência qualitativa até reavaliação do modelo e maior visibilidade operacional.",
+  "gatilhos_revisao": [
+    "Resolução trabalhista e reabertura segura de San Dimas.",
+    "Reavaliação do modelo após o balanço."
+  ],
+  "lacunas_de_dados": [
+    "Modelo anterior ao resultado corrente.",
+    "Demonstrações completas e conciliação de medidas não examinadas integralmente.",
+    "Probabilidades implícitas indisponíveis.",
+    "Percepção de mercado não demonstrada."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "First Majestic Silver",
+      "titulo": "Resultado financeiro, dividendos e atualização operacional",
+      "url": "https://www.firstmajestic.com/investors/news-releases/first-majestic-announces-q3-2026-financial-results-and-quarterly-dividend-payment",
+      "publicado_em": "2026-11-05",
+      "consultado_em": "2026-11-05"
+    }
+  ]
+}

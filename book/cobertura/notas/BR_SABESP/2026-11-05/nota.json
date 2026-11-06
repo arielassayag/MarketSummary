@@ -1,0 +1,120 @@
+{
+  "mind": "codex",
+  "issuer_id": "BR_SABESP",
+  "data": "2026-11-05",
+  "tipo": "pos_resultado",
+  "titulo": "Sabesp — avanço operacional e pressão do financiamento",
+  "resumo": "Mantemos neutralidade e baixa convicção. O resultado de 3T26 melhora a leitura operacional, mas financiamento e investimento limitam a conversão ao acionista. O modelo anterior ao balanço aponta alvo de {{fact:val.BR_SABESP.preco_alvo}} e potencial de {{fact:val.BR_SABESP.upside}}; não representa reavaliação deste resultado.",
+  "negocio": "Prestadora de água e esgotamento sanitário em São Paulo. A tese depende da remuneração contratual das obras, qualidade do serviço e disciplina financeira.",
+  "pilares_tese": [
+    {
+      "titulo": "Crescimento operacional",
+      "texto": "Sabesp, 2026-11-05: receita e EBITDA ajustados avançaram, com tarifa e novas economias; chuvas prejudicaram o mix. Julgamos necessário testar a persistência após custos comerciais.",
+      "evidencias": [
+        "F1"
+      ]
+    },
+    {
+      "titulo": "Financiamento limita o lucro",
+      "texto": "O lucro ajustado recuou e a despesa de juros aumentou com o financiamento das obras. A hipótese exige retorno depois do serviço da dívida.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "vetores": [
+    {
+      "vetor": "Reconhecimento e execução das obras",
+      "direcao": "incerto",
+      "sensibilidade": "alta",
+      "texto": "O investimento aumentou e a carteira contratada avançou. Avaliar prazo até remuneração e geração de caixa, sem equiparar contratação a entrega.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "catalisadores": [
+    {
+      "descricao": "Conferência de resultados: esclarecer financiamento, caixa e metas.",
+      "data": "2026-11-06",
+      "tipo": "resultado",
+      "direcao": "incerto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "riscos": [
+    {
+      "texto": "Maior dívida e custo financeiro podem absorver ganhos operacionais.",
+      "probabilidade": "media",
+      "impacto": "alto",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "cenarios": {
+    "otimista": "Obras remuneradas e disciplina financeira sustentam o alvo de {{fact:val.BR_SABESP.alvo_otimista}}.",
+    "base": "Remuneração contratual e financiamento equilibrados; alvo de {{fact:val.BR_SABESP.preco_alvo}} no modelo anterior ao balanço.",
+    "pessimista": "Custos e atrasos comprimem retorno; alvo de {{fact:val.BR_SABESP.alvo_pessimista}}."
+  },
+  "comentario_valuation": "Preço de referência {{fact:val.BR_SABESP.preco}}, ke {{fact:val.BR_SABESP.ke}} e consenso público {{fact:val.BR_SABESP.consenso_alvo}}. A comparação com energia e gás exige ajustar obrigações de investimento. Não atribuímos a divergência frente ao consenso a expectativas específicas sem evidência.",
+  "ultimo_resultado": "No release de 3T26, a Sabesp separa construção, ativo financeiro, EMAE e efeitos não recorrentes, incluindo crédito tributário e Jaguaré. Receita e EBITDA ajustados cresceram; lucro ajustado caiu. O documento não explicita revisão formal de guidance anual nesta leitura; sem_guidance descreve essa ausência, não retirada.",
+  "guidance": "sem_guidance",
+  "tom_gestao": "positivo",
+  "governanca": "Examinar contratos e atos regulatórios antes de concluir sobre liberdade de distribuição e remuneração das obras. Preservar base por ação ajustada ao desdobramento informado pelo emissor.",
+  "qualidade_resultados": {
+    "titulo": "Resultado e caixa",
+    "texto": "Créditos tributários e diferenças de perímetro exigem conciliação. Nossa análise prioriza caixa após juros e obras para avaliar a remuneração do acionista.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "alocacao_capital": {
+    "titulo": "Investimento e dívida",
+    "texto": "A dívida aumentou frente ao fechamento anual. Acompanhar liquidez e maturidade das obrigações antes de ampliar convicção.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "contratese": {
+    "titulo": "Teste de invalidação",
+    "texto": "Ganhos persistentes de caixa após investimento e juros enfraqueceriam a cautela; crescimento apenas contábil não bastaria.",
+    "evidencias": [
+      "F1"
+    ]
+  },
+  "indicadores_monitoramento": [
+    {
+      "titulo": "Execução e retorno",
+      "texto": "Monitorar recebimento, qualidade, reconhecimento dos ativos e financiamento; atrasos sem compensação tarifária deteriorariam a hipótese.",
+      "evidencias": [
+        "F1"
+      ]
+    }
+  ],
+  "o_que_mudou": "Desde 2026-10-19, incorporamos a leitura primária de 3T26. Melhora operacional convive com pressão financeira. A atualização qualitativa não altera o valuation anterior ao balanço.",
+  "gatilhos_revisao": [
+    "Reavaliação do modelo após o balanço.",
+    "Mudanças na remuneração regulatória e no financiamento."
+  ],
+  "lacunas_de_dados": [
+    "Modelo de 2026-11-04 anterior ao resultado corrente.",
+    "ITR e contratos regulatórios não conciliados integralmente.",
+    "Sem evidência suficiente sobre expectativas precificadas pelo mercado."
+  ],
+  "stance": 0,
+  "conviccao": 1,
+  "fontes": [
+    {
+      "id": "F1",
+      "tipo": "relacoes_com_investidores",
+      "instituicao": "Sabesp",
+      "titulo": "Resultado trimestral e demonstrações consolidadas",
+      "url": "https://filemanager-cdn.mziq.com/published/9e47ee51-f833-4a23-af98-2bac9e54e0b3/0893b718-acaa-4fb8-af6e-629cd24dd620",
+      "publicado_em": "2026-11-05",
+      "consultado_em": "2026-11-05"
+    }
+  ]
+}

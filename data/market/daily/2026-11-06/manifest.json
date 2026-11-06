@@ -1,0 +1,121 @@
+{
+  "kind": "daily_increment",
+  "session_date": "2026-11-06",
+  "created_at": "2026-11-06T22:23:53.831587Z",
+  "base_as_of": "2026-10-02",
+  "base_content_hash": "ec1e53241d99de22f2f6deb06749e9d80b3d43864de3a1d931eb3e94c8d40455",
+  "base_manifest_sha256": "6bf7cc5b57e0a1eb5bd73080fb213eab399c7b04359ae68b2f75dc93a185d263",
+  "prev_manifest_hash": "a1b988774573db323810d658cb50b6ed95d732a1a14cb1a87918b935c7a88100",
+  "universe_sha256": "a8f28ee5d20395a6e245c50ebb635eb56ada88922c01876351278cb99f5a29db",
+  "files": [
+    {
+      "path": "benchmarks.parquet",
+      "sha256": "12b849442eeb44c2eab235bc6d9bd8abab9f890e3209a2c19221421ded9e99bf",
+      "rows": 19,
+      "description": "Benchmarks do pregão"
+    },
+    {
+      "path": "fx.parquet",
+      "sha256": "a2c9b57686a60f2259bce4d3339db78dc0e75496f36b056fbbbf99938225fe27",
+      "rows": 8,
+      "description": "Câmbio do pregão (USD por unidade)"
+    },
+    {
+      "path": "lending.parquet",
+      "sha256": "e93c93b804e53a9ee65f7b1cdc26ae78c719383f88bffb98b6b1ac427a12b0c9",
+      "rows": 250,
+      "description": "Aluguel B3/BTC (longo) dos pregões ainda não gravados"
+    },
+    {
+      "path": "prices.parquet",
+      "sha256": "9e338f9ab07240a7ef9e16c11043fd061c0f573b7f40c962f3d7f4d848649515",
+      "rows": 281,
+      "description": "Preços do pregão (+ barra anterior da mesma coleta para encadear retorno total)"
+    },
+    {
+      "path": "qa.json",
+      "sha256": "073c36fcc497f17cb7a02d95c6e4beecc1ab0e58e312867f3440a8eedf28e651",
+      "rows": null,
+      "description": "QA do incremento: revisões, paridade ADR, mercados fechados"
+    },
+    {
+      "path": "rates.parquet",
+      "sha256": "37b6489e160eb039d5e946dca1b5f837268c5005158defbad5c1c3979ba16ec3",
+      "rows": 2,
+      "description": "Taxas do pregão (decimal anual)"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "yahoo_prices",
+      "name": "Yahoo Finance — barras diárias (janela)",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-11-06T22:23:23.505543Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "yahoo_fx",
+      "name": "Yahoo Finance — câmbio",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-11-06T22:23:24.505168Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "yahoo_benchmarks",
+      "name": "Yahoo Finance — benchmarks",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-11-06T22:23:33.364254Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "rates",
+      "name": "BCB SGS 432 + Yahoo ^IRX",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-11-06T22:23:33.968217Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "b3_bdi_lending",
+      "name": "B3 BDI — aluguel (BTC)",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-11-06T22:23:53.726957Z",
+      "point_in_time": false,
+      "notes": ""
+    }
+  ],
+  "limitations": [
+    "Revisões de fechamento do Yahoo em datas anteriores NÃO aplicadas (307): AC.MX@2026-10-27 (1.0022), ALPEKA.MX@2026-10-27 (1.0006), ALSEA.MX@2026-10-27 (0.9969), AMXB.MX@2026-10-27 (0.9987), ASURB.MX@2026-10-27 (0.9991), BBAJIOO.MX@2026-10-27 (1.0012), BIMBOA.MX@2026-10-27 (1.0023), BOLSAA.MX@2026-10-27 (0.9986), CEMEXCPO.MX@2026-10-27 (0.9955), CHDRAUIB.MX@2026-10-27 (1.0007), FEMSAUBD.MX@2026-10-27 (1.0023), FIBRAPL14.MX@2026-10-27 (0.9969), FMTY14.MX@2026-10-27 (0.9966), FUNO11.MX@2026-10-27 (1.0006), GAPB.MX@2026-10-27 (0.9984), GCARSOA1.MX@2026-10-27 (0.9976), GCC.MX@2026-10-27 (0.9991), GENTERA.MX@2026-10-27 (0.9973), GFINBURO.MX@2026-10-27 (1.0007), GFNORTEO..",
+    "Revisões de volume em datas anteriores NÃO aplicadas: 1347.",
+    "Barras tardias (datas anteriores não gravadas) NÃO aplicadas: 2.",
+    "Benchmarks sem barra no pregão: ^MERV.",
+    "QA paridade ADR: BAK vs BRKM5.SA desvio -6.4% no pregão (mediana +1.6%; tolerância 3%).",
+    "QA paridade ADR: SID vs CSNA3.SA desvio +6.1% no pregão (mediana -2.2%; tolerância 3%)."
+  ],
+  "notes": [],
+  "markets_traded": [
+    "AR",
+    "BR",
+    "CL",
+    "CO",
+    "MX",
+    "US"
+  ],
+  "markets_closed": [],
+  "slow_refreshed": [],
+  "lending_dates": [
+    "2026-11-04",
+    "2026-11-05"
+  ],
+  "is_synthetic": false,
+  "data_notice": "Dados reais de fontes públicas gratuitas (Yahoo, FINRA, B3/BDI, BCB, Google News); uso de pesquisa — não é feed licenciado.",
+  "manifest_hash": "a9172fdef3f9ef57e5c37cc4dbafe0b38f88c31c24147a31f990c5740c653910"
+}

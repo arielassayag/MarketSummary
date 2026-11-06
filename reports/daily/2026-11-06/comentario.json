@@ -1,0 +1,11 @@
+{
+ "mind":"codex",
+ "headline":"Carteira avança {{fact:day.ret}} e encerra a montagem com risco dentro da banda",
+ "paragraphs":[
+ "A carteira simulada encerrou 06/11/2026 com retorno de {{fact:day.ret}}, resultado de {{fact:day.pnl_usd}} e patrimônio de {{fact:nav}}. O acumulado desde o início ficou em {{fact:itd.ret}}, enquanto o mês registra {{fact:mtd.ret}}.",
+ "O lado comprado contribuiu {{fact:attr.long}}, parcialmente compensado pelo vendido, com {{fact:attr.short}}. A atribuição específica somou {{fact:attr.specific}}, ante {{fact:attr.factor}} da parcela fatorial; os custos representaram {{fact:attr.costs}}. Genomma, Aeroméxico e Millicom contribuíram {{fact:top.contrib.1.contrib}}, {{fact:top.contrib.2.contrib}} e {{fact:top.contrib.3.contrib}}. Orizon, Sigma Lithium e LAR responderam pelos maiores detratores, com {{fact:top.detract.1.contrib}}, {{fact:top.detract.2.contrib}} e {{fact:top.detract.3.contrib}}.",
+ "O calendário público do Bureau of Labor Statistics previa para 06/11/2026 a divulgação do relatório de emprego norte-americano. A leitura de mercado utilizada aqui se limita aos preços observados, sem atribuir causalidade a essa divulgação: o índice latino-americano representado por ILF avançou {{fact:mkt.ILF.ret_1d}} em dólar, e EWW registrou {{fact:mkt.EWW.ret_1d}} na mesma moeda. O Ibovespa subiu {{fact:mkt.BVSP.ret_1d}} em reais. O futuro de Brent recuou {{fact:mkt.BZ_F.ret_1d}}, em cotação em dólar.",
+ "Após a efetivação da decisão semanal, a carteira apresenta {{fact:risk.n_long}} posições compradas e {{fact:risk.n_short}} vendidas, exposição bruta de {{fact:risk.gross}} e líquida de {{fact:risk.net}}. A vol ex-ante de {{fact:risk.ex_ante_vol}} está dentro da banda de {{fact:mandate.vol_band_min}} a {{fact:mandate.vol_band_max}}, com beta de {{fact:risk.beta}} e VaR diário de {{fact:risk.var_1d}}. Ordens abaixo da banda de não-negociação foram preservadas conforme o controle de execução."
+ ],
+ "risk_flags":["Merval sem barra no pregão; ausência não representa retorno nulo.","Divergências de paridade entre ADRs e ações locais limitam a comparação entre mercados.","Revisões históricas e barras tardias não foram aplicadas; fundamentos atuais e câmbio não oficial permanecem limitações da pesquisa."]
+}

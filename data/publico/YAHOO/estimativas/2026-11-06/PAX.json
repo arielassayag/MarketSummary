@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 9.61,
+  "high": 20.0,
+  "low": 9.0,
+  "mean": 14.83333,
+  "median": 15.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.31,
+   "currency": "USD",
+   "growth": 0.1481,
+   "high": 0.34,
+   "low": 0.29,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.27
+  },
+  "+1y": {
+   "avg": 1.43134,
+   "currency": "USD",
+   "growth": 0.0743,
+   "high": 1.49,
+   "low": 1.37,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 1.33237
+  },
+  "0q": {
+   "avg": 0.45429,
+   "currency": "USD",
+   "growth": -0.091400005,
+   "high": 0.5,
+   "low": 0.40286,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.5
+  },
+  "0y": {
+   "avg": 1.33237,
+   "currency": "USD",
+   "growth": 0.049099997,
+   "high": 1.39,
+   "low": 1.27187,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 1.27
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 110103000,
+   "currency": "USD",
+   "growth": 0.189,
+   "high": 110103000,
+   "low": 110103000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 92600000
+  },
+  "+1y": {
+   "avg": 472861920,
+   "currency": "USD",
+   "growth": 0.0941,
+   "high": 504000000,
+   "low": 444000000,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 432202100
+  },
+  "0q": {
+   "avg": 138875000,
+   "currency": "USD",
+   "growth": 0.375,
+   "high": 152750000,
+   "low": 125000000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 101000000
+  },
+  "0y": {
+   "avg": 432202100,
+   "currency": "USD",
+   "growth": 0.2564,
+   "high": 475000000,
+   "low": 392000000,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 344000000
+  }
+ },
+ "ticker": "PAX",
+ "url": "https://finance.yahoo.com/quote/PAX"
+}

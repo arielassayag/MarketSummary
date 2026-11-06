@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 2003.1,
+  "high": 2153.7017,
+  "low": 1805.0631,
+  "mean": 1968.0883,
+  "median": 1994.6044
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.07573,
+   "currency": "USD",
+   "growth": null,
+   "high": 0.07573,
+   "low": 0.07573,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 0.26769,
+   "currency": "USD",
+   "growth": -0.2702,
+   "high": 0.28077,
+   "low": 0.23,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.3668
+  },
+  "0q": {
+   "avg": 0.06902,
+   "currency": "USD",
+   "growth": null,
+   "high": 0.06902,
+   "low": 0.06902,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 0.3668,
+   "currency": "USD",
+   "growth": 0.7467,
+   "high": 0.4,
+   "low": 0.33361,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.21
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 485283760,
+   "currency": "USD",
+   "growth": -0.1149,
+   "high": 485283760,
+   "low": 485283760,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 548300000
+  },
+  "+1y": {
+   "avg": 1705274640,
+   "currency": "USD",
+   "growth": -0.1356,
+   "high": 1887373210,
+   "low": 1588000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 1972869470
+  },
+  "0q": {
+   "avg": 524948340,
+   "currency": "USD",
+   "growth": 0.0975,
+   "high": 524948340,
+   "low": 524948340,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 478300000
+  },
+  "0y": {
+   "avg": 1972869470,
+   "currency": "USD",
+   "growth": -0.0499,
+   "high": 2094347340,
+   "low": 1889000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 2076554000
+  }
+ },
+ "ticker": "ECL.SN",
+ "url": "https://finance.yahoo.com/quote/ECL.SN"
+}

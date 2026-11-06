@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 11.3,
+  "high": 21.5,
+  "low": 12.0,
+  "mean": 16.9125,
+  "median": 17.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.64964,
+   "currency": "BRL",
+   "growth": 0.077199996,
+   "high": 0.6665,
+   "low": 0.63278,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.6031
+  },
+  "+1y": {
+   "avg": 2.48272,
+   "currency": "BRL",
+   "growth": 0.1015,
+   "high": 2.58886,
+   "low": 2.33,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 2.25391
+  },
+  "0q": {
+   "avg": 0.27422,
+   "currency": "BRL",
+   "growth": 0.4433,
+   "high": 0.31038,
+   "low": 0.23807,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.19
+  },
+  "0y": {
+   "avg": 2.25391,
+   "currency": "BRL",
+   "growth": 0.1988,
+   "high": 2.42923,
+   "low": 1.96,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 1.8801
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 610933480,
+   "currency": "BRL",
+   "growth": 0.0665,
+   "high": 612378920,
+   "low": 609488040,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 572854000
+  },
+  "+1y": {
+   "avg": 2520079450,
+   "currency": "BRL",
+   "growth": 0.067,
+   "high": 2633000000,
+   "low": 2431374200,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 2361726390
+  },
+  "0q": {
+   "avg": 535329550,
+   "currency": "BRL",
+   "growth": 0.040599998,
+   "high": 547000000,
+   "low": 520900000,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 514451000
+  },
+  "0y": {
+   "avg": 2361726390,
+   "currency": "BRL",
+   "growth": 0.0655,
+   "high": 2412000000,
+   "low": 2326576590,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 2216531000
+  }
+ },
+ "ticker": "SEER3.SA",
+ "url": "https://finance.yahoo.com/quote/SEER3.SA"
+}

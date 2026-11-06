@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 28.09,
+  "high": 49.0,
+  "low": 35.0,
+  "mean": 42.4,
+  "median": 43.2
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.25268,
+   "currency": "USD",
+   "growth": null,
+   "high": 1.53342,
+   "low": 1.07,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 4.91846,
+   "currency": "USD",
+   "growth": 0.19209999,
+   "high": 5.72,
+   "low": 3.87,
+   "numberOfAnalysts": 13,
+   "yearAgoEps": 4.126
+  },
+  "0q": {
+   "avg": 1.34111,
+   "currency": "USD",
+   "growth": 0.2895,
+   "high": 1.54,
+   "low": 1.08,
+   "numberOfAnalysts": 12,
+   "yearAgoEps": 1.04
+  },
+  "0y": {
+   "avg": 4.126,
+   "currency": "USD",
+   "growth": 0.9462,
+   "high": 4.81,
+   "low": 3.85,
+   "numberOfAnalysts": 10,
+   "yearAgoEps": 2.12
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 417170500,
+   "currency": "CAD",
+   "growth": 0.165,
+   "high": 479995000,
+   "low": 354346000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 358075700
+  },
+  "+1y": {
+   "avg": 1965696360,
+   "currency": "CAD",
+   "growth": 0.0924,
+   "high": 2263007000,
+   "low": 1604816000,
+   "numberOfAnalysts": 14,
+   "yearAgoRevenue": 1799511090
+  },
+  "0q": {
+   "avg": 549123000,
+   "currency": "CAD",
+   "growth": 0.25059998,
+   "high": 549123000,
+   "low": 549123000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 439077450
+  },
+  "0y": {
+   "avg": 1799511090,
+   "currency": "CAD",
+   "growth": 0.67,
+   "high": 1889096000,
+   "low": 1720145000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 1077536110
+  }
+ },
+ "ticker": "ERO",
+ "url": "https://finance.yahoo.com/quote/ERO"
+}

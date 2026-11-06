@@ -1,0 +1,40 @@
+{
+  "acknowledged_soft_checks": [],
+  "approval_hash": "e62aa068359926872d5de6e590f69cc6b8c1331173940d22cd623e50b1ce265b",
+  "approver": "CDP — Cabra da Peste (PM autônomo)",
+  "audit_head_hash": "add8837d1c97530da59db25cdaf51035a98414862908d7ad0d2fd94d77c12445",
+  "co_sign_reasons": [],
+  "co_signed_at": null,
+  "co_signer": null,
+  "config_hash": "2ddf7d89ac769dea9781ac51fb825fa55931bf19250fa64e2f7447aa91f34ff0",
+  "conviction": null,
+  "decided_at": "2026-11-06T14:34:39.369063Z",
+  "decision": "APPROVE",
+  "journal": {
+    "ai_vs_quant_vs_pm": "Abstenção do agente PM: carteira só-quant com as restrições vigentes.",
+    "alternatives_considered": "O que mudou na visão: A cobertura incorpora preços-base de 2026-11-05 e conhecimento disponível em 2026-11-06 antes da decisão. Restringe-se o lado vendido de Galicia, Globant, Orizon e Taesa pelos escores de squeeze. Não se atribui confirmação fundamental às lacunas documentais nem se extrai visão direcional de anúncios monetários sem teor integral confirmado.",
+    "bias_checklist": {},
+    "catalysts": [],
+    "horizon_weeks": 8,
+    "key_variables": [
+      "Regime: neutro",
+      "Postura: defensiva → defensiva",
+      "Escada de drawdown: normal"
+    ],
+    "mental_state": "Mente: codex",
+    "positions": [],
+    "premortem": "",
+    "situation": "Leitura neutra para a região, com convicção baixa e postura defensiva. O drawdown é -0,48%; a volatilidade realizada permanece n/d. A confirmação fundamental atualizada de todos os candidatos e posições não foi concluída. A abstenção discricionária preserva a seleção quantitativa, condicionada às restrições de risco e aos portões do mandato.",
+    "sizing_rationale": "Postura solicitada defensiva; efetiva defensiva (escada de drawdown: normal); vol-alvo 4,00% e gross máximo 2,00x (calculados por código). "
+  },
+  "mind": "codex",
+  "mode": "AUTONOMOUS",
+  "pm_decision_hash": "2ff4ada57ae2f0f9cae7f7fadc5ccb261f227722fa2d883491db6ab338183c6b",
+  "proposal_hash": "72b02ea1f5bceaff2e10b11610b34356f8403ad641be965313d287363f6155a0",
+  "proposal_id": "CDP-2026-11-06-cdp-restricoes",
+  "rationale": "Postura defensiva; regime neutro. Leitura neutra para a região, com convicção baixa e postura defensiva. O drawdown é -0,48%; a volatilidade realizada permanece n/d. A confirmação fundamental atualizada de todos os candidatos e posições não foi concluída. A abstenção discricionária preserva a seleção quantitativa, condicionada às restrições de risco e aos portões do mandato. Caminho: cdp-restricoes.",
+  "research_hash": "c877e7df58385e812b2dc4c1dd547f32c8f9f1c4c4ae85e165985aaefd9259da",
+  "risk_gate_hash": "b0a2954e4bb1aad79622d093248396f393d9bb1a2738f4bff8cca2383ff4c4f2",
+  "snapshot_hash": "902f5156fcde0240df1b0438dd2aa4bf6a975b4a738bdf187da1672732e0638f",
+  "week": "2026-11-06"
+}

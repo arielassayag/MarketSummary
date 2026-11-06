@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 68.62,
+  "high": 105.0,
+  "low": 76.3,
+  "mean": 91.4,
+  "median": 92.65
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.73019,
+   "currency": "BRL",
+   "growth": null,
+   "high": 1.85038,
+   "low": 1.61,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 5.27086,
+   "currency": "BRL",
+   "growth": 0.76589996,
+   "high": 6.91172,
+   "low": 3.63,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 2.9848
+  },
+  "0q": {
+   "avg": 0.61164,
+   "currency": "BRL",
+   "growth": -0.7867,
+   "high": 1.29329,
+   "low": -0.07,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 2.86715
+  },
+  "0y": {
+   "avg": 2.9848,
+   "currency": "BRL",
+   "growth": null,
+   "high": 3.80961,
+   "low": 2.16,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": null
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 126710612740,
+   "currency": "BRL",
+   "growth": 0.051999997,
+   "high": 132907163999,
+   "low": 120574511000,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 120444280840
+  },
+  "+1y": {
+   "avg": 488314764100,
+   "currency": "BRL",
+   "growth": 0.0167,
+   "high": 524571000000,
+   "low": 468705175000,
+   "numberOfAnalysts": 15,
+   "yearAgoRevenue": 480294585230
+  },
+  "0q": {
+   "avg": 117869777400,
+   "currency": "BRL",
+   "growth": -0.0425,
+   "high": 125643378000,
+   "low": 112525371000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 123099514000
+  },
+  "0y": {
+   "avg": 480294585230,
+   "currency": "BRL",
+   "growth": 0.0671,
+   "high": 506871736490,
+   "low": 458307684000,
+   "numberOfAnalysts": 14,
+   "yearAgoRevenue": 450087927340
+  }
+ },
+ "ticker": "JBSS32.SA",
+ "url": "https://finance.yahoo.com/quote/JBSS32.SA"
+}

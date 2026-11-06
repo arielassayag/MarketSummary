@@ -1,0 +1,33 @@
+{
+  "captured_at": "2026-11-06 14:26:24.416610+00:00",
+  "cobertura": {
+    "as_of": "2026-11-06",
+    "corte_temporal": {
+      "base_preco": "2026-11-05",
+      "coleta_fim": "2026-11-06T14:21:39.661524+00:00",
+      "coleta_inicio": "2026-11-06T14:12:31.486753+00:00",
+      "conhecimento_ate": "2026-11-06T14:21:39.661524+00:00",
+      "data_modelo": "2026-11-06",
+      "metodo": "base_preco_conhecimento_explicitos"
+    },
+    "manifest_sha256": "eaee0dbada9047a83676a909ac51c3e269404a6c4e7d5ea44c1a837752b77a13"
+  },
+  "cobertura_metodo": "base_preco_conhecimento_explicitos",
+  "config_hash": "2ddf7d89ac769dea9781ac51fb825fa55931bf19250fa64e2f7447aa91f34ff0",
+  "intraday": true,
+  "intraday_sha256": "36f97593daa8191cac942692b6cc8d6eec2c3fce8573b5f6a77abc43cb57af3c",
+  "live": true,
+  "n_quotes": 292,
+  "prepared_at": "2026-11-06 14:26:24.416600+00:00",
+  "previous_session": "2026-11-05",
+  "slow_failures": [],
+  "slow_hashes": {
+    "fundamentals.parquet": "7aee26d655e1e5d3223509bd3e14886cdb8189d9dbb69fe0c112aac39a43a0d9",
+    "lending.parquet": "b85ed285fdeb095ad27272f4658c39e05329850c311ec2ab3292d1d19de535ea",
+    "news.jsonl": "f6724be8c8d62183fbe01b58acac0b7b16d84df536b4caf9d98721d4671e1632",
+    "short_interest.parquet": "8395450fa7e4fee1cea2d97c04660ed5b81be5816bac6e2754d24b0bc740296a"
+  },
+  "snapshot_hash": "902f5156fcde0240df1b0438dd2aa4bf6a975b4a738bdf187da1672732e0638f",
+  "store_content_hash": "bea7803d1f6345de09b4fc80bf5f9b5b0195a1acc58b24e6ba40b32aa81d7a20",
+  "week": "2026-11-06"
+}

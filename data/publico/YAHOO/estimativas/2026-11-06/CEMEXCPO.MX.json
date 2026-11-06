@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 20.2,
+  "high": 28.999945,
+  "low": 23.229834,
+  "mean": 25.492502,
+  "median": 25.10652
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.03,
+   "currency": "USD",
+   "growth": 0.7647,
+   "high": 0.03,
+   "low": 0.03,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.017
+  },
+  "+1y": {
+   "avg": 0.105,
+   "currency": "USD",
+   "growth": 0.05,
+   "high": 0.11,
+   "low": 0.1,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.1
+  },
+  "0q": {
+   "avg": 0.03,
+   "currency": "USD",
+   "growth": 2.25,
+   "high": 0.03,
+   "low": 0.03,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -0.024
+  },
+  "0y": {
+   "avg": 0.1,
+   "currency": "USD",
+   "growth": 0.5385,
+   "high": 0.1,
+   "low": 0.1,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.065
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 4249721000,
+   "currency": "USD",
+   "growth": 0.0574,
+   "high": 4442842000,
+   "low": 4056600000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 4019094000
+  },
+  "+1y": {
+   "avg": 18037650950,
+   "currency": "USD",
+   "growth": 0.0347,
+   "high": 18624821820,
+   "low": 17578564130,
+   "numberOfAnalysts": 15,
+   "yearAgoRevenue": 17432345700
+  },
+  "0q": {
+   "avg": 4239617300,
+   "currency": "USD",
+   "growth": 0.0143,
+   "high": 4293200890,
+   "low": 4169500000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 4179704000
+  },
+  "0y": {
+   "avg": 17432345700,
+   "currency": "USD",
+   "growth": 0.0806,
+   "high": 17741000000,
+   "low": 17083000000,
+   "numberOfAnalysts": 15,
+   "yearAgoRevenue": 16131879000
+  }
+ },
+ "ticker": "CEMEXCPO.MX",
+ "url": "https://finance.yahoo.com/quote/CEMEXCPO.MX"
+}

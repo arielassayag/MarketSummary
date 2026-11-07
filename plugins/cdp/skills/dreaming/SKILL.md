@@ -7,6 +7,8 @@ allowed-tools:
   - Grep
   - Glob
   - Bash(uv sync *)
+  - Bash(uv run python -m cdp memoria fonte-sonho *)
+  - Bash(uv run python -m cdp memoria fonte-sonho)
   - Bash(uv run python -m cdp memoria sonhar)
   - Bash(uv run python -m cdp rotinas gate --tarefa cdp-dreaming *)
   - Bash(uv run python -m cdp rotinas gate --tarefa cdp-dreaming)

@@ -108,9 +108,13 @@ def test_memory_permissions_match_only_the_literal_context_for_the_family(family
     prefix = f"{form}memoria contexto --escopo "
     esperadas = {f"Bash({prefix}{scope})" for scope in scopes}
     if family == "dreaming":
-        esperadas.add(f"Bash({form}memoria sonhar)")
+        esperadas.update({f"Bash({form}memoria sonhar)", f"Bash({form}memoria fonte-sonho)",
+                          f"Bash({form}memoria fonte-sonho *)"})
     assert {rule for rule in rules if rule.startswith(f"Bash({form}memoria ")} == esperadas
     settings = {"permissions": {"allow": rules, "ask": [], "deny": []}}
+    fonte = f"{form}memoria fonte-sonho --uid exemplo"
+    assert _classify(settings, fonte) == ("allow" if family == "dreaming" else None)
+    assert _classify(settings, f"{form}memoria sonhar --limite 2") is None
     for scope in scopes:
         command = prefix + scope
         assert _classify(settings, command) == "allow"

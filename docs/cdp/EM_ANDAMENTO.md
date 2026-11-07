@@ -5,6 +5,25 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## Dreaming e agenda com reserva única — 07/11/2026
+
+O [roteiro de dreaming](playbooks/DREAMING.md) separa plano, análise de cada item e
+conferência da devolutiva. O plano lê o Git e vincula a revisão, a data, a fila e
+a proveniência. O resultado fica na execução agendada para revisão de candidatas.
+A wiki é uma vista derivada das notas já curadas. Veja os comandos e as duas
+comparações no [manual de memória](MEMORIA.md).
+
+O catálogo da agenda mantém uma reserva da montagem às 12h07 e inclui o dreaming
+aos sábados às 10h07. O fechamento principal recupera os pregões pendentes no
+próximo disparo útil. As duas rondas de risco observam momentos diferentes do pregão.
+A sincronização do clone das rotinas segue o procedimento do executor.
+
+No ensaio Git isolado, as cinco primeiras passagens tiveram recuperação completa em
+6 de 9 perguntas com busca direta, 6 de 9 com memória prévia e 8 de 9 após a revisão
+predefinida. As cinco passagens foram distribuídas com o mesmo orçamento. A rodada
+examinou promoção, vencimento, substituição e duplicidade. O teste por passagem
+anterior continua congelado para comparação.
+
 ## Qualificação da memória por passagem — 07/11/2026
 
 A consulta passou a fornecer passagens com linhas inclusivas e SHA-256. O índice usa

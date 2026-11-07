@@ -50,7 +50,7 @@ e **o que o agente fez** como resultados distintos. [CL-Bench 1.0](https://sky.c
 |---|---|---|
 | Busca lexical nas fontes | IDs, comandos, nomes de arquivos, símbolos e mensagens de erro conhecidos. | A referência de comparação usa documentos canônicos selecionados por escopo. A busca por palavras tem dificuldade com paráfrases. |
 | Notas estruturadas no Git e busca lexical | Identifica aprendizados duráveis, preserva a trilha da mudança e funciona sem serviço externo. | É a implementação escolhida. A seleção depende da qualidade dos títulos, do vocabulário, do recorte por tarefa e das evidências. |
-| Wiki derivada e vinculada | Ajuda quando um problema exige relacionar várias notas ou documentos. | O CDP usa um índice derivado, vínculos de evidência e substituições explícitas. Uma wiki narrativa exigiria prova de ganho, pois multiplica material a revisar. |
+| Wiki derivada e vinculada | Ajuda quando um problema exige relacionar várias notas ou documentos. | O CDP usa um índice e páginas temáticas derivados do catálogo, com vínculos de evidência e substituições explícitas. Uma wiki narrativa independente ampliaria o material a revisar. |
 | Índice lexical persistente, como SQLite FTS5 | Evita reler um corpus grande e permite busca ordenada por relevância. | O corpus inicial permite busca em arquivos. Se a latência justificar, usar um índice descartável e reconstruível a partir da mesma fonte versionada. |
 | Busca híbrida com vetores | Encontra paráfrases e vocabulário distante da fonte. | Acrescenta um modelo, versão de embeddings e avaliação de ordenação. Comparar offline somente quando consultas reais mostrarem perdas lexicais. |
 | Grafo temporal ou serviço especializado | Responde a relações recorrentes entre entidades e a mudanças de validade em escala. | Os estados e relações financeiras do CDP já têm representações canônicas. Para as notas, datas e vínculos explícitos atendem à necessidade inicial com revisão por diff. |
@@ -176,3 +176,54 @@ Uma relação já comprovada persiste após retirada ou remoção. Histórico in
 essa prova. Os controles de recuperação medem sugestões indevidas em consultas do corpus.
 Os testes de linhagem verificam separadamente a integridade do histórico.
 [git log e primeiro pai](https://git-scm.com/docs/git-log).
+
+## Consolidação e wiki a partir dos exemplos oficiais
+
+O cookbook de *dreaming* entrega entradas fixadas a analisadores, um por transcrição. Um
+organizador entra depois e reúne duplicatas, repara ligações e fecha o índice. O exemplo
+confere os registros das tarefas contra o relatório do coordenador e entrega a memória
+em leitura para as próximas sessões. Na execução registrada, 11 transcrições de exemplo
+custaram US$ 0,36 e levaram cerca de dois minutos e meio. No agendamento mostrado, a
+atualização ocorre na memória ativa antes de revisão e uma sessão ainda em andamento pode
+ficar fora das janelas seguintes. Isso motiva separar proposta de integração e conservar
+pendências explícitas de uma execução à outra. [Dreaming com fluxo dinâmico](https://platform.claude.com/cookbook/managed-agents-cma-dreaming-with-a-dynamic-workflow).
+
+A revisão de 06/11/2026 do *knowledge wiki* monta o acervo em etapas de extração por lote,
+resolução de lacunas, confronto das afirmações com os documentos e organização final.
+A origem e a data acompanham a afirmação. Mudanças de versão e divergências permanecem
+visíveis. As sessões de consulta leem a wiki em modo somente leitura. Quando falta a peça
+necessária, a resposta identifica a lacuna. O próprio exemplo detectou perda de conteúdo
+em cerca de 5% das linhas enviadas à página de entidade mais disputada entre escritores.
+[Quickstart fixado em 4a4224bd](https://github.com/anthropics/claude-quickstarts/blob/4a4224bdf0e9cfb3332167b69c90457403813625/managed-agents/knowledge-wiki/README.md).
+
+No *knowledge wiki*, a montagem registrada usa oito documentos principais, cerca de
+2,8 MB de texto e US$ 16 a preço de lista. A avaliação do notebook usa 21 perguntas,
+27 rodadas e dois modelos julgadores. O gabarito fica fora do repositório público.
+As comparações com o mesmo modelo separam parte do efeito da wiki da escolha do leitor.
+[Notebook fixado em 4a4224bd](https://github.com/anthropics/claude-quickstarts/blob/4a4224bdf0e9cfb3332167b69c90457403813625/managed-agents/knowledge-wiki/distill_documents_into_knowledge_wiki.ipynb).
+
+| Leitor | Documentos brutos | Wiki |
+|---|---:|---:|
+| Claude Haiku 5.5 | 88,9 ± 0,6 e US$ 0,0066 por resposta | 91,9 ± 0,7 e US$ 0,0056 por resposta |
+| Claude Sonnet 5.5 | 92,8 ± 0,5 e US$ 0,086 por resposta | 92,6 ± 0,6 e US$ 0,064 por resposta |
+
+As pontuações vão até 100 e o notebook apresenta intervalos de 95%. O custo de cerca de
+um quinze avos compara Haiku com wiki e Sonnet com documentos. A utilidade e a amortização
+no CDP dependem das suas próprias tarefas, acervo e condições de uso.
+[Medição e limites no notebook](https://github.com/anthropics/claude-quickstarts/blob/4a4224bdf0e9cfb3332167b69c90457403813625/managed-agents/knowledge-wiki/distill_documents_into_knowledge_wiki.ipynb).
+
+| Função nos exemplos | Adaptação ao CDP |
+|---|---|
+| Coordenar a consolidação | Código local fixa a revisão e a data, gera uma fila limitada e explicita o trabalho pendente. A agenda e o gate conservam a autoridade sobre rotinas. |
+| Analisar e resolver | Cada proposta tem um item de origem e evidências ancoradas. Trabalho em paralelo pode produzir propostas independentes. Lacunas, ausência de leitura e divergências ficam como situações distintas. |
+| Organizar | Validação e consolidação estruturais ficam separadas do julgamento semântico. A revisão por diff decide o que aceitar e registra substituições comprováveis. |
+| Entregar a wiki | A consulta usa a revisão registrada no Git, com índice, tópicos e referências derivados. As páginas conduzem às fontes canônicas e preservam a hierarquia de autoridade. |
+| Verificar o trabalho | Conferir o conjunto de itens planejados, o que foi analisado e o que sobrou para revisão. Um relatório de agente descreve o que ele tentou. A validação de evidência e a revisão identificam o que pode ser integrado. |
+
+A versão do CDP executa a coordenação e a renderização offline sobre o acervo permitido
+no repositório. Os dados consultados são material de análise. As instruções continuam no
+manual, nos roteiros e na configuração. Uma nota pode dizer onde verificar se houve entrega.
+A evidência de entrega continua sendo o registro da entrega. A wiki apresenta o mapa da
+investigação. O leitor confere as fontes quando a ausência ou a validade da informação
+puder mudar a decisão. [Orientação de análise](https://github.com/anthropics/claude-quickstarts/blob/4a4224bdf0e9cfb3332167b69c90457403813625/managed-agents/knowledge-wiki/prompts/analyzer_system.md),
+[orientação de organização](https://github.com/anthropics/claude-quickstarts/blob/4a4224bdf0e9cfb3332167b69c90457403813625/managed-agents/knowledge-wiki/prompts/organizer_system.md).

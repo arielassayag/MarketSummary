@@ -54,6 +54,7 @@ ESCOPO: dict[Escopo, tuple[str, ...]] = {
 PASTA = "docs/cdp/memoria/notas"
 AVALIACAO = "docs/cdp/memoria/avaliacao.json"
 REVISAO_AVALIACAO_INICIAL = "d60cc15fd70bc2ff12c96a6041d59a9506a02079"
+REVISAO_AVALIACAO_PASSAGENS = "42f19b27ff7842d36f475a05785e408701ec12f8"
 MAX_NOTAS = 128
 MAX_BYTES_NOTA = 16384
 MAX_BYTES_FONTE = 1024 * 1024
@@ -421,6 +422,7 @@ class Catalogo:
         self.notas = notas
         substitu, problemas = substituicoes_confirmadas(fontes, data, notas, registros)
         self.problemas.extend(problemas)
+        self.substituidas = frozenset(substitu)
         invalidas = {p["id"] for p in self.problemas}
         self.ativos: list[Registro] = []
         for id_, nota in notas.items():
@@ -688,8 +690,9 @@ def _comando(args: argparse.Namespace) -> int:
         revisao = getattr(args, "revisao", None)
         if revisao is not None and acao != "avaliar" and args.data is None:
             raise MemoriaErro("a consulta por revisão exige a data explícita de referência")
-        if acao == "avaliar" and not (args.reservada or args.replica) and revisao is None:
-            revisao = REVISAO_AVALIACAO_INICIAL
+        if acao == "avaliar" and revisao is None and not args.sonho:
+            revisao = (REVISAO_AVALIACAO_PASSAGENS if args.reservada or args.replica
+                       else REVISAO_AVALIACAO_INICIAL)
         fontes = Fontes(raiz_repo(), trabalho=trabalho, revisao=revisao)
         if acao == "propor":
             inicio, fim = args.linhas
@@ -699,6 +702,11 @@ def _comando(args: argparse.Namespace) -> int:
             print(nota.model_dump_json(indent=2))
             return 0
         if acao == "avaliar":
+            if args.sonho:
+                from .memoria_ensaio_sonho import avaliar_sonho
+
+                _json(avaliar_sonho(fontes))
+                return 0
             if args.reservada or args.replica:
                 from .memoria_avaliacao import avaliar_reservada
 
@@ -719,7 +727,19 @@ def _comando(args: argparse.Namespace) -> int:
             _json(rel)
             return int(bool(c.problemas))
         c = Catalogo(fontes, args.data or _hoje())
-        if acao == "contexto":
+        if acao in ("sonhar", "conferir-sonho"):
+            from .memoria_sonho import MAX_BYTES_RESPOSTA, conferir_sonho, sonhar
+
+            plano = sonhar(c, limite=args.limite, desde=args.desde, pagina=args.pagina)
+            if acao == "sonhar":
+                _json(plano)
+            else:
+                _json(conferir_sonho(c, plano, sys.stdin.buffer.read(MAX_BYTES_RESPOSTA + 1)))
+        elif acao == "wiki":
+            from .memoria_sonho import wiki
+
+            _json(wiki(c, args.escopo))
+        elif acao == "contexto":
             out = c.contexto(args.escopo)
             if args.formato == "md":
                 print(render_contexto(out), end="")
@@ -749,10 +769,13 @@ def registrar(sub: argparse._SubParsersAction) -> None:
         ("propor", "imprime um rascunho de nota com evidência da revisão Git"),
         ("auditar", "verifica a árvore de trabalho e gera uma fila de consolidação"),
         ("avaliar", "executa a comparação offline do corpus da revisão Git"),
+        ("sonhar", "gera um plano de revisão de memória na revisão Git"),
+        ("conferir-sonho", "valida na entrada padrão uma devolutiva vinculada ao plano"),
+        ("wiki", "mostra tópicos e evidências do catálogo curado por escopo"),
     ):
         s = acoes.add_parser(acao, help=ajuda)
         s.set_defaults(func=_comando)
-        if acao in ("contexto", "buscar", "avaliar"):
+        if acao in ("contexto", "buscar", "avaliar", "wiki", "sonhar", "conferir-sonho"):
             s.add_argument("--revisao", help="hash completo do commit local a consultar")
         if acao == "avaliar":
             conjunto = s.add_mutually_exclusive_group()
@@ -760,10 +783,18 @@ def registrar(sub: argparse._SubParsersAction) -> None:
                                    help="mede recuperação de passagens no primeiro corpus reservado")
             conjunto.add_argument("--replica", action="store_true",
                                    help="mede recuperação de passagens no corpus de verificação")
+            conjunto.add_argument("--sonho", action="store_true",
+                                   help="executa o ensaio de revisão em Git temporário")
         else:
             s.add_argument("--data", type=_data, help="data de referência (padrão: Brasília)")
-        if acao in ("contexto", "buscar", "propor"):
+        if acao in ("contexto", "buscar", "propor", "wiki"):
             s.add_argument("--escopo", choices=tuple(ESCOPO), required=True)
+        if acao in ("sonhar", "conferir-sonho"):
+            s.add_argument("--desde", help="hash completo da última revisão examinada")
+            s.add_argument("--limite", type=int, choices=range(1, 13), default=12,
+                           help="quantidade máxima de itens do plano")
+            s.add_argument("--pagina", type=int, default=1,
+                           help="página da fila na revisão fixada")
         if acao == "auditar":
             s.add_argument("--revisao-git", action="store_true",
                            help="audita o HEAD em vez da árvore de trabalho")

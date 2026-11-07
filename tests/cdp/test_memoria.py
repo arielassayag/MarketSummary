@@ -227,3 +227,51 @@ def test_retirada_preserva_substituicao_e_fonte_antiga(repo):
     c = Catalogo(Fontes(repo), DATA)
     assert c.contagens["substituida"] == c.contagens["retirada"] == 1
     assert _ids(c) == []
+
+
+def test_sonho_cobre_fila_e_confere_candidatas_sem_ativacao(repo):
+    from cdp.memoria_sonho import conferir_sonho, sonhar, wiki
+
+    _nota(repo, "nova-licao", estado="candidata", revisada_em=None, rever_em=None,
+          destaque=False, resumo="Uma hipótese sobre a consulta da moeda.")
+    _commit(repo)
+    catalogo = Catalogo(Fontes(repo), DATA)
+    plano = sonhar(catalogo)
+    assert plano == sonhar(catalogo)
+    item = next(i for i in plano["fila"] if i["id"] == "nova-licao")
+    assert item["acao"] == "revisar_candidata" and item["origens"][0]["sha256"]
+
+    candidata = catalogo.notas["nova-licao"].model_dump(mode="json")
+    candidata.update(id="licao-revisada", registrada_em=DATA.isoformat())
+    respostas = [{"uid": i["uid"], "decisao": "manter", "motivo": "Fonte conferida."}
+                 for i in plano["fila"]]
+    resposta = next(r for r in respostas if r["uid"] == item["uid"])
+    resposta.update(decisao="propor_candidata", candidata=candidata)
+    payload = {"plano_sha256": plano["sha256"], "respostas": respostas}
+    antes = {p.name for p in (repo / PASTA).iterdir()}
+    ok = conferir_sonho(catalogo, plano, json.dumps(payload).encode())
+    assert ok["estado"] == "propostas_para_revisao" and len(ok["candidatas"]) == 1
+    assert {p.name for p in (repo / PASTA).iterdir()} == antes
+    assert [n["id"] for n in wiki(catalogo, "diario")["notas"]] == ["moeda-original"]
+
+    with pytest.raises(MemoriaErro, match="exatamente uma"):
+        conferir_sonho(catalogo, plano, json.dumps(payload | {"respostas": []}).encode())
+    candidata["escopos"] = ["risco"]
+    with pytest.raises(MemoriaErro, match="fora do item"):
+        conferir_sonho(catalogo, plano, json.dumps(payload).encode())
+
+
+def test_sonho_identifica_fontes_mudadas_e_pagina_sem_perder_item(repo):
+    from cdp.memoria_sonho import sonhar
+
+    anterior = Fontes(repo).revisao
+    _gravar(repo, FONTE, f"Versão revista do roteiro.\n{TRECHO}\n")
+    _nota(repo, "candidata-teste", estado="candidata", revisada_em=None, rever_em=None,
+          destaque=False)
+    _commit(repo)
+    catalogo = Catalogo(Fontes(repo), DATA)
+    a = sonhar(catalogo, desde=anterior, limite=1)
+    b = sonhar(catalogo, desde=anterior, limite=1, pagina=2)
+    assert a["fila"][0]["acao"] == "revisar_candidata" and a["adiados"] == 1
+    assert b["fila"][0]["id"] == FONTE and b["adiados"] == 0
+    assert a["sha256"] != b["sha256"]

@@ -1073,3 +1073,11 @@ notas e fontes; a consolidação produz uma fila para revisão fora das rotinas.
 A memória localiza evidências, enquanto os registros canônicos governam estado,
 números, ações e publicação. Veja [desenho e pesquisa](MEMORIA_PESQUISA.md) e
 [fluxo de manutenção](MEMORIA.md).
+
+## 2026-11-07 · Dreaming com curadoria e reserva única
+
+A tarefa `cdp-dreaming` roda em leitura e entrega uma devolutiva vinculada ao Git.
+A conferência valida evidência e cobertura do plano. A promoção da memória passa
+pela revisão das candidatas. A reserva semanal das 12h07 protege o prazo de montagem.
+O próximo fechamento principal recupera pendências do diário pela agenda.
+Veja [roteiro](playbooks/DREAMING.md) e [desenho](MEMORIA_PESQUISA.md).

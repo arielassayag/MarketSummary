@@ -145,6 +145,37 @@ Os cinco comandos leem arquivos e imprimem resultados. A proposta e a fila não 
 promovem notas, agendam revisões ou publicam. A consolidação pode aproveitar ajuda de um agente
 em sessão de desenvolvimento, com suas mudanças apresentadas como diff para revisão.
 
+## Dreaming e wiki de leitura
+
+A rotina [dreaming](playbooks/DREAMING.md) revisa o catálogo aos sábados. O plano usa
+uma revisão Git, limita a fila a 12 unidades por página e registra data, origens e
+hashes. A ordem começa por problemas de evidência e linhagem, passa por vencimentos,
+candidatas e semelhanças, e termina em fontes alteradas. A janela padrão de 14 dias
+se sobrepõe entre sábados. Quando for necessário cobrir um intervalo maior, informe
+a última revisão examinada com `--desde` e use `--pagina` para alcançar os itens
+adiados na mesma revisão. O índice identifica os tópicos que já têm notas curadas.
+
+```sh
+uv run python -m cdp memoria sonhar
+uv run python -m cdp memoria wiki --escopo desenvolvimento
+```
+
+Cada item exige uma disposição e sua justificativa. A devolutiva traz o SHA-256 do
+plano, cobre todos os IDs selecionados e pode anexar novas notas candidatas
+no esquema deste manual. A curadoria compara fontes quando elas divergem.
+Em desenvolvimento, valide o JSON da devolutiva pela entrada padrão, com a
+mesma revisão, data, origem e página do plano.
+
+```sh
+uv run python -m cdp memoria conferir-sonho < /tmp/devolutiva-cdp.json
+```
+
+O validador confere cobertura da fila, escopo e evidência antes de devolver as
+candidatas para revisão. A aceitação de uma lição segue o diff revisável e a
+integração ao Git. A vista wiki usa notas já curadas, agrupadas por etiqueta, com
+links por ID para suas âncoras e predecessoras. Para detalhes e limites do
+desenho, consulte a [pesquisa de arquitetura](MEMORIA_PESQUISA.md).
+
 ## Avaliar recuperação
 
 ```sh
@@ -185,3 +216,23 @@ uv run python -m cdp memoria avaliar --reservada --revisao 42f19b27ff7842d36f475
 uv run python -m cdp memoria avaliar --replica --revisao 42f19b27ff7842d36f475a05785e408701ec12f8 > outputs/cdp-memoria/replica.json
 python3 scripts/cdp_memoria_figuras.py outputs/cdp-memoria/replica.json --primeira outputs/cdp-memoria/reservada.json
 ```
+
+A avaliação de dreaming executa a comparação em um repositório Git temporário.
+O ensaio separa busca direta, memória ativa antes da revisão e memória após a
+reaplicação de decisões editoriais predefinidas. O plano e a devolutiva são
+conferidos antes dessa reaplicação.
+
+```sh
+mkdir -p outputs/cdp-memoria
+uv run python -m cdp memoria avaliar --sonho > outputs/cdp-memoria/ensaio-sonho.json
+python3 scripts/cdp_memoria_figuras_sonho.py outputs/cdp-memoria/ensaio-sonho.json
+```
+
+O ensaio usa as mesmas fontes canônicas e o mesmo orçamento nos três braços.
+Entre as cinco primeiras passagens, a evidência completa apareceu em 6 de 9
+perguntas com busca direta, em 6 de 9 com a memória antes da revisão e em 8 de 9
+depois das decisões editoriais. As três primeiras passagens ficaram em 6 de 9
+nos três braços. A fila identificou os quatro casos predefinidos e a validação
+recebeu uma candidata sem ativá-la. Os números medem o efeito da revisão
+predefinida nesse cenário. O desempenho das decisões feitas pelo agente no
+agendador exige avaliação própria.

@@ -12,7 +12,7 @@ from dataclasses import dataclass
 
 LINHAS_PASSAGEM = 14
 BYTES_PASSAGEM = 1800
-_BYTES_AMPLIACAO = 4_500
+BYTES_CONTEXTO = 4_500
 _PASSO = 4
 _STOP = set(
     "a ao aos as com como da das de do dos e em essa esse esta isto mais na nas no nos "
@@ -204,7 +204,7 @@ def ampliar_selecao(passagens: list[Local], candidatas: Iterable[Local],
 
     selecionadas = list(passagens)
     total = sum(map(tamanho, selecionadas)) + max(0, len(selecionadas) - 1)
-    if total >= _BYTES_AMPLIACAO:
+    if total >= BYTES_CONTEXTO:
         return selecionadas
     por_fonte: dict[str, list[Local]] = {}
     for p in candidatas:
@@ -216,7 +216,7 @@ def ampliar_selecao(passagens: list[Local], candidatas: Iterable[Local],
                     or candidata.fim - candidata.inicio + 1 > LINHAS_PASSAGEM):
                 continue
             maior = tamanho(candidata)
-            if maior <= BYTES_PASSAGEM and total + maior - tamanho_atual <= _BYTES_AMPLIACAO:
+            if maior <= BYTES_PASSAGEM and total + maior - tamanho_atual <= BYTES_CONTEXTO:
                 selecionadas[i] = candidata
                 total += maior - tamanho_atual
                 break
@@ -242,9 +242,25 @@ def reaproveitar_vagas(passagens: list[Local], candidatas: Iterable[Local],
         if len(selecionadas) == len(passagens):
             break
         custo = tamanho(p) + 1
-        if (total + custo <= _BYTES_AMPLIACAO
+        if (total + custo <= BYTES_CONTEXTO
                 and not any(redundante(p, a, diverso=True) for a in selecionadas)):
             selecionadas.append(p)
+            total += custo
+    return selecionadas
+
+
+def limitar_contexto(passagens: Iterable[Local], ler: Callable[[str], tuple[str, ...]]) -> list[Local]:
+    """Conserva a ordem e admite apenas passagens inteiras que cabem em bytes UTF-8."""
+    selecionadas: list[Local] = []
+    total = 0
+    for local in passagens:
+        if local.fim - local.inicio + 1 > LINHAS_PASSAGEM:
+            continue
+        trecho = "\n".join(ler(local.caminho)[local.inicio - 1:local.fim])
+        tamanho = len(trecho.encode())
+        custo = tamanho + bool(selecionadas)
+        if tamanho <= BYTES_PASSAGEM and total + custo <= BYTES_CONTEXTO:
+            selecionadas.append(local)
             total += custo
     return selecionadas
 

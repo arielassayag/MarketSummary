@@ -13,6 +13,7 @@ from pydantic import Field, ValidationError, field_validator, model_validator
 from .memoria import (
     _DESTINOS_ATUAIS,
     ESCOPO,
+    LIMITE_CONSULTA,
     Catalogo,
     Escopo,
     MemoriaErro,
@@ -75,7 +76,7 @@ class _Pacote(_Modelo):
     versao: Literal[1]
     revisao: str = Field(pattern=r"^(?:[0-9a-f]{40}|[0-9a-f]{64})$")
     data: str = Field(pattern=r"^\d{4}-\d{2}-\d{2}$")
-    consulta: str = Field(min_length=1, max_length=240)
+    consulta: str = Field(min_length=1, max_length=LIMITE_CONSULTA)
     escopo: Escopo
     limite: int = Field(ge=1, le=_LIMITE_PASSAGENS)
     orcamento_bytes: int = Field(ge=_LIMITE_BYTES, le=_LIMITE_BYTES)

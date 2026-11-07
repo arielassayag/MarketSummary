@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import re
+from argparse import ArgumentTypeError
 from collections import Counter
 from datetime import date
 from typing import Annotated, Literal
@@ -14,6 +15,7 @@ from .memoria import (
     _AVISO,
     _DESTINOS_ATUAIS,
     ESCOPO,
+    LIMITE_CONSULTA,
     Catalogo,
     Escopo,
     Evidencia,
@@ -22,6 +24,7 @@ from .memoria import (
     MemoriaGitIndisponivel,
     Sha,
     _chaves_unicas,
+    _consulta,
     _localizar,
     _Modelo,
     _normalizar,
@@ -36,10 +39,10 @@ MAX_BYTES_MAPA = 64 * 1024
 MAX_BYTES_ROTA = 1024
 MAX_BYTES_ENVELOPE = MAX_BYTES_ROTA + MAX_BYTES_RESPOSTA + 128
 MAX_BYTES_AMBIGUIDADE = 4096
-MAX_BYTES_ESCOPO = 4096
+MAX_BYTES_ESCOPO = 8 * 1024
 _Frase = Annotated[str, Field(min_length=1, max_length=240), AfterValidator(_texto_simples)]
 _Termo = Annotated[str, Field(min_length=1, max_length=80), AfterValidator(_texto_simples)]
-_TrechoConsulta = Annotated[str, Field(min_length=1, max_length=240)]
+_TrechoConsulta = Annotated[str, Field(min_length=1, max_length=LIMITE_CONSULTA)]
 _PEDIR_ESCLARECIMENTO = (
     "Qual fato registrado ou procedimento do CDP você quer consultar? "
     "Se a dúvida envolve mais de um registro, diga qual deles deve comprovar o fato."
@@ -309,6 +312,10 @@ def preparar_rota(fontes: Fontes, data: date, escopo: Escopo, consulta: str, lim
         raise MemoriaErro("a triagem exige uma revisão Git")
     if escopo not in ESCOPO or type(limite) is not int or not 1 <= limite <= 10:
         raise MemoriaErro("escopo ou limite da triagem inválido")
+    try:
+        consulta = _consulta(consulta)
+    except ArgumentTypeError as exc:
+        raise MemoriaErro(str(exc)) from exc
     bloqueio = _pedido_fora_do_escopo(_normalizar(consulta).strip())
     autoridades, ressalvas = _autoridades(fontes) if com_autoridades and not bloqueio else ({}, [])
     pacote = {"versao": 1, "revisao": fontes.revisao, "data": data.isoformat(),

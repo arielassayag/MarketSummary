@@ -589,6 +589,33 @@ def test_revalidacao_cli_exige_revisao_e_arquivo_regular(repo, monkeypatch, caps
         assert "arquivo regular" in capsys.readouterr().err
 
 
+def test_consulta_composta_longa_passa_pela_triagem_e_selecao_lacradas(repo):
+    from cdp.memoria import LIMITE_CONSULTA
+    from cdp.memoria_roteamento import (
+        conferir_selecao_roteada,
+        preparar_rota,
+        preparar_selecao_roteada,
+    )
+
+    fontes = Fontes(repo)
+    consulta = ("No fechamento do CDP, como conferir a moeda de origem do índice e em qual "
+                "fonte se apoia essa conferência antes de redigir o comentário? "
+                "Explique a evidência que deve ser lida para confirmar a moeda e diferencie "
+                "o procedimento previsto de um valor que já conste num relatório publicado.")
+    assert 240 < len(consulta) < LIMITE_CONSULTA
+    rota = preparar_rota(fontes, DATA, "diario", consulta, 5)
+    triagem = {"lacre": rota["lacre"], "intencao": "evidencia", "destino_atual": None}
+    selecao = preparar_selecao_roteada(fontes, rota, json.dumps(triagem).encode())
+    resposta = {"lacre": selecao["lacre"], "ids": [], "intencao": "evidencia",
+                "recortes": [{"caminho": FONTE, "inicio": 3, "fim": 3}]}
+    resultado = conferir_selecao_roteada(
+        fontes, rota, json.dumps({"triagem": triagem, "selecao": resposta}).encode(),
+    )
+    assert selecao["consulta"] == consulta and resultado["passagens"][0]["caminho"] == FONTE
+    with pytest.raises(MemoriaErro, match=str(LIMITE_CONSULTA)):
+        preparar_rota(fontes, DATA, "diario", "x" * (LIMITE_CONSULTA + 1), 5)
+
+
 def test_corpus_do_projeto_mantem_abstencao_e_ganho_de_recuperacao():
     corrente = Catalogo(Fontes(RAIZ, trabalho=os.name == "posix"), DATA)
     assert not corrente.problemas, corrente.problemas

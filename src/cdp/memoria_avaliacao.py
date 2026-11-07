@@ -10,6 +10,7 @@ from typing import Annotated, Literal
 from pydantic import AfterValidator, Field, field_validator, model_validator
 
 from .memoria import (
+    LIMITE_CONSULTA,
     BuscaCanonica,
     Catalogo,
     Escopo,
@@ -39,7 +40,7 @@ MAX_BYTES_REVALIDACAO = 256 * 1024
 class CasoReservado(_Modelo):
     id: Slug
     escopo: Escopo
-    consulta: str = Field(min_length=1, max_length=240)
+    consulta: str = Field(min_length=1, max_length=LIMITE_CONSULTA)
     tipo: Literal["evidencia", "estado_atual", "fora_escopo"]
     grupos: list[list[Evidencia]] = Field(max_length=4)
     destinos_aceitos: list[Slug] | None = Field(default=None, min_length=1, max_length=4)

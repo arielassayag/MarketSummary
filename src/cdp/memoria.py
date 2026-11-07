@@ -34,6 +34,7 @@ from .memoria_busca import (
     ampliar_selecao,
     combinar_evidencias,
     completar_bloco,
+    limitar_contexto,
     reaproveitar_vagas,
     reunir_ancoras,
     termos_contextuais,
@@ -44,6 +45,7 @@ from .memoria_busca import (
 from .memoria_reforcos import IndiceReforcos
 from .memoria_secoes import IndiceSecoes
 
+LIMITE_CONSULTA = 480
 Escopo = Literal["desenvolvimento", "operador", "status", "semanal", "diario", "risco",
                  "cobertura", "calibracao"]
 ESCOPO: dict[Escopo, tuple[str, ...]] = {
@@ -179,7 +181,7 @@ class Nota(_Modelo):
 class _Caso(_Modelo):
     id: Slug
     escopo: Escopo
-    consulta: str = Field(min_length=1, max_length=240)
+    consulta: str = Field(min_length=1, max_length=LIMITE_CONSULTA)
     notas_esperadas: list[Slug] = Field(max_length=10)
     fontes_esperadas: list[str] = Field(max_length=10)
 
@@ -1135,7 +1137,8 @@ class Catalogo:
         return RefinadorAutoridades(self.fontes)
 
     def buscar(self, escopo: Escopo, consulta: str, limite: int, *,
-               estado_atual: bool = False, evidencia_conferida: bool = False) -> dict:
+               estado_atual: bool = False, evidencia_conferida: bool = False,
+               orcamento_estrito: bool = False) -> dict:
         q = _normalizar(consulta).strip()
         fora = _pedido_fora_do_escopo(q)
         rota = None if fora or evidencia_conferida else _destino_atual(consulta, forcar=estado_atual)
@@ -1155,6 +1158,8 @@ class Catalogo:
         passagens = [] if fora or rota else self._recuperar_passagens(
             escopo, consulta, limite, diretas, notas
         )
+        if orcamento_estrito:
+            passagens = limitar_contexto(passagens, self.fontes.linhas)
         caminhos = {}
         for local in (() if rota else diretas):
             caminhos.setdefault(local.caminho, local.json())
@@ -1544,7 +1549,7 @@ def _comando(args: argparse.Namespace) -> int:
                 if args.explorar_fontes:
                     raise MemoriaErro("explorar fontes exige gerar ou conferir uma seleção guiada")
                 _json(c.buscar(args.escopo, args.consulta, args.limite,
-                               estado_atual=args.estado_atual))
+                               estado_atual=args.estado_atual, orcamento_estrito=args.orcamento_estrito))
         else:
             _json(_relatorio(c))
             return int(bool(c.problemas))
@@ -1650,6 +1655,8 @@ def registrar(sub: argparse._SubParsersAction) -> None:
             modo = s.add_mutually_exclusive_group()
             modo.add_argument("--estado-atual", action="store_true",
                               help="encaminha à fonte do estado sem recuperar memória")
+            modo.add_argument("--orcamento-estrito", action="store_true",
+                              help="limita os trechos integrais a 4.500 bytes em UTF-8")
             modo.add_argument("--candidatas", action="store_true",
                               help="gera um pacote lacrado para seleção de evidências pelo agente")
             modo.add_argument("--conferir-selecao", action="store_true",
@@ -1666,6 +1673,7 @@ def registrar(sub: argparse._SubParsersAction) -> None:
 
 
 def _consulta(valor: str) -> str:
-    if 1 <= len(valor) <= 240 and not any(unicodedata.category(c).startswith("C") for c in valor):
+    if (isinstance(valor, str) and 1 <= len(valor) <= LIMITE_CONSULTA
+            and not any(unicodedata.category(c).startswith("C") for c in valor)):
         return valor
-    raise argparse.ArgumentTypeError("use texto em uma linha de até 240 caracteres")
+    raise argparse.ArgumentTypeError(f"use texto em uma linha de até {LIMITE_CONSULTA} caracteres")

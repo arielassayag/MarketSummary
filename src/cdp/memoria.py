@@ -339,7 +339,7 @@ _PROCEDIMENTO = re.compile(
     r"(?:procedimento|roteiro|comando|regra|diferenca|criterio|ordem|fluxo)\b)"
 )
 _VALOR = re.compile(
-    r"^(?:quanto|quant[oa]s)\b|^qual(?: e| foi)? [oa] "
+    r"^(?:quanto|quant[oa]s)\b|^qual(?: e| foi)? [oa] (?:ultim[oa] )?"
     r"(?:valor|pnl|p&l|pl|retorno|preco|cotacao|patrimonio|rentabilidade|drawdown|peso)\b"
 )
 _PEDIDO_DE_PROCEDIMENTO = re.compile(

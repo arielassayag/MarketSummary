@@ -118,6 +118,35 @@ def test_selecao_aplica_orcamento_utf8_sem_truncar():
         aplicar(pacote, _resposta(pacote, [1, 2, 3]))
 
 
+def test_completa_bloco_cortado_apenas_com_candidata_lacrada_e_vaga():
+    caminho = "docs/cdp/FECHAMENTO.md"
+    linhas = ("# Roteiro", "", "A condição começa aqui.", "Confira o horário.",
+              "Só então publique.", "", "Outra etapa.")
+    recorte = localizar(caminho, 4, linhas[3:5])
+    bloco = localizar(caminho, 3, linhas[2:5])
+    catalogo = _catalogo("Base")
+    catalogo.fontes.linhas = lambda _: linhas
+    catalogo.buscar = lambda *args: {
+        "revisao": _REVISAO, "data": _DATA.isoformat(), "escopo": "diario",
+        "passagens": [recorte.json()], "fontes": [], "notas": [], "orientacao_atual": None,
+    }
+    catalogo.indice.buscar = lambda *args, **kwargs: [bloco]
+    catalogo.indice.estruturais = lambda *args, **kwargs: []
+    catalogo.indice.simbolos = lambda *args: []
+
+    pacote = preparar(catalogo, "diario", _CONSULTA, 2)
+    assert aplicar(pacote, _resposta(pacote, [1]))["passagens"] == [recorte.json()]
+    assert aplicar(pacote, _resposta(pacote, [1]), ler=catalogo.fontes.linhas)["passagens"] == [
+        recorte.json(), bloco.json(),
+    ]
+    linhas_alteradas = (*linhas[:2], "Outra condição.", *linhas[3:])
+    with pytest.raises(MemoriaErro, match="fonte canônica lacrada"):
+        aplicar(pacote, _resposta(pacote, [1]), ler=lambda _: linhas_alteradas)
+    limitado = preparar(catalogo, "diario", _CONSULTA, 1)
+    assert aplicar(limitado, _resposta(limitado, [1]), ler=catalogo.fontes.linhas)[
+        "passagens"] == [recorte.json()]
+
+
 def test_teto_do_pacote_preserva_as_vinte_janelas_canonicas():
     catalogo = _catalogo(*(f"Passagem {i}" for i in range(100)))
     locais = [localizar(caminho, 1, catalogo.fontes.linhas(caminho))

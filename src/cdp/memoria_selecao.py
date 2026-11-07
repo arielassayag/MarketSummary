@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
 from itertools import chain, zip_longest
 from typing import Literal
 
@@ -22,7 +22,7 @@ from .memoria import (
     _Modelo,
     _sha,
 )
-from .memoria_busca import BYTES_PASSAGEM, LINHAS_PASSAGEM, Local, completar_bloco
+from .memoria_busca import BYTES_PASSAGEM, LINHAS_PASSAGEM, Local, _blocos_markdown, completar_bloco
 
 MAX_BYTES_RESPOSTA = 4096
 LIMITE_CANDIDATAS = 64
@@ -164,7 +164,37 @@ def preparar(catalogo: Catalogo, escopo: Escopo, consulta: str, limite: int) -> 
     return pacote
 
 
-def aplicar(pacote: dict, bruto: bytes) -> dict:
+def _completar_margens(pacote: _Pacote, escolhidas: list[_Candidata], total: int,
+                       ler: Callable[[str], tuple[str, ...]]) -> list[_Candidata]:
+    """Anexa blocos íntegros já lacrados quando uma passagem corta sua margem."""
+    saida = list(escolhidas)
+    por_intervalo = {(p.caminho, p.inicio, p.fim): p for p in pacote.candidatas}
+    for passagem in escolhidas:
+        if len(saida) == pacote.limite:
+            break
+        if not passagem.caminho.endswith(".md"):
+            continue
+        linhas = ler(passagem.caminho)
+        for inicio, fim in _blocos_markdown(linhas):
+            if len(saida) == pacote.limite:
+                break
+            inicio += 1
+            if not (inicio < passagem.inicio <= fim or inicio <= passagem.fim < fim):
+                continue
+            bloco = por_intervalo.get((passagem.caminho, inicio, fim))
+            if bloco is None or any(p.caminho == bloco.caminho and
+                                    p.inicio <= inicio <= fim <= p.fim for p in saida):
+                continue
+            if total + bloco.bytes + 1 <= pacote.orcamento_bytes:
+                if "\n".join(linhas[inicio - 1:fim]) != bloco.trecho:
+                    raise MemoriaErro("o complemento diverge da fonte canônica lacrada")
+                saida.append(bloco)
+                total += bloco.bytes + 1
+    return saida
+
+
+def aplicar(pacote: dict, bruto: bytes, *,
+            ler: Callable[[str], tuple[str, ...]] | None = None) -> dict:
     """Valida a devolutiva e resolve apenas IDs do pacote preparado pelo chamador."""
     if not isinstance(bruto, bytes):
         raise MemoriaErro("a resposta exige JSON em bytes")
@@ -195,4 +225,6 @@ def aplicar(pacote: dict, bruto: bytes) -> dict:
     total = sum(p.bytes for p in escolhidas) + max(0, len(escolhidas) - 1)
     if total > selada.orcamento_bytes:
         raise MemoriaErro("a seleção excede o orçamento de 4.500 bytes")
+    if ler is not None:
+        escolhidas = _completar_margens(selada, escolhidas, total, ler)
     return {**selada.base, "passagens": [p.referencia() for p in escolhidas]}

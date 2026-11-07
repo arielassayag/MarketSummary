@@ -77,6 +77,10 @@ resolve até cinco referências dentro do orçamento agregado de 4.500 bytes. Pa
 conferir, use a revisão e a data retornadas no pacote, repita a consulta e passe
 o JSON pela entrada padrão.
 
+Quando sobra espaço, a conferência pode incluir um bloco Markdown já lacrado
+que completa a margem cortada de uma passagem selecionada. As escolhas recebidas
+permanecem na mesma ordem.
+
 ```sh
 uv run python -m cdp memoria buscar --escopo diario --consulta 'moeda do benchmark índice local' \
   --revisao "$REVISAO_DO_PACOTE" --data "$DATA_DO_PACOTE" --conferir-selecao < selecao.json

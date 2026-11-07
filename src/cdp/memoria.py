@@ -1092,7 +1092,7 @@ def _comando(args: argparse.Namespace) -> int:
                     _json(pacote)
                 else:
                     bruto = sys.stdin.buffer.read(MAX_BYTES_RESPOSTA + 1)
-                    _json(aplicar(pacote, bruto))
+                    _json(aplicar(pacote, bruto, ler=c.fontes.linhas))
             else:
                 _json(c.buscar(args.escopo, args.consulta, args.limite,
                                estado_atual=args.estado_atual))

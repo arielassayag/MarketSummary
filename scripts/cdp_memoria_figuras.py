@@ -34,20 +34,20 @@ SERIES = (
     ("Hoje · memória com BM25", ANIL),
 )
 METRICAS = (
-    ("completo_1", "Todos os grupos\nna 1ª passagem"),
     ("completo_3", "Todos os grupos\nnas 3 primeiras"),
-    ("cobertura_3", "Cobertura média dos grupos\nnas 3 primeiras"),
+    ("completo_5", "Todos os grupos\nnas 5 primeiras"),
+    ("cobertura_5", "Cobertura média dos grupos\nnas 5 primeiras"),
 )
 
 
 def _percentual(valor: float) -> str:
-    return f"{valor:.1%}".replace(".", ",")
+    return f"{valor:.2%}".replace(".", ",")
 
 
 def _pontos(valor: float) -> str:
     if abs(valor) < 1e-12:
-        return "0,0 p.p."
-    return f"{100 * valor:+.1f}".replace(".", ",").replace("-", "−") + " p.p."
+        return "0,00 p.p."
+    return f"{100 * valor:+.2f}".replace(".", ",").replace("-", "−") + " p.p."
 
 
 def _cabecalho(fig, numero: str, titulo: str, subtitulo: str) -> None:
@@ -69,17 +69,17 @@ def _rodape(fig, nota: str, fonte: str) -> None:
 
 def _figura_recuperacao(series: list[dict], n: int, fonte: str):
     fig = plt.figure(figsize=(11.5, 6.55), facecolor=PAPEL)
-    ontem, _, hibrida = (s["completo_3"] for s in series)
-    delta = hibrida - ontem
-    if delta > 1e-12:
-        titulo = "Mais perguntas com evidência completa"
-    elif delta < -1e-12:
-        titulo = "Menos perguntas com evidência completa"
+    ontem, direta, hibrida = (s["completo_5"] for s in series)
+    delta_memoria = hibrida - direta
+    if delta_memoria > 1e-12:
+        titulo = "A memória elevou a recuperação completa"
+    elif delta_memoria < -1e-12:
+        titulo = "A memória reduziu a recuperação completa"
     else:
-        titulo = "A taxa de recuperação completa ficou estável"
+        titulo = "A recuperação completa empatou com a busca direta"
     _cabecalho(fig, "01", titulo,
-               f"Comparação offline em {n} perguntas de evidência · "
-               f"completa nas 3 primeiras {_pontos(delta)} ante ontem")
+               f"Nas 5 primeiras, {_pontos(hibrida - ontem)} ante ontem e "
+               f"{_pontos(delta_memoria)} ante a busca direta de hoje · {n} perguntas de evidência")
     ax = fig.add_axes((0.29, 0.208, 0.628, 0.458), facecolor=PAPEL)
     fig.legend(handles=[Patch(color=cor, label=nome) for nome, cor in SERIES],
                loc="upper left", bbox_to_anchor=(0.055, 0.728), ncol=3,
@@ -109,14 +109,14 @@ def _figura_recuperacao(series: list[dict], n: int, fonte: str):
     return fig
 
 
-def _figura_transicoes(linhas: list[tuple[str, dict]], controles: str, fonte: str):
+def _figura_transicoes(linhas: list[tuple[str, dict]], controles: list[str], fonte: str):
     fig = plt.figure(figsize=(11.5, 6.35), facecolor=PAPEL)
     total = linhas[0][1]
     ganhou, perdeu = total["ganhou"], total["perdeu"]
     titulo = ("As mesmas perguntas tiveram evidência completa" if not (ganhou or perdeu)
               else "Ganhos e perdas na recuperação por pergunta")
-    _cabecalho(fig, "02", titulo, f"As mesmas {sum(total.values())} perguntas estáticas nas duas versões · "
-               f"{ganhou} passaram a ter evidência completa e {perdeu} perderam essa condição")
+    _cabecalho(fig, "02", titulo, f"As mesmas {sum(total.values())} perguntas nas duas versões · "
+               f"ganhos de recuperação completa {ganhou} · perdas {perdeu}")
     ax = fig.add_axes((0.063, 0.26, 0.874, 0.408), facecolor=PAPEL)
     ax.set(xlim=(0, 11), ylim=(0, 3.62))
     ax.axis("off")
@@ -144,9 +144,10 @@ def _figura_transicoes(linhas: list[tuple[str, dict]], controles: str, fonte: st
             ax.text(x, y, str(valores[chave]), color=cor, ha="center", va="center",
                     fontsize=14.6, fontweight="bold")
     if controles:
-        fig.text(0.063, 0.191, "CONTROLES", fontsize=9.1, color=ANIL, fontweight="bold")
-        fig.text(0.178, 0.190, controles, fontsize=9.0, color=TINTA_2)
-    _rodape(fig, "Transições do BM25 reconstruído para memória com BM25, nas 3 primeiras passagens.",
+        fig.text(0.063, 0.196, "CONTROLES", fontsize=9.1, color=ANIL, fontweight="bold")
+        for indice, controle in enumerate(controles):
+            fig.text(0.178, 0.195 - indice * 0.033, controle, fontsize=9.0, color=TINTA_2)
+    _rodape(fig, "Transições do BM25 reconstruído para memória com BM25, nas 5 primeiras passagens.",
             fonte)
     return fig
 
@@ -162,8 +163,8 @@ def _transicoes(casos: list[dict]) -> dict[str, int]:
     contagem = dict.fromkeys(("ganhou", "perdeu", "ambas", "nenhuma"), 0)
     for caso in casos:
         modos = caso["modos"]
-        antes = modos["ontem"]["completo_3"]
-        depois = modos["memoria"]["completo_3"]
+        antes = modos["ontem"]["completo_5"]
+        depois = modos["memoria"]["completo_5"]
         if antes:
             chave = "ambas" if depois else "perdeu"
         else:
@@ -172,15 +173,31 @@ def _transicoes(casos: list[dict]) -> dict[str, int]:
     return contagem
 
 
-def _controles(casos: list[dict]) -> str:
+def _controles(casos: list[dict]) -> list[str]:
     resultados = []
-    for tipo, rotulo in (("estado_atual", "estado atual"), ("fora_escopo", "fora do escopo")):
+    for tipo, medida, rotulo in (
+        ("estado_atual", "encaminhou", "estado encaminhado automaticamente"),
+        ("fora_escopo", "abstencao", "abstenção fora do escopo"),
+    ):
         subset = [c["modos"] for c in casos if c["tipo"] == tipo]
         if subset:
-            anterior = sum(c["ontem"]["abstencao"] for c in subset)
-            atual = sum(c["memoria"]["abstencao"] for c in subset)
+            anterior = sum(c["ontem"][medida] for c in subset)
+            atual = sum(c["memoria"][medida] for c in subset)
             resultados.append(f"{rotulo} {anterior}/{len(subset)} → {atual}/{len(subset)}")
-    return "Abstenções · " + "   /   ".join(resultados) if resultados else ""
+    linhas = ["   /   ".join(resultados)] if resultados else []
+    estaticas = [c["modos"] for c in casos if c["tipo"] == "evidencia"]
+    if estaticas:
+        anterior = sum(c["ontem"]["encaminhou"] for c in estaticas)
+        atual = sum(c["memoria"]["encaminhou"] for c in estaticas)
+        estaticos = (f"Encaminhamentos em perguntas estáticas "
+                     f"{anterior}/{len(estaticas)} → {atual}/{len(estaticas)}")
+        explicitos = [c["modos"]["memoria"]["encaminhou_explicito"] for c in casos
+                      if c["tipo"] == "estado_atual"
+                      and "encaminhou_explicito" in c["modos"]["memoria"]]
+        if explicitos:
+            estaticos += f"   /   estado com intenção informada {sum(explicitos)}/{len(explicitos)}"
+        linhas.append(estaticos)
+    return linhas
 
 
 def main() -> None:
@@ -190,8 +207,8 @@ def main() -> None:
                         help="pasta para PNG e SVG")
     args = parser.parse_args()
     relatorio = json.loads(args.relatorio.read_text(encoding="utf-8"))
-    if relatorio["limite"] != 3:
-        parser.error("as figuras usam o relatório com limite de três passagens")
+    if relatorio["limite"] != 5:
+        parser.error("as figuras usam o relatório com limite de cinco passagens")
     casos = relatorio["casos"]
     positivos = [c for c in casos if c["tipo"] == "evidencia"]
     if not positivos:
@@ -203,9 +220,8 @@ def main() -> None:
               ("Dois ou mais grupos", _transicoes([c for c in positivos if c["grupos"] > 1]))]
     revisoes = relatorio["revisoes"]
     corpus = Path(relatorio.get("corpus", "")).stem
-    amostra = {"avaliacao_replica": "réplica", "avaliacao_reservada": "primeira amostra"}.get(
-        corpus, "ensaio"
-    )
+    amostra = {"avaliacao_replica": "réplica após ajuste",
+               "avaliacao_reservada": "primeira amostra após ajuste"}.get(corpus, "ensaio")
     fonte = (f"CDP · {amostra} · ontem {revisoes['ontem'][:8]} · hoje {revisoes['hoje'][:8]} · código "
              f"{revisoes['codigo'][:8]} · corpus {revisoes['corpus'][:8]} · corte {relatorio['data']}")
     with mpl.rc_context({"font.family": "DejaVu Sans", "svg.fonttype": "none",

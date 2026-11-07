@@ -16,6 +16,7 @@ from cdp.memoria import (
     AVALIACAO,
     LIMITE_CONTEXTO_BYTES,
     PASTA,
+    REVISAO_AVALIACAO_INICIAL,
     Catalogo,
     Fontes,
     MemoriaErro,
@@ -188,7 +189,9 @@ def test_cli_contexto_e_busca_publicam_so_referencia(repo, monkeypatch, capsys):
 
 
 def test_corpus_do_projeto_mantem_abstencao_e_ganho_de_recuperacao():
-    f = Fontes(RAIZ, trabalho=os.name == "posix")
+    corrente = Catalogo(Fontes(RAIZ, trabalho=os.name == "posix"), DATA)
+    assert not corrente.problemas, corrente.problemas
+    f = Fontes(RAIZ, revisao=REVISAO_AVALIACAO_INICIAL)
     e = _Avaliacao.model_validate_json(f.ler(AVALIACAO, 65_536))
     c = Catalogo(f, e.data)
     assert not c.problemas, c.problemas

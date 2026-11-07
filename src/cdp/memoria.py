@@ -53,6 +53,7 @@ ESCOPO: dict[Escopo, tuple[str, ...]] = {
 }
 PASTA = "docs/cdp/memoria/notas"
 AVALIACAO = "docs/cdp/memoria/avaliacao.json"
+REVISAO_AVALIACAO_INICIAL = "d60cc15fd70bc2ff12c96a6041d59a9506a02079"
 MAX_NOTAS = 128
 MAX_BYTES_NOTA = 16384
 MAX_BYTES_FONTE = 1024 * 1024
@@ -320,16 +321,16 @@ _DOMINIO = re.compile(
     r"montagem|pendencias?|fechamento|trava|cobertura|risco|relatorios?|calibracao|"
     r"publicacao|portal|pages|revisao|disparo|rodada|livro|emails?|entrega|snapshot)\b"
 )
+_AGORA = re.compile(r"\b(?:agora|hoje|ontem|neste momento|no momento|atualmente)\b")
 _TEMPO = re.compile(
-    r"\b(?:agora|hoje|ontem|atual(?:mente|is)?|ultim[oa]s?|neste momento|em vigor|vigentes?|"
-    r"no momento|esta semana|nesta semana|desde o inicio|mais recente)\b"
+    r"\b(?:atual|ultim[oa]s?|mais recente)\b"
     r"|\b(?:\d{4}-\d{2}-\d{2}|\d{1,2}/\d{1,2}(?:/\d{2,4})?)\b"
 )
 _OCORRENCIA = re.compile(
-    r"\b(?:ja|ainda|houve|ocorreu|consta[m]?|aparece[m]?|rodou|executou|fechou|"
-    r"entregou|publicou|virou|mudou|caiu|ficou|subiu|saiu|chegou|encerrou|"
-    r"concluiu|esta[o]?|foi|foram|acabou|resta[m]?)\b"
+    r"\b(?:ja|ainda) (?:rodou|executou|fechou|entregou|publicou|consta|"
+    r"subiu|saiu|chegou|encerrou|concluiu|foi publicado|foi enviado)\b"
 )
+_INTERROGATIVA = re.compile(r"^(?:quem|qual|quais|quanto|quant[ao]s|onde|quando|como esta)\b")
 _PROCEDIMENTO = re.compile(
     r"^(?:como (?!esta\b|estao\b|ficou\b|anda\b|se encontra\b)|"
     r"em (?:que situacao|que caso|qual situacao|qual caso)|"
@@ -355,9 +356,13 @@ def _fonte_atual(consulta: str, *, forcar: bool = False) -> str | None:
         if (not (mercado or dominio) or _PROCEDIMENTO.search(q)
                 or _PEDIDO_DE_PROCEDIMENTO.search(q)):
             return None
-        observacao = _TEMPO.search(q) or _OCORRENCIA.search(q)
-        consulta_valor = mercado and _VALOR.match(q)
-        if not (observacao or consulta_valor):
+        pergunta = bool(_INTERROGATIVA.match(q) or q.endswith("?"))
+        medida_com_data = mercado and _VALOR.match(q) and _TEMPO.search(q)
+        pessoa_ou_versao_atual = _INTERROGATIVA.match(q) and re.search(
+            r"\b(?:executor|portal|pages)\b.*\batual\b", q)
+        ocorrencia = _OCORRENCIA.search(q)
+        if not (pergunta and (_AGORA.search(q) or medida_com_data
+                              or pessoa_ou_versao_atual or ocorrencia)):
             return None
     if re.search(r"\b(?:portal|pages)\b", q):
         return "Confira o portal servido e a procedência em docs/cdp/SITE.md."
@@ -683,6 +688,8 @@ def _comando(args: argparse.Namespace) -> int:
         revisao = getattr(args, "revisao", None)
         if revisao is not None and acao != "avaliar" and args.data is None:
             raise MemoriaErro("a consulta por revisão exige a data explícita de referência")
+        if acao == "avaliar" and not (args.reservada or args.replica) and revisao is None:
+            revisao = REVISAO_AVALIACAO_INICIAL
         fontes = Fontes(raiz_repo(), trabalho=trabalho, revisao=revisao)
         if acao == "propor":
             inicio, fim = args.linhas

@@ -115,6 +115,7 @@ def _resumo(casos: list[dict], modo: str) -> dict:
         "abstencoes": sum(c["abstencao"] for c in controles),
         "consultas_estado": len(atuais),
         "encaminhamentos": sum(c["encaminhou"] for c in atuais),
+        "encaminhamentos_explicitos": sum(c.get("encaminhou_explicito", False) for c in atuais),
     }
 
 
@@ -138,14 +139,20 @@ def avaliar_reservada(fonte_corpus: Fontes, *, replica: bool = False) -> dict:
     for c in corpus.casos:
         gold_ontem, gold_hoje = _grupos(ontem, c), _grupos(hoje, c)
         hibrida = catalogo.buscar(c.escopo, c.consulta, K)
+        memoria = _medir([Local(**p) for p in hibrida["passagens"]], gold_hoje,
+                         encaminhou=bool(hibrida["orientacao_atual"]),
+                         notas=bool(hibrida["notas"]))
+        if c.tipo == "estado_atual":
+            explicita = catalogo.buscar(c.escopo, c.consulta, K, estado_atual=True)
+            memoria["encaminhou_explicito"] = bool(explicita["orientacao_atual"]) and not (
+                explicita["notas"] or explicita["passagens"]
+            )
         casos.append({
             "id": c.id, "escopo": c.escopo, "tipo": c.tipo, "grupos": len(c.grupos),
             "modos": {
                 "ontem": _medir(direta_ontem.buscar(c.escopo, c.consulta, K), gold_ontem),
                 "direta": _medir(catalogo.indice.buscar(c.escopo, c.consulta, K), gold_hoje),
-                "memoria": _medir([Local(**p) for p in hibrida["passagens"]], gold_hoje,
-                                  encaminhou=bool(hibrida["orientacao_atual"]),
-                                  notas=bool(hibrida["notas"])),
+                "memoria": memoria,
             },
         })
     return {

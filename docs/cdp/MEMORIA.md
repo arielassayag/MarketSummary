@@ -153,7 +153,7 @@ uv run python -m cdp memoria avaliar --reservada
 uv run python -m cdp memoria avaliar --replica
 ```
 
-O primeiro comando reproduz a metodologia inicial por caminho. Os dois conjuntos posteriores
+O primeiro comando usa o corpus e o catálogo iniciais, em `d60cc15f`, para medir por caminho. Os dois conjuntos posteriores
 foram congelados separadamente. As perguntas vieram de um anotador que não recebeu os
 resultados de recuperação. Cada pergunta estática tem um ou mais grupos de evidências. Uma
 passagem satisfaz um grupo quando contém integralmente um trecho aceito. Um acerto completo
@@ -166,7 +166,10 @@ revisão atual. As duas buscas diretas recebem a mesma lista de caminhos, inclus
 citados nas notas, para separar o efeito das referências do acesso aos arquivos. O relatório
 registra as revisões, o hash do corpus e as passagens recuperadas. São medidas descritivas
 do corpus, com a pergunta como unidade. Elas avaliam localização de evidência e abstenção
-da busca, sem medir a resposta de um agente em operação.
+da busca, sem medir a resposta de um agente em operação. O teste de estado separa
+encaminhamento inferido do encaminhamento com `--estado-atual`. Neste último a intenção é
+fornecida pelo teste, como numa chamada estruturada. Consultas estáticas também contam
+sugestões de encaminhamento indevidas.
 
 A partir da raiz do repositório, gere o relatório e as duas figuras. O renderizador requer
 Matplotlib. [Código das figuras](../../scripts/cdp_memoria_figuras.py).

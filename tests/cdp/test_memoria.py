@@ -341,6 +341,50 @@ def test_segunda_leitura_lacrada_so_pede_esclarecimento_ou_preserva_rota(repo, m
     assert codigo == 1 and not saida.out
 
 
+def test_segunda_leitura_ancorada_rejeita_atos_distintos_e_lacre_de_outro_modo(repo, monkeypatch, capsys):
+    monkeypatch.chdir(repo)
+    consulta = "Qual versão de ontem já saiu? E por qual canal o CDP publica esse tipo de documento?"
+    args = ["rotear", "--escopo", "diario", "--consulta", consulta, "--data", DATA.isoformat()]
+    assert _cli_memoria(*args) == 0
+    pacote = json.loads(capsys.readouterr().out)
+    args.extend(("--revisao", pacote["revisao"]))
+    triagem = {"lacre": pacote["lacre"], "intencao": "evidencia", "destino_atual": None}
+
+    def rodar(entrada, *modo):
+        monkeypatch.setattr("sys.stdin", SimpleNamespace(buffer=BytesIO(json.dumps(entrada).encode())))
+        codigo = _cli_memoria(*args, *modo)
+        return codigo, capsys.readouterr()
+
+    codigo, saida = rodar(triagem, "--pacote-ambiguidade", "--ancorar-ambiguidade")
+    assert codigo == 0
+    segunda = json.loads(saida.out)
+    assert [p["trecho"] for p in segunda["atos"]] == [
+        "Qual versão de ontem já saiu?", "E por qual canal o CDP publica esse tipo de documento?",
+    ]
+    assert all(consulta[p["inicio"]:p["fim"]] == p["trecho"] for p in segunda["atos"])
+    codigo, saida = rodar(triagem, "--pacote-ambiguidade", "--ancorar-ambiguidade", "--formato", "prompt")
+    assert codigo == 0 and "trechos literais numerados" in saida.out and segunda["lacre"] in saida.out
+
+    leituras = [
+        {"intencao": "estado_atual", "destino_atual": "relatorio-diario", "objeto": "edição do relatório", "ato": 1},
+        {"intencao": "estado_atual", "destino_atual": "portal-publicado", "objeto": "edição do portal", "ato": 1},
+    ]
+
+    def envelope(alternativas):
+        return {"triagem": triagem, "verificacao": {"lacre": segunda["lacre"], "indeterminado": True,
+                "leituras": alternativas, "falta": "O documento que a pessoa quer consultar"}}
+
+    modo = ("--conferir-ambiguidade", "--ancorar-ambiguidade")
+    codigo, saida = rodar(envelope(leituras), *modo)
+    assert codigo == 0 and json.loads(saida.out)["intencao"] == "indeterminado"
+    for ato in (None, 2, 99):
+        codigo, saida = rodar(envelope([leituras[0], leituras[1] | {"ato": ato}]), *modo)
+        assert codigo == 1 and not saida.out
+        assert "mesmo trecho literal" in saida.err
+    codigo, saida = rodar(envelope(leituras), "--conferir-ambiguidade")
+    assert codigo == 1 and "lacre da segunda leitura diverge" in saida.err
+
+
 def test_triagem_renderiza_prompt_portavel_com_mesmo_lacre(repo, monkeypatch, capsys):
     monkeypatch.chdir(repo)
     consulta = "Que versão o portal do CDP está servindo hoje?"

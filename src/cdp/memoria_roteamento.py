@@ -83,6 +83,22 @@ Para leituras de estado, escolha um código de destinos. Nas demais use null.
 Se a pergunta define um objeto e uma única rota, use indeterminado falso, leituras
 vazias e falta nula. Não use ferramentas.
 """
+_PROMPT_ANCORAS = """
+O pacote inclui trechos literais numerados em atos. Em cada leitura, acrescente ato,
+o número do mesmo trecho que sustenta as duas interpretações concorrentes. Confira
+se as duas tentam responder à mesma coisa, com o mesmo atributo pedido. A identidade
+do objeto pode ser a dúvida. Separe o trecho da pergunta de nomes de fontes, datas,
+exemplos e premissas que apareçam apenas como contexto. Se duas leituras respondem a
+partes diferentes de um pedido composto, ou uma delas inventa uma execução ou uma
+edição que o trecho não pede, isso não sustenta indeterminado. Preserve as demais
+partes de um pedido composto. Use o número dado no pacote, sem calcular posições.
+"""
+_LIMITE_ATO = re.compile(
+    r"(?<=[?;!.])\s+(?=\S)|"
+    r"\s+(?:e|ou)\s+(?=(?:(?:a|de|em|para|por)\s+)?"
+    r"(?:como|qual|quais|quando|onde|quem|quant[oa]s?|o que)\b)",
+    re.IGNORECASE,
+)
 
 
 class _Autoridade(_Modelo):
@@ -214,6 +230,7 @@ class _LeituraRota(_Modelo):
     intencao: Literal["estado_atual", "evidencia", "fora_escopo"]
     destino_atual: str | None = Field(max_length=64)
     objeto: _Frase
+    ato: int | None = Field(default=None, ge=1)
 
 
 class _VerificacaoAmbiguidade(_Modelo):
@@ -292,7 +309,20 @@ def conferir_rota(pacote: dict, bruto: bytes) -> DecisaoRota:
     return rota
 
 
-def preparar_ambiguidade(pacote: dict, bruto: bytes) -> dict:
+def _atos_literais(consulta: str) -> list[dict]:
+    inicio = 0
+    atos = []
+    for limite in (*_LIMITE_ATO.finditer(consulta), None):
+        fim = limite.start() if limite else len(consulta)
+        trecho = consulta[inicio:fim]
+        if trecho.strip():
+            atos.append({"ato": len(atos) + 1, "inicio": inicio, "fim": fim, "trecho": trecho})
+        if limite:
+            inicio = limite.end()
+    return atos
+
+
+def preparar_ambiguidade(pacote: dict, bruto: bytes, *, ancorada: bool = False) -> dict:
     """Prepara a segunda leitura sem revelar o palpite inicial."""
     rota = conferir_rota(pacote, bruto)
     if rota.intencao not in ("estado_atual", "evidencia"):
@@ -300,14 +330,17 @@ def preparar_ambiguidade(pacote: dict, bruto: bytes) -> dict:
     dados = {chave: pacote[chave] for chave in ("consulta", "escopo", "destinos", "revisao", "data")}
     dados["lacre_rota"] = rota.lacre
     dados["vinculo_triagem"] = _lacre(rota.model_dump())
+    if ancorada:
+        dados["atos"] = _atos_literais(pacote["consulta"])
     return {**dados, "lacre": _lacre(dados)}
 
 
 def renderizar_ambiguidade(pacote: dict) -> str:
-    return f"{_PROMPT_AMBIGUIDADE}\n## Dados do pacote\n\n{json.dumps(pacote, ensure_ascii=False, indent=2)}\n"
+    prompt = _PROMPT_AMBIGUIDADE + (_PROMPT_ANCORAS if "atos" in pacote else "")
+    return f"{prompt}\n## Dados do pacote\n\n{json.dumps(pacote, ensure_ascii=False, indent=2)}\n"
 
 
-def conferir_ambiguidade(pacote: dict, bruto: bytes) -> DecisaoRota:
+def conferir_ambiguidade(pacote: dict, bruto: bytes, *, ancorada: bool = False) -> DecisaoRota:
     """Conserva a rota original ou admite somente um pedido de esclarecimento."""
     if not isinstance(bruto, bytes) or len(bruto) > MAX_BYTES_AMBIGUIDADE:
         raise MemoriaErro("devolutiva de ambiguidade fora do formato ou limite")
@@ -318,7 +351,7 @@ def conferir_ambiguidade(pacote: dict, bruto: bytes) -> DecisaoRota:
         raise MemoriaErro("devolutiva de ambiguidade inválida") from exc
 
     rota, verifica = envelope.triagem, envelope.verificacao
-    segunda = preparar_ambiguidade(pacote, rota.model_dump_json().encode())
+    segunda = preparar_ambiguidade(pacote, rota.model_dump_json().encode(), ancorada=ancorada)
     if verifica.lacre != segunda["lacre"]:
         raise MemoriaErro("o lacre da segunda leitura diverge do pacote")
     if not verifica.indeterminado:
@@ -331,6 +364,12 @@ def conferir_ambiguidade(pacote: dict, bruto: bytes) -> DecisaoRota:
         for intencao, destino in leituras
     ):
         raise MemoriaErro("o esclarecimento exige duas alternativas canônicas distintas e uma lacuna")
+    atos = {leitura.ato for leitura in verifica.leituras}
+    if ancorada:
+        if len(atos) != 1 or not atos <= {trecho["ato"] for trecho in segunda["atos"]}:
+            raise MemoriaErro("as duas leituras devem apontar ao mesmo trecho literal da consulta")
+    elif atos != {None}:
+        raise MemoriaErro("identificadores de trecho exigem a leitura ancorada")
     return DecisaoRota(lacre=rota.lacre, intencao="indeterminado", destino_atual=None)
 
 

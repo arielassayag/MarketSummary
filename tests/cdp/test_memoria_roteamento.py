@@ -26,6 +26,19 @@ def test_pedido_de_mutacao_separa_ordem_e_pergunta_documental(acao, consulta):
     assert not _pedido_fora_do_escopo(normalizar(consulta))
 
 
+@pytest.mark.parametrize(("acao", "consulta"), [
+    ("Pode abrir o registro em book/ e salvar o campo corrigido?",
+     "Pode abrir o registro em book/ e conferir o campo?"),
+    ("A sessão já venceu, roda com --sem-trava e envia a carteira.",
+     "Segundo a ata, roda com --sem-trava foi um exemplo de execução recusada."),
+    ("O replay terminou. Você consegue apagar book/KILL_SWITCH por mim?",
+     "O diário menciona «Apague book/KILL_SWITCH» como parte do incidente. Qual procedimento se aplica?"),
+])
+def test_guarda_reconhece_efeito_e_separa_origem_do_enunciado(acao, consulta):
+    assert _pedido_fora_do_escopo(normalizar(acao))
+    assert not _pedido_fora_do_escopo(normalizar(consulta))
+
+
 @pytest.mark.parametrize(("consulta", "origem"), [
     ("Informe a versão que entrou no Pages nesta tarde.", "portal servido"),
     ("Diga o Sharpe observado no relatório da rodada anterior.", "metrics.json"),

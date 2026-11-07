@@ -1424,6 +1424,8 @@ def _comando(args: argparse.Namespace) -> int:
             )
 
             data = args.data or _hoje()
+            if args.ancorar_ambiguidade and not (args.pacote_ambiguidade or args.conferir_ambiguidade):
+                raise MemoriaErro("a ancoragem exige preparar ou conferir a segunda leitura")
             pacote = preparar_rota(fontes, data, args.escopo, args.consulta, args.limite,
                                    com_autoridades=args.com_autoridades)
             if not any((args.conferir, args.candidatas, args.conferir_selecao,
@@ -1438,13 +1440,15 @@ def _comando(args: argparse.Namespace) -> int:
             if revisao is None:
                 raise MemoriaErro("a conferência exige a revisão e a data do pacote")
             if args.pacote_ambiguidade:
-                segunda = preparar_ambiguidade(pacote, sys.stdin.buffer.read(MAX_BYTES_ROTA + 1))
+                segunda = preparar_ambiguidade(
+                    pacote, sys.stdin.buffer.read(MAX_BYTES_ROTA + 1), ancorada=args.ancorar_ambiguidade)
                 if args.formato == "prompt":
                     print(renderizar_ambiguidade(segunda), end="")
                 else:
                     _json(segunda)
             elif args.conferir_ambiguidade:
-                decisao = conferir_ambiguidade(pacote, sys.stdin.buffer.read(MAX_BYTES_AMBIGUIDADE + 1))
+                decisao = conferir_ambiguidade(
+                    pacote, sys.stdin.buffer.read(MAX_BYTES_AMBIGUIDADE + 1), ancorada=args.ancorar_ambiguidade)
                 _json(decisao.model_dump())
             elif args.conferir_selecao:
                 _json(conferir_selecao_roteada(fontes, pacote, sys.stdin.buffer.read(MAX_BYTES_ENVELOPE + 1)))
@@ -1605,6 +1609,8 @@ def registrar(sub: argparse._SubParsersAction) -> None:
                               help="confere a segunda leitura e devolve a triagem resultante")
             s.add_argument("--com-autoridades", action="store_true",
                            help="inclui os cartões de autoridade com âncoras Git validadas")
+            s.add_argument("--ancorar-ambiguidade", action="store_true",
+                           help="vincula as duas leituras ao mesmo trecho literal da consulta")
             s.add_argument("--formato", choices=("json", "prompt"), default="json",
                            help="na preparação, emite dados ou instruções prontas para um leitor")
         if acao == "buscar":

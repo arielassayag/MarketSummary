@@ -127,9 +127,10 @@ class IndicePassagens:
 
 
 def intercalar(diretas: list[Local], ancoras: list[list[Local]], limite: int) -> list[Local]:
-    """Preserva a primeira fonte direta e intercala âncoras de notas distintas."""
-    selecionadas: list[Local] = []
-    fontes = deque(diretas)
+    """Preserva as três primeiras fontes diretas e intercala âncoras nas vagas adicionais."""
+    preservadas = min(3, limite)
+    selecionadas = diretas[:preservadas]
+    fontes = deque(diretas[preservadas:])
     rodizio = deque(deque(grupo) for grupo in ancoras if grupo)
 
     def inserir(candidatas: deque[Local]) -> bool:
@@ -141,9 +142,6 @@ def intercalar(diretas: list[Local], ancoras: list[list[Local]], limite: int) ->
         return False
 
     while len(selecionadas) < limite:
-        inseriu_direta = inserir(fontes)
-        if len(selecionadas) == limite:
-            break
         inseriu_ancora = False
         while rodizio:
             grupo = rodizio.popleft()
@@ -152,6 +150,9 @@ def intercalar(diretas: list[Local], ancoras: list[list[Local]], limite: int) ->
                 if grupo:
                     rodizio.append(grupo)
                 break
+        if len(selecionadas) == limite:
+            break
+        inseriu_direta = inserir(fontes)
         if not inseriu_direta and not inseriu_ancora:
             break
     return selecionadas

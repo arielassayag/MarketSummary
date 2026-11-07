@@ -23,14 +23,15 @@ e `calibracao`. `contexto` mostra até três notas curadas em destaque no escopo
 6 KiB de saída em Markdown e JSON. `buscar` retorna separadamente notas elegíveis e
 fontes primárias do escopo. O limite de resultados por lista vai de um a dez e o padrão é cinco.
 A busca ordena passagens de fontes canônicas com BM25. Títulos, etiquetas, resumos e trechos
-validados ajudam a localizar lições. A lista `passagens` preserva o primeiro resultado direto
+validados ajudam a localizar lições. A lista `passagens` preserva os três primeiros resultados diretos
 e intercala referências de notas distintas. Uma passagem ocupa até 14 linhas e 1.800 bytes.
 O retorno `fontes` contém os caminhos da busca direta, enquanto `notas` identifica os
 registros recuperados. Cada passagem vem com linhas inclusivas e SHA-256.
 
 Quando a busca reconhece um pedido de estado, `orientacao_atual` indica a fonte a consultar.
-Notas e passagens históricas ficam fora do resultado. Use `--estado-atual` quando a intenção
-já estiver estabelecida. A classificação automática depende da redação da pergunta.
+O encaminhamento inferido deixa a busca direta disponível e omite as notas. Use
+`--estado-atual` para obter apenas o encaminhamento quando a intenção já estiver estabelecida.
+A classificação automática depende da redação da pergunta.
 
 Abra a fonte na revisão indicada e confira o trecho e seu contexto antes de usar a lição. O
 resultado inclui caminho, linhas inclusivas e SHA-256 para as evidências das notas. Se faltarem
@@ -159,7 +160,7 @@ passagem satisfaz um grupo quando contém integralmente um trecho aceito. Um ace
 exige todos os grupos. A avaliação também mede cobertura parcial e abstenção em perguntas de
 estado ou fora do acervo.
 
-A comparação usa três braços com até três passagens cada. A busca direta BM25 é executada
+A comparação usa três braços com até cinco passagens cada. A busca direta BM25 é executada
 no commit de 06/11 (`afee26ce`) e na revisão atual. O terceiro braço consulta a memória na
 revisão atual. As duas buscas diretas recebem a mesma lista de caminhos, inclusive caminhos
 citados nas notas, para separar o efeito das referências do acesso aos arquivos. O relatório

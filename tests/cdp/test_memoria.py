@@ -183,6 +183,8 @@ def test_cli_contexto_e_busca_publicam_so_referencia(repo, monkeypatch, capsys):
     c = Catalogo(Fontes(repo), DATA)
     atual = c.buscar("diario", "Qual foi o retorno do índice hoje?", 3)
     assert atual["orientacao_atual"] and atual["notas"] == []
+    manual = c.buscar("diario", "moeda do índice", 3, estado_atual=True)
+    assert manual["orientacao_atual"] and manual["passagens"] == manual["notas"] == []
 
 
 def test_corpus_do_projeto_mantem_abstencao_e_ganho_de_recuperacao():

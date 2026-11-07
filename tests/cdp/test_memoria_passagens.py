@@ -25,13 +25,13 @@ def test_avaliacao_exige_trecho_inteiro_e_todos_os_grupos():
     assert _medir([primeira, completa], [[a], [b]])["completo_3"] is True
 
 
-def test_intercalacao_preserva_primeira_direta_e_ignora_redundancia():
-    primeira = Local("a", 1, 14, "")
-    segunda = Local("a", 40, 54, "")
+def test_intercalacao_preserva_tres_diretas_e_ignora_redundancia():
+    diretas = [Local("a", i, i + 13, "") for i in (1, 40, 60, 80)]
     repetida = Local("a", 3, 7, "")
     nova = Local("b", 5, 8, "")
     ancoras = [[repetida, nova]]
-    assert intercalar([primeira, segunda], ancoras, 3) == [primeira, nova, segunda]
+    assert intercalar(diretas, ancoras, 3) == diretas[:3]
+    assert intercalar(diretas, ancoras, 5) == [*diretas[:3], nova, diretas[3]]
     assert ancoras == [[repetida, nova]]
 
 

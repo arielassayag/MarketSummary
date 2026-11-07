@@ -156,13 +156,13 @@ A unidade de avaliação passou de arquivo para trecho. Uma pergunta sobre vári
 só recebe crédito completo se a consulta localizar pelo menos uma âncora de cada grupo
 obrigatório. O desenho separa recuperação, atualizações temporais e abstenção, conforme
 as dimensões do LongMemEval. Para perguntas de estado, mede-se se a busca deixa de oferecer
-passagens históricas e indica uma fonte canônica. A experiência de seleção sob mudanças de
+notas históricas e indica uma fonte canônica. A experiência de seleção sob mudanças de
 domínio reforça a necessidade de testar a abstenção em conjuntos separados.
 [LongMemEval](https://arxiv.org/abs/2410.10813).
 [Selective Question Answering](https://aclanthology.org/2020.acl-main.503/).
 
 A busca direta usa BM25 em janelas limitadas. As notas acrescentam vocabulário de tarefa e
-referências para evidência textual. O primeiro resultado direto fica reservado e as vagas
+referências para evidência textual. Os três primeiros resultados diretos ficam reservados e as vagas
 seguintes alternam fontes e âncoras. Isso limita a influência de uma nota com muitas
 referências. A busca nas fontes é o controle também para as perguntas que só exigem um
 documento. A mesma lista de caminhos serve aos dois modos na revisão atual.

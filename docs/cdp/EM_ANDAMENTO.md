@@ -8,7 +8,7 @@ motivo: `docs/cdp/DECISOES.md`.
 ## Qualificação da memória por passagem — 07/11/2026
 
 A consulta passou a fornecer passagens com linhas inclusivas e SHA-256. O índice usa
-BM25 e a memória acrescenta âncoras em rodízio, com o primeiro resultado direto preservado.
+BM25 e a memória acrescenta âncoras em rodízio, com os três primeiros resultados diretos preservados.
 A busca também encaminha pedidos de estado e permite fixar a revisão Git com a data de
 aplicação. Sucessões exigem evidência válida na revisão que as registra e o histórico
 de primeiro pai conserva os vínculos comprovados.

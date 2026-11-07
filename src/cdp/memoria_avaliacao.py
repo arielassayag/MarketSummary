@@ -19,6 +19,7 @@ from .memoria import (
     MemoriaErro,
     Slug,
     _chaves_unicas,
+    _git,
     _localizar,
     _Modelo,
     _primarias,
@@ -27,7 +28,7 @@ from .memoria import (
 CORPUS = "docs/cdp/memoria/avaliacao_reservada.json"
 ONTEM = "afee26ce4442ee5b30943b318d9640416ba02586"
 REPLICA = "docs/cdp/memoria/avaliacao_replica.json"
-K = 3
+K = 5
 MODOS = ("ontem", "direta", "memoria")
 
 
@@ -81,15 +82,18 @@ def _medir(passagens: list[Local], grupos: list[list[Local]], *,
            encaminhou: bool = False, notas: bool = False) -> dict:
     if grupos:
         completo_1 = all(_atingidos(passagens[:1], grupos))
-        atingidos = _atingidos(passagens[:K], grupos)
-        completo_3 = all(atingidos)
-        cobertura_3 = sum(atingidos) / len(grupos)
+        atingidos_3 = _atingidos(passagens[:3], grupos)
+        atingidos_5 = _atingidos(passagens[:K], grupos)
+        completo_3, completo_5 = all(atingidos_3), all(atingidos_5)
+        cobertura_3 = sum(atingidos_3) / len(grupos)
+        cobertura_5 = sum(atingidos_5) / len(grupos)
         abstencao = None
     else:
-        completo_1 = completo_3 = cobertura_3 = None
+        completo_1 = completo_3 = completo_5 = cobertura_3 = cobertura_5 = None
         abstencao = not passagens and not notas
     return {"completo_1": completo_1, "completo_3": completo_3, "cobertura_3": cobertura_3,
-            "abstencao": abstencao, "encaminhou": encaminhou,
+            "completo_5": completo_5, "cobertura_5": cobertura_5,
+            "abstencao": abstencao, "encaminhou": encaminhou, "retornou_notas": notas,
             "passagens": [p.json() for p in passagens]}
 
 
@@ -101,8 +105,12 @@ def _resumo(casos: list[dict], modo: str) -> dict:
         "perguntas_com_evidencia": len(positivos),
         "completo_1": sum(c["completo_1"] for c in positivos),
         "completo_3": sum(c["completo_3"] for c in positivos),
+        "completo_5": sum(c["completo_5"] for c in positivos),
         "cobertura_media_3": (sum(c["cobertura_3"] for c in positivos) / len(positivos)
                               if positivos else None),
+        "cobertura_media_5": (sum(c["cobertura_5"] for c in positivos) / len(positivos)
+                              if positivos else None),
+        "encaminhamentos_em_perguntas_estaticas": sum(c["encaminhou"] for c in positivos),
         "controles": len(controles),
         "abstencoes": sum(c["abstencao"] for c in controles),
         "consultas_estado": len(atuais),
@@ -141,7 +149,7 @@ def avaliar_reservada(fonte_corpus: Fontes, *, replica: bool = False) -> dict:
             },
         })
     return {
-        "revisoes": {"ontem": ontem.revisao, "hoje": hoje.revisao, "codigo": fonte_corpus.revisao,
+        "revisoes": {"ontem": ontem.revisao, "hoje": hoje.revisao, "codigo": _git(hoje.raiz, "rev-parse", "--verify", "HEAD").decode().strip(),
                      "corpus": hashlib.sha256(bruto).hexdigest()},
         "data": corpus.data.isoformat(), "limite": K, "corpus": caminho_corpus,
         "resumo": {modo: _resumo(casos, modo) for modo in MODOS}, "casos": casos,

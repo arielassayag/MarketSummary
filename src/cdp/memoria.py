@@ -493,7 +493,9 @@ class Catalogo:
                estado_atual: bool = False) -> dict:
         atual = _fonte_atual(consulta, forcar=estado_atual)
         notas = [] if atual else self._buscar_notas(escopo, consulta, limite, expandir=True)
-        diretas = [] if atual else self.indice.buscar(escopo, consulta, limite)
+        diretas = [] if estado_atual else self.indice.buscar(escopo, consulta, limite)
+        if atual and not estado_atual:
+            atual = "Se a pergunta for sobre o estado efetivo, consulte a fonte oficial. " + atual
         termos = _tokens(consulta)
         ancoras = []
         for registro in notas:
@@ -679,7 +681,7 @@ def _comando(args: argparse.Namespace) -> int:
         if trabalho and os.name != "posix":
             raise MemoriaErro("auditoria da árvore de trabalho requer POSIX; use --revisao-git")
         revisao = getattr(args, "revisao", None)
-        if revisao is not None and args.data is None:
+        if revisao is not None and acao != "avaliar" and args.data is None:
             raise MemoriaErro("a consulta por revisão exige a data explícita de referência")
         fontes = Fontes(raiz_repo(), trabalho=trabalho, revisao=revisao)
         if acao == "propor":
@@ -743,7 +745,7 @@ def registrar(sub: argparse._SubParsersAction) -> None:
     ):
         s = acoes.add_parser(acao, help=ajuda)
         s.set_defaults(func=_comando)
-        if acao in ("contexto", "buscar"):
+        if acao in ("contexto", "buscar", "avaliar"):
             s.add_argument("--revisao", help="hash completo do commit local a consultar")
         if acao == "avaliar":
             conjunto = s.add_mutually_exclusive_group()

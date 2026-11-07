@@ -18,6 +18,7 @@ from .memoria import (
     Escopo,
     MemoriaErro,
     Sha,
+    Slug,
     _caminho,
     _chaves_unicas,
     _consulta,
@@ -35,18 +36,20 @@ from .memoria_busca import (
     completar_bloco,
     localizar,
 )
+from .memoria_pontes import LIMITE_PONTES, candidatas_pontes
 from .memoria_reforcos import LIMITE_REFORCOS
 
 MAX_BYTES_RESPOSTA = 4096
 _LIMITE_BASE = 64
 LIMITE_CANDIDATAS = _LIMITE_BASE + LIMITE_REFORCOS
+_LIMITE_COM_PONTES = LIMITE_CANDIDATAS + LIMITE_PONTES
 _LIMITE_PASSAGENS = 5
 _LIMITE_BYTES = 4500
 _LARGURA_CANONICA = 20
 
 
 class _Candidata(_Modelo):
-    id: int = Field(ge=1, le=LIMITE_CANDIDATAS)
+    id: int = Field(ge=1, le=_LIMITE_COM_PONTES)
     caminho: str
     inicio: int = Field(ge=1)
     fim: int = Field(ge=1)
@@ -72,6 +75,12 @@ class _Candidata(_Modelo):
         return Local(self.caminho, self.inicio, self.fim, self.sha256).json()
 
 
+class _PonteLacrada(_Modelo):
+    id: Slug
+    origem: Escopo
+    candidata: int = Field(ge=1, le=_LIMITE_COM_PONTES)
+
+
 class _Pacote(_Modelo):
     versao: Literal[1]
     revisao: str = Field(pattern=r"^(?:[0-9a-f]{40}|[0-9a-f]{64})$")
@@ -80,10 +89,11 @@ class _Pacote(_Modelo):
     escopo: Escopo
     limite: int = Field(ge=1, le=_LIMITE_PASSAGENS)
     orcamento_bytes: int = Field(ge=_LIMITE_BYTES, le=_LIMITE_BYTES)
-    candidatas: list[_Candidata] = Field(max_length=LIMITE_CANDIDATAS)
+    candidatas: list[_Candidata] = Field(max_length=_LIMITE_COM_PONTES)
     fontes_permitidas: list[str] | None = None
     destinos_permitidos: dict[str, str] | None = None
     lacre_rota: Sha | None = None
+    pontes: list[_PonteLacrada] | None = Field(default=None, max_length=LIMITE_PONTES)
     base: dict
     lacre: Sha
 
@@ -93,7 +103,21 @@ class _Pacote(_Modelo):
             raise ValueError("candidatas sem numeração consecutiva")
         if any(self.base.get(k) != getattr(self, k) for k in ("revisao", "data", "escopo")):
             raise ValueError("a busca base diverge do pacote")
-        if self.candidatas and not _tem_contexto(self.base):
+        pontes = self.pontes or []
+        ids = {p.candidata for p in pontes}
+        normais = len(self.candidatas) - len(pontes)
+        if self.pontes is not None and (not self.lacre_rota or self.fontes_permitidas is None):
+            raise ValueError("pontes exigem seleção documental roteada")
+        if (ids != set(range(normais + 1, len(self.candidatas) + 1))
+                or len({p.id for p in pontes}) != len(pontes) or normais > LIMITE_CANDIDATAS
+                or any(p.origem == self.escopo for p in pontes)):
+            raise ValueError("referências de pontes fora da faixa ou repetidas")
+        if self.fontes_permitidas is not None:
+            permitidas = set(self.fontes_permitidas)
+            fora = {p.id for p in self.candidatas if p.caminho not in permitidas}
+            if fora != ids or (pontes and (not permitidas or self.base.get("orientacao_atual"))):
+                raise ValueError("candidata fora das fontes ou pontes lacradas")
+        if normais and not _tem_contexto(self.base):
             raise ValueError("busca sem contexto não pode oferecer candidatas")
         return self
 
@@ -179,10 +203,13 @@ def _candidatas(catalogo: Catalogo, escopo: Escopo, consulta: str, busca: dict) 
 
 
 def preparar(catalogo: Catalogo, escopo: Escopo, consulta: str, limite: int, *,
-             explorar_fontes: bool = False, lacre_rota: str | None = None) -> dict:
+             explorar_fontes: bool = False, lacre_rota: str | None = None,
+             com_pontes: bool = False) -> dict:
     """Lê uma revisão Git e lacra o conjunto ordenado de candidatas e a busca base."""
     if catalogo.fontes.trabalho:
         raise MemoriaErro("a seleção exige fontes de uma revisão Git")
+    if com_pontes and (not explorar_fontes or lacre_rota is None):
+        raise MemoriaErro("pontes exigem seleção documental roteada")
     if escopo not in ESCOPO or type(limite) is not int or not 1 <= limite <= _LIMITE_PASSAGENS:
         raise MemoriaErro("a seleção exige escopo válido e limite entre um e cinco")
     if not isinstance(consulta, str):
@@ -206,6 +233,14 @@ def preparar(catalogo: Catalogo, escopo: Escopo, consulta: str, limite: int, *,
                                         if pacote["fontes_permitidas"] and lacre_rota is None else {})
     if lacre_rota is not None:
         pacote["lacre_rota"] = lacre_rota
+    if com_pontes:
+        pacote["pontes"] = []
+        if pacote["fontes_permitidas"]:
+            for ponte in candidatas_pontes(catalogo, escopo, consulta):
+                id_ = len(candidatas) + 1
+                candidatas.append({"id": id_, **ponte.local.json(), "trecho": ponte.trecho,
+                                   "bytes": len(ponte.trecho.encode())})
+                pacote["pontes"].append({"id": ponte.id, "origem": ponte.origem, "candidata": id_})
     pacote["lacre"] = _lacre(pacote)
     return pacote
 
@@ -215,10 +250,11 @@ def _completar_margens(pacote: _Pacote, escolhidas: list[_Candidata], total: int
     """Anexa blocos íntegros já lacrados quando uma passagem corta sua margem."""
     saida = list(escolhidas)
     por_intervalo = {(p.caminho, p.inicio, p.fim): p for p in pacote.candidatas}
+    ids_pontes = {p.candidata for p in pacote.pontes or []}
     for passagem in escolhidas:
         if len(saida) == pacote.limite:
             break
-        if not passagem.caminho.endswith(".md"):
+        if passagem.id in ids_pontes or not passagem.caminho.endswith(".md"):
             continue
         linhas = ler(passagem.caminho)
         for inicio, fim in _blocos_markdown(linhas):

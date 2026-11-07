@@ -1447,6 +1447,8 @@ def _comando(args: argparse.Namespace) -> int:
                 raise MemoriaErro("a ancoragem exige preparar ou conferir a segunda leitura")
             if args.com_autoridades and (args.pacote_escopo or args.conferir_escopo):
                 raise MemoriaErro("a leitura de escopo não recebe cartões de autoridade")
+            if args.com_pontes and not (args.candidatas or args.conferir_selecao):
+                raise MemoriaErro("as pontes exigem preparar ou conferir a seleção documental")
             pacote = preparar_rota(fontes, data, args.escopo, args.consulta, args.limite,
                                    com_autoridades=args.com_autoridades)
             if not any((args.conferir, args.candidatas, args.conferir_selecao,
@@ -1482,10 +1484,11 @@ def _comando(args: argparse.Namespace) -> int:
                     pacote, sys.stdin.buffer.read(MAX_BYTES_AMBIGUIDADE + 1), ancorada=args.ancorar_ambiguidade)
                 _json(decisao.model_dump())
             elif args.conferir_selecao:
-                _json(conferir_selecao_roteada(fontes, pacote, sys.stdin.buffer.read(MAX_BYTES_ENVELOPE + 1)))
+                _json(conferir_selecao_roteada(fontes, pacote, sys.stdin.buffer.read(MAX_BYTES_ENVELOPE + 1),
+                                              com_pontes=args.com_pontes))
             else:
                 bruto = sys.stdin.buffer.read(MAX_BYTES_ROTA + 1)
-                _json(preparar_selecao_roteada(fontes, pacote, bruto) if args.candidatas
+                _json(preparar_selecao_roteada(fontes, pacote, bruto, com_pontes=args.com_pontes) if args.candidatas
                       else resolver_rota(fontes, pacote, bruto))
             return 0
         c = Catalogo(fontes, args.data or _hoje())
@@ -1646,6 +1649,8 @@ def registrar(sub: argparse._SubParsersAction) -> None:
                               help="confere os recortes literais antes da triagem")
             s.add_argument("--com-autoridades", action="store_true",
                            help="inclui os cartões de autoridade com âncoras Git validadas")
+            s.add_argument("--com-pontes", action="store_true",
+                           help="inclui trechos curados entre papéis na seleção documental")
             s.add_argument("--ancorar-ambiguidade", action="store_true",
                            help="vincula as duas leituras ao mesmo trecho literal da consulta")
             s.add_argument("--formato", choices=("json", "prompt"), default="json",

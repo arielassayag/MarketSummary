@@ -506,18 +506,18 @@ def resolver_rota(fontes: Fontes, pacote: dict, bruto: bytes, *, catalogo: Catal
 
 
 def preparar_selecao_roteada(fontes: Fontes, pacote: dict, bruto: bytes, *,
-                             catalogo: Catalogo | None = None) -> dict:
+                             catalogo: Catalogo | None = None, com_pontes: bool = False) -> dict:
     _conferir_fonte(fontes, pacote)
     decisao = conferir_rota(pacote, bruto)
     if decisao.intencao != "evidencia":
         raise MemoriaErro("só a triagem de evidência admite candidatas")
     c = _catalogo_da_rota(fontes, pacote, catalogo)
     return preparar(c, pacote["escopo"], pacote["consulta"], pacote["limite"],
-                    explorar_fontes=True, lacre_rota=decisao.lacre)
+                    explorar_fontes=True, lacre_rota=decisao.lacre, com_pontes=com_pontes)
 
 
 def conferir_selecao_roteada(fontes: Fontes, pacote: dict, bruto: bytes, *,
-                             catalogo: Catalogo | None = None) -> dict:
+                             catalogo: Catalogo | None = None, com_pontes: bool = False) -> dict:
     if not isinstance(bruto, bytes) or len(bruto) > MAX_BYTES_ENVELOPE:
         raise MemoriaErro("devolutiva conjunta fora do formato ou limite")
     try:
@@ -528,6 +528,6 @@ def conferir_selecao_roteada(fontes: Fontes, pacote: dict, bruto: bytes, *,
                            for k in ("triagem", "selecao"))
     except (ValueError, RecursionError) as exc:
         raise MemoriaErro("a devolutiva conjunta exige triagem e seleção") from exc
-    candidatas = preparar_selecao_roteada(fontes, pacote, triagem, catalogo=catalogo)
+    candidatas = preparar_selecao_roteada(fontes, pacote, triagem, catalogo=catalogo, com_pontes=com_pontes)
     saida = aplicar(candidatas, selecao, ler=fontes.linhas)
     return {**saida, "intencao": "evidencia", "lacre_rota": candidatas["lacre_rota"]}

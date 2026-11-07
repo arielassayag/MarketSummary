@@ -48,8 +48,8 @@ TESES = ROOT / "docs" / "cdp" / "teses"
 #: Versão do plugin e resumo das skills nessa versão. A instalação pelo marketplace do GitHub guarda
 #: uma cópia presa à ``version`` (docs/cdp/LOCAL.md): skills novas com a versão antiga nunca chegam
 #: às rotinas. Mudou uma skill ⇒ suba a ``version`` em plugin.json e atualize os dois valores.
-PLUGIN_VERSION = "1.9.0"
-SKILLS_SHA256 = "7133af504187e84ee95e94a69ed5a86e9a666dc290f16747cb489994d741376d"
+PLUGIN_VERSION = "1.9.1"
+SKILLS_SHA256 = "1d482058cb193343a90625c74f3eb75bd037282bacfa30b6a2b74ceffe94369b"
 #: Roteiro de cada skill do plugin e a família de tarefas de ``configs/cdp/rotinas.yaml``.
 ROTEIRO = {"semanal": "SEMANAL.md", "diario": "DIARIO.md", "cobertura": "COBERTURA.md",
            "risco": "RISCO.md", "status": "STATUS.md", "calibracao": "CALIBRACAO.md",

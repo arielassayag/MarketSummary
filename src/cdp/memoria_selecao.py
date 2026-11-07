@@ -11,6 +11,7 @@ from typing import Literal
 from pydantic import Field, ValidationError, field_validator, model_validator
 
 from .memoria import (
+    _DESTINOS_ATUAIS,
     ESCOPO,
     Catalogo,
     Escopo,
@@ -19,7 +20,7 @@ from .memoria import (
     _caminho,
     _chaves_unicas,
     _consulta,
-    _fonte_atual,
+    _destino_atual,
     _Modelo,
     _normalizar,
     _pedido_fora_do_escopo,
@@ -80,6 +81,8 @@ class _Pacote(_Modelo):
     orcamento_bytes: int = Field(ge=_LIMITE_BYTES, le=_LIMITE_BYTES)
     candidatas: list[_Candidata] = Field(max_length=LIMITE_CANDIDATAS)
     fontes_permitidas: list[str] | None = None
+    destinos_permitidos: dict[str, str] | None = None
+    lacre_rota: Sha | None = None
     base: dict
     lacre: Sha
 
@@ -105,6 +108,7 @@ class _Resposta(_Modelo):
     ids: list[int] = Field(max_length=_LIMITE_PASSAGENS)
     intencao: Literal["evidencia", "estado_atual", "fora_escopo"] | None = None
     recortes: list[_Recorte] = Field(default_factory=list, max_length=_LIMITE_PASSAGENS)
+    destino_atual: str | None = Field(default=None, max_length=64)
 
 
 def _lacre(pacote: dict) -> str:
@@ -174,7 +178,7 @@ def _candidatas(catalogo: Catalogo, escopo: Escopo, consulta: str, busca: dict) 
 
 
 def preparar(catalogo: Catalogo, escopo: Escopo, consulta: str, limite: int, *,
-             explorar_fontes: bool = False) -> dict:
+             explorar_fontes: bool = False, lacre_rota: str | None = None) -> dict:
     """Lê uma revisão Git e lacra o conjunto ordenado de candidatas e a busca base."""
     if catalogo.fontes.trabalho:
         raise MemoriaErro("a seleção exige fontes de uma revisão Git")
@@ -186,7 +190,10 @@ def preparar(catalogo: Catalogo, escopo: Escopo, consulta: str, limite: int, *,
         consulta = _consulta(consulta)
     except argparse.ArgumentTypeError as exc:
         raise MemoriaErro(str(exc)) from exc
-    busca = catalogo.buscar(escopo, consulta, limite)
+    if lacre_rota is None:
+        busca = catalogo.buscar(escopo, consulta, limite)
+    else:
+        busca = catalogo.buscar(escopo, consulta, limite, evidencia_conferida=True)
     candidatas = _candidatas(catalogo, escopo, consulta, busca) if _tem_contexto(busca) else []
     pacote = {"versao": 1, "revisao": catalogo.fontes.revisao, "data": catalogo.data.isoformat(),
               "consulta": consulta, "escopo": escopo, "limite": limite,
@@ -194,6 +201,10 @@ def preparar(catalogo: Catalogo, escopo: Escopo, consulta: str, limite: int, *,
     if explorar_fontes:
         fora = _pedido_fora_do_escopo(_normalizar(consulta).strip())
         pacote["fontes_permitidas"] = [] if fora else sorted(catalogo.fontes_por_escopo[escopo])
+        pacote["destinos_permitidos"] = (dict(_DESTINOS_ATUAIS)
+                                        if pacote["fontes_permitidas"] and lacre_rota is None else {})
+    if lacre_rota is not None:
+        pacote["lacre_rota"] = lacre_rota
     pacote["lacre"] = _lacre(pacote)
     return pacote
 
@@ -249,6 +260,14 @@ def aplicar(pacote: dict, bruto: bytes, *,
         raise MemoriaErro("JSON inválido no pacote") from exc
     if resposta.lacre != selada.lacre or selada.lacre != lacre:
         raise MemoriaErro("o lacre da seleção diverge do pacote")
+    destino = resposta.destino_atual
+    if selada.lacre_rota is not None and resposta.intencao not in (None, "evidencia"):
+        raise MemoriaErro("a seleção não pode reabrir a intenção da triagem")
+    if destino is not None and (resposta.intencao != "estado_atual"
+                                or not selada.destinos_permitidos
+                                or destino not in selada.destinos_permitidos
+                                or selada.destinos_permitidos[destino] != _DESTINOS_ATUAIS.get(destino)):
+        raise MemoriaErro("destino exige intenção de estado e código canônico oferecido no pacote")
     base = selada.base
     if resposta.intencao is not None:
         if selada.fontes_permitidas is None:
@@ -256,13 +275,17 @@ def aplicar(pacote: dict, bruto: bytes, *,
         if resposta.intencao != "fora_escopo" and not selada.fontes_permitidas:
             raise MemoriaErro("a consulta está bloqueada pelas regras de escopo")
         if resposta.intencao == "evidencia":
-            base = {**base, "orientacao_atual": None}
+            base = {**base, "destino_atual": None, "orientacao_atual": None}
         else:
             if resposta.ids or resposta.recortes:
                 raise MemoriaErro("estado e fora do escopo exigem seleção vazia")
-            atual = (_fonte_atual(selada.consulta, forcar=True)
-                     if resposta.intencao == "estado_atual" else None)
-            return {**base, "notas": [], "fontes": [], "passagens": [], "orientacao_atual": atual}
+            rota = None
+            if resposta.intencao == "estado_atual":
+                rota = ((destino, _DESTINOS_ATUAIS[destino]) if destino is not None
+                        else _destino_atual(selada.consulta, forcar=True))
+            return {**base, "notas": [], "fontes": [], "passagens": [],
+                    "destino_atual": rota[0] if rota else None,
+                    "orientacao_atual": rota[1] if rota else None}
     ids = resposta.ids
     if len(ids) + len(resposta.recortes) > selada.limite or len(ids) != len(set(ids)):
         raise MemoriaErro("a seleção excede o limite ou repete IDs")

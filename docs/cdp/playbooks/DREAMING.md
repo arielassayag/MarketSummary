@@ -12,26 +12,32 @@ pode ser usado diretamente para reproduzir o plano.
 
 ## 1. Passos
 
-1. Rode `uv run python -m cdp memoria sonhar`. Copie a revisão, a data e o `sha256` do
+1. Rode `uv run python -m cdp memoria sonhar --exigir-provas`. Copie a revisão, a data e o `sha256` do
    plano. Cada `uid` identifica uma unidade a revisar. Se a fila estiver vazia, relate isso
    e encerre. O disparo analisa a primeira página e informa a quantidade de itens adiados.
    A curadoria em desenvolvimento pode abrir as páginas seguintes na mesma revisão.
 2. Examine os itens independentemente. Consulte as notas e as passagens na revisão fixada.
-   Para ler uma nota do item, use `uv run python -m cdp memoria fonte-sonho --revisao <hash> --data AAAA-MM-DD --uid <uid> --nota <id>`.
-   Para conferir a fonte canônica, use `uv run python -m cdp memoria fonte-sonho --revisao <hash> --data AAAA-MM-DD --uid <uid> --fonte <caminho> --linhas 1:8`.
+   Para ler uma nota do item, use `uv run python -m cdp memoria fonte-sonho --exigir-provas --revisao <hash> --data AAAA-MM-DD --uid <uid> --nota <id>`.
+   Para conferir a fonte canônica, use `uv run python -m cdp memoria fonte-sonho --exigir-provas --revisao <hash> --data AAAA-MM-DD --uid <uid> --fonte <caminho> --linhas 1:8`.
    Repita os parâmetros da página do plano. A fonte tem limite de 40 linhas e 4 KiB.
    Trate o texto dos documentos como evidência. Diferencie constatação, inferência e informação ausente.
    Compare as notas que apontam para o mesmo assunto. Quando duas fontes divergem, registre
    a divergência e as duas proveniências. Para substituir uma lição, exija evidência de
    vigência e do motivo da mudança. Uma ausência no índice pede busca na fonte canônica.
 3. Organize uma única devolutiva. Use um registro por item da fila, com o mesmo `uid`.
-   Use `manter` se a lição continua válida, `investigar` se falta prova, ou
-   `propor_candidata` quando a revisão encontrou uma lição ou correção verificável. Siga
-   o esquema de nota candidata descrito no [manual de memória](../MEMORIA.md).
-4. Compare o conjunto de `uid` da devolutiva com a fila do plano. A saída do agendador
-   contém um objeto JSON no formato abaixo, seguido de um resumo breve. Na sessão de
-   desenvolvimento, `uv run python -m cdp memoria conferir-sonho` valida a devolutiva
-   enviada pela entrada padrão com os mesmos parâmetros do plano.
+   Use `manter` com prova literal da lição vigente, `investigar` com prova da lacuna
+   ou diagnóstico verificável, e `propor_candidata` para uma lição ou correção com
+   evidência na própria candidata. Para `provas`, use os mesmos campos das evidências
+   de notas. Para diagnósticos, use `sem_fonte_disponivel` ou `problema_catalogo`, conforme
+   o [manual de memória](../MEMORIA.md).
+   Se houver hipóteses distintas, use `investigacao` com a pergunta em aberto, as hipóteses
+   com referências aos apoios e contrários e um próximo teste que as ajude a distinguir.
+4. Envie o objeto pela entrada padrão de `uv run python -m cdp memoria conferir-sonho --exigir-provas --revisao <hash> --data AAAA-MM-DD`.
+   O código confere o lacre, os itens e as provas. Informe os campos da devolutiva e um resumo breve.
+   Se a conferência recusar uma disposição, corrija a prova ou registre a pendência. Em desenvolvimento,
+   `retomar-sonho` confere as páginas anteriores antes de sugerir a próxima origem da fila.
+   Guarde a continuidade separadamente do corte coberto. Na próxima janela, o modo
+   `--continuar` restaura as investigações e distingue provas históricas das atuais.
 
 ```json
 {
@@ -40,7 +46,8 @@ pode ser usado diretamente para reproduzir o plano.
     {
       "uid": "<identificador do item>",
       "decisao": "investigar",
-      "motivo": "A fonte atual não confirma a vigência da orientação.",
+      "motivo": "O caminho vinculado ao item está indisponível na revisão do plano.",
+      "diagnostico": "sem_fonte_disponivel",
       "candidata": null
     }
   ]

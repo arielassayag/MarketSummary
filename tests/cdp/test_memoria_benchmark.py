@@ -42,7 +42,7 @@ def test_benchmark_de_evidencia_e_guardas_da_memoria():
             if caso.tipo == "evidencia":
                 passou = not encaminhou and all(_atingidos(passagens, _grupos(fontes, caso)))
             elif caso.tipo == "estado_atual":
-                passou = encaminhou and not saida["notas"]
+                passou = encaminhou and not (saida["notas"] or saida["fontes"] or saida["passagens"])
             else:
                 passou = not (encaminhou or passagens or saida["notas"])
             if not passou:

@@ -149,6 +149,15 @@ Um ensaio posterior com agentes em sessões novas pode medir respostas com evid�
 custo, registrando o modelo e a versão do acervo. Os resultados da literatura sustentam o desenho
 e as hipóteses. Ganho de desempenho no CDP depende da comparação local sob essas condições.
 
+Na ablação pareada, o mesmo preparador roda com e sem registros curados ativos. O índice
+de fontes permanece idêntico. Leitores em sessões novas recebem as mesmas perguntas e o
+mesmo modelo, instruções e orçamentos. O gabarito de cada grupo permanece com o avaliador.
+O contraste isola o efeito de oferecer as notas à preparação. A comparação com busca
+automática mede, em conjunto, a preparação e o trabalho adicional do leitor. Registre o
+saldo por pergunta e agrupe famílias que compartilham evidência na análise de sensibilidade.
+[Avaliador pareado](../../scripts/cdp_memoria_pareado.py).
+[Teste exato para proporções pareadas](https://pmc.ncbi.nlm.nih.gov/articles/PMC9447366/).
+
 
 ## Qualificação posterior por passagem
 
@@ -227,3 +236,25 @@ A evidência de entrega continua sendo o registro da entrega. A wiki apresenta o
 investigação. O leitor confere as fontes quando a ausência ou a validade da informação
 puder mudar a decisão. [Orientação de análise](https://github.com/anthropics/claude-quickstarts/blob/4a4224bdf0e9cfb3332167b69c90457403813625/managed-agents/knowledge-wiki/prompts/analyzer_system.md),
 [orientação de organização](https://github.com/anthropics/claude-quickstarts/blob/4a4224bdf0e9cfb3332167b69c90457403813625/managed-agents/knowledge-wiki/prompts/organizer_system.md).
+
+A retomada de uma revisão longa recompõe a mesma fila na revisão e data fixadas. Cada
+devolutiva comprova a cobertura da sua página, e a próxima origem só é sugerida após a
+cobertura de toda a fila. Uma investigação em aberto permanece identificada mesmo quando
+a fila foi lida. O modo estrito exige uma fonte literal ou um diagnóstico verificável
+por item. A curadoria ainda precisa decidir se a prova sustenta a manutenção ou mudança.
+
+## Transferência de uma lição para outra sessão
+
+O teste temporal do CDP usa uma fixture Git sem remoto. O revisor lê a fila lacrada
+e propõe candidatas com trechos literais. A aprovação para integração é explícita e
+limitada à fixture. Leitores novos recebem as mesmas fontes, perguntas, modelo e teto.
+Somente as notas aprovadas mudam. Um dos casos verifica se a sessão consegue ligar
+um apelido de operação a uma regra pública do ensaio. Os controles incluem validade,
+conflito de escopo, ausência de fonte, episódio isolado e conhecimento introduzido no
+futuro. Os leitores acertaram 7/7 casos após a revisão, ante 6/7 antes. A amostra
+dirigida mede essa transferência sob o corte fixado.
+
+Na resposta, separe uma ausência documentada de uma pergunta que ficou sem prova.
+A primeira é uma afirmação que deve citar a fonte que registra a ausência. A segunda
+é uma lacuna de evidência na seleção. Essa diferença também protege a distinção
+entre resultado documentado de um replay e estado de uma execução efetiva.

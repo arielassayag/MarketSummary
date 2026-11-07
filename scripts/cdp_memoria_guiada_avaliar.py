@@ -20,7 +20,14 @@ from cdp_memoria_benchmark import (
 )
 
 from cdp.memoria import MAX_BYTES_FONTE, Catalogo, Fontes, Local, _chaves_unicas, raiz_repo
-from cdp.memoria_avaliacao import CasoReservado, K, _atingidos, _medir
+from cdp.memoria_avaliacao import (
+    CasoReservado,
+    K,
+    _atingidos,
+    _medir,
+    _medir_destino,
+    _resumo_destinos,
+)
 from cdp.memoria_selecao import MAX_BYTES_RESPOSTA, _tem_contexto, aplicar, preparar
 
 _CODIGO = (
@@ -33,6 +40,7 @@ _CODIGO = (
     "src/cdp/memoria_selecao.py",
     "scripts/cdp_memoria_benchmark.py",
     "scripts/cdp_memoria_guiada_avaliar.py",
+    "scripts/cdp_memoria_auditar_guiada.py",
 )
 _CAMPOS_PUBLICOS = ("versao", "revisao", "data", "consulta", "escopo", "limite",
                     "orcamento_bytes", "candidatas", "lacre")
@@ -126,7 +134,8 @@ def _pacote(catalogo: Catalogo, entrada: _Entrada, opaco: str, *,
         rota = "estado_atual" if base["orientacao_atual"] else (
             "evidencia" if _tem_contexto(base) else "fora_escopo"
         )
-        campos.update(fontes_permitidas=pacote["fontes_permitidas"], rota_sugerida=rota)
+        campos.update(fontes_permitidas=pacote["fontes_permitidas"], rota_sugerida=rota,
+                      destinos_permitidos=pacote["destinos_permitidos"])
     publico = _json_bytes(campos)
     vinculo = {"opaco": opaco, "id": caso.id, "bateria": nome, "familia": familia,
                "sha256_pacote": _sha(publico), "lacre": pacote["lacre"]}
@@ -168,7 +177,8 @@ def _respostas(arquivo: Path, digest: str, diretorio: Path, ids: set[str]) -> di
     return respostas
 
 
-def _medir_guiada(catalogo: Catalogo, pacote: dict, resposta: object, ouro: list[list[Local]]) -> dict:
+def _medir_guiada(catalogo: Catalogo, pacote: dict, resposta: object, ouro: list[list[Local]],
+                  caso: CasoReservado) -> dict:
     saida = aplicar(pacote, _json_bytes(resposta), ler=catalogo.fontes.linhas)
     passagens = [Local(**p) for p in saida["passagens"]]
     prefixo, tamanho = _passagens_limitadas(catalogo.fontes, passagens)
@@ -178,6 +188,8 @@ def _medir_guiada(catalogo: Catalogo, pacote: dict, resposta: object, ouro: list
         **_medir(passagens, ouro, encaminhou=bool(saida["orientacao_atual"]), notas=bool(saida["notas"])),
         "bytes_evidencia": tamanho, "completo_4500b": all(_atingidos(prefixo, ouro)) if ouro else None,
         "grupos_atingidos": _atingidos(passagens, ouro),
+        **({"intencao": resposta["intencao"]} if resposta.get("intencao") else {}),
+        **_medir_destino(caso, saida),
     }
 
 
@@ -185,11 +197,16 @@ def _resumir(casos: list[dict]) -> dict:
     evidencias = [c for c in casos if c["tipo"] == "evidencia"]
     estados = [c for c in casos if c["tipo"] == "estado_atual"]
     externos = [c for c in casos if c["tipo"] == "fora_escopo"]
+    n_destinos = sum("destinos_aceitos" in c for c in estados)
     modos = {}
     for modo in _MODOS:
         est = [c["modos"][modo] for c in estados]
         ext = [c["modos"][modo] for c in externos]
         positivos = [c["modos"][modo] for c in evidencias]
+        destinos = _resumo_destinos(est)
+        if n_destinos and modo != "direta":
+            destinos = {"estado_destino_aceito": 0, "estado_destino_correto_sem_contexto": 0,
+                        **destinos, "estado_destino_n": n_destinos}
         modos[modo] = {
             "n_evidencia": len(evidencias),
             **{m: sum(x[m] for x in positivos)
@@ -199,9 +216,11 @@ def _resumir(casos: list[dict]) -> dict:
             "estado_encaminhado_sem_notas": sum(x["encaminhou"] and not x["retornou_notas"] for x in est),
             "estado_encaminhado_sem_contexto": sum(x["encaminhou"] and x["abstencao"] for x in est),
             "estado_n": len(est),
-            "fora_abstencao": sum(x["abstencao"] and not x["encaminhou"] for x in ext),
+            "fora_abstencao": sum(x["abstencao"] and not x["encaminhou"]
+                                  and x.get("intencao", "fora_escopo") == "fora_escopo" for x in ext),
             "fora_n": len(ext),
             "falsas_orientacoes_estaticas": sum(x["encaminhou"] for x in positivos),
+            **destinos,
         }
     pares = {}
     comparaveis = [
@@ -217,6 +236,7 @@ def _resumir(casos: list[dict]) -> dict:
             "integral": (guiada["completo_4500b"] == len(evidencias)
                          and not guiada["falsas_orientacoes_estaticas"]
                          and guiada["estado_encaminhado_sem_contexto"] == len(estados)
+                         and guiada.get("estado_destino_correto_sem_contexto", 0) == n_destinos
                          and guiada["fora_abstencao"] == len(externos))}
 
 
@@ -248,7 +268,7 @@ def _medir_ensaio(diretorio: Path, catalogo: Catalogo, ouro: dict[str, list[list
         evidencias = ouro[caso.id]
         resultado = _medir_caso(catalogo, caso, evidencias, familia, nome)
         resultado["opaco"] = opaco
-        resultado["modos"]["guiada"] = _medir_guiada(catalogo, pacote, respostas[opaco], evidencias)
+        resultado["modos"]["guiada"] = _medir_guiada(catalogo, pacote, respostas[opaco], evidencias, caso)
         casos.append(resultado)
 
     bruto_manifesto = _json_bytes({**metadados, "pacotes": vinculos})

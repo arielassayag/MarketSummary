@@ -40,6 +40,10 @@ from cdp.data.store import MarketStore
 ROOT = Path(__file__).resolve().parents[2]
 AS_OF = date(2026, 10, 8)
 IID, DOMESTICA, ADR = "AR_GALICIA", "GGAL.BA", "GGAL"
+# Prefixo literal do índice no commit e3e3c884, que introduziu a fixture.
+CORTE_ARQUIVO = datetime(2026, 10, 10, 20, 44, 17, tzinfo=UTC)
+INDICE_BYTES = 1_285_969
+INDICE_SHA = "dbfba66ac49b2c142790364aa5053c21a3b503ced7ea3cee8b41bcf4bb046c18"
 DEM_SHA = "1039b5c67ffea6ecca5b70db99e26c7f1d788c6da2137193c3d44c74fc958b9b"
 INFO_SHA = "8fa25be65dc0057ba07f548355485edd579ef5ca88c77987a9c845945135b3c2"
 
@@ -56,11 +60,15 @@ def produto(tmp_path):
     shutil.copytree(ROOT / "data/market", market)
     public = tmp_path / "fontes/publico"
     public.mkdir(parents=True)
-    shutil.copy2(ROOT / "data/publico/indice.jsonl", public / "indice.jsonl")
+    # Preserva os ordinais físicos das capturas, sem incorporar coletas posteriores.
+    with (ROOT / "data/publico/indice.jsonl").open("rb") as bruto:
+        indice = bruto.read(INDICE_BYTES)
+    assert hashlib.sha256(indice).hexdigest() == INDICE_SHA
+    (public / "indice.jsonl").write_bytes(indice)
     before = datetime.now(UTC)  # Corte anterior a ambas as novas recepções: negativo previsto.
     archive = Arquivo(tmp_path / "fontes", offline=True)
-    dem = archive.buscar(f"YAHOO/demonstracoes/{DOMESTICA}.json", ate=before)
-    info = archive.buscar(f"YAHOO/info/{DOMESTICA}.json", ate=before)
+    dem = archive.buscar(f"YAHOO/demonstracoes/{DOMESTICA}.json", ate=CORTE_ARQUIVO)
+    info = archive.buscar(f"YAHOO/info/{DOMESTICA}.json", ate=CORTE_ARQUIVO)
     assert dem is not None and info is not None
     assert dem.sha256 == DEM_SHA and info.sha256 == INFO_SHA
     for reg in (dem, info):

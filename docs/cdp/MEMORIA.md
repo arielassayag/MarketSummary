@@ -15,6 +15,7 @@ da tarefa para ver o índice breve ou procurar uma lição específica.
 ```sh
 uv run python -m cdp memoria contexto --escopo desenvolvimento
 uv run python -m cdp memoria contexto --escopo diario --formato json
+uv run python -m cdp memoria contexto --escopo diario --consulta 'moeda do benchmark índice local'
 uv run python -m cdp memoria buscar --escopo diario --consulta 'moeda do benchmark índice local' --limite 3
 ```
 
@@ -22,6 +23,8 @@ Os escopos são `desenvolvimento`, `operador`, `status`, `semanal`, `diario`, `r
 e `calibracao`. `contexto` mostra até três notas curadas em destaque no escopo, com orçamento de
 6 KiB de saída em Markdown e JSON. `buscar` retorna separadamente notas elegíveis e
 fontes primárias do escopo. O limite de resultados por lista vai de um a dez e o padrão é cinco.
+Com `--consulta`, `contexto` seleciona até três notas pertinentes mesmo quando elas não
+estão destacadas. Ele mantém o corte por data e revisão e o mesmo orçamento de saída.
 A busca combina BM25 direto, passagens ranqueadas com contexto da seção e âncoras das notas.
 A busca estrutural usa títulos, parágrafos e seções vizinhas dos mesmos documentos canônicos.
 Seções Markdown curtas também podem ser recuperadas integralmente quando o corpo sustenta a consulta.
@@ -35,9 +38,9 @@ continua vinculado ao trecho literal da fonte.
 O retorno `fontes` contém os caminhos da busca direta, enquanto `notas` identifica os
 registros recuperados. Cada passagem vem com linhas inclusivas e SHA-256.
 
-Quando a busca reconhece um pedido de estado, `orientacao_atual` indica a fonte a consultar.
-O encaminhamento inferido deixa a busca direta disponível e omite as notas. Use
-`--estado-atual` para obter apenas o encaminhamento quando a intenção já estiver estabelecida.
+Quando a busca reconhece um pedido de estado, `orientacao_atual` indica a fonte a consultar e
+`destino_atual` oferece um identificador estável para auditoria. O retorno fica sem notas,
+fontes históricas ou passagens. Use `--estado-atual` quando a intenção já estiver estabelecida.
 A classificação automática depende da redação da pergunta.
 
 Abra a fonte na revisão indicada e confira o trecho e seu contexto antes de usar a lição. O
@@ -101,7 +104,43 @@ como `evidencia`, `estado_atual` ou `fora_escopo`. Para evidência, pode enviar
 linhas inclusivos da revisão indicada. O código lê cada recorte no Git, resolve
 seu hash e conta as passagens e os bytes de toda a seleção. Uma passagem tem até
 14 linhas e 1.800 bytes. Pedidos de estado ou fora do escopo exigem seleção vazia.
-Os bloqueios explícitos de escopo e segurança continuam prevalecendo.
+Para estado, o leitor pode enviar `destino_atual` com um dos códigos de
+`destinos_permitidos`. O código devolve a orientação canônica do destino, sem
+passagens históricas, e mantém o encaminhamento automático quando o leitor
+omite o campo. Os bloqueios explícitos de escopo e segurança continuam prevalecendo.
+
+Ao redigir uma resposta a partir dos recortes, associe cada afirmação à passagem que
+a sustenta. Quando o procedimento documentado e a implementação vigente divergirem,
+descreva a diferença e a fonte que sustenta cada versão. Para fatos operacionais,
+consulte o destino indicado e faça o corte na execução pedida.
+
+### Triar antes de recuperar
+
+Para perguntas livres, `rotear` prepara uma devolutiva curta de intenção e destino.
+O pacote contém a consulta, o escopo, as orientações canônicas e o lacre. O leitor
+trata esse conteúdo como dados e devolve `lacre`, `intencao` e `destino_atual`.
+O destino é obrigatório em `estado_atual` e nulo em `evidencia`, `fora_escopo` e
+`indeterminado`. Para consultar o mapa com proveniência, use `--com-autoridades`.
+Uma âncora que perdeu validade retira o cartão correspondente do pacote.
+O formato `--formato prompt` reúne as instruções e o pacote lacrado para um leitor
+em qualquer aplicativo. A conferência continua usando a devolutiva JSON.
+
+```sh
+uv run python -m cdp memoria rotear --escopo risco --consulta 'Que VaR consta no monitor de hoje?'
+uv run python -m cdp memoria rotear --escopo risco --consulta 'Que VaR consta no monitor de hoje?' \
+  --revisao "$REVISAO_DO_PACOTE" --data "$DATA_DO_PACOTE" --conferir < rota.json
+```
+
+A conferência de estado e a abstenção terminam com `notas`, `fontes` e `passagens`
+vazias. O campo `catalogo_com_ressalvas` fica nulo porque o catálogo não foi lido.
+O encaminhamento indica a autoridade a consultar. A execução segue os gates do CDP.
+
+Para uma triagem de evidência, `--conferir` faz a recuperação automática. Se precisar
+da seleção guiada, use `--candidatas` com a mesma `rota.json`. O pacote de candidatas
+carrega `lacre_rota` e conserva o teto de cinco passagens e 4.500 bytes. Para conferir
+a seleção, use `--conferir-selecao` e passe um único objeto com `triagem` e `selecao`.
+Repita consulta, revisão, data, limite e a opção `--com-autoridades` do pacote original.
+O código reconstrói e confere os dois lacres. A seleção conserva a intenção da triagem.
 
 ## Registrar uma lição
 
@@ -206,7 +245,7 @@ a última revisão examinada com `--desde` e use `--pagina` para alcançar os it
 adiados na mesma revisão. O índice identifica os tópicos que já têm notas curadas.
 
 ```sh
-uv run python -m cdp memoria sonhar
+uv run python -m cdp memoria sonhar --exigir-provas
 uv run python -m cdp memoria wiki --escopo desenvolvimento
 ```
 
@@ -215,11 +254,11 @@ item na revisão fixada. A leitura por intervalo limita o retorno a 40 linhas e 
 Cada item exige uma disposição e sua justificativa. A devolutiva traz o SHA-256 do
 plano, cobre todos os IDs selecionados e pode anexar novas notas candidatas
 no esquema deste manual. A curadoria compara fontes quando elas divergem.
-Em desenvolvimento, valide o JSON da devolutiva pela entrada padrão, com a
-mesma revisão, data, origem e página do plano.
+Valide o JSON da devolutiva pela entrada padrão, com os mesmos parâmetros do plano.
 
 ```sh
-uv run python -m cdp memoria conferir-sonho < /tmp/devolutiva-cdp.json
+uv run python -m cdp memoria conferir-sonho --exigir-provas \
+  --revisao "$REVISAO_DO_PLANO" --data "$DATA_DO_PLANO" < /tmp/devolutiva-cdp.json
 ```
 
 O validador confere cobertura da fila, escopo e evidência antes de devolver as
@@ -227,6 +266,53 @@ candidatas para revisão. A aceitação de uma lição segue o diff revisável e
 integração ao Git. A vista wiki usa notas já curadas, agrupadas por etiqueta, com
 links por ID para suas âncoras e predecessoras. Para detalhes e limites do
 desenho, consulte a [pesquisa de arquitetura](MEMORIA_PESQUISA.md).
+
+Em desenvolvimento, `retomar-sonho` confere devolutivas anteriores em JSONL na ordem das
+páginas, com data e revisão obrigatórias. Repita o limite e a origem `--desde` do plano, se
+usados. O resultado traz o plano seguinte ou `cobertura_completa`, com `desde_sugerido`
+somente depois da última página. As investigações em aberto permanecem no resumo.
+
+```sh
+jq -c . /tmp/pagina-1.json /tmp/pagina-2.json | uv run python -m cdp memoria retomar-sonho \
+  --revisao "$REVISAO_DO_PLANO" --data "$DATA_DO_PLANO"
+```
+
+Para revisar com provas obrigatórias, use `--exigir-provas` ao planejar, ler, conferir e retomar.
+O parâmetro muda o lacre. `manter` exige uma prova literal em `provas`, no mesmo formato de
+`evidencias` das notas, e que a nota esteja sem falha conhecida. `investigar` admite prova
+literal ou um `diagnostico` verificável (`sem_fonte_disponivel` ou `problema_catalogo`). Uma
+`propor_candidata` usa as evidências da própria candidata. O código valida a origem do trecho.
+O curador avalia se o trecho sustenta a disposição.
+
+### Levar investigações ao próximo corte
+
+`desde_sugerido` indica até onde a fila foi examinada. Uma disposição `investigar` continua
+aberta. Pode incluir `investigacao` com uma `pergunta`, até três `hipoteses` e um
+`proximo_teste` que ajude a distinguir as hipóteses. Em cada hipótese, `apoios` e
+`contrarios` apontam para provas do item pelo par `caminho` e `sha256`. Listas vazias
+registram hipóteses ainda sem prova. O código confere os vínculos. A interpretação das
+passagens e a escolha do teste ficam com o curador.
+
+Com `--exigir-provas`, a saída de `retomar-sonho` ao cobrir todas as páginas traz
+`continuidade` se houver investigações ou se o corte recebeu uma continuidade anterior.
+Guarde o objeto e seu SHA-256 em registros separados. Na janela seguinte, forneça o objeto
+na primeira linha da entrada e o lacre esperado em `--continuar`. Use como origem a revisão
+coberta. A fila recupera o item em aberto mesmo quando a fonte fica fora do novo diff.
+
+```sh
+jq -c '.continuidade' /tmp/rodada-anterior.json | uv run python -m cdp memoria sonhar \
+  --exigir-provas --revisao "$REVISAO_ATUAL" --data "$DATA_ATUAL" \
+  --desde "$REVISAO_COBERTA" --continuar "$LACRE_ANTERIOR"
+```
+
+Repita os mesmos parâmetros em `fonte-sonho`, `conferir-sonho` e `retomar-sonho`. Envie as
+devolutivas depois da primeira linha, conforme a entrada de cada comando. O código
+reconstitui o item de origem no Git, exige que as revisões pertençam à mesma história e
+reconfere as provas na revisão em que foram registradas. O novo plano marca cada trecho
+histórico como localizado ou desatualizado na revisão atual. Para encerrar a investigação,
+use `manter` com prova atual e explique a conclusão no motivo. Uma saída de página isolada
+contém somente a continuidade daquela página. Preserve as rodadas anteriores para auditar
+mudanças nas hipóteses. A consulta de rotina e a wiki continuam lendo apenas notas curadas.
 
 ## Avaliar recuperação
 

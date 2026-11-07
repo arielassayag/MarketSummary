@@ -38,9 +38,15 @@ class CasoReservado(_Modelo):
     consulta: str = Field(min_length=1, max_length=240)
     tipo: Literal["evidencia", "estado_atual", "fora_escopo"]
     grupos: list[list[Evidencia]] = Field(max_length=4)
+    destinos_aceitos: list[Slug] | None = Field(default=None, min_length=1, max_length=4)
 
     @model_validator(mode="after")
     def conferir(self) -> CasoReservado:
+        if self.destinos_aceitos is not None:
+            if self.tipo != "estado_atual":
+                raise ValueError("apenas consultas de estado atual admitem destinos aceitos")
+            if len(set(self.destinos_aceitos)) != len(self.destinos_aceitos):
+                raise ValueError("destino aceito repetido no caso")
         if (self.tipo == "evidencia") != bool(self.grupos) or any(not g for g in self.grupos):
             raise ValueError("cada grupo exige uma evidência ou alternativas")
         chaves = [(ev.caminho, ev.sha256) for grupo in self.grupos for ev in grupo]
@@ -97,6 +103,30 @@ def _medir(passagens: list[Local], grupos: list[list[Local]], *,
             "passagens": [p.json() for p in passagens]}
 
 
+def _medir_destino(caso: CasoReservado, saida: dict) -> dict:
+    if caso.destinos_aceitos is None:
+        return {}
+    destino = saida["destino_atual"]
+    aceito = destino in caso.destinos_aceitos
+    retornou_fontes = bool(saida["fontes"])
+    sem_contexto = not (retornou_fontes or saida["notas"] or saida["passagens"])
+    return {
+        "destino_atual": destino, "destino_aceito": aceito, "retornou_fontes": retornou_fontes,
+        "estado_destino_correto_sem_contexto": aceito and bool(saida["orientacao_atual"]) and sem_contexto,
+    }
+
+
+def _resumo_destinos(medicoes: list[dict]) -> dict:
+    anotadas = [m for m in medicoes if "destino_aceito" in m]
+    if not anotadas:
+        return {}
+    return {
+        "estado_destino_n": len(anotadas),
+        "estado_destino_aceito": sum(m["destino_aceito"] for m in anotadas),
+        "estado_destino_correto_sem_contexto": sum(m["estado_destino_correto_sem_contexto"] for m in anotadas),
+    }
+
+
 def _resumo(casos: list[dict], modo: str) -> dict:
     positivos = [c["modos"][modo] for c in casos if c["tipo"] == "evidencia"]
     controles = [c["modos"][modo] for c in casos if c["tipo"] != "evidencia"]
@@ -116,6 +146,7 @@ def _resumo(casos: list[dict], modo: str) -> dict:
         "consultas_estado": len(atuais),
         "encaminhamentos": sum(c["encaminhou"] for c in atuais),
         "encaminhamentos_explicitos": sum(c.get("encaminhou_explicito", False) for c in atuais),
+        **_resumo_destinos(atuais),
     }
 
 
@@ -142,6 +173,7 @@ def avaliar_reservada(fonte_corpus: Fontes, *, replica: bool = False) -> dict:
         memoria = _medir([Local(**p) for p in hibrida["passagens"]], gold_hoje,
                          encaminhou=bool(hibrida["orientacao_atual"]),
                          notas=bool(hibrida["notas"]))
+        memoria.update(_medir_destino(c, hibrida))
         if c.tipo == "estado_atual":
             explicita = catalogo.buscar(c.escopo, c.consulta, K, estado_atual=True)
             memoria["encaminhou_explicito"] = bool(explicita["orientacao_atual"]) and not (
@@ -149,6 +181,7 @@ def avaliar_reservada(fonte_corpus: Fontes, *, replica: bool = False) -> dict:
             )
         casos.append({
             "id": c.id, "escopo": c.escopo, "tipo": c.tipo, "grupos": len(c.grupos),
+            **({"destinos_aceitos": c.destinos_aceitos} if c.destinos_aceitos is not None else {}),
             "modos": {
                 "ontem": _medir(direta_ontem.buscar(c.escopo, c.consulta, K), gold_ontem),
                 "direta": _medir(catalogo.indice.buscar(c.escopo, c.consulta, K), gold_hoje),

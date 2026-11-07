@@ -13,7 +13,16 @@ from random import Random
 from statistics import fmean
 
 from cdp.memoria import Catalogo, Fontes, Local, _chaves_unicas, raiz_repo
-from cdp.memoria_avaliacao import CasoReservado, CorpusReservado, K, _atingidos, _grupos, _medir
+from cdp.memoria_avaliacao import (
+    CasoReservado,
+    CorpusReservado,
+    K,
+    _atingidos,
+    _grupos,
+    _medir,
+    _medir_destino,
+    _resumo_destinos,
+)
 from cdp.memoria_busca import BYTES_PASSAGEM, LINHAS_PASSAGEM, _janelas
 
 MODOS = ("direta", "memoria")
@@ -166,7 +175,7 @@ def _medir_caso(catalogo: Catalogo, caso: CasoReservado, ouro: list[list[Local]]
     modos = {
         "direta": _medir(direta, ouro),
         "memoria": _medir(memoria, ouro, encaminhou=bool(hibrida["orientacao_atual"]),
-                           notas=bool(hibrida["notas"])),
+                           notas=bool(hibrida["notas"])) | _medir_destino(caso, hibrida),
     }
     for modo, passagens in zip(MODOS, (direta, memoria), strict=True):
         prefixo, tamanho = _passagens_limitadas(catalogo.fontes, passagens)
@@ -178,11 +187,14 @@ def _medir_caso(catalogo: Catalogo, caso: CasoReservado, ouro: list[list[Local]]
         modos["memoria"]["explicito_sem_memoria"] = bool(explicita["orientacao_atual"]) and not (
             explicita["notas"] or explicita["passagens"]
         )
+        if caso.destinos_aceitos is not None:
+            modos["memoria"]["destino_explicito"] = _medir_destino(caso, explicita)
     return {
         "id": caso.id, "bateria": bateria, "familia": familia, "escopo": caso.escopo,
         "consulta": caso.consulta, "tipo": caso.tipo, "grupos": len(ouro),
         "grupos_cobertos_catalogo": grupos_cobertos, "modos": modos,
         "gabarito": [[e.json() for e in grupo] for grupo in ouro],
+        **({"destinos_aceitos": caso.destinos_aceitos} if caso.destinos_aceitos is not None else {}),
     }
 
 
@@ -229,6 +241,7 @@ def main() -> None:
         raise ValueError("cada bateria precisa de perguntas de evidência")
     principal = _pares(positivos, "completo_5")
     baterias = {nome: _pares(c, "completo_5") for nome, c in por_bateria.items()}
+    destinos = _resumo_destinos(estados)
     resultado = {
         "revisao": fontes.revisao, "data": catalogo.data.isoformat(),
         "corpora": {nome: sha for nome, _, _, sha in lotes},
@@ -254,6 +267,10 @@ def main() -> None:
             "estado_com_notas": sum(e["retornou_notas"] for e in estados),
             "estaticas_encaminhadas": sum(c["modos"]["memoria"]["encaminhou"] for c in positivos),
             "fora_abstencao": {m: sum(c["modos"][m]["abstencao"] for c in fora) for m in MODOS},
+            **destinos,
+            **({"estado_destinos_explicitos": _resumo_destinos(
+                [e.get("destino_explicito", {}) for e in estados]
+            )} if destinos else {}),
         },
         "casos": casos,
     }

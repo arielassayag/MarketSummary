@@ -5,6 +5,139 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## Continuidade de investigações entre cortes — 07/11/2026
+
+A saída de dreaming com provas separa o corte coberto das investigações em aberto.
+`--continuar` recebe o lacre esperado e o objeto na primeira linha da entrada.
+O código reconstitui o item de origem, confere a história no Git, revalida as provas
+na revisão anterior e marca as que ainda constam da revisão nova. Uma pendência
+reaparece mesmo que a sua fonte fique fora do diff novo. O curador pode registrar
+hipóteses concorrentes, seus apoios e contrários e o próximo teste discriminante.
+Uma resolução exige prova da revisão corrente. As hipóteses ficam na curadoria.
+
+A referência determinística da C22 acertou 9/18 destinos, 10/10 procedimentos e
+0/8 abstenções externas. O protótipo local Qwen3.5 4B acertou 8/18 destinos,
+8/10 procedimentos e 6/8 abstenções. O ganho externo veio com três falsos externos.
+As duas alternativas seguem com lacunas e o protótipo fica fora do fluxo padrão.
+
+A fixture bancária fixa agora o prefixo histórico do índice e seu SHA-256. O módulo
+passou em 72/72. A guarda do replay recusou selar execução quando código mudou durante
+a suíte ampla original. A próxima execução usa uma árvore congelada.
+
+## Triagem separada, evidência encadeada e confirmação C21 — 07/11/2026
+
+`memoria rotear` prepara um pacote compacto e pode renderizá-lo como prompt
+portátil. O código recompõe e confere o lacre e os destinos permitidos.
+Estado, fora de escopo e intenção indeterminada saem sem abrir o catálogo.
+Só a triagem conferida de evidência habilita o pacote de seleção encadeado.
+O mapa opcional registra 26 autoridades com 45 âncoras literais, conferidas
+no Git. Na C20, a triagem acertou 34/34 casos com e sem os cartões. As
+orientações compactas são o padrão.
+
+A C21, qualificação `781a5afb`, passou de 14/32 para 32/32 acertos nas
+mesmas consultas, frente à memória automática. Foram 12/12 evidências
+completas, 14/14 destinos exatos sem histórico e 6/6 abstenções. A busca
+direta empatou nas 12 perguntas documentais. A triagem seguida de busca
+automática recuperou 8/12, ante 7/12 da memória automática sem triagem.
+Dois julgadores aprovaram as 12 respostas curtas redigidas com prova por
+alegação. O protocolo, os placares e a auditoria estão em
+`outputs/cdp-memoria-rigor/`. O rascunho local com as figuras está em
+`outputs/ai-notes-15/ai-notes-15-eval-fluxo-21.html`.
+
+A triagem avaliada usou Codex. O roteador offline tem lacunas em casos
+inéditos. Embeddings locais e o ensaio com Qwen3 1.7B ficaram abaixo
+da referência avaliada e seguem fora do fluxo padrão. A confirmação
+restringe-se a perguntas documentais, estado e escopo deste corpus. O
+ensaio temporal segue separado, com fontes simuladas. A suíte focal
+da CLI, da seleção e da documentação passou com 326 testes e um pulado.
+Uma falha de hash na preparação das fixtures bancárias da suíte ampla
+foi reproduzida isoladamente. O livro e a operação seguem no executor.
+
+## Confirmação integral C18 do fluxo guiado — 07/11/2026
+
+A qualificação `27595955` passou em **26/26 casos inéditos**, com 8/8 perguntas
+de evidência e 13/13 grupos, 12/12 destinos exatos, 6/6 abstenções e zero rotas
+indevidas. A busca direta e a automática recuperaram 6/8 perguntas no mesmo
+teto de saída. A automática acertou 7/12 destinos e 2/6 abstenções na C18.
+Dois julgadores aprovaram também **8/8 respostas** estruturadas com prova por
+alegação. O placar congelado e a auditoria ficam em `outputs/cdp-memoria-rigor/`.
+
+Após a medição, o roteador automático recebeu correções para formulações de
+tese, agenda, executor e trava, além de colisões de vocabulário externo. A
+regressão das amostras já abertas C17 e C18 passou em 28/28 destinos, 12/12
+abstenções e zero falsos encaminhamentos em 20 perguntas documentais. Esses
+são casos conhecidos. A C19 é a confirmação independente do roteador.
+Na primeira execução inédita da C19, `3d1ff986`, o automático acertou 8/16
+destinos e 2/8 abstenções. Nenhuma das oito perguntas documentais recebeu
+rota de estado e seis recuperaram todos os trechos. As novas formulações
+confirmam que a regressão conhecida ainda é insuficiente para a generalização
+do roteador. Resultado e protocolo em `outputs/cdp-memoria-rigor/`.
+
+O ensaio temporal prospectivo passou de 6/7 a 7/7, com as quatro abstenções
+preservadas e 8/8 controles temporais. Foram integradas duas notas somente
+no Git da fixture após revisão explícita. A versão do artigo com os placares
+e as duas figuras é `outputs/ai-notes-15/ai-notes-15-eval-prospectivo-18.html`.
+O ramo de desenvolvimento conserva as alterações e a operação segue no executor.
+A suíte focal final passou com 898 testes e um pulado. A suíte integral foi
+iniciada na qualificação anterior e ainda está em andamento. Um teste de recuperação
+de replay sinalizado nessa execução passou quando reexecutado isoladamente.
+
+## Roteamento com fontes canônicas e confirmação C17 — 07/11/2026
+
+O modo guiado pode escolher o `destino_atual` no mapa canônico lacrado no pacote.
+O verificador exige intenção de estado e saída vazia de notas, fontes e passagens.
+A C16 confirmou 20/20 destinos, 6/6 abstenções e 11/12 evidências literais.
+Um parecer independente considerou suficiente a seleção alternativa no 12º caso.
+A C17 confirmou 16/16 destinos, 6/6 abstenções e 11/12 evidências literais. A única
+falha de evidência veio de tratar o alcance de um replay documentado como estado.
+A distinção foi corrigida no código e passa a ser testada na confirmação C18.
+
+No teste de texto da C17, os dois julgadores aprovaram 8/12 com texto corrido e
+10/12 com referências por alegação. Ficaram em aberto o replay sem passagem e
+uma ausência documentada que o leitor registrou como lacuna sem citação.
+Os protocolos e entregas lacrados ficam em `outputs/cdp-memoria-rigor/`.
+
+O roteiro semanal de dreaming exige prova agora, confere a devolutiva em leitura
+e preserva as investigações. As skills geradas e o plugin 1.9.1 usam as permissões
+fechadas para os comandos de leitura e conferência. A C17 temporal simulada conferiu
+9/9 itens em três páginas. Duas notas foram integradas explicitamente só na fixture.
+Sessões novas passaram de 6/7 para 7/7 no critério fixado antes do teste, com 4/4
+abstenções preservadas e 8/8 controles de corte, validade e proveniência. O ensaio
+histórico de curadoria recuperou 9/9 evidências com até cinco passagens.
+
+O artigo atualizado está em `outputs/ai-notes-15/ai-notes-15-eval-prospectivo-17.html`.
+A agenda versionada contém uma reserva semanal e o dreaming de sábado. A verificação
+deste ramo é de desenvolvimento. A operação e a entrega de rotinas permanecem no executor.
+
+## Ablação pareada C15 e retomada da memória — 07/11/2026
+
+A qualificação `1b3df366`, com fontes `ac5f8481`, mediu 24 perguntas inéditas de
+evidência, 12 destinos de estado e quatro controles externos. A busca direta
+acertou 14/24, a memória automática 18/24 e o Codex guiado 23/24 tanto com
+quanto sem as notas ativas. O fluxo guiado com notas ganhou dez e perdeu uma
+frente à direta, saldo de 37,5 pontos percentuais. O contraste entre leitores
+empatou nas mesmas 23 perguntas. Ambos acertaram 7/12 destinos de estado e 4/4
+abstenções externas, com zero encaminhamentos indevidos nas perguntas de evidência.
+
+A auditoria recontou 80 escolhas diretamente no Git. Os cinco erros de destino
+ficaram no roteador determinístico, embora os leitores tenham reconhecido a
+intenção de estado. A regressão dos 14 destinos anotados no original e na C14
+ficou em 14/14. Para a próxima confirmação prospectiva, trate os erros da C15
+como diagnóstico conhecido. Em evidência, os dois leitores falharam na mesma
+pergunta sobre divergência de participações e a busca direta recuperou o trecho.
+A comparação mede recuperação, com dependência potencial entre perguntas da
+mesma sessão. O ensaio e as figuras ficam em `outputs/cdp-memoria-rigor/`.
+
+`memoria contexto --consulta` seleciona notas pertinentes no mesmo orçamento
+de 6 KiB. Consultas de estado retornam um destino estável sem contexto histórico.
+`memoria retomar-sonho` confere páginas sucessivas e conserva pendências.
+`--exigir-provas` valida trecho literal ou diagnóstico verificável na revisão.
+A reexecução simulada do dreaming passou de 4/9 a 7/9 na primeira passagem e
+ficou em 8/9 nos dois estágios com até cinco. As disposições editoriais do
+ensaio eram predefinidas. A avaliação semântica de um curador autônomo e da
+análise final segue em aberto. O livro e as rotinas operacionais não foram
+acionados nesta avaliação. A suíte focal passou com 450 e um pulado.
+
 ## Confirmação 14 integral da seleção guiada — 07/11/2026
 
 Na revisão `6c5c85b0`, qualificação `f85c9acf`, a seleção exploratória

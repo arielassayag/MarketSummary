@@ -1,0 +1,36 @@
+{
+  "id": "estado-pendencias-procedencia",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Estado atual e procedência das execuções",
+  "resumo": "A leitura de estado identifica a origem dos commits, o executor, os incidentes e a integridade. Use a agenda para o próximo passo e o modo de rede quando precisar conferir remoto, trava e portal. Em cobertura, rascunhos ainda não adotados e obsoletos têm estados próprios.",
+  "escopos": [
+    "operador",
+    "status"
+  ],
+  "tags": [
+    "estado",
+    "agenda",
+    "pendências",
+    "procedência",
+    "incidentes",
+    "rascunhos"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": true,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/STATUS.md",
+      "trecho": "`estado` já reúne fase, executor designado × este ambiente, trava das rotinas, integridade,\núltimos registros, últimas execuções (com a procedência de cada commit), pendências, incidentes\ne o próximo passo. Com acesso à rede, `uv run python -m cdp estado --rede --formato md` consulta\ntambém o remoto, a trava e o portal publicado.",
+      "sha256": "e112c23365f7cdfa9daae55adc15fad6741985411ac5512e41cc5ae79ba94a6b"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/STATUS.md",
+      "trecho": "- **Pendências**: fechamentos, relatórios, tese da semana, relatórios semanais\n  (`relatorio_semanal.pendentes`), retrato da cobertura, a fila de notas (`pendentes` de\n  `nota agenda`) e os rascunhos entregues ainda não adotados ou obsoletos\n  (`rascunhos_pendentes`, `rascunhos_obsoletos`).",
+      "sha256": "c77480f28f3b1d8fa26e683acbf263cb308552e2557943db8b37adc7c5341e47"
+    }
+  ]
+}

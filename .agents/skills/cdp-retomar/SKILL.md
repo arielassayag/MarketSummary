@@ -9,18 +9,26 @@ allowed-tools:
   - "Bash(uv sync *)"
   - "Bash(git status *)"
   - "Bash(git log *)"
+  - "Bash(uv run cdp agenda *)"
+  - "Bash(uv run cdp agenda)"
   - "Bash(uv run cdp estado *)"
   - "Bash(uv run cdp estado)"
   - "Bash(uv run cdp executor janela *)"
   - "Bash(uv run cdp executor janela)"
+  - "Bash(uv run cdp memoria contexto --escopo desenvolvimento)"
+  - "Bash(uv run cdp memoria contexto --escopo operador)"
   - "Bash(uv run cdp rotinas verificar *)"
   - "Bash(uv run cdp rotinas verificar)"
   - "Bash(uv run cdp skills sincronizar --claude --verificar *)"
   - "Bash(uv run cdp skills sincronizar --claude --verificar)"
+  - "Bash(uv run python -m cdp agenda *)"
+  - "Bash(uv run python -m cdp agenda)"
   - "Bash(uv run python -m cdp estado *)"
   - "Bash(uv run python -m cdp estado)"
   - "Bash(uv run python -m cdp executor janela *)"
   - "Bash(uv run python -m cdp executor janela)"
+  - "Bash(uv run python -m cdp memoria contexto --escopo desenvolvimento)"
+  - "Bash(uv run python -m cdp memoria contexto --escopo operador)"
   - "Bash(uv run python -m cdp rotinas verificar *)"
   - "Bash(uv run python -m cdp rotinas verificar)"
   - "Bash(uv run python -m cdp skills sincronizar --claude --verificar *)"
@@ -32,13 +40,10 @@ metadata:
 ---
 # CDP — pegar o bonde andando
 
-1. `uv sync --extra dev --extra ai`
-2. `uv run python -m cdp estado --formato md` (para máquinas: sem `--formato`). Leia fase,
-   executor (`sou_o_executor`), incidentes, pendências e `playbook_sugerido`.
-3. Identifique o seu papel (`AGENTS.md`, seção 1): rotina agendada ⇒ a skill da tarefa;
-   sessão de operador ⇒ leitura por padrão; sessão de desenvolvimento ⇒ nunca grave `book/`,
-   `data/`, `reports/`, `artifacts/`; leia `docs/cdp/EM_ANDAMENTO.md` e `docs/cdp/DECISOES.md`.
-4. Siga `docs/cdp/playbooks/RETOMAR.md`.
-5. Ao encerrar uma sessão de desenvolvimento, atualize `docs/cdp/EM_ANDAMENTO.md`.
+Siga `docs/cdp/playbooks/RETOMAR.md` desde o início. O roteiro reúne estado, agenda,
+identificação do papel e consulta de memória por escopo.
+
+O operador começa em leitura. Em desenvolvimento, preserve `book/`, `data/`, `reports/`
+e `artifacts/` e atualize `docs/cdp/EM_ANDAMENTO.md` ao encerrar a sessão.
 
 Arquivo gerado — não edite à mão (`uv run python -m cdp skills sincronizar`).

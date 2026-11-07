@@ -5,6 +5,28 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## Memória entre sessões — 07/11/2026
+
+A implementação está no ramo de desenvolvimento `codex/cdp-memoria`, sobre o fechamento
+publicado de 06/11 (`afee26ce`). Consulte [Memória do CDP](MEMORIA.md) para operação e
+curadoria e [pesquisa e decisão de arquitetura](MEMORIA_PESQUISA.md) para fontes e limites.
+
+O catálogo inicial tem 15 notas e 28 âncoras de evidência verificáveis. O contexto lê o
+Git local e contém no máximo três notas por escopo. A busca combina lições revisadas com
+fontes canônicas; a auditoria lista candidatas, divergências, validade e sobreposições
+para revisão fora das rotinas. Os seis roteiros só oferecem o contexto depois do gate
+e da sincronização, quando aplicável. O encerramento por código 10 é preservado.
+
+A avaliação offline compara até três caminhos por consulta; em 24 perguntas com fonte
+esperada, a busca direta recuperou pelo menos uma em 21 casos e a consulta com memória,
+em 24. O teste recuperou uma nota esperada em 21 de 21 perguntas; houve abstenção em
+oito de oito controles negativos e nos três casos reservados à busca direta. O corpus
+é pequeno e coelaborado com o recurso. Falta medir efeito no desempenho de sessões
+novas com perguntas reservadas.
+
+A integração em main e a adoção no executor são etapas posteriores. Esta sessão de
+desenvolvimento não acionou rotinas nem gravou livro, base, relatórios ou artefatos.
+
 ## Recuperação de descritores NET — 17/10/2026
 
 O operador autorizou corrigir a falha de arquivos abertos, testar e retomar o

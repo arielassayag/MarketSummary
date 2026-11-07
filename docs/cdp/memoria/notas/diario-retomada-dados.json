@@ -1,0 +1,34 @@
+{
+  "id": "diario-retomada-dados",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "Fechamento indisponível interrompe a sequência",
+  "resumo": "Se o fechamento retornar dados não prontos, preserve o motivo e interrompa a sequência de datas. A próxima execução prevista retoma, e o que já fechou segue o roteiro de publicação. Uma recuperação editorial posterior usa o contexto do próprio pregão.",
+  "escopos": [
+    "diario"
+  ],
+  "tags": [
+    "dados não prontos",
+    "câmbio",
+    "sequência",
+    "recuperação",
+    "pregão"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "- `dados não prontos` → **pare o laço** (não processe datas posteriores) e relate o `motivo`: a\n  próxima execução (o reforço das 21:07, a repescagem de sábado ou o dia seguinte) retoma. Não\n  espere nem repita em laço. Publique o que já fechou.\n- `sem carteira efetivada` → pare e relate (nenhuma decisão executável ainda).\n- Erro → pare e relate a mensagem (não tente contornar).",
+      "sha256": "5736979713f853f2b19564b997130a3e66846b9b65471368e19316f2bd72346a"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "2. Pesquise o contexto de mercado **do dia D** (países, setores, commodities, câmbio, notícias\n   dos emissores relevantes) só em fontes públicas. Em dias recuperados, pesquise aquela data.",
+      "sha256": "79b34231c51e56eae37703ac7a3d02a34877ebd4e858d1734946c42bc574674a"
+    }
+  ]
+}

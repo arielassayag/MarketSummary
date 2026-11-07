@@ -100,6 +100,23 @@ def test_task_catalog_matches_native_ids_and_has_no_broad_rule(family):
                                       "trava adquirir", "weekly unknown", "demo", "genese"))
 
 
+@pytest.mark.parametrize("family", tuple(pe.FOLHAS))
+@pytest.mark.parametrize("form", pe.FORMAS)
+def test_memory_permissions_match_only_the_literal_context_for_the_family(family, form):
+    rules = pe.regras(ROT, family)
+    scopes = ("operador", "desenvolvimento") if family == "retomar" else (family,)
+    prefix = f"{form}memoria contexto --escopo "
+    assert {rule for rule in rules if rule.startswith(f"Bash({form}memoria ")} == {
+        f"Bash({prefix}{scope})" for scope in scopes
+    }
+    settings = {"permissions": {"allow": rules, "ask": [], "deny": []}}
+    for scope in scopes:
+        command = prefix + scope
+        assert _classify(settings, command) == "allow"
+        assert _classify(settings, command + " --escopo outra") is None
+    assert _classify(settings, form + "memoria propor --escopo desenvolvimento") is None
+
+
 @pytest.mark.parametrize("command,level", [
     ("weekly prepare --date 2026-10-09", "allow"),
     ("rotinas gate --tarefa cdp-diario --adquirir", "allow"),

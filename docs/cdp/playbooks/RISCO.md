@@ -44,6 +44,10 @@ uv run python -m cdp sincronizar --executar
 
 ## 1. Agenda
 
+Com a execução admitida, consulte, se útil, `uv run python -m cdp memoria contexto --escopo risco`.
+Use o contexto como referência e confirme a informação na fonte indicada. Se a consulta
+estiver indisponível, prossiga pelo roteiro e pelos documentos canônicos.
+
 ```sh
 uv run python -m cdp agenda
 ```

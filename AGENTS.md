@@ -47,19 +47,24 @@ decidido por código.
    - **Rotina agendada** (o prompt cita uma tarefa `cdp-…`): a skill da tarefa
      (`.agents/skills/cdp-*`, espelhada em `.claude/skills/`), que começa por
      `uv run python -m cdp rotinas gate --tarefa <tarefa> --adquirir` (uma vez só). Com
-     `executar: false`, responda o `motivo` e encerre. Senão, siga o roteiro até o fim, sem
-     perguntar nada; se algo impedir, pare e explique no resumo final. **Exceção:** quando o
-     prompt disser que a agenda, a trava e a publicação são do executor (script de rotina em
-     volta de um app com sandbox), faça só o roteiro — não rode gate, `cdp sincronizar`,
-     `cdp publicar`, `cdp trava` nem `git` que grave.
+     `executar: false` (código 10), responda "Sem execução: <motivo>" e encerre. Após o gate e
+     a sincronização, quando aplicável, a consulta opcional de memória está no roteiro da tarefa.
+     Siga o roteiro até o fim, sem perguntar nada. Se algo impedir, pare e explique no resumo
+     final. **Exceção.** Quando o prompt disser que
+     a agenda, a trava e a publicação são do executor (script de rotina em volta de um app com
+     sandbox), faça só o roteiro. Nesse modo, não rode gate, `cdp sincronizar`, `cdp publicar`,
+     `cdp trava` nem `git` que grave.
    - **Sessão de operador** (uma pessoa pede algo da operação): leitura por padrão. Grave o
      livro só se `executor.sou_o_executor` for verdadeiro em `cdp estado` e a pessoa pedir,
      com `--manual` no gate. Na nuvem do Claude Code, o ambiente "CDP" (com `CDP_EXECUTOR`) é
      só das rotinas: sessões interativas usam o ambiente Default, sem `CDP_EXECUTOR`.
    - **Sessão de desenvolvimento**: nunca grave `book/`, `data/`, `reports/`, `artifacts/`
-     nem rode `publish`, `decide` ou `reinicio`; leia `docs/cdp/EM_ANDAMENTO.md` e
-     `docs/cdp/DECISOES.md` (seção 6).
-5. Ao encerrar uma sessão de desenvolvimento, atualize `docs/cdp/EM_ANDAMENTO.md` (o que mudou,
+     nem rode `publish`, `decide` ou `reinicio`. Leia a passagem corrente de
+     `docs/cdp/EM_ANDAMENTO.md` e as entradas pertinentes de `docs/cdp/DECISOES.md` (seção 6).
+5. Em sessões de operador e desenvolvimento, consulte a memória por papel quando útil, conforme
+   `docs/cdp/playbooks/RETOMAR.md`. A memória aponta para fontes e lições revisadas. Agenda,
+   estado, mandato, livro e FactBook continuam sendo as fontes para a execução e seus números.
+6. Ao encerrar uma sessão de desenvolvimento, atualize `docs/cdp/EM_ANDAMENTO.md` (o que mudou,
    o que falta, riscos) — é assim que o próximo agente, em qualquer app, continua o trabalho.
    Roteiro completo: `docs/cdp/playbooks/RETOMAR.md`.
 
@@ -164,6 +169,8 @@ código (passo a passo em `docs/cdp/AUTOMACAO.md`):
 
 - Estado e agenda: `uv run python -m cdp estado`, `uv run python -m cdp agenda`,
   `uv run python -m cdp verify`
+- Memória: `uv run python -m cdp memoria contexto --escopo desenvolvimento`
+  (`docs/cdp/MEMORIA.md`).
 - Rotina: `uv run python -m cdp rotinas gate --tarefa cdp-diario --adquirir` →
   `uv run python -m cdp sincronizar --executar` → roteiro → publicação **só** por
   `uv run python -m cdp publicar --tarefa cdp-diario --mensagem "CDP: fechamento 2026-10-12" --execucao <execucao> --trava <trava.id>`
@@ -220,6 +227,7 @@ código (passo a passo em `docs/cdp/AUTOMACAO.md`):
 | `docs/cdp/REPLAY_OPERACIONAL.md` | ensaio isolado com decisão, MOC, diário e origem retrospectiva autenticada; limites E1/PIT |
 | `docs/cdp/ARQUITETURA.md` | módulos, comandos e fluxo semanal e diário |
 | `docs/cdp/EM_ANDAMENTO.md`, `docs/cdp/DECISOES.md` | passagem de bastão e registro de decisões |
+| `docs/cdp/MEMORIA.md`, `docs/cdp/MEMORIA_PESQUISA.md` | contexto por papel, curadoria, avaliação e pesquisa de arquitetura da memória |
 | `docs/cdp/HISTORICO_2026-10-10_EM_ANDAMENTO.md` | histórico integral da passagem até 10/10/2026; a retomada começa pelo estado corrente em EM_ANDAMENTO |
 | `docs/cdp/HISTORICO_PRIVADO_2026-10-10_CONSOLIDACAO.md` | histórico preservado da preparação privada e seus limites; não concede autoridade operacional |
 | `docs/cdp/PASSAGEM_CODEX.md` | prompt de passagem do desenvolvimento (Claude Code) para a operação no Codex, com o P0 até a carteira inaugural |

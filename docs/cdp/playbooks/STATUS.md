@@ -32,6 +32,10 @@ uv run python -m cdp rotinas proximas --n 12
 e o próximo passo. Com acesso à rede, `uv run python -m cdp estado --rede --formato md` consulta
 também o remoto, a trava e o portal publicado.
 
+Com a execução admitida, consulte, se útil, `uv run python -m cdp memoria contexto --escopo status`.
+Use o contexto como referência e confirme a informação na fonte indicada. Se a consulta
+estiver indisponível, prossiga pelo roteiro e pelos documentos canônicos.
+
 ## 2. O que relatar (resumo final, até 12 linhas)
 
 - **Integridade** e **kill switch**.

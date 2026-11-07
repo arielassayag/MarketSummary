@@ -939,10 +939,11 @@ def build_parser() -> argparse.ArgumentParser:
     # Operação em qualquer harness (rotinas, executor, trava, estado, portal): docs/cdp/AUTOMACAO.md
     from . import estado as _estado
     from . import executor as _executor
+    from . import memoria as _memoria
     from . import rotinas as _rotinas
     from . import site as _site
 
-    for _mod in (_estado, _rotinas, _executor, _site):
+    for _mod in (_estado, _rotinas, _executor, _site, _memoria):
         _mod.registrar(sub)
     return p
 

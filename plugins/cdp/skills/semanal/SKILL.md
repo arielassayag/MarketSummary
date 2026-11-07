@@ -17,6 +17,7 @@ allowed-tools:
   - Bash(uv run python -m cdp avaliacao status)
   - Bash(uv run python -m cdp cobertura run *)
   - Bash(uv run python -m cdp cobertura run)
+  - Bash(uv run python -m cdp memoria contexto --escopo semanal)
   - Bash(uv run python -m cdp painel --sem-local *)
   - Bash(uv run python -m cdp painel --sem-local)
   - Bash(uv run python -m cdp publicar --tarefa cdp-semanal *)

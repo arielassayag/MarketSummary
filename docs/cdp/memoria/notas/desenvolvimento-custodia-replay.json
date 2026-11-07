@@ -1,0 +1,30 @@
+{
+  "id": "desenvolvimento-custodia-replay",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "Uma etapa de replay exige recibo e âncora",
+  "resumo": "Se um arquivo de etapa existe sem a âncora REPLAY_STEP, a retomada o trata como incompleto. A presença do arquivo e a integridade geral do livro não autenticam seus bytes. Preserve a pasta parcial como evidência e confira os recibos do ensaio.",
+  "escopos": [
+    "desenvolvimento"
+  ],
+  "tags": [
+    "replay",
+    "âncora",
+    "recibo",
+    "interrupção",
+    "custódia",
+    "integridade"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": true,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/REPLAY_OPERACIONAL.md",
+      "trecho": "Cada etapa tem arquivo imutável, âncora `REPLAY_STEP` no livro e registro encadeado em\n`steps.jsonl`. Um arquivo já ancorado pode concluir o registro na cadeia. Um arquivo de etapa\nsem âncora fica incompleto: sua existência e a integridade do livro não autenticam os bytes;\na retomada recusa aceitá-lo ou reexecutá-lo. Não apagar arquivos para forçar a conclusão.\nBriefings, relatórios e teses existentes exigem seus recibos canônicos correspondentes.\n\nA conclusão guarda inventário integral, `result.json` e uma única âncora `REPLAY_COMPLETE`.\nUma interrupção nessa conclusão só é recuperada após comparar inventário, etapas e recálculo\noperacional exato. Remoção, adulteração, caminho redirecionado e resultado sem seus selos são\nrecusados. Uma falha durante a preparação inicial, antes do manifesto, exige uma nova pasta;\na pasta parcial é preservada como evidência.",
+      "sha256": "0bc8101c0ab96885bdc70765fe329ea922dc8a31d2e485747156da625460ad26"
+    }
+  ]
+}

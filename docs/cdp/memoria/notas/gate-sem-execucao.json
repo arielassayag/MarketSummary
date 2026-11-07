@@ -1,0 +1,45 @@
+{
+  "id": "gate-sem-execucao",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "Código 10 encerra o disparo",
+  "resumo": "Quando o gate retorna executar=false, relate o motivo e encerre o disparo. Esse resultado indica que a rotina pulou e não comprova integridade do livro, sincronização ou publicação. Uma reserva posterior avalia a própria entrada.",
+  "escopos": [
+    "operador",
+    "status",
+    "semanal",
+    "diario",
+    "risco",
+    "cobertura",
+    "calibracao"
+  ],
+  "tags": [
+    "gate",
+    "no-op",
+    "código 10",
+    "reserva",
+    "parada"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": true,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "src/cdp/rotinas.py",
+      "trecho": "EXIT_EXECUTAR = 0\nEXIT_CONFIG = 2\nEXIT_SEM_PROGRESSO = 4\nEXIT_PULAR = 10",
+      "sha256": "baa6d032985d63853545b5c8bc7cab06c8f9330457d622b662a2eeba717a0ebb"
+    },
+    {
+      "caminho": "src/cdp/rotinas.py",
+      "trecho": "        passos.append(f'`{gate}` — se \"executar\" for false, responda \"Sem execução: <motivo>\" '\n                      f\"e encerre. {guarda}\".rstrip())\n        if t.grava:\n            libera = (\" rode `uv run python -m cdp trava liberar --id <trava.id>` e\"\n                      if trava else \"\")\n            passos.append('`uv run python -m cdp sincronizar --executar` — se \"acao\" for '\n                          f'\"parar\",{libera} encerre relatando o motivo.')",
+      "sha256": "d596c9fc01e462af7e6fce2aaa90855ee7e56ba980922e3591050a06d0e66c97"
+    },
+    {
+      "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+      "trecho": "ou contato automático com outro chat. Rotina agendada com `executar: false` responde o\nmotivo e encerra, sem sincronizar, repetir gate ou usar `--manual` como recuperação.",
+      "sha256": "f48f1e83358fd30594ddcdf512a0068ec5373f44064c0dcd4b2495c449d07ae9"
+    }
+  ]
+}

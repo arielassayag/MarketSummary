@@ -31,9 +31,10 @@ FOLHAS = MappingProxyType({
     "cobertura": ("agenda", "nota agenda", "nota prepare", "validate-nota", "nota publish", "verify"),
     "risco": ("agenda", "risk", "kill-switch on", "status", "verify"),
     "calibracao": ("agenda", "backtest", "verify"),
-    "retomar": ("estado", "executor janela", "rotinas verificar",
+    "retomar": ("estado", "agenda", "executor janela", "rotinas verificar",
                 "skills sincronizar --claude --verificar"),
 })
+_MEMORIA_CONTEXTO = "memoria contexto --escopo "
 _ESCRITORAS = frozenset({"semanal", "diario", "cobertura", "risco", "calibracao"})
 _EXCLUSIVAS = frozenset({"semanal", "diario", "cobertura"})
 _FERRAMENTAS = MappingProxyType({
@@ -67,6 +68,8 @@ def prefixos(rot: Rotinas, familia: str) -> tuple[str, ...]:
         raise ValueError("Famílias de rotinas divergentes do catálogo de permissões")
     tasks = families.get(f"cdp-{familia}", ())
     out = set(FOLHAS[familia])
+    escopos = ("operador", "desenvolvimento") if familia == "retomar" else (familia,)
+    out.update(f"{_MEMORIA_CONTEXTO}{escopo}" for escopo in escopos)
     for task in tasks:
         if (task.grava != (familia in _ESCRITORAS)
                 or task.exclusiva != (familia in _EXCLUSIVAS)
@@ -90,8 +93,11 @@ def regras(rot: Rotinas, familia: str | None = None, *,
         raise ValueError("Forma da CLI fora do catálogo")
     leaves = {p for f in ((familia,) if familia is not None else FOLHAS)
               for p in prefixos(rot, f)}
-    return tuple(sorted({f"Bash({form}{leaf}{tail})" for form in formas
-                         for leaf in leaves for tail in ("", " *")}))
+    # Uma flag repetida poderia trocar o escopo. Autorize apenas a consulta literal.
+    grants = {f"Bash({form}{leaf})" for form in formas for leaf in leaves}
+    grants.update(f"Bash({form}{leaf} *)" for form in formas for leaf in leaves
+                  if not leaf.startswith(_MEMORIA_CONTEXTO))
+    return tuple(sorted(grants))
 
 
 def ferramentas_skill(rot: Rotinas, familia: str) -> tuple[str, ...]:

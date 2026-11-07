@@ -13,6 +13,7 @@ allowed-tools:
   - Bash(uv sync *)
   - Bash(uv run python -m cdp agenda *)
   - Bash(uv run python -m cdp agenda)
+  - Bash(uv run python -m cdp memoria contexto --escopo cobertura)
   - Bash(uv run python -m cdp nota agenda *)
   - Bash(uv run python -m cdp nota agenda)
   - Bash(uv run python -m cdp nota prepare *)

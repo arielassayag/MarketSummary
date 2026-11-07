@@ -25,6 +25,7 @@ allowed-tools:
   - Bash(uv run python -m cdp daily close)
   - Bash(uv run python -m cdp daily publish *)
   - Bash(uv run python -m cdp daily publish)
+  - Bash(uv run python -m cdp memoria contexto --escopo diario)
   - Bash(uv run python -m cdp painel --sem-local *)
   - Bash(uv run python -m cdp painel --sem-local)
   - Bash(uv run python -m cdp publicar --tarefa cdp-diario *)

@@ -1,0 +1,31 @@
+{
+  "id": "replay-origem-temporal",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "Replay com dados reais exige prova do corte histórico",
+  "resumo": "Cortar uma série de preços em uma data antiga não estabelece quais fundamentos, universo ou empréstimos estavam disponíveis naquele instante. O ensaio distingue regressão sintética, sombra reconstruída e PIT auditado, conforme a procedência e as provas temporais dos insumos.",
+  "escopos": [
+    "desenvolvimento",
+    "calibracao"
+  ],
+  "tags": [
+    "replay",
+    "pit",
+    "vintage",
+    "sombra",
+    "corte histórico",
+    "proveniência"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": true,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/REPLAY_OPERACIONAL.md",
+      "trecho": "| `simulado` | Captura sintética | Regressão determinística, com DADOS SIMULADOS |\n| `sombra_real` | Captura real reconstruída hoje | Ensaio técnico; dependências sem vintage são declaradas |\n| `pit_auditado` | Capturas historicamente disponíveis e autenticadas | Falha fechada quando falta prova temporal essencial |\n\nData contábil, publicação, captura real e relógio lógico são distintos. Cortar uma série de\npreços não transforma fundamentos, universo ou empréstimo atuais em dados históricos conhecidos.\nO manifesto guarda bytes e metadados integrais da origem, código, configuração, horários,\ncalendário, prefixos e limitações. A política temporal autentica capturas completas; vintages\npor documento/campo e uma amostra econômica adequada permanecem trabalho posterior.",
+      "sha256": "a963b6de9bd63673191587cba69e463140c0b67c6beb0ad6816ab0b8b8dcd23d"
+    }
+  ]
+}

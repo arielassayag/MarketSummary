@@ -1510,14 +1510,11 @@ def _skill_retomar(rot: Rotinas) -> str:
                                             "tarefas": ""}, ferramentas_skill(rot, "retomar"))
     corpo = """# CDP — pegar o bonde andando
 
-1. `uv sync --extra dev --extra ai`
-2. `uv run python -m cdp estado --formato md` (para máquinas: sem `--formato`). Leia fase,
-   executor (`sou_o_executor`), incidentes, pendências e `playbook_sugerido`.
-3. Identifique o seu papel (`AGENTS.md`, seção 1): rotina agendada ⇒ a skill da tarefa;
-   sessão de operador ⇒ leitura por padrão; sessão de desenvolvimento ⇒ nunca grave `book/`,
-   `data/`, `reports/`, `artifacts/`; leia `docs/cdp/EM_ANDAMENTO.md` e `docs/cdp/DECISOES.md`.
-4. Siga `docs/cdp/playbooks/RETOMAR.md`.
-5. Ao encerrar uma sessão de desenvolvimento, atualize `docs/cdp/EM_ANDAMENTO.md`.
+Siga `docs/cdp/playbooks/RETOMAR.md` desde o início. O roteiro reúne estado, agenda,
+identificação do papel e consulta de memória por escopo.
+
+O operador começa em leitura. Em desenvolvimento, preserve `book/`, `data/`, `reports/`
+e `artifacts/` e atualize `docs/cdp/EM_ANDAMENTO.md` ao encerrar a sessão.
 
 Arquivo gerado — não edite à mão (`uv run python -m cdp skills sincronizar`).
 """

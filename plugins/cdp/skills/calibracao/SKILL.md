@@ -12,6 +12,7 @@ allowed-tools:
   - Bash(uv run python -m cdp agenda)
   - Bash(uv run python -m cdp backtest *)
   - Bash(uv run python -m cdp backtest)
+  - Bash(uv run python -m cdp memoria contexto --escopo calibracao)
   - Bash(uv run python -m cdp publicar --tarefa cdp-calibracao *)
   - Bash(uv run python -m cdp publicar --tarefa cdp-calibracao)
   - Bash(uv run python -m cdp rotinas gate --tarefa cdp-calibracao *)

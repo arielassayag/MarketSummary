@@ -105,6 +105,7 @@ em modo `AUTONOMOUS`, com as falhas SOFT registradas como cientes.
 | `workflow/demo.py` | demonstração offline completa com mercado sintético (DADOS SIMULADOS): montagens, tese, fechamentos, relatório semanal e verificação da trilha | CLI `cdp demo` |
 | `workflow/painel*.py`, `painel_template.html` | painel de gestão (dados e página) na identidade visual da marca | CLI `cdp painel` |
 | `estado.py` | retrato só de leitura para qualquer agente: fase, executor, trava, integridade, últimas execuções, pendências, incidentes e próximo passo | CLI `cdp estado [--rede] [--sla]` |
+| `memoria.py` | memória portátil com contexto por escopo, busca, auditoria, avaliação e proposta de consolidação | CLI `cdp memoria contexto\|buscar\|auditar\|avaliar\|propor` ([Memória do CDP](MEMORIA.md)) |
 | `rotinas.py` | agenda como dados: gate determinístico, prompts neutros, exportação para agendadores, skills geradas | CLI `cdp rotinas listar|proximas|verificar|gate|prompt|exportar|conferir`, `cdp skills sincronizar|verificar` |
 | `executor.py` | escritor único: executor designado, trava distribuída (ramo `cdp-trava`), sincronização e publicação por código, entrega entre jobs | CLI `cdp executor`, `cdp trava`, `cdp sincronizar`, `cdp publicar`, `cdp entrega` |
 | `site.py` | portal público estático (GitHub Pages): painel sem cortes, dados abertos com SHA-256, manifesto ligado à versão | CLI `cdp site construir|conferir|estaticos` (`docs/cdp/SITE.md`) |
@@ -238,4 +239,6 @@ recalcula os preços-alvo.
 - **Conhecimento** agnóstico ao app: `AGENTS.md` (manual canônico), roteiros em
   `docs/cdp/playbooks/`, agenda em `configs/cdp/rotinas.yaml`, skills abertas geradas em
   `.agents/skills/` (espelho em `.claude/skills/`); `docs/cdp/EM_ANDAMENTO.md` e
-  `docs/cdp/DECISOES.md` para a continuidade entre sessões.
+  `docs/cdp/DECISOES.md` para a continuidade entre sessões. A memória fornece referências
+  curtas por papel e escopo, com consulta opcional no roteiro após o gate e a sincronização
+  aplicável. Na execução prevalecem o mandato, os roteiros e os dados e validações do código.

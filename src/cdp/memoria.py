@@ -1370,6 +1370,10 @@ def _comando(args: argparse.Namespace) -> int:
         if trabalho and os.name != "posix":
             raise MemoriaErro("auditoria da árvore de trabalho requer POSIX; use --revisao-git")
         revisao = getattr(args, "revisao", None)
+        if acao == "avaliar" and args.revalidacao is not None and (
+            revisao is None or not (args.reservada or args.replica)
+        ):
+            raise MemoriaErro("a revalidação exige corpus reservado ou réplica e revisão explícita")
         if revisao is not None and acao != "avaliar" and args.data is None:
             raise MemoriaErro("a consulta por revisão exige a data explícita de referência")
         if acao == "avaliar" and revisao is None and not args.sonho:
@@ -1390,9 +1394,13 @@ def _comando(args: argparse.Namespace) -> int:
                 _json(avaliar_sonho(fontes))
                 return 0
             if args.reservada or args.replica:
-                from .memoria_avaliacao import avaliar_reservada
+                from .memoria_avaliacao import MAX_BYTES_REVALIDACAO, avaliar_reservada
 
-                _json(avaliar_reservada(fontes, replica=args.replica))
+                revalidacao = None
+                if args.revalidacao is not None:
+                    with args.revalidacao.open("rb") as arquivo:
+                        revalidacao = arquivo.read(MAX_BYTES_REVALIDACAO + 1)
+                _json(avaliar_reservada(fontes, replica=args.replica, revalidacao=revalidacao))
                 return 0
             bruto = fontes.ler(AVALIACAO, 65536)
             json.loads(bruto, object_pairs_hook=_chaves_unicas)
@@ -1561,6 +1569,8 @@ def registrar(sub: argparse._SubParsersAction) -> None:
                                    help="mede recuperação de passagens no corpus de verificação")
             conjunto.add_argument("--sonho", action="store_true",
                                    help="executa o ensaio de revisão em Git temporário")
+            s.add_argument("--revalidacao", type=Path, metavar="JSON",
+                           help="mede separadamente provas revalidadas para a revisão explícita")
         else:
             s.add_argument("--data", type=_data, required=revisao_obrigatoria,
                            help="data de referência (padrão: Brasília)")

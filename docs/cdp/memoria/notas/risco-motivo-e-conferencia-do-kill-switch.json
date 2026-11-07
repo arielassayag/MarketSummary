@@ -3,7 +3,7 @@
   "tipo": "procedimento",
   "estado": "curada",
   "titulo": "Ativação recomendada do kill switch exige motivo literal e conferência",
-  "resumo": "Se o código recomendar kill switch e ele estiver desligado, copie literalmente motivo_kill_switch na ativação e consulte status para confirmar o estado. A rotina não desliga o bloqueio nem age sem recomendação.",
+  "resumo": "Ligue o kill switch quando acoes_recomendadas pedir a ativação e o bloqueio estiver desligado. Passe motivo_kill_switch literalmente ao comando e confirme kill_switch verdadeiro na saída de status.",
   "escopos": [
     "risco",
     "operador"
@@ -25,8 +25,18 @@
   "evidencias": [
     {
       "caminho": "docs/cdp/playbooks/RISCO.md",
-      "trecho": "## 4. Kill switch (só por recomendação do código)\n\nSe algum item de `acoes_recomendadas` começar com `kill-switch: ` e `kill_switch.ativo` for\n`false`, copie **exatamente** `motivo_kill_switch` e rode:\n\n```sh\nuv run python -m cdp kill-switch on --reason \"<motivo_kill_switch>\" --by \"CDP — rotina de risco\"\nuv run python -m cdp status\n```\n\nConfirme `kill_switch: true`. Em qualquer outro caso, não mexa no kill switch.",
-      "sha256": "cb298fcf089b3f0e6ed2e9aacb51b8eb88e5addd2f7d5aad6e1ba5cfc91b061f"
+      "trecho": "Se algum item de `acoes_recomendadas` começar com `kill-switch: ` e `kill_switch.ativo` for\n`false`, copie **exatamente** `motivo_kill_switch` e rode:",
+      "sha256": "922a618c0e0a2e94e6f4a902a0b51596028a7642df49e950ab50e8465143b269"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/RISCO.md",
+      "trecho": "```sh\nuv run python -m cdp kill-switch on --reason \"<motivo_kill_switch>\" --by \"CDP — rotina de risco\"\nuv run python -m cdp status\n```\n\nConfirme `kill_switch: true`. Em qualquer outro caso, não mexa no kill switch.",
+      "sha256": "b0259c13dcb06cb985f7a1c05e4e59b598cb167b45614973976ca0e28f17a6c4"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/RISCO.md",
+      "trecho": "- O kill switch **só bloqueia risco novo** (redução continua permitida) e nunca afrouxa limites.\n  Ligue-o **apenas** quando `acoes_recomendadas` trouxer um item que começa com `kill-switch: `.\n  **Nunca** o desligue: só um humano desliga. Depois de um desligamento humano, o código só volta\n  a recomendar por piora (`revisao_humana` na saída).",
+      "sha256": "a4c4a1961a0d9a4b81f019135d6eec43b699c0c468826dab2639cb676059b5d0"
     }
   ]
 }

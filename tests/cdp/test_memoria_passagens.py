@@ -13,6 +13,7 @@ from cdp.memoria_busca import (
     _janelas,
     ampliar,
     combinar_evidencias,
+    completar_bloco,
     reunir_ancoras,
     termos_contextuais,
 )
@@ -59,6 +60,18 @@ def test_ancoras_da_mesma_nota_cabem_sem_cortar_evidencia():
     assert juntas[0].sha256 == hashlib.sha256("\n".join(linhas[7:21]).encode()).hexdigest()
 
 
+def test_segunda_nota_resgata_continuacao_na_mesma_fonte():
+    primeira = Local("a", 1, 8, "")
+    complementar = Local("a", 30, 37, "")
+    continuacao = Local("a", 5, 16, "")
+    direta = Local("b", 1, 14, "")
+    contextual = Local("c", 3, 10, "")
+    reserva = Local("d", 1, 10, "")
+    assert combinar_evidencias(
+        [direta, reserva], [contextual], [[primeira, complementar], [continuacao]], 5
+    ) == [primeira, direta, complementar, contextual, continuacao]
+
+
 def test_busca_contextual_preserva_bloco_que_cruza_limite_da_janela_lexical():
     linhas = tuple(["# Encerramento", *["" for _ in range(12)],
                     "Para reduzir a posição, veja as duas condições:",
@@ -78,6 +91,17 @@ def test_vocabulario_relaciona_parafrases_sem_confundir_superficies_de_publicaca
     assert "@fuso" in termos_contextuais("agendar em UTC")
     assert "@portal-publico" not in termos_contextuais("refazer o painel local")
     assert "@painel-local" not in termos_contextuais("comparar o portal do GitHub Pages")
+
+
+def test_completa_bloco_preservando_a_evidencia_ja_encontrada():
+    linhas = ("# Risco", "", "Confira a posição vigente antes do leilão.",
+              "Depois do leilão, confira o registro de fechamento.", "", "Outro assunto.")
+    recorte = Local("risco.md", 3, 3, "")
+    inteiro = completar_bloco(recorte, linhas)
+    assert (inteiro.inicio, inteiro.fim) == (3, 4)
+    assert inteiro.sha256 == hashlib.sha256("\n".join(linhas[2:4]).encode()).hexdigest()
+    grande = ("# Risco", "", "A" * 1500, "B" * 600)
+    assert completar_bloco(recorte, grande) == recorte
 
 
 def test_contexto_adjacente_preserva_ancora_e_hash():

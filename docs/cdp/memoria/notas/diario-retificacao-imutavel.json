@@ -28,8 +28,8 @@
     },
     {
       "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
-      "trecho": "`--publish` deste comando cria somente a nota local e o evento\n`WEEKLY_EDITORIAL_RECTIFICATION`; não faz commit nem push. A nota fica em\n`reports/semanal/<data>/retificacoes/<id>/`, com JSON, Markdown e HTML novos. O original e os\neventos anteriores permanecem literais. Uma tentativa repetida não sobrescreve a nota.",
-      "sha256": "d602c116ee7bfc5ef81aeabeebfdbf77835a979b17908e203aa21e985fb162bf"
+      "trecho": "`--publish` deste comando cria somente a nota local e o evento\n`WEEKLY_EDITORIAL_RECTIFICATION`; não faz commit nem push. A nota fica em\n`reports/semanal/<data>/retificacoes/<id>/`, com JSON, Markdown e HTML novos. O original e os\neventos anteriores permanecem literais. Uma tentativa repetida não sobrescreve a nota.\n\nDepois da integridade e do painel previstos no roteiro diário, use exclusivamente o\npublicador normal:\n\n```sh\nuv run python -m cdp publicar --tarefa <tarefa-diaria> --mensagem \"CDP: retificação editorial semanal\" --execucao <execucao> --trava <trava.id>\nuv run python -m cdp trava liberar --id <trava.id>",
+      "sha256": "8924b8e2d571923ae3a0a73c9a3a118b69fca41058f505772e46da3ebed012f4"
     },
     {
       "caminho": "docs/cdp/playbooks/DIARIO.md",

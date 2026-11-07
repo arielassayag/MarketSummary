@@ -1,0 +1,35 @@
+{
+  "id": "cobertura-rating-retrato-parcial",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Composição dos pares no rating após uma atualização parcial",
+  "resumo": "O rating compara o alfa do emissor com a mediana de pares elegíveis. Em retrato parcial após divulgação de resultado, mantenha para cada par ainda sem reavaliação o alfa do último retrato em que ele aparece. Use o recorte de pares e as exclusões de qualidade definidos pelo modelo.",
+  "escopos": [
+    "cobertura"
+  ],
+  "tags": [
+    "rating",
+    "alfa",
+    "mediana",
+    "pares",
+    "atualização parcial",
+    "retrato da cobertura"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/COBERTURA.md",
+      "trecho": "- `τ` pela incerteza (quartis da largura dos cenários no universo): Baixa 8%, Média 10%, Alta\n  15%, Muito alta 20%. Histerese de 2 p.p. para quem já tem o rating. Pares: país × setor com ao\n  menos 5 nomes; senão setor; senão país; senão o universo. Emissores bloqueados, com retorno extremo\n  (G11), patrimônio residual frágil (G16) ou demonstrações defasadas (G19) não entram na mediana dos\n  pares; emissores de países com o ajuste de nível regional não entram na de outros países.",
+      "sha256": "3e9cdfb119baf0bb1a997de41214ad74b6131c524bdae25f308361ceca0a205b"
+    },
+    {
+      "caminho": "docs/cdp/COBERTURA.md",
+      "trecho": "- Numa execução parcial (após resultados), os pares não reavaliados entram na mediana dos pares\n  com o α publicado no último snapshot que os cobriu.\n- A distribuição de ratings é monitorada (faixas de 15–35% para Compra e Venda entre os nomes\n  publicáveis) e nunca forçada.",
+      "sha256": "acead82d38ad3112065f22dde6fdf7af77b4b8d445f1d57488324d9225576888"
+    }
+  ]
+}

@@ -3,17 +3,20 @@
   "tipo": "licao",
   "estado": "curada",
   "titulo": "Recoleta preserva os insumos do cálculo original",
-  "resumo": "Para conferir uma fonte pública, faça a coleta de novo em pasta separada e preserve o arquivo que entrou no modelo. Proventos e reapresentações podem mudar os bytes recebidos depois. Confira datas de divulgação e compare os valores pela tolerância documentada.",
+  "resumo": "Reproduza o estudo com os insumos oficiais arquivados. Para conferir a origem, baixe os dados públicos em outra pasta. Ajustes por proventos ou reapresentações podem mudar os bytes que o fornecedor serve. Compare os valores por tolerância e confira as datas de publicação em relação ao corte do modelo.",
   "escopos": [
     "desenvolvimento",
-    "cobertura"
+    "cobertura",
+    "calibracao"
   ],
   "tags": [
     "recoleta",
     "arquivo original",
     "proventos",
     "reapresentação",
-    "tolerância"
+    "tolerância",
+    "reprodução",
+    "série pública"
   ],
   "registrada_em": "2026-11-07",
   "revisada_em": "2026-11-07",

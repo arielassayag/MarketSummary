@@ -173,6 +173,24 @@ def _blocos_markdown(linhas: tuple[str, ...]) -> Iterable[tuple[int, int]]:
         inicio = pos + 1
 
 
+def completar_bloco(local: Local, linhas: tuple[str, ...]) -> Local:
+    """Completa um bloco Markdown cortado, preservando integralmente a seleção."""
+    if not local.caminho.endswith(".md") or local.fim - local.inicio + 1 >= LINHAS_PASSAGEM:
+        return local
+    inicio, fim = local.inicio, local.fim
+    for primeiro, ultimo in _blocos_markdown(linhas):
+        if primeiro >= local.fim:
+            break
+        if ultimo < local.inicio:
+            continue
+        a, b = min(inicio, primeiro + 1), max(fim, ultimo)
+        trecho = linhas[a - 1:b]
+        if len(trecho) <= LINHAS_PASSAGEM and len("\n".join(trecho).encode()) <= BYTES_PASSAGEM:
+            inicio, fim = a, b
+    return (local if (inicio, fim) == (local.inicio, local.fim)
+            else localizar(local.caminho, inicio, linhas[inicio - 1:fim]))
+
+
 def _janelas(caminho: str, linhas: tuple[str, ...], *, contextual: bool = False) -> Iterable[_Janela]:
     titulos_por_linha: list[Counter[str]] = []
     if contextual:
@@ -266,6 +284,8 @@ def combinar_evidencias(diretas: list[Local], contextuais: list[Local],
     selecao: list[Local] = []
     sobrepostas: list[Local] = []
     primaria = ancoras[0] if ancoras else []
+    fontes_da_licao = {p.caminho for p in primaria}
+    complementares = [p for grupo in ancoras[1:] for p in grupo if p.caminho in fontes_da_licao]
     lexicais = (contextuais[:1], diretas[:1]) if contextuais and diretas and redundante(
         contextuais[0], diretas[0], diverso=True
     ) else (diretas[:1], contextuais[:1])
@@ -273,17 +293,21 @@ def combinar_evidencias(diretas: list[Local], contextuais: list[Local],
         primeiras = (primaria[:1], lexicais[0], primaria[1:2], lexicais[1])
     else:
         primeiras = (*lexicais, primaria[:1], contextuais[1:2], diretas[1:2], primaria[1:2])
-    ordem = (*primeiras, diretas[1:2], contextuais[1:3],
+    ordem = (*primeiras, complementares, diretas[1:2], contextuais[1:3],
              *(grupo[:1] for grupo in ancoras[1:]), diretas[2:], contextuais[3:], primaria[2:],
              *(grupo[1:] for grupo in ancoras[1:]))
     for grupo in ordem:
         for local in grupo:
-            if any(redundante(local, anterior, diverso=True) for anterior in selecao):
+            # Uma segunda nota pode ampliar a regra na mesma fonte sem repeti-la por inteiro.
+            diverso = grupo is not complementares
+            if any(redundante(local, anterior, diverso=diverso) for anterior in selecao):
                 sobrepostas.append(local)
                 continue
             selecao.append(local)
             if len(selecao) == limite:
                 return selecao
+            if grupo is complementares:
+                break
     for local in sobrepostas:
         if not any(redundante(local, anterior) for anterior in selecao):
             selecao.append(local)

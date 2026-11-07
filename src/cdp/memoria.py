@@ -30,6 +30,7 @@ from .memoria_busca import (
     IndicePassagens,
     Local,
     combinar_evidencias,
+    completar_bloco,
     reunir_ancoras,
     termos_contextuais,
 )
@@ -359,6 +360,8 @@ _OCORRENCIA = re.compile(
     r"selad[oa]s?|anotad[oa]s?|observad[oa]s?|registrad[oa]s?|designad[oa]s?|"
     r"abert[oa]s?|ativ[oa]s?|ficou|ficaram|marcou|primeir[oa]s?)\b"
     r"|\bmedid[oa]s? (?:em|n[oa]s?|pel[oa]s?|durante)\b"
+    r"|\b(?:ja|ainda) (?:esta|estao) \w+(?:ando|endo|indo)\b"
+    r"|\bja (?:foi|foram|teve|tiveram) (?:\w+ ){0,7}\w+(?:ad|id)[oa]s?\b"
 )
 _QUANTIFICA_TEMPO = re.compile(r"\b(?:quanto(?: tempo)?|quant[oa]s (?:segundos?|minutos?|horas?|dias?))\b")
 _TEMPO_PENDENTE = re.compile(r"\b(?:faltam?|restam?)\b")
@@ -414,6 +417,16 @@ _ORGANIZACAO_EXTERNA = re.compile(
     r"(?:cdp|marketsummary|cabra da peste))\b"
 )
 _ACESSO_A_RECURSO = re.compile(r"\b(?:acessos?|permiss(?:ao|oes)|colaboradores?|membros?)\b")
+_CONTEXTO_ALHEIO = re.compile(
+    r"\b(?:(?:contas?|carteiras?|agendas?|calendarios?) pesso(?:al|ais)|"
+    r"(?:relatorios?|trabalhos?|tarefas?|atividades?) (?:escolar(?:es)?|de escola|de aula)|"
+    r"google (?:calendar|agenda|calendario)|(?:agenda|calendario) do (?:google|outlook|icloud)|"
+    r"(?:outlook|icloud|apple) calendar)\b"
+)
+_VINCULO_CDP = re.compile(
+    r"\b(?:cdp|marketsummary|cabras? da peste|factbook|cdp-trava|kill[- ]switch|"
+    r"backtest[- ]operacional|origin/main|carteira simulada|agenda das rotinas)\b"
+)
 
 
 def _pedido_fora_do_escopo(q: str) -> bool:
@@ -421,7 +434,8 @@ def _pedido_fora_do_escopo(q: str) -> bool:
     return bool((_BURLA.search(q) and _CONTROLES.search(q)) or _EXTRACAO_SEGREDO.search(q)
                 or (_NEGOCIACAO_REAL.search(q) and _PEDIDO_NEGOCIACAO.search(q))
                 or (_RECURSO_PRIVADO.search(q) and _ORGANIZACAO_EXTERNA.search(q)
-                    and _ACESSO_A_RECURSO.search(q)))
+                    and _ACESSO_A_RECURSO.search(q))
+                or (_CONTEXTO_ALHEIO.search(q) and not _VINCULO_CDP.search(q)))
 
 
 def _tema_do_cdp(q: str) -> bool:
@@ -465,6 +479,8 @@ def _fonte_atual(consulta: str, *, forcar: bool = False) -> str | None:
             return "Consulte o manifesto e a verificação do snapshot ou da captura solicitada."
     if re.search(r"\btrava\b", q) and _QUANTIFICA_TEMPO.search(q) and _TEMPO_PENDENTE.search(q):
         return "Consulte cdp trava ver para conferir a ocupação e a expiração da trava distribuída."
+    if re.search(r"\b(?:balancos?|resultados?)\b", q) and re.search(r"\b(?:modelos?|retratos?)\b", q):
+        return "Consulte o retrato da cobertura da data solicitada e os campos de cobertura em cdp agenda."
     if re.search(r"\b(?:cobertura|emissor(?:es)?)\b", q) and re.search(
         r"\b(?:fila|notas?|retrato|emissor(?:es)?)\b", q
     ):
@@ -660,8 +676,9 @@ class Catalogo:
                                          for p, tem_apoio in termos_ancoras.items())
                 ancoras.append([primeira, *complementares])
         contextuais = self.indice.buscar(escopo, consulta, max(limite, 5), contextual=True)
-        return combinar_evidencias(diretas, contextuais, ancoras, limite,
-                                  priorizar_nota=priorizar_nota)
+        escolhidas = combinar_evidencias(diretas, contextuais, ancoras, limite,
+                                         priorizar_nota=priorizar_nota)
+        return [completar_bloco(p, self.fontes.linhas(p.caminho)) for p in escolhidas]
 
     def buscar(self, escopo: Escopo, consulta: str, limite: int, *,
                estado_atual: bool = False) -> dict:

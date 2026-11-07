@@ -1,0 +1,384 @@
+{
+  "versao": 1,
+  "data": "2026-11-07",
+  "casos": [
+    {
+      "id": "replica-coleta-alterada-pelo-fornecedor",
+      "escopo": "desenvolvimento",
+      "consulta": "Uma segunda coleta do provedor mudou um arquivo histórico. Qual versão continua oficial, e o que pode explicar a diferença?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/REPRODUZIR.md",
+            "trecho": "Os arquivos arquivados são os insumos oficiais. Para conferir que vieram das fontes públicas,\ncolete de novo numa pasta separada e compare:",
+            "sha256": "a3879d285fe8efa93df8c5e344374186f279156d9077ee29c5d237462dfcda9c"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/REPRODUZIR.md",
+            "trecho": "Fornecedores revisam séries (ajustes por proventos, reapresentações de demonstrações), então a\ncoleta nova pode diferir em bytes; compare valores com tolerância e confira datas de publicação\n— os insumos usados num modelo nunca têm data de publicação posterior à data do modelo.",
+            "sha256": "2d2ddc1b425b69e1314e0599554551da96ee110115b7ff328d6b2f2b261c0fa5"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "replica-pacote-em-outra-mente",
+      "escopo": "desenvolvimento",
+      "consulta": "Vou repetir a escrita da tese com um assistente sem acesso ao repo. Que insumos ele recebe e qual validador confere a resposta?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/REPRODUZIR.md",
+            "trecho": "1. O código prepara os fatos da etapa (na sua cópia do livro; nada vai para o livro oficial).\n2. `cdp mente pacote` exporta **um único arquivo markdown autocontido**: papel, regras\n   invioláveis, guia de estilo (`docs/cdp/ESTILO.md`), os fatos do código, o JSON Schema, um\n   esqueleto de exemplo e o comando exato de validação. O pacote vai para fora do repositório",
+            "sha256": "5fcde38cc346ab71f58c1f8878cc1f1fc646b512524eae5e2d4161b5e1adc8cb"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/REPRODUZIR.md",
+            "trecho": "| Decisão do gestor | `weekly prepare` e a pesquisa salva | `--etapa decisao --semana D` | `validate --week D --mind M` |\n| Tese de investimento | `tese prepare --week D` | `--etapa tese --semana D` | `validate-tese --week D` |\n| Nota por emissor | `nota prepare --issuer IID --date D` | `--etapa nota --emissor IID --data D` | `validate-nota --issuer IID --date D` |",
+            "sha256": "572a23160cafc3d2e336f958c20ae637558f3453aa3328c552d095c190fba4a9"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "replica-protecao-do-ensaio",
+      "escopo": "operador",
+      "consulta": "Basta passar --ensaio no prompt? Que proteção o gate instala durante o ensaio e o que acontece se alguém tentar publicar de um clone que já tem commits de ensaio?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/AUTOMACAO.md",
+            "trecho": "como numa semana real. Um clone com commits de ensaio nunca publica fora do ensaio\n(`cdp publicar` recusa o push): o ensaio usa sempre um clone próprio. A opção `--ensaio` sozinha\nsó muda o prompt. Compare: terminou no prazo, validadores ok, transcrição limpa.",
+            "sha256": "0bd1f7ad33722fd863bb6fb84dee31017dc54dc27ef9f1e44736be603d8f460c"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/AUTOMACAO.md",
+            "trecho": "`cdp-semanal*`. Além do prompt, o código garante: com `CDP_ENSAIO=1`, o gate instala um gancho\n`pre-push` que recusa todo push enquanto essa variável estiver no ambiente, `cdp trava` não\ngrava nada no remoto e `cdp publicar` faz só o **commit local** (com o trailer\n`CDP-Ensaio: sim`, sem trava e sem push) — a rotina seguinte do ensaio encontra o livro em dia,",
+            "sha256": "94f5b545feb4afd770b2a4b3fcc192f2ce55b2a5ca4c8b2844ecca38ab0a5dba"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "replica-push-recusado-remoto-gravou",
+      "escopo": "operador",
+      "consulta": "Outro processo publicou enquanto o push do CDP estava em andamento. Quantas novas tentativas cabem e o que muda se o concorrente gravou o livro?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/AUTOMACAO.md",
+            "trecho": "- **Push recusado** por corrida: `cdp publicar` sincroniza e tenta uma vez; se o remoto gravou o\n  livro, para e relata (nunca mescla à força, reescreve nem força).",
+            "sha256": "fbe3ad0d6821b656104817f1c725f551b1c3dab2c87a851e931bb5ca5b9fdc28"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "replica-site-livro-nao-aberto",
+      "escopo": "status",
+      "consulta": "O Pages deve sair quando o livro ainda aguarda a gênese do mandato? Se a verificação falhar, qual é o comportamento do workflow?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/SITE.md",
+            "trecho": "- O workflow só **lê** o repositório (`contents: read`); a escrita no Pages usa o ambiente\n  `github-pages`.\n- O site não é montado com o livro aguardando a abertura na data de início do mandato (o workflow\n  pula a publicação) e não é publicado com `cdp verify` falhando (o workflow falha).",
+            "sha256": "c946f6426e2de2129fe3071195dd69181a10cc26868a2a49dff0e96429320297"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "replica-travas-sla-distintas",
+      "escopo": "status",
+      "consulta": "A auditoria encontrou uma trava distribuída vencida e um lock abandonado no clone. Como os dois incidentes aparecem e de que prazos dependem?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/AUTOMACAO.md",
+            "trecho": "| `SLA_RISCO` | baixa | nenhum relatório de risco até 16:45 num pregão |\n| `TRAVA_EXPIRADA` | baixa | trava ocupada e vencida há mais de 2 h |\n| `TRAVA_LOCAL_ORFA` | baixa | `logs/cdp/.lock` com mais de 6 h |",
+            "sha256": "844542545e9729c44ca4f9173745e1a54104ce1501187711db25ea3def9557e1"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "replica-parcela-moc-sem-carregar",
+      "escopo": "semanal",
+      "consulta": "Uma ordem no leilão saiu só pela metade. O saldo vira ordem para a semana seguinte e que volume sustenta a conferência do preenchimento?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/EXECUCAO.md",
+            "trecho": "- **Execução no fechamento (MOC):** ordens em quantidade de ações, fixadas na decisão,\n  executadas ao preço oficial de fechamento de cada linha, limitadas à capacidade do leilão e\n  da janela pré-fechamento (§5). Um único leilão por dia de montagem; a parcela não executada não\n  é carregada (a decisão seguinte parte da carteira efetiva).",
+            "sha256": "49aaa6dbf9073d547ef99c08aaf231d1a3fa58665765b52f423e308a53fb1278"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/EXECUCAO.md",
+            "trecho": "- A regra de execução por linha é uma só (`preenchimentos_esperados`) e serve à rotina diária,\n  ao livro e à verificação: o livro recalcula, com os dados do pregão, a execução esperada de\n  cada linha e recusa (`BOOKING_REFUSED`) qualquer efetivação que negocie acima da capacidade\n  pelo volume realizado, num mercado sem fechamento elegível, num emissor congelado, depois do",
+            "sha256": "6b053d9096fc59a4c7edf1d5792475ad5fc55fed67115357b29973717ca64ab7"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "replica-adr-bolsa-local-fechada",
+      "escopo": "semanal",
+      "consulta": "A bolsa local fechou por feriado e o recibo do emissor negocia nos EUA. Como muda o tratamento se já temos a ação local ou se não temos posição?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/EXECUCAO.md",
+            "trecho": "- Linha cujo mercado não tem pregão elegível (fechado, horário não conferido ou fechamento antes\n  do prazo mais a margem) não negocia. Emissor com **linha detida** nessa situação fica\n  **congelado**: mantém as ações e nenhuma linha dele é negociada no dia (o otimizador fixa\n  `w = w⁰`).",
+            "sha256": "ceb3edd3780d3ebe247c610bc015d5ae447d08cb254b7276bcbe0203e03f86c2"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/EXECUCAO.md",
+            "trecho": "- Política `adr_if_eligible_else_freeze`: um emissor sem posição, com o mercado local fechado,\n  pode ser negociado pela ADR/listagem nos EUA se houver linha elegível com dados; sem ela, fica\n  congelado. O roteamento (`rotear_linhas`) troca a linha comprada do emissor pela linha elegível\n  de maior ADTV antes da construção, de modo que capacidade, custo, ordem e execução usem a",
+            "sha256": "0457d4d0f582217418d3fdab5bcc4c753d968c5d02ab778525f8b6c3d26992cf"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "replica-retrato-macro-versus-resultado",
+      "escopo": "diario",
+      "consulta": "No diário, qual é a diferença no universo recalculado entre uma reação a evento macro relevante e o resultado novo de um emissor?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/playbooks/DIARIO.md",
+            "trecho": "   - `cobertura.tipo: \"completo\"` — todo o universo: gênese, atualização antes da decisão que não\n     foi gravada, evento macro de impacto alto do calendário público\n     (`configs/cdp/cobertura/eventos_macro.yaml`: Copom, FOMC, Banxico, IPCA, CPI dos EUA) que\n     reagiu neste pregão (os modelos dependem de juros e inflação) ou resultados demais para uma",
+            "sha256": "dbff704db03005177e9e2db67c9ddf8fdc56a2d8fc0f34901a3fa1602efd85b9"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/playbooks/DIARIO.md",
+            "trecho": "   - `cobertura.tipo: \"parcial\"` — só os emissores com resultado divulgado depois do último\n     modelo (`cobertura.emissores`, `cobertura.adhoc.itens`: CVM, SEC ou Yahoo, com data efetiva\n     ou anunciada, nunca estimada), dentro de um pregão da divulgação:",
+            "sha256": "a42cbba086bd45e6a18c0ebec939da62763832dc9f349de40df35b21daeb0767"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "replica-comentario-reprovado-recibo",
+      "escopo": "diario",
+      "consulta": "O texto diário continua inválido depois das correções. O relatório fica sem sair? Qual campo mostra se o texto foi o da mente?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/playbooks/DIARIO.md",
+            "trecho": "4. Valide (não grava nada; saída JSON com `ok` e `problemas`) e corrija até `\"ok\": true`;\n   depois de 3 correções ainda com `\"ok\": false`, publique assim mesmo (o código usa o texto\n   determinístico, só com fatos) e relate os apontamentos — o dia não fica sem relatório:",
+            "sha256": "d9a68578e95c7aab07d6431cdde66425aaaef1c0f23c908739af01f1d82ae2d7"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/playbooks/DIARIO.md",
+            "trecho": "   Confirme `comentario_da_mente: true`; com `false`, relate os `apontamentos_comentario`.",
+            "sha256": "091926d5e988e2c16a39354a6d9fe9537017a211014cd682cb39944e1aa7326f"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "replica-analise-pre-inicio",
+      "escopo": "risco",
+      "consulta": "A abertura do livro ainda está pendente. A rotina de risco deve publicar um monitor provisório enquanto não há carteira?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/playbooks/RISCO.md",
+            "trecho": "Com `fase: \"pre_inicio\"` ou `reinicio.pendente: true`, encerre com \"Sem monitoramento:\npré-início\" — não há carteira a monitorar e nada a publicar.",
+            "sha256": "46e37e104ef7a1a63eec0f1154726fe2a0dc1fe2b77673b5677441cac4d9b8d2"
+          },
+          {
+            "caminho": "docs/cdp/playbooks/RISCO.md",
+            "trecho": "  compartilhada: o gate **não** pega a trava (só os escritores exclusivos pegam). Ele só executa\n  com carteira em vigor e pregão hoje na B3 ou na NYSE; antes da data de início do mandato, sai\n  com \"pré-início: sem carteira a monitorar\". `executar: false` ⇒ \"Sem monitoramento: <motivo>\" e\n  encerre. Guarde `execucao` e `mente`.",
+            "sha256": "99f2eaf4a501cc54f0c65c53ee3b2ea23edce85ef374fe4744c0297d8a659df7"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "replica-fechamento-ajustado-e-societario",
+      "escopo": "risco",
+      "consulta": "Um papel da carteira mostra retornos diferentes no fechamento bruto e no ajustado. Em que situação isso pede conferir um evento societário?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/METODOLOGIA.md",
+            "trecho": "  médio pelo gross. Divergência entre a variação do fechamento e a do fechamento ajustado acima de\n  1% numa linha detida sinaliza possível evento societário (conferência antes do\n  rebalanceamento).",
+            "sha256": "99c72dca76539bfe814eca3c55eb2689618ed5af933f5398a062dcbbcac7f75e"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "replica-xbrl-ri-recebimento",
+      "escopo": "cobertura",
+      "consulta": "O documento da SEC só traz dados da capa. Quando o XBRL do RI serve de alternativa e o que é preciso preservar da coleta?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/COBERTURA.md",
+            "trecho": "Quando um documento SEC pendente está indisponível ou contém só fatos da capa, a coleta pode\nusar seu XBRL publicado no RI oficial, conforme `configs/cdp/sec_ri_xbrl.json` (schema\n`cdp.sec_ri_xbrl/v1`). O catálogo declara CIK, accession, formulário, documento SEC, data de\narquivamento, data-base, página do RI, URL, SHA-256 e, para ZIP, o membro XML exato. CIK e",
+            "sha256": "d6fc3ae4c46e5440f4689569df3beccb98c46095b20dcd6f1b1272451d1b5bdc"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/COBERTURA.md",
+            "trecho": "arquivamento, data-base, página do RI, URL, SHA-256 e, para ZIP, o membro XML exato. CIK e\nmetadados precisam conferir com SEC submissions no corte; o ZIP bruto fica arquivado com\nproveniência e data de coleta. A leitura admite apenas tags padrão e totais sem dimensões,",
+            "sha256": "bf7c7dd9e2140d2e0ad7234ee3e9b412c0a93829013699f5d939616344d1a3aa"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "replica-metodo-indisponivel-e-discrepante",
+      "escopo": "cobertura",
+      "consulta": "Na combinação do valuation, um método ficou sem dados e outro, válido, divergiu bastante. Os dois devem sair da média? A divergência some do cálculo de confiança?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/COBERTURA.md",
+            "trecho": "Métodos indisponíveis saem da média e os pesos são renormalizados. **Combinação robusta (G18)**: com\ntrês ou mais métodos válidos, o que ficar fora de [1/3; 3] × a mediana dos demais (o mais distante) é\n**limitado à borda do intervalo** (por sorteio e ponto da grade) — nunca retirado: a combinação fica\nmonótona no valor de cada método (um custo da dívida maior nunca eleva o preço-alvo). Só se limita",
+            "sha256": "6691f4052573f65a6b454768c34e362263691b0c504a0cdee7b574feee1d4739"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/COBERTURA.md",
+            "trecho": "quando os demais concordam (CV ≤ 10%) e o discrepante não está do lado do preço (dissidência a favor do\nmercado fica na média). Em todos os casos a dissidência — o discrepante pelo valor bruto e os métodos\ncom valor do patrimônio não positivo, como zero — entra na dispersão usada na confiança e na\ncorroboração do G11.",
+            "sha256": "bcfdc253f822520ef72d3ef1233c6ba999942ac4eb1e7360fa6ccdf530ec1670"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "replica-efeito-ia-e-fase-com-demo",
+      "escopo": "calibracao",
+      "consulta": "Quantas semanas reais de histórico antecedem uma alegação de ganho da IA? Uma série sintética pode promover a fase do agente?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/METODOLOGIA.md",
+            "trecho": "- Avaliação contínua: IC das visões da mente vs. resíduo realizado, IC do quant, carteira-sombra\n  só-quant, calibração (Brier) e comparação **entre mentes** (Claude Code, Codex, Gemini ou outra)\n  — mesma régua.\n- Nenhuma alegação de valor agregado da IA antes de 26 semanas de track record.",
+            "sha256": "57fcede5e1c0fd8c60cb43c0bd525e7af327a49488b202fffb2165034b9a14b9"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/METODOLOGIA.md",
+            "trecho": "`--simulados` inclui **DADOS SIMULADOS** somente para diagnóstico; essa amostra não promove\na fase. O relatório mantém separadas fase vigente e recomendada. `phase_gate` recomenda",
+            "sha256": "4a0034ab43d13617bb084e518d162c4e72031baaa3af80d56e574d8c21adf3e2"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "replica-mensal-publicacao-e-painel",
+      "escopo": "calibracao",
+      "consulta": "Com o resumo mensal escrito, que comandos fecham a rotina e é necessário regenerar o painel junto da publicação?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/playbooks/CALIBRACAO.md",
+            "trecho": "5. Integridade e publicação (uma vez por execução; esta rotina não regenera o painel):",
+            "sha256": "2cd0ecc3b9449414acdcfb15186ec78b57afc0d4114c91618159b38cb44432ed"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/playbooks/CALIBRACAO.md",
+            "trecho": "   uv run python -m cdp verify\n   uv run python -m cdp publicar --tarefa cdp-calibracao --mensagem \"CDP: calibração mensal AAAA-MM-DD\" --execucao <execucao> --mente <mente>",
+            "sha256": "e22f7010b082f2d297c27204525dbe89435a87dd3d5deeb9f0d4beb88de936dd"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "replica-controle-identidade-implicita",
+      "escopo": "operador",
+      "consulta": "Identifique o executor designado.",
+      "tipo": "estado_atual",
+      "grupos": []
+    },
+    {
+      "id": "replica-controle-numero-de-shorts",
+      "escopo": "semanal",
+      "consulta": "Quantos shorts constam no livro?",
+      "tipo": "estado_atual",
+      "grupos": []
+    },
+    {
+      "id": "replica-controle-data-relatorio",
+      "escopo": "diario",
+      "consulta": "Em que pregão foi selado o relatório semanal mais recente?",
+      "tipo": "estado_atual",
+      "grupos": []
+    },
+    {
+      "id": "replica-controle-retrato-ja-saiu",
+      "escopo": "cobertura",
+      "consulta": "O retrato completo da cobertura já saiu?",
+      "tipo": "estado_atual",
+      "grupos": []
+    },
+    {
+      "id": "replica-controle-retorno-da-rodada",
+      "escopo": "calibracao",
+      "consulta": "Dê o retorno anualizado medido na rodada mensal.",
+      "tipo": "estado_atual",
+      "grupos": []
+    },
+    {
+      "id": "replica-controle-dosagem",
+      "escopo": "desenvolvimento",
+      "consulta": "Explique como ajustar a dosagem de fermento num bolo de laranja.",
+      "tipo": "fora_escopo",
+      "grupos": []
+    },
+    {
+      "id": "replica-controle-itinerario",
+      "escopo": "status",
+      "consulta": "Monte um roteiro de parques públicos em Belo Horizonte para domingo.",
+      "tipo": "fora_escopo",
+      "grupos": []
+    },
+    {
+      "id": "replica-controle-manutencao",
+      "escopo": "risco",
+      "consulta": "Descreva como trocar o filtro de uma máquina de lavar.",
+      "tipo": "fora_escopo",
+      "grupos": []
+    }
+  ]
+}

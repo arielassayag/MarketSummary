@@ -5,6 +5,33 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## Confirmação 14 integral da seleção guiada — 07/11/2026
+
+Na revisão `6c5c85b0`, qualificação `f85c9acf`, a seleção exploratória
+recuperou **52/52 evidências e 16/16 controles** no original reaplicado e
+**24/24 evidências e 8/8 controles** na primeira execução da amostra 14.
+Houve zero encaminhamentos indevidos em ambos. A busca direta fez 17/24 e
+a automática fez 18/24 na amostra 14. O ganho pareado da guiada foi de seis
+perguntas e 25 pontos percentuais, com zero perdas. A auditoria independente
+recontou 74/74 grupos no original e 40/40 na amostra 14.
+
+O modo `memoria buscar --explorar-fontes` está disponível para preparar e
+conferir seleções guiadas. Ele valida intenção e recortes literais das fontes
+permitidas na revisão Git. Os limites continuam em cinco passagens e 4.500
+bytes. A revisão de bordas foi aplicada por agentes independentes com
+pacotes sem gabarito, inclusive nos casos sem candidatas iniciais.
+
+O resultado integral vale para essas duas baterias e para a seleção guiada.
+Nos controles de estado, o critério verifica a rota sem notas ou passagens.
+A orientação textual para CI e VaR usou a indicação geral de estado e agenda.
+O ensaio mede recuperação e roteamento, com leituras adicionais na guiada.
+Tempo, custo e qualidade da análise final ficam fora da medição.
+
+Lacres, respostas, auditorias, figura e reprodução em `outputs/cdp-memoria-rigor/`.
+A suíte focal passou com 427 aprovações e um caso pulado. A CLI também foi
+conferida com um recorte autorizado resolvido no Git. O livro, a configuração
+operacional e o catálogo permanecem na mesma revisão de conteúdo.
+
 ## Confirmação 13 da seleção guiada — 07/11/2026
 
 No candidato `b92b8f2b`, qualificação `15dbbc1a`, a reaplicação do original

@@ -32,6 +32,8 @@ from cdp.memoria_busca import Local, normalizar
     ("Quais fechamentos a rotina ainda deve registrar?", "fechamentos_pendentes"),
     ("Os preços-alvo mudaram no último retrato completo?", "retrato da cobertura"),
     ("O que diferencia o relatório de hoje do monitor de risco do de ontem?", "relatório do monitor"),
+    ("No resumo de hoje do monitor, quais saídas mostram o que ficou retido?", "relatório do monitor"),
+    ("A entrega do relatório já saiu hoje?", "trilha de entrega"),
 ])
 def test_consulta_observada_indica_a_fonte_da_tarefa(consulta, origem):
     orientacao = _fonte_atual(consulta)
@@ -65,6 +67,7 @@ def test_quadro_temporal_da_montagem_encaminha_as_duas_partes_da_pergunta():
     "Para a próxima montagem, quais critérios definem o prazo se um mercado estiver fechado?",
     "No monitor de risco, o que separa os alertas que exigem ação dos que ficam para o próximo pregão? "
     "Como interpretar uma posição que ficou sem negócio?",
+    "No resumo do monitor, quais artefatos indicam a situação da trava, a cobertura e o que ficou retido?",
 ])
 def test_ocorrencia_narrada_nao_converte_regra_em_pedido_de_estado(consulta):
     assert _fonte_atual(consulta) is None
@@ -119,6 +122,10 @@ def test_contexto_externo_com_vinculo_operacional_nao_e_bloqueado(consulta):
      "Foi publicado o comentário final."),
     ("Revise as contas de e-mail da biblioteca e escolha quem altera as senhas.",
      "Escolha a conta autorizada e guarde a senha."),
+    ("Qual empresa entrega refeições no meu endereço hoje e em quanto tempo?",
+     "O endereço e o tempo aparecem no inventário."),
+    ("Qual empresa usa o monitor no meu endereço agora e quanto tempo leva?",
+     "O endereço e o tempo aparecem no inventário."),
 ])
 def test_coincidencias_isoladas_na_fonte_nao_sustentam_o_tema(consulta, trecho):
     c = object.__new__(Catalogo)

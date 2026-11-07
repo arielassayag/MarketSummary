@@ -3,14 +3,14 @@
   "tipo": "licao",
   "estado": "curada",
   "titulo": "Selos do replay, valores econômicos e tolerância numérica",
-  "resumo": "Separe equivalência econômica do replay de igualdade dos hashes de encadeamento ou tempos de otimização. Confira os bytes arquivados na trilha. Compare valores recalculados pela tolerância, pois biblioteca e solver podem mudar o último dígito.",
+  "resumo": "Separe equivalência econômica do replay de hashes e tempos do solver. Verifique os bytes arquivados e compare valores recalculados por tolerância. Prepare o ambiente com Git e uv, usando uv.lock. Compare as versões locais com ambiente no manifest.json do snapshot de cobertura quando investigar divergências.",
   "escopos": [
     "desenvolvimento",
     "calibracao"
   ],
   "tags": [
     "replay",
-    "rodadas",
+    "rodadas e versões do ambiente",
     "hash",
     "selo",
     "otimização",
@@ -36,8 +36,13 @@
     },
     {
       "caminho": "docs/cdp/REPRODUZIR.md",
-      "trecho": "contra o registrado, rode `uv pip show numpy pandas scipy cvxpy`; cada snapshot da cobertura grava\nas versões de Python, numpy, pandas e scipy em `manifest.json` (campo `ambiente`).",
-      "sha256": "4b2f1e66c17742264dc9a525908023e7470948f974ce5db33e224da2ad58e2be"
+      "trecho": "`verify` responde `ÍNTEGRO` ou lista cada divergência. Para conferir o ambiente que você usa\ncontra o registrado, rode `uv pip show numpy pandas scipy cvxpy`; cada snapshot da cobertura grava\nas versões de Python, numpy, pandas e scipy em `manifest.json` (campo `ambiente`).",
+      "sha256": "8164c5e0be572c097ab010eb27fbc1f507e41be8c68a0802600b766a2177dac4"
+    },
+    {
+      "caminho": "docs/cdp/REPRODUZIR.md",
+      "trecho": "Pré-requisitos: Git e o gerenciador de Python `uv` (as versões exatas das bibliotecas estão\nfixadas em `uv.lock`). Nenhuma chave de API ou assinatura é necessária para verificar e\nrecalcular.",
+      "sha256": "2e43406e0970c14275738f914a728f0a754dda96dcae0b831b4a05a0f92753fe"
     }
   ]
 }

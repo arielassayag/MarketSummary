@@ -9,6 +9,7 @@ import pytest
 from cdp.memoria import _fonte_atual
 from cdp.memoria_avaliacao import _medir
 from cdp.memoria_busca import (
+    IndicePassagens,
     Local,
     _janelas,
     ampliar,
@@ -128,6 +129,21 @@ def test_reusa_vaga_contida_preservando_evidencia_e_orcamento():
     saida = reaproveitar_vagas(anterior, [d, e], linhas.__getitem__)
     assert saida == [anterior[0], *anterior[2:], e]
     assert all(_medir(saida, [[p]])["completo_5"] for p in anterior)
+
+
+def test_resgata_da_busca_direta_apenas_vocabulario_adicional():
+    linhas = {"a": ("Conferir a versão do snapshot.",), "b": ("Validação da cobertura.",),
+              "c": ("Atualização do índice.",), "d": ("Publicação do relatório.",),
+              "e": ("A versão do relatório.",), "f": ("Dependências exigidas no ambiente.",)}
+    ordem = [Local(c, 1, 1, "") for c in linhas]
+    indice = IndicePassagens(linhas.items(), contextual=True)
+    consulta = "Como conferir a versão do snapshot e as dependências do ambiente?"
+    assert indice.complementar_com_diretas(
+        consulta, ordem[:5], [ordem[0], ordem[5]], linhas.__getitem__,
+    ) == [*ordem[:4], ordem[5]]
+    assert indice.complementar_com_diretas(
+        consulta, ordem[:5], [ordem[0]], linhas.__getitem__,
+    ) == ordem[:5]
 
 
 def test_contexto_adjacente_preserva_ancora_e_hash():

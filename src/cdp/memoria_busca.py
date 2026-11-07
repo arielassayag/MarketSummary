@@ -12,7 +12,7 @@ from dataclasses import dataclass
 
 LINHAS_PASSAGEM = 14
 BYTES_PASSAGEM = 1800
-_BYTES_AMPLIACAO = 4500
+_BYTES_AMPLIACAO = 4_500
 _PASSO = 4
 _STOP = set(
     "a ao aos as com como da das de do dos e em essa esse esta isto mais na nas no nos "
@@ -293,6 +293,34 @@ class IndicePassagens:
         for janela in self._janelas:
             self._df.update(janela.termos.keys() | janela.contexto.keys())
         self._media = sum(j.tamanho for j in self._janelas) / max(1, len(self._janelas))
+
+    def complementar_com_diretas(self, consulta: str, passagens: list[Local],
+                                 diretas: list[Local],
+                                 ler: Callable[[str], tuple[str, ...]]) -> list[Local]:
+        """Reserva a última vaga para cobertura lexical adicional, se houver ganho."""
+        if len(passagens) < 5 or not diretas:
+            return passagens
+
+        def termos(p: Local) -> Counter[str]:
+            return termos_contextuais("\n".join(ler(p.caminho)[p.inicio - 1:p.fim]))
+
+        iniciais = passagens[:-1]
+        faltantes = set(termos_contextuais(consulta)).difference(*(termos(p) for p in iniciais))
+        pesos = {t: 1 / math.sqrt(math.log(2 + self._df[t])) for t in sorted(faltantes)}
+
+        def apoio(p: Local) -> float:
+            presentes = termos(p)
+            return sum(peso for t, peso in pesos.items() if t in presentes)
+
+        ultima = passagens[-1]
+        pontuacao = apoio(ultima)
+        for direta in diretas[:2]:
+            candidata = completar_bloco(direta, ler(direta.caminho))
+            nota = apoio(candidata)
+            # Um ganho pequeno de peso não justifica trocar uma passagem já selecionada.
+            if nota - pontuacao >= 0.25:
+                ultima, pontuacao = candidata, nota
+        return [*iniciais, ultima]
 
     def buscar(self, consulta: str, limite: int) -> list[Local]:
         q = (termos_contextuais(consulta) if self.contextual else frequencias(consulta)).keys()

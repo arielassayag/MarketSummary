@@ -326,7 +326,7 @@ _DOMINIO = re.compile(
     r"\b(?:kill[- ]switch|executor|rotinas?|agenda|carteira|posic(?:ao|oes)|exposicao|"
     r"montagem|pendencias?|fechamento|trava|cobertura|risco|relatorios?|calibracao|"
     r"publicacao|portal|pages|implantacao|deploy|revisao|disparo|rodada|livro|e-?mails?|"
-    r"entrega|snapshot|ensaio|captura|manifesto|sha[- ]?256|commits?|fila|emissor(?:es)?|"
+    r"snapshot|ensaio|captura|manifesto|sha[- ]?256|commits?|fila|emissor(?:es)?|"
     r"incidentes?|monitor|alertas?)\b"
 )
 _TEMA_CDP = re.compile(
@@ -379,6 +379,10 @@ _PEDIDO_OBSERVACAO = re.compile(
 )
 _DISTINCAO_DE_TIPOS = re.compile(r"^o que (?:distingue|diferencia|separa|caracteriza)\b")
 _RELATIVA_DE_TIPO = re.compile(r"\s+(?:d[oa]s? )?que\s+")
+_FUNCAO_DA_SAIDA = re.compile(
+    r"^qu(?:al|ais|e) (?:[ao]s? )?(?:saidas?|campos?|artefatos?|arquivos?|secoes?|colunas?) "
+    r"(?:mostra(?:m)?|indica(?:m)?|informa(?:m)?|reune(?:m)?|contem|traz(?:em)?)\b"
+)
 _PROCEDIMENTO = re.compile(
     r"^(?:como (?!esta\b|estao\b|ficou\b|anda\b|se encontra\b)|"
     r"em (?:que situacao|que caso|qual situacao|qual caso)|"
@@ -451,6 +455,9 @@ _TERMOS_INCIDENTAIS = frozenset(
 )
 _ARTEFATO_COBERTURA = re.compile(r"\b(?:modelos?|retratos?)\b")
 _SAIDA_COBERTURA = re.compile(r"\b(?:balancos?|resultados?|ratings?|precos?[- ]alvo)\b")
+_ENTREGA_DOCUMENTAL = re.compile(
+    r"\b(?:e-?mails?|entregas? d[oa]s? (?:relatorios?|pdfs?|comentarios?|notas?|resumos?))\b"
+)
 
 
 def _pedido_fora_do_escopo(q: str) -> bool:
@@ -474,21 +481,33 @@ def _sobre_retrato_de_cobertura(q: str) -> bool:
     return bool(_ARTEFATO_COBERTURA.search(q) and _SAIDA_COBERTURA.search(q))
 
 
+def _termos_de_observacao(q: str) -> set[str]:
+    temas = _DOMINIO.findall(q) + _MERCADO.findall(q)
+    if _sobre_retrato_de_cobertura(q):
+        temas.extend(_ARTEFATO_COBERTURA.findall(q) + _SAIDA_COBERTURA.findall(q))
+    return set(termos_contextuais(" ".join(temas)))
+
+
 def _pede_estado(q: str) -> bool:
     # Uma situação narrada antes da pergunta dá contexto, mas não muda a intenção.
     for frase in re.split(r"(?<=[.!?])\s+", q):
-        inicio, separador, fim = frase.rpartition(", ")
         quadro = ""
-        if separador and _PEDIDO_OBSERVACAO.match(fim):
-            if _QUADRO_TEMPORAL.match(inicio):
-                quadro = inicio
-            frase = fim
+        if not _PEDIDO_OBSERVACAO.match(frase):
+            fronteira = next((m for m in re.finditer(r",\s+", frase)
+                              if _PEDIDO_OBSERVACAO.match(frase[m.end():])), None)
+            if fronteira:
+                inicio = frase[:fronteira.start()]
+                if _QUADRO_TEMPORAL.match(inicio):
+                    quadro = inicio
+                frase = frase[fronteira.end():]
         assunto = f"{quadro} {frase}"
         if not (_MERCADO.search(assunto) or _DOMINIO.search(assunto) or _VINCULO_CDP.search(assunto)
                 or _sobre_retrato_de_cobertura(assunto)):
             continue
         pedido = _PEDIDO_OBSERVACAO.search(frase) or frase.endswith("?")
         enunciado = _SUBORDINADA.split(frase, maxsplit=1)[0]
+        if _FUNCAO_DA_SAIDA.match(enunciado) and not _TEMPO.search(quadro):
+            continue
         distincao = _DISTINCAO_DE_TIPOS.match(enunciado)
         if distincao:
             # A relativa descreve a categoria comparada, não data a observação.
@@ -515,7 +534,7 @@ def _fonte_atual(consulta: str, *, forcar: bool = False) -> str | None:
         return "Consulte a passagem corrente em docs/cdp/EM_ANDAMENTO.md na revisão atual."
     if re.search(r"\b(?:portal|pages|implantacao|deploy)\b", q):
         return "Confira o portal servido e a procedência em docs/cdp/SITE.md."
-    if re.search(r"\b(?:e-?mails?|entrega)\b", q):
+    if _ENTREGA_DOCUMENTAL.search(q) or (_VINCULO_CDP.search(q) and re.search(r"\bentregas?\b", q)):
         return "Confira a trilha de entrega descrita em docs/cdp/playbooks/DIARIO.md."
     if re.search(r"\bcommits?\b", q):
         return ("Consulte a procedência do commit gravado. O trailer CDP-Harness identifica "
@@ -734,16 +753,21 @@ class Catalogo:
                                          for p, tem_apoio in termos_ancoras.items())
                 ancoras.append([primeira, *complementares])
         largura = max(limite, 5)
-        contextuais = self.indice.buscar(escopo, consulta, max(largura, 10), contextual=True)
+        indice_contextual = self.indice.para_escopo(escopo, contextual=True)
+        contextuais = indice_contextual.buscar(consulta, max(largura, 10))
         escolhidas = combinar_evidencias(diretas, contextuais[:largura], ancoras, limite,
                                          priorizar_nota=priorizar_nota)
         blocos = [completar_bloco(p, self.fontes.linhas(p.caminho)) for p in escolhidas]
         if not any(p.fim - p.inicio + 1 < LINHAS_PASSAGEM for p in blocos):
-            return reaproveitar_vagas(blocos, (*diretas, *contextuais), self.fontes.linhas)
-        diretas_amplas = self.indice.buscar(escopo, consulta, max(limite, 10))
-        candidatas = (*diretas_amplas, *contextuais)
-        ampliadas = ampliar_selecao(blocos, candidatas, self.fontes.linhas)
-        return reaproveitar_vagas(ampliadas, candidatas, self.fontes.linhas)
+            candidatas = (*diretas, *contextuais)
+        else:
+            diretas_amplas = self.indice.buscar(escopo, consulta, max(limite, 10))
+            candidatas = (*diretas_amplas, *contextuais)
+            blocos = ampliar_selecao(blocos, candidatas, self.fontes.linhas)
+        recuperadas = reaproveitar_vagas(blocos, candidatas, self.fontes.linhas)
+        return indice_contextual.complementar_com_diretas(
+            consulta, recuperadas, diretas, self.fontes.linhas,
+        )
 
     def _tem_apoio_no_acervo(self, escopo: Escopo, q: str, diretas: list[Local], notas: list[Registro], *,
                             observacao: bool) -> bool:
@@ -751,12 +775,14 @@ class Catalogo:
         termos -= _TERMOS_INCIDENTAIS
         base = min(3, len(termos)) if _tema_do_cdp(q) else 4
         minimo = 2 if observacao else max(2, len(termos) // 5, base)
+        topicos = _termos_de_observacao(q) if observacao else set()
 
-        def termos_em(texto: str) -> int:
-            return len(termos & termos_contextuais(texto).keys())
+        def termos_em(texto: str) -> set[str]:
+            return termos & termos_contextuais(texto).keys()
 
         def apoia(p: Local) -> bool:
-            return termos_em("\n".join(self.fontes.linhas(p.caminho)[p.inicio - 1:p.fim])) >= minimo
+            comuns = termos_em("\n".join(self.fontes.linhas(p.caminho)[p.inicio - 1:p.fim]))
+            return len(comuns) >= minimo and (not observacao or bool(comuns & topicos))
 
         # Uma fonte deve sustentar os termos em conjunto. Etiquetas, aliases e títulos
         # do índice, sozinhos, não autorizam admitir um assunto novo no acervo.
@@ -767,7 +793,7 @@ class Catalogo:
         for registro in notas:
             nota = registro.nota
             descricao = " ".join((nota.titulo, nota.resumo, *nota.tags))
-            if termos_em(descricao) >= minimo and any(termos_em(ev.trecho) >= 2 for ev in nota.evidencias):
+            if len(termos_em(descricao)) >= minimo and any(len(termos_em(ev.trecho)) >= 2 for ev in nota.evidencias):
                 return True
         return False
 
@@ -835,6 +861,9 @@ class BuscaCanonica:
 
     def buscar(self, escopo: Escopo, consulta: str, limite: int, *,
                contextual: bool = False) -> list[Local]:
+        return self.para_escopo(escopo, contextual=contextual).buscar(consulta, limite)
+
+    def para_escopo(self, escopo: Escopo, *, contextual: bool) -> IndicePassagens:
         chave = (escopo, contextual)
         if chave not in self.indices:
             fontes = []
@@ -844,7 +873,7 @@ class BuscaCanonica:
                 except MemoriaErro:
                     continue
             self.indices[chave] = IndicePassagens(fontes, contextual=contextual)
-        return self.indices[chave].buscar(consulta, limite)
+        return self.indices[chave]
 
 
 def _hoje() -> date:

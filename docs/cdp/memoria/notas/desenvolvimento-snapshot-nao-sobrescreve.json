@@ -2,19 +2,19 @@
   "id": "desenvolvimento-snapshot-nao-sobrescreve",
   "tipo": "procedimento",
   "estado": "curada",
-  "titulo": "Snapshot de mercado exige novo destino e revalida hashes ao ler",
-  "resumo": "A coleta cria um novo destino sem sobrescrever capturas. O carregamento recalcula os hashes e falha se os bytes divergirem. O arquivo público bruto tem índice e hash de coleta próprios.",
+  "titulo": "Gravação de snapshot exige pasta nova e leitura rejeita alterações",
+  "resumo": "O gravador de snapshot cria outra pasta para cada captura e recusa reusar um destino existente. O leitor load_snapshot recalcula hashes e recusa arquivos alterados. O arquivo bruto público usa índice e hash de coleta próprios.",
   "escopos": [
     "desenvolvimento",
     "operador"
   ],
   "tags": [
-    "snapshot",
-    "captura",
-    "hash",
-    "destino",
-    "coleta",
-    "sobrescrever",
+    "snapshot de mercado",
+    "pasta de captura",
+    "destino existente",
+    "sobrescrita",
+    "gravador",
+    "leitor",
     "load_snapshot",
     "manifesto"
   ],

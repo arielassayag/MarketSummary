@@ -20,6 +20,8 @@ from cdp.memoria import Catalogo, _fonte_atual
     ("Qual e-mail saiu hoje?", "trilha de entrega"),
     ("Qual carteira está efetivada no momento?", "estado e a agenda"),
     ("Informe a liquidez medida no fechamento.", "FactBook"),
+    ("O SHA-256 da captura que acabamos de gerar confere com o manifesto?", "verificação do snapshot"),
+    ("Restam quantos segundos de validade para a trava distribuída?", "cdp trava ver"),
 ])
 def test_consulta_observada_indica_a_fonte_da_tarefa(consulta, origem):
     orientacao = _fonte_atual(consulta)
@@ -34,6 +36,9 @@ def test_consulta_observada_indica_a_fonte_da_tarefa(consulta, origem):
     "Qual é o papel da liquidez no momento de estimar capacidade?",
     "Que parte do relatório entra na medida de desvio da cotação?",
     "Calcula-se a exposição com a carteira atual ou com o alvo?",
+    "O que aparece no relatório da carteira sem comentário?",
+    "Qual é o intervalo padrão de validade da trava distribuída?",
+    "Que informações preciso registrar no snapshot que acabei de gerar?",
 ])
 def test_ocorrencia_narrada_nao_converte_regra_em_pedido_de_estado(consulta):
     assert _fonte_atual(consulta) is None

@@ -39,6 +39,7 @@ _CONCEITOS = {
     "divulgacao": r"divulgac(?:ao|oes)|data (?:de|da) publicacao|release(?:s)?|data de publicacao",
     "efetivacao": r"efetivac(?:ao|oes)|efetiv(?:ar|ad[oa]s?)|fills?|preenchimento(?:s)? de ordem",
     "errata": r"erratas?|retificac(?:ao|oes)|correc(?:ao|oes) editoria(?:l|is)",
+    "espelho-privado": r"espelho privado|artifact(?:s)? do claude|painel privado",
     "fato": r"factbook|fatos? citave(?:l|is)|placeholder(?:s)? de fato|referencia de fato",
     "fuso": r"utc|fusos?(?: horarios?)?|horario de brasilia|virada d[eo] dia|dia seguinte",
     "impressao-digital": r"hash(?:es)?|sha[- ]?256|checksum(?:s)?|digest(?:s)?|impressao digital",
@@ -58,6 +59,7 @@ _CONCEITOS = {
     "proposta": r"propostas?|carteira sugerida|previa(?:s)? de decisao|proposta aprovada",
     "replay": r"replays?|reexecuc(?:ao|oes)|reproduzir uma montagem|ensaio retrospectivo",
     "retrato": r"retratos?|snapshots?|base do modelo|modelos atualizados",
+    "relatorio-arquivado": r"relatorios? (?:antigos?|arquivad[oa]s?|historicos?)|dados/relatorios|texto integral",
     "rotina": r"rotinas?|tarefas? recorrentes?|agendamentos?|disparos?",
     "saida-automatica": r"texto automatico|nota automatica|autoria.{0,6}codigo|fallback editorial",
     "sincronizacao": r"sincroniz\w*|reconcili\w*|atualizar (?:o clone|do remoto)",
@@ -242,6 +244,9 @@ class IndicePassagens:
                 pontos += 0.65 * sum(idf[t] for t in idf if t in janela.contexto)
                 if janela.bloco_inteiro:
                     pontos *= 1.12
+                if (janela.caminho == "docs/cdp/EM_ANDAMENTO.md"
+                        and not q & {"andamento", "frente", "passagem", "historico"}):
+                    pontos *= 0.85
             ranqueadas.append((-pontos, -len(comuns), janela.caminho, janela.inicio, janela))
         selecionadas: list[Local] = []
         for *_, j in sorted(ranqueadas, key=lambda linha: linha[:4]):

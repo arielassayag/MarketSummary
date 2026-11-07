@@ -1,0 +1,38 @@
+{
+  "id": "calibracao-entrada-no-modo-executor",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Calibração em modo executor usa a entrada e publicação delegadas",
+  "resumo": "A skill ou o prompt admitiu a tarefa agendada sem trava. Não repita o gate. Quando agenda, sincronização e publicação pertencem ao executor, siga apenas a parte analítica do roteiro e pule entrada e publicação.",
+  "escopos": [
+    "calibracao",
+    "operador"
+  ],
+  "tags": [
+    "calibração",
+    "modo executor",
+    "prompt",
+    "gate",
+    "agenda",
+    "sincronização",
+    "publicação",
+    "delegação"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/CALIBRACAO.md",
+      "trecho": "## 0. Entrada da execução (uma vez por execução)\n\nNuma rotina agendada, a skill ou o prompt da rotina já fez estes três passos (tarefa\ncompartilhada: sem trava). **Nunca rode o gate de novo na mesma execução.** Numa sessão de\noperador, rode-os à mão com `--manual` no gate:",
+      "sha256": "0252b24bc0bf6e6f6b8ffe4c836f4bc6a38c442b54f22e3ce52b6ee45758549a"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/CALIBRACAO.md",
+      "trecho": "O gate só executa no dia 1 sem a calibração do mês. `executar: false` ⇒ encerre. Guarde\n`execucao` e `mente`. `sincronizar` com `acao: \"parar\"` ⇒ encerre relatando. **Modo executor.**\nSe o prompt disser que a agenda, a sincronização e a publicação são do executor, pule esta seção\ne o passo 5.",
+      "sha256": "a723d1d5010cc5497394cd78a94bbdf184f6b331b4517fb7e641c5c20a9c543e"
+    }
+  ]
+}

@@ -355,11 +355,13 @@ _TEMPO = re.compile(
 _OCORRENCIA = re.compile(
     r"\b(?:ja|ainda) (?:rodou|executou|fechou|entregou|publicou|consta|subiu|saiu|"
     r"chegou|encerrou|concluiu|terminou|foi publicado|foi enviado)\b"
-    r"|\b(?:acab(?:ou|aram) de|consta(?:m)?|aparece(?:m)?|gravou|publicou|"
+    r"|\b(?:acab(?:ei|amos|ou|aram) de|consta(?:m)?|gravou|publicou|"
     r"selad[oa]s?|anotad[oa]s?|observad[oa]s?|registrad[oa]s?|designad[oa]s?|"
     r"abert[oa]s?|ativ[oa]s?|ficou|ficaram|marcou|primeir[oa]s?)\b"
     r"|\bmedid[oa]s? (?:em|n[oa]s?|pel[oa]s?|durante)\b"
 )
+_QUANTIFICA_TEMPO = re.compile(r"\b(?:quanto(?: tempo)?|quant[oa]s (?:segundos?|minutos?|horas?|dias?))\b")
+_TEMPO_PENDENTE = re.compile(r"\b(?:faltam?|restam?)\b")
 _PEDIDO_OBSERVACAO = re.compile(
     r"^(?:me )?(?:quem|qual|quais|quanto|quant[ao]s|onde|quando|em que|que|como esta|"
     r"liste|informe|diga|identifique|mostre|traga|de (?:o|a|os|as))\b"
@@ -376,7 +378,7 @@ _PROCEDIMENTO = re.compile(
 _PEDIDO_DE_PROCEDIMENTO = re.compile(
     r"\b(?:como (?!esta\b|estao\b|ficou\b|anda\b|se encontra\b)|"
     r"posso\b|podemos\b|pode(?:m)?\b(?! (?:me )?(?:dizer|informar|mostrar)\b)|"
-    r"devo\b|deve(?:m)?\b|precisa(?:m)?\b|permite\b|autoriza\b|atesta\b|serve para\b|"
+    r"devo\b|deve(?:m)?\b|precis(?:o|a|amos|am)\b|permite\b|autoriza\b|atesta\b|serve para\b|"
     r"o que (?:faco|fazer|vale conferir)|de onde tiro|onde (?:consulto|confiro|preparo)|"
     r"(?:usa|mede|calcula|considera|aplica|define)-se\b|"
     r"(?:metodo|regra|criterio|passos?|roteiro) (?:para|de|da|do)\b)"
@@ -423,9 +425,8 @@ def _pede_estado(q: str) -> bool:
             continue
         pedido = _PEDIDO_OBSERVACAO.search(frase) or frase.endswith("?")
         enunciado = re.split(r"\s+(?:se|caso|quando)\s+", frase, maxsplit=1)[0]
-        if pedido and (
-            _TEMPO.search(enunciado) or _OCORRENCIA.search(enunciado)
-        ):
+        tempo_restante = _QUANTIFICA_TEMPO.search(enunciado) and _TEMPO_PENDENTE.search(enunciado)
+        if pedido and (_TEMPO.search(enunciado) or _OCORRENCIA.search(enunciado) or tempo_restante):
             return True
     return False
 
@@ -442,10 +443,13 @@ def _fonte_atual(consulta: str, *, forcar: bool = False) -> str | None:
     if re.search(r"\bcommits?\b", q):
         return ("Consulte a procedência do commit gravado. O trailer CDP-Harness identifica "
                 "o aplicativo e CDP-Executor identifica o executor.")
-    if re.search(r"\b(?:ensaio|captura|replay)\b", q) and re.search(
-        r"\b(?:manifesto|sha[- ]?256)\b", q
-    ):
-        return "Consulte o manifesto e a verificação da execução solicitada do ensaio isolado."
+    if re.search(r"\b(?:manifesto|hash|sha[- ]?256)\b", q):
+        if re.search(r"\b(?:ensaio|replay)\b", q):
+            return "Consulte o manifesto e a verificação da execução solicitada do ensaio isolado."
+        if re.search(r"\b(?:snapshot|captura)\b", q):
+            return "Consulte o manifesto e a verificação do snapshot ou da captura solicitada."
+    if re.search(r"\btrava\b", q) and _QUANTIFICA_TEMPO.search(q) and _TEMPO_PENDENTE.search(q):
+        return "Consulte cdp trava ver para conferir a ocupação e a expiração da trava distribuída."
     if re.search(r"\b(?:cobertura|emissor(?:es)?)\b", q) and re.search(
         r"\b(?:fila|notas?|retrato|emissor(?:es)?)\b", q
     ):

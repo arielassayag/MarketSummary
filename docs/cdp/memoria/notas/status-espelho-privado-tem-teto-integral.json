@@ -1,0 +1,33 @@
+{
+  "id": "status-espelho-privado-tem-teto-integral",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Espelho privado publica cobertura inteira ou mantém a anterior",
+  "resumo": "O espelho privado do Claude lê toda a publicação com orçamento total de 1 MB. A cobertura só vai inteira se couber. Se exceder o teto, fica a versão anterior ou um aviso que aponta para o portal. O marcador local registra somente o que foi publicado.",
+  "escopos": [
+    "status",
+    "operador"
+  ],
+  "tags": [
+    "espelho privado",
+    "artifact",
+    "teto",
+    "limite de leitura",
+    "cobertura anterior",
+    "marcador",
+    "COBERTURA_PUBLICADA.json",
+    "painel"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/SITE.md",
+      "trecho": "O espelho privado opcional (artifact do claude.ai) usa o perfil `publicacao`, com o orçamento de\nleitura integral de quem publica (cada arquivo ≤ 260 KB e linhas ≤ 1.500 caracteres nos dados):\na formulação completa da decisão fica só no portal (o espelho leva a decomposição do risco e os\najustes escalares da decisão e, nos níveis finais, só as restrições que vinculam ou estão perto\ndo limite, com a contagem das exibidas). Tudo o que vai ao espelho numa publicação é lido por\ninteiro, com teto total de 1 MB (`painel_artifact.ORCAMENTO_LEITURA`). Os dados da cobertura que\nmudaram vão inteiros só quando cabem nesse teto junto com o resto da publicação; senão nada da\ncobertura vai (o espelho mantém a última cobertura publicada, ou mostra o aviso que aponta o\nportal público) e o marcador local `COBERTURA_PUBLICADA.json` só registra o que de fato foi\npublicado (`cdp painel --publicado` refaz a mesma conta). Falha no registro da cobertura nunca\nderruba o painel nem o portal: a aba fica \"em conferência\" e o resto segue publicado.",
+      "sha256": "714c87f48da7cfc542a81e75ad47393f75d85187cf1cdab200293e5992bbb1d9"
+    }
+  ]
+}

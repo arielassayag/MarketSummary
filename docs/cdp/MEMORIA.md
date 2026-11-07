@@ -171,11 +171,17 @@ encaminhamento inferido do encaminhamento com `--estado-atual`. Neste último a 
 fornecida pelo teste, como numa chamada estruturada. Consultas estáticas também contam
 sugestões de encaminhamento indevidas.
 
-A partir da raiz do repositório, gere o relatório e as duas figuras. O renderizador requer
-Matplotlib. [Código das figuras](../../scripts/cdp_memoria_figuras.py).
+As figuras da entrega usam a revisão `42f19b27` e os dois conjuntos. A primeira leitura
+mostrou que a fusão descartava referências úteis. O ajuste posterior passou a preservar
+as três primeiras passagens diretas. As figuras mostram a medição após esse ajuste.
+A revisão da fonte e o código aparecem separadamente no rodapé.
+
+A partir da raiz do repositório, gere os relatórios e as duas figuras. O renderizador
+requer Matplotlib. [Código das figuras](../../scripts/cdp_memoria_figuras.py).
 
 ```sh
 mkdir -p outputs/cdp-memoria
-uv run python -m cdp memoria avaliar --replica > outputs/cdp-memoria/replica.json
-python3 scripts/cdp_memoria_figuras.py outputs/cdp-memoria/replica.json
+uv run python -m cdp memoria avaliar --reservada --revisao 42f19b27ff7842d36f475a05785e408701ec12f8 > outputs/cdp-memoria/reservada.json
+uv run python -m cdp memoria avaliar --replica --revisao 42f19b27ff7842d36f475a05785e408701ec12f8 > outputs/cdp-memoria/replica.json
+python3 scripts/cdp_memoria_figuras.py outputs/cdp-memoria/replica.json --primeira outputs/cdp-memoria/reservada.json
 ```

@@ -67,14 +67,15 @@ def _rodape(fig, nota: str, fonte: str) -> None:
     fig.text(0.063, 0.037, fonte, fontsize=8.3, color=SUAVE)
 
 
-def _figura_recuperacao(series: list[dict], n: int, fonte: str):
+def _figura_recuperacao(series: list[dict], n: int, fonte: str, amostras: str):
     fig = plt.figure(figsize=(11.5, 6.55), facecolor=PAPEL)
     ontem, direta, hibrida = (s["completo_5"] for s in series)
     delta_memoria = hibrida - direta
     if delta_memoria > 1e-12:
-        titulo = "A memória elevou a recuperação completa"
+        titulo = ("Uma recuperação completa a mais no ensaio" if round(delta_memoria * n) == 1
+                  else "Mais recuperações completas no ensaio")
     elif delta_memoria < -1e-12:
-        titulo = "A memória reduziu a recuperação completa"
+        titulo = "Menos recuperações completas no ensaio"
     else:
         titulo = "A recuperação completa empatou com a busca direta"
     _cabecalho(fig, "01", titulo,
@@ -104,6 +105,8 @@ def _figura_recuperacao(series: list[dict], n: int, fonte: str):
     ax.tick_params(axis="x", labelcolor=SUAVE, labelsize=9, length=0, pad=7)
     for spine in ax.spines.values():
         spine.set_visible(False)
+    if amostras:
+        fig.text(0.063, 0.137, amostras, fontsize=9.4, color=TINTA_2)
     _rodape(fig, "Completa exige todos os grupos necessários. A cobertura é a média por pergunta.",
             fonte)
     return fig
@@ -203,13 +206,24 @@ def _controles(casos: list[dict]) -> list[str]:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("relatorio", type=Path, help="relatório JSON de recuperação por passagem")
+    parser.add_argument("--primeira", type=Path, help="relatório da primeira amostra após o ajuste")
     parser.add_argument("--saida", type=Path, default=Path("outputs/cdp-memoria"),
                         help="pasta para PNG e SVG")
     args = parser.parse_args()
     relatorio = json.loads(args.relatorio.read_text(encoding="utf-8"))
-    if relatorio["limite"] != 5:
+    relatorios = [relatorio]
+    if args.primeira:
+        relatorios.insert(0, json.loads(args.primeira.read_text(encoding="utf-8")))
+    if any(r["limite"] != 5 for r in relatorios):
         parser.error("as figuras usam o relatório com limite de cinco passagens")
-    casos = relatorio["casos"]
+    for campo in ("ontem", "hoje", "codigo"):
+        if any(r["revisoes"][campo] != relatorio["revisoes"][campo] for r in relatorios):
+            parser.error("as amostras precisam usar as mesmas revisões")
+    if any(r["data"] != relatorio["data"] for r in relatorios):
+        parser.error("as amostras precisam usar a mesma data de referência")
+    casos = [caso for r in relatorios for caso in r["casos"]]
+    if len({c["id"] for c in casos}) != len(casos):
+        parser.error("as amostras contêm casos repetidos")
     positivos = [c for c in casos if c["tipo"] == "evidencia"]
     if not positivos:
         parser.error("o relatório precisa de perguntas com evidência esperada")
@@ -219,14 +233,23 @@ def main() -> None:
               ("Um grupo de evidência", _transicoes([c for c in positivos if c["grupos"] == 1])),
               ("Dois ou mais grupos", _transicoes([c for c in positivos if c["grupos"] > 1]))]
     revisoes = relatorio["revisoes"]
-    corpus = Path(relatorio.get("corpus", "")).stem
-    amostra = {"avaliacao_replica": "réplica após ajuste",
-               "avaliacao_reservada": "primeira amostra após ajuste"}.get(corpus, "ensaio")
-    fonte = (f"CDP · {amostra} · ontem {revisoes['ontem'][:8]} · hoje {revisoes['hoje'][:8]} · código "
-             f"{revisoes['codigo'][:8]} · corpus {revisoes['corpus'][:8]} · corte {relatorio['data']}")
+    nomes = {"avaliacao_replica": "réplica", "avaliacao_reservada": "primeira amostra"}
+    corpora = " e ".join(r["revisoes"]["corpus"][:8] for r in relatorios)
+    amostras = []
+    for r in relatorios:
+        nome = nomes.get(Path(r.get("corpus", "")).stem, "ensaio")
+        casos_amostra = [c["modos"] for c in r["casos"] if c["tipo"] == "evidencia"]
+        antes = sum(c["direta"]["completo_5"] for c in casos_amostra)
+        depois = sum(c["memoria"]["completo_5"] for c in casos_amostra)
+        n = len(casos_amostra)
+        amostras.append(f"{nome} {antes}/{n} → {depois}/{n}")
+    recorte = "duas amostras após ajuste" if args.primeira else nome + " após ajuste"
+    fonte = (f"CDP · {recorte} · ontem {revisoes['ontem'][:8]} · hoje {revisoes['hoje'][:8]} · "
+             f"código {revisoes['codigo'][:8]} · corpus {corpora} · corte {relatorio['data']}")
+    nota_amostras = "Busca direta → memória nas 5 primeiras · " + "   /   ".join(amostras)
     with mpl.rc_context({"font.family": "DejaVu Sans", "svg.fonttype": "none",
                          "svg.hashsalt": "cdp-memoria-figuras"}):
-        _salvar(_figura_recuperacao(series, len(positivos), fonte),
+        _salvar(_figura_recuperacao(series, len(positivos), fonte, nota_amostras),
                 args.saida, "01-recuperacao-por-passagem")
         _salvar(_figura_transicoes(linhas, _controles(casos), fonte),
                 args.saida, "02-transicoes-pareadas")

@@ -13,11 +13,15 @@ A busca também encaminha pedidos de estado e permite fixar a revisão Git com a
 aplicação. Sucessões exigem evidência válida na revisão que as registra e o histórico
 de primeiro pai conserva os vínculos comprovados.
 
-O primeiro corpus reservado e a réplica cega medem evidência completa por pergunta,
-cobertura parcial e abstenção. Consulte os comandos e o método no
-[manual de memória](MEMORIA.md). O renderizador usa o JSON da réplica para gerar duas
-figuras, com transições pareadas e os denominadores dos controles. A validação cobre
-recuperação de evidência em desenvolvimento. A adoção operacional segue pendente.
+Os dois conjuntos congelados somam 66 consultas, com 46 perguntas de evidência.
+Na revisão `42f19b27`, as cinco primeiras passagens recuperaram evidência completa em
+30 de 46 casos com busca direta no código de ontem e na revisão atual, e em 31 de 46 com
+memória. O acerto adicional ocorreu no primeiro conjunto, de 20 para 21 em 30. Na réplica,
+a busca direta e a memória ficaram em 10 de 16. Dos 13 controles de estado, um foi
+encaminhado automaticamente e os 13 foram encaminhados quando a intenção foi informada.
+O catálogo foi auditado com 31 notas e 65 trechos. O [manual de memória](MEMORIA.md)
+registra a reprodução dos dois relatórios e das duas figuras. A adoção operacional
+segue pendente.
 
 ## Memória entre sessões — 07/11/2026
 

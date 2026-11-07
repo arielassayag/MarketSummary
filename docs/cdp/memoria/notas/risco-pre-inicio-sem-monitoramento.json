@@ -1,0 +1,33 @@
+{
+  "id": "risco-pre-inicio-sem-monitoramento",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Monitor de risco encerra no pré-início",
+  "resumo": "Antes da abertura, ou se o reinício estiver pendente, a agenda determina sem monitoramento. Ainda não há carteira a monitorar nem relatório a publicar. Quando houver operação, o monitor segue a condição de pregão da B3.",
+  "escopos": [
+    "risco",
+    "status"
+  ],
+  "tags": [
+    "pré-início",
+    "abertura do livro",
+    "risco",
+    "monitoramento",
+    "reinício pendente",
+    "sem carteira",
+    "relatório",
+    "agenda"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/RISCO.md",
+      "trecho": "```sh\nuv run python -m cdp agenda\n```\n\nCom `fase: \"pre_inicio\"` ou `reinicio.pendente: true`, encerre com \"Sem monitoramento:\npré-início\" — não há carteira a monitorar e nada a publicar.\n\n## 2. Monitor\n\nCom `pregao_b3_hoje: true`:",
+      "sha256": "0782f087d9d7b780572aec86d7e641279b7706b327b4ad13d4b521dd4063cfbb"
+    }
+  ]
+}

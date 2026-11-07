@@ -1,0 +1,38 @@
+{
+  "id": "diario-autoria-interna-e-texto-publico",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Linha de autoria interna é omitida no portal público",
+  "resumo": "A linha de autoria do relatório diário identifica a mente para auditoria e app interno. O portal a omite. Os demais textos do investidor seguem o guia de estilo, inclusive a proibição de nomes de assistentes e jargão.",
+  "escopos": [
+    "diario",
+    "status"
+  ],
+  "tags": [
+    "autoria",
+    "assistente",
+    "relatório diário",
+    "portal",
+    "texto para investidores",
+    "auditoria",
+    "aplicativo interno",
+    "guia de estilo"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/ESTILO.md",
+      "trecho": "(`validate-weekly-report`) — recusam também, pelo guia de estilo (`guardrails.style_problems`,\naplicado em `pm_agent.text_problems`):\n\n- jargão de tecnologia e nomes de assistentes (por exemplo: JSON, hash, commit, pipeline,\n  script, prompt, Python, e os nomes dos assistentes de IA);\n- registro coloquial (\"galera\", \"tipo assim\", \"pra\", \"tá\", \"né\", \"kkk\");\n- tom promocional (\"imperdível\", \"incrível\", \"sensacional\", \"espetacular\", \"explosivo\",\n  \"foguete\", \"retorno garantido\", \"oportunidade única\");\n- ponto de exclamação.",
+      "sha256": "8e6ef23c5f2c58b8434361bfe93a03bc2c03d2b74aa5fd6fbf917d5036fbe209"
+    },
+    {
+      "caminho": "docs/cdp/ESTILO.md",
+      "trecho": "Os textos escritos pelo código para o investidor seguem as mesmas regras e são varridos pelo\nteste do guia de estilo. A única exceção é a linha de autoria do relatório diário (\"Autoria:\nmente … [IA]\"), que identifica a mente para a auditoria e o aplicativo interno; o portal a omite.",
+      "sha256": "6b7c75836cbc08834d4a1acb2b4872248b36823e4d2f8e4fc5bd68c6fadef56b"
+    }
+  ]
+}

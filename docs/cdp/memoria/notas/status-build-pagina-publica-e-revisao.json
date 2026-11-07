@@ -1,0 +1,33 @@
+{
+  "id": "status-build-pagina-publica-e-revisao",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Workflow distingue publicação pulada, falha e revisão servida",
+  "resumo": "Enquanto o livro aguarda abertura, o workflow pula a publicação. Falha de verify bloqueia a publicação. Depois do deploy, o manifesto no ar identifica a versão efetivamente publicada.",
+  "escopos": [
+    "status",
+    "operador"
+  ],
+  "tags": [
+    "workflow",
+    "portal",
+    "deploy",
+    "aguardando abertura",
+    "verify",
+    "trilha",
+    "manifesto",
+    "versão servida"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/SITE.md",
+      "trecho": "- O workflow só **lê** o repositório (`contents: read`); a escrita no Pages usa o ambiente\n  `github-pages`.\n- O site não é montado com o livro aguardando a abertura na data de início do mandato (o workflow\n  pula a publicação) e não é publicado com `cdp verify` falhando (o workflow falha).\n- Montagem determinística por versão do repositório: dois builds da mesma versão geram os mesmos\n  arquivos.\n- Depois de publicar, o workflow confere no ar que `manifest.json` traz a versão que acabou de ser\n  publicada.",
+      "sha256": "6bbb5833f133e8bc0e40e4d2dca89519b300de9bb401116083ec1fdaffed58a0"
+    }
+  ]
+}

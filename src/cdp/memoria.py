@@ -371,9 +371,11 @@ _PROCEDIMENTO = re.compile(
     r"^(?:como (?!esta\b|estao\b|ficou\b|anda\b|se encontra\b)|"
     r"em (?:que situacao|que caso|qual situacao|qual caso)|"
     r"se\b|quando (?:um|uma|a fonte|os dados|a regra)\b|no dia (?:de|da|do)\b|"
-    r"o que (?:fazer|faco|acontece quando)|qu(?:al|ais)(?: e| sao)? (?:[ao]s? )?"
-    r"(?:procedimentos?|roteiros?|comandos?|regras?|diferencas?|criterios?|ordem|fluxos?|"
-    r"passos?|condic(?:ao|oes)|campos?)\b)"
+    r"o que (?:fazer|faco|acontece quando)|qu(?:al|ais|e)(?: e| sao)? (?:[ao]s? )?"
+    r"(?:(?:procedimentos?|roteiros?|comandos?|regras?|diferencas?|criterios?|ordem|fluxos?|"
+    r"passos?|condic(?:ao|oes)|campos?)\b|"
+    r"(?:verificac(?:ao|oes)|checagens?|evidencias?|provas?|testes?|recibos?|comprovantes?) "
+    r"(?:comprova|confirma|demonstra|distingue)m?\b))"
 )
 _PEDIDO_DE_PROCEDIMENTO = re.compile(
     r"\b(?:como (?!esta\b|estao\b|ficou\b|anda\b|se encontra\b)|"
@@ -401,12 +403,25 @@ _PEDIDO_NEGOCIACAO = re.compile(
     r"(?:^|[.!?]\s+|\be\s+)(?:conecte|execute|mande|envie|emita|transmita|"
     r"negocie|compre|venda|opere)\b"
 )
+_RECURSO_PRIVADO = re.compile(
+    r"\b(?:repositorios?|projetos?|sistemas?|contas?|ambientes?) "
+    r"(?:privad[oa]s?|intern[oa]s?|restrit[oa]s?|confidencia(?:l|is))\b"
+)
+_ORGANIZACAO_EXTERNA = re.compile(
+    r"\b(?:outra (?:organizacao|empresa|instituicao)|"
+    r"(?:fora do|alhei[oa] ao|sem (?:vinculo|relacao) com o|"
+    r"nao (?:faz(?:em)? parte do|pertence(?:m)? ao|integra(?:m)? o)) "
+    r"(?:cdp|marketsummary|cabra da peste))\b"
+)
+_ACESSO_A_RECURSO = re.compile(r"\b(?:acessos?|permiss(?:ao|oes)|colaboradores?|membros?)\b")
 
 
 def _pedido_fora_do_escopo(q: str) -> bool:
     """Filtra pedidos de execução ou acesso que a memória consultiva não atende."""
     return bool((_BURLA.search(q) and _CONTROLES.search(q)) or _EXTRACAO_SEGREDO.search(q)
-                or (_NEGOCIACAO_REAL.search(q) and _PEDIDO_NEGOCIACAO.search(q)))
+                or (_NEGOCIACAO_REAL.search(q) and _PEDIDO_NEGOCIACAO.search(q))
+                or (_RECURSO_PRIVADO.search(q) and _ORGANIZACAO_EXTERNA.search(q)
+                    and _ACESSO_A_RECURSO.search(q)))
 
 
 def _tema_do_cdp(q: str) -> bool:
@@ -625,18 +640,25 @@ class Catalogo:
                 if (local.fim - local.inicio + 1 <= LINHAS_PASSAGEM
                         and len(evidencia.trecho.encode()) <= BYTES_PASSAGEM):
                     fontes.setdefault(local.caminho, []).append(local)
-                    termos_ancoras[local] = len(termos & termos_contextuais(evidencia.trecho).keys()) >= 2
+                    comuns = termos & termos_contextuais(evidencia.trecho).keys()
+                    # Um conceito sintético e sua palavra de origem contam como um único sinal.
+                    literais = sum(not t.startswith("@") for t in comuns)
+                    termos_ancoras[local] = literais >= 2 or (literais == 1 and len(comuns) >= 3)
             reunidas = [p for caminho, locais in fontes.items()
                         for p in reunir_ancoras(locais, self.fontes.linhas(caminho))]
-            reunidas.sort(key=lambda p: -len(termos & termos_contextuais(
-                "\n".join(self.fontes.linhas(p.caminho)[p.inicio - 1:p.fim])).keys()))
             if reunidas:
+                apoio = {p: termos & termos_contextuais("\n".join(
+                    self.fontes.linhas(p.caminho)[p.inicio - 1:p.fim]
+                )).keys() for p in reunidas}
+                primeira = max(reunidas, key=lambda p: len(apoio[p]))
+                complementares = sorted((p for p in reunidas if p != primeira), key=lambda p: (
+                    -len(apoio[p] - apoio[primeira]), p.caminho != primeira.caminho, -len(apoio[p]),
+                ))
                 if not ancoras:
-                    primeira = reunidas[0]
                     priorizar_nota = any(tem_apoio and p.caminho == primeira.caminho
                                          and primeira.inicio <= p.inicio <= p.fim <= primeira.fim
                                          for p, tem_apoio in termos_ancoras.items())
-                ancoras.append(reunidas)
+                ancoras.append([primeira, *complementares])
         contextuais = self.indice.buscar(escopo, consulta, max(limite, 5), contextual=True)
         return combinar_evidencias(diretas, contextuais, ancoras, limite,
                                   priorizar_nota=priorizar_nota)

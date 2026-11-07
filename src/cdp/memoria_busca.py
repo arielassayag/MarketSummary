@@ -272,7 +272,7 @@ def combinar_evidencias(diretas: list[Local], contextuais: list[Local],
     if priorizar_nota:
         primeiras = (primaria[:1], lexicais[0], primaria[1:2], lexicais[1])
     else:
-        primeiras = (*lexicais, primaria[:1], diretas[1:2], primaria[1:2])
+        primeiras = (*lexicais, primaria[:1], contextuais[1:2], diretas[1:2], primaria[1:2])
     ordem = (*primeiras, diretas[1:2], contextuais[1:3],
              *(grupo[:1] for grupo in ancoras[1:]), diretas[2:], contextuais[3:], primaria[2:],
              *(grupo[1:] for grupo in ancoras[1:]))

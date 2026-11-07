@@ -762,6 +762,17 @@ class Catalogo:
         contextuais = indice_contextual.buscar(consulta, max(largura, 10))
         escolhidas = combinar_evidencias(diretas, contextuais[:largura], ancoras, limite,
                                          priorizar_nota=priorizar_nota)
+        janelas_bastao = [i for i, p in enumerate(escolhidas)
+                          if p.caminho == "docs/cdp/EM_ANDAMENTO.md"]
+        if (ancoras and len(escolhidas) == limite and len(janelas_bastao) >= 3
+                and 2 * len(janelas_bastao) > limite
+                and not re.search(r"\b(?:passagem(?: de bastao)?|frentes? em andamento|em[-_ ]andamento)\b",
+                                  _normalizar(consulta))):
+            # Uma terceira janela de histórico não desloca uma fonte nova da lição líder.
+            fontes_escolhidas = {p.caminho for p in escolhidas}
+            apoio = next((p for p in ancoras[0] if p.caminho not in fontes_escolhidas), None)
+            if apoio is not None:
+                escolhidas[janelas_bastao[-1]] = apoio
         blocos = [completar_bloco(p, self.fontes.linhas(p.caminho)) for p in escolhidas]
         if not any(p.fim - p.inicio + 1 < LINHAS_PASSAGEM for p in blocos):
             candidatas = (*diretas, *contextuais)

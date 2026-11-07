@@ -3,7 +3,7 @@
   "tipo": "procedimento",
   "estado": "curada",
   "titulo": "Reproduzir a etapa editorial fora do executor",
-  "resumo": "Prepare os fatos numa cópia do livro e exporte cdp mente pacote para o assistente externo. O arquivo reúne fatos, regras, schema, exemplo e comando de validação. A tese destinada à operação segue como rascunho em docs/cdp/teses e passa pelo preparo do executor.",
+  "resumo": "Prepare os fatos numa cópia do livro. Exporte cdp mente pacote para entregar fatos, regras, schema, exemplo e comando de validação. Valide a pesquisa com --so-pesquisa e exporte o pacote da decisão para validar a semana inteira. Nova pesquisa invalida a decisão que citava os IDs anteriores. A tese externa segue como rascunho em docs/cdp/teses.",
   "escopos": [
     "desenvolvimento"
   ],
@@ -14,7 +14,8 @@
     "schema",
     "rascunho",
     "cópia",
-    "validador"
+    "validador",
+    "ordem de validação"
   ],
   "registrada_em": "2026-11-07",
   "revisada_em": "2026-11-07",
@@ -31,6 +32,11 @@
       "caminho": "docs/cdp/ARQUITETURA.md",
       "trecho": "`approval_hash = sha256(proposal_hash | snapshot_hash | config_hash | research_hash | decisor |\ndecisão | decided_at)`, com os hashes da decisão do PM e dos gates de risco. A efetivação exige\numa decisão válida e recalcula todos os hashes. Uma tese escrita fora do clone das rotinas é\nentregue como rascunho em `docs/cdp/teses/<semana>.json` e adotada pelo `tese prepare`.",
       "sha256": "cba2410894e1a0832fa4174cc830bbf7052db25b1aa93b55fd8a6c1a5bf3186e"
+    },
+    {
+      "caminho": "docs/cdp/REPRODUZIR.md",
+      "trecho": "A pesquisa vem antes da decisão: a decisão cita os ids das notas da pesquisa, então uma pesquisa\nnova invalida a decisão gravada antes dela. Valide a pesquisa sozinha (`--so-pesquisa`), depois\nexporte o pacote da decisão — que traz um resumo da pesquisa salva — e valide a semana inteira.",
+      "sha256": "c8ad66736f0a13c3916433ccbb66266102c9cae600e93812eb86b57b7cbbd6e0"
     }
   ]
 }

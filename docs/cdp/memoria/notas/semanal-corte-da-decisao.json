@@ -3,10 +3,11 @@
   "tipo": "licao",
   "estado": "curada",
   "titulo": "O prazo efetivo da montagem vem da agenda",
-  "resumo": "Consulte semanal.prazo_efetivo. O código aplica o menor entre o teto de Brasília, o prazo do mandato e o primeiro fechamento entre NYSE, B3 e BMV menos a margem. Com o prazo vencido e sem decisão gravada, a carteira anterior segue vigente. Na inauguração, o fundo segue sem carteira.",
+  "resumo": "Consulte semanal.prazo_efetivo. Ele é o menor entre o teto de Brasília, o prazo do mandato e o primeiro fechamento de NYSE, B3 e BMV menos a margem. Só executa mercado aberto, com horário oficial conferido e fechamento ao menos 45 minutos após o prazo. Vencido o prazo sem decisão, mantenha a carteira anterior. Na inauguração, o fundo segue sem carteira.",
   "escopos": [
     "semanal",
-    "operador"
+    "operador",
+    "risco"
   ],
   "tags": [
     "prazo efetivo",
@@ -14,7 +15,8 @@
     "fechamento antecipado",
     "calendário de pregão",
     "carteira mantida",
-    "decisão perdida"
+    "decisão perdida",
+    "mercado elegível"
   ],
   "registrada_em": "2026-11-07",
   "revisada_em": "2026-11-07",
@@ -36,6 +38,11 @@
       "caminho": "docs/cdp/AUTOMACAO.md",
       "trecho": "  da tarefa e nunca a encurta. Passado o prazo efetivo sem decisão, o\n  código não decide: a carteira anterior é mantida — na carteira inaugural, o fundo segue sem\n  carteira (`decisao_perdida` na agenda; `weekly decide` devolve `status: \"prazo_vencido\"`).",
       "sha256": "3f30533f6525492b5c4343a62a40cbb9aee4907c702fdffbd83250cb566a5fc8"
+    },
+    {
+      "caminho": "docs/cdp/EXECUCAO.md",
+      "trecho": "- Um mercado só executa no fechamento do dia se estiver aberto, tiver horário oficial\n  conferido e fechar em `prazo + 45 min` ou depois (corte de ordens posterior ao prazo). Com o\n  teto de 15h00, Santiago (16h00 locais = 16h00 de Brasília em outubro) é elegível; em\n  fechamentos antecipados com encerramento antes de 15h45, não.",
+      "sha256": "d1bd7f480d3ba1395d5a62dbfa3277203a7cb9d4e99972f941792a6c81d09430"
     }
   ]
 }

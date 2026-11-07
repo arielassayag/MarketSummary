@@ -362,7 +362,10 @@ _OCORRENCIA = re.compile(
     r"chegou|encerrou|concluiu|terminou|foi publicado|foi enviado)\b"
     r"|\b(?:acab(?:ei|amos|ou|aram) de|consta(?:m)?|gravou|publicou|"
     r"selad[oa]s?|anotad[oa]s?|observad[oa]s?|registrad[oa]s?|designad[oa]s?|"
-    r"abert[oa]s?|ativ[oa]s?|ficou|ficaram|marcou|primeir[oa]s?)\b"
+    r"abert[oa]s?|ficou|ficaram|marcou|primeir[oa]s?)\b"
+    r"|\b(?:esta|estao|permanece(?:m)?|continua(?:m)?|"
+    r"alertas?|sinais?|bloqueios?|gatilhos?|notas?|travas?|tarefas?|rotinas?|ordens?|posicoes)"
+    r" ativ[oa]s?\b"
     r"|\bmedid[oa]s? (?:em|n[oa]s?|pel[oa]s?|durante)\b"
     r"|\b(?:ja|ainda) (?:esta|estao) \w+(?:ando|endo|indo)\b"
     r"|\b(?:foi|foram|esta|estao) (?:\w+ ){0,3}\w+(?:ad|id)[oa]s?\b"
@@ -772,9 +775,11 @@ class Catalogo:
         )
         if not selecionadas or all(p.fim - p.inicio + 1 == LINHAS_PASSAGEM for p in selecionadas):
             return selecionadas
-        estruturais = self.indice.estruturais(escopo, consulta)
-        ampliadas = ampliar_selecao(selecionadas, estruturais, self.fontes.linhas)
-        return reaproveitar_vagas(ampliadas, estruturais, self.fontes.linhas)
+        for completas in (False, True):
+            estruturais = self.indice.estruturais(escopo, consulta, completas=completas)
+            ampliadas = ampliar_selecao(selecionadas, estruturais, self.fontes.linhas)
+            selecionadas = reaproveitar_vagas(ampliadas, estruturais, self.fontes.linhas)
+        return selecionadas
 
     def _tem_apoio_no_acervo(self, escopo: Escopo, q: str, diretas: list[Local], notas: list[Registro], *,
                             observacao: bool) -> bool:
@@ -877,10 +882,11 @@ class BuscaCanonica:
             self.indices[chave] = IndicePassagens(self._documentos(escopo), contextual=contextual)
         return self.indices[chave]
 
-    def estruturais(self, escopo: Escopo, consulta: str) -> list[Local]:
+    def estruturais(self, escopo: Escopo, consulta: str, *, completas: bool = False) -> list[Local]:
         if escopo not in self._indices_secoes:
             self._indices_secoes[escopo] = IndiceSecoes(self._documentos(escopo))
-        return self._indices_secoes[escopo].buscar(consulta)
+        indice = self._indices_secoes[escopo]
+        return indice.compactas(consulta) if completas else indice.buscar(consulta)
 
     def _documentos(self, escopo: Escopo) -> Iterable[tuple[str, tuple[str, ...]]]:
         for caminho in self.caminhos[escopo]:

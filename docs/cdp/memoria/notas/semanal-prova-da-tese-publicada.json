@@ -3,7 +3,7 @@
   "tipo": "procedimento",
   "estado": "curada",
   "titulo": "Trilha e autoria da tese publicada",
-  "resumo": "A tese publicada é imutável e vinculada à proposta aprovada. O evento WEEKLY_THESIS registra hashes dos arquivos de saída, hashes da proposta e da aprovação e a autoria. O painel exporta a tese publicada.",
+  "resumo": "A tese publicada é imutável e vinculada à proposta aprovada. WEEKLY_THESIS guarda os hashes dos arquivos, da proposta e da aprovação e a autoria. O painel rotula a narrativa como da gestão (IA) ou automática, sem identificar a mente. As semanas antigas viram resumos de uma linha.",
   "escopos": [
     "semanal",
     "diario",
@@ -29,6 +29,11 @@
       "caminho": "docs/cdp/TESE.md",
       "trecho": "- `tese_publicada.json` e `tese.md` são gravados uma única vez (escrita exclusiva). Uma semana tem\n  no máximo uma tese publicada; depois dela, `tese prepare` não regrava nada e `tese publish`\n  recusa.\n- A tese fica vinculada à **proposta aprovada** da semana (a referenciada pela decisão que a\n  aprovou).\n- A publicação acrescenta um evento `WEEKLY_THESIS` (ator `CDP`) à trilha de auditoria encadeada\n  por hash. O payload traz o SHA-256 de `tese_publicada.json` e de `tese.md`, o `proposal_hash`, o\n  `approval_hash` e a autoria (`mente` ou `codigo`).\n- O painel exporta só a tese publicada, nunca o rascunho `tese.json`.",
       "sha256": "b726d6ac8db836ea9d4c7edd245fd8618e3fec68040e0daeffac23f18d7d0b16"
+    },
+    {
+      "caminho": "docs/cdp/TESE.md",
+      "trecho": "Os textos chegam com os `{{fact:id}}` já resolvidos pelo código. A autoria aparece como \"Narrativa\nda gestão (IA)\" ou \"Narrativa automática\", nunca com o nome da mente ou do modelo. Semanas antigas\nviram resumos de uma linha, sem a tese. Se os dados publicados precisarem ser cortados para caber,",
+      "sha256": "81db9d20307c46dc80f8d08426477c13bc5c4eb5e3bcb8b70276e041f0215947"
     }
   ]
 }

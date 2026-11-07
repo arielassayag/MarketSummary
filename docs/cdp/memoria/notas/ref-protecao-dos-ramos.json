@@ -3,7 +3,7 @@
   "tipo": "procedimento",
   "estado": "curada",
   "titulo": "Proteção de main e atualização da trava têm regras próprias",
-  "resumo": "A regra do ramo main bloqueia push forçado e exclusão, permitindo a publicação direta do publicador canônico. O ramo cdp-trava precisa ficar fora dessa regra para poder ser atualizado pela trava distribuída. Uma lista vazia de regras do repositório indica ausência dessa proteção.",
+  "resumo": "A regra de main bloqueia push forçado e exclusão e admite a publicação direta pelo publicador canônico. A trava distribuída atualiza cdp-trava, fora dessa regra. Confira a configuração com gh api repos/arielassayag/MarketSummary/rulesets. Uma lista vazia indica ausência da proteção.",
   "escopos": [
     "operador",
     "desenvolvimento"
@@ -15,7 +15,8 @@
     "ruleset",
     "push forçado",
     "exclusão",
-    "publicador"
+    "publicador",
+    "gh api"
   ],
   "registrada_em": "2026-11-07",
   "revisada_em": "2026-11-07",
@@ -27,6 +28,11 @@
       "caminho": "docs/cdp/AUTOMACAO.md",
       "trecho": "**Regra do ramo `main` no GitHub — crie antes de ligar qualquer rotina** (Settings → Rules →\nRulesets → New branch ruleset, alvo `main`): bloquear force push e exclusão; **não** exigir pull\nrequest (as rotinas publicam direto em `main` por `cdp publicar`); não incluir o ramo\n`cdp-trava` (a trava precisa ser regravada). Confira com\n`gh api repos/<dono>/<repositório>/rulesets`: lista vazia quer dizer `main` sem proteção. O\nproxy do GitHub da nuvem aceita o push do ramo `cdp-trava` e de `HEAD:main`, limitado só pelas\nregras do repositório — sem a regra, só pelo código.",
       "sha256": "5030909e7a437468e3e71186145f24473268c73ae048c6b5303fb0d4de5e0c6c"
+    },
+    {
+      "caminho": "docs/cdp/DECISOES.md",
+      "trecho": "Contexto: o executor das rotinas (Codex) roda com acesso total ao clone e à credencial de push. →\nDecisão: ruleset 24618259 ativo em `main` desde 06/10/2026 — bloqueia force push e exclusão, sem\nexigir pull request; o ramo `cdp-trava` fica livre (a trava distribuída grava nele). →\nConsequências: nenhum histórico publicado é reescrito, nem por engano de um app de IA; `cdp\npublicar` continua sem força. Conferência: `gh api repos/arielassayag/MarketSummary/rulesets`.",
+      "sha256": "7188e9246f1cb09adf26c04105f65e965d3afb8f526c10cf4d727f8d717f767e"
     }
   ]
 }

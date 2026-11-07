@@ -24,6 +24,7 @@ e `calibracao`. `contexto` mostra até três notas curadas em destaque no escopo
 fontes primárias do escopo. O limite de resultados por lista vai de um a dez e o padrão é cinco.
 A busca combina BM25 direto, passagens ranqueadas com contexto da seção e âncoras das notas.
 A busca estrutural usa títulos, parágrafos e seções vizinhas dos mesmos documentos canônicos.
+Seções Markdown curtas também podem ser recuperadas integralmente quando o corpo sustenta a consulta.
 Ela pode ampliar uma passagem por inclusão literal ou ocupar uma vaga que ficou livre
 quando uma passagem já estava integralmente contida em outra.
 Flexões em português, títulos, etiquetas, resumos e trechos validados ajudam a localizar lições.

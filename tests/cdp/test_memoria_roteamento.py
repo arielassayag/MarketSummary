@@ -17,6 +17,7 @@ from cdp.memoria_busca import Local, normalizar
     ("Traga a composição da prévia registrada para a montagem de hoje.", "proposta"),
     ("Quanto rendeu a carteira na data de ontem?", "FactBook"),
     ("Liste os alertas ativos no monitor desta manhã.", "relatório do monitor"),
+    ("Liste os alertas ativos no monitor.", "relatório do monitor"),
     ("Quantos longs estão na carteira vigente?", "carteira efetivada no livro"),
     ("Qual e-mail saiu hoje?", "trilha de entrega"),
     ("Qual carteira está efetivada no momento?", "estado e a agenda"),
@@ -68,6 +69,7 @@ def test_quadro_temporal_da_montagem_encaminha_as_duas_partes_da_pergunta():
     "No monitor de risco, o que separa os alertas que exigem ação dos que ficam para o próximo pregão? "
     "Como interpretar uma posição que ficou sem negócio?",
     "No resumo do monitor, quais artefatos indicam a situação da trava, a cobertura e o que ficou retido?",
+    "Em que moeda os retornos entram no painel de ativos?",
 ])
 def test_ocorrencia_narrada_nao_converte_regra_em_pedido_de_estado(consulta):
     assert _fonte_atual(consulta) is None

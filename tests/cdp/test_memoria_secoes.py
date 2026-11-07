@@ -52,3 +52,23 @@ def test_passagens_sao_literais_e_respeitam_os_limites():
         assert len(trecho) <= LINHAS_PASSAGEM
         assert len(bruto) <= BYTES_PASSAGEM
         assert p.sha256 == sha256(bruto).hexdigest()
+
+
+def test_compactas_preservam_a_secao_inteira_e_pulam_excesso_de_bytes():
+    linhas = (
+        "# Dados de mercado",
+        "",
+        "A observação ausente deve continuar ausente.",
+        "",
+        "Considere somente informações disponíveis até o corte.",
+        "# Observação sem cotação",
+        "Observação ausente sem cotação " + "á" * BYTES_PASSAGEM,
+    )
+    indice = IndiceSecoes([("Dados.md", linhas), ("rascunho.py", linhas[:5])])
+    passagens = indice.compactas("Observação ausente", limite=1)
+
+    assert len(passagens) == 1
+    assert indice.compactas("Observação ausente") == passagens
+    passagem = passagens[0]
+    assert (passagem.caminho, passagem.inicio, passagem.fim) == ("Dados.md", 1, 5)
+    assert passagem.sha256 == sha256("\n".join(linhas[:5]).encode()).hexdigest()

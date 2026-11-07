@@ -197,6 +197,32 @@ class IndiceSecoes:
                 break
         return escolhidas
 
+    def compactas(self, consulta: str, limite: int = 24) -> list[Local]:
+        """Recupera seções Markdown completas que cabem numa passagem."""
+        if limite <= 0:
+            return []
+        termos = termos_contextuais(consulta)
+        pesos = _pesos(termos, self._df_paragrafos, self._n_paragrafos)
+        candidatas: list[tuple[float, str, int, int]] = []
+        for caminho, secoes in self._documentos.items():
+            if not caminho.endswith(".md"):
+                continue
+            for secao in secoes:
+                if not 2 <= secao.fim - secao.inicio <= LINHAS_PASSAGEM:
+                    continue
+                relevancia = _relevancia(secao.corpo, pesos, 20)
+                if relevancia > 0:
+                    nota = (relevancia + .30 * _cobertura(secao.titulo, pesos)
+                            + .15 * _cobertura(secao.corpo, pesos))
+                    candidatas.append((-nota, caminho, secao.inicio, secao.fim))
+        passagens: list[Local] = []
+        for _, caminho, inicio, fim in sorted(candidatas):
+            if (janela := self._janela(caminho, inicio, fim)) is not None:
+                passagens.append(janela[0])
+                if len(passagens) == limite:
+                    break
+        return passagens
+
     def buscar(self, consulta: str, limite: int = _MAX_SECOES * _POR_SECAO) -> list[Local]:
         """Intercala as janelas válidas das melhores seções de fontes distintas."""
         termos = termos_contextuais(consulta)

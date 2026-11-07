@@ -35,6 +35,7 @@ def main() -> None:
         "src/cdp/memoria_busca.py",
         "src/cdp/memoria_avaliacao.py",
         "src/cdp/memoria_linhagem.py",
+        "src/cdp/memoria_reforcos.py",
         "src/cdp/memoria_secoes.py",
         "src/cdp/memoria_selecao.py",
         "scripts/cdp_memoria_benchmark.py",

@@ -23,9 +23,11 @@ from .memoria import (
     _sha,
 )
 from .memoria_busca import BYTES_PASSAGEM, LINHAS_PASSAGEM, Local, _blocos_markdown, completar_bloco
+from .memoria_reforcos import LIMITE_REFORCOS
 
 MAX_BYTES_RESPOSTA = 4096
-LIMITE_CANDIDATAS = 64
+_LIMITE_BASE = 64
+LIMITE_CANDIDATAS = _LIMITE_BASE + LIMITE_REFORCOS
 _LIMITE_PASSAGENS = 5
 _LIMITE_BYTES = 4500
 _LARGURA_CANONICA = 20
@@ -119,26 +121,35 @@ def _candidatas(catalogo: Catalogo, escopo: Escopo, consulta: str, busca: dict) 
         _intercalar(diretas[5:], contextuais[5:]),
         _intercalar(notas[4:], estruturais[5:], completas[5:], simbolos[5:]),
     )
-    vistos: set[Local] = set()
+    vistos: dict[Local, None] = {}
     candidatas: list[dict] = []
-    for local, expandir in chain(((p, False) for p in base), ((p, True) for p in alternadas)):
+
+    def incluir(local: Local, *, expandir: bool) -> None:
         if not 0 < local.fim - local.inicio + 1 <= LINHAS_PASSAGEM:
-            continue
+            return
         linhas = ler(local.caminho)
         trecho = "\n".join(linhas[local.inicio - 1:local.fim])
         if len(trecho.encode()) > BYTES_PASSAGEM or not trecho.strip():
-            continue
+            return
         if not 1 <= local.inicio <= local.fim <= len(linhas) or _sha(trecho) != local.sha256:
             raise MemoriaErro("referência diverge da fonte canônica")
         if expandir:
             local = completar_bloco(local, linhas)
         if local in vistos:
-            continue
-        vistos.add(local)
+            return
+        vistos[local] = None
         trecho = "\n".join(linhas[local.inicio - 1:local.fim])
         candidatas.append({"id": len(candidatas) + 1, **local.json(),
                            "bytes": len(trecho.encode()), "trecho": trecho})
-        if len(candidatas) == LIMITE_CANDIDATAS:
+
+    for local, expandir in chain(((p, False) for p in base), ((p, True) for p in alternadas)):
+        incluir(local, expandir=expandir)
+        if len(candidatas) == _LIMITE_BASE:
+            break
+    teto = len(candidatas) + LIMITE_REFORCOS
+    for local in catalogo.indice.reforcos(escopo, consulta, list(vistos)):
+        incluir(local, expandir=False)
+        if len(candidatas) == teto:
             break
     return candidatas
 

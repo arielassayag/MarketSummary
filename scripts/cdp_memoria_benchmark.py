@@ -194,7 +194,7 @@ def main() -> None:
     fontes = Fontes(raiz_repo(), revisao=args.revisao)
     for arquivo in (
         "memoria", "memoria_busca", "memoria_avaliacao", "memoria_linhagem", "memoria_secoes",
-        "memoria_selecao",
+        "memoria_selecao", "memoria_reforcos",
     ):
         caminho = f"src/cdp/{arquivo}.py"
         if (fontes.raiz / caminho).read_bytes() != fontes.ler(caminho, 256 * 1024):

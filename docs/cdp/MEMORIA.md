@@ -81,6 +81,11 @@ Quando sobra espaço, a conferência pode incluir um bloco Markdown já lacrado
 que completa a margem cortada de uma passagem selecionada. As escolhas recebidas
 permanecem na mesma ordem.
 
+O pacote preserva até 64 candidatas iniciais e acrescenta até 20 referências do
+mesmo escopo. Elas recuperam itens de lista, trechos de código delimitados por
+comentários e condições que começam antes de uma janela. Os complementos recebem
+novos IDs. O teto da seleção permanece em cinco passagens e 4.500 bytes.
+
 ```sh
 uv run python -m cdp memoria buscar --escopo diario --consulta 'moeda do benchmark índice local' \
   --revisao "$REVISAO_DO_PACOTE" --data "$DATA_DO_PACOTE" --conferir-selecao < selecao.json

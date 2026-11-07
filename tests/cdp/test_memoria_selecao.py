@@ -46,7 +46,8 @@ def _catalogo(*textos, orientacao=None, sem_contexto=False):
     return SimpleNamespace(
         data=_DATA, buscar=buscar,
         fontes=SimpleNamespace(revisao=_REVISAO, trabalho=False, linhas=fontes.__getitem__),
-        indice=SimpleNamespace(buscar=buscar_amplo, estruturais=estruturais, simbolos=simbolos),
+        indice=SimpleNamespace(buscar=buscar_amplo, estruturais=estruturais, simbolos=simbolos,
+                              reforcos=lambda *args: []),
     )
 
 
@@ -161,6 +162,11 @@ def test_teto_do_pacote_preserva_as_vinte_janelas_canonicas():
 
     pacote = preparar(catalogo, "diario", _CONSULTA, 5)
     caminhos = {p["caminho"] for p in pacote["candidatas"]}
-    assert len(pacote["candidatas"]) == len(caminhos) == LIMITE_CANDIDATAS
+    assert len(pacote["candidatas"]) == len(caminhos) == 64
     assert {p.caminho for p in locais[:40]} <= caminhos
     assert {p.caminho for p in locais[80:85]} <= caminhos
+    catalogo.indice.reforcos = lambda *a: [p for p in locais if p.caminho not in caminhos]
+    ampliado = preparar(catalogo, "diario", _CONSULTA, 5)
+    assert ampliado["candidatas"][:64] == pacote["candidatas"]
+    assert len(ampliado["candidatas"]) == LIMITE_CANDIDATAS
+    assert len(aplicar(ampliado, _resposta(ampliado, [LIMITE_CANDIDATAS]))["passagens"]) == 1

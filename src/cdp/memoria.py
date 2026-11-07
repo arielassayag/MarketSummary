@@ -40,6 +40,7 @@ from .memoria_busca import (
 from .memoria_busca import (
     normalizar as _normalizar,
 )
+from .memoria_reforcos import IndiceReforcos
 from .memoria_secoes import IndiceSecoes
 
 Escopo = Literal["desenvolvimento", "operador", "status", "semanal", "diario", "risco",
@@ -900,6 +901,7 @@ class BuscaCanonica:
         self.caminhos = caminhos
         self.indices: dict[tuple[Escopo, bool], IndicePassagens] = {}
         self._indices_secoes: dict[Escopo, IndiceSecoes] = {}
+        self._indices_reforcos: dict[Escopo, IndiceReforcos] = {}
 
     def buscar(self, escopo: Escopo, consulta: str, limite: int, *,
                contextual: bool = False) -> list[Local]:
@@ -917,6 +919,11 @@ class BuscaCanonica:
 
     def simbolos(self, escopo: Escopo, consulta: str) -> list[Local]:
         return self._indice_estrutural(escopo).simbolos(consulta)
+
+    def reforcos(self, escopo: Escopo, consulta: str, candidatas: list[Local]) -> list[Local]:
+        if escopo not in self._indices_reforcos:
+            self._indices_reforcos[escopo] = IndiceReforcos(self.fontes.linhas, self.caminhos[escopo])
+        return self._indices_reforcos[escopo].buscar(consulta, candidatas)
 
     def _indice_estrutural(self, escopo: Escopo) -> IndiceSecoes:
         if escopo not in self._indices_secoes:

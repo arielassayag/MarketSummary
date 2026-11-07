@@ -41,7 +41,10 @@ Fixe a próxima versão e o protocolo antes de usá-la. O catálogo tem 127 nota
 Na preparação da próxima revisão, o roteamento separa origem de procedimento recorrente
 de metadados de uma publicação específica. O AST prioriza a assinatura quando a consulta
 nomeia a ação e o formato. As duas mudanças preservaram os 68 pacotes fixados do original
-e corrigiram três sintomas no diagnóstico aberto. A suíte focal passou com 422 e um pulado.
+e corrigiram três sintomas no diagnóstico aberto. A faixa estrutural acrescenta até
+20 candidatas depois do pacote-base. Com o gabarito da amostra 12 já aberta, todos
+os 24 casos têm combinações viáveis, com 8/8 controles e zero falso encaminhamento.
+Esse é um teste de disponibilidade. A suíte focal passou com 423 e um pulado.
 
 ## Recuperação com memória qualificada — 07/11/2026
 

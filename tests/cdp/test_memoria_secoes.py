@@ -1,6 +1,7 @@
 from hashlib import sha256
 
-from cdp.memoria_busca import BYTES_PASSAGEM, LINHAS_PASSAGEM
+from cdp.memoria_busca import BYTES_PASSAGEM, LINHAS_PASSAGEM, localizar
+from cdp.memoria_reforcos import IndiceReforcos
 from cdp.memoria_secoes import IndiceSecoes
 
 
@@ -22,6 +23,27 @@ def test_busca_por_simbolo_prioriza_assinatura_que_nomeia_acao_e_formato():
     (primeira, *_) = indice.simbolos("Quais campos vêm ao exportar a agenda em JSON?")
 
     assert (primeira.inicio, primeira.fim) == (5, 6)
+
+
+def test_reforcos_completam_item_e_condicao_nas_fontes_permitidas():
+    roteiro = "docs/cdp/ROTINA.md"
+    codigo = "src/cdp/rotina.py"
+    fontes = {
+        roteiro: ("# Agenda", "- Confira o limite da fila.", "  Use o limite efetivo.",
+                  "- Só então trate os fechamentos."),
+        codigo: ("def conferir_risco():", "    if risco and pregao:",
+                 "        reporte_risco()", "    return risco"),
+    }
+    base = [localizar(roteiro, 3, fontes[roteiro][2:]),
+            localizar(codigo, 3, fontes[codigo][2:]),
+            localizar("docs/cdp/FORA.md", 1, ("risco e limite",))]
+    indice = IndiceReforcos(fontes.__getitem__, fontes)
+    saida = indice.buscar("Qual limite da fila e condição de risco no pregão?", base)
+
+    assert saida == indice.buscar("Qual limite da fila e condição de risco no pregão?", base)
+    assert not set(base) & set(saida)
+    assert any(p.caminho == roteiro and p.inicio == 2 and p.fim >= 3 for p in saida)
+    assert any(p.caminho == codigo and p.inicio <= 2 and p.fim >= 3 for p in saida)
 
 
 def test_busca_por_secoes_diversifica_fontes_e_recupera_vizinha():

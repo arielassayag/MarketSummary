@@ -5,6 +5,24 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## Confirmação prospectiva da memória em andamento — 07/11/2026
+
+A revisão `4c34b1be` amplia o vocabulário, completa blocos de evidência e permite que uma
+segunda nota complemente a primeira na mesma fonte. O original está em 52/52 e 16/16 nos
+controles. As baterias de ajuste somam 160/160 evidências e 49/49 controles. Os gabaritos e
+o limite de cinco passagens foram preservados.
+
+A quarta confirmação, fechada antes de avaliar `4c34b1be`, retornou 18/24 evidências e
+3/8 controles. A busca direta acertou 20/24. A detecção automática perdeu dois pedidos de
+estado e aceitou três consultas externas. A meta de 100% em inéditos continua aberta. Os
+resultados e lacres das quatro rodadas estão em `outputs/cdp-memoria-rigor/`, no relatório
+`relatorio-confirmacoes.md` e no protocolo `protocolo-confirmacao.md`.
+
+Próxima etapa: medir a cobertura de um conjunto maior de candidatos por seção e por oração,
+separar falta de candidato de erro de ordenação e condicionar a inclusão de notas à relevância
+das passagens. Revisar também a admissão de consultas com termos genéricos do domínio. A quarta
+bateria já está aberta para diagnóstico. O próximo teste independente usa outra amostra lacrada.
+
 ## Recuperação com memória qualificada — 07/11/2026
 
 A revisão `11c1e327` recuperou os grupos completos nas 52 perguntas do benchmark congelado e

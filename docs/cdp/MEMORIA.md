@@ -19,6 +19,15 @@ uv run python -m cdp memoria contexto --escopo diario --consulta 'moeda do bench
 uv run python -m cdp memoria buscar --escopo diario --consulta 'moeda do benchmark índice local' --limite 3
 ```
 
+Use `--orcamento-estrito` na busca de evidências quando a saída precisar
+caber em 4.500 bytes de texto. O cálculo usa UTF-8 e conta um byte entre
+passagens. Cada passagem preservada tem até 14 linhas e 1.800 bytes.
+O código conserva a ordem da busca e pula passagens inteiras que
+ultrapassariam o teto. O limite se aplica aos trechos referenciados em
+`passagens`; os metadados do JSON têm orçamento separado.
+Busca, triagem e seleção aceitam consultas em uma linha de até 480
+caracteres. O mesmo limite vale para o pacote lacrado e para o avaliador.
+
 Os escopos são `desenvolvimento`, `operador`, `status`, `semanal`, `diario`, `risco`, `cobertura`
 e `calibracao`. `contexto` mostra até três notas curadas em destaque no escopo, com orçamento de
 6 KiB de saída em Markdown e JSON. `buscar` retorna separadamente notas elegíveis e

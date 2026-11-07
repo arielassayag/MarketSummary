@@ -329,6 +329,45 @@ estava aberto. Na C33 cega, com 16 consultas novas, a nota isolada elevou
 os acertos de 9/16 a 14/16. Os cinco ganhos ficaram nos oito casos de
 aquisição e retomada. Renovação, estado e burla conservaram 8/8 controles.
 
+O diagnóstico C33 encontrou dois problemas distintos. Uma passagem curta
+já reunia as provas de uma nota que ficou em segundo lugar na mistura.
+No outro caso, a prova do identificador da tarefa chegou às candidatas
+estruturais, mas não coube na seleção final. Repetir o teste já aberto com
+uma prova adicional do roteiro na nota recuperou as duas consultas. Essa
+versão segue candidata no acervo.
+
+A C34 cruzou a nota com prova adicional e um seletor que separa pedidos
+e avalia itens Markdown compactos. O desenho se inspira na diversificação
+por aspectos de consulta. Os quatro braços receberam o mesmo teto real
+de cinco passagens e 4.500 bytes. Os quatro acertaram 13/24. O seletor
+recuperou mais um grupo de prova, de 19/32 para 20/32, sem completar
+outra consulta. A forma experimental permanece fora do fluxo padrão.
+[Diversificação explícita por subconsultas](https://theses.gla.ac.uk/4106/).
+
+A CLI oferece `--orcamento-estrito` para conferir os bytes de cada
+passagem antes de devolver a seleção e preservar seus intervalos.
+O primeiro ensaio guiado da C34 também expôs seis perguntas acima do
+limite anterior de 240 caracteres. Busca, triagem, seleção e avaliação
+passaram a aceitar consultas em uma linha de até 480 caracteres.
+
+Com os enunciados preservados, a C34 acertou 24/24 na triagem assistida.
+A busca automática com essa triagem obteve 14/24, e a guiada 12/24.
+Cada braço acertou os oito controles. Entre as 16 consultas documentais,
+foram seis completas na busca automática e quatro na guiada.
+As duas perdas foram consultas multigrupo. A leitura guiada produziu
+menos bytes e perdeu cinco grupos que a automática havia recuperado,
+ao mesmo tempo que acrescentou três. A cobertura de todos os grupos
+foi a medida usada para decidir se uma resposta documental estava completa.
+A combinação retrospectiva preservou todas as passagens automáticas e
+acrescentou passagens guiadas quando cabiam no mesmo teto. A cobertura
+passou de 19/32 para 21/32 grupos, com os mesmos 14/24 casos completos.
+
+Na C35, a segunda leitura ancorada obteve 46/48 rotas, ante 38/48
+na triagem inicial. Exigir concordância entre duas segundas leituras
+ficou em 45/48. Uma falha comum revelou que uma frase anterior fixava
+o referente do pedido factual. Preservar o trecho do ato e o
+antecedente necessário é a próxima hipótese de triagem.
+
 ## Transferência de uma lição para outra sessão
 
 O teste temporal do CDP usa uma fixture Git sem remoto. O revisor lê a fila lacrada

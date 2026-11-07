@@ -1069,11 +1069,10 @@ class Catalogo:
                                          priorizar_nota=priorizar_nota)
         janelas_bastao = [i for i, p in enumerate(escolhidas)
                           if p.caminho == "docs/cdp/EM_ANDAMENTO.md"]
-        if (ancoras and len(escolhidas) == limite and len(janelas_bastao) >= 3
-                and 2 * len(janelas_bastao) > limite
+        if (ancoras and len(escolhidas) == limite and len(janelas_bastao) > 1
                 and not re.search(r"\b(?:passagem(?: de bastao)?|frentes? em andamento|em[-_ ]andamento)\b",
                                   _normalizar(consulta))):
-            # Uma terceira janela de histórico não desloca uma fonte nova da lição líder.
+            # Uma segunda janela de histórico cede lugar a uma fonte da lição líder ainda ausente.
             fontes_escolhidas = {p.caminho for p in escolhidas}
             apoio = next((p for p in ancoras[0] if p.caminho not in fontes_escolhidas), None)
             if apoio is not None:

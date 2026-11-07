@@ -5,6 +5,29 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## Orçamento de evidência e perguntas compostas — 07/11/2026
+
+A C34 separou a seleção por partes da nova referência cruzada na nota
+da trava. Os quatro braços acertaram 13/24 sob o mesmo teto. O seletor
+foi de 19/32 para 20/32 grupos, sem completar outra consulta. A nota
+com o vínculo ao roteiro recuperou 16/16 na C33 já aberta e não alterou
+a C34. A referência do roteiro está na candidata do acervo, com três
+âncoras verificadas. Ela ainda aguarda curadoria para ficar ativa.
+
+`memoria buscar --orcamento-estrito` preserva trechos inteiros dentro de
+4.500 bytes. Em uma consulta da C33, a CLI passou de 4.745 a 3.856 bytes
+com a opção. Seis perguntas da C34 excederam o limite antigo de 240
+caracteres e a primeira seleção guiada parou antes de pedir recortes.
+O limite de 480 caracteres passou a valer para busca, triagem, seleção
+e corpus de avaliação. Na repetição C34, a triagem acertou 24/24.
+A busca automática obteve 14/24 e a guiada 12/24, com duas perdas.
+
+A contraprova retrospectiva reduziu a C31 de 45/48 para 41/48 na
+leitura livre e 44/48 na ancorada. A concordância entre as duas segundas
+leituras, conservando a triagem inicial em desacordos, fez 46/48.
+Na C35 cega, a leitura ancorada obteve 46/48 e a concordância 45/48.
+Um antecedente necessário ficou de fora da interpretação de estado.
+
 ## Prova literal e memória quando a fonte muda — 07/11/2026
 
 `memoria rotear --ancorar-ambiguidade` vincula as duas interpretações

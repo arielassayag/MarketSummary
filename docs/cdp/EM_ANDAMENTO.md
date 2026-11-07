@@ -7,43 +7,40 @@ motivo: `docs/cdp/DECISOES.md`.
 
 ## Confirmação prospectiva da memória em andamento — 07/11/2026
 
-A revisão `0232a0e9` manteve **52/52 evidências e 16/16 controles** no benchmark original.
-Na qualificação com fontes congeladas, o conjunto exposto até a oitava passou em
-280/280 evidências e 89/89 controles, sem orientação indevida. O catálogo teve 125 notas
-ativas. O limite de cinco passagens, 14 linhas e 1.800 bytes por passagem segue fixo.
+A revisão `2784236e` manteve **52/52 evidências e 16/16 controles** no original, com até
+cinco passagens de 14 linhas e 1.800 bytes cada. Nas baterias abertas até a décima,
+passou em 328/328 evidências e 105/105 controles. A sensibilidade agregada de 4.500 bytes
+ficou em 51/52 no original.
 
-A oitava confirmação lacrada mediu 21/24 na revisão `49d456c8`, ante 20/24 nos dois
-braços sem notas. A memória ganhou dois casos e perdeu um sobre a busca direta.
-Passou em 7/8 controles e orientou indevidamente uma pergunta de procedimento.
+A décima primeira confirmação teve **14/24 evidências, 8/8 controles e zero orientação
+indevida**. A busca direta e a contextual sem notas tiveram 15/24. Dos dez erros, oito
+tinham os grupos no conjunto ampliado. A décima, com `d4e5865b`, teve 16/24 e 8/8,
+com um falso encaminhamento estático corrigido na revisão seguinte. A meta de 100% em
+inéditos continua aberta. Lacres, primeiras execuções e comparação estão em
+`outputs/cdp-memoria-rigor/`.
 
-A nona confirmação foi redigida por outro anotador, sem acesso a busca, notas ou resultados.
-Na primeira execução de `0232a0e9`, a memória recuperou 20/24 evidências, ante 19/24 da
-direta e 20/24 da contextual sem notas. Passou em 8/8 controles, sem orientação indevida.
-A meta de 100% em inéditos continua aberta. Os resultados da primeira execução e os
-lacres de ambas estão em `outputs/cdp-memoria-rigor/`.
+O gerador estrutural usa títulos, parágrafos, seções vizinhas e seções curtas inteiras.
+A busca automática só amplia por inclusão literal ou reaproveita vaga redundante.
+A seleção guiada acrescenta recuperação de funções Python por AST, nome e docstring.
+O comando `memoria buscar --candidatas` lacra referências canônicas, até 64.
+`memoria buscar --conferir-selecao` reconstrói o pacote no Git e confere os IDs
+recebidos pela entrada padrão, até cinco passagens e 4.500 bytes.
 
-Na nona, todas as quatro falhas de evidência já tinham os trechos no conjunto ampliado
-de 30 passagens diretas, 30 contextuais e as âncoras elegíveis. O gargalo observado foi
-selecionar as cinco. O ensaio de trocar passagens conforme as partes da consulta regrediu
-nas baterias abertas. A busca padrão reaproveita passagens integralmente contidas e só
-considera trocar a última por uma direta quando aumenta a cobertura lexical faltante.
+O pacote guiado continha evidência viável para 52/52 no original e 24/24 em cada
+uma das rodadas abertas 10 e 11. Isso é cobertura de candidatos conferida pelo
+gabarito. O ensaio com um agente sem acesso ao gabarito recuperou sete das oito
+falhas abertas da décima. O reranqueador local com partes da consulta recuperou
+23/24 na nona aberta e quatro das oito falhas da décima. As duas vias de seleção
+ainda precisam de avaliação de ponta a ponta em inéditos.
 
-Depois de abrir a nona, quatro notas existentes receberam referências para autenticação
-editorial, monitoramento remoto, adoção de rascunhos e limites de risco. A regressão
-na árvore de trabalho passou em 304/304 evidências e 97/97 controles, sem orientação
-indevida. O catálogo permaneceu em 125 notas. Essas notas aguardam a próxima confirmação.
+A 12ª está lacrada. Antes de usar, fixe código, catálogo e protocolo de seleção.
+A seleção guiada precisa ser avaliada separadamente da busca automática. Preserve
+as escolhas com lacre antes de confrontar com o gabarito. A consolidação de duas
+notas semanais liberou uma vaga e o catálogo de trabalho auditou 127 notas.
 
-O reranqueador Qwen3-0.6B local preservando os três primeiros trechos levou a sétima
-aberta de 18/24 a 22/24, mas ficou em 51/52 no original. Ao proteger também a âncora
-pertinente da nota mais bem ranqueada, o ensaio preservou 52/52 no original, manteve
-22/24 na sétima e recuperou duas das quatro falhas avaliadas na nona. Ainda faltam
-replays completos e avaliação inédita com o modelo. Os dados de experimento estão em
-`outputs/cdp-memoria-rigor/`, os protótipos em `/tmp/cdp-confirm8-lab/`.
-
-Na nona, a expansão estrutural por seções levou o conjunto direto e contextual curto
-de 22/24 a 24/24 sem notas. Ela ainda precisa demonstrar ganho na seleção final. A busca
-padrão permanece determinística e offline. O próximo inédito deve permanecer separado
-dos ajustes e o candidato deve ser fixado antes da primeira recuperação.
+A suíte focal teve 414 aprovações e uma omissão. A execução ampla foi interrompida
+após a troca de HEAD durante a fixture de replay. Os dois testes dessa fixture
+passaram em revisões estáveis, inclusive neste worktree.
 
 ## Recuperação com memória qualificada — 07/11/2026
 

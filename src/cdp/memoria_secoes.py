@@ -2,10 +2,11 @@
 
 from __future__ import annotations
 
+import ast
 from collections import Counter
 from collections.abc import Iterable
 from dataclasses import dataclass
-from functools import lru_cache
+from functools import cached_property, lru_cache
 from itertools import pairwise, zip_longest
 from math import log1p
 from pathlib import PurePosixPath
@@ -73,11 +74,14 @@ def _secoes(caminho: str, linhas: tuple[str, ...], nome: str) -> Iterable[_Secao
     for (inicio, titulos), (fim, _) in pairwise([*marcadores, (len(linhas), ())]):
         if inicio == fim:
             continue
-        paragrafos = tuple((a, b, termos_contextuais("\n".join(linhas[a:b])))
-                           for a, b in _paragrafos(linhas, inicio, fim))
-        yield _Secao(inicio, fim, termos_contextuais("\n".join(linhas[inicio:fim])),
-                     termos_contextuais(titulos[-1]),
-                     termos_contextuais(" / ".join((nome, *titulos))), paragrafos)
+        yield _secao(linhas, inicio, fim, titulos[-1], " / ".join((nome, *titulos)))
+
+
+def _secao(linhas: tuple[str, ...], inicio: int, fim: int, titulo: str, contexto: str) -> _Secao:
+    paragrafos = tuple((a, b, termos_contextuais("\n".join(linhas[a:b])))
+                       for a, b in _paragrafos(linhas, inicio, fim))
+    return _Secao(inicio, fim, termos_contextuais("\n".join(linhas[inicio:fim])),
+                  termos_contextuais(titulo), termos_contextuais(contexto), paragrafos)
 
 
 def _pesos(consulta: Counter[str], frequencias: Counter[str], total: int) -> dict[str, float]:
@@ -130,6 +134,32 @@ class IndiceSecoes:
                 for _, _, termos in secao.paragrafos:
                     self._df_paragrafos.update(termos.keys())
         self._janela = lru_cache(maxsize=2048)(self._ler_janela)
+
+    @cached_property
+    def _funcoes(self) -> tuple[list[tuple[str, _Secao]], Counter[str], Counter[str], int]:
+        funcoes: list[tuple[str, _Secao]] = []
+        df_funcoes: Counter[str] = Counter()
+        df_paragrafos: Counter[str] = Counter()
+        n_paragrafos = 0
+        for caminho, linhas in self._fontes.items():
+            if not caminho.endswith(".py"):
+                continue
+            try:
+                arvore = ast.parse("\n".join(linhas))
+            except SyntaxError:
+                continue
+            for secao in self._documentos[caminho]:
+                for _, _, termos in secao.paragrafos:
+                    df_paragrafos.update(termos.keys())
+                    n_paragrafos += 1
+            for no in ast.walk(arvore):
+                if not isinstance(no, (ast.FunctionDef, ast.AsyncFunctionDef)) or no.end_lineno is None:
+                    continue
+                titulo = f"{no.name} {ast.get_docstring(no) or ''}"
+                funcao = _secao(linhas, no.lineno - 1, no.end_lineno, titulo, titulo)
+                funcoes.append((caminho, funcao))
+                df_funcoes.update(funcao.titulo.keys() | funcao.corpo.keys())
+        return funcoes, df_funcoes, df_paragrafos, n_paragrafos
 
     def _ler_janela(self, caminho: str, inicio: int,
                     fim: int) -> tuple[Local, Counter[str]] | None:
@@ -222,6 +252,30 @@ class IndiceSecoes:
                 if len(passagens) == limite:
                     break
         return passagens
+
+    def simbolos(self, consulta: str, limite: int = 24) -> list[Local]:
+        """Localiza funções Python pelo nome e pela documentação, sem executar código."""
+        if limite <= 0:
+            return []
+        funcoes, df_funcoes, df_paragrafos, n_paragrafos = self._funcoes
+        termos = termos_contextuais(consulta)
+        pesos = _pesos(termos, df_funcoes, len(funcoes))
+        pesos_locais = _pesos(termos, df_paragrafos, n_paragrafos)
+        ordenadas: list[tuple[float, str, int, _Secao]] = []
+        for caminho, funcao in funcoes:
+            nota = _cobertura(funcao.titulo, pesos) + _relevancia(funcao.corpo, pesos, 100)
+            if nota > 0:
+                ordenadas.append((-nota, caminho, funcao.inicio, funcao))
+        candidatas: dict[Local, None] = {}
+        for _, caminho, _, funcao in sorted(ordenadas, key=lambda x: x[:3])[:12]:
+            candidatas.update(dict.fromkeys(self._candidatas(caminho, funcao, pesos_locais)))
+            # Inclui a entrada e o retorno quando a pergunta coincide com o contrato da função.
+            inicio, fim = funcao.inicio, funcao.fim
+            for a, b in ((inicio, min(fim, inicio + LINHAS_PASSAGEM)),
+                         (max(inicio, fim - LINHAS_PASSAGEM), fim)):
+                if (janela := self._janela(caminho, a, b)) is not None:
+                    candidatas[janela[0]] = None
+        return list(candidatas)[:limite]
 
     def buscar(self, consulta: str, limite: int = _MAX_SECOES * _POR_SECAO) -> list[Local]:
         """Intercala as janelas válidas das melhores seções de fontes distintas."""

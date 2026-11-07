@@ -192,7 +192,10 @@ def main() -> None:
     parser.add_argument("corpora", nargs="+", type=Path, help="baterias JSON congeladas")
     args = parser.parse_args()
     fontes = Fontes(raiz_repo(), revisao=args.revisao)
-    for arquivo in ("memoria", "memoria_busca", "memoria_avaliacao", "memoria_linhagem", "memoria_secoes"):
+    for arquivo in (
+        "memoria", "memoria_busca", "memoria_avaliacao", "memoria_linhagem", "memoria_secoes",
+        "memoria_selecao",
+    ):
         caminho = f"src/cdp/{arquivo}.py"
         if (fontes.raiz / caminho).read_bytes() != fontes.ler(caminho, 256 * 1024):
             raise ValueError(f"o código local diverge da revisão: {caminho}")

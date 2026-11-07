@@ -60,6 +60,31 @@ no corte. A data filtra a elegibilidade dentro da revisão escolhida. Ela, sozin
 insuficiente para estabelecer disponibilidade histórica ou origem *point-in-time*.
 A avaliação usa a data fixa do corpus.
 
+## Seleção guiada de evidências
+
+Use a seleção guiada para entregar ao agente trechos canônicos numerados. O pacote
+combina as buscas direta, contextual e estrutural, as âncoras e as funções Python
+pertinentes ao escopo. Ele inclui a consulta, a revisão, a data, os tamanhos em bytes
+e o lacre do conjunto. Cada corpo é dado para leitura e referência.
+
+```sh
+uv run python -m cdp memoria buscar --escopo diario --consulta 'moeda do benchmark índice local' --candidatas
+```
+
+O agente devolve um JSON com `lacre` e `ids`, usando o lacre do pacote e os números
+das passagens que, juntas, sustentam a consulta. O código valida a devolutiva e
+resolve até cinco referências dentro do orçamento agregado de 4.500 bytes. Para
+conferir, use a revisão e a data retornadas no pacote, repita a consulta e passe
+o JSON pela entrada padrão.
+
+```sh
+uv run python -m cdp memoria buscar --escopo diario --consulta 'moeda do benchmark índice local' \
+  --revisao "$REVISAO_DO_PACOTE" --data "$DATA_DO_PACOTE" --conferir-selecao < selecao.json
+```
+
+Em consultas de estado ou fora do escopo, a lista de candidatas fica vazia.
+O pacote e a conferência funcionam localmente a partir do Git.
+
 ## Registrar uma lição
 
 Em desenvolvimento, escolha uma descoberta reutilizável com evidência em `AGENTS.md`, em um

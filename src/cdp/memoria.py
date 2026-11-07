@@ -883,10 +883,16 @@ class BuscaCanonica:
         return self.indices[chave]
 
     def estruturais(self, escopo: Escopo, consulta: str, *, completas: bool = False) -> list[Local]:
+        indice = self._indice_estrutural(escopo)
+        return indice.compactas(consulta) if completas else indice.buscar(consulta)
+
+    def simbolos(self, escopo: Escopo, consulta: str) -> list[Local]:
+        return self._indice_estrutural(escopo).simbolos(consulta)
+
+    def _indice_estrutural(self, escopo: Escopo) -> IndiceSecoes:
         if escopo not in self._indices_secoes:
             self._indices_secoes[escopo] = IndiceSecoes(self._documentos(escopo))
-        indice = self._indices_secoes[escopo]
-        return indice.compactas(consulta) if completas else indice.buscar(consulta)
+        return self._indices_secoes[escopo]
 
     def _documentos(self, escopo: Escopo) -> Iterable[tuple[str, tuple[str, ...]]]:
         for caminho in self.caminhos[escopo]:
@@ -1076,8 +1082,20 @@ def _comando(args: argparse.Namespace) -> int:
             else:
                 _json(out)
         elif acao == "buscar":
-            _json(c.buscar(args.escopo, args.consulta, args.limite,
-                           estado_atual=args.estado_atual))
+            if args.candidatas or args.conferir_selecao:
+                from .memoria_selecao import MAX_BYTES_RESPOSTA, aplicar, preparar
+
+                if args.conferir_selecao and revisao is None:
+                    raise MemoriaErro("a conferência exige a revisão e a data do pacote")
+                pacote = preparar(c, args.escopo, args.consulta, args.limite)
+                if args.candidatas:
+                    _json(pacote)
+                else:
+                    bruto = sys.stdin.buffer.read(MAX_BYTES_RESPOSTA + 1)
+                    _json(aplicar(pacote, bruto))
+            else:
+                _json(c.buscar(args.escopo, args.consulta, args.limite,
+                               estado_atual=args.estado_atual))
         else:
             _json(_relatorio(c))
             return int(bool(c.problemas))
@@ -1143,8 +1161,13 @@ def registrar(sub: argparse._SubParsersAction) -> None:
         if acao == "buscar":
             s.add_argument("--consulta", required=True, type=_consulta)
             s.add_argument("--limite", type=int, choices=range(1, 11), default=5)
-            s.add_argument("--estado-atual", action="store_true",
-                           help="encaminha à fonte do estado sem recuperar memória")
+            modo = s.add_mutually_exclusive_group()
+            modo.add_argument("--estado-atual", action="store_true",
+                              help="encaminha à fonte do estado sem recuperar memória")
+            modo.add_argument("--candidatas", action="store_true",
+                              help="gera um pacote lacrado para seleção de evidências pelo agente")
+            modo.add_argument("--conferir-selecao", action="store_true",
+                              help="confere os IDs recebidos na entrada padrão contra o pacote lacrado")
         if acao == "propor":
             s.add_argument("--id", required=True)
             s.add_argument("--evidencia", required=True, help="caminho relativo da fonte")

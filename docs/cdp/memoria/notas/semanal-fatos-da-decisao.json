@@ -2,8 +2,8 @@
   "id": "semanal-fatos-da-decisao",
   "tipo": "licao",
   "estado": "curada",
-  "titulo": "A ficha de cobertura não torna um fato citável na decisão",
-  "resumo": "Consulte a ficha do emissor como leitura e use somente os identificadores presentes no context.json preparado para a semana. Sem evidência, a pesquisa se abstém do nome. O prazo da montagem limita a pesquisa ao material sustentado que já estiver disponível.",
+  "titulo": "Pesquisa semanal e fatos citáveis da decisão",
+  "resumo": "A pesquisa parte da última nota publicada e do retrato completo de modelos, com conferência de mudanças posteriores. Use a ficha como leitura e cite apenas os fatos do context.json da semana. Sem evidência, abstenha-se do nome e respeite o prazo da montagem.",
   "escopos": [
     "semanal",
     "cobertura"
@@ -14,7 +14,9 @@
     "ficha",
     "prazo",
     "evidência",
-    "abstenção"
+    "abstenção",
+    "retrato completo",
+    "nota publicada"
   ],
   "registrada_em": "2026-11-07",
   "revisada_em": "2026-11-07",
@@ -22,6 +24,11 @@
   "destaque": true,
   "substitui": [],
   "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/SEMANAL.md",
+      "trecho": "Leia `briefing.md`, `context.json`, `INSTRUCTIONS.md` e os dois schemas. Ponto de partida por\nemissor: a nota de pesquisa publicada mais recente (`book/cobertura/notas/<IID>/<data>/nota.md`,\ncom a ficha do modelo aberto da cobertura) e o modelo atualizado do retrato de\n`cobertura.ultimo_retrato_completo` (`book/cobertura/<data>/modelos.csv` e\n`book/cobertura/<data>/modelos/<IID>.json`: preço-alvo, rating, confiança, portões e a ponte do\nalvo contra o retrato anterior); confira o que mudou depois da data da nota. O modelo é leitura:\nnúmeros só entram pelos fatos de `context.json`.",
+      "sha256": "93a10f1743bd46c4be626133772b7bce5d75015b0ec1987d1741f1b414f3c6a0"
+    },
     {
       "caminho": "docs/cdp/playbooks/SEMANAL.md",
       "trecho": "4. Sem evidência ⇒ abster-se daquele nome (ou `abstain: true` na decisão inteira).\n\nNúmeros só como `{{fact:<id>}}` existentes em `context.json`: cite fatos `val.<IID>.*` somente\nquando estiverem lá (a ficha da nota é leitura, não fato citável da semana). **Orçamento de\ntempo:** a cada bloco de pesquisa, rode `agenda` e renove a trava (seção 0); com\n`semanal.minutos_ate_o_prazo` abaixo de 60, pare de pesquisar e escreva com o que estiver\nsustentado por evidência.",

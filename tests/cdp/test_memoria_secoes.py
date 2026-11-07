@@ -4,6 +4,16 @@ from cdp.memoria_busca import BYTES_PASSAGEM, LINHAS_PASSAGEM
 from cdp.memoria_secoes import IndiceSecoes
 
 
+def test_busca_por_simbolo_inclui_retorno_de_funcao_descrita_na_docstring():
+    caminho = "src/cdp/agenda.py"
+    linhas = ("def pendentes():", '    """Seleção de pregões sem registro diário."""',
+              *("    pass",) * 15, "    return fechamentos")
+    indice = IndiceSecoes([(caminho, linhas)])
+    candidatas = indice.simbolos("Como selecionar pregões sem registro diário?")
+    assert any(p.caminho == caminho and p.fim == len(linhas) for p in candidatas)
+    assert all(p.fim - p.inicio + 1 <= 14 for p in candidatas)
+
+
 def test_busca_por_secoes_diversifica_fontes_e_recupera_vizinha():
     fontes = {
         "Roteiro.md": (

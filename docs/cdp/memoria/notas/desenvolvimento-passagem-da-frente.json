@@ -1,0 +1,30 @@
+{
+  "id": "desenvolvimento-passagem-da-frente",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "A passagem corrente orienta a retomada de desenvolvimento",
+  "resumo": "Abra o início de EM_ANDAMENTO.md, localize a frente em curso e confira as entradas pertinentes de DECISOES.md. Ao encerrar, registre na passagem o que mudou, o que falta, os riscos e a evidência que a próxima sessão precisará consultar.",
+  "escopos": [
+    "desenvolvimento"
+  ],
+  "tags": [
+    "passagem de bastão",
+    "frente em curso",
+    "continuidade",
+    "registro de decisões",
+    "pendências",
+    "encerramento de sessão"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/RETOMAR.md",
+      "trecho": "1. Abra a passagem corrente no início de `docs/cdp/EM_ANDAMENTO.md` e localize a frente em que\n   vai trabalhar. As entradas anteriores ficam disponíveis para consulta.\n2. Em `docs/cdp/DECISOES.md`, consulte as decisões ligadas à frente escolhida.\n3. Antes de encerrar, atualize `docs/cdp/EM_ANDAMENTO.md` (o que mudou, o que falta, riscos).\n   Registre evidência e pendências no repositório. Uma lição durável pode virar proposta de",
+      "sha256": "12b8c067caded5b2e3c492a45be04a90847c57bfc3ab1022ec905929521d5695"
+    }
+  ]
+}

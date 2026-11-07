@@ -1,0 +1,35 @@
+{
+  "id": "semanal-abstencao-na-validacao",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "Validação pendente perto do prazo aciona a abstenção",
+  "resumo": "Se a validação continuar com ok falso e faltarem menos de 20 minutos, use abstain verdadeiro sem visões em pm_decision.json e valide novamente. O código decide pela carteira só-quant. Pule a revisão de prévia quando restarem menos de 30 minutos.",
+  "escopos": [
+    "semanal"
+  ],
+  "tags": [
+    "abstain",
+    "abstenção",
+    "validador reprovado",
+    "só quant",
+    "prévia pré-trade",
+    "janela curta"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/SEMANAL.md",
+      "trecho": "A saída é JSON (`ok` e `problemas`, como em todos os validadores). Corrija e repita até\n`\"ok\": true`. Com menos de 20 minutos para o prazo e ainda `\"ok\": false`, reescreva\n`pm_decision.json` como abstenção (`abstain: true`, sem visões) e valide de novo: o código decide\npela carteira só-quant.",
+      "sha256": "df71aa812922437c335767333ab3878cac395d2afe0bad8e5d03d277bbcb55d4"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/SEMANAL.md",
+      "trecho": "## 6. Revisão pré-trade (recomendada; pule com menos de 30 minutos para o prazo)",
+      "sha256": "0a79b3e310692a7d77fac09504e1f332055eac3b3d606a26a01cf16e673a5ca6"
+    }
+  ]
+}

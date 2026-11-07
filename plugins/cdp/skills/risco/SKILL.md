@@ -13,6 +13,7 @@ allowed-tools:
   - Bash(uv run python -m cdp agenda)
   - Bash(uv run python -m cdp kill-switch on *)
   - Bash(uv run python -m cdp kill-switch on)
+  - Bash(uv run python -m cdp memoria contexto --escopo risco)
   - Bash(uv run python -m cdp publicar --tarefa cdp-risco-1330 *)
   - Bash(uv run python -m cdp publicar --tarefa cdp-risco-1330)
   - Bash(uv run python -m cdp publicar --tarefa cdp-risco-1603 *)

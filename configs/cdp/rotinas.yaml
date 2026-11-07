@@ -53,14 +53,12 @@ tarefas:
     cron_utc: "7 14 * * 1-5"
     reservas:
       cdp-semanal-b: {hora: "12:07", cron: "7 12 * * 1-5", cron_utc: "7 15 * * 1-5"}
-      cdp-semanal-c: {hora: "13:07", cron: "7 13 * * 1-5", cron_utc: "7 16 * * 1-5"}
-      cdp-semanal-d: {hora: "14:07", cron: "7 14 * * 1-5", cron_utc: "7 17 * * 1-5"}
     gate: semanal
     caminhos: [book, reports, data/market, data/publico, artifacts/painel, pesquisa]
     timeout_min: 240
     atraso_max_min: 230
-    # Menor que o intervalo entre reservas (60 min) menos a folga de relógio: a trava de uma
-    # execução que morreu sem renovar vence antes da reserva seguinte (`rotinas verificar`).
+    # A trava de uma execução que morreu sem renovar vence antes da reserva das 12:07,
+    # observada a folga de relógio (`rotinas verificar`).
     trava_ttl_min: 50
   cdp-risco-1330:
     descricao: Monitor de risco intradiário; liga o kill switch só por gatilho HARD do código.
@@ -101,9 +99,6 @@ tarefas:
     dias: [seg, ter, qua, qui, sex]
     cron: "22 19 * * 1-5"
     cron_utc: "22 22 * * 1-5"
-    reservas:
-      cdp-diario-reforco: {hora: "21:07", cron: "7 21 * * 1-5", cron_utc: "7 0 * * 2-6"}
-      cdp-diario-sabado: {hora: "10:07", dias: [sab], cron: "7 10 * * 6", cron_utc: "7 13 * * 6"}
     gate: diario
     caminhos: [book, reports, data/market, data/publico, artifacts/painel, pesquisa]
     timeout_min: 150
@@ -116,7 +111,7 @@ tarefas:
     playbook: docs/cdp/playbooks/COBERTURA.md
     skill: cdp-cobertura
     plugin: /cdp:cobertura
-    hora: "22:37"                    # depois do reforço das 21:07 (na nuvem, máquinas separadas)
+    hora: "22:37"                    # depois do fechamento das 19:22
     dias: [seg, ter, qua, qui]
     cron: "37 22 * * 1-4"
     cron_utc: "37 1 * * 2-5"
@@ -124,6 +119,22 @@ tarefas:
     caminhos: [book/cobertura, book/audit_log.jsonl, pesquisa]   # rascunhos em docs/cdp/notas só são lidos
     timeout_min: 180
     atraso_max_min: 240
+  cdp-dreaming:
+    descricao: Revisão semanal das candidatas e evidências da memória do CDP, em leitura.
+    playbook: docs/cdp/playbooks/DREAMING.md
+    skill: cdp-dreaming
+    plugin: /cdp:dreaming
+    hora: "10:07"
+    dias: [sab]
+    cron: "7 10 * * 6"
+    cron_utc: "7 13 * * 6"
+    gate: sempre
+    escreve_livro: false
+    concorrencia: compartilhada
+    caminhos: []
+    timeout_min: 20
+    atraso_max_min: 240
+    modelo: leve
   cdp-calibracao:
     descricao: >-
       Backtest mensal com todo o histórico e comparação com a execução anterior (nunca muda o

@@ -1,0 +1,41 @@
+{
+  "id": "cobertura-validar-rascunho-entregue",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "A validação vem antes da reescrita do rascunho entregue",
+  "resumo": "Com rascunho adotado ou com entrega indicada e cópia já existente, valide antes de editar. Se passar, publique a cópia como está. Se reprovar, corrija a cópia no livro pelos problemas do validador. O rascunho entregue preserva a identidade da mente autora.",
+  "escopos": [
+    "cobertura",
+    "desenvolvimento"
+  ],
+  "tags": [
+    "rascunho entregue",
+    "adoção de nota",
+    "cópia existente",
+    "validate-nota",
+    "autoria do rascunho",
+    "identidade do app"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/COBERTURA.md",
+      "trecho": "2. **Rascunho entregue** (nota escrita fora do clone das rotinas, em\n   `docs/cdp/notas/<IID>/<data>.json`): com `rascunho_adotado: true` — ou `rascunho_entregue`\n   preenchido e `rascunho_adotado: false` —, valide **antes de escrever qualquer coisa**:\n   `ok: true` ⇒ vá ao subpasso 6 sem reescrever; `ok: false` ⇒ corrija a cópia a partir dos\n   `problemas`.",
+      "sha256": "9b7e0fa790411ea0f87262acf7651696a3a2c02268dba1b38ede2bf776efd234"
+    },
+    {
+      "caminho": "docs/cdp/NOTAS.md",
+      "trecho": "- `nota prepare --issuer IID [--date D]`: grava os arquivos do código (regraváveis até a\n  publicação) e adota o rascunho entregue em `docs/cdp/notas/<IID>/<data>.json` se `nota.json`\n  ainda não existir (`rascunho_adotado: true`); nunca sobrescreve `nota.json` nem publica.",
+      "sha256": "cb433fad5572b0da3b31298f0cd6a18ae3674bff4ae1e5540c6983170a73788d"
+    },
+    {
+      "caminho": "AGENTS.md",
+      "trecho": "seu app. Os validadores e as publicações (`validate`, `validate-nota`, `validate-tese`,\n`validate-daily`, `validate-weekly-report` e os `publish`) recusam um arquivo cujo `\"mind\"`\ndifere da mente da execução (`--mind` ou `CDP_HARNESS`); só o rascunho entregue por outra sessão\n(`docs/cdp/teses/`, `docs/cdp/notas/`) mantém a mente de quem o escreveu. O executor deste",
+      "sha256": "ceb060f7e5f98ddda3276f17d26286c8d6a67d5db471d2d431ef51a3669e8ffc"
+    }
+  ]
+}

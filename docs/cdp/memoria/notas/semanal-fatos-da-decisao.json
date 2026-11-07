@@ -1,0 +1,31 @@
+{
+  "id": "semanal-fatos-da-decisao",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "A ficha de cobertura não torna um fato citável na decisão",
+  "resumo": "Consulte a ficha do emissor como leitura e use somente os identificadores presentes no context.json preparado para a semana. Sem evidência, a pesquisa se abstém do nome. O prazo da montagem limita a pesquisa ao material sustentado que já estiver disponível.",
+  "escopos": [
+    "semanal",
+    "cobertura"
+  ],
+  "tags": [
+    "factbook",
+    "context.json",
+    "ficha",
+    "prazo",
+    "evidência",
+    "abstenção"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": true,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/SEMANAL.md",
+      "trecho": "4. Sem evidência ⇒ abster-se daquele nome (ou `abstain: true` na decisão inteira).\n\nNúmeros só como `{{fact:<id>}}` existentes em `context.json`: cite fatos `val.<IID>.*` somente\nquando estiverem lá (a ficha da nota é leitura, não fato citável da semana). **Orçamento de\ntempo:** a cada bloco de pesquisa, rode `agenda` e renove a trava (seção 0); com\n`semanal.minutos_ate_o_prazo` abaixo de 60, pare de pesquisar e escreva com o que estiver\nsustentado por evidência.",
+      "sha256": "3d37d6daaea86a4cd6efa6c07014487af40e2cdcd5f2dc38823d27326b65d30f"
+    }
+  ]
+}

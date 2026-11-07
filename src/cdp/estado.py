@@ -25,7 +25,9 @@ from zoneinfo import ZoneInfo
 from . import executor as ex
 from .rotinas import (
     CAMINHOS_DO_LIVRO,
+    CAMINHOS_TAREFAS_APOSENTADAS,
     ROTINAS_PADRAO,
+    TAREFAS_APOSENTADAS,
     Cron,
     ErroRotinas,
     Rotinas,
@@ -125,9 +127,14 @@ def ultimas_execucoes(raiz: Path, rot: Rotinas | None, n: int = 10,
             "executor": tr.get("CDP-Executor"), "harness": tr.get("CDP-Harness"),
             "sessao": tr.get("CDP-Sessao"), "execucao": tr.get("CDP-Execucao"),
             "mensagem": assunto}
-        if item["tarefa"] and rot is not None and item["tarefa"] in rot.tarefas:
-            caminhos = rot.tarefas[item["tarefa"]].caminhos
+        tarefa = item["tarefa"]
+        if tarefa and rot is not None and tarefa in rot.tarefas:
+            caminhos = rot.tarefas[tarefa].caminhos
             item["fora_do_escopo"] = [p for p in nomes if not ex._no_livro(p, caminhos)]
+        elif tarefa in TAREFAS_APOSENTADAS:
+            item["tarefa_aposentada"] = True
+            item["fora_do_escopo"] = [
+                p for p in nomes if not ex._no_livro(p, CAMINHOS_TAREFAS_APOSENTADAS)]
         out.append(item)
         if len(out) >= n:
             break
@@ -231,7 +238,7 @@ def incidentes(ag: Mapping[str, Any], *, agora: datetime, integridade: Mapping[s
     inicio = _d(ag.get("data_de_inicio"))
     pre = _reinicio_pendente(ag)
     if pre:
-        # alta só depois da primeira rotina do dia de início (semanal 11:07, reservas até 14:07)
+        # alta só depois da primeira rotina do dia de início (semanal 11:07, reserva às 12:07)
         sev = ("alta" if inicio is not None and (hoje > inicio or (hoje == inicio
                                                                   and local >= _em(hoje, "12:30")))
                else "media")
@@ -242,9 +249,9 @@ def incidentes(ag: Mapping[str, Any], *, agora: datetime, integridade: Mapping[s
         dd = _d(d)
         if dd is not None and local > _em(dd, "22:00"):
             out.append(_inc("SLA_FECHAMENTO", "alta",
-                            f"Fechamento de {dd:%d/%m/%Y} pendente após o reforço das 21:07.",
-                            "Ver o registro da rotina cdp-diario-reforco; a repescagem de "
-                            "sábado tenta de novo.", _em(dd, "22:00")))
+                            f"Fechamento de {dd:%d/%m/%Y} pendente após as 22:00.",
+                            "Conferir cdp-diario; o próximo disparo diário recupera "
+                            "as datas pendentes.", _em(dd, "22:00")))
             break
     if not pre and (ag.get("semanal") or {}).get("decisao_perdida"):
         out.append(_inc("DECISAO_PERDIDA", "alta", str((ag.get("semanal") or {}).get("motivo")),
@@ -261,7 +268,7 @@ def incidentes(ag: Mapping[str, Any], *, agora: datetime, integridade: Mapping[s
             local > _em(rsd + timedelta(days=1), "12:00"):
         out.append(_inc("SLA_RELATORIO_SEMANAL", "media",
                         f"Relatório semanal de {rsd:%d/%m/%Y} pendente.",
-                        "A repescagem de sábado (cdp-diario-sabado) publica.",
+                        "O próximo cdp-diario processa o relatório pendente.",
                         _em(rsd + timedelta(days=1), "12:00")))
     cob = ag.get("cobertura") or {}
     cd = _d(cob.get("data"))
@@ -556,7 +563,10 @@ def para_markdown(e: Mapping[str, Any]) -> str:
     if execs:
         linhas += ["| Quando | Tarefa | Executor | Registro |", "|---|---|---|---|"]
         for x in execs[:6]:
-            linhas.append(f"| {_fmt_dt(x['quando'])} | {x.get('tarefa') or '—'} | "
+            tarefa = x.get("tarefa") or "—"
+            if x.get("tarefa_aposentada"):
+                tarefa += " (aposentada)"
+            linhas.append(f"| {_fmt_dt(x['quando'])} | {tarefa} | "
                           f"{x.get('executor') or '—'} | {x['mensagem'][:60]} |")
     else:
         linhas.append("- Nenhuma registrada neste histórico.")

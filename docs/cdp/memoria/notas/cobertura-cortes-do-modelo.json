@@ -1,0 +1,32 @@
+{
+  "id": "cobertura-cortes-do-modelo",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "Base de preço e conhecimento têm cortes distintos",
+  "resumo": "Um retrato pode usar um fechamento anterior e fontes conhecidas depois dele. Leia base_preco, data_modelo e conhecimento_ate para identificar os cortes. Para uma janela histórica fixa, o código recusa capturas posteriores ao corte mesmo que o documento declare data de publicação anterior.",
+  "escopos": [
+    "cobertura",
+    "calibracao",
+    "desenvolvimento"
+  ],
+  "tags": [
+    "corte temporal",
+    "captura",
+    "vintage",
+    "base de preço",
+    "recepção",
+    "point-in-time"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/COBERTURA.md",
+      "trecho": "Na política temporal `2026-10.8`, a base de preços e o conhecimento do modelo têm cortes\ndistintos. `cobertura run --date D` usa o fechamento de mercado `D`; o retrato recebe a data\ncivil do conhecimento do executor. O contrato selado contém `base_preco`, `data_modelo`,\n`conhecimento_ate`, `coleta_inicio` e `coleta_fim`. Assim, uma montagem na sexta pode usar\npreços de quinta e fontes disponíveis na sexta, sem anunciar um retrato histórico de quinta.\nA primeira coleta arquiva os bytes com horário real; a seleção final ocorre offline depois\nda coleta. Um corte histórico fixo não avança. Arquivos capturados depois do corte são\nrecusados, inclusive quando o documento declara publicação anterior. Datas civis de\npublicação sem prova de horário continuam com essa limitação; nenhum carimbo é retrodatado.",
+      "sha256": "5cee63b47405ec878acc27a71a897f4c0de5100507e3b85bcbd5d63aa56d8149"
+    }
+  ]
+}

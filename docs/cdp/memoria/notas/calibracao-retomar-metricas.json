@@ -1,0 +1,34 @@
+{
+  "id": "calibracao-retomar-metricas",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "A calibração retoma das métricas já gravadas",
+  "resumo": "Se a execução já gravou metrics.json para a data, retome do resumo comparativo. Use as métricas prontas de cada execução. Alterações de mandato ou código ficam como propostas para decisão humana, fora da rotina de calibração.",
+  "escopos": [
+    "calibracao"
+  ],
+  "tags": [
+    "calibração",
+    "metrics.json",
+    "backtest",
+    "retomada",
+    "mandato"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": true,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/CALIBRACAO.md",
+      "trecho": "- **Nunca altere** `configs/cdp/fund.yaml` nem código: mudanças de mandato são só **propostas**,\n  para decisão humana (qualquer mudança altera o `config_hash` e precisa ser auditada).\n- Números **copiados** de `metrics.json`, lado a lado; nunca calcule diferenças.\n- O backtest usa só sinais point-in-time; a camada de IA e a escada de drawdown não entram.",
+      "sha256": "45f8a59ed9bbbf014a01cc673e97adc94cb4dc8ce3201ecfcc6ceab20664a736"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/CALIBRACAO.md",
+      "trecho": "1. Data de hoje (Brasília) = `agora_brasilia` de `uv run python -m cdp agenda`. Se\n   `reports/backtest/AAAA-MM-DD/CALIBRACAO_MENSAL.md` de hoje existe, encerre (\"calibração do mês\n   já feita\"). Se `reports/backtest/AAAA-MM-DD/mensal/metrics.json` existe (o script de rotina\n   rodou o backtest antes, ou uma execução anterior parou depois dele), pule o passo 2: nos dois\n   casos, `cdp publicar` leva a pasta `mensal/` junto com o resumo.\n2. Backtest com todo o histórico (demora; rode-o uma vez, sem laços de espera e nunca dois ao\n   mesmo tempo):",
+      "sha256": "b8fa35fbfda08f81ed6c3ebb4fab25feb37fd621d25d81116a6426461ea7fb07"
+    }
+  ]
+}

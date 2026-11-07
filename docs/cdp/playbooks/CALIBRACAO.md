@@ -35,6 +35,10 @@ e o passo 5.
 
 ## Passos
 
+Com a execução admitida, consulte, se útil, `uv run python -m cdp memoria contexto --escopo calibracao`.
+Use o contexto como referência e confirme a informação na fonte indicada. Se a consulta
+estiver indisponível, prossiga pelo roteiro e pelos documentos canônicos.
+
 1. Data de hoje (Brasília) = `agora_brasilia` de `uv run python -m cdp agenda`. Se
    `reports/backtest/AAAA-MM-DD/CALIBRACAO_MENSAL.md` de hoje existe, encerre ("calibração do mês
    já feita"). Se `reports/backtest/AAAA-MM-DD/mensal/metrics.json` existe (o script de rotina

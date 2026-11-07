@@ -97,7 +97,7 @@ def test_task_reserve_does_not_wait_for_family_primary():
 
 @pytest.mark.parametrize(("tid", "instant", "should_wait"), [
     ("cdp-semanal", "2026-10-10T11:04:00-03:00", False),
-    ("cdp-diario-sabado", "2026-10-10T10:04:00-03:00", True),
+    ("cdp-dreaming", "2026-10-10T10:04:00-03:00", True),
     ("cdp-calibracao", "2026-11-01T09:12:00-03:00", True),
     ("cdp-calibracao", "2026-11-02T09:12:00-03:00", False),
     ("cdp-calibracao", "2026-10-31T23:59:00-03:00", False),

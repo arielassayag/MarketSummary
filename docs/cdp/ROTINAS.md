@@ -20,43 +20,43 @@ Fonte única: `configs/cdp/rotinas.yaml`. Tabela gerada por
 | `cdp-status` | segundas, 08:30 | `30 11 * * 1` | `docs/cdp/playbooks/STATUS.md` | não |
 | `cdp-semanal` | dias úteis, 11:07 | `7 14 * * 1-5` | `docs/cdp/playbooks/SEMANAL.md` | sim (trava exclusiva) |
 | `cdp-semanal-b` | dias úteis, 12:07 | `7 15 * * 1-5` | `docs/cdp/playbooks/SEMANAL.md` | sim (trava exclusiva) |
-| `cdp-semanal-c` | dias úteis, 13:07 | `7 16 * * 1-5` | `docs/cdp/playbooks/SEMANAL.md` | sim (trava exclusiva) |
-| `cdp-semanal-d` | dias úteis, 14:07 | `7 17 * * 1-5` | `docs/cdp/playbooks/SEMANAL.md` | sim (trava exclusiva) |
 | `cdp-risco-1330` | dias úteis, 13:30 | `30 16 * * 1-5` | `docs/cdp/playbooks/RISCO.md` | só arquivos novos |
 | `cdp-risco-1603` | dias úteis, 16:03 | `3 19 * * 1-5` | `docs/cdp/playbooks/RISCO.md` | só arquivos novos |
 | `cdp-diario` | dias úteis, 19:22 | `22 22 * * 1-5` | `docs/cdp/playbooks/DIARIO.md` | sim (trava exclusiva) |
-| `cdp-diario-reforco` | dias úteis, 21:07 | `7 0 * * 2-6` | `docs/cdp/playbooks/DIARIO.md` | sim (trava exclusiva) |
-| `cdp-diario-sabado` | sábados, 10:07 | `7 13 * * 6` | `docs/cdp/playbooks/DIARIO.md` | sim (trava exclusiva) |
 | `cdp-cobertura` | segunda a quinta, 22:37 | `37 1 * * 2-5` | `docs/cdp/playbooks/COBERTURA.md` | sim (trava exclusiva) |
+| `cdp-dreaming` | sábados, 10:07 | `7 13 * * 6` | `docs/cdp/playbooks/DREAMING.md` | não |
 | `cdp-calibracao` | dia 1 de cada mês, 09:15 | `15 12 1 * *` | `docs/cdp/playbooks/CALIBRACAO.md` | só arquivos novos |
 <!-- fim da tabela gerada -->
 
-- **Montagem semanal** (`cdp-semanal` e reservas): age só no **dia de montagem** — o último
+- **Montagem semanal** (`cdp-semanal` e `cdp-semanal-b`): age só no **dia de montagem** — o último
   pregão da semana na NYSE (sexta-feira, ou o dia útil anterior em feriado nos EUA) e a data de
   início do mandato (carteira inaugural). Atualiza os modelos da cobertura (retrato completo
   com dados até o pregão anterior), coleta todos os dados até o momento, pesquisa, decisão
   do PM, validação e decisão autônoma antes do **prazo efetivo** (`semanal.prazo_efetivo` em
   `cdp agenda`: em geral 15:00; mais cedo nos fechamentos antecipados dos EUA), e a tese de
-  investimento da carteira decidida. A execução hipotética é no leilão de fechamento. As reservas
-  retomam de onde a principal parou; nos outros dias, o gate sai sem chamar o modelo.
+  investimento da carteira decidida. A execução hipotética é no leilão de fechamento. A reserva
+  das 12:07 retoma de onde a principal parou. Nos outros dias, o gate sai sem chamar o modelo.
 - **Risco** (13:30 e 16:03): monitor intradiário; kill switch só por gatilho HARD do código.
-- **Fechamento diário** (19:22, reforço às 21:07, repescagem no sábado às 10:07): registro do
+- **Fechamento diário** (19:22 nos dias úteis) registra o
   fechamento, comentário e relatório do dia, tese pendente da semana corrente, um relatório
   semanal de resultado para cada dia de montagem pendente (do mais antigo ao mais recente,
   inclusive sem decisão gravada), o retrato da cobertura quando o código o pede — parcial, só
   dos emissores com resultado divulgado depois do último modelo; completo, depois de um evento
   macro de impacto alto do calendário público (`configs/cdp/cobertura/eventos_macro.yaml`) — e,
-  no último dia de montagem do mês, a revisão mensal dos modelos.
+  no último dia de montagem do mês, a revisão mensal dos modelos. O próximo disparo
+  recupera os pregões pendentes que a agenda apontar.
 - **Cobertura** (segunda a quinta, 22:37): notas de pesquisa por emissor, até 12 por execução —
   primeiro as de pós-resultado dos emissores reavaliados, depois a fila do código —, só com
   fontes públicas.
 - **Estado** (segundas, 08:30): só leitura.
+- **Dreaming** (sábados, 10:07) revisa a memória em leitura e sugere curadoria. Veja o
+  [roteiro](playbooks/DREAMING.md).
 - **Calibração** (dia 1, 09:15): grava só arquivos novos em `reports/backtest/`; backtest mensal
   comparado com o anterior, mudanças de mandato só como proposta.
 
 **Sexta-feira (dia de montagem).** 11:07: modelos da cobertura atualizados com dados até o
-pregão anterior, coleta, pesquisa e decisão antes do prazo efetivo (reservas às 12:07, 13:07 e
-14:07); leilão de fechamento: execução hipotética da carteira nova; 19:22 (reforço às 21:07):
+pregão anterior, coleta, pesquisa e decisão antes do prazo efetivo, com reserva às 12:07.
+O leilão de fechamento é a execução hipotética da carteira nova. Às 19:22 começa o
 registro do fechamento, comentário do dia, relatório semanal de resultado (mudanças da carteira,
 resultado e atribuição da semana e desde o início), retrato da cobertura só se houver resultado
 ou evento macro do dia (ou se a atualização da manhã não tiver sido gravada) e, no último dia de

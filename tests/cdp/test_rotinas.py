@@ -55,17 +55,23 @@ def test_rotinas_yaml_is_coherent():
 
 def test_expected_tasks_reserves_and_inheritance():
     ids = set(ROT.tarefas)
-    assert {"cdp-status", "cdp-semanal", "cdp-semanal-b", "cdp-semanal-c", "cdp-semanal-d",
-            "cdp-risco-1330", "cdp-risco-1603", "cdp-diario", "cdp-diario-reforco",
-            "cdp-diario-sabado", "cdp-cobertura", "cdp-calibracao"} == ids
+    assert {"cdp-status", "cdp-semanal", "cdp-semanal-b", "cdp-risco-1330", "cdp-risco-1603",
+            "cdp-diario", "cdp-cobertura", "cdp-dreaming", "cdp-calibracao"} == ids
+    assert [t.id for t in ROT.tarefas.values() if t.reserva_de] == ["cdp-semanal-b"]
+    assert not ids.intersection(ro.TAREFAS_APOSENTADAS)
+    for tid in ro.TAREFAS_APOSENTADAS:
+        with pytest.raises(ro.ErroRotinas):
+            ROT.tarefa(tid)
     b = ROT.tarefa("cdp-semanal-b")
     assert b.reserva_de == "cdp-semanal" and b.familia == "cdp-semanal" and b.hora == "12:07"
     assert b.playbook == ROT.tarefa("cdp-semanal").playbook and b.exclusiva
     r2 = ROT.tarefa("cdp-risco-1603")
     assert r2.playbook == "docs/cdp/playbooks/RISCO.md" and r2.reserva_de is None
     assert r2.concorrencia == "compartilhada" and not r2.exclusiva and r2.grava
-    sab = ROT.tarefa("cdp-diario-sabado")
+    sab = ROT.tarefa("cdp-dreaming")
     assert sab.dias == ("sab",) and sab.cron_utc == "7 13 * * 6"
+    assert not sab.grava and not sab.exclusiva and not sab.caminhos and not sab.caminhos_exclusivos
+    assert sab.gate == "sempre" and sab.reserva_de is None
     assert not ROT.tarefa("cdp-status").grava
     for t in ROT.tarefas.values():  # escritores só nos caminhos do livro
         assert all(any(c == b or c.startswith(b + "/") for b in ro.CAMINHOS_DO_LIVRO)
@@ -102,8 +108,8 @@ def test_cron_parsing_and_firings():
 
 def test_proximas_orders_firings():
     prox = ROT.proximas(_dt("2026-10-09T10:00:00"), 6)
-    assert [t.id for _, t in prox] == ["cdp-semanal", "cdp-semanal-b", "cdp-semanal-c",
-                                       "cdp-risco-1330", "cdp-semanal-d", "cdp-risco-1603"]
+    assert [t.id for _, t in prox] == ["cdp-semanal", "cdp-semanal-b", "cdp-risco-1330",
+                                       "cdp-risco-1603", "cdp-diario", "cdp-dreaming"]
 
 
 def _yaml(tmp_path: Path, tarefas: dict) -> Path:
@@ -253,6 +259,21 @@ def test_gate_requires_the_designated_executor(raiz):
     assert code == ro.EXIT_EXECUTAR and out["ensaio"] and out["trava"] is None
 
 
+def test_dreaming_gate_runs_read_only_in_its_saturday_slot(raiz, monkeypatch):
+    from cdp import executor as ex
+
+    def recusar_trava(*args, **kwargs):
+        pytest.fail("dreaming tentou adquirir uma trava distribuída")
+
+    monkeypatch.setattr(ex, "trava_adquirir", recusar_trava)
+    code, out = _avaliar(raiz, "cdp-dreaming", "2026-10-10T10:08:00", {},
+                         adquirir=True, registrar=False)
+    assert code == ro.EXIT_EXECUTAR and out["executar"]
+    assert not out["grava"] and not out["exclusiva"] and out["trava"] is None
+    code, out = _avaliar(raiz, "cdp-dreaming", "2026-10-11T10:08:00", {}, registrar=False)
+    assert code == ro.EXIT_PULAR and not out["executar"] and out["execucao"] is None
+
+
 def test_gate_stale_guard_and_execution_record(raiz):
     env = {"CDP_EXECUTOR": "local-pc", "CDP_HARNESS": "codex"}
     code, out = _avaliar(raiz, "cdp-semanal", "2026-10-09T15:30:00", env,
@@ -383,7 +404,8 @@ def test_export_cli_prints_name_cron_and_prompt(capsys):
     assert main(["rotinas", "exportar", "--alvo", "claude-routines", "--formato", "md",
                  "--rotinas", str(ROOT / "configs/cdp/rotinas.yaml")]) == 0
     md = capsys.readouterr().out
-    assert "cron (UTC): `7 0 * * 2-6`" in md and "## CDP · cdp-diario-reforco (21:07 BRT)" in md
+    assert "cron (UTC): `7 13 * * 6`" in md and "## CDP · cdp-dreaming (10:07 BRT)" in md
+    assert not any(tid in md for tid in ro.TAREFAS_APOSENTADAS)
 
 
 def _run_blocks(wf: dict) -> list[str]:
@@ -440,7 +462,9 @@ def test_export_github_actions_workflow():
 def test_export_other_schedulers(tmp_path, capsys):
     cron = ro.exportar_cron(ROT)
     assert "CRON_TZ=America/Sao_Paulo" in cron and "22 19 * * 1-5 cd" in cron
-    assert "7 0 * * 2-6" in ro.exportar_cron(ROT, utc=True)
+    cron_utc = ro.exportar_cron(ROT, utc=True)
+    assert "37 1 * * 2-5" in cron_utc and "7 13 * * 6" in cron_utc
+    assert "7 0 * * 2-6" not in cron_utc
     plists = ro.exportar_launchd(ROT)
     p = plistlib.loads(plists["com.cdp.cdp-calibracao.plist"].encode())
     assert p["StartCalendarInterval"] == [{"Day": 1, "Hour": 9, "Minute": 15}]
@@ -456,9 +480,11 @@ def test_export_other_schedulers(tmp_path, capsys):
                  "--rotinas", str(ROOT / "configs/cdp/rotinas.yaml")]) == 0
     assert len(list((tmp_path / "la").glob("com.cdp.*.plist"))) == len(ROT.tarefas)
     capsys.readouterr()
-    assert main(["rotinas", "resolver", "--cron-utc", "7  0 * * 2-6",
+    assert main(["rotinas", "resolver", "--cron-utc", "7  13 * * 6",
                  "--rotinas", str(ROOT / "configs/cdp/rotinas.yaml")]) == 0
-    assert capsys.readouterr().out.strip() == "tarefa=cdp-diario-reforco"
+    assert capsys.readouterr().out.strip() == "tarefa=cdp-dreaming"
+    assert main(["rotinas", "resolver", "--cron-utc", "7 0 * * 2-6",
+                 "--rotinas", str(ROOT / "configs/cdp/rotinas.yaml")]) == ro.EXIT_CONFIG
     assert main(["rotinas", "resolver", "--cron-utc", "1 2 3 * *",
                  "--rotinas", str(ROOT / "configs/cdp/rotinas.yaml")]) == ro.EXIT_CONFIG
     capsys.readouterr()
@@ -640,10 +666,10 @@ def test_runner_skips_without_a_model_call(tmp_path):
 
 
 def test_last_scheduled_slot_covers_utc_midnight():
-    t = ROT.tarefa("cdp-diario-reforco")
-    agora = _dt("2026-10-09T21:30:00")
+    t = ROT.tarefa("cdp-cobertura")
+    agora = _dt("2026-10-08T22:55:00")
     slot = ro.Cron.ler(t.cron).ultimo(agora, BRT)
-    assert slot == _dt("2026-10-09T21:07:00") and agora - slot < timedelta(minutes=30)
+    assert slot == _dt("2026-10-08T22:37:00") and agora - slot < timedelta(minutes=30)
 
 
 # ------------------------------------------------------- trava: falha fechada e reentrada

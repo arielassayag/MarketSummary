@@ -1,7 +1,7 @@
 ---
 name: diario
-description: "Fechamento diário do CDP — Cabra da Peste depois do pregão: marcação a mercado, execução no leilão de fechamento no dia de montagem, risco, atribuição e registro encadeado por hash (código), comentário do dia escrito pela mente \"claude-code\" e relatório diário; recupera pregões perdidos e a tese pendente da semana corrente; na noite do dia de montagem, um relatório semanal de resultado para cada dia de montagem pendente (do mais antigo ao mais recente, inclusive sem decisão gravada); o retrato da cobertura quando pendente (parcial após resultados divulgados, completo após evento macro de juros ou inflação) e, no último dia de montagem do mês, a revisão mensal dos modelos (revisao.json escrito pela mente \"claude-code\"). Entrada e saída da execução no Claude Code; o procedimento é o roteiro neutro docs/cdp/playbooks/DIARIO.md. Use nas tarefas agendadas cdp-diario, cdp-diario-reforco e cdp-diario-sabado ou quando pedirem o fechamento do dia do CDP."
-argument-hint: "[tarefa agendada: cdp-diario, cdp-diario-reforco, cdp-diario-sabado]"
+description: "Fechamento diário do CDP — Cabra da Peste depois do pregão: marcação a mercado, execução no leilão de fechamento no dia de montagem, risco, atribuição e registro encadeado por hash (código), comentário do dia escrito pela mente \"claude-code\" e relatório diário; recupera pregões perdidos e a tese pendente da semana corrente; na noite do dia de montagem, um relatório semanal de resultado para cada dia de montagem pendente (do mais antigo ao mais recente, inclusive sem decisão gravada); o retrato da cobertura quando pendente (parcial após resultados divulgados, completo após evento macro de juros ou inflação) e, no último dia de montagem do mês, a revisão mensal dos modelos (revisao.json escrito pela mente \"claude-code\"). Entrada e saída da execução no Claude Code; o procedimento é o roteiro neutro docs/cdp/playbooks/DIARIO.md. Use na tarefa agendada cdp-diario ou quando pedirem o fechamento do dia do CDP."
+argument-hint: "[tarefa agendada: cdp-diario]"
 allowed-tools:
   - Read
   - Write
@@ -25,20 +25,13 @@ allowed-tools:
   - Bash(uv run python -m cdp daily close)
   - Bash(uv run python -m cdp daily publish *)
   - Bash(uv run python -m cdp daily publish)
+  - Bash(uv run python -m cdp memoria contexto --escopo diario)
   - Bash(uv run python -m cdp painel --sem-local *)
   - Bash(uv run python -m cdp painel --sem-local)
   - Bash(uv run python -m cdp publicar --tarefa cdp-diario *)
   - Bash(uv run python -m cdp publicar --tarefa cdp-diario)
-  - Bash(uv run python -m cdp publicar --tarefa cdp-diario-reforco *)
-  - Bash(uv run python -m cdp publicar --tarefa cdp-diario-reforco)
-  - Bash(uv run python -m cdp publicar --tarefa cdp-diario-sabado *)
-  - Bash(uv run python -m cdp publicar --tarefa cdp-diario-sabado)
   - Bash(uv run python -m cdp rotinas gate --tarefa cdp-diario *)
   - Bash(uv run python -m cdp rotinas gate --tarefa cdp-diario)
-  - Bash(uv run python -m cdp rotinas gate --tarefa cdp-diario-reforco *)
-  - Bash(uv run python -m cdp rotinas gate --tarefa cdp-diario-reforco)
-  - Bash(uv run python -m cdp rotinas gate --tarefa cdp-diario-sabado *)
-  - Bash(uv run python -m cdp rotinas gate --tarefa cdp-diario-sabado)
   - Bash(uv run python -m cdp sincronizar --executar *)
   - Bash(uv run python -m cdp sincronizar --executar)
   - Bash(uv run python -m cdp tese prepare *)
@@ -71,9 +64,7 @@ bloquear, pare e explique no resumo final. O procedimento é o roteiro `docs/cdp
 execução no Claude Code (app desktop, CLI ou sessão interativa). Metodologia:
 `docs/cdp/METODOLOGIA.md`; manual do agente: `AGENTS.md`.
 
-Argumento (`$ARGUMENTS`): o id da tarefa agendada que disparou você (`cdp-diario`,
-`cdp-diario-reforco` ou `cdp-diario-sabado`); sem argumento, `cdp-diario`. Fora do horário agendado
-(pedido do operador), substitua `--aguardar-horario` por `--manual` no gate.
+Use `cdp-diario` como argumento da tarefa. Fora do horário agendado (pedido do operador), substitua `--aguardar-horario` por `--manual` no gate.
 
 ## Regras desta skill
 

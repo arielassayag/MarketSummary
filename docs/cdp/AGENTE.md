@@ -38,9 +38,8 @@ sessão: `docs/cdp/playbooks/RETOMAR.md`.
   (`docs/cdp/SITE.md`); o artifact do claude.ai é espelho privado opcional.
 - **Executor**: o ambiente que grava o livro (`configs/cdp/executor.yaml`); **identidade**:
   `CDP_EXECUTOR` ou `.cdp/local.yaml`.
-- **Rotina / tarefa**: uma entrada de `configs/cdp/rotinas.yaml`; **reserva / reforço /
-  repescagem**: disparos extras da mesma família (`cdp-semanal-b`, `cdp-diario-reforco`,
-  `cdp-diario-sabado`).
+- Uma **rotina** ou **tarefa** é uma entrada de `configs/cdp/rotinas.yaml`. A **reserva**
+  `cdp-semanal-b` é o disparo extra da montagem antes do prazo efetivo.
 - **Roteiro** (playbook): o passo a passo neutro de uma tarefa, em `docs/cdp/playbooks/`.
 - **Gate**: decisão determinística "agir agora?" (`cdp rotinas gate`), antes de qualquer uso de
   modelo.

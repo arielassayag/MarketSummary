@@ -1,0 +1,41 @@
+{
+  "id": "cobertura-nota-apos-reavaliacao",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "A nota de pós-resultado segue a reavaliação do modelo",
+  "resumo": "A rotina diária faz a reavaliação parcial por emissor após a divulgação. A lista cobertura.notas_pos_resultado traz quem já teve o resultado incorporado e ainda precisa de nota. Trate a lista antes da fila regular, conte cada emissor uma vez e use iniciação quando for a primeira nota.",
+  "escopos": [
+    "cobertura",
+    "diario"
+  ],
+  "tags": [
+    "divulgação de resultado",
+    "modelo reavaliado",
+    "notas pós-resultado",
+    "prioridade da fila",
+    "iniciação",
+    "retrato parcial"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/NOTAS.md",
+      "trecho": "- Pós-resultado: quando um emissor divulga resultado (CVM, SEC ou Yahoo), a rotina diária\n  reavalia o modelo no fechamento do pregão seguinte (retrato parcial da cobertura,\n  `cobertura.snapshot_pendente` com `tipo: \"parcial\"` em `cdp agenda`) e a rotina de notas",
+      "sha256": "18b3cd180ea4aebf9f8b4b8b7e60653744ef0c05adaa4073f79f586b2eea5f29"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/COBERTURA.md",
+      "trecho": "**Primeiro, os modelos reavaliados por resultado.** `cobertura.notas_pos_resultado` em\n`cdp agenda` lista, em ordem, os emissores cujo resultado divulgado nos últimos 4 dias já entrou\nno modelo da cobertura (retrato parcial da rotina diária ou atualização do dia de montagem) e que\nainda não têm nota posterior ao resultado (`resultado`, `modelo` e `ultima_nota` de cada item).",
+      "sha256": "8d7f6d22ded84a838649f4a40ac4e1f597b663647884cbf38031c27ea3d9f371"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/COBERTURA.md",
+      "trecho": "Trate-os antes da fila, com a data de hoje (`agora_brasilia`) como data da nota e tipo\n`pos_resultado` (ou `iniciacao`, se o emissor não tiver nota anterior), no mesmo limite de\n`limite_por_execucao` emissores por execução; um emissor que também esteja na `fila` é tratado\numa vez só. Os retratos parciais são da rotina diária: esta rotina nunca roda `cdp cobertura run`.",
+      "sha256": "f0c6a6c116a08d245cbf1a7166203175f5abb57972d4ee740dbed4a66dde0e15"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "id": "diario-retificacao-imutavel",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Retificação editorial preserva o relatório original",
+  "resumo": "A retificação semanal anexa uma nota e um evento de auditoria com a execução e a trava do gate diário. A etapa local produz novos arquivos. A publicação no repositório ocorre depois pelo publicador canônico.",
+  "escopos": [
+    "diario",
+    "operador"
+  ],
+  "tags": [
+    "retificação",
+    "errata",
+    "imutabilidade",
+    "relatório semanal",
+    "trilha"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+      "trecho": "Somente no executor designado e com gate diário normal que devolva `executar: true`, use a\nexecução nova e sua trava legítima. A agenda expõe `retificacao_editorial`; o gate reconhece\na pendência sem recolocar fechamentos ou o relatório original entre as etapas financeiras.\nSe um operador autorizado pelo humano atuar fora do horário, a entrada é a prevista no\nroteiro diário com `--manual`; este documento não autoriza um novo disparo ou contornar no-op.",
+      "sha256": "020b9af1045948a9422f05d725193496dedc3b2d9311c7b2be3c8097263d7fcd"
+    },
+    {
+      "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+      "trecho": "`--publish` deste comando cria somente a nota local e o evento\n`WEEKLY_EDITORIAL_RECTIFICATION`; não faz commit nem push. A nota fica em\n`reports/semanal/<data>/retificacoes/<id>/`, com JSON, Markdown e HTML novos. O original e os\neventos anteriores permanecem literais. Uma tentativa repetida não sobrescreve a nota.",
+      "sha256": "d602c116ee7bfc5ef81aeabeebfdbf77835a979b17908e203aa21e985fb162bf"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "- `retificacao_editorial.pendente: true` → trate a pendência por\n  [Retificação editorial](../RETIFICACAO_EDITORIAL.md) antes do passo 7. Se for o único item do\n  gate, pule os passos financeiros 2 a 6: não repita MOC, registro diário, tese, coleta ou\n  relatório semanal. Falha de integridade ou recibo original incompleto → pare e relate;\n  nunca regrave o original para resolver a pendência.",
+      "sha256": "b095c515c71921be800885d58c1ae81e5ceb4533a97a143ae748b16dea31acc0"
+    }
+  ]
+}

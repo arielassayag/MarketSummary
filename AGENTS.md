@@ -47,19 +47,24 @@ decidido por código.
    - **Rotina agendada** (o prompt cita uma tarefa `cdp-…`): a skill da tarefa
      (`.agents/skills/cdp-*`, espelhada em `.claude/skills/`), que começa por
      `uv run python -m cdp rotinas gate --tarefa <tarefa> --adquirir` (uma vez só). Com
-     `executar: false`, responda o `motivo` e encerre. Senão, siga o roteiro até o fim, sem
-     perguntar nada; se algo impedir, pare e explique no resumo final. **Exceção:** quando o
-     prompt disser que a agenda, a trava e a publicação são do executor (script de rotina em
-     volta de um app com sandbox), faça só o roteiro — não rode gate, `cdp sincronizar`,
-     `cdp publicar`, `cdp trava` nem `git` que grave.
+     `executar: false` (código 10), responda "Sem execução: <motivo>" e encerre. Após o gate e
+     a sincronização, quando aplicável, a consulta opcional de memória está no roteiro da tarefa.
+     Siga o roteiro até o fim, sem perguntar nada. Se algo impedir, pare e explique no resumo
+     final. **Exceção.** Quando o prompt disser que
+     a agenda, a trava e a publicação são do executor (script de rotina em volta de um app com
+     sandbox), faça só o roteiro. Nesse modo, não rode gate, `cdp sincronizar`, `cdp publicar`,
+     `cdp trava` nem `git` que grave.
    - **Sessão de operador** (uma pessoa pede algo da operação): leitura por padrão. Grave o
      livro só se `executor.sou_o_executor` for verdadeiro em `cdp estado` e a pessoa pedir,
      com `--manual` no gate. Na nuvem do Claude Code, o ambiente "CDP" (com `CDP_EXECUTOR`) é
      só das rotinas: sessões interativas usam o ambiente Default, sem `CDP_EXECUTOR`.
    - **Sessão de desenvolvimento**: nunca grave `book/`, `data/`, `reports/`, `artifacts/`
-     nem rode `publish`, `decide` ou `reinicio`; leia `docs/cdp/EM_ANDAMENTO.md` e
-     `docs/cdp/DECISOES.md` (seção 6).
-5. Ao encerrar uma sessão de desenvolvimento, atualize `docs/cdp/EM_ANDAMENTO.md` (o que mudou,
+     nem rode `publish`, `decide` ou `reinicio`. Leia a passagem corrente de
+     `docs/cdp/EM_ANDAMENTO.md` e as entradas pertinentes de `docs/cdp/DECISOES.md` (seção 6).
+5. Em sessões de operador e desenvolvimento, consulte a memória por papel quando útil, conforme
+   `docs/cdp/playbooks/RETOMAR.md`. A memória aponta para fontes e lições revisadas. Agenda,
+   estado, mandato, livro e FactBook continuam sendo as fontes para a execução e seus números.
+6. Ao encerrar uma sessão de desenvolvimento, atualize `docs/cdp/EM_ANDAMENTO.md` (o que mudou,
    o que falta, riscos) — é assim que o próximo agente, em qualquer app, continua o trabalho.
    Roteiro completo: `docs/cdp/playbooks/RETOMAR.md`.
 
@@ -126,17 +131,16 @@ Substituem os itens 3 e 4 da seção do Fechamento apenas para o CDP.
 | `cdp-status` | segundas, 08:30 | `30 11 * * 1` | `docs/cdp/playbooks/STATUS.md` | não |
 | `cdp-semanal` | dias úteis, 11:07 | `7 14 * * 1-5` | `docs/cdp/playbooks/SEMANAL.md` | sim (trava exclusiva) |
 | `cdp-semanal-b` | dias úteis, 12:07 | `7 15 * * 1-5` | `docs/cdp/playbooks/SEMANAL.md` | sim (trava exclusiva) |
-| `cdp-semanal-c` | dias úteis, 13:07 | `7 16 * * 1-5` | `docs/cdp/playbooks/SEMANAL.md` | sim (trava exclusiva) |
-| `cdp-semanal-d` | dias úteis, 14:07 | `7 17 * * 1-5` | `docs/cdp/playbooks/SEMANAL.md` | sim (trava exclusiva) |
 | `cdp-risco-1330` | dias úteis, 13:30 | `30 16 * * 1-5` | `docs/cdp/playbooks/RISCO.md` | só arquivos novos |
 | `cdp-risco-1603` | dias úteis, 16:03 | `3 19 * * 1-5` | `docs/cdp/playbooks/RISCO.md` | só arquivos novos |
 | `cdp-diario` | dias úteis, 19:22 | `22 22 * * 1-5` | `docs/cdp/playbooks/DIARIO.md` | sim (trava exclusiva) |
-| `cdp-diario-reforco` | dias úteis, 21:07 | `7 0 * * 2-6` | `docs/cdp/playbooks/DIARIO.md` | sim (trava exclusiva) |
-| `cdp-diario-sabado` | sábados, 10:07 | `7 13 * * 6` | `docs/cdp/playbooks/DIARIO.md` | sim (trava exclusiva) |
 | `cdp-cobertura` | segunda a quinta, 22:37 | `37 1 * * 2-5` | `docs/cdp/playbooks/COBERTURA.md` | sim (trava exclusiva) |
+| `cdp-dreaming` | sábados, 10:07 | `7 13 * * 6` | `docs/cdp/playbooks/DREAMING.md` | não |
 | `cdp-calibracao` | dia 1 de cada mês, 09:15 | `15 12 1 * *` | `docs/cdp/playbooks/CALIBRACAO.md` | só arquivos novos |
 
-A maioria dos disparos sai no gate em segundos (nada pendente). A semana típica: fechamento
+A única reserva é `cdp-semanal-b`, às 12:07. Se o fechamento ficar pendente, o próximo
+`cdp-diario` retoma as datas pela agenda. Aos sábados, `cdp-dreaming` revisa a memória em leitura
+e devolve sugestões de curadoria. Quando falta trabalho, o gate encerra o disparo. A semana típica: fechamento
 de quinta (19:22, com o retrato da cobertura) → notas de cobertura na quinta à noite (22:37) →
 na sexta (último pregão da semana na NYSE), pesquisa às 11:07 e decisão até o prazo efetivo →
 execução no leilão de fechamento → na sexta à noite, efetivação, registro diário, relatório
@@ -164,6 +168,8 @@ código (passo a passo em `docs/cdp/AUTOMACAO.md`):
 
 - Estado e agenda: `uv run python -m cdp estado`, `uv run python -m cdp agenda`,
   `uv run python -m cdp verify`
+- Memória: `uv run python -m cdp memoria contexto --escopo desenvolvimento`
+  (`docs/cdp/MEMORIA.md`).
 - Rotina: `uv run python -m cdp rotinas gate --tarefa cdp-diario --adquirir` →
   `uv run python -m cdp sincronizar --executar` → roteiro → publicação **só** por
   `uv run python -m cdp publicar --tarefa cdp-diario --mensagem "CDP: fechamento 2026-10-12" --execucao <execucao> --trava <trava.id>`
@@ -203,7 +209,7 @@ código (passo a passo em `docs/cdp/AUTOMACAO.md`):
 | Documento | Para quê |
 |---|---|
 | `docs/cdp/AGENTE.md` | papéis, glossário, direitos de decisão, "nunca", como plugar um app novo |
-| `docs/cdp/playbooks/` | roteiros neutros das rotinas: `SEMANAL.md`, `DIARIO.md`, `RISCO.md`, `COBERTURA.md`, `STATUS.md`, `CALIBRACAO.md`; de sessão: `RETOMAR.md` (retomar) e `ESPELHO.md` (espelho privado opcional do painel, só operador) |
+| `docs/cdp/playbooks/` | roteiros neutros das rotinas: `SEMANAL.md`, `DIARIO.md`, `RISCO.md`, `COBERTURA.md`, `STATUS.md`, `CALIBRACAO.md`, `DREAMING.md`; de sessão: `RETOMAR.md` (retomar) e `ESPELHO.md` (espelho privado opcional do painel, só operador) |
 | `docs/cdp/METODOLOGIA.md` | mandato, modelo de risco, alpha, construção e gestão de risco |
 | `docs/cdp/EXECUCAO.md` | dia de montagem, prazo efetivo, leilão de fechamento, capacidade e custos |
 | `docs/cdp/COBERTURA.md`, `docs/cdp/NOTAS.md` | modelos abertos de valuation e notas de pesquisa por emissor |
@@ -220,6 +226,7 @@ código (passo a passo em `docs/cdp/AUTOMACAO.md`):
 | `docs/cdp/REPLAY_OPERACIONAL.md` | ensaio isolado com decisão, MOC, diário e origem retrospectiva autenticada; limites E1/PIT |
 | `docs/cdp/ARQUITETURA.md` | módulos, comandos e fluxo semanal e diário |
 | `docs/cdp/EM_ANDAMENTO.md`, `docs/cdp/DECISOES.md` | passagem de bastão e registro de decisões |
+| `docs/cdp/MEMORIA.md`, `docs/cdp/MEMORIA_PESQUISA.md` | contexto por papel, curadoria, avaliação e pesquisa de arquitetura da memória |
 | `docs/cdp/HISTORICO_2026-10-10_EM_ANDAMENTO.md` | histórico integral da passagem até 10/10/2026; a retomada começa pelo estado corrente em EM_ANDAMENTO |
 | `docs/cdp/HISTORICO_PRIVADO_2026-10-10_CONSOLIDACAO.md` | histórico preservado da preparação privada e seus limites; não concede autoridade operacional |
 | `docs/cdp/PASSAGEM_CODEX.md` | prompt de passagem do desenvolvimento (Claude Code) para a operação no Codex, com o P0 até a carteira inaugural |

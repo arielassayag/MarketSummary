@@ -35,9 +35,9 @@ antecipada, B3 fechada), 31/12 (quinta; B3, Santiago e Bogotá fechadas).
 |---|---|
 | Véspera, após o fechamento | Fechamento diário (marcação, risco, atribuição, comentário de P&L) e retrato da cobertura |
 | 11h00 | Pesquisa e preparação da semana com dados até o momento da análise |
-| até o prazo efetivo (15h00; 14h15 em fechamento antecipado nos EUA) | Decisão gravada (tarefas de reserva às 12h07, 13h07 e 14h07) |
+| até o prazo efetivo (15h00; 14h15 em fechamento antecipado nos EUA) | Decisão gravada (reserva às 12h07) |
 | 16h00–17h00 (até 01/11/2026); 18h00 a partir de 02/11/2026 | Leilões de fechamento: execução das ordens |
-| noite (19h20 e reserva às 21h07) | Efetivação ao fechamento oficial, registro diário e comentário de P&L; em seguida o **relatório semanal de resultado** (§10) |
+| noite (19h22) | Efetivação ao fechamento oficial, registro diário e comentário de P&L; em seguida o **relatório semanal de resultado** (§10) |
 
 Os EUA saem do horário de verão em 01/11/2026: a NYSE, a B3 (alinhada a Nova York) e a BMV passam
 a fechar às 18h00 de Brasília. A rotina diária roda depois disso e a base de mercado fecha o
@@ -373,8 +373,8 @@ uv run python -m cdp verify            # trilha, livro, track record e base de m
   carteira inaugural, o histórico começa nesse dia em caixa (PL inicial, sem posições); numa
   semana regular, a carteira anterior segue marcada. A próxima data de montagem decide de novo,
   com dados novos (a partir da caixa, se a inaugural caducou). Recusa por dado ausente (preço ou
-  câmbio) na carteira inaugural não caduca: nada é registrado e a reserva do mesmo fechamento
-  tenta de novo.
+  câmbio) na carteira inaugural não caduca. Nada é registrado e o próximo fechamento retoma
+  a data pendente quando a fonte estiver disponível.
 - **Revisar um stop de squeeze por nome** (só um humano, como no desligamento): depois de um stop
   num fechamento, o emissor não pode ficar comprado até revisão humana — o relatório de risco
   lista os emissores nessa situação (`squeeze.vetos_compra`, gatilho
@@ -414,6 +414,6 @@ qualquer um. O GitHub Actions só roda a integração contínua e publica o port
    (`uv run python -m cdp rotinas exportar --alvo cron --harness agy`); Gemini CLI com chave paga:
    `uv run python -m cdp rotinas exportar --alvo cron --harness gemini`.
 
-Horários do dia de montagem: pesquisa a partir das 11h07, tarefas de reserva às 12h07, 13h07 e
-14h07 (todas antes do prazo efetivo), fechamento diário às 19h22 com reserva às 21h07. Detalhes,
+No dia de montagem, a pesquisa começa às 11h07, com uma reserva às 12h07, antes do prazo
+efetivo. O fechamento diário roda às 19h22 e recupera pendências no próximo disparo. Detalhes,
 limites de cada app e solução de problemas: `docs/cdp/AUTOMACAO.md`.

@@ -1,0 +1,41 @@
+{
+  "id": "calibracao-referencia-da-comparacao",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "A comparação mensal tem uma referência definida",
+  "resumo": "Use como referência a execução mensal mais recente anterior à data do resumo. Se for a primeira calibração mensal, compare com a variante escolhida na calibração-base. Apresente o período e os rebalanceamentos junto às métricas. O método walk-forward usa sinais disponíveis à época e inclui custos, aluguel e caixa.",
+  "escopos": [
+    "calibracao"
+  ],
+  "tags": [
+    "referência de comparação",
+    "mês anterior",
+    "primeiro backtest",
+    "calibração-base",
+    "sharpe deflacionado",
+    "walk-forward",
+    "sinais point-in-time"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/METODOLOGIA.md",
+      "trecho": "Backtest walk-forward com dados reais (sinais point-in-time, custos, aluguel, caixa). Toda mudança\nde parâmetro é registrada com evidência e Sharpe deflacionado; nada muda automaticamente.",
+      "sha256": "3bee0bdce099440b13acd8f920af9a02f0292c4bb9965f8710e68723d409a581"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/CALIBRACAO.md",
+      "trecho": "3. Execução anterior: a pasta `reports/backtest/*/mensal/` mais recente antes de hoje; sem\n   nenhuma, a variante escolhida em `reports/backtest/2026-10-05/CALIBRACAO.md`.",
+      "sha256": "f391cc0c06e247137b560b29203f28242eca23dbd250ef523023a749669c14a8"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/CALIBRACAO.md",
+      "trecho": "4. Escreva `reports/backtest/AAAA-MM-DD/CALIBRACAO_MENSAL.md` (pt-BR): período, número de\n   rebalanceamentos e a pasta de comparação; tabela atual × anterior com retorno anualizado, vol\n   anualizada, Sharpe (excesso e bruto), drawdown máximo, custos, giro semanal, resultado\n   específico e fatorial, PSR, Sharpe deflacionado, fração do tempo com vol na banda e IC médio\n   por sinal; leitura qualitativa e **propostas** marcadas \"para revisão humana — não",
+      "sha256": "fb5bdd5058db64d30ffa5247f0ec0ef92c225e714ae64f1aaee56fd34154de44"
+    }
+  ]
+}

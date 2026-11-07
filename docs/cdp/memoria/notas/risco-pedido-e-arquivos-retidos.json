@@ -1,0 +1,45 @@
+{
+  "id": "risco-pedido-e-arquivos-retidos",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "O pedido de kill switch pode sair antes da gravação no livro",
+  "resumo": "Código 6 com retidos indica que o relatório e o pedido saíram, mas a marca do kill switch e seu evento ficaram fora do livro publicado. Destaque os arquivos retidos. A próxima montagem ou fechamento aplica o pedido publicado. No clone persistente, os arquivos retidos podem seguir como anteriores.",
+  "escopos": [
+    "risco",
+    "operador",
+    "status",
+    "semanal",
+    "diario"
+  ],
+  "tags": [
+    "código 6",
+    "pedido de kill switch",
+    "arquivos retidos",
+    "trava exclusiva",
+    "clone descartável",
+    "aplicar pedido",
+    "trilha de auditoria"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/RISCO.md",
+      "trecho": "- O relatório de risco e, se você ligou o kill switch, o **pedido de kill switch**\n  (`reports/risk/<data>/kill_switch_<HHMM>.yaml`, gravado pelo `kill-switch on`) são arquivos\n  novos e saem sempre. `book/KILL_SWITCH` e o evento em `book/audit_log.jsonl` só entram com a\n  trava exclusiva das rotinas: `cdp publicar` espera por ela até 10 minutos; se outra execução a\n  segura (por exemplo, a montagem semanal), publica o relatório e o pedido e devolve código 6,",
+      "sha256": "d7e272b8191e9ab38ab787ef9647661ae810cfe8ce65954e91634aaa803c39a4"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/RISCO.md",
+      "trecho": "  com o restante em `retidos`. **Relate `retidos` em destaque no resumo**: o kill switch ainda\n  não está no livro publicado. O pedido publicado faz com que ele valha: a próxima montagem ou\n  o próximo fechamento o aplica antes de decidir ou de fechar o dia (a montagem sincroniza logo\n  antes do `weekly decide`). Na nuvem, cada execução tem um clone descartável: o que ficou",
+      "sha256": "0ff2307a8f9d039080cb95f1fcb68ae23eeb69bb215ee1f2576962f7cc477d6f"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/RISCO.md",
+      "trecho": "  retido some com ele, e só o pedido publicado conta. No clone persistente do PC, a próxima\n  montagem ou o próximo fechamento publica o que ficou retido (`anteriores` na saída do\n  `cdp publicar`; `docs/cdp/LOCAL.md`, seção 14).",
+      "sha256": "be903c7700835b096f5748d8ed2fc7e2eeb18e58415c60aafa7eb9fefaae0bb7"
+    }
+  ]
+}

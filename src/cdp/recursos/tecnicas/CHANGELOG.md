@@ -1,5 +1,12 @@
 # Histórico de versões do CDP
 
+## 1.8.0
+
+- Memória local entre sessões: notas versionadas, contexto por escopo, busca nas fontes,
+  evidência ancorada, auditoria e avaliação offline.
+- Consulta opcional após o gate nos roteiros operacionais; permissões por escopo no plugin.
+- Revisão das notas em desenvolvimento, sem promoção ou publicação pelos comandos de memória.
+
 ## 1.7.0
 
 - Nove consultas operacionais nativas de leitura com contexto explícito recebido,

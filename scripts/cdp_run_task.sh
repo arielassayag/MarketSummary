@@ -2,8 +2,8 @@
 # CDP — Cabra da Peste: atalho do Claude Code com o plugin `cdp` para o agendador do sistema.
 #
 # Uso:
-#   scripts/cdp_run_task.sh <semanal|diario|cobertura|risco|status|calibracao> [tarefa] [opções]
-#   ex.: scripts/cdp_run_task.sh diario cdp-diario-reforco
+#   scripts/cdp_run_task.sh <semanal|diario|cobertura|risco|status|calibracao|dreaming> [tarefa] [opções]
+#   ex.: scripts/cdp_run_task.sh diario cdp-diario
 # Equivale a:
 #   scripts/cdp_rotina.sh <tarefa> --harness claude --modo-prompt plugin [opções]
 # O script de rotina faz tudo (trava local com espera em CDP_LOCK_WAIT_MIN e saída 75 se
@@ -16,8 +16,8 @@ set -euo pipefail
 
 SKILL="${1:-}"
 case "$SKILL" in
-  semanal|diario|cobertura|risco|status|calibracao) shift ;;
-  *) echo "uso: $0 <semanal|diario|cobertura|risco|status|calibracao> [tarefa cdp-...] [opções]" >&2
+  semanal|diario|cobertura|risco|status|calibracao|dreaming) shift ;;
+  *) echo "uso: $0 <semanal|diario|cobertura|risco|status|calibracao|dreaming> [tarefa cdp-...] [opções]" >&2
      exit 2 ;;
 esac
 
@@ -27,17 +27,10 @@ case "${1:-}" in
 esac
 if [ -z "$TAREFA" ]; then
   HORA="$(TZ=America/Sao_Paulo date +%H%M)"
-  DIA="$(TZ=America/Sao_Paulo date +%u)"   # 1 = segunda … 6 = sábado
   case "$SKILL" in
     semanal)
-      if [ "$HORA" -lt 1207 ]; then TAREFA=cdp-semanal
-      elif [ "$HORA" -lt 1307 ]; then TAREFA=cdp-semanal-b
-      elif [ "$HORA" -lt 1407 ]; then TAREFA=cdp-semanal-c
-      else TAREFA=cdp-semanal-d; fi ;;
-    diario)
-      if [ "$DIA" -eq 6 ]; then TAREFA=cdp-diario-sabado
-      elif [ "$HORA" -ge 2107 ] || [ "$HORA" -lt 1000 ]; then TAREFA=cdp-diario-reforco
-      else TAREFA=cdp-diario; fi ;;
+      if [ "$HORA" -lt 1207 ]; then TAREFA=cdp-semanal; else TAREFA=cdp-semanal-b; fi ;;
+    dreaming) TAREFA=cdp-dreaming ;;
     risco)
       if [ "$HORA" -ge 1603 ]; then TAREFA=cdp-risco-1603; else TAREFA=cdp-risco-1330; fi ;;
     *) TAREFA="cdp-$SKILL" ;;

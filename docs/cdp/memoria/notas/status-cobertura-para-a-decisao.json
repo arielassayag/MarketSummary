@@ -1,0 +1,38 @@
+{
+  "id": "status-cobertura-para-a-decisao",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "A prontidão dos modelos depende da data-base da decisão",
+  "resumo": "No status, informe separadamente os últimos retratos completo e parcial. Para saber se os modelos servem à próxima montagem, use modelos_em_dia_para_a_decisao e data_base_decisao da agenda. A atualização antes da decisão depende de atualizar_antes_da_decisao, que verifica também base de mercado e tempo disponível.",
+  "escopos": [
+    "status",
+    "operador",
+    "semanal",
+    "cobertura"
+  ],
+  "tags": [
+    "snapshot parcial",
+    "retrato completo",
+    "defasagem",
+    "modelos em dia",
+    "pregão anterior",
+    "cobertura pré-decisão"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/STATUS.md",
+      "trecho": "- **Modelos da cobertura** (`cobertura` em `cdp agenda`): último retrato completo e parcial,\n  se os modelos estão em dia para a próxima decisão (`modelos_em_dia_para_a_decisao`,\n  `data_base_decisao`), emissores com resultado à espera de reavaliação (`adhoc.emissores`;\n  `adhoc.falha`, se as datas de resultado estiverem indisponíveis), eventos macro pendentes e dos\n  próximos 7 dias (`macro`), notas de pós-resultado (`notas_pos_resultado`) e a revisão mensal",
+      "sha256": "f94fea73b257293a3b1f3a710f24ee2336cef20f598fab919568eef687be95c0"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/SEMANAL.md",
+      "trecho": "Só com `cobertura.atualizar_antes_da_decisao: true` em `cdp agenda` (o código já conferiu que\nhoje é dia de montagem, que a decisão não foi gravada, que faltam ao menos 120 minutos para o\nprazo efetivo, que a base de mercado chega à data-base e que ainda não há retrato completo dela).\nUse a data de `cobertura.data_base_decisao` (o pregão anterior; `cobertura.passo_antes_da_decisao`\ntraz o comando pronto):",
+      "sha256": "e00a305673191c05e77a67f5111bed73d33cd8bfbb8a00d1810f93c35a267860"
+    }
+  ]
+}

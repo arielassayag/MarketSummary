@@ -1,0 +1,35 @@
+{
+  "id": "cobertura-fonte-primaria",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "Fonte primária sustenta a nota de emissor real",
+  "resumo": "Uma nota de emissor real exige fonte primária pública, como regulador ou bolsa em domínio oficial, ou relações com investidores. Quando falta evidência, declare a lacuna. Data de consulta e data de publicação são distintas, e consultar agora não comprova disponibilidade histórica.",
+  "escopos": [
+    "cobertura"
+  ],
+  "tags": [
+    "fonte primária",
+    "regulador",
+    "ri",
+    "cvm",
+    "sec",
+    "lacuna"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": true,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/NOTAS.md",
+      "trecho": "- Fontes: URL https com domínio público (nunca endereço IP, `localhost`, rede local, intranet\n  ou domínio de teste); publicação conhecida e consulta não posteriores à nota (sem look-ahead); publicação\n  desconhecida exige `publicado_em: null` e data real em `consultado_em`, nunca uma data\n  inventada. Consulta não comprova disponibilidade histórica; fontes `regulatorio` e\n  `bolsa` só com URL do domínio oficial (CVM, agências e BCB sob gov.br; sec.gov e finra.org;\n  gob.mx; cmfchile.cl e gob.cl; gov.co; gob.pe; gov.ar e gob.ar; B3, BMV, BIVA, Bolsa de\n  Santiago, BVC, BVL, BYMA, NYSE e Nasdaq); emissor real exige ao menos uma fonte primária\n  (`regulatorio` ou `bolsa` em domínio oficial, ou `relacoes_com_investidores`). Emissor sintético\n  da demonstração dispensa fontes.",
+      "sha256": "886c135d9b0f1f1f28d5abcbd6c2948d6615abf2aca6aa9e1832b5edcca188b8"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/COBERTURA.md",
+      "trecho": "   do schema. Percepção variante exige suporte público para a leitura atribuída ao mercado;\n   não presuma um consenso. Se faltar evidência, declare a lacuna. As páginas individuais\n   do portal incorporam esses campos após a publicação válida da nota.",
+      "sha256": "941886db5e6f80f5eea59e3b1969e062b5b1c95add7160249718093e9e20e69b"
+    }
+  ]
+}

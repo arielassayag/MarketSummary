@@ -1,0 +1,30 @@
+{
+  "id": "desenvolvimento-rotinas-derivadas",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "A mudança de agenda exige regenerar as skills",
+  "resumo": "Depois de mudar configs/cdp/rotinas.yaml, rode rotinas verificar e skills sincronizar --claude para regenerar as duas cópias das skills. Confira a geração com --verificar e rode os testes de CDP e o lint antes de propor o commit.",
+  "escopos": [
+    "desenvolvimento"
+  ],
+  "tags": [
+    "alteração de cron",
+    "horário das rotinas",
+    "sincronizar skills",
+    "agenda gerada",
+    "Claude Code",
+    "verificação da geração"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/RETOMAR.md",
+      "trecho": "4. Mudou `configs/cdp/rotinas.yaml`: `uv run python -m cdp rotinas verificar` e\n   `uv run python -m cdp skills sincronizar --claude` (regenera `.agents/skills/` e a cópia\n   `.claude/skills/`, a que as rotinas na nuvem usam; confira com\n   `uv run python -m cdp skills sincronizar --claude --verificar`). Antes de propor um commit:\n   `uv run pytest tests/cdp -q` e `uv run ruff check .`.",
+      "sha256": "3e01c743f96f199f7239f18800fea6ebd58346ee36fc97ca4859d8c415cbfb24"
+    }
+  ]
+}

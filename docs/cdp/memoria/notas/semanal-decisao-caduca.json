@@ -1,0 +1,30 @@
+{
+  "id": "semanal-decisao-caduca",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "Decisão recusada pelo kill switch no leilão caduca",
+  "resumo": "Se o kill switch impede a efetivação no leilão do dia de montagem, a rotina diária grava a recusa e a decisão caduca. O desligamento humano posterior não reabre o leilão. A próxima montagem toma uma nova decisão. Falta de preço ou câmbio na carteira inaugural tem outro tratamento.",
+  "escopos": [
+    "semanal",
+    "risco"
+  ],
+  "tags": [
+    "caducidade",
+    "efetivação",
+    "leilão",
+    "kill switch",
+    "montagem"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": true,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/EXECUCAO.md",
+      "trecho": "- **Kill switch no leilão do dia de montagem — regra de caducidade.** A decisão vale só para o\n  leilão de fechamento do seu dia de montagem. Com o kill switch ligado nesse fechamento, a ordem\n  não é executada (só redução de risco) e a rotina diária registra o próprio dia com a recusa\n  (`daily close` → `status: \"registrado\"` com `efetivacao_recusada`; alerta \"Efetivação\n  recusada\" no registro): grava `book/<semana>/efetivacao_recusada.json` e o evento\n  `BOOKING_LAPSED` na trilha. A decisão **caduca**: nunca é efetivada depois, nem quando um\n  humano desligar o kill switch (sem efetivação retroativa, que usaria um preço já conhecido). Na\n  carteira inaugural, o histórico começa nesse dia em caixa (PL inicial, sem posições); numa\n  semana regular, a carteira anterior segue marcada. A próxima data de montagem decide de novo,\n  com dados novos (a partir da caixa, se a inaugural caducou). Recusa por dado ausente (preço ou\n  câmbio) na carteira inaugural não caduca. Nada é registrado e o próximo fechamento retoma\n  a data pendente quando a fonte estiver disponível.",
+      "sha256": "0e32bc3fe22f36eca3164f23be71a79e97dc4c69229c1bcd24fe87a96e232005"
+    }
+  ]
+}

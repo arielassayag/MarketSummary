@@ -5,6 +5,65 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## Dreaming e agenda com reserva única — 07/11/2026
+
+O [roteiro de dreaming](playbooks/DREAMING.md) separa plano, análise de cada item e
+conferência da devolutiva. O plano lê o Git e vincula a revisão, a data, a fila e
+a proveniência. O resultado fica na execução agendada para revisão de candidatas.
+A wiki é uma vista derivada das notas já curadas. Veja os comandos e as duas
+comparações no [manual de memória](MEMORIA.md).
+
+O catálogo da agenda mantém uma reserva da montagem às 12h07 e inclui o dreaming
+aos sábados às 10h07. O fechamento principal recupera os pregões pendentes no
+próximo disparo útil. As duas rondas de risco observam momentos diferentes do pregão.
+A sincronização do clone das rotinas segue o procedimento do executor.
+
+No ensaio Git isolado, as cinco primeiras passagens tiveram recuperação completa em
+6 de 9 perguntas com busca direta, 6 de 9 com memória prévia e 8 de 9 após a revisão
+predefinida. As cinco passagens foram distribuídas com o mesmo orçamento. A rodada
+examinou promoção, vencimento, substituição e duplicidade. O teste por passagem
+anterior continua congelado para comparação.
+
+## Qualificação da memória por passagem — 07/11/2026
+
+A consulta passou a fornecer passagens com linhas inclusivas e SHA-256. O índice usa
+BM25 e a memória acrescenta âncoras em rodízio, com os três primeiros resultados diretos preservados.
+A busca também encaminha pedidos de estado e permite fixar a revisão Git com a data de
+aplicação. Sucessões exigem evidência válida na revisão que as registra e o histórico
+de primeiro pai conserva os vínculos comprovados.
+
+Os dois conjuntos congelados somam 66 consultas, com 46 perguntas de evidência.
+Na revisão `42f19b27`, as cinco primeiras passagens recuperaram evidência completa em
+30 de 46 casos com busca direta no código de ontem e na revisão atual, e em 31 de 46 com
+memória. O acerto adicional ocorreu no primeiro conjunto, de 20 para 21 em 30. Na réplica,
+a busca direta e a memória ficaram em 10 de 16. Dos 13 controles de estado, um foi
+encaminhado automaticamente e os 13 foram encaminhados quando a intenção foi informada.
+O catálogo foi auditado com 31 notas e 65 trechos. O [manual de memória](MEMORIA.md)
+registra a reprodução dos dois relatórios e das duas figuras. A adoção operacional
+segue pendente.
+
+## Memória entre sessões — 07/11/2026
+
+A implementação está no ramo de desenvolvimento `codex/cdp-memoria`, sobre o fechamento
+publicado de 06/11 (`afee26ce`). Consulte [Memória do CDP](MEMORIA.md) para operação e
+curadoria e [pesquisa e decisão de arquitetura](MEMORIA_PESQUISA.md) para fontes e limites.
+
+O catálogo inicial tem 15 notas e 28 âncoras de evidência verificáveis. O contexto lê o
+Git local e contém no máximo três notas por escopo. A busca combina lições revisadas com
+fontes canônicas; a auditoria lista candidatas, divergências, validade e sobreposições
+para revisão fora das rotinas. Os seis roteiros só oferecem o contexto depois do gate
+e da sincronização, quando aplicável. O encerramento por código 10 é preservado.
+
+A avaliação offline compara até três caminhos por consulta; em 24 perguntas com fonte
+esperada, a busca direta recuperou pelo menos uma em 21 casos e a consulta com memória,
+em 24. O teste recuperou uma nota esperada em 21 de 21 perguntas; houve abstenção em
+oito de oito controles negativos e nos três casos reservados à busca direta. O corpus
+é pequeno e coelaborado com o recurso. Falta medir efeito no desempenho de sessões
+novas com perguntas reservadas.
+
+A integração em main e a adoção no executor são etapas posteriores. Esta sessão de
+desenvolvimento não acionou rotinas nem gravou livro, base, relatórios ou artefatos.
+
 ## Recuperação de descritores NET — 17/10/2026
 
 O operador autorizou corrigir a falha de arquivos abertos, testar e retomar o

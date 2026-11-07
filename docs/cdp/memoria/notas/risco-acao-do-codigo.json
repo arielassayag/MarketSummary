@@ -1,0 +1,40 @@
+{
+  "id": "risco-acao-do-codigo",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "O monitor separa alerta de recomendação de kill switch",
+  "resumo": "SOFT segue para revisão no próximo rebalanceamento e INFO descreve o que foi observado. A rotina só liga o kill switch com a recomendação explícita em acoes_recomendadas, copiando motivo_kill_switch. O desligamento depende de um humano.",
+  "escopos": [
+    "risco"
+  ],
+  "tags": [
+    "alerta",
+    "hard",
+    "soft",
+    "info",
+    "kill switch",
+    "rebalanceamento"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/RISCO.md",
+      "trecho": "- O kill switch **só bloqueia risco novo** (redução continua permitida) e nunca afrouxa limites.\n  Ligue-o **apenas** quando `acoes_recomendadas` trouxer um item que começa com `kill-switch: `.\n  **Nunca** o desligue: só um humano desliga. Depois de um desligamento humano, o código só volta\n  a recomendar por piora (`revisao_humana` na saída).",
+      "sha256": "a4c4a1961a0d9a4b81f019135d6eec43b699c0c468826dab2639cb676059b5d0"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/RISCO.md",
+      "trecho": "- `gatilhos`: `HARD` (o mandato exige ação), `SOFT` (revisar no próximo rebalanceamento; inclui\n  condições já revisadas por humano) e `INFO`.",
+      "sha256": "3bb1889f1d1a3851ea17ce264913827603c9242b0a9d5760ddda3df7ccd7bdc1"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/RISCO.md",
+      "trecho": "Se algum item de `acoes_recomendadas` começar com `kill-switch: ` e `kill_switch.ativo` for\n`false`, copie **exatamente** `motivo_kill_switch` e rode:",
+      "sha256": "922a618c0e0a2e94e6f4a902a0b51596028a7642df49e950ab50e8465143b269"
+    }
+  ]
+}

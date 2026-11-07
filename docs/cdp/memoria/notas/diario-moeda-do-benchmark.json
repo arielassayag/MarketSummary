@@ -1,0 +1,35 @@
+{
+  "id": "diario-moeda-do-benchmark",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "Moeda e unidade do benchmark no comentário diário",
+  "resumo": "Ao revisar o comentário, confira a unidade do fato antes de descrever um benchmark. Índices locais e linhas locais variam como cotados, sem conversão cambial. DXY e VIX variam em nível de índice. Use os fatos preparados para aquele fechamento.",
+  "escopos": [
+    "diario"
+  ],
+  "tags": [
+    "moeda",
+    "benchmark",
+    "cotação",
+    "índice local",
+    "câmbio",
+    "comentário"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": true,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "src/cdp/research/factbook.py",
+      "trecho": "def benchmark_unit(symbol: str) -> str:\n    \"\"\"Em que unidade está o retorno de um benchmark: o código só mede a variação do nível ou do\n    preço como cotado, sem conversão cambial. ETFs listados nos EUA ⇒ USD; índices locais e\n    linhas locais ⇒ moeda local; futuros ⇒ contrato cotado em USD; VIX e índice do dólar ⇒\n    nível do índice.\"\"\"\n    if symbol in _LEVEL_INDICATORS:\n        return \"variação do nível do índice\"\n    if symbol.endswith(\"=F\"):\n        return \"futuro cotado em USD\"\n    ccy = _INDEX_CCY.get(symbol) or next(\n        (c for suffix, c in _SUFFIX_CCY.items() if symbol.endswith(suffix)), None)\n    if ccy:\n        return f\"em {ccy}, moeda local\"\n    if symbol.startswith(\"^\"):",
+      "sha256": "911367000e325bfdf7f63c0dc31edc96ffa72cbcda3bc95b474a353a7204eea6"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "1. Leia `reports/daily/D/facts.md` (números e `fact_id`s do dia) e `comentario.schema.json`.\n2. Pesquise o contexto de mercado **do dia D** (países, setores, commodities, câmbio, notícias\n   dos emissores relevantes) só em fontes públicas. Em dias recuperados, pesquise aquela data.\n3. Escreva `reports/daily/D/comentario.json`: manchete, 2 a 5 parágrafos sóbrios e\n   institucionais, alertas de risco e `mind`. Números só como `{{fact:<id>}}` existentes em\n   `facts.md`.",
+      "sha256": "646f16958f74d1aa1d300bd5d9860ab6285aa0e4f2448b744a1fe6e54f8b51ea"
+    }
+  ]
+}

@@ -11,6 +11,7 @@ allowed-tools:
   - Bash(uv run python -m cdp agenda)
   - Bash(uv run python -m cdp estado *)
   - Bash(uv run python -m cdp estado)
+  - Bash(uv run python -m cdp memoria contexto --escopo status)
   - Bash(uv run python -m cdp nota agenda *)
   - Bash(uv run python -m cdp nota agenda)
   - Bash(uv run python -m cdp rotinas gate --tarefa cdp-status *)

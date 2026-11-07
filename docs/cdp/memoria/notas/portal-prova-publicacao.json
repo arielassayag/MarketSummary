@@ -1,0 +1,38 @@
+{
+  "id": "portal-prova-publicacao",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "Push e publicação no portal exigem provas diferentes",
+  "resumo": "Um commit no remoto é evidência de publicação no repositório. Para confirmar a versão no portal, confira o source_commit do manifest.json servido e, quando necessário, compare os hashes dos arquivos da publicação.",
+  "escopos": [
+    "operador",
+    "status",
+    "diario",
+    "risco"
+  ],
+  "tags": [
+    "portal",
+    "pages",
+    "manifesto",
+    "source_commit",
+    "push",
+    "versão"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": true,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/SITE.md",
+      "trecho": "- Depois de publicar, o workflow confere no ar que `manifest.json` traz a versão que acabou de ser\n  publicada.",
+      "sha256": "520f7f2c543cfc87f8a398620e4dcdabb899fb5c86036ef669a5d63f516785c4"
+    },
+    {
+      "caminho": "docs/cdp/SITE.md",
+      "trecho": "Na pasta do portal baixado (por exemplo, o artefato do workflow), `sha256sum -c SHA256SUMS`\nconfere cada byte; `dados/datapackage.json` (Frictionless Data Package) traz tamanho, SHA-256 e\norigem de cada arquivo. Para recalcular etapas da mente em qualquer assistente:",
+      "sha256": "b2c42bca8b4de21ec967a38d6f138d1f1424c9b714c29041e5353150c79418f1"
+    }
+  ]
+}

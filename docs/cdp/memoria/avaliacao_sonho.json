@@ -1,0 +1,640 @@
+{
+  "versao": 1,
+  "data": "2026-11-07",
+  "revisao_fontes": "afee26ce4442ee5b30943b318d9640416ba02586",
+  "deriva": [
+    {
+      "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+      "trecho": "DADOS SIMULADOS — protocolo fictício anterior do ensaio: o recibo avulso bastava para a errata.",
+      "sha256": "eaeabbf0b01b7190304f4e47963c3fe4534035ac7edfa88f1af873ab111942ae"
+    }
+  ],
+  "notas_antes": [
+    {
+      "id": "ensaio-semanal-sem-ordens",
+      "tipo": "licao",
+      "estado": "candidata",
+      "titulo": "Relatório semanal quando não houve nova decisão",
+      "resumo": "No dia de montagem com fechamento registrado e sem decisão, a rotina publica o relatório semanal com a carteira mantida.",
+      "escopos": [
+        "diario"
+      ],
+      "tags": [
+        "montagem",
+        "relatório",
+        "carteira mantida"
+      ],
+      "registrada_em": "2026-10-20",
+      "revisada_em": null,
+      "rever_em": null,
+      "destaque": false,
+      "substitui": [],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/playbooks/DIARIO.md",
+          "trecho": "1. **Relatórios semanais de resultado** — `relatorio_semanal.pendentes` lista, do mais antigo ao\n   mais recente, todo dia de montagem da regra semanal com o registro do fechamento e sem\n   relatório publicado — **inclusive os dias sem decisão gravada** (carteira mantida). Trate\n   cada data da lista, nessa ordem:",
+          "sha256": "e6a5ca702704b8e2a63032fbee0f14f33dddddd2a76ce38fdf3f66e2fe68e15d"
+        }
+      ]
+    },
+    {
+      "id": "ensaio-previa-prazo",
+      "tipo": "licao",
+      "estado": "curada",
+      "titulo": "Margem para prévia e revisão dos juízos da mente",
+      "resumo": "A prévia dispensa gravação no livro. Pule se o prazo estiver apertado. Ajustes de pesquisa se limitam aos juízos ordinais do gestor.",
+      "escopos": [
+        "semanal"
+      ],
+      "tags": [
+        "prévia",
+        "revisão",
+        "prazo",
+        "juízos"
+      ],
+      "registrada_em": "2026-10-20",
+      "revisada_em": "2026-10-20",
+      "rever_em": "2026-11-01",
+      "destaque": false,
+      "substitui": [],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/playbooks/SEMANAL.md",
+          "trecho": "## 6. Revisão pré-trade (recomendada; pule com menos de 30 minutos para o prazo)",
+          "sha256": "0a79b3e310692a7d77fac09504e1f332055eac3b3d606a26a01cf16e673a5ca6"
+        },
+        {
+          "caminho": "docs/cdp/playbooks/SEMANAL.md",
+          "trecho": "Roda o pipeline do `decide` **sem gravar nada no livro**. Se uma posição relevante contradiz a\npesquisa ou depende de um fato não confirmado, ajuste **somente juízos ordinais** (visões,\nconvicções, exclusões, postura) em `pm_decision.json`, valide de novo e repita no máximo duas\nvezes. A coerência de sinal é aplicada pelo código.",
+          "sha256": "1605737198497d55d0b0766ce65d83dcb33ea596aed1b89db3cf5184d44502cd"
+        }
+      ]
+    },
+    {
+      "id": "ensaio-recibo-avulso",
+      "tipo": "licao",
+      "estado": "curada",
+      "titulo": "Recibo avulso para errata",
+      "resumo": "Esta nota representa a regra fictícia de um protocolo antigo do ensaio.",
+      "escopos": [
+        "operador"
+      ],
+      "tags": [
+        "errata",
+        "recibo",
+        "retificação"
+      ],
+      "registrada_em": "2026-10-20",
+      "revisada_em": "2026-10-20",
+      "rever_em": "2027-05-07",
+      "destaque": false,
+      "substitui": [],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+          "trecho": "DADOS SIMULADOS — protocolo fictício anterior do ensaio: o recibo avulso bastava para a errata.",
+          "sha256": "eaeabbf0b01b7190304f4e47963c3fe4534035ac7edfa88f1af873ab111942ae"
+        }
+      ]
+    },
+    {
+      "id": "ensaio-retidos-risco",
+      "tipo": "licao",
+      "estado": "curada",
+      "titulo": "Pedido publicado com arquivos retidos",
+      "resumo": "O pedido de kill switch é publicado antes da aplicação pela próxima execução exclusiva.",
+      "escopos": [
+        "risco"
+      ],
+      "tags": [
+        "pedido",
+        "kill switch",
+        "retidos"
+      ],
+      "registrada_em": "2026-10-20",
+      "revisada_em": "2026-10-20",
+      "rever_em": "2027-05-07",
+      "destaque": false,
+      "substitui": [],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/playbooks/RISCO.md",
+          "trecho": "  trava exclusiva das rotinas: `cdp publicar` espera por ela até 10 minutos; se outra execução a\n  segura (por exemplo, a montagem semanal), publica o relatório e o pedido e devolve código 6,\n  com o restante em `retidos`. **Relate `retidos` em destaque no resumo**: o kill switch ainda\n  não está no livro publicado. O pedido publicado faz com que ele valha: a próxima montagem ou",
+          "sha256": "2962b924f1a8e21d84e293b17df5defc4f7632d526023eaec2995de0f97e2fa0"
+        }
+      ]
+    },
+    {
+      "id": "ensaio-retidos-execucao",
+      "tipo": "licao",
+      "estado": "curada",
+      "titulo": "Pedido publicado com aplicação diferida",
+      "resumo": "O pedido de kill switch é publicado antes da aplicação pela próxima execução exclusiva.",
+      "escopos": [
+        "risco"
+      ],
+      "tags": [
+        "pedido",
+        "kill switch",
+        "retidos"
+      ],
+      "registrada_em": "2026-10-20",
+      "revisada_em": "2026-10-20",
+      "rever_em": "2027-05-07",
+      "destaque": false,
+      "substitui": [],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/EXECUCAO.md",
+          "trecho": "  `reports/risk/<data>/kill_switch_<HHMM>.yaml`. Se a rotina não tiver a trava exclusiva do livro\n  (clones separados na nuvem, outra rotina gravando), `cdp publicar` publica o pedido e retém o\n  livro; a próxima execução exclusiva (`weekly prepare`, `weekly decide` ou `daily close`)\n  aplica o pedido antes de qualquer decisão. `cdp agenda` lista os pedidos ainda não aplicados",
+          "sha256": "bf48a5db5e3f6d27556719ffac508178e41ab3309c3d7a1b07d2e12f71e7ccca"
+        }
+      ]
+    },
+    {
+      "id": "ensaio-rascunho-em-aberto",
+      "tipo": "licao",
+      "estado": "candidata",
+      "titulo": "Rascunho da nota encontrado na agenda",
+      "resumo": "Rascunho de emissor obsoleto não entra na adoção. O preparo respeita o arquivo de nota já existente.",
+      "escopos": [
+        "cobertura"
+      ],
+      "tags": [
+        "rascunho",
+        "obsoleto",
+        "adoção"
+      ],
+      "registrada_em": "2026-10-20",
+      "revisada_em": null,
+      "rever_em": null,
+      "destaque": false,
+      "substitui": [],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/NOTAS.md",
+          "trecho": "  item traz `data_nota` (hoje, ou a data do rascunho); a saída lista também\n  `rascunhos_pendentes`, `rascunhos_obsoletos` (emissor com nota publicada depois da data do\n  rascunho, ou fora do universo — nunca adotados) e `notas_da_mente_por_mente`.\n- `nota prepare --issuer IID [--date D]`: grava os arquivos do código (regraváveis até a\n  publicação) e adota o rascunho entregue em `docs/cdp/notas/<IID>/<data>.json` se `nota.json`\n  ainda não existir (`rascunho_adotado: true`); nunca sobrescreve `nota.json` nem publica.",
+          "sha256": "6db047e41dfae4d4302bf7d8a8d7912831063eb9840e5f4aa147a7d675d2c02a"
+        }
+      ]
+    },
+    {
+      "id": "ensaio-monitor-sem-carteira",
+      "tipo": "licao",
+      "estado": "curada",
+      "titulo": "Monitor antes do início da carteira",
+      "resumo": "Antes da abertura do livro, a rotina de risco encerra sem publicar.",
+      "escopos": [
+        "risco"
+      ],
+      "tags": [
+        "monitoramento",
+        "pré-início",
+        "carteira"
+      ],
+      "registrada_em": "2026-10-20",
+      "revisada_em": "2026-10-20",
+      "rever_em": "2027-05-07",
+      "destaque": false,
+      "substitui": [],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/playbooks/RISCO.md",
+          "trecho": "Com `fase: \"pre_inicio\"` ou `reinicio.pendente: true`, encerre com \"Sem monitoramento:\npré-início\" — não há carteira a monitorar e nada a publicar.",
+          "sha256": "46e37e104ef7a1a63eec0f1154726fe2a0dc1fe2b77673b5677441cac4d9b8d2"
+        }
+      ]
+    },
+    {
+      "id": "ensaio-calibracao-sem-renovacao",
+      "tipo": "licao",
+      "estado": "curada",
+      "titulo": "Referência de execução anterior da calibração",
+      "resumo": "Quando não há backtest mensal anterior, a calibração de base é a referência.",
+      "escopos": [
+        "calibracao"
+      ],
+      "tags": [
+        "calibração",
+        "referência",
+        "backtest"
+      ],
+      "registrada_em": "2026-10-20",
+      "revisada_em": "2026-10-20",
+      "rever_em": "2026-11-01",
+      "destaque": false,
+      "substitui": [],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/playbooks/CALIBRACAO.md",
+          "trecho": "3. Execução anterior: a pasta `reports/backtest/*/mensal/` mais recente antes de hoje; sem\n   nenhuma, a variante escolhida em `reports/backtest/2026-10-05/CALIBRACAO.md`.",
+          "sha256": "f391cc0c06e247137b560b29203f28242eca23dbd250ef523023a749669c14a8"
+        }
+      ]
+    }
+  ],
+  "decisoes": [
+    {
+      "tipo": "promocao",
+      "requer": [
+        {
+          "id": "ensaio-semanal-sem-ordens",
+          "acao": "revisar_candidata"
+        }
+      ],
+      "atualizar": [
+        {
+          "id": "ensaio-semanal-sem-ordens",
+          "tipo": "licao",
+          "estado": "curada",
+          "titulo": "Relatório semanal quando não houve nova decisão",
+          "resumo": "No dia de montagem com fechamento registrado e sem decisão, a rotina publica o relatório semanal com a carteira mantida.",
+          "escopos": [
+            "diario"
+          ],
+          "tags": [
+            "montagem",
+            "relatório",
+            "carteira mantida"
+          ],
+          "registrada_em": "2026-10-20",
+          "revisada_em": "2026-11-07",
+          "rever_em": "2027-05-07",
+          "destaque": false,
+          "substitui": [],
+          "evidencias": [
+            {
+              "caminho": "docs/cdp/playbooks/DIARIO.md",
+              "trecho": "1. **Relatórios semanais de resultado** — `relatorio_semanal.pendentes` lista, do mais antigo ao\n   mais recente, todo dia de montagem da regra semanal com o registro do fechamento e sem\n   relatório publicado — **inclusive os dias sem decisão gravada** (carteira mantida). Trate\n   cada data da lista, nessa ordem:",
+              "sha256": "e6a5ca702704b8e2a63032fbee0f14f33dddddd2a76ce38fdf3f66e2fe68e15d"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "renovacao",
+      "requer": [
+        {
+          "id": "ensaio-previa-prazo",
+          "acao": "rever_validade"
+        }
+      ],
+      "atualizar": [
+        {
+          "id": "ensaio-previa-prazo",
+          "tipo": "licao",
+          "estado": "curada",
+          "titulo": "Margem para prévia e revisão dos juízos da mente",
+          "resumo": "A prévia dispensa gravação no livro. Pule se o prazo estiver apertado. Ajustes de pesquisa se limitam aos juízos ordinais do gestor.",
+          "escopos": [
+            "semanal"
+          ],
+          "tags": [
+            "prévia",
+            "revisão",
+            "prazo",
+            "juízos"
+          ],
+          "registrada_em": "2026-10-20",
+          "revisada_em": "2026-11-07",
+          "rever_em": "2027-05-07",
+          "destaque": false,
+          "substitui": [],
+          "evidencias": [
+            {
+              "caminho": "docs/cdp/playbooks/SEMANAL.md",
+              "trecho": "## 6. Revisão pré-trade (recomendada; pule com menos de 30 minutos para o prazo)",
+              "sha256": "0a79b3e310692a7d77fac09504e1f332055eac3b3d606a26a01cf16e673a5ca6"
+            },
+            {
+              "caminho": "docs/cdp/playbooks/SEMANAL.md",
+              "trecho": "Roda o pipeline do `decide` **sem gravar nada no livro**. Se uma posição relevante contradiz a\npesquisa ou depende de um fato não confirmado, ajuste **somente juízos ordinais** (visões,\nconvicções, exclusões, postura) em `pm_decision.json`, valide de novo e repita no máximo duas\nvezes. A coerência de sinal é aplicada pelo código.",
+              "sha256": "1605737198497d55d0b0766ce65d83dcb33ea596aed1b89db3cf5184d44502cd"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "substituicao",
+      "requer": [
+        {
+          "id": "ensaio-recibo-avulso",
+          "acao": "evidencia"
+        }
+      ],
+      "atualizar": [
+        {
+          "id": "ensaio-recibo-comprovado",
+          "tipo": "licao",
+          "estado": "curada",
+          "titulo": "Recomposição autenticada de recibo para errata",
+          "resumo": "Os valores do registro e da base de fatos saem do relatório selado. Preserve a fonte de cada campo. Divergência do hash ou falta de fonte bloqueiam a retificação.",
+          "escopos": [
+            "operador"
+          ],
+          "tags": [
+            "errata",
+            "recibo",
+            "retificação",
+            "hash"
+          ],
+          "registrada_em": "2026-11-07",
+          "revisada_em": "2026-11-07",
+          "rever_em": "2027-05-07",
+          "destaque": false,
+          "substitui": [
+            "ensaio-recibo-avulso"
+          ],
+          "evidencias": [
+            {
+              "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+              "trecho": "- `registro`: o valor literal de “Registro diário do fechamento” na seção Integridade do\n  relatório selado, conferido com `record_hash` do registro diário original quando disponível.\n- `factbook`: o valor literal de “Base de fatos da semana” na mesma seção. A validação o\n  confronta com `FactBook.factbook_hash()` do corpo preservado de `factbook.json`; esse hash de",
+              "sha256": "1418a76aa72dd0aa3ed12e48d5cafa8078ec4f8798a9ba848cb6c32453d96e4b"
+            },
+            {
+              "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+              "trecho": "Registre quais evidências forneceram cada campo e que o corpo é recomposto, sem atribuir\nautoria, data de coleta ou persistência histórica ao recibo novo. Falta de qualquer fonte\nnecessária, corpo incompleto ou divergência do hash ao evento bloqueia a retificação. Não\ninferir valores só do hash, nem chamar preparação, `calcular_semana`, modelos, fechamento ou",
+              "sha256": "c71a4a1efaa6b1ed3756fa2bfc1c128f91bd3b0c809c63a152f31b851f477877"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tipo": "fusao",
+      "requer": [
+        {
+          "id": "ensaio-retidos-risco",
+          "acao": "duplicata"
+        },
+        {
+          "id": "ensaio-retidos-execucao",
+          "acao": "duplicata"
+        }
+      ],
+      "atualizar": [
+        {
+          "id": "ensaio-retidos-consolidado",
+          "tipo": "licao",
+          "estado": "curada",
+          "titulo": "Pedido de kill switch com itens retidos",
+          "resumo": "Se a trava impedir a inclusão no livro, o risco publica o relatório e o pedido. A próxima execução exclusiva aplica o pedido antes de decidir.",
+          "escopos": [
+            "risco"
+          ],
+          "tags": [
+            "pedido",
+            "kill switch",
+            "retidos"
+          ],
+          "registrada_em": "2026-11-07",
+          "revisada_em": "2026-11-07",
+          "rever_em": "2027-05-07",
+          "destaque": false,
+          "substitui": [
+            "ensaio-retidos-risco",
+            "ensaio-retidos-execucao"
+          ],
+          "evidencias": [
+            {
+              "caminho": "docs/cdp/playbooks/RISCO.md",
+              "trecho": "  trava exclusiva das rotinas: `cdp publicar` espera por ela até 10 minutos; se outra execução a\n  segura (por exemplo, a montagem semanal), publica o relatório e o pedido e devolve código 6,\n  com o restante em `retidos`. **Relate `retidos` em destaque no resumo**: o kill switch ainda\n  não está no livro publicado. O pedido publicado faz com que ele valha: a próxima montagem ou",
+              "sha256": "2962b924f1a8e21d84e293b17df5defc4f7632d526023eaec2995de0f97e2fa0"
+            },
+            {
+              "caminho": "docs/cdp/EXECUCAO.md",
+              "trecho": "  `reports/risk/<data>/kill_switch_<HHMM>.yaml`. Se a rotina não tiver a trava exclusiva do livro\n  (clones separados na nuvem, outra rotina gravando), `cdp publicar` publica o pedido e retém o\n  livro; a próxima execução exclusiva (`weekly prepare`, `weekly decide` ou `daily close`)\n  aplica o pedido antes de qualquer decisão. `cdp agenda` lista os pedidos ainda não aplicados",
+              "sha256": "bf48a5db5e3f6d27556719ffac508178e41ab3309c3d7a1b07d2e12f71e7ccca"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "casos": [
+    {
+      "id": "sono-relatorio-carteira-mantida",
+      "escopo": "diario",
+      "consulta": "Sem decisão de montagem nem ordens novas, ainda fazemos o relatório semanal da carteira mantida?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/playbooks/DIARIO.md",
+            "trecho": "1. **Relatórios semanais de resultado** — `relatorio_semanal.pendentes` lista, do mais antigo ao\n   mais recente, todo dia de montagem da regra semanal com o registro do fechamento e sem\n   relatório publicado — **inclusive os dias sem decisão gravada** (carteira mantida). Trate\n   cada data da lista, nessa ordem:",
+            "sha256": "e6a5ca702704b8e2a63032fbee0f14f33dddddd2a76ce38fdf3f66e2fe68e15d"
+          }
+        ]
+      ],
+      "notas_antes": [],
+      "notas_apos_revisao": [
+        "ensaio-semanal-sem-ordens"
+      ]
+    },
+    {
+      "id": "sono-previa-perto-do-prazo",
+      "escopo": "semanal",
+      "consulta": "Perto do prazo da decisão, qual é a regra para pular a prévia e quais juízos posso revisar se a proposta destoar da pesquisa?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/playbooks/SEMANAL.md",
+            "trecho": "## 6. Revisão pré-trade (recomendada; pule com menos de 30 minutos para o prazo)",
+            "sha256": "0a79b3e310692a7d77fac09504e1f332055eac3b3d606a26a01cf16e673a5ca6"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/playbooks/SEMANAL.md",
+            "trecho": "Roda o pipeline do `decide` **sem gravar nada no livro**. Se uma posição relevante contradiz a\npesquisa ou depende de um fato não confirmado, ajuste **somente juízos ordinais** (visões,\nconvicções, exclusões, postura) em `pm_decision.json`, valide de novo e repita no máximo duas\nvezes. A coerência de sinal é aplicada pelo código.",
+            "sha256": "1605737198497d55d0b0766ce65d83dcb33ea596aed1b89db3cf5184d44502cd"
+          }
+        ]
+      ],
+      "notas_antes": [],
+      "notas_apos_revisao": [
+        "ensaio-previa-prazo"
+      ]
+    },
+    {
+      "id": "sono-recibo-errata",
+      "escopo": "operador",
+      "consulta": "Na errata, como reconstituir o recibo do FactBook e do registro? Em que caso a falta de evidência bloqueia?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+            "trecho": "- `registro`: o valor literal de “Registro diário do fechamento” na seção Integridade do\n  relatório selado, conferido com `record_hash` do registro diário original quando disponível.\n- `factbook`: o valor literal de “Base de fatos da semana” na mesma seção. A validação o\n  confronta com `FactBook.factbook_hash()` do corpo preservado de `factbook.json`; esse hash de",
+            "sha256": "1418a76aa72dd0aa3ed12e48d5cafa8078ec4f8798a9ba848cb6c32453d96e4b"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+            "trecho": "Registre quais evidências forneceram cada campo e que o corpo é recomposto, sem atribuir\nautoria, data de coleta ou persistência histórica ao recibo novo. Falta de qualquer fonte\nnecessária, corpo incompleto ou divergência do hash ao evento bloqueia a retificação. Não\ninferir valores só do hash, nem chamar preparação, `calcular_semana`, modelos, fechamento ou",
+            "sha256": "c71a4a1efaa6b1ed3756fa2bfc1c128f91bd3b0c809c63a152f31b851f477877"
+          }
+        ]
+      ],
+      "notas_antes": [],
+      "notas_apos_revisao": [
+        "ensaio-recibo-comprovado"
+      ]
+    },
+    {
+      "id": "sono-pedido-e-trava",
+      "escopo": "risco",
+      "consulta": "Se o pedido de kill switch saiu mas houve itens retidos pela trava, quando a mudança chega ao livro?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/playbooks/RISCO.md",
+            "trecho": "  trava exclusiva das rotinas: `cdp publicar` espera por ela até 10 minutos; se outra execução a\n  segura (por exemplo, a montagem semanal), publica o relatório e o pedido e devolve código 6,\n  com o restante em `retidos`. **Relate `retidos` em destaque no resumo**: o kill switch ainda\n  não está no livro publicado. O pedido publicado faz com que ele valha: a próxima montagem ou",
+            "sha256": "2962b924f1a8e21d84e293b17df5defc4f7632d526023eaec2995de0f97e2fa0"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/EXECUCAO.md",
+            "trecho": "  `reports/risk/<data>/kill_switch_<HHMM>.yaml`. Se a rotina não tiver a trava exclusiva do livro\n  (clones separados na nuvem, outra rotina gravando), `cdp publicar` publica o pedido e retém o\n  livro; a próxima execução exclusiva (`weekly prepare`, `weekly decide` ou `daily close`)\n  aplica o pedido antes de qualquer decisão. `cdp agenda` lista os pedidos ainda não aplicados",
+            "sha256": "bf48a5db5e3f6d27556719ffac508178e41ab3309c3d7a1b07d2e12f71e7ccca"
+          }
+        ]
+      ],
+      "notas_antes": [],
+      "notas_apos_revisao": [
+        "ensaio-retidos-consolidado"
+      ]
+    },
+    {
+      "id": "sono-rascunho-sem-revisao",
+      "escopo": "cobertura",
+      "consulta": "O preparo adota um rascunho obsoleto, ou sobrescreve a nota existente?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/NOTAS.md",
+            "trecho": "  item traz `data_nota` (hoje, ou a data do rascunho); a saída lista também\n  `rascunhos_pendentes`, `rascunhos_obsoletos` (emissor com nota publicada depois da data do\n  rascunho, ou fora do universo — nunca adotados) e `notas_da_mente_por_mente`.\n- `nota prepare --issuer IID [--date D]`: grava os arquivos do código (regraváveis até a\n  publicação) e adota o rascunho entregue em `docs/cdp/notas/<IID>/<data>.json` se `nota.json`\n  ainda não existir (`rascunho_adotado: true`); nunca sobrescreve `nota.json` nem publica.",
+            "sha256": "6db047e41dfae4d4302bf7d8a8d7912831063eb9840e5f4aa147a7d675d2c02a"
+          }
+        ]
+      ],
+      "notas_antes": [],
+      "notas_apos_revisao": []
+    },
+    {
+      "id": "sono-sem-carteira",
+      "escopo": "risco",
+      "consulta": "O monitor de risco deve rodar antes da abertura do livro, em pré-início sem carteira?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/playbooks/RISCO.md",
+            "trecho": "Com `fase: \"pre_inicio\"` ou `reinicio.pendente: true`, encerre com \"Sem monitoramento:\npré-início\" — não há carteira a monitorar e nada a publicar.",
+            "sha256": "46e37e104ef7a1a63eec0f1154726fe2a0dc1fe2b77673b5677441cac4d9b8d2"
+          }
+        ]
+      ],
+      "notas_antes": [
+        "ensaio-monitor-sem-carteira"
+      ],
+      "notas_apos_revisao": [
+        "ensaio-monitor-sem-carteira"
+      ]
+    },
+    {
+      "id": "sono-calibracao-nota-vencida",
+      "escopo": "calibracao",
+      "consulta": "Onde está a referência para comparar a calibração mensal quando não há uma execução anterior?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/playbooks/CALIBRACAO.md",
+            "trecho": "3. Execução anterior: a pasta `reports/backtest/*/mensal/` mais recente antes de hoje; sem\n   nenhuma, a variante escolhida em `reports/backtest/2026-10-05/CALIBRACAO.md`.",
+            "sha256": "f391cc0c06e247137b560b29203f28242eca23dbd250ef523023a749669c14a8"
+          }
+        ]
+      ],
+      "notas_antes": [],
+      "notas_apos_revisao": []
+    },
+    {
+      "id": "sono-cobertura-calendario",
+      "escopo": "status",
+      "consulta": "Como o resumo separa modelos em dia de fontes de calendário de resultado indisponíveis?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/playbooks/STATUS.md",
+            "trecho": "- **Modelos da cobertura** (`cobertura` em `cdp agenda`): último retrato completo e parcial,\n  se os modelos estão em dia para a próxima decisão (`modelos_em_dia_para_a_decisao`,\n  `data_base_decisao`), emissores com resultado à espera de reavaliação (`adhoc.emissores`;\n  `adhoc.falha`, se as datas de resultado estiverem indisponíveis), eventos macro pendentes e dos",
+            "sha256": "cf8676a1a721e0546ee53f6f81697478ff65073ba597f1b31617f929d1608898"
+          }
+        ]
+      ],
+      "notas_antes": [],
+      "notas_apos_revisao": []
+    },
+    {
+      "id": "sono-relatorio-fallback",
+      "escopo": "diario",
+      "consulta": "Qual é o procedimento do diário quando a narrativa continua reprovada depois de corrigir?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/playbooks/DIARIO.md",
+            "trecho": "4. Valide (não grava nada; saída JSON com `ok` e `problemas`) e corrija até `\"ok\": true`;\n   depois de 3 correções ainda com `\"ok\": false`, publique assim mesmo (o código usa o texto\n   determinístico, só com fatos) e relate os apontamentos — o dia não fica sem relatório:",
+            "sha256": "d9a68578e95c7aab07d6431cdde66425aaaef1c0f23c908739af01f1d82ae2d7"
+          }
+        ]
+      ],
+      "notas_antes": [],
+      "notas_apos_revisao": []
+    },
+    {
+      "id": "sono-estado-real",
+      "escopo": "risco",
+      "consulta": "O kill switch está ligado agora?",
+      "tipo": "estado_atual",
+      "grupos": [],
+      "notas_antes": [],
+      "notas_apos_revisao": []
+    },
+    {
+      "id": "sono-estado-fechamento",
+      "escopo": "diario",
+      "consulta": "Qual foi o patrimônio no fechamento de hoje?",
+      "tipo": "estado_atual",
+      "grupos": [],
+      "notas_antes": [],
+      "notas_apos_revisao": []
+    },
+    {
+      "id": "sono-fora-escopo",
+      "escopo": "desenvolvimento",
+      "consulta": "Qual receita rende uma broa de fubá macia?",
+      "tipo": "fora_escopo",
+      "grupos": [],
+      "notas_antes": [],
+      "notas_apos_revisao": []
+    },
+    {
+      "id": "sono-fora-bicicleta",
+      "escopo": "status",
+      "consulta": "Dê instruções para ajustar o selim de uma bicicleta.",
+      "tipo": "fora_escopo",
+      "grupos": [],
+      "notas_antes": [],
+      "notas_apos_revisao": []
+    }
+  ]
+}

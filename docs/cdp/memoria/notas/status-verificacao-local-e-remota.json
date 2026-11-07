@@ -1,0 +1,33 @@
+{
+  "id": "status-verificacao-local-e-remota",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Saúde do clone e versão pública no diagnóstico com rede",
+  "resumo": "Estado reúne o executor, a trava, a integridade, as últimas execuções e o próximo passo a partir do clone. Com rede também consulta o remoto, a trava e a versão pública do portal.",
+  "escopos": [
+    "status",
+    "operador"
+  ],
+  "tags": [
+    "saúde",
+    "diagnóstico",
+    "clone",
+    "rede",
+    "portal publicado",
+    "versão pública",
+    "remoto",
+    "estado"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/STATUS.md",
+      "trecho": "`estado` já reúne fase, executor designado × este ambiente, trava das rotinas, integridade,\núltimos registros, últimas execuções (com a procedência de cada commit), pendências, incidentes\ne o próximo passo. Com acesso à rede, `uv run python -m cdp estado --rede --formato md` consulta\ntambém o remoto, a trava e o portal publicado.",
+      "sha256": "e112c23365f7cdfa9daae55adc15fad6741985411ac5512e41cc5ae79ba94a6b"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "id": "diario-verify-e-painel-local",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Integridade final e painel local têm funções distintas",
+  "resumo": "Faça a conferência do livro depois da última gravação e registre o resultado. O painel local vem do livro e pode falhar separadamente. O portal público é construído pelo GitHub Actions a partir da revisão publicada.",
+  "escopos": [
+    "diario",
+    "status",
+    "operador"
+  ],
+  "tags": [
+    "verify",
+    "integridade",
+    "painel local",
+    "portal público",
+    "falha do painel",
+    "última gravação",
+    "GitHub Actions"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "```sh\nuv run python -m cdp verify\nuv run python -m cdp painel --sem-local\n```\n\nRode os dois sempre, qualquer que tenha sido o resultado dos passos anteriores (inclusive com a\ntese recusada ou com falha): esse `verify` confere a trilha depois da última gravação desta\nexecução, e `cdp publicar` o repete antes do push. `painel --sem-local` regenera\n`artifacts/painel/` a partir do livro (só código; a pasta fica fora do git — é a cópia local do\npainel, nunca publicada). Anote o resultado do `verify` e siga mesmo se o painel falhar. O portal\npúblico é montado pelo GitHub Actions a partir do que for publicado.",
+      "sha256": "8c94ed08f12b6410a18fce8ec4ee2f2b2008ab5540f583147f0967cdb9ffaa25"
+    }
+  ]
+}

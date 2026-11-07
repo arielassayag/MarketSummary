@@ -1,0 +1,35 @@
+{
+  "id": "ref-calibracao-corte-e-limitacoes",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Backtest mensal usa sinais disponíveis na data do teste",
+  "resumo": "A calibração mensal roda em código com sinais point-in-time. A camada de IA e a escada de drawdown ficam fora. O parecer copia os números de metrics.json e compara as execuções lado a lado. Mudanças de mandato seguem como propostas para decisão humana e revisão do hash da configuração.",
+  "escopos": [
+    "calibracao"
+  ],
+  "tags": [
+    "backtest mensal",
+    "point-in-time",
+    "drawdown",
+    "metrics.json",
+    "comparação",
+    "mandato"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/CALIBRACAO.md",
+      "trecho": "Procedimento único da calibração mensal, igual em **qualquer harness**. O backtest é **código**\n(`src/cdp/backtest/`); a mente executa, lê `metrics.json` e escreve um resumo comparativo. As\nskills (`cdp-calibracao`, `/cdp:calibracao`) e o prompt da rotina `cdp-calibracao` só fazem a\nentrada e a saída da execução. Contexto: `docs/cdp/METODOLOGIA.md` e a calibração-base em\n`reports/backtest/2026-10-05/CALIBRACAO.md`.",
+      "sha256": "04ec0d48d4e11abab0fc31302e3478f436d86e2af3179dbc1e25bf6489336a76"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/CALIBRACAO.md",
+      "trecho": "## Regras\n\n- **Nunca altere** `configs/cdp/fund.yaml` nem código: mudanças de mandato são só **propostas**,\n  para decisão humana (qualquer mudança altera o `config_hash` e precisa ser auditada).\n- Números **copiados** de `metrics.json`, lado a lado; nunca calcule diferenças.\n- O backtest usa só sinais point-in-time; a camada de IA e a escada de drawdown não entram.\n- **Só os comandos deste roteiro** (a CLI do CDP) e leitura de arquivos; nunca\n  `python -c`, `jq`, `sleep` nem laços de espera; nenhum comando `git` que grave. Você só escreve\n  `reports/backtest/AAAA-MM-DD/CALIBRACAO_MENSAL.md`.",
+      "sha256": "c30fadb319645c8885ff6140a4963289c67bb25f29b566c63faaf2ab57666320"
+    }
+  ]
+}

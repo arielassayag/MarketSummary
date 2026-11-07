@@ -1,0 +1,38 @@
+{
+  "id": "operador-converter-agenda-utc",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Agenda de Brasília em UTC pode mudar o dia da semana",
+  "resumo": "A agenda canônica usa o horário de Brasília. Na conversão para UTC, acrescente três horas e verifique se o disparo noturno passa para o dia seguinte. Gere o cron no formato adequado pelo exportador oficial.",
+  "escopos": [
+    "operador",
+    "status"
+  ],
+  "tags": [
+    "UTC",
+    "fuso",
+    "Brasília",
+    "cron",
+    "virada de dia",
+    "disparo noturno",
+    "agendador",
+    "conversão"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "- **Quando**: `uv run python -m cdp rotinas listar` (tabela em `AGENTS.md`, seção 4). Horários\n  de Brasília (sem horário de verão). Em UTC, some 3 h e confira a virada de dia, como na\n  cobertura de segunda a quinta.",
+      "sha256": "41a818b4f9fe9825be660e0290a81cb38a104e8c8501255f9395bedb407b2d26"
+    },
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "| Agendador do sistema | Exportação |\n|---|---|\n| cron (Linux) | `uv run python -m cdp rotinas exportar --alvo cron` (`CRON_TZ=America/Sao_Paulo`; `--utc` para servidores sem esse suporte) |\n| launchd (macOS) | `uv run python -m cdp rotinas exportar --alvo launchd --saida ~/Library/LaunchAgents` |\n| Agendador do Windows | `uv run python -m cdp rotinas exportar --alvo windows` (PowerShell com `Register-ScheduledTask`) |",
+      "sha256": "b643ee6995bd3dd20970fa9623de91367e654acd75d19f13ec7405b727c96be4"
+    }
+  ]
+}

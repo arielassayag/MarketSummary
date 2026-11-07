@@ -1,0 +1,36 @@
+{
+  "id": "diario-comentario-do-pregao-e-fallback",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Comentário de fechamento usa fatos e contexto do próprio dia",
+  "resumo": "Ao recuperar um fechamento atrasado, pesquise o contexto público da data do registro. Escreva com referências do FactBook e valide. Depois de três correções sem êxito, o código publica texto determinístico e a execução relata os apontamentos.",
+  "escopos": [
+    "diario"
+  ],
+  "tags": [
+    "comentário diário",
+    "fatos",
+    "pregão recuperado",
+    "data",
+    "validação",
+    "texto automático",
+    "comentário_da_mente"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "## 3. Comentário do dia D (a mente)\n\n1. Leia `reports/daily/D/facts.md` (números e `fact_id`s do dia) e `comentario.schema.json`.\n2. Pesquise o contexto de mercado **do dia D** (países, setores, commodities, câmbio, notícias\n   dos emissores relevantes) só em fontes públicas. Em dias recuperados, pesquise aquela data.\n3. Escreva `reports/daily/D/comentario.json`: manchete, 2 a 5 parágrafos sóbrios e\n   institucionais, alertas de risco e `mind`. Números só como `{{fact:<id>}}` existentes em\n   `facts.md`.\n4. Valide (não grava nada; saída JSON com `ok` e `problemas`) e corrija até `\"ok\": true`;\n   depois de 3 correções ainda com `\"ok\": false`, publique assim mesmo (o código usa o texto\n   determinístico, só com fatos) e relate os apontamentos — o dia não fica sem relatório:",
+      "sha256": "727e0645b3b40a381e0a6670587e5558c511b14941bfd7069dde6d03a8834b15"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "   ```sh\n   uv run python -m cdp validate-daily --date AAAA-MM-DD\n   uv run python -m cdp daily publish --date AAAA-MM-DD\n   ```\n\n   Confirme `comentario_da_mente: true`; com `false`, relate os `apontamentos_comentario`.",
+      "sha256": "b23e28126c9430fcc7030b30f7e6b0d620a38173db62577a52e98f8cd5872c62"
+    }
+  ]
+}

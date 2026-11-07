@@ -25,11 +25,53 @@ _STOP_CONSULTA = _STOP | set(
     "vale devem devo posso podem isso esse neste tambem alguma algum".split()
 )
 _TITULO = re.compile(r"^(#{1,6})\s+(.+)")
+# Equivalências usadas no vocabulário dos roteiros. Os conceitos são sinais de busca e
+# não entram no texto da passagem nem determinam o procedimento a executar.
+_CONCEITOS = {
+    "agendador": r"agendador(?:es)?|cron|launchd|tarefas? agendadas?|disparos? automaticos?",
+    "aluguel": r"alugue(?:l|is)|emprestimo de acoes|taxa de aluguel|disponibilidade de short",
+    "arquivo-orfa": r"orfa(?:o|os|s)?|sem par|artefato isolado|evento isolado|arquivo avulso",
+    "autoria": r"autoria|autor(?:es)?|autor[ai]s?|quem (?:redigiu|escreveu|produziu)|mind",
+    "congelamento": r"congelad[oa]s?|congelamento|freeze|posicao mantida|linha detida sem",
+    "cotacao": r"cotac(?:ao|oes)|preco(?:s)? de (?:mercado|fechamento)|barra (?:diaria|provisoria)",
+    "defasagem": r"defasad[oa]s?|defasagem|desatualizad[oa]s?|atrasad[oa]s?|retrato antigo",
+    "desfecho": r"desfechos?|outcomes?|resultado observado|realizacao da previsao",
+    "divulgacao": r"divulgac(?:ao|oes)|data (?:de|da) publicacao|release(?:s)?|data de publicacao",
+    "efetivacao": r"efetivac(?:ao|oes)|efetiv(?:ar|ad[oa]s?)|fills?|preenchimento(?:s)? de ordem",
+    "errata": r"erratas?|retificac(?:ao|oes)|correc(?:ao|oes) editoria(?:l|is)",
+    "fato": r"factbook|fatos? citave(?:l|is)|placeholder(?:s)? de fato|referencia de fato",
+    "fuso": r"utc|fusos?(?: horarios?)?|horario de brasilia|virada d[eo] dia|dia seguinte",
+    "impressao-digital": r"hash(?:es)?|sha[- ]?256|checksum(?:s)?|digest(?:s)?|impressao digital",
+    "integridade": r"integridade|cdp verify|trilha encadeada|cadeia de auditoria",
+    "janela": r"prazo efetivo|janela operacional|limite de horario|corte da decisao|tempo restante",
+    "kill-switch": r"kill[- ]switch|bloqueio de risco|bloqueio de risco novo|ligar o bloqueio",
+    "nota": r"nota de (?:pesquisa|emissor|cobertura)|analise de emissor|nota pos[- ]resultado",
+    "noticia": r"noticias?|materias?|manchetes?|texto jornalistico|conteudo externo",
+    "operador": r"operador(?:es)?|sess(?:ao|oes) interativas?|sess(?:ao|oes) manua(?:l|is)",
+    "ordens": r"ordens?|acoes[- ]alvo|quantidade (?:de acoes|planejada)|roteamento da linha",
+    "painel-local": r"painel local|dashboard local|espelho local|painel interno",
+    "parametro": r"parametros?|premissas?|ajustes recomendados|hipoteses? de modelo",
+    "pendencia": r"pendencias?|pendentes?|faltantes?|na fila|sem registro",
+    "posicao-vendida": r"shorts?|posic(?:ao|oes) vendid[ao]s?|ponta vendida|venda a descoberto",
+    "portal-publico": r"portal(?:is)?|github pages|publicado no ar|pagina publica",
+    "procedencia": r"procedencia|proveniencia|origem comprovada|tra(?:iler|ilers)|fonte original",
+    "proposta": r"propostas?|carteira sugerida|previa(?:s)? de decisao|proposta aprovada",
+    "replay": r"replays?|reexecuc(?:ao|oes)|reproduzir uma montagem|ensaio retrospectivo",
+    "retrato": r"retratos?|snapshots?|base do modelo|modelos atualizados",
+    "rotina": r"rotinas?|tarefas? recorrentes?|agendamentos?|disparos?",
+    "saida-automatica": r"texto automatico|nota automatica|autoria.{0,6}codigo|fallback editorial",
+    "sincronizacao": r"sincroniz\w*|reconcili\w*|atualizar (?:o clone|do remoto)",
+    "trava": r"travas?|bloqueio de escrita|escritor exclusivo|lock",
+    "validacao": r"validadores?|validac(?:ao|oes)|valida(?:r|do|da)|texto invalid[oa]|reprovad[oa]",
+}
+_ALIASES = tuple(("@" + id_, re.compile(rf"\b(?:{alternativas})\b"))
+                 for id_, alternativas in _CONCEITOS.items())
 
 
 def termos_contextuais(s: str) -> Counter[str]:
     """Normaliza flexões produtivas usadas nas consultas e nos procedimentos."""
-    palavras = frequencias(s, paradas=_STOP_CONSULTA)
+    texto = normalizar(s)
+    palavras = _frequencias_normalizadas(texto, _STOP_CONSULTA)
     termos = Counter()
     for palavra, peso in palavras.items():
         for sufixo in ("amento", "imento", "acao", "icao", "idade", "ando", "endo", "indo",
@@ -38,6 +80,7 @@ def termos_contextuais(s: str) -> Counter[str]:
                 palavra = palavra[:-len(sufixo)]
                 break
         termos[palavra] += peso
+    termos.update(id_ for id_, alias in _ALIASES if alias.search(texto))
     return termos
 
 
@@ -48,7 +91,11 @@ def normalizar(s: str) -> str:
 
 
 def frequencias(s: str, *, paradas: set[str] = _STOP) -> Counter[str]:
-    termos = (t for t in re.findall(r"[a-z0-9]{2,}", normalizar(s)) if t not in paradas)
+    return _frequencias_normalizadas(normalizar(s), paradas)
+
+
+def _frequencias_normalizadas(texto: str, paradas: set[str]) -> Counter[str]:
+    termos = (t for t in re.findall(r"[a-z0-9]{2,}", texto) if t not in paradas)
     return Counter(
         t[:-3] + "ao" if len(t) > 4 and t.endswith("oes") else
         t[:-1] if len(t) > 4 and t[-2:] in ("as", "es", "is", "os", "us") else t
@@ -125,15 +172,17 @@ def _blocos_markdown(linhas: tuple[str, ...]) -> Iterable[tuple[int, int]]:
 
 
 def _janelas(caminho: str, linhas: tuple[str, ...], *, contextual: bool = False) -> Iterable[_Janela]:
-    titulos_por_linha: list[str] = []
+    titulos_por_linha: list[Counter[str]] = []
     if contextual:
         titulos: dict[int, str] = {}
+        termos_do_titulo: Counter[str] = Counter()
         for linha in linhas:
             if caminho.endswith(".md") and (titulo := _TITULO.match(linha)):
                 nivel = len(titulo[1])
                 titulos = {n: t for n, t in titulos.items() if n < nivel}
                 titulos[nivel] = titulo[2]
-            titulos_por_linha.append(" ".join(titulos.values()))
+                termos_do_titulo = termos_contextuais(" ".join(titulos.values()))
+            titulos_por_linha.append(termos_do_titulo)
     limites = {(pos, min(pos + LINHAS_PASSAGEM, len(linhas))): False
                for pos in range(0, len(linhas), _PASSO)}
     if contextual and caminho.endswith(".md"):
@@ -145,7 +194,7 @@ def _janelas(caminho: str, linhas: tuple[str, ...], *, contextual: bool = False)
             continue
         contagem = termos_contextuais(corpo) if contextual else frequencias(corpo)
         if contagem:
-            cabecalho = termos_contextuais(titulos_por_linha[pos]) if contextual else Counter()
+            cabecalho = titulos_por_linha[pos] if contextual else Counter()
             yield _Janela(caminho, pos + 1, janela, contagem, contagem.total(), cabecalho,
                           bloco_inteiro)
 
@@ -175,15 +224,19 @@ class IndicePassagens:
         n = len(self._janelas)
         idf = {t: math.log1p((n - self._df[t] + 0.5) / (self._df[t] + 0.5))
                for t in sorted(q) if self._df[t]}
+        # Vocabulário fora do acervo não conta como evidência contra uma janela do índice contextual.
+        tamanho_consulta = len(idf) if self.contextual else len(q)
         ranqueadas = []
         for janela in self._janelas:
             comuns = [t for t in idf if t in janela.termos]
             minimo = 6 if self.contextual else 4
-            if len(comuns) < min(2, len(q)) or len(comuns) * minimo < len(q) or not comuns:
+            if (not comuns or len(comuns) < min(2, tamanho_consulta)
+                    or len(comuns) * minimo < tamanho_consulta):
                 continue
             # Robertson e Zaragoza, k1=1,2 e b=0,75.
             normalizacao = 1.2 * (0.25 + 0.75 * janela.tamanho / self._media)
-            pontos = sum(idf[t] * 2.2 * janela.termos[t] / (janela.termos[t] + normalizacao)
+            pontos = sum((0.8 if t.startswith("@") else 1) * idf[t] * 2.2 * janela.termos[t]
+                         / (janela.termos[t] + normalizacao)
                          for t in comuns)
             if self.contextual:
                 pontos += 0.65 * sum(idf[t] for t in idf if t in janela.contexto)

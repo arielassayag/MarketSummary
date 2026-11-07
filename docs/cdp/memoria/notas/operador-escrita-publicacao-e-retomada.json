@@ -1,0 +1,38 @@
+{
+  "id": "operador-escrita-publicacao-e-retomada",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Commit retido e tentativa de publicação preservam o livro",
+  "resumo": "O publicador confere executor, integridade e trava e inclui arquivos anteriores elegíveis. Sem push confirmado, o commit fica local para a próxima reconciliação. A tarefa libera sua trava no fim e relata o motivo.",
+  "escopos": [
+    "operador",
+    "diario",
+    "status"
+  ],
+  "tags": [
+    "commit retido",
+    "push",
+    "livro",
+    "verificação",
+    "arquivos anteriores",
+    "trava",
+    "reconciliação"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "- `cdp publicar` confere a integridade, o executor designado e a trava, faz commit do que esta\n  execução gravou e do que uma execução anterior interrompida deixou no clone (`anteriores`), com\n  os trailers de procedência, e push em `main` — nunca força. Leia `push` e\n  `motivo` na saída: sem push (verify com falha, remoto mudou o livro, sem rede, trava perdida),\n  o commit fica no clone e a próxima rotina reconcilia; relate. Nunca tente outro caminho.\n- Libere a trava **sempre**, mesmo em falha.",
+      "sha256": "ee251b9e78f9e3a4c1062144c34a2308ceb3145ab68003a6af72c90a38c394f4"
+    },
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "- **Execução atrasada**: o gate recusa disparos muito depois do horário (`atraso_max_min`);\n  para rodar fora do horário, numa sessão de operador no executor, use `--manual`:\n  `uv run python -m cdp rotinas gate --tarefa cdp-diario --manual --adquirir`.\n- **Executor pausado** (`nenhum`) ou trocado no meio da execução: `cdp publicar` relê\n  `origin/main` antes do push e não publica.\n- **Push recusado** por corrida: `cdp publicar` sincroniza e tenta uma vez; se o remoto gravou o\n  livro, para e relata (nunca mescla à força, reescreve nem força).",
+      "sha256": "062b8f99960028a47d3b85b3aa9637e1fadf2277883a9f8b040e119f8275e566"
+    }
+  ]
+}

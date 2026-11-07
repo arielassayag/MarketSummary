@@ -1,0 +1,37 @@
+{
+  "id": "ref-ci-portal-e-artefato",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "A demonstração do portal fica restrita ao artefato de revisão",
+  "resumo": "A integração contínua verifica código, livro, agenda, skills e demonstração em modo de leitura. O workflow do portal lê o repositório e só publica com o livro aberto e a integridade válida. O modo de demonstração produz páginas rotuladas e sem indexação para abrir localmente.",
+  "escopos": [
+    "operador",
+    "status"
+  ],
+  "tags": [
+    "integração contínua",
+    "GitHub Pages",
+    "cdp-ci",
+    "cdp-site",
+    "artefato",
+    "dados simulados",
+    "noindex"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "## 8. GitHub Actions: só integração contínua e portal\n\n- `.github/workflows/cdp-ci.yml`: lint, testes, integridade do livro, agenda das rotinas, skills\n  em dia e o portal da demonstração (DADOS SIMULADOS) como artefato de revisão. Sem segredos,\n  só leitura.\n- `.github/workflows/cdp-site.yml`: a cada push em `main` (e numa rede de segurança agendada),\n  monta o portal a partir do repositório com `cdp site construir`, confere e publica no GitHub\n  Pages. Não usa IA e não grava no repositório (`docs/cdp/SITE.md`).\n\nNenhum workflow roda a mente nas rotinas. O workflow com IA gerado por\n`--alvo github-actions` existe só como alternativa opcional, desarmada (apêndice A).",
+      "sha256": "9b503612436990035bece397333a582fcef51e611a8afd5cc0318ce68aa92e4f"
+    },
+    {
+      "caminho": "docs/cdp/SITE.md",
+      "trecho": "## Garantias\n\n- O workflow só **lê** o repositório (`contents: read`); a escrita no Pages usa o ambiente\n  `github-pages`.\n- O site não é montado com o livro aguardando a abertura na data de início do mandato (o workflow\n  pula a publicação) e não é publicado com `cdp verify` falhando (o workflow falha).\n- Montagem determinística por versão do repositório: dois builds da mesma versão geram os mesmos\n  arquivos.\n- Depois de publicar, o workflow confere no ar que `manifest.json` traz a versão que acabou de ser\n  publicada.\n- A demonstração (`--demo`) é marcada \"DADOS SIMULADOS\" em todas as páginas, leva `noindex` nas\n  páginas HTML e **nunca vai ao endereço público**: no workflow, a opção de demonstração só\n  monta o site como artefato `github-pages` da execução (baixe e abra localmente).",
+      "sha256": "eb1e241d71d098ff9d0f3cb61ba7222b72e16c430466bd85cd97562d76e5c2e4"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "id": "ref-troca-de-executor-muda-autoridade",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "O publicador confirma a autoridade novamente antes do push",
+  "resumo": "Pause o executor antigo e confira se há gravações retidas antes da troca em sessão de operador. O publicador relê origin/main antes do push e para se o executor tiver sido pausado ou trocado durante a execução.",
+  "escopos": [
+    "operador",
+    "status"
+  ],
+  "tags": [
+    "troca de executor",
+    "autoridade",
+    "origin/main",
+    "antes do push",
+    "pausa",
+    "execução em curso"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "- **Executor pausado** (`nenhum`) ou trocado no meio da execução: `cdp publicar` relê\n  `origin/main` antes do push e não publica.",
+      "sha256": "3b2436c3f4ed2d49c8b04a60f2c144eeda6d9d2f5c2aed167fce061722e4783c"
+    },
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "1. Janela segura: `uv run python -m cdp executor janela` (nenhum escritor nos próximos 90 min,\n   trava livre, nada pendente; evite dias de montagem das 10:30 às 17:30 e as noites das 19:00\n   às 23:30).\n2. Pause o antigo: desligue as tarefas do app (desktop do Claude Code, Codex ou Antigravity) ou\n   as rotinas da nuvem; no clone antigo, `git status -sb` em dia (publique antes qualquer commit\n   retido).\n3. Troque, numa sessão de operador (nunca dentro de uma rotina):\n\n   ```sh\n   uv run python -m cdp executor transferir --para claude-cloud --por \"Nome\" --motivo \"rotinas na nuvem após o ensaio\"",
+      "sha256": "e7577cb512421ab148a3280c1222c65d4c0a090fe53d299b8c2393dde51d1331"
+    }
+  ]
+}

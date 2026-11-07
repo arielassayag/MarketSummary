@@ -8,7 +8,14 @@ import pytest
 
 from cdp.memoria import _fonte_atual
 from cdp.memoria_avaliacao import _medir
-from cdp.memoria_busca import Local, _janelas, ampliar, combinar_evidencias, reunir_ancoras
+from cdp.memoria_busca import (
+    Local,
+    _janelas,
+    ampliar,
+    combinar_evidencias,
+    reunir_ancoras,
+    termos_contextuais,
+)
 
 
 def test_avaliacao_exige_trecho_inteiro_e_todos_os_grupos():
@@ -62,6 +69,15 @@ def test_busca_contextual_preserva_bloco_que_cruza_limite_da_janela_lexical():
     assert bloco.inicio == 14 and bloco.linhas == linhas[13:16]
     assert "encerr" in bloco.contexto
     assert not any(j.bloco_inteiro for j in _janelas("fonte.md", linhas))
+
+
+def test_vocabulario_relaciona_parafrases_sem_confundir_superficies_de_publicacao():
+    assert "@posicao-vendida" in termos_contextuais("encerrar a posição vendida")
+    assert "@posicao-vendida" in termos_contextuais("recomprar o short")
+    assert "@fuso" in termos_contextuais("conferir a virada de dia")
+    assert "@fuso" in termos_contextuais("agendar em UTC")
+    assert "@portal-publico" not in termos_contextuais("refazer o painel local")
+    assert "@painel-local" not in termos_contextuais("comparar o portal do GitHub Pages")
 
 
 def test_contexto_adjacente_preserva_ancora_e_hash():

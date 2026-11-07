@@ -1,0 +1,36 @@
+{
+  "id": "ref-snapshot-recriacao-e-leitura",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "O snapshot abre em pasta nova e a leitura reconfere hashes",
+  "resumo": "A captura guarda manifesto, universo, preços, câmbio, índices, juros e retratos de dados. Grave em uma pasta nova. A leitura do snapshot refaz os hashes e falha em divergência. O texto de notícias continua sendo dado não confiável.",
+  "escopos": [
+    "desenvolvimento"
+  ],
+  "tags": [
+    "snapshot",
+    "captura",
+    "pasta nova",
+    "load_snapshot",
+    "manifesto",
+    "notícias",
+    "hashes"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/ARQUITETURA.md",
+      "trecho": "### Layout do snapshot (`data/snapshots/<as_of>/`)\n\n```\nmanifest.json            SnapshotManifest (hash de cada arquivo, fontes, limitações)\nuniverse.csv             cópia do universo usado\nprices.parquet           longo: date, ticker, close, adj_close, volume\nfx.parquet               longo: date, currency, usd_per_unit\nbenchmarks.parquet       longo: date, symbol, close\nrates.parquet            longo: date, series, value\nfundamentals.parquet     índice ticker (FUNDAMENTAL_FIELDS)\nshort_interest.parquet   índice ticker (SHORT_INTEREST_FIELDS)\nlending.parquet          índice ticker (LENDING_FIELDS, B3/BTC)\nnews.jsonl               NewsItem por linha (conteúdo NÃO confiável)\n```",
+      "sha256": "353f3ac74798cb84abad9302bb0bb6c7d6ac0efe4a1c4bc17fa114bc1a052971"
+    },
+    {
+      "caminho": "docs/cdp/ARQUITETURA.md",
+      "trecho": "A pasta de destino precisa ser nova (nunca sobrescreve). `load_snapshot` recalcula todos os\nhashes e falha em divergência. Os arquivos públicos brutos da cobertura ficam em\n`data/publico/<FONTE>/...`, com índice append-only e SHA-256 de cada coleta. Os brutos",
+      "sha256": "794bc1cc930db18334b29130bae89f8869b052e23d9b5549ab9fc8b8cc09ca35"
+    }
+  ]
+}

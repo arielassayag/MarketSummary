@@ -1,0 +1,31 @@
+{
+  "id": "ref-trilha-de-rotina-verde",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Execução verde sem commit se esclarece na transcrição",
+  "resumo": "Uma rotina verde sem commit pode ter pulado no gate ou relatado uma falha no resumo. Consulte a transcrição e o estado. Push em ramo inesperado na nuvem pode indicar uso de um prompt diferente daquele exportado pela rotina.",
+  "escopos": [
+    "operador",
+    "status"
+  ],
+  "tags": [
+    "rotina verde",
+    "transcrição",
+    "sem commit",
+    "gate",
+    "ramo inesperado",
+    "prompt gerado"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "| `publicar` sem push, \"verify falhou\" | integridade | `uv run python -m cdp verify` e investigar antes de qualquer publicação |\n| rotina verde sem commit | gate saiu cedo, ou falha relatada no resumo | ler a transcrição; `cdp estado` |\n| push na nuvem foi para `claude/…` | o prompt não foi o gerado | use só os prompts de `cdp rotinas exportar` (publicam em `main` por `cdp publicar`) |\n| portal antigo | workflow não disparou | Actions → cdp-site → Run workflow; `PORTAL_DEFASADO` em `cdp estado --rede` |",
+      "sha256": "0dc41135a777c2e95271de19a47bc3f8c1482e52d99c7d71d704b5d6fae2b34f"
+    }
+  ]
+}

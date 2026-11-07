@@ -1,0 +1,37 @@
+{
+  "id": "semanal-tese-prazo-e-validacao",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "A tese explica a carteira aprovada depois da decisão",
+  "resumo": "O prazo efetivo é da decisão. A tese descreve a carteira já aprovada sem usar fatos posteriores. Prepare os fatos pelo código e valide o rascunho, quando houver, antes de editar.",
+  "escopos": [
+    "semanal",
+    "diario"
+  ],
+  "tags": [
+    "tese semanal",
+    "decisão aprovada",
+    "prazo efetivo",
+    "rascunho",
+    "fatos posteriores",
+    "validação",
+    "prepare"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/SEMANAL.md",
+      "trecho": "A tese explica a carteira decidida: por que cada nome e cada peso, exposições, sensibilidade a\nmercado, volatilidade e orçamento de risco, temas, riscos, premortem, gatilhos e calendário. Não\ntem o prazo efetivo e nunca atrasa a decisão.\n\n1. Fatos e análises da carteira aprovada (código):\n\n   ```sh\n   uv run python -m cdp tese prepare --week AAAA-MM-DD\n   ```\n\n   `publicada: true` ⇒ passo 9. Falha (por exemplo, semana sem decisão aprovada) ⇒ passo 9 e\n   relate. Anote `rascunho_entregue` e `rascunho_adotado`.",
+      "sha256": "8113a07628c06ab237dfef2becca7c409bea1986e46de81f9d0102a545116bf3"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/SEMANAL.md",
+      "trecho": "2. **Rascunho entregue** (tese escrita fora do clone das rotinas, em\n   `docs/cdp/teses/<semana>.json`; `docs/cdp/TESE.md`): com `rascunho_adotado: true` — ou\n   `rascunho_entregue` preenchido e `rascunho_adotado: false` —, valide **antes de escrever\n   qualquer coisa**: `uv run python -m cdp validate-tese --week AAAA-MM-DD`. `ok: true` ⇒ não\n   reescreva nada: vá ao subpasso 5. `ok: false` ⇒ corrija `book/<semana>/tese/tese.json` a partir\n   dos `problemas`. Sem rascunho, siga do subpasso 3.\n3. Leia **por inteiro** `book/<semana>/tese/fatos.md` (em partes, até a última linha) e\n   `tese.schema.json`; apoie o texto na pesquisa da semana e em `fatos.md`, sem fatos posteriores\n   à decisão.",
+      "sha256": "34b642d37e88f5fe83f0b7b92e708937eac9acf10a029ae78b85696d497559db"
+    }
+  ]
+}

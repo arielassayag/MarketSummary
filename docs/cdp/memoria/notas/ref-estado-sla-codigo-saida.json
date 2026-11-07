@@ -1,0 +1,37 @@
+{
+  "id": "ref-estado-sla-codigo-saida",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "A saída de estado e a condição de erro do SLA são separadas",
+  "resumo": "Estado imprime o retrato escolhido em JSON ou Markdown. Com SLA, a presença de incidente de severidade alta produz código 1 e mensagem no erro padrão. O modo rápido pula a verificação de integridade. Rede acrescenta remoto, trava e manifesto do portal.",
+  "escopos": [
+    "operador",
+    "status"
+  ],
+  "tags": [
+    "estado",
+    "sla",
+    "código de saída",
+    "severidade alta",
+    "rápido",
+    "stderr",
+    "manifesto"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "src/cdp/estado.py",
+      "trecho": "def cmd_estado(args: argparse.Namespace) -> int:\n    from .workflow.runtime import Runtime\n\n    rt = Runtime.from_args(args)\n    e = estado(rt, Path(args.raiz), agora=args.agora, rapido=args.rapido, rede=args.rede)\n    if args.formato == \"md\":\n        print(para_markdown(e), end=\"\")\n    else:\n        print(json.dumps(e, ensure_ascii=False, indent=2, default=str))\n    if args.sla and any(i[\"severidade\"] == \"alta\" for i in e[\"incidentes\"]):\n        print(\"SLA: incidente de severidade alta\", file=sys.stderr)\n        return 1\n    return 0",
+      "sha256": "a8231128fdb297a0af96b24cdac40df6d90fd925c8bf265a0b7e3b031628169b"
+    },
+    {
+      "caminho": "src/cdp/estado.py",
+      "trecho": "    s.add_argument(\"--raiz\", default=\".\")\n    s.add_argument(\"--formato\", choices=[\"json\", \"md\"], default=\"json\")\n    s.add_argument(\"--rapido\", action=\"store_true\", help=\"sem a verificação de integridade\")\n    s.add_argument(\"--rede\", action=\"store_true\",\n                   help=\"consulta o remoto, a trava e o manifesto do portal\")\n    s.add_argument(\"--sla\", action=\"store_true\", help=\"sai com 1 se houver incidente alto\")\n    s.add_argument(\"--agora\", type=_aware, default=None,\n                   help=\"instante ISO (sem fuso = Brasília); padrão: agora\")",
+      "sha256": "d1e51b77fcf1ffbcfeb0ad34afefa5cc0a0775439dc45bef86e199f1efe7b7a0"
+    }
+  ]
+}

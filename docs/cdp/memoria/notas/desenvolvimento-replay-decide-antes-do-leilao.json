@@ -1,0 +1,33 @@
+{
+  "id": "desenvolvimento-replay-decide-antes-do-leilao",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Replay separa o corte da proposta e o fechamento realizado",
+  "resumo": "A preparação anterior ao fechamento enxerga o pregão anterior. A proposta fixa ações e ticker. A efetivação usa as observações do próprio pregão, aplica lotes, capacidade realizada, custos e caducidade.",
+  "escopos": [
+    "desenvolvimento",
+    "calibracao"
+  ],
+  "tags": [
+    "replay",
+    "ensaio",
+    "montagem",
+    "proposta",
+    "pregão anterior",
+    "leilão",
+    "fechamento",
+    "ações e ticker"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/REPLAY_OPERACIONAL.md",
+      "trecho": "Antes do horário de fechamento, o armazenamento expõe apenas o pregão anterior. A proposta\nfixa ações e ticker; o fechamento aplica capacidade realizada, lotes, custos e caducidade pelas\nrotinas canônicas. A próxima decisão parte do patrimônio e das ações efetivas arquivados.\nPreço, volume e câmbio usados para negociar precisam ser observados no próprio pregão;\ncarry usado na marcação ou no ADV não autoriza um fill. Uma linha detida sem fechamento ou\ncâmbio próprios congela o emissor inteiro, inclusive a abertura de outra linha. USD/USD=1 é\na identidade da unidade; moeda desconhecida não recebe câmbio presumido.",
+      "sha256": "8a2145c2c83e9c782046ede1ad7891097855d4ead26ab6ef7cea46723d80127b"
+    }
+  ]
+}

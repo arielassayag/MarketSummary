@@ -1,0 +1,39 @@
+{
+  "id": "semanal-sincronizar-antes-da-decisao",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Sincronização final da montagem incorpora pedidos de risco",
+  "resumo": "Antes da decisão, confira agenda e sincronização canônica. O código aplica pedidos pendentes de kill switch antes de decidir. A recomendação para parar encerra a montagem; no modo executor, a sincronização fica com o script.",
+  "escopos": [
+    "semanal",
+    "operador",
+    "risco"
+  ],
+  "tags": [
+    "montagem",
+    "sincronização",
+    "pedido de risco",
+    "kill switch",
+    "antes da decisão",
+    "agenda",
+    "prazo efetivo",
+    "parar"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/SEMANAL.md",
+      "trecho": "Logo antes de decidir, sincronize de novo e confira a agenda:\n\n```sh\nuv run python -m cdp sincronizar --executar\nuv run python -m cdp agenda\n```\n\n- A sincronização traz o que a rotina de risco publicou durante a montagem a partir de outro\n  clone (por exemplo, na nuvem), inclusive o **pedido de kill switch**\n  (`reports/risk/<data>/kill_switch_<HHMM>.yaml`). Os pedidos ainda não aplicados aparecem em\n  `kill_switch_pedidos` da agenda; o `weekly decide` os aplica antes de decidir (kill switch\n  ligado ⇒ só redução de risco). Relate-os no resumo.",
+      "sha256": "d86463d5af54703b7a13a29d8ab861c1e5cf52c30df334d78fd2fb449f61f5ec"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/SEMANAL.md",
+      "trecho": "- `acao: \"parar\"` ⇒ não decida: libere a trava e encerre relatando o `motivo`.\n  `acao: \"seguir_sem_push\"` (sem rede) ⇒ siga e relate.\n- No modo executor, pule a sincronização (ela é do executor) e rode só a `agenda`.\n- Só prossiga com `semanal.minutos_ate_o_prazo` > 0.",
+      "sha256": "49d37044207b463ea141caa434645222b98fb00c85c881ad02a940edc0c6fe04"
+    }
+  ]
+}

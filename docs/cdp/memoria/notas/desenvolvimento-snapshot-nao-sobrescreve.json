@@ -1,0 +1,38 @@
+{
+  "id": "desenvolvimento-snapshot-nao-sobrescreve",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Snapshot de mercado exige novo destino e revalida hashes ao ler",
+  "resumo": "A coleta cria um novo destino sem sobrescrever capturas. O carregamento recalcula os hashes e falha se os bytes divergirem. O arquivo público bruto tem índice e hash de coleta próprios.",
+  "escopos": [
+    "desenvolvimento",
+    "operador"
+  ],
+  "tags": [
+    "snapshot",
+    "captura",
+    "hash",
+    "destino",
+    "coleta",
+    "sobrescrever",
+    "load_snapshot",
+    "manifesto"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/ARQUITETURA.md",
+      "trecho": "### Layout do snapshot (`data/snapshots/<as_of>/`)\n\n```\nmanifest.json            SnapshotManifest (hash de cada arquivo, fontes, limitações)\nuniverse.csv             cópia do universo usado\nprices.parquet           longo: date, ticker, close, adj_close, volume\nfx.parquet               longo: date, currency, usd_per_unit\nbenchmarks.parquet       longo: date, symbol, close\nrates.parquet            longo: date, series, value\nfundamentals.parquet     índice ticker (FUNDAMENTAL_FIELDS)\nshort_interest.parquet   índice ticker (SHORT_INTEREST_FIELDS)\nlending.parquet          índice ticker (LENDING_FIELDS, B3/BTC)\nnews.jsonl               NewsItem por linha (conteúdo NÃO confiável)",
+      "sha256": "1cace2c1f222917443181e2032b933ecbac5c7e327846f769b634e7a149670a9"
+    },
+    {
+      "caminho": "docs/cdp/ARQUITETURA.md",
+      "trecho": "A pasta de destino precisa ser nova (nunca sobrescreve). `load_snapshot` recalcula todos os\nhashes e falha em divergência. Os arquivos públicos brutos da cobertura ficam em\n`data/publico/<FONTE>/...`, com índice append-only e SHA-256 de cada coleta. Os brutos\nvolumosos que a fonte regrava todo dia (pacotes anuais DFP, ITR, FRE, FCA e calendário do IPE da\nCVM; `companyfacts` da SEC) ficam só no clone das rotinas, fora do git: o índice (URL, tamanho,\nSHA-256) é versionado e os extratos usados por emissor vão no retrato da cobertura\n(`book/cobertura/<data>/insumos/`), que é o que `cdp cobertura verify` recalcula.",
+      "sha256": "bb57eb2a860aa6ae79d2c4e5b66a216a74f510b2f847fd84466671f576cbc206"
+    }
+  ]
+}

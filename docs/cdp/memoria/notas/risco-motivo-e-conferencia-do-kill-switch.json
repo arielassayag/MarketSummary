@@ -1,0 +1,32 @@
+{
+  "id": "risco-motivo-e-conferencia-do-kill-switch",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Ativação recomendada do kill switch exige motivo literal e conferência",
+  "resumo": "Se o código recomendar kill switch e ele estiver desligado, copie literalmente motivo_kill_switch na ativação e consulte status para confirmar o estado. A rotina não desliga o bloqueio nem age sem recomendação.",
+  "escopos": [
+    "risco",
+    "operador"
+  ],
+  "tags": [
+    "kill switch",
+    "bloqueio",
+    "ativação",
+    "motivo literal",
+    "recomendação",
+    "conferência",
+    "status"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/RISCO.md",
+      "trecho": "## 4. Kill switch (só por recomendação do código)\n\nSe algum item de `acoes_recomendadas` começar com `kill-switch: ` e `kill_switch.ativo` for\n`false`, copie **exatamente** `motivo_kill_switch` e rode:\n\n```sh\nuv run python -m cdp kill-switch on --reason \"<motivo_kill_switch>\" --by \"CDP — rotina de risco\"\nuv run python -m cdp status\n```\n\nConfirme `kill_switch: true`. Em qualquer outro caso, não mexa no kill switch.",
+      "sha256": "cb298fcf089b3f0e6ed2e9aacb51b8eb88e5addd2f7d5aad6e1ba5cfc91b061f"
+    }
+  ]
+}

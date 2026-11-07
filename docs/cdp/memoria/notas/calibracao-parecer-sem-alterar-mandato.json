@@ -1,0 +1,36 @@
+{
+  "id": "calibracao-parecer-sem-alterar-mandato",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Relatório mensal compara métricas e encaminha propostas à revisão humana",
+  "resumo": "Compare a rodada com a referência anterior, identifique a pasta e reporte as métricas previstas pelo roteiro. Mudanças ficam como propostas para decisão humana. A publicação da calibração verifica integridade sem regenerar o painel.",
+  "escopos": [
+    "calibracao"
+  ],
+  "tags": [
+    "calibração",
+    "métricas",
+    "propostas",
+    "mandato",
+    "revisão humana",
+    "resumo",
+    "painel"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/CALIBRACAO.md",
+      "trecho": "3. Execução anterior: a pasta `reports/backtest/*/mensal/` mais recente antes de hoje; sem\n   nenhuma, a variante escolhida em `reports/backtest/2026-10-05/CALIBRACAO.md`.\n4. Escreva `reports/backtest/AAAA-MM-DD/CALIBRACAO_MENSAL.md` (pt-BR): período, número de\n   rebalanceamentos e a pasta de comparação; tabela atual × anterior com retorno anualizado, vol\n   anualizada, Sharpe (excesso e bruto), drawdown máximo, custos, giro semanal, resultado\n   específico e fatorial, PSR, Sharpe deflacionado, fração do tempo com vol na banda e IC médio\n   por sinal; leitura qualitativa e **propostas** marcadas \"para revisão humana — não\n   aplicadas\".\n5. Integridade e publicação (uma vez por execução; esta rotina não regenera o painel):",
+      "sha256": "07231f86d6fb2ea4da94c918aedb59ad63c663156d939be9a0838a59405949ce"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/CALIBRACAO.md",
+      "trecho": "   ```sh\n   uv run python -m cdp verify\n   uv run python -m cdp publicar --tarefa cdp-calibracao --mensagem \"CDP: calibração mensal AAAA-MM-DD\" --execucao <execucao> --mente <mente>\n   ```\n\n   Sem push, relate o `motivo`; nunca tente outro caminho.",
+      "sha256": "747be4e7f4b88ec8baa3c9dea767089311407c840a7a0a912fb903f1e67c8535"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "id": "ref-provas-verificacao-e-recalculo",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Verificação literal e recálculo numérico usam critérios distintos",
+  "resumo": "A trilha, decisões, registros, notas e arquivos selados são conferidos pelos hashes gravados. O modo sem-recalculo da cobertura confere a integridade sem repetir os modelos. Para comparar valores recalculados a partir dos insumos arquivados, aplique as tolerâncias documentadas.",
+  "escopos": [
+    "desenvolvimento",
+    "calibracao"
+  ],
+  "tags": [
+    "verificação literal",
+    "recalcular",
+    "sem-recalculo",
+    "sha256",
+    "tolerância",
+    "solver"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/REPRODUZIR.md",
+      "trecho": "Tudo o que foi gravado é verificado byte a byte:\n\n- cada evento da trilha guarda o sha256 do evento anterior; qualquer edição, remoção ou\n  reordenação quebra a cadeia;\n- cada decisão referencia os hashes da proposta, da pesquisa, da configuração e dos insumos da\n  semana; cada registro diário, o do registro anterior;\n- cada snapshot da cobertura tem manifesto com o sha256 de cada arquivo (insumos, configuração\n  usada, modelos), selado na trilha do fundo; o livro da cobertura é encadeado;\n- cada nota de pesquisa publicada tem o seu evento na trilha com o sha256 de `nota_publicada.json`\n  e de `nota.md` (conferido por `cdp verify`; `cdp nota agenda` mostra `integridade_notas`).",
+      "sha256": "4ea411630b1cc86e20dfd8de494dd326646df8e6c058a4c94efd6071c5c79a55"
+    },
+    {
+      "caminho": "docs/cdp/REPRODUZIR.md",
+      "trecho": "```sh\nuv run python -m cdp verify\nuv run python -m cdp cobertura verify --sem-recalculo\nuv run python -m cdp nota agenda\n```\n\n## 4. Recalcular a partir dos insumos arquivados (tolerância)\n\nNúmeros recalculados não são comparados por hash: álgebra linear e solvers de otimização convexa\npodem diferir no último dígito entre versões de biblioteca, sistema e processador. A comparação é\npor tolerância documentada.",
+      "sha256": "4070319a557efc5bba5f7c22980839ac69d4fad307bd05102ec7b23ad697e644"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "id": "cobertura-retomada-do-evento-de-publicacao",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Publicação de nota liga arquivos e evento de trilha",
+  "resumo": "Se a publicação parou antes do evento, a retomada exige que os arquivos confiram byte a byte. A verificação liga cada nota ao evento COVERAGE_NOTE e confere os hashes, a data, o snapshot e a autoria.",
+  "escopos": [
+    "cobertura",
+    "desenvolvimento",
+    "operador"
+  ],
+  "tags": [
+    "nota publicada",
+    "COVERAGE_NOTE",
+    "publicação interrompida",
+    "evento",
+    "trilha",
+    "retomada",
+    "arquivos finais",
+    "hash"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/NOTAS.md",
+      "trecho": "Cada publicação grava um evento `COVERAGE_NOTE` na trilha de auditoria do fundo\n(`book/audit_log.jsonl`) com o emissor, a data, o sha256 de `nota_publicada.json` e de `nota.md`,\no snapshot da cobertura usado e a autoria. A verificação (`verify_notes`, parte de `cdp verify`)\nconfere que toda nota publicada tem o seu evento e que todo evento aponta para arquivos íntegros;\n`cdp nota agenda` mostra o resultado em `integridade_notas`.",
+      "sha256": "b50413769405e5c5bd849d89197eded9c335f2f9440252cb2169732056a8bd40"
+    },
+    {
+      "caminho": "docs/cdp/NOTAS.md",
+      "trecho": "  automática do código (`autoria: \"codigo\"`, só fatos, visão neutra) e os problemas registrados.\n  Placeholder que sobre na narrativa da mente ⇒ nota automática; criação exclusiva; evento\n  `COVERAGE_NOTE`; publicação interrompida antes do evento é retomada se os arquivos conferirem\n  byte a byte.",
+      "sha256": "f80d471045e5fbf560a0bc01dad9160ab9e1d2c394fea82001d2b67e470eefcc"
+    }
+  ]
+}

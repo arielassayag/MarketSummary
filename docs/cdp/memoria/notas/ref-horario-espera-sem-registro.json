@@ -1,0 +1,46 @@
+{
+  "id": "ref-horario-espera-sem-registro",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Espera pelo horário nominal ocorre antes da admissão",
+  "resumo": "A espera opcional exige relógio real e se limita à ocorrência de hoje da própria tarefa nos próximos cinco minutos. Nenhuma execução ou trava é registrada durante a espera. Regressão do relógio, interrupção ou limite esgotado abortam com executar falso antes do gate.",
+  "escopos": [
+    "desenvolvimento",
+    "operador"
+  ],
+  "tags": [
+    "aguardar-horario",
+    "horário nominal",
+    "antecipação",
+    "relógio monotônico",
+    "gate",
+    "trava"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "src/cdp/rotinas.py",
+      "trecho": "                     informar: Callable[[str], None] | None = None) -> dict[str, Any] | None:\n    \"\"\"Opt-in: só a próxima ocorrência da própria tarefa, hoje e em até cinco minutos.\n\n    Função sem Runtime, agenda, identidade, registro ou trava. Observa clocks após cada\n    espera de no máximo um segundo; rollback/interrupção/limite abortam antes do gate.\n    Fora do recorte retorna None sem sleep, mantendo o gate ordinário.\n    \"\"\"\n    tarefa = rot.tarefa(tarefa_id)\n    inicio = _clock_aware(clock())\n    alvo = Cron.ler(tarefa.cron).proximo(inicio, rot.tz)\n    if (alvo is None or alvo.date() != inicio.astimezone(rot.tz).date()\n            or not 0 < (alvo - inicio).total_seconds() <= ESPERA_HORARIO_MAX_S):\n        return None",
+      "sha256": "316543e6aab351574c636e56b81989c66501156ae3983beff096fb22971d132b"
+    },
+    {
+      "caminho": "src/cdp/rotinas.py",
+      "trecho": "        mono = monotonic()\n        if not math.isfinite(mono) or mono < mono_anterior:\n            raise ErroEsperaHorario(\"relógio monotônico inválido ou regressivo\")\n        decorrido = mono - mono_inicio\n        if decorrido > ESPERA_HORARIO_MAX_S:\n            raise ErroEsperaHorario(\"limite monotônico de 5 min excedido antes do gate\")\n        restante = (alvo - agora).total_seconds()\n        if restante <= 0:\n            return {\"tarefa\": tarefa.id, \"inicio\": inicio.isoformat(),\n                    \"agendada_para\": alvo.isoformat(), \"fim\": agora.isoformat(),\n                    \"segundos_monotonicos\": decorrido}\n        if decorrido >= ESPERA_HORARIO_MAX_S:\n            raise ErroEsperaHorario(\"horário nominal não alcançado em 5 min monotônicos\")",
+      "sha256": "b9d22489f3701308673f0218d712e707aded01b12577e1c0175ef0141de68498"
+    },
+    {
+      "caminho": "src/cdp/rotinas.py",
+      "trecho": "    espera = None\n    erro_espera = None\n    if getattr(args, \"aguardar_horario\", False):\n        if args.manual or getattr(args, \"agora\", None) is not None:\n            print(\"Erro: --aguardar-horario requer relógio real, sem --manual ou --agora\", file=sys.stderr)\n            return EXIT_CONFIG\n        try:\n            espera = aguardar_horario(rot, args.tarefa, clock=lambda: _agora(args),\n                                     informar=lambda msg: print(msg, file=sys.stderr, flush=True))\n            if espera:\n                # Nenhum Runtime/gate usa o retrato anterior à espera.",
+      "sha256": "efb3d36d605d316216abcddaf04db7353032263cf8379cefb0ccb89b86fc8071"
+    },
+    {
+      "caminho": "src/cdp/rotinas.py",
+      "trecho": "    if erro_espera is not None:\n        code, out = EXIT_PULAR, {\"tarefa\": args.tarefa, \"executar\": False,\n            \"motivo\": f\"espera de horário abortada: {erro_espera}\",\n            \"itens\": [], \"trava\": None, \"execucao\": None, \"mente\": None, \"trailers\": []}\n    else:",
+      "sha256": "d4e4119838e58bc6b1d25e7ead598316eec1cce50b5ea24cf15d3a892881fd58"
+    }
+  ]
+}

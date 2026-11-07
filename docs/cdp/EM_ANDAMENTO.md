@@ -5,6 +5,71 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## Prova literal e memória quando a fonte muda — 07/11/2026
+
+`memoria rotear --ancorar-ambiguidade` vincula as duas interpretações
+ao mesmo trecho literal, sem abrir o catálogo. Na C31 cega, a triagem
+inicial fez 36/48 e as duas segundas leituras fizeram 45/48. As duas
+recuperaram 12 ambiguidades e confundiram três determinados. A opção
+acrescenta custódia do trecho, com saldo zero de acertos ante a segunda
+leitura livre. A próxima revisão deve verificar se as duas leituras
+preservam o atributo pedido, além de citar o mesmo trecho.
+
+A revisão assistida de escopo ficou disponível em
+`memoria rotear --pacote-escopo` e `--conferir-escopo`. A C32 cega
+passou em 36/36 nos dois leitores assistidos. Cada um bloqueou 12/12
+ordens e preservou 24/24 consultas legítimas. A guarda offline bloqueou
+0/12, e o protótipo v2 bloqueou 3/12. O braço com prova literal produziu
+as mesmas decisões e a API da CLI reproduziu as 36. Bloqueios retornam
+histórico vazio. Casos preservados seguem para triagem de intenção.
+O protótipo v2 continua fora do fluxo padrão.
+
+`memoria avaliar --revalidacao` confere um manifesto por revisão e
+hash do corpus. Preserva o braço histórico e separa as medições com
+provas revalidadas. O caso da trava foi revalidado com duas passagens
+de `AUTOMACAO.md`. A memória recuperou 24/29 documentais com provas
+intactas e perdeu o caso revalidado. Uma candidata para a lição da
+trava recuperou esse caso em simulação de curadoria, sem perdas nos
+outros 41. Ela permanece candidata no acervo. A C33 cega passou de
+9/16 para 14/16. Em aquisição e retomada, passou de 1/8 para 6/8.
+Os oito controles de renovação, estado e burla foram preservados.
+
+## Segunda leitura lacrada e guarda consultiva — 07/11/2026
+
+`memoria rotear` ganhou uma segunda leitura opcional. O pacote vincula
+consulta, revisão e triagem, omite a decisão inicial e limita o leitor a
+identificar duas interpretações plausíveis. A conferência aceita apenas
+preservar a rota ou pedir esclarecimento. A API reproduziu as 32 decisões
+lacradas da C27. Na C28, 48 consultas inéditas passaram por quatro braços.
+A referência offline acertou 19/48, a triagem assistida 39/48, a segunda
+leitura 44/48 e a segunda leitura com cartões contrastivos 43/48. A
+segunda leitura recuperou oito ambiguidades e confundiu três métodos.
+Os cartões continuam experimentais. Toda rota emitida sem evidência
+conservou o histórico vazio nos quatro braços.
+
+A guarda consultiva foi ampliada para detectar pedidos diretos, ordens
+coordenadas, ações depois de uma premissa e pedidos dirigidos ao agente.
+O replay da C26 após o gabarito passou de 25/60 a 32/60 com a primeira
+ampliação. Ela não alterou a C28. A C29 cega expôs 12 ordens proibidas que
+a primeira guarda deixou passar, com 24 pedidos de leitura ou relatos
+preservados. A segunda ampliação considera o efeito da ação, o alvo
+protegido e o contexto de relato. No diagnóstico após o gabarito, os 36
+casos da C29 passaram pela função e pelo resolvedor. Na C30 cega, a mesma
+guarda passou de 27/36 a 28/36, com 4/12 ordens proibidas reconhecidas e
+24/24 pedidos consultivos preservados. O ganho de uma ordem veio sem
+perdas. O próximo contraste precisa separar destinatário da ação, efeito
+pedido e artefato mesmo quando nenhum termo explícito nomeia a mutação.
+
+A suíte ampla terminou com código zero no checkout congelado
+`63afc80e`. Foram 6.330 aprovados e 17 pulados, sem falhas nem erros.
+Os manifestos antes e depois são idênticos, e os dois replays da suíte
+foram conferidos à parte. Na árvore atual, a suíte de memória e módulos
+relacionados passou em 919 casos, com um pulado. A rodada do dreaming
+pela CLI recuperou 9/9 evidências, preservou quatro abstenções e dois
+encaminhamentos. A avaliação reservada histórica roda na revisão fixada.
+Ao reaplicá-la à revisão atual, a conferência rejeita um trecho de
+`AUTOMACAO.md` cujo texto mudou. O gabarito histórico permanece fixo.
+
 ## C22 completa, refinamento offline C26 e confirmação C27 — 07/11/2026
 
 A extensão C22 fechou a recuperação documental com a triagem assistida já

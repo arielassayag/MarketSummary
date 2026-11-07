@@ -281,6 +281,54 @@ segue experimental porque, na C26 já aberta, a mesma abordagem também
 introduziu duas abstenções indevidas. A C27 mede triagem e destino, com
 uma rodada por desenho e famílias escolhidas para cobrir contrastes.
 
+Na C28, a segunda leitura passou de 39/48 a 44/48. Corrigiu oito
+ambiguidades e confundiu três pedidos documentais compostos. Uma variante
+com os mesmos casos e cartões recuperados de contrastes anteriores chegou
+a 43/48. Cartões podem reter o que um agente aprendeu. Neste ensaio, deram
+contexto a 28 das 33 verificações e não melhoraram o acerto conjunto.
+
+Um diagnóstico posterior mostrou que os três falsos esclarecimentos
+opunham método a estado. A segunda interpretação isolava uma parte de
+uma consulta composta ou acrescentava uma instância que o enunciado não
+pedia. Um filtro retrospectivo de núcleos interrogativos preservou os
+oito ganhos e chegou a 47/48. A próxima prova deve exigir que as duas
+leituras apontem ao mesmo trecho interrogativo e preservem o objeto e
+o atributo pedidos. Fixar uma passagem é verificável em código. Decidir
+se as alternativas cobrem o mesmo pedido ainda exige julgamento.
+
+Para mutação, a primeira ampliação da guarda recuperou sete casos na
+C26 já aberta. Na C29 cega, tanto a base quanto essa candidata deixaram
+passar os 12 pedidos proibidos. A correção passou em 36/36 na reexecução
+C29. Na C30 cega, reconheceu 4/12 ordens frente a 3/12 na base. Preservou
+as 24 consultas e retrospectivas legítimas. A diferença entre diagnóstico
+e confirmação motiva manter o gabarito separado das lições recuperadas.
+
+Na C31, o recorte literal tornou verificável que duas interpretações apontavam
+ao mesmo trecho. A segunda leitura livre e a ancorada chegaram a 45/48, ante
+36/48 na triagem inicial. Ambas recuperaram 12/12 ambiguidades e fizeram
+três pedidos indevidos de esclarecimento. A conferência do trecho explica
+qual pergunta o leitor interpretou. A existência do trecho não prova que a
+interpretação era plausível.
+
+Na C32, leitores assistidos acertaram 36/36, com e sem recortes obrigatórios.
+Os dois bloquearam 12 ordens e preservaram 24 consultas ou relatos legítimos.
+A versão com recortes deixou uma prova conferível de pedido, efeito e alvo.
+A referência offline bloqueou zero ordens, e o protótipo ajustado na C29 e
+C30 bloqueou três. A leitura assistida entrou como opção anterior à triagem
+e o resolvedor reproduziu as 36 decisões com histórico vazio nos bloqueios.
+
+## Revalidar a prova quando a fonte muda
+
+As fontes de um gabarito também envelhecem. A regra de travamento permaneceu
+fechada após a mudança de agenda, mas a prova literal da recuperação mudou.
+O avaliador agora conserva a passagem histórica e pede um manifesto para
+conferir o caso na revisão nova. Na primeira comparação, uma nota candidata
+foi ativada somente no checkout do ensaio. Ela recuperou os dois grupos
+exigidos e conservou os outros 41 casos. O caso usado para redigir a nota
+estava aberto. Na C33 cega, com 16 consultas novas, a nota isolada elevou
+os acertos de 9/16 a 14/16. Os cinco ganhos ficaram nos oito casos de
+aquisição e retomada. Renovação, estado e burla conservaram 8/8 controles.
+
 ## Transferência de uma lição para outra sessão
 
 O teste temporal do CDP usa uma fixture Git sem remoto. O revisor lê a fila lacrada

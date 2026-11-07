@@ -138,7 +138,10 @@ inclui `esclarecimento` para pedir o fato ou procedimento que a pessoa quer cons
 antes de selecionar uma autoridade. A execução segue os gates do CDP.
 Pedidos explícitos para gravar, adulterar ou publicar registros operacionais ficam
 fora da memória consultiva. Consultas sobre como o procedimento funciona continuam
-passando pela busca documental.
+passando pela busca documental. Para pedidos coordenados ou dirigidos ao agente,
+a guarda compara o verbo, o efeito pretendido e o alvo protegido na mesma frase.
+Citações e relatos de ocorrências servem de contexto para a consulta. Os
+bloqueios determinísticos das rotinas continuam decidindo a execução.
 
 Na busca automática, uma consulta já reconhecida como estado pode ter seu destino
 refinado pelos critérios versionados de objeto e atributo. Uma alternativa só
@@ -147,6 +150,28 @@ distintos da pergunta, a autoridade tem âncoras válidas e há margem sobre as 
 O campo `refinamento_destino` registra o destino anterior, os critérios encontrados
 e a origem verificada. Revisões antigas, cartões vencidos e empates conservam a
 orientação inicial.
+
+### Rever pedidos de alteração antes da triagem
+
+`--pacote-escopo` prepara uma leitura opcional de pedidos de mutação ou burla.
+O pacote contém a consulta e o lacre. Se `bloqueio_escopo` já for verdadeiro,
+`--conferir-escopo` aplica a regra sem esperar uma leitura. Nos demais casos,
+entregue o prompt a um leitor e devolva seu JSON à conferência.
+
+```sh
+uv run python -m cdp memoria rotear --escopo operador --consulta "$CONSULTA" \
+  --revisao "$REVISAO_DO_PACOTE" --data "$DATA_DO_PACOTE" --pacote-escopo --formato prompt
+uv run python -m cdp memoria rotear --escopo operador --consulta "$CONSULTA" \
+  --revisao "$REVISAO_DO_PACOTE" --data "$DATA_DO_PACOTE" --conferir-escopo < escopo.json
+```
+
+Para recusar, o leitor identifica trechos literais de pedido, efeito e alvo.
+A conferência exige ocorrências únicas, efeito dentro do pedido e um pedido
+que vá além de uma citação isolada. Os recortes aparecem como posições da
+consulta, com início inclusivo e fim exclusivo. O julgamento semântico continua
+com o leitor. A recusa retorna `fora_escopo` com histórico vazio. Uma consulta
+preservada retorna `triagem_necessaria` e segue para a escolha normal de intenção
+e destino. As proteções das rotinas continuam governando a execução.
 
 ### Verificar uma ambiguidade antes de abrir fontes
 
@@ -173,6 +198,13 @@ Esse passo opcional conserva a decisão inicial ou pede esclarecimento.
 A plausibilidade das duas leituras é avaliada pelo leitor. O código confere
 a estrutura, o vínculo e os destinos permitidos. Se o segundo leitor devolver
 uma análise inválida, a conferência a rejeita.
+
+Use `--ancorar-ambiguidade` tanto ao preparar quanto ao conferir para exigir
+um `ato` em cada interpretação. O código recorta trechos literais da consulta,
+numera os recortes e lacra as posições. Uma mudança para indeterminado exige que
+as duas leituras apontem para o mesmo ato. Esse vínculo pode ser conferido sem
+ler o catálogo. A regra semântica continua sendo responder ao mesmo objeto e
+atributo, distinguindo informação incidental de um pedido independente.
 
 ### Recuperar após a triagem
 
@@ -401,6 +433,22 @@ As figuras da entrega usam a revisão `42f19b27` e os dois conjuntos. A primeira
 mostrou que a fusão descartava referências úteis. O ajuste posterior passou a preservar
 as três primeiras passagens diretas. As figuras mostram a medição após esse ajuste.
 A revisão da fonte e o código aparecem separadamente no rodapé.
+
+Quando uma fonte muda, preserve o corpus histórico. A execução normal exige
+que os trechos do gabarito ainda confiram. Para medir uma revisão nova com uma
+prova atualizada, forneça um manifesto JSON explicitamente revisado.
+
+```sh
+uv run python -m cdp memoria avaliar --reservada --revisao "$REVISAO_ALVO" \
+  --revalidacao "$MANIFESTO_JSON"
+```
+
+O manifesto declara `versao` 1, `revisao_alvo`, `sha256_corpus` e `casos`.
+Cada caso informa `id`, `justificativa` e `grupos` de evidências com caminho,
+trecho literal e hash. A conferência exige que a prova original do caso tenha
+deixado de conferir no alvo. A medição preserva a prova original no braço
+histórico e usa a prova nova nas buscas do alvo. O relatório separa os pares
+com provas intactas dos casos revalidados e identifica o manifesto usado.
 
 A partir da raiz de um checkout na revisão histórica `42f19b27`, gere os relatórios e as duas
 figuras. O renderizador requer Matplotlib. [Código das figuras](../../scripts/cdp_memoria_figuras.py).

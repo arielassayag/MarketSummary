@@ -5,6 +5,43 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## Pontes literais na seleção documental — 07/11/2026
+
+`memoria rotear --candidatas --com-pontes` e
+`--conferir-selecao --com-pontes` usam o mapa Git com origem, papéis de
+destino, prazo de revisão e SHA-256 literal. A ponte ocupa um ID e o
+arquivo dela fica fora da lista de recortes livres. O modo é consultivo
+e experimental. A CLI confirmou o intervalo exato e rejeitou um recorte
+que tentava ampliá-lo. A validação focada de seleção e triagem passou em
+187 casos, incluindo vencimento, mudança e duplicidade da fonte.
+
+Na C34 já aberta, acrescentar apenas os seis recortes do gabarito
+levou o alcance de 26/32 a 32/32 grupos e de 10/16 a 16/16 casos
+documentais. Os recortes somaram 2.057 bytes e a maior seleção completa
+coube em 1.538 bytes. A C37 congelou separadamente 17 trechos antes de
+receber os pedidos inéditos.
+
+## Wiki de procedimentos e lacunas de evidência — 07/11/2026
+
+Na C34, os 16 documentais eram recuperáveis no Git dentro do teto.
+O pacote guiado admitia no máximo 10 completos e 26/32 grupos.
+Os seis grupos ausentes pertenciam a fontes fora do catálogo por
+escopo. A seleção guiada entregou 17/32, deixando nove grupos
+que já estavam ao alcance do pacote. Os dois estágios precisam de
+medidas separadas. Reutilizar 243 âncoras compactas de todos os
+papéis recuperaria zero dos seis grupos ausentes.
+
+A C36 congelou 16 páginas de etapas ligadas a trechos de notas curadas.
+Em 24 pedidos inéditos, a referência completou 6/16 documentais
+multigrupo. A lista plana e a wiki ficaram em 5/16. Todas completaram
+os quatro documentais simples. Todos os 40 grupos tinham uma fonte
+no próprio escopo. A triagem offline errou os quatro controles
+nos três braços. O protótipo permanece experimental.
+O próximo ensaio deve separar pontes explícitas entre papéis, que
+exponham apenas trechos curados, da escolha das passagens já expostas.
+O benchmark externo ganhou `--preflight-conjunto` e confirmou que os
+52 documentais das duas baterias de referência cabem no teto.
+
 ## Orçamento de evidência e perguntas compostas — 07/11/2026
 
 A C34 separou a seleção por partes da nova referência cruzada na nota

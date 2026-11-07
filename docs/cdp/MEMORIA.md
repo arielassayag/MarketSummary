@@ -160,6 +160,37 @@ O campo `refinamento_destino` registra o destino anterior, os critérios encontr
 e a origem verificada. Revisões antigas, cartões vencidos e empates conservam a
 orientação inicial.
 
+### Pontes documentais entre papéis
+
+`rotear --candidatas --com-pontes` pode acrescentar até seis trechos curados
+de outro papel depois de validar uma triagem de evidência. O mapa Git em
+[`memoria/pontes.json`](memoria/pontes.json) registra o papel de origem,
+os papéis de destino, os gatilhos, a validade e a prova literal com SHA-256.
+O caminho precisa pertencer ao catálogo da origem. O trecho precisa ter
+uma ocorrência exata na revisão consultada. Vencimento, mudança ou
+ambiguidade da prova deixam a ponte fora do pacote.
+
+Cada ponte aparece como um ID de candidata. `fontes_permitidas` conserva
+os caminhos de origem da consulta e governa os recortes livres. Um ID de
+ponte resolve somente o seu intervalo. A lista de candidatas usuais fica
+na mesma ordem. A seleção final continua limitada a cinco passagens e
+4.500 bytes. As saídas de estado, fora do escopo e indeterminado continuam
+sem consultar o mapa de pontes.
+
+```sh
+uv run python -m cdp memoria rotear --escopo calibracao \
+  --consulta 'Como verificar a procedência de uma versão publicada no portal?' \
+  --revisao "$REVISAO" --data "$DATA" --candidatas --com-pontes < triagem.json
+uv run python -m cdp memoria rotear --escopo calibracao \
+  --consulta 'Como verificar a procedência de uma versão publicada no portal?' \
+  --revisao "$REVISAO" --data "$DATA" --conferir-selecao --com-pontes < selecao-roteada.json
+```
+
+Use a mesma revisão, data e opção nas duas chamadas. A segunda entrada
+contém `triagem` e `selecao`. O lacre vincula a lista de pontes à seleção.
+O mapa é curado por revisão de Git e o leitor o recebe apenas como
+trechos para citar. A opção é experimental.
+
 ### Rever pedidos de alteração antes da triagem
 
 `--pacote-escopo` prepara uma leitura opcional de pedidos de mutação ou burla.
@@ -411,6 +442,18 @@ O [qualificador](../../scripts/cdp_memoria_qualificar.py) permite indicar separa
 do código e a das fontes do gabarito. Ele comprova a igualdade dos bytes das fontes e compara
 busca direta, busca contextual sem notas e busca com notas, sob o mesmo limite de cinco passagens.
 Esse corpus serviu ao diagnóstico da implementação. A validação prospectiva é medida separadamente.
+
+O [benchmark externo](../../scripts/cdp_memoria_benchmark.py) aceita
+`--preflight-conjunto` para validar o gabarito antes da busca. Cada
+grupo precisa de uma janela direta de fonte permitida. Todos os grupos
+de uma pergunta precisam caber juntos em até cinco janelas e 4.500
+bytes, contando um byte entre passagens. O pré-teste fixa a revisão das
+fontes e informa os hashes do código local. A saída tem totais e lacres.
+
+```sh
+uv run python scripts/cdp_memoria_benchmark.py --preflight-conjunto --revisao "$REVISAO" \
+  docs/cdp/memoria/benchmark-operacional.json docs/cdp/memoria/benchmark-auditoria.json
+```
 
 ### Corpora iniciais
 

@@ -362,11 +362,57 @@ A combinação retrospectiva preservou todas as passagens automáticas e
 acrescentou passagens guiadas quando cabiam no mesmo teto. A cobertura
 passou de 19/32 para 21/32 grupos, com os mesmos 14/24 casos completos.
 
+Uma auditoria da C34 reconstituiu o máximo possível antes de escolher
+passagens. A revisão Git comporta os 16 casos documentais e 32 grupos
+sob os limites de saída. Entre candidatas lacradas, fontes numeradas e
+recortes permitidos, o máximo foi de 10 casos documentais e 26 grupos.
+As fontes dos seis grupos ausentes estavam fora do catálogo do escopo.
+Os outros nove grupos que faltaram na saída guiada estavam disponíveis
+ao leitor. Alargar o acesso às fontes e escolher melhor dentro do pacote
+exigem controles e métricas próprios.
+As 243 âncoras compactas das notas ativas de todos os papéis não
+cobriam os seis grupos ausentes. Uma ponte para esses grupos exige
+curar os trechos de destino, além de vinculá-los ao papel pertinente.
+
 Na C35, a segunda leitura ancorada obteve 46/48 rotas, ante 38/48
 na triagem inicial. Exigir concordância entre duas segundas leituras
 ficou em 45/48. Uma falha comum revelou que uma frase anterior fixava
 o referente do pedido factual. Preservar o trecho do ato e o
 antecedente necessário é a próxima hipótese de triagem.
+
+### Wiki de procedimentos com passagens curadas
+
+Para testar a relação entre etapas, a C36 congelou 16 páginas que apontam
+para âncoras já validadas de notas curadas. Um vínculo descreve onde
+procurar uma parte da prova. A fonte literal continua no Git. O braço
+plano recebeu as mesmas passagens e o mesmo teto que o braço com wiki.
+As três variantes compartilharam a triagem offline e a revisão de fontes.
+O teste tem 24 pedidos inéditos em oito escopos e 40 grupos verificáveis.
+
+A referência recuperou todas as provas em 6/16 casos multigrupo. A
+lista plana e a wiki recuperaram em 5/16. Todos os braços acertaram os
+quatro documentais simples. As relações mudaram duas seleções ante a
+lista plana, com o mesmo placar. Todos os grupos tinham fonte no
+escopo. A triagem offline errou os quatro controles em cada braço.
+A versão permanece experimental.
+Uma ponte prospectiva entre escopos deve autorizar somente a passagem
+curada identificada, preservando o perímetro da leitura direta de fontes.
+[Representações e busca combinadas na Anthropic](https://www.anthropic.com/research/components-of-agent-memory).
+
+### Autorizar um trecho entre papéis
+
+Uma ponte liga um papel de origem a papéis de destino e a um intervalo
+literal de documento canônico. Validade, gatilhos e SHA-256 entram no
+mapa Git. O recorte aparece como candidata depois da triagem documental,
+sem adicionar caminhos à lista de fontes de leitura livre. Esse limite
+segue a separação entre conteúdo curado e acesso ao arquivo inteiro.
+
+O diagnóstico retrospectivo da C34 acrescentou os seis recortes
+faltantes já conhecidos. O alcance passou de 26/32 a 32/32 grupos e de
+10/16 a 16/16 casos documentais. Os seis recortes somaram 2.057 bytes.
+O teste mede a capacidade física do mecanismo com curadoria perfeita
+naquele conjunto. A C37 mede a transferência de um mapa diferente,
+com 17 trechos curados antes de receber as perguntas inéditas.
 
 ## Transferência de uma lição para outra sessão
 

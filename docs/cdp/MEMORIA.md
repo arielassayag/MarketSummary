@@ -191,6 +191,19 @@ contém `triagem` e `selecao`. O lacre vincula a lista de pontes à seleção.
 O mapa é curado por revisão de Git e o leitor o recebe apenas como
 trechos para citar. A opção é experimental.
 
+Na revisão da memória, use a auditoria para separar uma ponte vencida,
+uma fonte que perdeu autoridade na origem, um destino que já ganhou
+acesso direto e uma prova ausente ou ambígua. A saída tem os IDs, os
+papéis, as datas, o estado de cada ponte e o hash do mapa. Ela serve
+de fila para a curadoria e para a próxima avaliação de recuperação.
+
+```sh
+uv run python -m cdp memoria auditar --pontes --revisao "$REVISAO" --data "$DATA"
+```
+
+O código de saída 1 indica um item que exige revisão. Valide a nova
+prova e o papel destinatário antes de alterar o mapa em Git.
+
 ### Rever pedidos de alteração antes da triagem
 
 `--pacote-escopo` prepara uma leitura opcional de pedidos de mutação ou burla.

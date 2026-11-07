@@ -5,6 +5,30 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## Curadoria por tarefa e auditoria de pontes — 07/11/2026
+
+`memoria auditar --pontes` verifica validade, autoridade e unicidade
+da prova no Git. Em C38, 45 entradas passaram na data do corte e
+foram classificadas como vencidas na data posterior de controle.
+O comando devolve o hash do mapa e estados de revisão por entrada.
+
+A C38 comparou 17 e 45 entradas em 27 pedidos inéditos. A oferta de
+provas fora do papel ficou em 1/16 nos dois mapas. A única travessia
+completa do braço ampliado usou uma ponte do mapa original. Ambos
+fizeram 11/27, com um ganho e uma perda por pedido. O acervo ampliado
+ficou congelado na revisão do ensaio. O mapa de trabalho voltou à
+referência de 17. O replay da C37 preservou as duas pontes usadas e
+os quatro grupos que já estavam ao alcance do leitor.
+
+O potencial dos 45 trechos em C38 é de 6/16 grupos com os papéis
+preservados e os gatilhos dispensados. O limite de acesso precisa ser
+medido à parte da ativação. O próximo ensaio deve separar novos blocos
+revisados, cobertura lexical e escolha da prova final.
+
+A suíte ampla da revisão `a3b7ee0e` terminou com 6.357 aprovados,
+17 pulados e zero falhas. A comparação do checkout antes e depois
+confirmou a mesma revisão, árvore e bytes versionados.
+
 ## Pontes literais na seleção documental — 07/11/2026
 
 `memoria rotear --candidatas --com-pontes` e
@@ -20,6 +44,15 @@ levou o alcance de 26/32 a 32/32 grupos e de 10/16 a 16/16 casos
 documentais. Os recortes somaram 2.057 bytes e a maior seleção completa
 coube em 1.538 bytes. A C37 congelou separadamente 17 trechos antes de
 receber os pedidos inéditos.
+
+Na C37, a seleção com pontes completou 2/12 travessias, ante 0/12.
+Os 6/6 controles e os 4/6 documentais comuns completos foram preservados.
+Os grupos cobertos passaram de 14/34 a 16/34, com cinco ganhos e três
+perdas. A lista de recortes livres ficou idêntica. Uma tentativa de
+recorte fora da lista foi recusada no braço com pontes.
+O diagnóstico dos 17 trechos mostrou 4/13 grupos fora do papel
+oferecidos e 5/13 sem gatilhos. Dispensar também o papel de destino
+conserva 5/13. A próxima curadoria precisa de novos recortes.
 
 ## Wiki de procedimentos e lacunas de evidência — 07/11/2026
 

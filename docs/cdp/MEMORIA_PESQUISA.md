@@ -414,6 +414,34 @@ O teste mede a capacidade física do mecanismo com curadoria perfeita
 naquele conjunto. A C37 mede a transferência de um mapa diferente,
 com 17 trechos curados antes de receber as perguntas inéditas.
 
+A C37 usou a mesma triagem assistida e as mesmas fontes livres
+numeradas. Os 12 pedidos de travessia passaram de 0 a 2 completos. Dos
+13 grupos fora do papel da consulta, passaram de zero a três recuperados.
+Nos seis documentais comuns, ambos os braços completaram quatro. Os
+seis controles passaram em ambos. Em todos os 34 grupos, foram cinco
+ganhos e três perdas, com saldo de 14/34 para 16/34. As duas seleções
+foram feitas em sessões separadas. O teste mede a intervenção com
+esse mapa, sob o mesmo orçamento final.
+
+O diagnóstico retrospectivo separou os filtros da curadoria. O mapa
+ofereceu quatro dos 13 grupos fora do papel da consulta. Dispensar os
+gatilhos ofereceria cinco. Dispensar também o papel de destino conservaria
+cinco. Oito grupos precisam de novos recortes, independentemente desses
+dois filtros. Dos quatro grupos oferecidos, três chegaram à seleção.
+
+Na C38, três curadores ampliaram o mapa de 17 para 45 trechos a
+partir de etapas e exceções de tarefa. O mapa foi lacrado antes de
+receber os 27 pedidos. Com as mesmas candidatas comuns, fontes livres,
+triagem e teto, os dois mapas ofereceram 1/16 grupos fora do papel.
+O braço ampliado completou 1/15 travessias, com uma ponte original
+disponível nos dois braços, e perdeu um caso comum. Ambos ficaram em
+11/27. O mapa maior ficou congelado como experimento.
+
+Ao dispensar gatilhos retrospectivamente, mantendo os papéis, os
+45 recortes cobrem 6/16 grupos fora do papel. Retirar o filtro do
+destino conserva 6/16. Dez grupos ainda dependem de novos recortes.
+O ensaio de oferta e a seleção do leitor devem continuar separados.
+
 ## Transferência de uma lição para outra sessão
 
 O teste temporal do CDP usa uma fixture Git sem remoto. O revisor lê a fila lacrada

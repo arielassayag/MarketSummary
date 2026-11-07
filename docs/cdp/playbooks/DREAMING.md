@@ -32,6 +32,9 @@ pode ser usado diretamente para reproduzir o plano.
    o [manual de memória](../MEMORIA.md).
    Se houver hipóteses distintas, use `investigacao` com a pergunta em aberto, as hipóteses
    com referências aos apoios e contrários e um próximo teste que as ajude a distinguir.
+   Ao retomar, preserve todas as hipóteses sem resolução explícita, inclusive as que têm
+   prova contrária. Uma passagem histórica pode explicar a investigação. A decisão sobre
+   o que segue em aberto precisa das provas do corte atual.
 4. Envie o objeto pela entrada padrão de `uv run python -m cdp memoria conferir-sonho --exigir-provas --revisao <hash> --data AAAA-MM-DD`.
    O código confere o lacre, os itens e as provas. Informe os campos da devolutiva e um resumo breve.
    Se a conferência recusar uma disposição, corrija a prova ou registre a pendência. Em desenvolvimento,

@@ -128,6 +128,21 @@ def test_retomada_recusa_repeticao_buraco_lacre_e_excedente(repo_sonho):
         retomar_sonho(catalogo, **opcoes, devolutivas=[*devolutivas, primeira])
 
 
+def test_retomada_reconfere_lacres_externos_dos_bytes(repo_sonho):
+    repo, anterior = repo_sonho
+    catalogo = Catalogo(Fontes(repo), DATA)
+    opcoes = {"limite": 1, "desde": anterior}
+    paginas = [_responder(sonhar(catalogo, **opcoes, pagina=i)) for i in (1, 2)]
+    lacres = [hashlib.sha256(p).hexdigest() for p in paginas]
+    validada = retomar_sonho(catalogo, **opcoes, devolutivas=paginas, lacres_devolutivas=lacres)
+    assert validada["lacres_devolutivas"] == lacres
+    with pytest.raises(MemoriaErro, match="lacre fixado para a página"):
+        retomar_sonho(catalogo, **opcoes, devolutivas=[paginas[0] + b" ", paginas[1]],
+                      lacres_devolutivas=lacres)
+    with pytest.raises(MemoriaErro, match="faltam devolutivas"):
+        retomar_sonho(catalogo, **opcoes, devolutivas=paginas[:1], lacres_devolutivas=lacres)
+
+
 def test_retomada_exige_o_mesmo_corte_mesmo_com_itens_iguais(repo_sonho):
     repo, anterior = repo_sonho
     original = Catalogo(Fontes(repo), DATA)
@@ -178,7 +193,8 @@ def test_investigacao_sobrevive_ao_corte_e_a_prova_antiga_nao_fecha_o_item(repo_
     bruto = _responder(plano, {FONTE: {"decisao": "investigar", "provas": provas,
                                       "investigacao": investigacao}}, padrao=padrao)
     fim = retomar_sonho(catalogo, **opcoes, devolutivas=[bruto])
-    continuidade = json.dumps(fim["continuidade"]).encode()
+    continuar = {"continuidade": json.dumps(fim["continuidade"]).encode(),
+                 "lacre_continuidade": fim["continuidade"]["sha256"]}
     assert fim["desde_sugerido"] == revisao
     assert fim["pendencias"][0]["investigacao"] == investigacao
 
@@ -187,7 +203,7 @@ def test_investigacao_sobrevive_ao_corte_e_a_prova_antiga_nao_fecha_o_item(repo_
     novo = Catalogo(Fontes(repo), DATA + timedelta(days=1))
     opcoes = {"desde": revisao, "exigir_provas": True}
     assert FONTE not in {item["id"] for item in sonhar(novo, **opcoes)["fila"]}
-    com_historia = sonhar(novo, **opcoes, continuidade=continuidade)
+    com_historia = sonhar(novo, **opcoes, **continuar)
     item = next(i for i in com_historia["fila"] if i["id"] == FONTE)
     pendencia = item["pendencia_anterior"]
     assert pendencia["origem"]["revisao"] == revisao
@@ -202,7 +218,7 @@ def test_investigacao_sobrevive_ao_corte_e_a_prova_antiga_nao_fecha_o_item(repo_
     _commit(repo)
     novo = Catalogo(Fontes(repo), DATA + timedelta(days=2))
     opcoes["desde"] = corte
-    plano = sonhar(novo, **opcoes, continuidade=continuidade)
+    plano = sonhar(novo, **opcoes, **continuar)
     item = next(i for i in plano["fila"] if i["id"] == FONTE)
     assert sum(i["id"] == FONTE for i in plano["fila"]) == 1
     assert [p["situacao"] for p in item["pendencia_anterior"]["provas"]] == ["localizada", "desatualizada"]
@@ -210,9 +226,35 @@ def test_investigacao_sobrevive_ao_corte_e_a_prova_antiga_nao_fecha_o_item(repo_
         conferir_sonho(novo, plano, _responder(plano, {FONTE: {"provas": [provas[1]]}}, padrao=padrao))
     solucao = _prova(trecho="DADOS SIMULADOS. A unidade foi corrigida no relatório.")
     bruto = _responder(plano, {FONTE: {"provas": [solucao]}}, padrao=padrao)
-    fim = retomar_sonho(novo, **opcoes, continuidade=continuidade, devolutivas=[bruto])
+    fim = retomar_sonho(novo, **opcoes, **continuar, devolutivas=[bruto])
     assert fim["continuidade"]["itens"] == []
     assert fim["resolucoes"][0]["provas"][0]["sha256"] == solucao["sha256"]
+    assert fim["continuidade"]["resolvidas"][0]["origem"] == pendencia["origem"]
+    continuar = {"continuidade": json.dumps(fim["continuidade"]).encode(),
+                 "lacre_continuidade": fim["continuidade"]["sha256"]}
+    opcoes["desde"] = fim["revisao"]
+
+    (repo / "alheio.txt").write_text("DADOS SIMULADOS. Sem mudanças nas provas.", encoding="utf-8")
+    corte = _commit(repo)
+    novo = Catalogo(Fontes(repo), DATA + timedelta(days=3))
+    plano = sonhar(novo, **opcoes, **continuar)
+    assert FONTE not in {i["id"] for i in plano["fila"]}
+    fim = retomar_sonho(novo, **opcoes, **continuar, devolutivas=[_responder(plano, padrao=padrao)])
+    assert fim["continuidade"]["sha256"] == continuar["lacre_continuidade"]
+
+    fonte.write_text(f"{TRECHO}\nDADOS SIMULADOS. A correção no relatório foi revertida.\n",
+                     encoding="utf-8")
+    _commit(repo)
+    novo = Catalogo(Fontes(repo), DATA + timedelta(days=4))
+    opcoes["desde"] = corte
+    plano = sonhar(novo, **opcoes, **continuar)
+    item = next(i for i in plano["fila"] if i["id"] == FONTE)
+    reaberta = item["pendencia_anterior"]
+    assert reaberta["origem"] == pendencia["origem"]
+    assert reaberta["disposicao_anterior"] == "manter"
+    assert reaberta["provas"][0]["situacao"] == "desatualizada"
+    with pytest.raises(MemoriaErro):
+        conferir_sonho(novo, plano, _responder(plano, {FONTE: {"provas": [solucao]}}, padrao=padrao))
     assert _git(repo, "status", "--porcelain") == b""
 
 
@@ -225,17 +267,24 @@ def test_continuidade_recusa_lacre_origem_e_prova_adulterados(repo_sonho):
     plano = sonhar(catalogo, **opcoes)
     resposta = _responder(plano, {FONTE: {"decisao": "investigar"}}, padrao={"provas": [_prova()]})
     checkpoint = conferir_sonho(catalogo, plano, resposta)["continuidade"]
-    for alvo in ("lacre", "origem", "prova"):
+    for alvo in ("lacre", "origem", "prova", "motivo"):
         alterado = json.loads(json.dumps(checkpoint))
         registro = alterado["itens"][0]
         if alvo in ("lacre", "origem"):
             registro["origem"]["id"] = "docs/cdp/METODOLOGIA.md"
-        else:
+        elif alvo == "prova":
             registro["resposta"]["provas"] = [_prova(trecho="DADOS SIMULADOS. Trecho inexistente.")]
+        else:
+            registro["resposta"]["motivo"] = "Texto reescrito."
         if alvo != "lacre":
             alterado["sha256"] = _digestir({k: v for k, v in alterado.items() if k != "sha256"})
-        with pytest.raises(MemoriaErro):
-            sonhar(catalogo, **opcoes, continuidade=json.dumps(alterado).encode())
+        with pytest.raises(MemoriaErro, match="lacre"):
+            sonhar(catalogo, **opcoes, continuidade=json.dumps(alterado).encode(),
+                   lacre_continuidade=checkpoint["sha256"])
+        if alvo in ("origem", "prova"):
+            with pytest.raises(MemoriaErro):
+                sonhar(catalogo, **opcoes, continuidade=json.dumps(alterado).encode(),
+                       lacre_continuidade=alterado["sha256"])
 
 
 def test_propostas_podem_exceder_vagas_sem_promocao(repo_sonho):

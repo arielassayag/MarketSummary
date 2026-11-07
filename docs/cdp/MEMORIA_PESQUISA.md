@@ -243,6 +243,16 @@ cobertura de toda a fila. Uma investigação em aberto permanece identificada me
 a fila foi lida. O modo estrito exige uma fonte literal ou um diagnóstico verificável
 por item. A curadoria ainda precisa decidir se a prova sustenta a manutenção ou mudança.
 
+A janela de mudanças e o estado de uma investigação têm relógios diferentes. A primeira
+avança com a cobertura das fontes. A segunda depende de uma conclusão apoiada. A
+continuidade do CDP registra a pergunta, hipóteses concorrentes e um próximo teste,
+reconstitui o item no Git e localiza de novo as provas no corte atual. Uma passagem
+alterada continua acessível na revisão anterior e perde vigência no plano novo.
+Uma resolução pede uma passagem atual. O caderno de pesquisa da Anthropic descreve
+como anotar tentativas anteriores evita voltar aos mesmos caminhos sem saída.
+[Componentes da memória](https://www.anthropic.com/research/components-of-agent-memory) ·
+[Memória em pesquisas longas](https://www.anthropic.com/research/long-running-claude).
+
 ## Transferência de uma lição para outra sessão
 
 O teste temporal do CDP usa uma fixture Git sem remoto. O revisor lê a fila lacrada

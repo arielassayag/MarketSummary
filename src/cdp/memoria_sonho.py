@@ -89,7 +89,7 @@ def wiki(c: Catalogo, escopo: Escopo) -> dict:
 
 
 def _fila_sonho(catalogo: Catalogo, limite: int, desde: str | None, *,
-                exigir_provas: bool, continuidade: bytes | None = None) -> list[dict]:
+                exigir_provas: bool) -> list[dict]:
     if catalogo.fontes.trabalho:
         raise MemoriaErro("o dreaming exige uma revisão Git comprometida")
     if type(limite) is not int or not 1 <= limite <= LIMITE_SONHO:
@@ -127,12 +127,11 @@ def _fila_sonho(catalogo: Catalogo, limite: int, desde: str | None, *,
         escopos = {e for e, caminhos in fontes_por_escopo.items() if caminho in caminhos}
         incluir("revisar_fonte", caminho, "fonte canônica mudou no intervalo", {caminho}, escopos, set())
 
-    if continuidade is not None:
-        if not exigir_provas:
-            raise MemoriaErro("a continuidade exige provas conferidas")
-        _retomar_investigacoes(catalogo, itens, continuidade)
+    return _ordenar_fila(itens.values())
 
-    return sorted(itens.values(), key=lambda x: (
+
+def _ordenar_fila(itens: Iterable[dict]) -> list[dict]:
+    return sorted(itens, key=lambda x: (
         _PRIORIDADE.get(x["acao"], 0), "pendencia_anterior" not in x, x["id"], x["acao"]
     ))
 
@@ -180,11 +179,12 @@ def _plano_sonho(catalogo: Catalogo, todos: list[dict], *, limite: int, desde: s
 
 
 def sonhar(catalogo: Catalogo, *, limite: int = LIMITE_SONHO, desde: str | None = None,
-           pagina: int = 1, exigir_provas: bool = False, continuidade: bytes | None = None) -> dict:
+           pagina: int = 1, exigir_provas: bool = False, continuidade: bytes | None = None,
+           lacre_continuidade: str | None = None) -> dict:
     """Monta um plano finito. A leitura operacional nunca adota uma resposta do plano."""
     if type(pagina) is not int or pagina < 1:
         raise MemoriaErro("a página precisa ser um inteiro positivo")
-    todos = _fila_sonho(catalogo, limite, desde, exigir_provas=exigir_provas, continuidade=continuidade)
+    todos, _ = _preparar_fila(catalogo, limite, desde, exigir_provas, continuidade, lacre_continuidade)
     return _plano_sonho(catalogo, todos, limite=limite, desde=desde, pagina=pagina, recebidos={},
                         exigir_provas=exigir_provas)
 
@@ -297,6 +297,7 @@ class RetomadaInvestigacao(_Modelo):
 class Continuidade(_Modelo):
     versao: Literal[1]
     itens: list[RetomadaInvestigacao] = Field(max_length=MAX_INVESTIGACOES)
+    resolvidas: list[RetomadaInvestigacao] = Field(default_factory=list, max_length=MAX_INVESTIGACOES)
     sha256: Sha
 
 
@@ -345,17 +346,35 @@ def _conferir_provas(catalogo: Catalogo, item: dict, resposta: ItemRevisado, *,
     return [_localizar(catalogo.fontes, prova).json() for prova in resposta.provas]
 
 
-def _retomar_investigacoes(catalogo: Catalogo, itens: dict[tuple[str, str], dict], bruto: bytes) -> None:
+def _preparar_fila(catalogo: Catalogo, limite: int, desde: str | None, exigir_provas: bool,
+                   bruto: bytes | None, lacre: str | None) -> tuple[list[dict], list[dict]]:
+    fila = _fila_sonho(catalogo, limite, desde, exigir_provas=exigir_provas)
+    if bruto is None and lacre is None:
+        return fila, []
+    if not exigir_provas or bruto is None or lacre is None:
+        raise MemoriaErro("a continuidade exige provas e o lacre esperado")
     if len(bruto) > MAX_BYTES_CONTINUIDADE:
         raise MemoriaErro("a continuidade excede o limite de bytes")
-    json.loads(bruto, object_pairs_hook=_chaves_unicas)
+    objeto = json.loads(bruto, object_pairs_hook=_chaves_unicas)
     continuidade = Continuidade.model_validate_json(bruto)
-    if _digestir(continuidade.model_dump(mode="json", exclude={"sha256"})) != continuidade.sha256:
+    if continuidade.sha256 != lacre or _digestir({
+        k: v for k, v in objeto.items() if k != "sha256"
+    }) != lacre:
         raise MemoriaErro("o lacre da continuidade diverge")
+    if len(continuidade.itens) + len(continuidade.resolvidas) > MAX_INVESTIGACOES:
+        raise MemoriaErro("há investigações além do limite de continuidade")
+    itens = {(i["acao"], i["id"]): i for i in fila}
+    preservadas = _retomar_investigacoes(catalogo, itens, continuidade)
+    return _ordenar_fila(itens.values()), preservadas
+
+
+def _retomar_investigacoes(catalogo: Catalogo, itens: dict[tuple[str, str], dict],
+                           continuidade: Continuidade) -> list[dict]:
     raiz = catalogo.fontes.raiz
     catalogos = {(catalogo.fontes.revisao, catalogo.data): catalogo}
     filas: dict[tuple, dict[tuple[str, str], dict]] = {}
     vistos: set[tuple[str, str]] = set()
+    preservadas = []
 
     def catalogo_de(revisao: str, data: date) -> Catalogo:
         chave = (revisao, data)
@@ -363,10 +382,12 @@ def _retomar_investigacoes(catalogo: Catalogo, itens: dict[tuple[str, str], dict
             catalogos[chave] = Catalogo(Fontes(raiz, revisao=revisao), data)
         return catalogos[chave]
 
-    for registro in continuidade.itens:
+    registros = [(r, "investigar") for r in continuidade.itens]
+    registros.extend((r, "manter") for r in continuidade.resolvidas)
+    for registro, disposicao in registros:
         origem, r = registro.origem, registro.resposta
         chave = (origem.acao, origem.id)
-        if (chave in vistos or r.decisao != "investigar" or r.uid != origem.uid
+        if (chave in vistos or r.decisao != disposicao or r.uid != origem.uid
                 or not origem.data <= registro.data_da_prova <= catalogo.data):
             raise MemoriaErro("origem, data ou disposição inválida na continuidade")
         vistos.add(chave)
@@ -401,21 +422,40 @@ def _retomar_investigacoes(catalogo: Catalogo, itens: dict[tuple[str, str], dict
             else:
                 situacao = "localizada"
             provas.append({**prova.model_dump(), "situacao": situacao})
+        if disposicao == "manter" and not na_fila_atual and all(
+            p["situacao"] == "localizada" for p in provas
+        ):
+            preservadas.append(registro.model_dump(mode="json"))
+            continue
         itens[chave] = {**item, "pendencia_anterior": {
             **registro.model_dump(mode="json", exclude={"resposta"}),
+            "disposicao_anterior": disposicao,
             "motivo": r.motivo, "investigacao": r.investigacao.model_dump() if r.investigacao else None,
             "diagnostico": r.diagnostico, "provas": provas, "na_fila_atual": na_fila_atual,
         }}
+    return preservadas
 
 
-def _continuidade(itens: list[dict]) -> dict:
-    if len(itens) > MAX_INVESTIGACOES:
+def _continuidade(itens: list[dict], resolvidas: list[dict]) -> dict:
+    if len(itens) + len(resolvidas) > MAX_INVESTIGACOES:
         raise MemoriaErro("há investigações além do limite de continuidade")
     corpo = {"versao": 1, "itens": itens}
+    if resolvidas:
+        corpo["resolvidas"] = resolvidas
     lacrado = {**corpo, "sha256": _digestir(corpo)}
     if len(json.dumps(lacrado, ensure_ascii=False).encode()) > MAX_BYTES_CONTINUIDADE:
         raise MemoriaErro("a continuidade excede o limite de bytes")
     return lacrado
+
+
+def _registro_continuidade(plano: dict, item: dict, r: ItemRevisado) -> dict:
+    anterior = item.get("pendencia_anterior")
+    origem = anterior["origem"] if anterior else {
+        "revisao": plano["revisao"], "data": plano["data"], "desde": plano["desde"],
+        "acao": item["acao"], "id": item["id"], "uid": r.uid,
+    }
+    return {"origem": origem, "revisao_da_prova": plano["revisao"], "data_da_prova": plano["data"],
+            "resposta": {**r.model_dump(mode="json"), "uid": origem["uid"]}}
 
 
 def conferir_sonho(catalogo: Catalogo, plano: dict, bruto: bytes) -> dict:
@@ -439,6 +479,7 @@ def conferir_sonho(catalogo: Catalogo, plano: dict, bruto: bytes) -> dict:
     pendencias: list[dict] = []
     continuacoes: list[dict] = []
     resolucoes: list[dict] = []
+    encerradas: list[dict] = []
     caminhos_notas = catalogo.fontes.catalogo()
     ids = {PurePosixPath(caminho).stem for caminho in caminhos_notas}
     vagas_catalogo = MAX_NOTAS - len(caminhos_notas)
@@ -460,16 +501,10 @@ def conferir_sonho(catalogo: Catalogo, plano: dict, bruto: bytes) -> dict:
                 pendencia["investigacao"] = r.investigacao.model_dump()
             pendencias.append(pendencia)
             if exigir_provas:
-                origem = anterior["origem"] if anterior else {
-                    "revisao": plano["revisao"], "data": plano["data"], "desde": plano["desde"],
-                    "acao": item["acao"], "id": item["id"], "uid": r.uid,
-                }
-                continuacoes.append({
-                    "origem": origem, "revisao_da_prova": plano["revisao"], "data_da_prova": plano["data"],
-                    "resposta": {**r.model_dump(mode="json"), "uid": origem["uid"]},
-                })
+                continuacoes.append(_registro_continuidade(plano, item, r))
         elif anterior:
             resolucoes.append({"origem": anterior["origem"], "motivo": r.motivo, "provas": provas})
+            encerradas.append(_registro_continuidade(plano, item, r))
         if nota is None:
             continue
         if nota.id in ids or nota.registrada_em != catalogo.data:
@@ -487,7 +522,7 @@ def conferir_sonho(catalogo: Catalogo, plano: dict, bruto: bytes) -> dict:
            "candidatas": candidatas, "vagas_catalogo": vagas_catalogo,
            "pendencias": pendencias, "estado": "propostas_para_revisao"}
     if continuacoes or resolucoes:
-        out["continuidade"] = _continuidade(continuacoes)
+        out["continuidade"] = _continuidade(continuacoes, encerradas)
     if resolucoes:
         out["resolucoes"] = resolucoes
     return out
@@ -495,9 +530,11 @@ def conferir_sonho(catalogo: Catalogo, plano: dict, bruto: bytes) -> dict:
 
 def retomar_sonho(catalogo: Catalogo, *, limite: int = LIMITE_SONHO, desde: str | None = None,
                   devolutivas: Iterable[bytes], exigir_provas: bool = False,
-                  continuidade: bytes | None = None) -> dict:
+                  continuidade: bytes | None = None, lacre_continuidade: str | None = None,
+                  lacres_devolutivas: Iterable[str] | None = None) -> dict:
     """Confere as páginas em sequência na mesma revisão e oferece o próximo plano."""
-    fila = _fila_sonho(catalogo, limite, desde, exigir_provas=exigir_provas, continuidade=continuidade)
+    fila, encerradas = _preparar_fila(catalogo, limite, desde, exigir_provas, continuidade,
+                                     lacre_continuidade)
     recebidos: dict[str, str | None] = {}
     candidatas: list[dict] = []
     pendencias: list[dict] = []
@@ -506,9 +543,15 @@ def retomar_sonho(catalogo: Catalogo, *, limite: int = LIMITE_SONHO, desde: str 
     ids_candidatas: set[str] = set()
     itens_conferidos = 0
     pagina = 1
+    lacres = []
+    esperados = tuple(lacres_devolutivas) if lacres_devolutivas is not None else None
     for bruto in devolutivas:
         if itens_conferidos == len(fila):
             raise MemoriaErro("há devolutivas além da fila de revisão")
+        lacre = hashlib.sha256(bruto).hexdigest()
+        if esperados is not None and (pagina > len(esperados) or lacre != esperados[pagina - 1]):
+            raise MemoriaErro("a devolutiva diverge do lacre fixado para a página")
+        lacres.append(lacre)
         plano = _plano_sonho(catalogo, fila, limite=limite, desde=desde, pagina=pagina,
                              recebidos=recebidos, exigir_provas=exigir_provas)
         resposta = conferir_sonho(catalogo, plano, bruto)
@@ -519,9 +562,12 @@ def retomar_sonho(catalogo: Catalogo, *, limite: int = LIMITE_SONHO, desde: str 
         candidatas.extend(resposta["candidatas"])
         pendencias.extend(resposta["pendencias"])
         continuacoes.extend(resposta.get("continuidade", {}).get("itens", ()))
+        encerradas.extend(resposta.get("continuidade", {}).get("resolvidas", ()))
         resolucoes.extend(resposta.get("resolucoes", ()))
         itens_conferidos += resposta["respostas"]
         pagina += 1
+    if esperados is not None and len(esperados) != len(lacres):
+        raise MemoriaErro("faltam devolutivas com lacre fixado")
     revisao = catalogo.fontes.revisao
     resumo = {"revisao": revisao, "data": catalogo.data.isoformat(), "desde": desde,
               "total": len(fila), "paginas_conferidas": pagina - 1,
@@ -529,11 +575,13 @@ def retomar_sonho(catalogo: Catalogo, *, limite: int = LIMITE_SONHO, desde: str 
               "candidatas": candidatas}
     if exigir_provas:
         resumo["exigir_provas"] = True
+    if lacres:
+        resumo["lacres_devolutivas"] = lacres
     if resolucoes:
         resumo["resolucoes"] = resolucoes
     if itens_conferidos == len(fila):
         if continuacoes or continuidade is not None:
-            resumo["continuidade"] = _continuidade(continuacoes)
+            resumo["continuidade"] = _continuidade(continuacoes, encerradas)
         return {**resumo, "estado": "cobertura_completa", "proximo_plano": None,
                 "desde_sugerido": revisao}
     proximo = _plano_sonho(catalogo, fila, limite=limite, desde=desde, pagina=pagina,

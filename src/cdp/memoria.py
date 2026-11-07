@@ -1358,9 +1358,6 @@ def _comando(args: argparse.Namespace) -> int:
             linha = sys.stdin.buffer.readline(MAX_BYTES_CONTINUIDADE + 2).rstrip(b"\r\n")
             if not linha or len(linha) > MAX_BYTES_CONTINUIDADE:
                 raise MemoriaErro("informe a continuidade em uma linha JSON dentro do limite")
-            objeto = json.loads(linha, object_pairs_hook=_chaves_unicas)
-            if not isinstance(objeto, dict) or objeto.get("sha256") != args.continuar:
-                raise MemoriaErro("a continuidade não corresponde ao lacre esperado")
             continuidade = linha
         if acao == "retomar-sonho":
             from .memoria_sonho import MAX_BYTES_RESPOSTA, retomar_sonho
@@ -1368,13 +1365,15 @@ def _comando(args: argparse.Namespace) -> int:
             _json(retomar_sonho(
                 c, limite=args.limite, desde=args.desde, exigir_provas=args.exigir_provas,
                 devolutivas=_devolutivas_sonho(sys.stdin.buffer, MAX_BYTES_RESPOSTA),
-                continuidade=continuidade,
+                continuidade=continuidade, lacre_continuidade=args.continuar,
+                lacres_devolutivas=args.lacre_pagina,
             ))
         elif acao in ("sonhar", "conferir-sonho", "fonte-sonho"):
             from .memoria_sonho import MAX_BYTES_RESPOSTA, conferir_sonho, ler_fonte_sonho, sonhar
 
             plano = sonhar(c, limite=args.limite, desde=args.desde, pagina=args.pagina,
-                           exigir_provas=args.exigir_provas, continuidade=continuidade)
+                           exigir_provas=args.exigir_provas, continuidade=continuidade,
+                           lacre_continuidade=args.continuar)
             if acao == "sonhar":
                 _json(plano)
             elif acao == "fonte-sonho":
@@ -1469,6 +1468,9 @@ def registrar(sub: argparse._SubParsersAction) -> None:
         if acao in ("sonhar", "conferir-sonho", "fonte-sonho"):
             s.add_argument("--pagina", type=int, default=1,
                            help="página da fila na revisão fixada")
+        if acao == "retomar-sonho":
+            s.add_argument("--lacre-pagina", action="append", metavar="SHA256",
+                           help="hash esperado dos bytes de uma devolutiva, na ordem das páginas")
         if acao == "fonte-sonho":
             s.add_argument("--uid", required=True, help="identificador do item do plano")
             origem = s.add_mutually_exclusive_group(required=True)

@@ -310,9 +310,15 @@ devolutivas depois da primeira linha, conforme a entrada de cada comando. O cód
 reconstitui o item de origem no Git, exige que as revisões pertençam à mesma história e
 reconfere as provas na revisão em que foram registradas. O novo plano marca cada trecho
 histórico como localizado ou desatualizado na revisão atual. Para encerrar a investigação,
-use `manter` com prova atual e explique a conclusão no motivo. Uma saída de página isolada
-contém somente a continuidade daquela página. Preserve as rodadas anteriores para auditar
-mudanças nas hipóteses. A consulta de rotina e a wiki continuam lendo apenas notas curadas.
+use `manter` com prova atual e explique a conclusão no motivo. A continuidade conserva essa
+resolução. Se uma prova de encerramento deixar de conferir, o item volta à fila com o motivo
+e a prova históricos. Uma saída de página isolada contém a continuidade daquela página.
+
+`retomar-sonho` também devolve `lacres_devolutivas` dos bytes das respostas JSONL, excluindo
+o separador de linha. Ao reconferir páginas arquivadas, passe um `--lacre-pagina` por
+devolutiva na ordem original. Guarde os lacres junto aos recibos da revisão e separados dos
+bytes que serão reconferidos. Preserve as rodadas anteriores para auditar mudanças nas
+hipóteses. A consulta de rotina e a wiki continuam lendo apenas notas curadas.
 
 ## Avaliar recuperação
 

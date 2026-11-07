@@ -13,16 +13,27 @@ O código reconstitui o item de origem, confere a história no Git, revalida as 
 na revisão anterior e marca as que ainda constam da revisão nova. Uma pendência
 reaparece mesmo que a sua fonte fique fora do diff novo. O curador pode registrar
 hipóteses concorrentes, seus apoios e contrários e o próximo teste discriminante.
-Uma resolução exige prova da revisão corrente. As hipóteses ficam na curadoria.
+Uma resolução exige prova da revisão corrente. A continuidade preserva resoluções
+e reabre o item se a prova de encerramento perder a âncora. Lacres esperados da
+continuidade e, em rechecagem, das respostas brutas verificam os recibos separados
+do conteúdo. As hipóteses ficam na curadoria.
 
 A referência determinística da C22 acertou 9/18 destinos, 10/10 procedimentos e
 0/8 abstenções externas. O protótipo local Qwen3.5 4B acertou 8/18 destinos,
 8/10 procedimentos e 6/8 abstenções. O ganho externo veio com três falsos externos.
 As duas alternativas seguem com lacunas e o protótipo fica fora do fluxo padrão.
 
+A repetição C24, com dados simulados e sem ferramentas, obteve 0/8 casos
+completos sem histórico, 5/8 com prosa e 6/8 com registro estruturado. Os dois
+formatos com histórico acertaram 8/8 evidências, próximas ações e checagens
+anteriores. A diferença restante está nas hipóteses que deveriam continuar
+em aberto. A qualificação focal desta etapa passou com 306 casos e um pulado.
+O rascunho atualizado fica em `outputs/ai-notes-15/ai-notes-15-eval-continuacao.html`.
+
 A fixture bancária fixa agora o prefixo histórico do índice e seu SHA-256. O módulo
 passou em 72/72. A guarda do replay recusou selar execução quando código mudou durante
-a suíte ampla original. A próxima execução usa uma árvore congelada.
+a suíte ampla original. Os quatro adaptadores técnicos foram regenerados na versão
+canônica e o módulo passou em 10/10. A qualificação ampla usa árvore congelada.
 
 ## Triagem separada, evidência encadeada e confirmação C21 — 07/11/2026
 

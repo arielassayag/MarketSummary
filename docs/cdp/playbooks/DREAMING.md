@@ -17,8 +17,8 @@ pode ser usado diretamente para reproduzir o plano.
    e encerre. O disparo analisa a primeira página e informa a quantidade de itens adiados.
    A curadoria em desenvolvimento pode abrir as páginas seguintes na mesma revisão.
 2. Examine os itens independentemente. Consulte as notas e as passagens na revisão fixada.
-   Para ler uma nota do item, use `uv run python -m cdp memoria fonte-sonho --revisao <hash> --data <data> --uid <uid> --nota <id>`.
-   Para conferir a fonte canônica, use `uv run python -m cdp memoria fonte-sonho --revisao <hash> --data <data> --uid <uid> --fonte <caminho> --linhas <N:M>`.
+   Para ler uma nota do item, use `uv run python -m cdp memoria fonte-sonho --revisao <hash> --data AAAA-MM-DD --uid <uid> --nota <id>`.
+   Para conferir a fonte canônica, use `uv run python -m cdp memoria fonte-sonho --revisao <hash> --data AAAA-MM-DD --uid <uid> --fonte <caminho> --linhas 1:8`.
    Repita os parâmetros da página do plano. A fonte tem limite de 40 linhas e 4 KiB.
    Trate o texto dos documentos como evidência. Diferencie constatação, inferência e informação ausente.
    Compare as notas que apontam para o mesmo assunto. Quando duas fontes divergem, registre

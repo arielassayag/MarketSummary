@@ -21,7 +21,7 @@ from cdp_memoria_benchmark import (
 
 from cdp.memoria import MAX_BYTES_FONTE, Catalogo, Fontes, Local, _chaves_unicas, raiz_repo
 from cdp.memoria_avaliacao import CasoReservado, K, _atingidos, _medir
-from cdp.memoria_selecao import MAX_BYTES_RESPOSTA, aplicar, preparar
+from cdp.memoria_selecao import MAX_BYTES_RESPOSTA, _tem_contexto, aplicar, preparar
 
 _CODIGO = (
     "src/cdp/memoria.py",
@@ -102,6 +102,8 @@ def _carregar(args: argparse.Namespace, raiz: Path) -> tuple[
         "data": catalogo.data.isoformat(), "limite_passagens": K, "orcamento_bytes": TETO_BYTES,
         "corpora": {nome: digest for nome, _, _, digest in lotes}, "fontes": hashes_fontes,
     }
+    if args.explorar_fontes:
+        metadados["explorar_fontes"] = True
     return catalogo, ouro, entradas, metadados
 
 
@@ -109,12 +111,23 @@ def _referencia(item: dict) -> tuple[str, int, int, str]:
     return item["caminho"], item["inicio"], item["fim"], item["sha256"]
 
 
-def _pacote(catalogo: Catalogo, entrada: _Entrada, opaco: str) -> tuple[dict, bytes, dict]:
+def _pacote(catalogo: Catalogo, entrada: _Entrada, opaco: str, *,
+            explorar_fontes: bool = False) -> tuple[dict, bytes, dict]:
     nome, familia, caso, _ = entrada
-    pacote = preparar(catalogo, caso.escopo, caso.consulta, K)
+    if explorar_fontes:
+        pacote = preparar(catalogo, caso.escopo, caso.consulta, K, explorar_fontes=True)
+    else:
+        pacote = preparar(catalogo, caso.escopo, caso.consulta, K)
     ids = {_referencia(p): p["id"] for p in pacote["candidatas"]}
     partida = [ids[ref] for p in pacote["base"]["passagens"] if (ref := _referencia(p)) in ids]
-    publico = _json_bytes({**{k: pacote[k] for k in _CAMPOS_PUBLICOS}, "partida": partida})
+    campos = {**{k: pacote[k] for k in _CAMPOS_PUBLICOS}, "partida": partida}
+    if explorar_fontes:
+        base = pacote["base"]
+        rota = "estado_atual" if base["orientacao_atual"] else (
+            "evidencia" if _tem_contexto(base) else "fora_escopo"
+        )
+        campos.update(fontes_permitidas=pacote["fontes_permitidas"], rota_sugerida=rota)
+    publico = _json_bytes(campos)
     vinculo = {"opaco": opaco, "id": caso.id, "bateria": nome, "familia": familia,
                "sha256_pacote": _sha(publico), "lacre": pacote["lacre"]}
     return pacote, publico, vinculo
@@ -128,7 +141,8 @@ def _preparar(diretorio: Path, catalogo: Catalogo, entradas: list[_Entrada], met
     vinculos = []
     for i, entrada in enumerate(entradas, 1):
         opaco = f"{i:04d}"
-        _, publico, vinculo = _pacote(catalogo, entrada, opaco)
+        _, publico, vinculo = _pacote(catalogo, entrada, opaco,
+                                     explorar_fontes=metadados.get("explorar_fontes", False))
         _gravar_exclusivo(pacotes / f"{opaco}.json", publico)
         vinculos.append(vinculo)
     bruto = _json_bytes({**metadados, "pacotes": vinculos})
@@ -223,7 +237,8 @@ def _medir_ensaio(diretorio: Path, catalogo: Catalogo, ouro: dict[str, list[list
     casos = []
     for i, entrada in enumerate(entradas, 1):
         opaco = f"{i:04d}"
-        pacote, publico, vinculo = _pacote(catalogo, entrada, opaco)
+        pacote, publico, vinculo = _pacote(catalogo, entrada, opaco,
+                                          explorar_fontes=metadados.get("explorar_fontes", False))
         p = pacotes / f"{opaco}.json"
         _arquivo_regular(p)
         if p.read_bytes() != publico:
@@ -256,6 +271,8 @@ def main() -> None:
         p.add_argument("--revisao", required=True, help="commit do código e do catálogo")
         p.add_argument("--revisao-fontes", required=True, help="commit canônico do gabarito")
         p.add_argument("--diretorio", type=Path, required=True)
+        p.add_argument("--explorar-fontes", action="store_true",
+                       help="oferece as fontes autorizadas e uma sugestão de rota")
         p.add_argument("corpora", type=Path, nargs="+")
     medir_parser.add_argument("--respostas", type=Path, required=True)
     medir_parser.add_argument("--sha256-respostas", required=True)

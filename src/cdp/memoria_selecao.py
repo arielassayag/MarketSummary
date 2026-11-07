@@ -19,10 +19,20 @@ from .memoria import (
     _caminho,
     _chaves_unicas,
     _consulta,
+    _fonte_atual,
     _Modelo,
+    _normalizar,
+    _pedido_fora_do_escopo,
     _sha,
 )
-from .memoria_busca import BYTES_PASSAGEM, LINHAS_PASSAGEM, Local, _blocos_markdown, completar_bloco
+from .memoria_busca import (
+    BYTES_PASSAGEM,
+    LINHAS_PASSAGEM,
+    Local,
+    _blocos_markdown,
+    completar_bloco,
+    localizar,
+)
 from .memoria_reforcos import LIMITE_REFORCOS
 
 MAX_BYTES_RESPOSTA = 4096
@@ -69,6 +79,7 @@ class _Pacote(_Modelo):
     limite: int = Field(ge=1, le=_LIMITE_PASSAGENS)
     orcamento_bytes: int = Field(ge=_LIMITE_BYTES, le=_LIMITE_BYTES)
     candidatas: list[_Candidata] = Field(max_length=LIMITE_CANDIDATAS)
+    fontes_permitidas: list[str] | None = None
     base: dict
     lacre: Sha
 
@@ -83,9 +94,17 @@ class _Pacote(_Modelo):
         return self
 
 
+class _Recorte(_Modelo):
+    caminho: str
+    inicio: int = Field(ge=1)
+    fim: int = Field(ge=1)
+
+
 class _Resposta(_Modelo):
     lacre: Sha
     ids: list[int] = Field(max_length=_LIMITE_PASSAGENS)
+    intencao: Literal["evidencia", "estado_atual", "fora_escopo"] | None = None
+    recortes: list[_Recorte] = Field(default_factory=list, max_length=_LIMITE_PASSAGENS)
 
 
 def _lacre(pacote: dict) -> str:
@@ -154,7 +173,8 @@ def _candidatas(catalogo: Catalogo, escopo: Escopo, consulta: str, busca: dict) 
     return candidatas
 
 
-def preparar(catalogo: Catalogo, escopo: Escopo, consulta: str, limite: int) -> dict:
+def preparar(catalogo: Catalogo, escopo: Escopo, consulta: str, limite: int, *,
+             explorar_fontes: bool = False) -> dict:
     """Lê uma revisão Git e lacra o conjunto ordenado de candidatas e a busca base."""
     if catalogo.fontes.trabalho:
         raise MemoriaErro("a seleção exige fontes de uma revisão Git")
@@ -171,6 +191,9 @@ def preparar(catalogo: Catalogo, escopo: Escopo, consulta: str, limite: int) -> 
     pacote = {"versao": 1, "revisao": catalogo.fontes.revisao, "data": catalogo.data.isoformat(),
               "consulta": consulta, "escopo": escopo, "limite": limite,
               "orcamento_bytes": _LIMITE_BYTES, "candidatas": candidatas, "base": busca}
+    if explorar_fontes:
+        fora = _pedido_fora_do_escopo(_normalizar(consulta).strip())
+        pacote["fontes_permitidas"] = [] if fora else sorted(catalogo.fontes_por_escopo[escopo])
     pacote["lacre"] = _lacre(pacote)
     return pacote
 
@@ -226,16 +249,53 @@ def aplicar(pacote: dict, bruto: bytes, *,
         raise MemoriaErro("JSON inválido no pacote") from exc
     if resposta.lacre != selada.lacre or selada.lacre != lacre:
         raise MemoriaErro("o lacre da seleção diverge do pacote")
+    base = selada.base
+    if resposta.intencao is not None:
+        if selada.fontes_permitidas is None:
+            raise MemoriaErro("a revisão da intenção exige exploração de fontes no pacote")
+        if resposta.intencao != "fora_escopo" and not selada.fontes_permitidas:
+            raise MemoriaErro("a consulta está bloqueada pelas regras de escopo")
+        if resposta.intencao == "evidencia":
+            base = {**base, "orientacao_atual": None}
+        else:
+            if resposta.ids or resposta.recortes:
+                raise MemoriaErro("estado e fora do escopo exigem seleção vazia")
+            atual = (_fonte_atual(selada.consulta, forcar=True)
+                     if resposta.intencao == "estado_atual" else None)
+            return {**base, "notas": [], "fontes": [], "passagens": [], "orientacao_atual": atual}
     ids = resposta.ids
-    if len(ids) > selada.limite or len(ids) != len(set(ids)):
+    if len(ids) + len(resposta.recortes) > selada.limite or len(ids) != len(set(ids)):
         raise MemoriaErro("a seleção excede o limite ou repete IDs")
     candidatas = {p.id: p for p in selada.candidatas}
     if any(i not in candidatas for i in ids):
         raise MemoriaErro("a seleção usa ID desconhecido")
     escolhidas = [candidatas[i] for i in ids]
-    total = sum(p.bytes for p in escolhidas) + max(0, len(escolhidas) - 1)
+    referencias = [p.referencia() for p in escolhidas]
+    total = sum(p.bytes for p in escolhidas)
+    if resposta.recortes:
+        if resposta.intencao != "evidencia" or ler is None or not selada.fontes_permitidas:
+            raise MemoriaErro("recortes exigem intenção de evidência e leitura canônica")
+        for recorte in resposta.recortes:
+            if recorte.caminho not in selada.fontes_permitidas:
+                raise MemoriaErro("o recorte usa fonte fora do escopo lacrado")
+            linhas = ler(recorte.caminho)
+            a, z = recorte.inicio, recorte.fim
+            if not 1 <= a <= z <= len(linhas) or z - a >= LINHAS_PASSAGEM:
+                raise MemoriaErro("intervalo do recorte fora da fonte ou do limite de linhas")
+            janela = linhas[a - 1:z]
+            trecho = "\n".join(janela)
+            custo = len(trecho.encode())
+            if custo > BYTES_PASSAGEM or not trecho.strip():
+                raise MemoriaErro("recorte vazio ou acima do limite de bytes por passagem")
+            ref = localizar(recorte.caminho, a, janela).json()
+            if ref in referencias:
+                raise MemoriaErro("a seleção repete uma referência")
+            referencias.append(ref)
+            total += custo
+    total += max(0, len(referencias) - 1)
     if total > selada.orcamento_bytes:
         raise MemoriaErro("a seleção excede o orçamento de 4.500 bytes")
-    if ler is not None:
+    if ler is not None and not resposta.recortes:
         escolhidas = _completar_margens(selada, escolhidas, total, ler)
-    return {**selada.base, "passagens": [p.referencia() for p in escolhidas]}
+        referencias = [p.referencia() for p in escolhidas]
+    return {**base, "passagens": referencias}

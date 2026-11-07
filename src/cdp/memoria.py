@@ -1124,13 +1124,16 @@ def _comando(args: argparse.Namespace) -> int:
 
                 if args.conferir_selecao and revisao is None:
                     raise MemoriaErro("a conferência exige a revisão e a data do pacote")
-                pacote = preparar(c, args.escopo, args.consulta, args.limite)
+                pacote = preparar(c, args.escopo, args.consulta, args.limite,
+                                  explorar_fontes=args.explorar_fontes)
                 if args.candidatas:
                     _json(pacote)
                 else:
                     bruto = sys.stdin.buffer.read(MAX_BYTES_RESPOSTA + 1)
                     _json(aplicar(pacote, bruto, ler=c.fontes.linhas))
             else:
+                if args.explorar_fontes:
+                    raise MemoriaErro("explorar fontes exige gerar ou conferir uma seleção guiada")
                 _json(c.buscar(args.escopo, args.consulta, args.limite,
                                estado_atual=args.estado_atual))
         else:
@@ -1205,6 +1208,8 @@ def registrar(sub: argparse._SubParsersAction) -> None:
                               help="gera um pacote lacrado para seleção de evidências pelo agente")
             modo.add_argument("--conferir-selecao", action="store_true",
                               help="confere os IDs recebidos na entrada padrão contra o pacote lacrado")
+            s.add_argument("--explorar-fontes", action="store_true",
+                           help="permite revisar a intenção e selecionar recortes de fontes do escopo")
         if acao == "propor":
             s.add_argument("--id", required=True)
             s.add_argument("--evidencia", required=True, help="caminho relativo da fonte")

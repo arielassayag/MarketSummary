@@ -94,6 +94,15 @@ uv run python -m cdp memoria buscar --escopo diario --consulta 'moeda do benchma
 Em consultas de estado ou fora do escopo, a lista de candidatas fica vazia.
 O pacote e a conferência funcionam localmente a partir do Git.
 
+Use `--explorar-fontes` nas duas chamadas para revisar também a intenção e
+consultar as fontes que o pacote autoriza. O agente pode declarar `intencao`
+como `evidencia`, `estado_atual` ou `fora_escopo`. Para evidência, pode enviar
+`recortes` com `caminho`, `inicio` e `fim`, além de `ids`. Use intervalos de
+linhas inclusivos da revisão indicada. O código lê cada recorte no Git, resolve
+seu hash e conta as passagens e os bytes de toda a seleção. Uma passagem tem até
+14 linhas e 1.800 bytes. Pedidos de estado ou fora do escopo exigem seleção vazia.
+Os bloqueios explícitos de escopo e segurança continuam prevalecendo.
+
 ## Registrar uma lição
 
 Em desenvolvimento, escolha uma descoberta reutilizável com evidência em `AGENTS.md`, em um

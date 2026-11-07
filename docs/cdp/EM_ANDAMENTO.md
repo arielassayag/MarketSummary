@@ -7,40 +7,41 @@ motivo: `docs/cdp/DECISOES.md`.
 
 ## Confirmação prospectiva da memória em andamento — 07/11/2026
 
-A revisão `2784236e` manteve **52/52 evidências e 16/16 controles** no original, com até
-cinco passagens de 14 linhas e 1.800 bytes cada. Nas baterias abertas até a décima,
-passou em 328/328 evidências e 105/105 controles. A sensibilidade agregada de 4.500 bytes
-ficou em 51/52 no original.
+A seleção guiada no candidato `199c0e86`, qualificação `475611e5`, recuperou
+**52/52 evidências e 16/16 controles** no original, em cinco passagens e 4.500 bytes.
+A automática teve 51/52 no mesmo teto e 52/52 com até cinco passagens sem teto agregado.
+O protocolo usa seleção inicial, revisão independente e nova escolha compacta somente
+quando há divergência. O avaliador compara as mesmas consultas e reconstrói pacotes
+e escolhas lacradas na revisão Git. O original já orientou o desenvolvimento.
 
-A décima primeira confirmação teve **14/24 evidências, 8/8 controles e zero orientação
-indevida**. A busca direta e a contextual sem notas tiveram 15/24. Dos dez erros, oito
-tinham os grupos no conjunto ampliado. A décima, com `d4e5865b`, teve 16/24 e 8/8,
-com um falso encaminhamento estático corrigido na revisão seguinte. A meta de 100% em
-inéditos continua aberta. Lacres, primeiras execuções e comparação estão em
-`outputs/cdp-memoria-rigor/`.
+Na primeira execução inédita da confirmação 12, a guiada teve **17/24 evidências e
+7/8 controles**. A direta e a automática tiveram 13/24. Sobre a automática, a guiada
+ganhou cinco e perdeu uma, saldo de 16,7 pontos percentuais. Houve um falso encaminhamento
+estático. Em seis consultas faltava ao pacote algum grupo completo. Em uma outra a
+candidata viável ficou de fora da seleção. A meta integral em inéditos continua aberta.
 
-O gerador estrutural usa títulos, parágrafos, seções vizinhas e seções curtas inteiras.
-A busca automática só amplia por inclusão literal ou reaproveita vaga redundante.
-A seleção guiada acrescenta recuperação de funções Python por AST, nome e docstring.
-O comando `memoria buscar --candidatas` lacra referências canônicas, até 64.
-`memoria buscar --conferir-selecao` reconstrói o pacote no Git e confere os IDs
-recebidos pela entrada padrão, até cinco passagens e 4.500 bytes.
+A CLI oferece até 64 referências com `memoria buscar --candidatas`. A conferência
+`memoria buscar --conferir-selecao` reconstrói o pacote, confere as escolhas e
+pode completar a margem com um bloco já lacrado que cabe nas vagas livres.
+Uma correção limita a concentração da passagem de bastão quando uma âncora da
+nota líder acrescenta outra fonte. Ela preservou os 68 pacotes do original fixado.
 
-O pacote guiado continha evidência viável para 52/52 no original e 24/24 em cada
-uma das rodadas abertas 10 e 11. Isso é cobertura de candidatos conferida pelo
-gabarito. O ensaio com um agente sem acesso ao gabarito recuperou sete das oito
-falhas abertas da décima. O reranqueador local com partes da consulta recuperou
-23/24 na nona aberta e quatro das oito falhas da décima. As duas vias de seleção
-ainda precisam de avaliação de ponta a ponta em inéditos.
+O histórico até a 11ª confirmação está no relatório local. A 11ª busca automática
+ficou em 14/24 com 8/8 controles e zero orientação indevida. A suíte focal da versão
+guiada passou com 415 aprovações e um caso pulado. A execução ampla anterior foi
+interrompida durante uma troca de HEAD. Os dois testes afetados pela fixture de
+replay passaram em revisões estáveis.
 
-A 12ª está lacrada. Antes de usar, fixe código, catálogo e protocolo de seleção.
-A seleção guiada precisa ser avaliada separadamente da busca automática. Preserve
-as escolhas com lacre antes de confrontar com o gabarito. A consolidação de duas
-notas semanais liberou uma vaga e o catálogo de trabalho auditou 127 notas.
+O protocolo, a figura, os lacres e os resultados estão em `outputs/cdp-memoria-rigor/`.
+A próxima revisão precisa tratar blocos de código cortados e distinguir perguntas de
+procedimento recorrente de fatos de uma publicação específica. A amostra 12 já aberta
+é diagnóstico para mudanças. A amostra 13 já foi lacrada e segue sem recuperação.
+Fixe a próxima versão e o protocolo antes de usá-la. O catálogo tem 127 notas ativas.
 
-A suíte focal teve 414 aprovações e uma omissão. A execução ampla foi interrompida
-após a troca de HEAD durante a fixture de replay. Os dois testes dessa fixture
-passaram em revisões estáveis, inclusive neste worktree.
+Na preparação da próxima revisão, o roteamento separa origem de procedimento recorrente
+de metadados de uma publicação específica. O AST prioriza a assinatura quando a consulta
+nomeia a ação e o formato. As duas mudanças preservaram os 68 pacotes fixados do original
+e corrigiram três sintomas no diagnóstico aberto. A suíte focal passou com 422 e um pulado.
 
 ## Recuperação com memória qualificada — 07/11/2026
 

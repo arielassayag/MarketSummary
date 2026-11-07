@@ -14,6 +14,16 @@ def test_busca_por_simbolo_inclui_retorno_de_funcao_descrita_na_docstring():
     assert all(p.fim - p.inicio + 1 <= 14 for p in candidatas)
 
 
+def test_busca_por_simbolo_prioriza_assinatura_que_nomeia_acao_e_formato():
+    linhas = ("def exportar_aplicativo():", '    """Exportar agenda em JSON, com campos calculados."""',
+              "    return carregar_dados()", "", "def exportar_json():",
+              "    return {'quando': calcular_horario()}")
+    indice = IndiceSecoes([("src/cdp/rotinas.py", linhas)])
+    (primeira, *_) = indice.simbolos("Quais campos vêm ao exportar a agenda em JSON?")
+
+    assert (primeira.inicio, primeira.fim) == (5, 6)
+
+
 def test_busca_por_secoes_diversifica_fontes_e_recupera_vizinha():
     fontes = {
         "Roteiro.md": (

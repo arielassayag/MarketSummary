@@ -397,6 +397,7 @@ _PROCEDIMENTO = re.compile(
     r"passos?|condic(?:ao|oes)|campos?)\b|"
     r"(?:verificac(?:ao|oes)|checagens?|evidencias?|provas?|testes?|recibos?|comprovantes?) "
     r"(?:comprova|confirma|demonstra|distingue)m?\b))"
+    r"|^de onde (?:vem|saem?)\b[^.?!]*\b(?:a|em) cada\b"
 )
 _PEDIDO_DE_PROCEDIMENTO = re.compile(
     r"(?:^|[,;:]\s*|\b(?:e|ou|diga|explique|mostre|descreva|ensine|saber) )"
@@ -463,6 +464,16 @@ _SAIDA_COBERTURA = re.compile(r"\b(?:balancos?|resultados?|ratings?|precos?[- ]a
 _ENTREGA_DOCUMENTAL = re.compile(
     r"\b(?:e-?mails?|entregas? d[oa]s? (?:relatorios?|pdfs?|comentarios?|notas?|resumos?))\b"
 )
+_TESE_DO_CDP = re.compile(
+    r"\b(?:tese_publicada|teses? (?:semana(?:l|is)|d[oa] (?:carteira|montagem|cdp)))\b"
+)
+_PUBLICADO = re.compile(r"\b(?:publicad[oa]s?|publicou|publicaram|publicac(?:ao|oes))\b")
+_PEDIDO_METADADO = re.compile(
+    r"^(?:(?:me )?quem\b|(?:(?:me )?(?:qual|quais|que)(?: e| sao| foi| foram)?|"
+    r"(?:me )?(?:informe|diga|mostre|traga|liste|identifique)|em que)\s+"
+    r"(?:[ao]s?\s+)?(?:autoria|autor(?:a|es|as)?|assinatura|mind|vers(?:ao|oes)|"
+    r"identidad(?:e|es)|datas?|carimbo|horario|sha[- ]?256|hash)\b)"
+)
 
 
 def _pedido_fora_do_escopo(q: str) -> bool:
@@ -490,6 +501,8 @@ def _termos_de_observacao(q: str) -> set[str]:
     temas = _DOMINIO.findall(q) + _MERCADO.findall(q)
     if _sobre_retrato_de_cobertura(q):
         temas.extend(_ARTEFATO_COBERTURA.findall(q) + _SAIDA_COBERTURA.findall(q))
+    if _PUBLICADO.search(q):
+        temas.extend(_TESE_DO_CDP.findall(q))
     return set(termos_contextuais(" ".join(temas)))
 
 
@@ -506,8 +519,10 @@ def _pede_estado(q: str) -> bool:
                     quadro = inicio
                 frase = frase[fronteira.end():]
         assunto = f"{quadro} {frase}"
+        metadado_da_tese = (_TESE_DO_CDP.search(assunto) and _PUBLICADO.search(assunto)
+                            and _TEMPO.search(assunto) and _PEDIDO_METADADO.match(frase))
         if not (_MERCADO.search(assunto) or _DOMINIO.search(assunto) or _VINCULO_CDP.search(assunto)
-                or _sobre_retrato_de_cobertura(assunto)):
+                or _sobre_retrato_de_cobertura(assunto) or metadado_da_tese):
             continue
         pedido = _PEDIDO_OBSERVACAO.search(frase) or frase.endswith("?")
         enunciado = _SUBORDINADA.split(frase, maxsplit=1)[0]
@@ -578,6 +593,9 @@ def _fonte_atual(consulta: str, *, forcar: bool = False) -> str | None:
         r"\b(?:carteira|livro)\b", q
     ):
         return "Consulte a carteira efetivada no livro ou o relatório correspondente ao corte."
+    if _TESE_DO_CDP.search(q) and _PUBLICADO.search(q):
+        return ("Consulte a tese publicada no livro, em book/<semana>/tese/tese_publicada.json, "
+                "e o evento WEEKLY_THESIS correspondente na trilha de auditoria.")
     if _MERCADO.search(q) or re.search(r"\bquanto (?:marcou|rendeu|valeu|fechou)\b", q):
         return "Consulte o relatório oficial da data ou os fatos correspondentes no FactBook."
     return "Consulte o estado e a agenda no clone de operação."

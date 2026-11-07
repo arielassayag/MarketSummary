@@ -35,6 +35,8 @@ from cdp.memoria_busca import Local, normalizar
     ("O que diferencia o relatório de hoje do monitor de risco do de ontem?", "relatório do monitor"),
     ("No resumo de hoje do monitor, quais saídas mostram o que ficou retido?", "relatório do monitor"),
     ("A entrega do relatório já saiu hoje?", "trilha de entrega"),
+    ("Qual autoria consta na última tese semanal publicada?", "tese_publicada.json"),
+    ("Na última tese da carteira publicada, quem figura como autor?", "WEEKLY_THESIS"),
 ])
 def test_consulta_observada_indica_a_fonte_da_tarefa(consulta, origem):
     orientacao = _fonte_atual(consulta)
@@ -70,6 +72,10 @@ def test_quadro_temporal_da_montagem_encaminha_as_duas_partes_da_pergunta():
     "Como interpretar uma posição que ficou sem negócio?",
     "No resumo do monitor, quais artefatos indicam a situação da trava, a cobertura e o que ficou retido?",
     "Em que moeda os retornos entram no painel de ativos?",
+    "De onde vem o roteiro a cada disparo e por que as rotinas foram separadas?",
+    "Qual campo guarda a autoria da última tese semanal publicada?",
+    "Qual é o papel da autoria na última tese semanal publicada?",
+    "Quem orientou a última tese acadêmica publicada?",
 ])
 def test_ocorrencia_narrada_nao_converte_regra_em_pedido_de_estado(consulta):
     assert _fonte_atual(consulta) is None

@@ -26,6 +26,7 @@ _MAX_SECOES = 9
 _POR_SECAO = 4
 _LINHAS_SECAO_CODIGO = 64
 _CERCAS = ("```", "~~~")
+_FORMATOS = frozenset("json csv yaml yml markdown md html xml parquet pdf toml xlsx".split())
 
 
 @dataclass(frozen=True)
@@ -136,8 +137,8 @@ class IndiceSecoes:
         self._janela = lru_cache(maxsize=2048)(self._ler_janela)
 
     @cached_property
-    def _funcoes(self) -> tuple[list[tuple[str, _Secao]], Counter[str], Counter[str], int]:
-        funcoes: list[tuple[str, _Secao]] = []
+    def _funcoes(self) -> tuple[list[tuple[str, _Secao, Counter[str]]], Counter[str], Counter[str], int]:
+        funcoes: list[tuple[str, _Secao, Counter[str]]] = []
         df_funcoes: Counter[str] = Counter()
         df_paragrafos: Counter[str] = Counter()
         n_paragrafos = 0
@@ -157,7 +158,7 @@ class IndiceSecoes:
                     continue
                 titulo = f"{no.name} {ast.get_docstring(no) or ''}"
                 funcao = _secao(linhas, no.lineno - 1, no.end_lineno, titulo, titulo)
-                funcoes.append((caminho, funcao))
+                funcoes.append((caminho, funcao, termos_contextuais(no.name)))
                 df_funcoes.update(funcao.titulo.keys() | funcao.corpo.keys())
         return funcoes, df_funcoes, df_paragrafos, n_paragrafos
 
@@ -261,12 +262,21 @@ class IndiceSecoes:
         termos = termos_contextuais(consulta)
         pesos = _pesos(termos, df_funcoes, len(funcoes))
         pesos_locais = _pesos(termos, df_paragrafos, n_paragrafos)
+        formatos = termos.keys() & _FORMATOS
+        assinaturas: list[tuple[float, str, int, Local]] = []
         ordenadas: list[tuple[float, str, int, _Secao]] = []
-        for caminho, funcao in funcoes:
-            nota = _cobertura(funcao.titulo, pesos) + _relevancia(funcao.corpo, pesos, 100)
+        for caminho, funcao, nome in funcoes:
+            relevancia = _relevancia(funcao.corpo, pesos, 100)
+            nota = _cobertura(funcao.titulo, pesos) + relevancia
             if nota > 0:
                 ordenadas.append((-nota, caminho, funcao.inicio, funcao))
-        candidatas: dict[Local, None] = {}
+            comuns = termos.keys() & nome.keys()
+            if comuns & formatos and comuns - formatos:
+                a, b = funcao.inicio, min(funcao.fim, funcao.inicio + LINHAS_PASSAGEM)
+                if (janela := self._janela(caminho, a, b)) is not None:
+                    assinaturas.append((-(_cobertura(nome, pesos) + relevancia), caminho, a, janela[0]))
+        # A assinatura que nomeia o formato distingue o exportador do seu chamador.
+        candidatas = dict.fromkeys(p for _, _, _, p in sorted(assinaturas, key=lambda x: x[:3])[:2])
         for _, caminho, _, funcao in sorted(ordenadas, key=lambda x: x[:3])[:12]:
             candidatas.update(dict.fromkeys(self._candidatas(caminho, funcao, pesos_locais)))
             # Inclui a entrada e o retorno quando a pergunta coincide com o contrato da função.

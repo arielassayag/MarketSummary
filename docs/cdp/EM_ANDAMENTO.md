@@ -5,6 +5,20 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## Curadoria da primeira execução de dreaming — 07/11/2026
+
+A revisão de desenvolvimento completou os três itens adiados. As duas devolutivas do plano
+de 2026-11-07, fixado em `bfddf16465baad0d2d23ff2cae530c96163c7c67`, cobriram 15 de 15 itens
+e passaram pela conferência. SHA-256 da página 1
+`4fcd54c472c3347871c2ac3d7d13ff28dfa7cb4d18e29696c98504c1a6356a4a` e da página 2
+`90b7efa119dff4755fffbe8bc6f742894bfed8a6e310d61050db198009e1d46d`.
+
+Os guias distinguem o fluxo exclusivo do fluxo de leitura. O cronograma de montagem usa
+11h07 em Brasília, conforme a agenda, e o roteiro de status atribui a abertura à primeira
+rotina elegível de montagem ou fechamento. As duas propostas do primeiro disparo ficaram
+fora do catálogo. A cobertura mede os itens do plano, enquanto a recuperação de evidência
+segue os ensaios do [manual de memória](MEMORIA.md). Falta integrar o ramo de desenvolvimento.
+
 ## Dreaming e agenda com reserva única — 07/11/2026
 
 O [roteiro de dreaming](playbooks/DREAMING.md) separa plano, análise de cada item e

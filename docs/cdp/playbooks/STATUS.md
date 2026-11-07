@@ -40,7 +40,7 @@ estiver indisponível, prossiga pelo roteiro e pelos documentos canônicos.
 
 - **Integridade** e **kill switch**.
 - **Fase**: antes da data de início, a data da carteira inaugural; com a abertura do livro
-  pendente, destaque que a próxima rotina diária a faz.
+  pendente, destaque que a primeira rotina elegível de montagem ou de fechamento abre o livro.
 - **Executor**: quem grava o livro e desde quando; se este ambiente não é o executor, diga
   "somente leitura".
 - **Incidentes** por severidade (alta primeiro), com a ação indicada.

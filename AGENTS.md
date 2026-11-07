@@ -45,8 +45,9 @@ decidido por código.
    pendentes. Nunca decida por conta própria o que rodar nem quando.
 4. Siga o **roteiro neutro** da tarefa (`docs/cdp/playbooks/<TAREFA>.md`) conforme o papel:
    - **Rotina agendada** (o prompt cita uma tarefa `cdp-…`): a skill da tarefa
-     (`.agents/skills/cdp-*`, espelhada em `.claude/skills/`), que começa por
-     `uv run python -m cdp rotinas gate --tarefa <tarefa> --adquirir` (uma vez só). Com
+     (`.agents/skills/cdp-*`, espelhada em `.claude/skills/`). Rode uma vez o gate do prompt
+     gerado para a tarefa. O modo agente usa `--adquirir` nas rotinas exclusivas. As rotinas
+     de leitura, como `cdp-dreaming`, seguem do gate ao roteiro, sem trava. Com
      `executar: false` (código 10), responda "Sem execução: <motivo>" e encerre. Após o gate e
      a sincronização, quando aplicável, a consulta opcional de memória está no roteiro da tarefa.
      Siga o roteiro até o fim, sem perguntar nada. Se algo impedir, pare e explique no resumo
@@ -139,12 +140,15 @@ Substituem os itens 3 e 4 da seção do Fechamento apenas para o CDP.
 | `cdp-calibracao` | dia 1 de cada mês, 09:15 | `15 12 1 * *` | `docs/cdp/playbooks/CALIBRACAO.md` | só arquivos novos |
 
 A única reserva é `cdp-semanal-b`, às 12:07. Se o fechamento ficar pendente, o próximo
-`cdp-diario` retoma as datas pela agenda. Aos sábados, `cdp-dreaming` revisa a memória em leitura
-e devolve sugestões de curadoria. Quando falta trabalho, o gate encerra o disparo. A semana típica: fechamento
-de quinta (19:22, com o retrato da cobertura) → notas de cobertura na quinta à noite (22:37) →
-na sexta (último pregão da semana na NYSE), pesquisa às 11:07 e decisão até o prazo efetivo →
-execução no leilão de fechamento → na sexta à noite, efetivação, registro diário, relatório
-semanal de resultado e portal atualizado (`docs/cdp/ARQUITETURA.md`, seção 2).
+`cdp-diario` retoma as datas pela agenda. Nas tarefas cujo gate consulta a agenda, a falta
+de trabalho encerra o disparo no gate. Aos sábados, `cdp-dreaming` revisa a memória em leitura
+e devolve sugestões de curadoria. A rotina encerra no roteiro se o plano de revisão vier vazio.
+
+A semana típica começa no fechamento de quinta (19:22, com o retrato da cobertura), seguido
+pelas notas de cobertura na quinta à noite (22:37). Na sexta, último pregão da semana na NYSE,
+a pesquisa começa às 11:07, a decisão sai até o prazo efetivo e a execução ocorre no leilão
+de fechamento. À noite, seguem a efetivação, o registro diário, o relatório semanal de
+resultado e a atualização do portal (`docs/cdp/ARQUITETURA.md`, seção 2).
 
 **Onde agendar** — as rotinas rodam **dentro do app de IA**, com o prompt neutro gerado pelo
 código (passo a passo em `docs/cdp/AUTOMACAO.md`):

@@ -3,7 +3,7 @@
   "tipo": "procedimento",
   "estado": "curada",
   "titulo": "Escada de drawdown e kill switch aplicam o teto mais restritivo",
-  "resumo": "A escada ajusta o teto de volatilidade ex-ante a partir do drawdown. A exposição volta conforme a perda se recupera. Com kill switch ativo, combine os dois tetos pelo mais restritivo, sem multiplicar as reduções.",
+  "resumo": "O mandato limita o net absoluto a 1% do NAV e o beta absoluto a 0,05. Com menos de 26 semanas, divida a meta de volatilidade por 1,10. A escada ajusta o teto ex-ante pelo drawdown e devolve exposição à medida que a perda se recupera. Com kill switch ativo, aplique o mais restritivo dos dois tetos, sem multiplicar as reduções.",
   "escopos": [
     "risco",
     "semanal"
@@ -15,7 +15,8 @@
     "tetos simultâneos",
     "mais restritivo",
     "recuperação",
-    "volatilidade ex-ante"
+    "volatilidade ex-ante",
+    "beta e exposição líquida"
   ],
   "registrada_em": "2026-11-07",
   "revisada_em": "2026-11-07",
@@ -27,6 +28,11 @@
       "caminho": "docs/cdp/METODOLOGIA.md",
       "trecho": "- **Escada de drawdown sobre o risco tomado**: a partir do pico, −2,5% (stop suave), −5% (stop\n  duro) e −7,5% (stop-out) limitam a vol ex-ante a `m·σ_ref`, com `m` por estágio = 0,75, 0,50 e\n  0,25 (os três valores estão sobre a reta `1 − |DD|/D_max` nos limiares, `D_max` = 10%) e\n  `σ_ref` = vol da mesma carteira resolvida no estágio normal; sem ela, a vol da carteira atual e,\n  sem carteira, a meta de vol da semana. Sem memória: o risco volta conforme o drawdown se\n  recupera. Com o kill switch ligado vale o mais restritivo dos dois tetos, nunca o produto.",
       "sha256": "c4af64657a8bed6feec3709dbb5055e6c4d9dfeb46bf27114cb7575efd36bf35"
+    },
+    {
+      "caminho": "docs/cdp/METODOLOGIA.md",
+      "trecho": "- **Net neutral** (|Σw| ≤ 1% do NAV) e **beta neutro** (|β| ≤ 0,05) contra o mercado LatAm.\n- **Volatilidade-alvo ex-ante de 5% a.a.**, banda permitida **3%–7%**; enquanto o track record tiver\n  menos de 26 semanas, a meta efetiva é dividida pelo viés a priori de 1,10 (carteiras otimizadas\n  têm risco subestimado).\n- Pode operar linhas locais (B3, BMV, Santiago, BVC, BVL, BYMA) e ADRs/US listings.\n- Todos os números do mandato vivem em `configs/cdp/fund.yaml` (fonte única, com hash).",
+      "sha256": "d8a5abb2ed62f1ad726c258c38af2431b55e0e7fbd2821b1da569790b0002c28"
     }
   ]
 }

@@ -7,33 +7,43 @@ motivo: `docs/cdp/DECISOES.md`.
 
 ## Confirmação prospectiva da memória em andamento — 07/11/2026
 
-A revisão local `73c98dc3` mantém **52/52 evidências e 16/16 controles** no benchmark
-original. Com 117 notas verificadas, passou nas baterias expostas com 232/232 evidências,
-73/73 controles e zero orientação indevida. As baterias expostas orientaram a curadoria
-e o roteamento. O limite de cinco passagens, 14 linhas e 1.800 bytes por passagem continua
-fixo. O qualificador confere as fontes, o código, os scripts, os hashes e os tamanhos.
+A revisão `0232a0e9` manteve **52/52 evidências e 16/16 controles** no benchmark original.
+Na qualificação com fontes congeladas, o conjunto exposto até a oitava passou em
+280/280 evidências e 89/89 controles, sem orientação indevida. O catálogo teve 125 notas
+ativas. O limite de cinco passagens, 14 linhas e 1.800 bytes por passagem segue fixo.
 
-Na sexta confirmação lacrada, a revisão `337003ff` recuperou 21/24, ante 17/24 na busca
-direta e 18/24 na contextual sem notas, com quatro ganhos pareados e nenhuma perda. Passou
-em 5/8 controles. O replay de `65661a4a` sobre o mesmo corpus teve os mesmos acertos.
+A oitava confirmação lacrada mediu 21/24 na revisão `49d456c8`, ante 20/24 nos dois
+braços sem notas. A memória ganhou dois casos e perdeu um sobre a busca direta.
+Passou em 7/8 controles e orientou indevidamente uma pergunta de procedimento.
 
-A sétima confirmação, com o candidato `73c98dc3` fixado antes da entrega do corpus, recuperou
-18/24 contra 17/24 nos dois braços sem notas, com um ganho pareado e nenhuma perda sobre a
-direta. Passou em 7/8 controles. Uma consulta estática recuperou a evidência e recebeu
-orientação de estado indevida. A meta de 100% em inéditos continua aberta. As primeiras
-execuções, os lacres, os planos e o relatório ficam em `outputs/cdp-memoria-rigor/`.
+A nona confirmação foi redigida por outro anotador, sem acesso a busca, notas ou resultados.
+Na primeira execução de `0232a0e9`, a memória recuperou 20/24 evidências, ante 19/24 da
+direta e 20/24 da contextual sem notas. Passou em 8/8 controles, sem orientação indevida.
+A meta de 100% em inéditos continua aberta. Os resultados da primeira execução e os
+lacres de ambas estão em `outputs/cdp-memoria-rigor/`.
 
-A sétima amostra está aberta para diagnóstico. A união de 30 passagens diretas, 30 contextuais
-e todas as âncoras elegíveis contém todos os grupos de 23/24 perguntas. Entre as seis
-falhas de evidência, cinco têm os trechos nesse conjunto e uma precisa de outra busca.
-Priorize seleção de evidências complementares por pergunta e teste a distinção entre um
-procedimento hipotético e uma observação de estado. Corrija também a admissão quando a
-menção ao projeto é explicitamente negativa, como em “fora do CDP”. O próximo inédito
-deve ser separado dos ajustes e ter o candidato fixado antes da primeira execução.
+Na nona, todas as quatro falhas de evidência já tinham os trechos no conjunto ampliado
+de 30 passagens diretas, 30 contextuais e as âncoras elegíveis. O gargalo observado foi
+selecionar as cinco. O ensaio de trocar passagens conforme as partes da consulta regrediu
+nas baterias abertas. A busca padrão reaproveita passagens integralmente contidas e só
+considera trocar a última por uma direta quando aumenta a cobertura lexical faltante.
 
-Os experimentos locais de reranqueamento e classificação são diagnósticos. O melhor
-reranqueador subiu de 18/24 a 22/24 na quarta amostra já aberta e teve latência mediana de
-13,5 segundos por consulta nesta máquina. A versão padrão continua determinística e offline.
+Depois de abrir a nona, quatro notas existentes receberam referências para autenticação
+editorial, monitoramento remoto, adoção de rascunhos e limites de risco. A regressão
+na árvore de trabalho passou em 304/304 evidências e 97/97 controles, sem orientação
+indevida. O catálogo permaneceu em 125 notas. Essas notas aguardam a próxima confirmação.
+
+O reranqueador Qwen3-0.6B local preservando os três primeiros trechos levou a sétima
+aberta de 18/24 a 22/24, mas ficou em 51/52 no original. Ao proteger também a âncora
+pertinente da nota mais bem ranqueada, o ensaio preservou 52/52 no original, manteve
+22/24 na sétima e recuperou duas das quatro falhas avaliadas na nona. Ainda faltam
+replays completos e avaliação inédita com o modelo. Os dados de experimento estão em
+`outputs/cdp-memoria-rigor/`, os protótipos em `/tmp/cdp-confirm8-lab/`.
+
+Na nona, a expansão estrutural por seções levou o conjunto direto e contextual curto
+de 22/24 a 24/24 sem notas. Ela ainda precisa demonstrar ganho na seleção final. A busca
+padrão permanece determinística e offline. O próximo inédito deve permanecer separado
+dos ajustes e o candidato deve ser fixado antes da primeira recuperação.
 
 ## Recuperação com memória qualificada — 07/11/2026
 

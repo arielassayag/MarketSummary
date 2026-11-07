@@ -3,7 +3,7 @@
   "tipo": "procedimento",
   "estado": "curada",
   "titulo": "Preparação da tese semanal e aproveitamento do rascunho",
-  "resumo": "A decisão tem prazo efetivo. Depois dela, prepare os fatos da carteira aprovada e use o corte temporal da decisão na tese. Valide todo rascunho entregue antes de editar, ainda que o preparo não o tenha adotado. Preserve o texto válido para publicação. Se o rascunho falhar, corrija o texto a partir dos problemas do validador.",
+  "resumo": "Após decidir, prepare os fatos da carteira aprovada e use o corte temporal da decisão. Entregue tese externa em docs/cdp/teses/ com a semana da decisão no nome e preserve schema e autoria. Valide antes de editar contra o FactBook da rotina, mesmo se o rascunho entregue não tiver sido adotado. Publique o texto válido e corrija a cópia pelos problemas apontados.",
   "escopos": [
     "semanal",
     "diario"
@@ -31,13 +31,18 @@
     },
     {
       "caminho": "docs/cdp/playbooks/SEMANAL.md",
-      "trecho": "2. **Rascunho entregue** (tese escrita fora do clone das rotinas, em\n   `docs/cdp/teses/<semana>.json`; `docs/cdp/TESE.md`): com `rascunho_adotado: true` — ou\n   `rascunho_entregue` preenchido e `rascunho_adotado: false` —, valide **antes de escrever\n   qualquer coisa**: `uv run python -m cdp validate-tese --week AAAA-MM-DD`. `ok: true` ⇒ não\n   reescreva nada: vá ao subpasso 5. `ok: false` ⇒ corrija `book/<semana>/tese/tese.json` a partir\n   dos `problemas`. Sem rascunho, siga do subpasso 3.",
-      "sha256": "20d96b2ea435dfad9dad852513e1ba8004ccda63b258709eb1d36984f62205a9"
+      "trecho": "2. **Rascunho entregue** (tese escrita fora do clone das rotinas, em\n   `docs/cdp/teses/<semana>.json`; `docs/cdp/TESE.md`): com `rascunho_adotado: true` — ou\n   `rascunho_entregue` preenchido e `rascunho_adotado: false` —, valide **antes de escrever\n   qualquer coisa**: `uv run python -m cdp validate-tese --week AAAA-MM-DD`. `ok: true` ⇒ não\n   reescreva nada: vá ao subpasso 5. `ok: false` ⇒ corrija `book/<semana>/tese/tese.json` a partir\n   dos `problemas`. Sem rascunho, siga do subpasso 3.\n3. Leia **por inteiro** `book/<semana>/tese/fatos.md` (em partes, até a última linha) e\n   `tese.schema.json`; apoie o texto na pesquisa da semana e em `fatos.md`, sem fatos posteriores\n   à decisão.",
+      "sha256": "34b642d37e88f5fe83f0b7b92e708937eac9acf10a029ae78b85696d497559db"
     },
     {
-      "caminho": "docs/cdp/playbooks/SEMANAL.md",
-      "trecho": "3. Leia **por inteiro** `book/<semana>/tese/fatos.md` (em partes, até a última linha) e\n   `tese.schema.json`; apoie o texto na pesquisa da semana e em `fatos.md`, sem fatos posteriores\n   à decisão.",
-      "sha256": "2ae6a73ae07664865441d69f0f94031687c56ca7e07226d2c5e3afc56db10863"
+      "caminho": "docs/cdp/TESE.md",
+      "trecho": "**Onde.** A tese escrita fora do clone das rotinas é entregue como arquivo versionado\n`docs/cdp/teses/<semana>.json` (a semana da decisão, AAAA-MM-DD), com o **mesmo schema** de\n`book/<semana>/tese/tese.json` (seção 6): mesmas regras, números só como `{{fact:id}}`, `mind`\nde quem escreveu. Ela chega ao clone das rotinas pelo `git pull` normal da sincronização — é\ndocumentação, não livro, então a sincronização segue. A pasta é `docs/cdp/teses/` por padrão\n(opção global `--teses` da CLI, resolvida como `--book` e `--reports`).",
+      "sha256": "d4708d39fb6959271282c664dd89e555bc588ef639009ad3c2b9ab2d8ed79209"
+    },
+    {
+      "caminho": "docs/cdp/TESE.md",
+      "trecho": "2. Com `rascunho_adotado: true`, a mente roda `validate-tese` **primeiro**, antes de escrever\n   qualquer coisa. O rascunho é validado contra o FactBook calculado pelo código **da própria\n   rotina** (os `{{fact:id}}` resolvem com os valores do clone das rotinas, não com os do lugar\n   onde o rascunho foi escrito).\n3. `ok: true` ⇒ a mente não reescreve nada e segue para o `tese publish`. `ok: false` ⇒ a mente\n   corrige `book/<semana>/tese/tese.json` a partir dos `problemas` (no máximo 3 tentativas, como\n   sempre) e publica; se continuar inválido, o publish cai no template do código\n   (`autoria: \"codigo\"`).",
+      "sha256": "ec0c506628c6690782d83eb790336676f18a3aa37595c59708de16ce5d637881"
     }
   ]
 }

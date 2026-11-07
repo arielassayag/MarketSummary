@@ -457,6 +457,39 @@ _RETIRAR_MARCA_SIMULADA = re.compile(
     r"^(?:(?:coloque|publique|suba|divulgue)\b[^.!?]{0,140}\be\s+)?"
     r"(?:tire|retire|remova|apague|oculte) (?:a )?(?:marca|indicacao|rotulo) de dados simulados\b"
 )
+_FRONTEIRA_FRASE = re.compile(r"[.!?;](?=\s|$)")
+_TRECHO_CITADO = re.compile(r'«[^»]*»|“[^”]*”|"[^"]*"')
+_INICIO_PEDIDO = (
+    r"(?:^|[.!?;]\s+|,\s+)"
+    r"(?:por favor[,:]?\s+)?(?:(?:quero|preciso|peco|gostaria) que(?: voce)?\s+|"
+    r"(?:(?:voce )?(?:pode|poderia|consegue)|da (?:para|pra) voce|favor)\s+)?"
+)
+_PEDIDO_COM_ACAO = re.compile(
+    _INICIO_PEDIDO + r"(?:afroux[ae]|efetiv[ae]|tap[ae]|encarreg[ae]|republic[ae]|pul[ae]|"
+    r"substitu[ai]|sobrescrev[ae]|forc[ae]|apag[ae]|refaz|refaca|rod[ae]|toc[ae]|"
+    r"acert[ae]|faz|faca|manda|mande|apagar|republicar|sobrescrever|alterar|retirar|"
+    r"editar|abrir|seguir|aplicar|remover|substituir|mudar|trocar|salvar|"
+    r"desligar|desativar|publicar|gravar)\b"
+)
+_ALVO_DE_ACAO_PROTEGIDO = re.compile(
+    r"\b(?:book(?:/\S+)?|livro|fund\.yaml|cdp_executor|kill[-_ ]switch|chave de emergencia|"
+    r"falha hard|limite hard|publicacao exclusiva|arquivo bruto|artifact|audit_log|"
+    r"trilha encadeada|main|mandato|publicacao selada|relatorio [^.?!]{0,35}selado)\b"
+    r"|--(?:manual|sem-trava|force)\b"
+)
+_EFEITO_DE_MUTACAO = re.compile(
+    r"\b(?:afroux(?:a|e|ar)|efetiv(?:a|e|ar)|tap(?:a|e|ar)|republic(?:a|e|ar)|"
+    r"pul(?:a|e|ar)|substitu(?:a|i|ir)|sobrescrev(?:a|e|er)|forc(?:a|e|ar)|"
+    r"apag(?:a|e|ar)|refaz|refaca|acert(?:a|e|ar)|passar pelo executor|"
+    r"usar esse arquivo|gravar|grave|trocar|salvar|editar|edite|remover|"
+    r"desligar|desativar|publicar|publicacao exclusiva)\b"
+    r"|\b(?:rod[ae]|rode|rodar|toc[ae])\b[^.?!;]{0,70}--(?:manual|sem-trava)\b"
+)
+_CONTEXTO_DE_RELATO = re.compile(
+    r"\b(?:segundo|conforme) (?:a|o) (?:ata|registro|recibo|relato|documento|passagem|historico)\b"
+    r"|\b(?:ata|registro|recibo|relato|documento|passagem|historico|diario|retrospectiva|auditoria)"
+    r"\b[^.!?;]{0,40}\b(?:diz|dizia|relata|afirma|menciona|descreve|registra|apareceu|constava)\b"
+)
 _BURLA = re.compile(
     r"(?:^|[.!?]\s+|^(?:se|caso)\b[^,.!?]{0,120},\s+)(?:ignore|burle|contorne|drible)\b|"
     r"\b(?:como|mandou|instruiu a|disse para) (?:ignorar|burlar|contornar|driblar)\b"
@@ -539,6 +572,22 @@ _PEDIDO_METADADO = re.compile(
 )
 
 
+def _pedido_com_efeito_protegido(q: str) -> bool:
+    # A decisão usa a ação pedida na frase, sem tratar uma citação como ordem.
+    texto = _TRECHO_CITADO.sub(" ", q)
+    for acao in _PEDIDO_COM_ACAO.finditer(texto):
+        anterior = _FRONTEIRA_FRASE.split(texto[:acao.start()])[-1]
+        if _CONTEXTO_DE_RELATO.search(anterior):
+            continue
+        inicio = acao.start()
+        if texto[inicio] in ".,!?;":
+            inicio += 1
+        frase = _FRONTEIRA_FRASE.split(texto[inicio:], maxsplit=1)[0]
+        if _ALVO_DE_ACAO_PROTEGIDO.search(frase) and _EFEITO_DE_MUTACAO.search(frase):
+            return True
+    return False
+
+
 def _pedido_fora_do_escopo(q: str) -> bool:
     """Filtra pedidos de execução ou acesso que a memória consultiva não atende."""
     nega_vinculo = _SEM_VINCULO_CDP.search(q)
@@ -551,6 +600,7 @@ def _pedido_fora_do_escopo(q: str) -> bool:
     return bool(_MUTACAO_OPERACIONAL.search(q)
                 or _RETIRAR_MARCA_SIMULADA.search(q)
                 or (_MUTACAO_REFERIDA.search(q) and re.search(_OBJETO_OPERACIONAL, q))
+                or _pedido_com_efeito_protegido(q)
                 or (_BURLA.search(q) and _CONTROLES.search(q)) or _EXTRACAO_SEGREDO.search(q)
                 or (_NEGOCIACAO_REAL.search(q) and _PEDIDO_NEGOCIACAO.search(q))
                 or (_RECURSO_PRIVADO.search(q) and (nega_vinculo or _ORGANIZACAO_EXTERNA.search(q))

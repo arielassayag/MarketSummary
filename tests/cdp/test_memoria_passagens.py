@@ -15,6 +15,7 @@ from cdp.memoria_busca import (
     ampliar_selecao,
     combinar_evidencias,
     completar_bloco,
+    reaproveitar_vagas,
     reunir_ancoras,
     termos_contextuais,
 )
@@ -116,6 +117,17 @@ def test_amplia_selecao_por_contencao_sem_cortar_ou_exceder_orcamento():
     longa = Local("a", 1, 10, "")
     base = [antiga, *(Local(c, 1, 1, "") for c in "bcd")]
     assert ampliar_selecao(base, [longa], linhas.__getitem__) == base
+
+
+def test_reusa_vaga_contida_preservando_evidencia_e_orcamento():
+    linhas = {"a": ("a" * 500,) * 3, "b": ("b" * 1400,), "c": ("c" * 1400,),
+              "d": ("d" * 1400,), "e": ("e",)}
+    anterior = [Local("a", 1, 3, ""), Local("a", 2, 3, ""),
+                Local("b", 1, 1, ""), Local("c", 1, 1, "")]
+    d, e = Local("d", 1, 1, ""), Local("e", 1, 1, "")
+    saida = reaproveitar_vagas(anterior, [d, e], linhas.__getitem__)
+    assert saida == [anterior[0], *anterior[2:], e]
+    assert all(_medir(saida, [[p]])["completo_5"] for p in anterior)
 
 
 def test_contexto_adjacente_preserva_ancora_e_hash():

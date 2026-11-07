@@ -12,6 +12,7 @@ from dataclasses import dataclass
 
 LINHAS_PASSAGEM = 14
 BYTES_PASSAGEM = 1800
+_BYTES_AMPLIACAO = 4500
 _PASSO = 4
 _STOP = set(
     "a ao aos as com como da das de do dos e em essa esse esta isto mais na nas no nos "
@@ -200,7 +201,7 @@ def ampliar_selecao(passagens: list[Local], candidatas: Iterable[Local],
 
     selecionadas = list(passagens)
     total = sum(map(tamanho, selecionadas)) + max(0, len(selecionadas) - 1)
-    if total >= 4_500:
+    if total >= _BYTES_AMPLIACAO:
         return selecionadas
     por_fonte: dict[str, list[Local]] = {}
     for p in candidatas:
@@ -212,10 +213,36 @@ def ampliar_selecao(passagens: list[Local], candidatas: Iterable[Local],
                     or candidata.fim - candidata.inicio + 1 > LINHAS_PASSAGEM):
                 continue
             maior = tamanho(candidata)
-            if maior <= BYTES_PASSAGEM and total + maior - tamanho_atual <= 4_500:
+            if maior <= BYTES_PASSAGEM and total + maior - tamanho_atual <= _BYTES_AMPLIACAO:
                 selecionadas[i] = candidata
                 total += maior - tamanho_atual
                 break
+    return selecionadas
+
+
+def reaproveitar_vagas(passagens: list[Local], candidatas: Iterable[Local],
+                       ler: Callable[[str], tuple[str, ...]]) -> list[Local]:
+    """Troca recortes já contidos por evidência adicional sem perder linhas."""
+    selecionadas: list[Local] = []
+    for p in passagens:
+        if not any(a.caminho == p.caminho and a.inicio <= p.inicio <= p.fim <= a.fim
+                   for a in selecionadas):
+            selecionadas.append(p)
+    if len(selecionadas) == len(passagens):
+        return selecionadas
+
+    def tamanho(p: Local) -> int:
+        return len("\n".join(ler(p.caminho)[p.inicio - 1:p.fim]).encode())
+
+    total = sum(map(tamanho, selecionadas)) + len(selecionadas) - 1
+    for p in candidatas:
+        if len(selecionadas) == len(passagens):
+            break
+        custo = tamanho(p) + 1
+        if (total + custo <= _BYTES_AMPLIACAO
+                and not any(redundante(p, a, diverso=True) for a in selecionadas)):
+            selecionadas.append(p)
+            total += custo
     return selecionadas
 
 

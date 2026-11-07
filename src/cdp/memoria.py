@@ -32,6 +32,7 @@ from .memoria_busca import (
     ampliar_selecao,
     combinar_evidencias,
     completar_bloco,
+    reaproveitar_vagas,
     reunir_ancoras,
     termos_contextuais,
 )
@@ -372,10 +373,12 @@ _OBRIGACAO_PENDENTE = re.compile(r"\bainda (?:precis(?:a|am)|deve(?:m)?|tem (?:d
 _SUBORDINADA = re.compile(r"\s+(?:se|caso|quando|depois que|antes que|assim que|logo que)\s+")
 _QUADRO_TEMPORAL = re.compile(r"^(?:para|em|n[oa]s?)\b")
 _PEDIDO_OBSERVACAO = re.compile(
-    r"^(?:me )?(?:quem|qual|quais|quanto|quant[ao]s|onde|quando|em que|que|como esta|"
+    r"^(?:me )?(?:quem|qual|quais|quanto|quant[ao]s|onde|quando|em que|o que|que|como esta|"
     r"liste|informe|diga|identifique|mostre|traga|de (?:o|a|os|as))\b"
     r"|\bquero (?:saber|o nome|a data|o valor)\b"
 )
+_DISTINCAO_DE_TIPOS = re.compile(r"^o que (?:distingue|diferencia|separa|caracteriza)\b")
+_RELATIVA_DE_TIPO = re.compile(r"\s+(?:d[oa]s? )?que\s+")
 _PROCEDIMENTO = re.compile(
     r"^(?:como (?!esta\b|estao\b|ficou\b|anda\b|se encontra\b)|"
     r"em (?:que situacao|que caso|qual situacao|qual caso)|"
@@ -417,11 +420,14 @@ _RECURSO_PRIVADO = re.compile(
     r"\b(?:repositorios?|projetos?|sistemas?|contas?|ambientes?) "
     r"(?:privad[oa]s?|intern[oa]s?|restrit[oa]s?|confidencia(?:l|is))\b"
 )
-_ORGANIZACAO_EXTERNA = re.compile(
-    r"\b(?:outra (?:organizacao|empresa|instituicao)|"
-    r"(?:fora do|alhei[oa] ao|sem (?:vinculo|relacao) com o|"
-    r"nao (?:faz(?:em)? parte do|pertence(?:m)? ao|integra(?:m)? o)) "
-    r"(?:cdp|marketsummary|cabra da peste))\b"
+_ORGANIZACAO_EXTERNA = re.compile(r"\boutra (?:organizacao|empresa|instituicao)\b")
+_NOME_CDP = r"cdp|marketsummary|cabras? da peste"
+_REFERENCIAS_CDP = rf"{_NOME_CDP}|factbook|cdp-trava|backtest[- ]operacional"
+_REFERENCIA_EXPLICITA_CDP = re.compile(rf"\b(?:{_REFERENCIAS_CDP})\b")
+_SEM_VINCULO_CDP = re.compile(
+    r"\b(?:fora d[oa]|alhei[oa]s? a[oa]|sem (?:vinculo|relacao) com(?: o| a)?|"
+    r"nao (?:faz(?:em)? parte d[oa]|pertence(?:m)? a[oa]|integra(?:m)? [oa])) "
+    rf"(?:{_NOME_CDP})\b(?!-[a-z0-9])"
 )
 _ACESSO_A_RECURSO = re.compile(r"\b(?:acessos?|permiss(?:ao|oes)|colaboradores?|membros?)\b")
 _CONTEXTO_ALHEIO = re.compile(
@@ -431,8 +437,7 @@ _CONTEXTO_ALHEIO = re.compile(
     r"(?:outlook|icloud|apple) calendar)\b"
 )
 _VINCULO_CDP = re.compile(
-    r"\b(?:cdp|marketsummary|cabras? da peste|factbook|cdp-trava|kill[- ]switch|"
-    r"backtest[- ]operacional|carteira simulada|agenda das rotinas)\b"
+    rf"\b(?:{_REFERENCIAS_CDP}|kill[- ]switch|carteira simulada|agenda das rotinas)\b"
 )
 _MEDICAO_DE_ATIVO = re.compile(
     r"\b(?:retornos?|rentabilidade|volatilidade|cotac(?:ao|oes)) d[aeo]s? "
@@ -450,9 +455,12 @@ _SAIDA_COBERTURA = re.compile(r"\b(?:balancos?|resultados?|ratings?|precos?[- ]a
 
 def _pedido_fora_do_escopo(q: str) -> bool:
     """Filtra pedidos de execução ou acesso que a memória consultiva não atende."""
+    nega_vinculo = _SEM_VINCULO_CDP.search(q)
+    if nega_vinculo and not _REFERENCIA_EXPLICITA_CDP.search(_SEM_VINCULO_CDP.sub(" ", q)):
+        return True
     return bool((_BURLA.search(q) and _CONTROLES.search(q)) or _EXTRACAO_SEGREDO.search(q)
                 or (_NEGOCIACAO_REAL.search(q) and _PEDIDO_NEGOCIACAO.search(q))
-                or (_RECURSO_PRIVADO.search(q) and _ORGANIZACAO_EXTERNA.search(q)
+                or (_RECURSO_PRIVADO.search(q) and (nega_vinculo or _ORGANIZACAO_EXTERNA.search(q))
                     and _ACESSO_A_RECURSO.search(q))
                 or (_CONTEXTO_ALHEIO.search(q) and not _VINCULO_CDP.search(q)))
 
@@ -481,6 +489,12 @@ def _pede_estado(q: str) -> bool:
             continue
         pedido = _PEDIDO_OBSERVACAO.search(frase) or frase.endswith("?")
         enunciado = _SUBORDINADA.split(frase, maxsplit=1)[0]
+        distincao = _DISTINCAO_DE_TIPOS.match(enunciado)
+        if distincao:
+            # A relativa descreve a categoria comparada, não data a observação.
+            foco = _RELATIVA_DE_TIPO.split(enunciado[distincao.end():], maxsplit=1)[0]
+            if not (_TEMPO.search(foco) or _OCORRENCIA.search(foco)):
+                continue
         if _PROCEDIMENTO.search(frase) or _PEDIDO_DE_PROCEDIMENTO.search(
             _OBRIGACAO_PENDENTE.sub(" ", enunciado)
         ):
@@ -725,9 +739,11 @@ class Catalogo:
                                          priorizar_nota=priorizar_nota)
         blocos = [completar_bloco(p, self.fontes.linhas(p.caminho)) for p in escolhidas]
         if not any(p.fim - p.inicio + 1 < LINHAS_PASSAGEM for p in blocos):
-            return blocos
+            return reaproveitar_vagas(blocos, (*diretas, *contextuais), self.fontes.linhas)
         diretas_amplas = self.indice.buscar(escopo, consulta, max(limite, 10))
-        return ampliar_selecao(blocos, (*diretas_amplas, *contextuais), self.fontes.linhas)
+        candidatas = (*diretas_amplas, *contextuais)
+        ampliadas = ampliar_selecao(blocos, candidatas, self.fontes.linhas)
+        return reaproveitar_vagas(ampliadas, candidatas, self.fontes.linhas)
 
     def _tem_apoio_no_acervo(self, escopo: Escopo, q: str, diretas: list[Local], notas: list[Registro], *,
                             observacao: bool) -> bool:

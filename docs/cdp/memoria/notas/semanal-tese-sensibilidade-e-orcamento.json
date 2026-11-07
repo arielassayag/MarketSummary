@@ -1,0 +1,30 @@
+{
+  "id": "semanal-tese-sensibilidade-e-orcamento",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Sensibilidades e encadeamento do orçamento de risco da tese",
+  "resumo": "Na tese, separe beta do modelo e relações realizadas com índices, câmbio e commodities. Declare a ausência de juros no modelo. Explique como a meta do mandato, a postura de risco e a meta aplicada levam à volatilidade atingida. Distinga a parcela fatorial da específica.",
+  "escopos": [
+    "semanal"
+  ],
+  "tags": [
+    "tese semanal",
+    "sensibilidade a mercado",
+    "juros",
+    "orçamento de risco",
+    "meta aplicada",
+    "volatilidade"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/TESE.md",
+      "trecho": "| Exposições | mente | leitura das exposições por país, setor, estilo, commodity, tema, moeda e evento, frente aos limites |\n| Sensibilidade a mercado | mente | beta do modelo e beta/correlação realizados contra índices, câmbio e commodities; choque de mercado; limitações (juros não são modelados) |\n| Volatilidade e orçamento de risco | mente | meta do mandato → postura → meta aplicada → vol atingida; risco fatorial × específico; VaR/ES; oscilação típica por dia, semana e mês |\n| Riscos, premortem e gatilhos de revisão | mente | o que pode invalidar a tese e o que faria a gestão revisar a carteira |",
+      "sha256": "6eab03a0b08db6de7be9ee472d61ac5aa7ef6108dca9c7885a1970d01341fc20"
+    }
+  ]
+}

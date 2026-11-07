@@ -1,0 +1,35 @@
+{
+  "id": "cobertura-bloqueio-por-defasagem-contabil",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Demonstrações defasadas e destino do alvo em revisão",
+  "resumo": "G19 compara a idade do último balanço ou dos fluxos de doze meses com a data do modelo. Mais de 300 dias gera aviso e mais de 550 dias bloqueia. O modelo aberto retém o cálculo para auditoria. O alvo em revisão fica fora da tabela, das citações na pesquisa e do placar.",
+  "escopos": [
+    "cobertura"
+  ],
+  "tags": [
+    "G19",
+    "demonstrações defasadas",
+    "balanço",
+    "fluxos de doze meses",
+    "bloqueio",
+    "preço-alvo"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/COBERTURA.md",
+      "trecho": "limita a B); **G19** demonstrações recentes (último balanço ou fluxos de 12 meses com mais de 300 dias\nna data: aviso; mais de 550 dias: bloqueio); **G20** plausibilidade do alvo, com revisão analítica\nsem ancorar a visão da casa no consenso.",
+      "sha256": "99038450eb3369c8bbde253bcfba90f493f1eb139102087ddeb02dfee7b3e713"
+    },
+    {
+      "caminho": "docs/cdp/COBERTURA.md",
+      "trecho": "Bloqueio ⇒ \"Em revisão\": o preço-alvo existe no modelo aberto para auditoria, mas não é publicado na\ntabela, não é citável nos fatos da pesquisa e não entra no placar; o motivo publicado cita o portão e\no número que o disparou.",
+      "sha256": "aad277d62f2e0000db78b56e0d3837c8b8ae706db7b424e2b65c089bb886e963"
+    }
+  ]
+}

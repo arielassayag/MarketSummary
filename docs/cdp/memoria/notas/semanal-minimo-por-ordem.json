@@ -3,9 +3,10 @@
   "tipo": "procedimento",
   "estado": "curada",
   "titulo": "Comissão mínima e decomposição por ordem",
-  "resumo": "Quando há mínimo aplicável, cada ordem paga o maior entre sua comissão variável e esse mínimo. Os lotes padrão e fracionário têm custos separados. Confira o mercado e a convenção da execução antes de extrapolar para o débito.",
+  "resumo": "A execução na B3 pode decompor a ordem em lote padrão e fração, mantendo uma única posição marcada na linha oficial. Quando houver mínimo no mercado, aplique-o por ordem antes de somar a comissão da linha. As tarifas da B3 são ad valorem. A estimativa e o débito usam quantidades e preços de momentos distintos.",
   "escopos": [
-    "semanal"
+    "semanal",
+    "diario"
   ],
   "tags": [
     "corretagem",
@@ -13,7 +14,8 @@
     "lote padrão",
     "fracionário",
     "pico",
-    "custos"
+    "custos",
+    "pernas da ordem"
   ],
   "registrada_em": "2026-11-07",
   "revisada_em": "2026-11-07",
@@ -30,6 +32,11 @@
       "caminho": "docs/cdp/METODOLOGIA.md",
       "trecho": "**Custos fixos e lotes (PL pequeno).** Cada ordem paga ao menos o mínimo por ordem das tabelas\npúblicas do mercado (US$ 1,00 nos EUA; MXN 60 na BMV; 0,5 UF de direitos de bolsa mais a tarifa da\ncorretora em Santiago; COP 60 mil na BVC; na B3 as tarifas são ad valorem, sem mínimo). Custo fixo\nnão é convexo e não entra no otimizador; entra em três lugares, todos em código: (i) a banda de\nnão-negociação é de 0,10% do NAV e, em cada mercado, a ordem só é enviada se o custo fixo mínimo\nfor de no máximo 10 bps do nocional (US$ 1 mil nos EUA e na B3, cerca de US$ 3,5 mil na BMV e",
       "sha256": "1fefc65f97c6e051d319b0d46629963efad11276cf744e20e6f9c638f7e87693"
+    },
+    {
+      "caminho": "docs/cdp/EXECUCAO.md",
+      "trecho": "- Ações-alvo arredondadas à ação inteira. Na B3 a ordem é dividida em lote padrão (múltiplos de\n  100 ações, no código da linha) e mercado fracionário (1 a 99 ações, código com sufixo `F`,\n  ex.: `PETR4F`) — `cdp.portfolio.trades.order_legs`; a posição é uma só, marcada ao fechamento\n  oficial da linha. Com PL de US$ 1,0 mi, arredondar ao lote de 100 distorceria posições pequenas\n  em até meio lote (até ~US$ 640 numa posição mínima de US$ 2 mil).",
+      "sha256": "e71456ce26522460500e8ae35cf1ed98bd72ad839baa7b32be8d00de7986fd71"
     }
   ]
 }

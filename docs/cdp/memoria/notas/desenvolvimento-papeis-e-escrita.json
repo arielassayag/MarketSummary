@@ -1,0 +1,29 @@
+{
+  "id": "desenvolvimento-papeis-e-escrita",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Permissões de desenvolvimento e de operação interativa",
+  "resumo": "Em desenvolvimento, preserve book/, data/, reports/ e artifacts/ e use a passagem de bastão e as decisões do projeto. Publish, decide e reinicio pertencem à operação. A sessão de operador começa em leitura. Escrita no livro exige pedido explícito, identidade do executor e gate manual no roteiro da tarefa.",
+  "escopos": [
+    "desenvolvimento"
+  ],
+  "tags": [
+    "papel da sessão",
+    "permissão de escrita",
+    "livro protegido",
+    "modo de leitura",
+    "gate manual"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/RETOMAR.md",
+      "trecho": "| Uma pessoa pede algo da operação (sessão de operador) | Leitura por padrão. Grave o livro só se `sou_o_executor` for verdadeiro e a pessoa pedir, rodando o roteiro da tarefa com `--manual` no gate |\n| Desenvolvimento (código, documentação, testes) | Nunca grave `book/`, `data/`, `reports/`, `artifacts/` nem rode `publish`, `decide` ou `reinicio`. Consulte a passagem e as decisões do item 3 |",
+      "sha256": "7a77c019ab9eb71a3b0b8af6a2ce1993f6f4ea7ef365e13ba7b745a43e7376d1"
+    }
+  ]
+}

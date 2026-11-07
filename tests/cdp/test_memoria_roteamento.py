@@ -37,6 +37,13 @@ def test_consulta_observada_indica_a_fonte_da_tarefa(consulta, origem):
     assert orientacao and origem in orientacao
 
 
+def test_quadro_temporal_da_montagem_encaminha_as_duas_partes_da_pergunta():
+    orientacao = _fonte_atual(
+        "Na próxima montagem do CDP, qual é a hora limite e quais mercados estão sinalizados como fechados?"
+    )
+    assert orientacao and all(campo in orientacao for campo in ("prazo_efetivo", "mercados_fechados"))
+
+
 @pytest.mark.parametrize("consulta", [
     "Há um relatório atrasado no clone. Como o roteiro descreve a retomada?",
     "Quantas tentativas são previstas se a publicação ficou no clone?",
@@ -54,6 +61,7 @@ def test_consulta_observada_indica_a_fonte_da_tarefa(consulta, origem):
     "Com o portal publicado ontem, como verifico se a implantação terminou?",
     "Quais passos a rotina ainda precisa seguir para publicar um relatório antigo?",
     "Que validação acontece depois que o relatório semanal foi montado?",
+    "Para a próxima montagem, quais critérios definem o prazo se um mercado estiver fechado?",
 ])
 def test_ocorrencia_narrada_nao_converte_regra_em_pedido_de_estado(consulta):
     assert _fonte_atual(consulta) is None
@@ -101,6 +109,10 @@ def test_contexto_externo_com_vinculo_operacional_nao_e_bloqueado(consulta):
     ("Qual é o risco atual de fratura no prontuário do paciente?", "O risco atual segue o mandato."),
     ("Planeje uma janela semanal de órbita para três satélites.", "Cada janela semanal permite três ordens."),
     ("Que atalho do VS Code alterna entre as últimas abas?", "A última comparação foi entre VS Code e outro app."),
+    ("Qual foi o placar da final de handebol? Faça um comentário do resultado.",
+     "Foi publicado o comentário final."),
+    ("Revise as contas de e-mail da biblioteca e escolha quem altera as senhas.",
+     "Escolha a conta autorizada e guarde a senha."),
 ])
 def test_coincidencias_isoladas_na_fonte_nao_sustentam_o_tema(consulta, trecho):
     c = object.__new__(Catalogo)

@@ -362,7 +362,7 @@ _OCORRENCIA = re.compile(
     r"abert[oa]s?|ativ[oa]s?|ficou|ficaram|marcou|primeir[oa]s?)\b"
     r"|\bmedid[oa]s? (?:em|n[oa]s?|pel[oa]s?|durante)\b"
     r"|\b(?:ja|ainda) (?:esta|estao) \w+(?:ando|endo|indo)\b"
-    r"|\b(?:foi|foram) (?:\w+ ){0,3}\w+(?:ad|id)[oa]s?\b"
+    r"|\b(?:foi|foram|esta|estao) (?:\w+ ){0,3}\w+(?:ad|id)[oa]s?\b"
     r"|\bja (?:teve|tiveram) (?:\w+ ){0,7}\w+(?:ad|id)[oa]s?\b"
     r"|\bja (?:voltou|voltaram)\b"
 )
@@ -370,6 +370,7 @@ _QUANTIFICA_TEMPO = re.compile(r"\b(?:quanto(?: tempo)?|quant[oa]s (?:segundos?|
 _TEMPO_PENDENTE = re.compile(r"\b(?:faltam?|restam?)\b")
 _OBRIGACAO_PENDENTE = re.compile(r"\bainda (?:precis(?:a|am)|deve(?:m)?|tem (?:de|que))\b")
 _SUBORDINADA = re.compile(r"\s+(?:se|caso|quando|depois que|antes que|assim que|logo que)\s+")
+_QUADRO_TEMPORAL = re.compile(r"^(?:para|em|n[oa]s?)\b")
 _PEDIDO_OBSERVACAO = re.compile(
     r"^(?:me )?(?:quem|qual|quais|quanto|quant[ao]s|onde|quando|em que|que|como esta|"
     r"liste|informe|diga|identifique|mostre|traga|de (?:o|a|os|as))\b"
@@ -439,8 +440,9 @@ _MEDICAO_DE_ATIVO = re.compile(
 )
 _TERMOS_INCIDENTAIS = frozenset(
     "cada meu minha meus minhas seu sua seus suas ele ela eles elas eu estao estava estavam entre "
-    "mas num numa agora atual atualmente hoje ontem ultimo ultima ultimos ultimas "
-    "dois duas tres quatro cinco seis sete oito nove dez".split()
+    "mas num numa agora atual atualmente hoje ontem ultimo ultima ultimos ultimas ja "
+    "dois duas tres quatro cinco seis sete oito nove dez foi foram era eram ser ter teve tiveram "
+    "diga escolha faca identifique informe liste mostre revise traga".split()
 )
 _ARTEFATO_COBERTURA = re.compile(r"\b(?:modelos?|retratos?)\b")
 _SAIDA_COBERTURA = re.compile(r"\b(?:balancos?|resultados?|ratings?|precos?[- ]alvo)\b")
@@ -467,11 +469,15 @@ def _sobre_retrato_de_cobertura(q: str) -> bool:
 def _pede_estado(q: str) -> bool:
     # Uma situação narrada antes da pergunta dá contexto, mas não muda a intenção.
     for frase in re.split(r"(?<=[.!?])\s+", q):
-        fim = frase.rsplit(", ", 1)[-1]
-        if _PEDIDO_OBSERVACAO.match(fim):
+        inicio, separador, fim = frase.rpartition(", ")
+        quadro = ""
+        if separador and _PEDIDO_OBSERVACAO.match(fim):
+            if _QUADRO_TEMPORAL.match(inicio):
+                quadro = inicio
             frase = fim
-        if not (_MERCADO.search(frase) or _DOMINIO.search(frase) or _VINCULO_CDP.search(frase)
-                or _sobre_retrato_de_cobertura(frase)):
+        assunto = f"{quadro} {frase}"
+        if not (_MERCADO.search(assunto) or _DOMINIO.search(assunto) or _VINCULO_CDP.search(assunto)
+                or _sobre_retrato_de_cobertura(assunto)):
             continue
         pedido = _PEDIDO_OBSERVACAO.search(frase) or frase.endswith("?")
         enunciado = _SUBORDINADA.split(frase, maxsplit=1)[0]
@@ -480,7 +486,7 @@ def _pede_estado(q: str) -> bool:
         ):
             continue
         tempo_restante = _QUANTIFICA_TEMPO.search(enunciado) and _TEMPO_PENDENTE.search(enunciado)
-        if pedido and (_TEMPO.search(enunciado) or _OCORRENCIA.search(enunciado)
+        if pedido and (_TEMPO.search(enunciado) or _TEMPO.search(quadro) or _OCORRENCIA.search(enunciado)
                        or _OBRIGACAO_PENDENTE.search(enunciado) or tempo_restante):
             return True
     return False
@@ -522,6 +528,10 @@ def _fonte_atual(consulta: str, *, forcar: bool = False) -> str | None:
     if re.search(r"\b(?:propostas?|previa)\b", q):
         return ("Consulte a proposta da montagem efetivamente gravada. "
                 "Se não houver proposta para essa etapa, registre a ausência.")
+    if re.search(r"\b(?:montagem|rebalanceamento)\b", q) and re.search(
+        r"\b(?:agenda|prazos?|mercados?)\b", q
+    ):
+        return "Consulte semanal.prazo_efetivo e semanal.mercados_fechados na saída de cdp agenda."
     if re.search(r"\b(?:alertas?|monitor|hard|soft)\b", q) and not re.search(
         r"\bkill[- ]switch\b", q
     ):

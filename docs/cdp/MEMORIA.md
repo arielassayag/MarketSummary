@@ -183,6 +183,16 @@ desenho, consulte a [pesquisa de arquitetura](MEMORIA_PESQUISA.md).
 
 ## Avaliar recuperação
 
+O [benchmark operacional](memoria/benchmark-operacional.json) e o [benchmark de auditoria](memoria/benchmark-auditoria.json)
+fixam as perguntas e os trechos esperados da comparação por passagem. O teste
+`tests/cdp/test_memoria_benchmark.py` confere seus hashes e a recuperação com a política atual.
+O [qualificador](../../scripts/cdp_memoria_qualificar.py) permite indicar separadamente a revisão
+do código e a das fontes do gabarito. Ele comprova a igualdade dos bytes das fontes e compara
+busca direta, busca contextual sem notas e busca com notas, sob o mesmo limite de cinco passagens.
+Esse corpus serviu ao diagnóstico da implementação. A validação prospectiva é medida separadamente.
+
+### Corpora iniciais
+
 ```sh
 uv run python -m cdp memoria avaliar
 uv run python -m cdp memoria avaliar --reservada

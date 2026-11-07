@@ -5,6 +5,36 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## Recuperação com memória qualificada — 07/11/2026
+
+A revisão `11c1e327` recuperou os grupos completos nas 52 perguntas do benchmark congelado e
+passou nos 16 controles de estado e fora de escopo. O ranking usa blocos de seção, sinais de
+português e âncoras complementares. O catálogo tem 67 notas ativas e foi auditado no Git sem
+ressalvas. O teste de regressão conserva os hashes do gabarito. O relatório e os JSONs locais
+estão em `outputs/cdp-memoria-rigor/`.
+
+O braço contextual sem notas acertou 33 de 52 nos casos usados para ajustar o sistema. Na
+validação prospectiva aberta depois de fixar o código, a busca direta acertou 13 de 20 e as
+duas buscas contextuais, com e sem notas, acertaram as mesmas 14 de 20. Os quatro controles
+prospectivos passaram. A bateria intermediária usada para diagnosticar regressões foi mantida
+separada. A avaliação mede recuperação, abstenção e encaminhamento. A qualidade da resposta
+final e da curadoria automática ainda é uma etapa de avaliação distinta.
+
+## Benchmark pareado de recuperação — 07/11/2026
+
+O executor de teste `scripts/cdp_memoria_benchmark.py` compara busca direta e híbrida
+com os mesmos arquivos, revisão e orçamento. O pacote local em `outputs/cdp-memoria-rigor/`
+contém protocolo, gabaritos lacrados, relatório por pergunta e figura. O ensaio fixou a
+revisão `ac5f8481` e usou 52 perguntas de evidência e 16 controles. Em até cinco
+passagens, foram 28 acertos completos sem memória e 29 com memória, com um ganho na
+montagem semanal e nenhuma perda. Houve empate na auditoria e o resultado ficou abaixo
+do critério prévio de vantagem global. O mesmo ganho apareceu no teste de 4.500 bytes.
+
+O encaminhamento automático de estado não apareceu nos dez controles. Com o tipo
+sinalizado explicitamente, os dez encaminhamentos omitiram notas e passagens. O ensaio
+mede recuperação de evidência. A qualidade da resposta e a curadoria pelo agente
+agendado exigem testes próprios.
+
 ## Dreaming e agenda com reserva única — 07/11/2026
 
 O [roteiro de dreaming](playbooks/DREAMING.md) separa plano, análise de cada item e

@@ -144,7 +144,10 @@ def _indexar(caminho: str, linhas: tuple[str, ...]) -> _Vias:
             continue
         titulo = no.name + " " + (ast.get_docstring(no) or "")
         comum, codigo = termos_contextuais(titulo), _termos_codigo(titulo)
-        for a, z in _irmas(no, linhas):
+        inteira = _bloco(caminho, linhas, no.lineno, no.end_lineno, comum, termos_contextuais)
+        if inteira is not None:
+            irmas.setdefault((no.lineno, no.end_lineno), inteira)
+        for a, z in (() if inteira else _irmas(no, linhas)):
             if (a, z) not in irmas:
                 if b := _bloco(caminho, linhas, a, z, comum, termos_contextuais):
                     irmas[a, z] = b

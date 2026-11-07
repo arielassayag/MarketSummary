@@ -399,6 +399,7 @@ _PROCEDIMENTO = re.compile(
     r"(?:verificac(?:ao|oes)|checagens?|evidencias?|provas?|testes?|recibos?|comprovantes?) "
     r"(?:comprova|confirma|demonstra|distingue)m?\b))"
     r"|^de onde (?:vem|saem?)\b[^.?!]*\b(?:a|em) cada\b"
+    r"|^quando (?:ha|houver|exist(?:e|em|ir|irem))\b[^,?!]*,\s*(?:qual|quais|como|o que|que|onde)\b"
 )
 _PEDIDO_DE_PROCEDIMENTO = re.compile(
     r"(?:^|[,;:]\s*|\b(?:e|ou|diga|explique|mostre|descreva|ensine|saber) )"

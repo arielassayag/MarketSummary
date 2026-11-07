@@ -73,6 +73,7 @@ def test_quadro_temporal_da_montagem_encaminha_as_duas_partes_da_pergunta():
     "No resumo do monitor, quais artefatos indicam a situação da trava, a cobertura e o que ficou retido?",
     "Em que moeda os retornos entram no painel de ativos?",
     "De onde vem o roteiro a cada disparo e por que as rotinas foram separadas?",
+    "Quando há mais de um relatório pendente, qual data a agenda indica primeiro?",
     "Qual campo guarda a autoria da última tese semanal publicada?",
     "Qual é o papel da autoria na última tese semanal publicada?",
     "Quem orientou a última tese acadêmica publicada?",

@@ -44,6 +44,7 @@ def test_reforcos_completam_item_e_condicao_nas_fontes_permitidas():
     assert not set(base) & set(saida)
     assert any(p.caminho == roteiro and p.inicio == 2 and p.fim >= 3 for p in saida)
     assert any(p.caminho == codigo and p.inicio <= 2 and p.fim >= 3 for p in saida)
+    assert localizar(codigo, 1, fontes[codigo]) in saida
 
 
 def test_busca_por_secoes_diversifica_fontes_e_recupera_vizinha():

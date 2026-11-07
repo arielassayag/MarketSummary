@@ -5,6 +5,34 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## Confirmação 13 da seleção guiada — 07/11/2026
+
+No candidato `b92b8f2b`, qualificação `15dbbc1a`, a reaplicação do original
+recuperou **52/52 evidências e 16/16 controles** em cinco passagens e 4.500 bytes.
+Na primeira execução da amostra 13, a guiada recuperou **20/24** evidências e
+**8/8 controles**, com uma orientação estática indevida. A direta ficou em 17/24,
+e a automática em 16/24. Foram cinco ganhos e uma perda contra a automática.
+O pacote continha uma combinação viável para 22/24. Os outros dois erros de
+evidência aconteceram na seleção. A meta integral em inéditos continua aberta.
+
+O preflight da 13ª recusou 13 âncoras cuja indentação tinha sido removida. O
+anotador preservou perguntas, grupos, arquivos e plano e restaurou a indentação
+em nova cópia antes da primeira busca. O código já estava congelado. Lacres,
+pacotes, respostas e auditoria independente estão em `outputs/cdp-memoria-rigor/`.
+
+Após abrir a 13ª, a correção de perguntas condicionais com oração principal
+recuperou o caso de relatórios semanais que foi orientado indevidamente. O
+índice estrutural passou a preservar funções curtas inteiras e recuperou a
+evidência do manifesto do portal. O diagnóstico com gabarito aberto encontrou
+combinações viáveis em 24/24 nas rodadas 12 e 13, com 8/8 controles e zero
+orientação indevida em cada uma. A próxima bateria deve ser nova e selada.
+As duas falhas da seleção exigem verificar limites literais e comparar as
+candidatas que começam antes da janela escolhida.
+
+A suíte focal mais recente passou com 424 aprovações e um caso pulado.
+A ampla foi interrompida após 472 aprovações e dois casos pulados. O artigo
+e as duas figuras estão em `outputs/ai-notes-15/ai-notes-15-eval-prospectivo.zip`.
+
 ## Confirmação prospectiva da memória em andamento — 07/11/2026
 
 A seleção guiada no candidato `199c0e86`, qualificação `475611e5`, recuperou
@@ -35,8 +63,8 @@ replay passaram em revisões estáveis.
 O protocolo, a figura, os lacres e os resultados estão em `outputs/cdp-memoria-rigor/`.
 A próxima revisão precisa tratar blocos de código cortados e distinguir perguntas de
 procedimento recorrente de fatos de uma publicação específica. A amostra 12 já aberta
-é diagnóstico para mudanças. A amostra 13 já foi lacrada e segue sem recuperação.
-Fixe a próxima versão e o protocolo antes de usá-la. O catálogo tem 127 notas ativas.
+é diagnóstico para mudanças. A amostra 13 foi lacrada antes de fixar sua revisão
+e recebeu avaliação independente na seção anterior. O catálogo tem 127 notas ativas.
 
 Na preparação da próxima revisão, o roteamento separa origem de procedimento recorrente
 de metadados de uma publicação específica. O AST prioriza a assinatura quando a consulta

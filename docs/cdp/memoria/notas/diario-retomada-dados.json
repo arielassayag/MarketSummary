@@ -3,7 +3,7 @@
   "tipo": "licao",
   "estado": "curada",
   "titulo": "Fechamento indisponível interrompe a sequência",
-  "resumo": "Se o fechamento retornar dados não prontos, preserve o motivo e interrompa a sequência de datas. A próxima execução prevista retoma, e o que já fechou segue o roteiro de publicação. Uma recuperação editorial posterior usa o contexto do próprio pregão.",
+  "resumo": "Se o fechamento retornar dados não prontos, preserve o motivo e interrompa a sequência de datas. O próximo cdp-diario retoma os pregões pendentes pela agenda, e o que já fechou segue o roteiro de publicação. Uma recuperação editorial posterior usa o contexto do próprio pregão.",
   "escopos": [
     "diario"
   ],
@@ -22,8 +22,8 @@
   "evidencias": [
     {
       "caminho": "docs/cdp/playbooks/DIARIO.md",
-      "trecho": "- `dados não prontos` → **pare o laço** (não processe datas posteriores) e relate o `motivo`: a\n  próxima execução (o reforço das 21:07, a repescagem de sábado ou o dia seguinte) retoma. Não\n  espere nem repita em laço. Publique o que já fechou.\n- `sem carteira efetivada` → pare e relate (nenhuma decisão executável ainda).\n- Erro → pare e relate a mensagem (não tente contornar).",
-      "sha256": "5736979713f853f2b19564b997130a3e66846b9b65471368e19316f2bd72346a"
+      "trecho": "- `dados não prontos` → **pare o laço** (não processe datas posteriores) e relate o `motivo`: a\n  próxima execução de `cdp-diario` retoma os pregões pendentes pela agenda. Não\n  espere nem repita em laço. Publique o que já fechou.\n- `sem carteira efetivada` → pare e relate (nenhuma decisão executável ainda).\n- Erro → pare e relate a mensagem (não tente contornar).",
+      "sha256": "64fbd2cd585b5adc2657736c035bdea9c21c02ceeea4fdfde9c51ec6d67fa13b"
     },
     {
       "caminho": "docs/cdp/playbooks/DIARIO.md",

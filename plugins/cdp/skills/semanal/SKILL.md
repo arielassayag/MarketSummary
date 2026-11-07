@@ -1,7 +1,7 @@
 ---
 name: semanal
-description: "Montagem semanal da carteira do CDP — Cabra da Peste no último pregão da semana na NYSE (ou na data de início do mandato): pesquisa só em fontes públicas, research_pack.json e pm_decision.json escritos pela mente \"claude-code\", validação, decisão autônoma pelo código antes do prazo efetivo, execução no leilão de fechamento e tese de investimento da carteira decidida; antes da coleta, os modelos da cobertura são atualizados com dados até o pregão anterior. Entrada e saída da execução no Claude Code (gate, trava, sincronização e publicação pelo código); o procedimento é o roteiro neutro docs/cdp/playbooks/SEMANAL.md. Use nas tarefas agendadas cdp-semanal, cdp-semanal-b, cdp-semanal-c e cdp-semanal-d ou quando pedirem a carteira ou a tese da semana do CDP."
-argument-hint: "[tarefa agendada: cdp-semanal, cdp-semanal-b, cdp-semanal-c, cdp-semanal-d]"
+description: "Montagem semanal da carteira do CDP — Cabra da Peste no último pregão da semana na NYSE (ou na data de início do mandato): pesquisa só em fontes públicas, research_pack.json e pm_decision.json escritos pela mente \"claude-code\", validação, decisão autônoma pelo código antes do prazo efetivo, execução no leilão de fechamento e tese de investimento da carteira decidida; antes da coleta, os modelos da cobertura são atualizados com dados até o pregão anterior. Entrada e saída da execução no Claude Code (gate, trava, sincronização e publicação pelo código); o procedimento é o roteiro neutro docs/cdp/playbooks/SEMANAL.md. Use nas tarefas agendadas cdp-semanal e cdp-semanal-b ou quando pedirem a carteira ou a tese da semana do CDP."
+argument-hint: "[tarefa agendada: cdp-semanal, cdp-semanal-b]"
 allowed-tools:
   - Read
   - Write
@@ -24,18 +24,10 @@ allowed-tools:
   - Bash(uv run python -m cdp publicar --tarefa cdp-semanal)
   - Bash(uv run python -m cdp publicar --tarefa cdp-semanal-b *)
   - Bash(uv run python -m cdp publicar --tarefa cdp-semanal-b)
-  - Bash(uv run python -m cdp publicar --tarefa cdp-semanal-c *)
-  - Bash(uv run python -m cdp publicar --tarefa cdp-semanal-c)
-  - Bash(uv run python -m cdp publicar --tarefa cdp-semanal-d *)
-  - Bash(uv run python -m cdp publicar --tarefa cdp-semanal-d)
   - Bash(uv run python -m cdp rotinas gate --tarefa cdp-semanal *)
   - Bash(uv run python -m cdp rotinas gate --tarefa cdp-semanal)
   - Bash(uv run python -m cdp rotinas gate --tarefa cdp-semanal-b *)
   - Bash(uv run python -m cdp rotinas gate --tarefa cdp-semanal-b)
-  - Bash(uv run python -m cdp rotinas gate --tarefa cdp-semanal-c *)
-  - Bash(uv run python -m cdp rotinas gate --tarefa cdp-semanal-c)
-  - Bash(uv run python -m cdp rotinas gate --tarefa cdp-semanal-d *)
-  - Bash(uv run python -m cdp rotinas gate --tarefa cdp-semanal-d)
   - Bash(uv run python -m cdp sincronizar --executar *)
   - Bash(uv run python -m cdp sincronizar --executar)
   - Bash(uv run python -m cdp status *)
@@ -72,9 +64,8 @@ bloquear, pare e explique no resumo final. O procedimento é o roteiro
 skill só faz a entrada e a saída da execução no Claude Code (app desktop, CLI ou sessão interativa).
 Metodologia: `docs/cdp/METODOLOGIA.md`; manual do agente: `AGENTS.md`.
 
-Argumento (`$ARGUMENTS`): o id da tarefa agendada que disparou você (`cdp-semanal`, `cdp-semanal-b`,
-`cdp-semanal-c` ou `cdp-semanal-d`); sem argumento, `cdp-semanal`. Fora do horário agendado (pedido
-do operador), substitua `--aguardar-horario` por `--manual` no gate.
+Argumento (`$ARGUMENTS`): o id da tarefa agendada que disparou você (`cdp-semanal` ou `cdp-semanal-b`).
+Sem argumento, use `cdp-semanal`. Fora do horário agendado (pedido do operador), substitua `--aguardar-horario` por `--manual` no gate.
 
 ## Regras desta skill
 

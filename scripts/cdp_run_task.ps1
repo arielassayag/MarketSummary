@@ -3,7 +3,7 @@ CDP — Cabra da Peste: atalho do Claude Code com o plugin `cdp` para o Agendado
 Windows.
 
 Uso:
-  powershell -NoProfile -ExecutionPolicy Bypass -File scripts\cdp_run_task.ps1 diario cdp-diario-reforco
+  powershell -NoProfile -ExecutionPolicy Bypass -File scripts\cdp_run_task.ps1 diario cdp-diario
 Equivale a:
   scripts\cdp_rotina.ps1 <tarefa> -Harness claude -ModoPrompt plugin [opções]
 O script de rotina faz tudo: trava local com espera em CDP_LOCK_WAIT_MIN (saída 75 se continuar
@@ -14,7 +14,7 @@ antigas, de uma linha por skill). Opções repassadas: -Ensaio, -Manual, -Seco.
 #>
 param(
     [Parameter(Mandatory = $true, Position = 0)]
-    [ValidateSet("semanal", "diario", "cobertura", "risco", "status", "calibracao")]
+    [ValidateSet("semanal", "diario", "cobertura", "risco", "status", "calibracao", "dreaming")]
     [string]$Skill,
     [Parameter(Position = 1)]
     [string]$Tarefa = "",
@@ -31,15 +31,9 @@ if (-not $Tarefa) {
     switch ($Skill) {
         "semanal" {
             if ($hhmm -lt 1207) { $Tarefa = "cdp-semanal" }
-            elseif ($hhmm -lt 1307) { $Tarefa = "cdp-semanal-b" }
-            elseif ($hhmm -lt 1407) { $Tarefa = "cdp-semanal-c" }
-            else { $Tarefa = "cdp-semanal-d" }
+            else { $Tarefa = "cdp-semanal-b" }
         }
-        "diario" {
-            if ($agora.DayOfWeek -eq [DayOfWeek]::Saturday) { $Tarefa = "cdp-diario-sabado" }
-            elseif ($hhmm -ge 2107 -or $hhmm -lt 1000) { $Tarefa = "cdp-diario-reforco" }
-            else { $Tarefa = "cdp-diario" }
-        }
+        "dreaming" { $Tarefa = "cdp-dreaming" }
         "risco" { $Tarefa = if ($hhmm -ge 1603) { "cdp-risco-1603" } else { "cdp-risco-1330" } }
         default { $Tarefa = "cdp-$Skill" }
     }

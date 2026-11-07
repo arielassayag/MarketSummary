@@ -167,9 +167,9 @@ uv run python -m cdp rotinas exportar --alvo claude-desktop
 
 Na aba **Code**: **Routines** → **New routine** → **Local**, uma por linha:
 
-- **Name**: o id da tarefa (ex.: `cdp-diario-reforco`).
-- **Instructions**: o comando da skill **com o id da tarefa** — `/cdp-diario cdp-diario-reforco`
-  (skill do projeto) ou `/cdp:diario cdp-diario-reforco` (plugin). O gate confere o horário da
+- **Name**: o id da tarefa (ex.: `cdp-diario`).
+- **Instructions**: o comando da skill **com o id da tarefa** — `/cdp-diario cdp-diario`
+  (skill do projeto) ou `/cdp:diario cdp-diario` (plugin). O gate confere o horário da
   tarefa certa: sem o id, uma reserva ou o risco das 16:03 seriam tomados pela tarefa principal.
 - **Permission mode**: "Aceitar edições" (`acceptEdits`). **Folder**: a raiz do clone dedicado.
   **Worktree**: desligado (a identidade, a trava e o livro são do clone).
@@ -179,10 +179,10 @@ Na aba **Code**: **Routines** → **New routine** → **Local**, uma por linha:
 
 Depois, **Run now** em `cdp-status` e acompanhe; um pedido de permissão aparece na sessão (escolha
 "always allow" só para comandos seguros). O app roda **uma tarefa por vez**: um disparo que
-encontra outra em andamento (ou o PC dormindo) é pulado; por isso existem as reservas da
-montagem (`cdp-semanal-b`, `cdp-semanal-c`, `cdp-semanal-d` às 12:07, 13:07 e 14:07), o reforço
-do fechamento (`cdp-diario-reforco`, 21:07) e a repescagem de sábado (`cdp-diario-sabado`,
-10:07). **Antes de ligar as tarefas locais, desligue as rotinas do CDP em qualquer outro app**
+encontra outra em andamento (ou o PC dormindo) é pulado. A única reserva da agenda é
+`cdp-semanal-b` às 12:07, dentro da janela de montagem. `cdp-diario` recupera as datas pendentes
+no próximo disparo. `cdp-dreaming` roda aos sábados às 10:07 e revisa a memória em leitura.
+**Antes de ligar as tarefas locais, desligue as rotinas do CDP em qualquer outro app**
 (nuvem do Claude Code, Codex, Antigravity).
 
 ## 7. Codex ou Antigravity no PC
@@ -209,9 +209,8 @@ Em todos, `"mind"` é o nome do app (`codex`, `gemini`), a identidade do clone �
   dias de atraso e processa **todos** os pregões pendentes, em ordem.
 - A montagem só decide no dia de montagem (último pregão da semana na NYSE) **antes do prazo
   efetivo**; depois, a carteira anterior é mantida e o estado destaca a decisão perdida. Se a
-  execução parou depois da decisão, a reserva seguinte ou o fechamento do dia conclui a tese.
-- `dados não prontos` no fechamento: o reforço das 21:07, a repescagem de sábado ou o dia
-  seguinte retomam.
+  execução parou depois da decisão, a reserva das 12:07 ou o fechamento do dia conclui a tese.
+- Com `dados não prontos` no fechamento, o próximo `cdp-diario` recupera as datas da agenda.
 
 ## 9. Fuso horário
 
@@ -358,7 +357,7 @@ com as tarefas desligadas.
 | Sintoma | Causa provável e correção |
 |---|---|
 | "Sem execução: este ambiente não é o executor designado" | o clone não tem identidade (`.cdp/local.yaml`) ou o executor em `configs/cdp/executor.yaml` é outro: `uv run python -m cdp executor mostrar`; registre com `cdp executor registrar` (seção 3) |
-| "trava distribuída indisponível" | o PC não consegue fazer push no ramo `cdp-trava` (rede, credencial) ou outra execução segura a trava: confira com `uv run python -m cdp trava ver`; a reserva seguinte tenta de novo |
+| "trava distribuída indisponível" | o PC não consegue fazer push no ramo `cdp-trava` (rede, credencial) ou outra execução segura a trava: confira com `uv run python -m cdp trava ver`. Aguarde o próximo disparo aplicável |
 | "execução atrasada" no gate | o disparo veio muito depois do horário (PC dormindo): é o esperado; numa sessão de operador use `--manual` |
 | `/cdp:diario` desconhecido | plugin não instalado: `claude plugin list` e a seção 4; ou use a skill do projeto `/cdp-diario cdp-diario` |
 | `uv: command not found` nas tarefas do app | o app foi aberto antes da instalação do uv: feche e reabra o app |
@@ -368,7 +367,7 @@ com as tarefas desligadas.
 | `publicar` sem push | `verify` falhou, sem rede ou a trava se perdeu: o commit ficou no clone e a próxima rotina reconcilia; confira com `git status -sb` |
 | `publicar` com código 6 (`retidos`) | o risco ligou o kill switch enquanto outra execução segurava a trava: o relatório e o pedido de kill switch (`reports/risk/<data>/kill_switch_<HHMM>.yaml`) saíram; `book/KILL_SWITCH` e o evento da trilha ficaram no clone. A próxima montagem ou fechamento aplica o pedido (em outro clone, como na nuvem) ou publica o que ficou (neste clone, campo `anteriores` do `cdp publicar`) |
 | `git status` mostra arquivos em `book/`, `reports/` ou `data/` sem nenhuma rotina rodando | uma execução gravou e não chegou a publicar (PC dormiu, app fechado, tempo esgotado) ou o kill switch ficou retido. A próxima montagem ou fechamento retoma e publica tudo junto (`anteriores`); a rotina de notas para e deixa para o fechamento. Para publicar antes: "Gravações de uma execução interrompida", abaixo |
-| `dados não prontos` no fechamento | a fonte ainda não publicou o fechamento; o reforço, a repescagem ou o dia seguinte recuperam |
+| `dados não prontos` no fechamento | a fonte ainda não publicou o fechamento. O próximo disparo diário retoma as datas pendentes |
 | `verify` acusa hash divergente após clonar no Windows | fins de linha convertidos: confira o `.gitattributes` e clone de novo |
 | Acentos estranhos no Windows | `PYTHONUTF8=1` (já no `.claude/settings.json` e nos scripts); no terminal, `chcp 65001` |
 | Decisão da semana perdida | o PC estava desligado entre 11:00 e o prazo efetivo do dia de montagem; a carteira anterior segue até a próxima semana |

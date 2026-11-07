@@ -40,6 +40,16 @@ import yaml
 from cdp.leitura_arquivos import ler_texto, recusar_escrita
 
 ROTINAS_PADRAO = Path("configs/cdp/rotinas.yaml")
+# Identidades preservadas para ler recibos anteriores e retirar permissões derivadas.
+TAREFAS_APOSENTADAS = {
+    "cdp-semanal-c": "cdp-semanal",
+    "cdp-semanal-d": "cdp-semanal",
+    "cdp-diario-reforco": "cdp-diario",
+    "cdp-diario-sabado": "cdp-diario",
+}
+CAMINHOS_TAREFAS_APOSENTADAS = (
+    "book", "reports", "data/market", "data/publico", "artifacts/painel", "pesquisa",
+)
 FUSO = "America/Sao_Paulo"
 #: Brasília sem horário de verão desde 2019: UTC = Brasília + 3 h (``verificar`` confere).
 DESLOCAMENTO_UTC_H = 3
@@ -803,7 +813,7 @@ def avaliar(rot: Rotinas, tarefa_id: str, *, rt: Any, agora: datetime, raiz: Pat
                 if tr.get("estado") == "ocupada_por_outro":
                     return pular(motivo or "outra execução segura a trava")
                 return pular(f"trava distribuída indisponível ({motivo}): sem a trava, um "
-                             "escritor exclusivo não executa; a reserva seguinte tenta de novo")
+                             "escritor exclusivo não executa; aguarde o próximo disparo da agenda")
             out["sem_trava"] = True
     elif sem_trava and t.exclusiva:
         out["sem_trava"] = True
@@ -838,6 +848,8 @@ def avaliar(rot: Rotinas, tarefa_id: str, *, rt: Any, agora: datetime, raiz: Pat
 
 
 def _titulo(t: Tarefa) -> str:
+    if t.skill == "cdp-dreaming":
+        return "revisão semanal da memória"
     base = {"semanal": "montagem semanal da carteira e tese", "diario": "fechamento diário",
             "risco": "monitor de risco", "cobertura": "notas de cobertura",
             "calibracao": "calibração mensal", "sempre": "estado da operação"}[t.gate]

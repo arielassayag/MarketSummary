@@ -31,6 +31,7 @@ FOLHAS = MappingProxyType({
     "cobertura": ("agenda", "nota agenda", "nota prepare", "validate-nota", "nota publish", "verify"),
     "risco": ("agenda", "risk", "kill-switch on", "status", "verify"),
     "calibracao": ("agenda", "backtest", "verify"),
+    "dreaming": ("memoria sonhar",),
     "retomar": ("estado", "agenda", "executor janela", "rotinas verificar",
                 "skills sincronizar --claude --verificar"),
 })
@@ -39,6 +40,7 @@ _ESCRITORAS = frozenset({"semanal", "diario", "cobertura", "risco", "calibracao"
 _EXCLUSIVAS = frozenset({"semanal", "diario", "cobertura"})
 _FERRAMENTAS = MappingProxyType({
     "status": ("Read", "Grep", "Glob"),
+    "dreaming": ("Read", "Grep", "Glob"),
     "retomar": ("Read", "Grep", "Glob"),
     "calibracao": ("Read", "Write", "Grep", "Glob"),
     "risco": ("Read", "Grep", "Glob", "WebSearch", "WebFetch"),
@@ -68,8 +70,9 @@ def prefixos(rot: Rotinas, familia: str) -> tuple[str, ...]:
         raise ValueError("Famílias de rotinas divergentes do catálogo de permissões")
     tasks = families.get(f"cdp-{familia}", ())
     out = set(FOLHAS[familia])
-    escopos = ("operador", "desenvolvimento") if familia == "retomar" else (familia,)
-    out.update(f"{_MEMORIA_CONTEXTO}{escopo}" for escopo in escopos)
+    if familia != "dreaming":
+        escopos = ("operador", "desenvolvimento") if familia == "retomar" else (familia,)
+        out.update(f"{_MEMORIA_CONTEXTO}{escopo}" for escopo in escopos)
     for task in tasks:
         if (task.grava != (familia in _ESCRITORAS)
                 or task.exclusiva != (familia in _EXCLUSIVAS)
@@ -93,10 +96,10 @@ def regras(rot: Rotinas, familia: str | None = None, *,
         raise ValueError("Forma da CLI fora do catálogo")
     leaves = {p for f in ((familia,) if familia is not None else FOLHAS)
               for p in prefixos(rot, f)}
-    # Uma flag repetida poderia trocar o escopo. Autorize apenas a consulta literal.
+    # Autorize apenas as chamadas literais de memória nas rotinas.
     grants = {f"Bash({form}{leaf})" for form in formas for leaf in leaves}
     grants.update(f"Bash({form}{leaf} *)" for form in formas for leaf in leaves
-                  if not leaf.startswith(_MEMORIA_CONTEXTO))
+                  if not leaf.startswith("memoria "))
     return tuple(sorted(grants))
 
 
@@ -108,6 +111,16 @@ def ferramentas_skill(rot: Rotinas, familia: str) -> tuple[str, ...]:
 
 def _cdp(rule: str) -> bool:
     return any(rule.startswith(f"Bash({form}") for form in FORMAS)
+
+
+def _regras_aposentadas(familia: str | None = None) -> set[str]:
+    from .rotinas import TAREFAS_APOSENTADAS
+
+    return {f"Bash({forma}{acao} --tarefa {tarefa}{sufixo})"
+            for tarefa, principal in TAREFAS_APOSENTADAS.items()
+            if familia is None or principal == f"cdp-{familia}"
+            for forma in FORMAS for acao in ("rotinas gate", "publicar")
+            for sufixo in ("", " *")}
 
 
 def gerar_settings(rot: Rotinas, atual: dict) -> dict:
@@ -126,7 +139,8 @@ def gerar_settings(rot: Rotinas, atual: dict) -> dict:
     if not isinstance(previous, list) or not all(type(v) is str for v in previous):
         raise ValueError("Lista allow inválida")
     broad = {f"Bash({form}*)" for form in FORMAS}
-    if any(_cdp(v) and v not in broad and v not in grants for v in previous):
+    anteriores = broad | set(grants) | _regras_aposentadas()
+    if any(_cdp(v) and v not in anteriores for v in previous):
         raise ValueError("Grant CDP fora do bloco derivado")
     # Inserção na posição do primeiro grant CDP: ordem dos demais permanece literal.
     insert = next((i for i, v in enumerate(previous) if _cdp(v)), len(previous))
@@ -151,7 +165,8 @@ def gerar_plugin_skill(rot: Rotinas, familia: str, atual: str) -> str:
     grants = regras(rot, familia, formas=(FORMAS[0],))
     broad = f"Bash({FORMAS[0]}*)"
     old = [i for i, line in enumerate(block) if _cdp(line[4:].strip())]
-    if not old or any(block[i][4:].strip() not in {broad, *grants} for i in old):
+    anteriores = {broad, *grants} | _regras_aposentadas(familia)
+    if not old or any(block[i][4:].strip() not in anteriores for i in old):
         raise ValueError("Bloco CDP de plugin fora do catálogo")
     insert = old[0]
     kept = [line for i, line in enumerate(block) if i not in old]

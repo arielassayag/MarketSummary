@@ -49,8 +49,8 @@ das rotinas: `docs/cdp/ROTINAS.md`. Portal público: `docs/cdp/SITE.md`.
   `scripts/cdp_rotina.sh` faz o git por fora — modo "executor" — e o prompt diz à mente que
   gate, trava e publicação não são dela.
 - **Quando**: `uv run python -m cdp rotinas listar` (tabela em `AGENTS.md`, seção 4). Horários
-  de Brasília (sem horário de verão); em UTC, some 3 h — 21:07 de Brasília vira terça a sábado
-  em UTC.
+  de Brasília (sem horário de verão). Em UTC, some 3 h e confira a virada de dia, como na
+  cobertura de segunda a quinta.
 - **O que mudou**: cada commit de rotina leva os trailers `CDP-Tarefa`, `CDP-Executor`,
   `CDP-Harness` e `CDP-Execucao`, e `CDP-Sessao` quando o app expõe a sessão (URL da rotina na
   nuvem ou do GitHub Actions; nos apps locais, o identificador da conversa quando o app o exporta
@@ -157,11 +157,10 @@ API; o `uuid` do evento já sai novo em cada exportação.
 | Rotina | Brasília | cron (UTC) |
 |---|---|---|
 | `cdp-status` | segundas, 08:30 | `30 11 * * 1` |
-| `cdp-semanal` / `-b` / `-c` / `-d` | dias úteis, 11:07 / 12:07 / 13:07 / 14:07 | `7 14 * * 1-5` / `7 15 * * 1-5` / `7 16 * * 1-5` / `7 17 * * 1-5` |
+| `cdp-semanal` / `cdp-semanal-b` | dias úteis, 11:07 / 12:07 | `7 14 * * 1-5` / `7 15 * * 1-5` |
 | `cdp-risco-1330` / `cdp-risco-1603` | dias úteis, 13:30 / 16:03 | `30 16 * * 1-5` / `3 19 * * 1-5` |
 | `cdp-diario` | dias úteis, 19:22 | `22 22 * * 1-5` |
-| `cdp-diario-reforco` | dias úteis, 21:07 | `7 0 * * 2-6` (terça a sábado em UTC) |
-| `cdp-diario-sabado` | sábados, 10:07 | `7 13 * * 6` |
+| `cdp-dreaming` | sábados, 10:07 | `7 13 * * 6` |
 | `cdp-cobertura` | segunda a quinta, 22:37 | `37 1 * * 2-5` (terça a sexta em UTC) |
 | `cdp-calibracao` | dia 1 de cada mês, 09:15 | `15 12 1 * *` |
 
@@ -204,7 +203,7 @@ proteções do CDP continuam valendo pelo código (gate, escopo de caminhos, `cd
 publicar, nunca force) e pela regra do ramo `main` — que precisa estar criada antes (seção 3,
 passo 1).
 
-**Arranjo vigente, conferido em 10/10/2026:** as 12 automações pertencem ao
+**Arranjo histórico, conferido em 10/10/2026:** as 12 automações pertenciam ao
 projeto atual AInotes, na seção CDP do Codex. Cada prompt entra no clone dedicado
 interno `.cdp/rotinas`, em `main`, antes de consultar a skill e o procedimento
 gerado. A pasta de desenvolvimento permanece sem identidade de executor. Essa
@@ -213,11 +212,11 @@ retomar este projeto.
 
 As definições das automações são administradas pelo Codex em sua pasta global.
 Execução, quadros, estudos e evidências ficam na área interna `.cdp/`. O quadro
-`.cdp/AGENDAS.md` reúne nomes e horários por seis famílias, e `.cdp/TAREFAS.md`
-registra entregas e pendências. As reservas continuam separadas: ainda não foi
-validada a concorrência de múltiplos horários dentro de uma única automação.
-A configuração ativa não certifica um disparo futuro nem a publicação de uma
-operação. Computador ligado, app aberto e gates nativos continuam necessários.
+`.cdp/AGENDAS.md` reúne nomes e horários observados, e `.cdp/TAREFAS.md`
+registra entregas e pendências. Confira a instalação do app contra a agenda
+atual em `configs/cdp/rotinas.yaml`. A configuração ativa, a execução e a
+publicação são evidências distintas. Computador ligado, app aberto e gates
+nativos continuam necessários.
 
 O passo a passo abaixo prepara uma instalação nova; na instalação atual,
 conserve o projeto e o clone internos já designados.
@@ -261,13 +260,10 @@ Passo a passo:
    | `cdp-status` | `RRULE:FREQ=WEEKLY;BYDAY=MO;BYHOUR=8;BYMINUTE=30` | leve |
    | `cdp-semanal` | `RRULE:FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR;BYHOUR=11;BYMINUTE=7` | forte |
    | `cdp-semanal-b` | `RRULE:FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR;BYHOUR=12;BYMINUTE=7` | forte |
-   | `cdp-semanal-c` | `RRULE:FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR;BYHOUR=13;BYMINUTE=7` | forte |
-   | `cdp-semanal-d` | `RRULE:FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR;BYHOUR=14;BYMINUTE=7` | forte |
    | `cdp-risco-1330` | `RRULE:FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR;BYHOUR=13;BYMINUTE=30` | leve |
    | `cdp-risco-1603` | `RRULE:FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR;BYHOUR=16;BYMINUTE=3` | leve |
    | `cdp-diario` | `RRULE:FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR;BYHOUR=19;BYMINUTE=22` | forte |
-   | `cdp-diario-reforco` | `RRULE:FREQ=WEEKLY;BYDAY=MO,TU,WE,TH,FR;BYHOUR=21;BYMINUTE=7` | forte |
-   | `cdp-diario-sabado` | `RRULE:FREQ=WEEKLY;BYDAY=SA;BYHOUR=10;BYMINUTE=7` | forte |
+   | `cdp-dreaming` | `RRULE:FREQ=WEEKLY;BYDAY=SA;BYHOUR=10;BYMINUTE=7` | leve |
    | `cdp-cobertura` | `RRULE:FREQ=WEEKLY;BYDAY=MO,TU,WE,TH;BYHOUR=22;BYMINUTE=37` | forte |
    | `cdp-calibracao` | `RRULE:FREQ=MONTHLY;BYMONTHDAY=1;BYHOUR=9;BYMINUTE=15` | leve |
 
@@ -276,7 +272,7 @@ Passo a passo:
    `CDP_ENSAIO = "1"` ao `set` acima enquanto durar o ensaio (nada é publicado; seção 13).
 
 **Limites (honestos):** roda só com o computador ligado e o app aberto; o gate recusa
-disparos muito atrasados (`atraso_max_min`), e as reservas cobrem falhas curtas. Acesso total
+disparos muito atrasados (`atraso_max_min`). A reserva cobre uma falha curta na montagem. Acesso total
 dispensa aprovações — por isso a conta dedicada. As tarefas agendadas da **web** não acessam o
 repositório, e o **Codex Cloud** ainda não agenda tarefas: nenhum dos dois serve de executor.
 
@@ -421,18 +417,18 @@ Nenhum workflow roda a mente nas rotinas. O workflow com IA gerado por
 
 ## 10. Falhas, reservas e recuperação
 
-- **Montagem**: reservas às 12:07, 13:07 e 14:07 retomam se a principal parou (a trava impede
-  duas ao mesmo tempo; uma trava abandonada sem renovação expira em 50 min, antes da reserva
-  seguinte — `cdp rotinas verificar` recusa validade que alcance a próxima reserva —, e a
-  renovação usa a validade da tarefa e nunca a encurta). Passado o prazo efetivo sem decisão, o
+- **Montagem.** A reserva das 12:07 pode retomar se a principal parou. A trava impede duas
+  execuções ao mesmo tempo e, sem renovação, expira em 50 min, antes da reserva.
+  `cdp rotinas verificar` recusa validade que alcance a reserva. A renovação usa a validade
+  da tarefa e nunca a encurta. Passado o prazo efetivo sem decisão, o
   código não decide: a carteira anterior é mantida — na carteira inaugural, o fundo segue sem
   carteira (`decisao_perdida` na agenda; `weekly decide` devolve `status: "prazo_vencido"`).
 - **Prepare interrompido** (rede, fonte, modelo): o briefing é montado numa área temporária e
-  promovido de uma vez só no fim, então nada parcial fica para trás e a reserva seguinte refaz
-  o `weekly prepare`. Cotação intradiária vazia é falha de coleta (a análise usa o fechamento
+  promovido de uma vez só no fim. A reserva pode refazer o `weekly prepare` se ainda não
+  tiver disparado. Cotação intradiária vazia é falha de coleta (a análise usa o fechamento
   anterior, sem barra provisória, e a falha aparece em `falhas_coleta`).
 - **Trava inacessível** (GitHub fora do ar, disputa): o escritor exclusivo **não executa**
-  (falha fechada); a reserva seguinte tenta de novo. Só uma sessão de operador,
+  (falha fechada). A próxima tarefa da agenda volta a consultar a trava. Só uma sessão de operador,
   explicitamente, usa `--sem-trava` (no gate e em `cdp publicar`).
 - **Kill switch pela rotina de risco**: o relatório de risco é arquivo novo (mesclável) e sai
   sempre, junto com o pedido de kill switch (`reports/risk/<data>/kill_switch_<HHMM>.yaml`,
@@ -442,8 +438,10 @@ Nenhum workflow roda a mente nas rotinas. O workflow com IA gerado por
   seguinte (montagem ou fechamento) aplica o pedido antes de gravar qualquer coisa
   (`cdp kill-switch aplicar-pedidos` faz o mesmo numa sessão de operador no executor; a agenda
   lista os pendentes em `kill_switch_pedidos`). Não é preciso intervir à mão.
-- **Fechamento**: reforço às 21:07 e repescagem no sábado às 10:07; "dados não prontos" é
-  tentado de novo pela execução seguinte; a agenda lista todos os pregões pendentes.
+- **Fechamento.** A agenda lista os pregões pendentes para o próximo `cdp-diario`. Uma
+  pendência de sexta pode chegar ao disparo de segunda. Os alertas de atraso continuam às 22:00.
+- **Dreaming.** A revisão da memória roda no sábado às 10:07 em leitura. Suas propostas saem
+  no resumo da rotina e seguem para a revisão em desenvolvimento.
 - **Execução atrasada**: o gate recusa disparos muito depois do horário (`atraso_max_min`);
   para rodar fora do horário, numa sessão de operador no executor, use `--manual`:
   `uv run python -m cdp rotinas gate --tarefa cdp-diario --manual --adquirir`.
@@ -454,9 +452,9 @@ Nenhum workflow roda a mente nas rotinas. O workflow com IA gerado por
 
 ## 11. Capacidade do plano
 
-- Disparos por semana: cerca de 46 (20 da montagem e reservas, 10 de risco, 10 do fechamento e
-  reforço, 1 de sábado, 4 de notas, 1 de estado), mais a calibração mensal. A maioria sai no
-  gate em poucos segundos. Confira o uso no painel do seu plano (no Claude,
+- A agenda prevê 31 disparos por semana, mais a calibração mensal. São dez da montagem com
+  a reserva, dez de risco, cinco do fechamento, quatro de cobertura, um de estado e um de
+  revisão da memória. O gate encerra os disparos sem trabalho. Confira o uso no painel do seu plano (no Claude,
   claude.ai/settings/usage).
 - Execuções pesadas: montagem (1 a 2 por semana, com o retrato completo da cobertura antes da
   coleta), fechamentos (5 por semana, sexta mais longa; retratos parciais depois de resultados,
@@ -536,7 +534,7 @@ só muda o prompt. Compare: terminou no prazo, validadores ok, transcrição lim
 | "Sem execução: identidade deste ambiente desconhecida" | `CDP_EXECUTOR` ausente | defina no ambiente da nuvem, ou `cdp executor registrar --como local-pc` no clone |
 | "o executor designado é local-pc" na nuvem | troca ainda não feita | seção 13 |
 | "execução atrasada" | disparo atrasado ou execução manual fora do horário | normal; para rodar já, sessão de operador com `--manual` |
-| "<tarefa> em andamento em …" | outra execução segura a trava | normal; a reserva seguinte retoma; trava abandonada expira |
+| "<tarefa> em andamento em …" | outra execução segura a trava | aguarde o próximo disparo aplicável. Uma trava abandonada expira |
 | "trava distribuída indisponível" | GitHub inacessível, disputa ou sandbox sem rede/escrita em `.git` | normal se passageiro; no Codex, confira o acesso total (seção 5.1); persistindo, rede e regras do ramo `cdp-trava` |
 | `publicar` → "escritor exclusivo sem a trava" | `--trava` faltando ou trava perdida | nada foi publicado; a execução seguinte refaz a partir do livro |
 | `sincronizar` → `parar` | o remoto gravou o livro, ou clone com código alterado | investigar numa sessão de operador no clone do executor; depois de conferir, `git merge origin/main` à mão; nunca forçar |

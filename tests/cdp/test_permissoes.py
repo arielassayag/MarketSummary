@@ -104,11 +104,12 @@ def test_task_catalog_matches_native_ids_and_has_no_broad_rule(family):
 @pytest.mark.parametrize("form", pe.FORMAS)
 def test_memory_permissions_match_only_the_literal_context_for_the_family(family, form):
     rules = pe.regras(ROT, family)
-    scopes = ("operador", "desenvolvimento") if family == "retomar" else (family,)
+    scopes = {"retomar": ("operador", "desenvolvimento"), "dreaming": ()}.get(family, (family,))
     prefix = f"{form}memoria contexto --escopo "
-    assert {rule for rule in rules if rule.startswith(f"Bash({form}memoria ")} == {
-        f"Bash({prefix}{scope})" for scope in scopes
-    }
+    esperadas = {f"Bash({prefix}{scope})" for scope in scopes}
+    if family == "dreaming":
+        esperadas.add(f"Bash({form}memoria sonhar)")
+    assert {rule for rule in rules if rule.startswith(f"Bash({form}memoria ")} == esperadas
     settings = {"permissions": {"allow": rules, "ask": [], "deny": []}}
     for scope in scopes:
         command = prefix + scope

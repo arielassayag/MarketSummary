@@ -2,9 +2,9 @@
 
 Procedimento único do fechamento diário, igual em **qualquer harness** (Claude Code, Codex,
 Gemini/Antigravity ou outro). As skills (`cdp-diario`, `/cdp:diario`) e os prompts das rotinas só
-fazem a entrada e a saída da execução e mandam seguir este roteiro. Tarefas: `cdp-diario`
-(dias úteis, 19:22), `cdp-diario-reforco` (dias úteis, 21:07) e `cdp-diario-sabado` (sábados,
-10:07, repescagem); agenda em `configs/cdp/rotinas.yaml`. Metodologia: `docs/cdp/METODOLOGIA.md`;
+fazem a entrada e a saída da execução e mandam seguir este roteiro. `cdp-diario` roda nos dias
+úteis às 19:22 e o próximo disparo trata as datas pendentes. A agenda está em
+`configs/cdp/rotinas.yaml`. Metodologia: `docs/cdp/METODOLOGIA.md`;
 tom: `docs/cdp/ESTILO.md`; tese: `docs/cdp/TESE.md`.
 
 ## Regras invioláveis
@@ -53,8 +53,7 @@ uv run python -m cdp rotinas gate --tarefa cdp-diario --adquirir
 uv run python -m cdp sincronizar --executar
 ```
 
-- Use a tarefa que disparou a execução (`cdp-diario`, `cdp-diario-reforco` ou
-  `cdp-diario-sabado`). `executar: false` ⇒ responda "Sem execução: <motivo>" e encerre. Guarde
+- Use a tarefa `cdp-diario`. `executar: false` ⇒ responda "Sem execução: <motivo>" e encerre. Guarde
   `trava.id`, `execucao`, `mente` e `itens` (o que está pendente).
 - `sincronizar` com `acao: "parar"` ⇒ libere a trava
   (`uv run python -m cdp trava liberar --id <trava.id>`) e encerre relatando o `motivo`.
@@ -147,7 +146,7 @@ registro diário encadeado por hash. Leia `status` na saída:
 - `registrado` → passo 3 com D (anote `alertas`).
 - `sem pregão` → próxima data.
 - `dados não prontos` → **pare o laço** (não processe datas posteriores) e relate o `motivo`: a
-  próxima execução (o reforço das 21:07, a repescagem de sábado ou o dia seguinte) retoma. Não
+  próxima execução de `cdp-diario` retoma os pregões pendentes pela agenda. Não
   espere nem repita em laço. Publique o que já fechou.
 - `sem carteira efetivada` → pare e relate (nenhuma decisão executável ainda).
 - Erro → pare e relate a mensagem (não tente contornar).

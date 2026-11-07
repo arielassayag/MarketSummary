@@ -34,8 +34,8 @@
     },
     {
       "caminho": "docs/cdp/AUTOMACAO.md",
-      "trecho": "  renovação usa a validade da tarefa e nunca a encurta). Passado o prazo efetivo sem decisão, o\n  código não decide: a carteira anterior é mantida — na carteira inaugural, o fundo segue sem\n  carteira (`decisao_perdida` na agenda; `weekly decide` devolve `status: \"prazo_vencido\"`).",
-      "sha256": "91b6de945601919dc692a3c3c3f2c00d13e03962abf15eb5420f87ca7a93af75"
+      "trecho": "  da tarefa e nunca a encurta. Passado o prazo efetivo sem decisão, o\n  código não decide: a carteira anterior é mantida — na carteira inaugural, o fundo segue sem\n  carteira (`decisao_perdida` na agenda; `weekly decide` devolve `status: \"prazo_vencido\"`).",
+      "sha256": "3f30533f6525492b5c4343a62a40cbb9aee4907c702fdffbd83250cb566a5fc8"
     }
   ]
 }

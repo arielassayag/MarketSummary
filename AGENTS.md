@@ -131,17 +131,16 @@ Substituem os itens 3 e 4 da seção do Fechamento apenas para o CDP.
 | `cdp-status` | segundas, 08:30 | `30 11 * * 1` | `docs/cdp/playbooks/STATUS.md` | não |
 | `cdp-semanal` | dias úteis, 11:07 | `7 14 * * 1-5` | `docs/cdp/playbooks/SEMANAL.md` | sim (trava exclusiva) |
 | `cdp-semanal-b` | dias úteis, 12:07 | `7 15 * * 1-5` | `docs/cdp/playbooks/SEMANAL.md` | sim (trava exclusiva) |
-| `cdp-semanal-c` | dias úteis, 13:07 | `7 16 * * 1-5` | `docs/cdp/playbooks/SEMANAL.md` | sim (trava exclusiva) |
-| `cdp-semanal-d` | dias úteis, 14:07 | `7 17 * * 1-5` | `docs/cdp/playbooks/SEMANAL.md` | sim (trava exclusiva) |
 | `cdp-risco-1330` | dias úteis, 13:30 | `30 16 * * 1-5` | `docs/cdp/playbooks/RISCO.md` | só arquivos novos |
 | `cdp-risco-1603` | dias úteis, 16:03 | `3 19 * * 1-5` | `docs/cdp/playbooks/RISCO.md` | só arquivos novos |
 | `cdp-diario` | dias úteis, 19:22 | `22 22 * * 1-5` | `docs/cdp/playbooks/DIARIO.md` | sim (trava exclusiva) |
-| `cdp-diario-reforco` | dias úteis, 21:07 | `7 0 * * 2-6` | `docs/cdp/playbooks/DIARIO.md` | sim (trava exclusiva) |
-| `cdp-diario-sabado` | sábados, 10:07 | `7 13 * * 6` | `docs/cdp/playbooks/DIARIO.md` | sim (trava exclusiva) |
 | `cdp-cobertura` | segunda a quinta, 22:37 | `37 1 * * 2-5` | `docs/cdp/playbooks/COBERTURA.md` | sim (trava exclusiva) |
+| `cdp-dreaming` | sábados, 10:07 | `7 13 * * 6` | `docs/cdp/playbooks/DREAMING.md` | não |
 | `cdp-calibracao` | dia 1 de cada mês, 09:15 | `15 12 1 * *` | `docs/cdp/playbooks/CALIBRACAO.md` | só arquivos novos |
 
-A maioria dos disparos sai no gate em segundos (nada pendente). A semana típica: fechamento
+A única reserva é `cdp-semanal-b`, às 12:07. Se o fechamento ficar pendente, o próximo
+`cdp-diario` retoma as datas pela agenda. Aos sábados, `cdp-dreaming` revisa a memória em leitura
+e devolve sugestões de curadoria. Quando falta trabalho, o gate encerra o disparo. A semana típica: fechamento
 de quinta (19:22, com o retrato da cobertura) → notas de cobertura na quinta à noite (22:37) →
 na sexta (último pregão da semana na NYSE), pesquisa às 11:07 e decisão até o prazo efetivo →
 execução no leilão de fechamento → na sexta à noite, efetivação, registro diário, relatório
@@ -210,7 +209,7 @@ código (passo a passo em `docs/cdp/AUTOMACAO.md`):
 | Documento | Para quê |
 |---|---|
 | `docs/cdp/AGENTE.md` | papéis, glossário, direitos de decisão, "nunca", como plugar um app novo |
-| `docs/cdp/playbooks/` | roteiros neutros das rotinas: `SEMANAL.md`, `DIARIO.md`, `RISCO.md`, `COBERTURA.md`, `STATUS.md`, `CALIBRACAO.md`; de sessão: `RETOMAR.md` (retomar) e `ESPELHO.md` (espelho privado opcional do painel, só operador) |
+| `docs/cdp/playbooks/` | roteiros neutros das rotinas: `SEMANAL.md`, `DIARIO.md`, `RISCO.md`, `COBERTURA.md`, `STATUS.md`, `CALIBRACAO.md`, `DREAMING.md`; de sessão: `RETOMAR.md` (retomar) e `ESPELHO.md` (espelho privado opcional do painel, só operador) |
 | `docs/cdp/METODOLOGIA.md` | mandato, modelo de risco, alpha, construção e gestão de risco |
 | `docs/cdp/EXECUCAO.md` | dia de montagem, prazo efetivo, leilão de fechamento, capacidade e custos |
 | `docs/cdp/COBERTURA.md`, `docs/cdp/NOTAS.md` | modelos abertos de valuation e notas de pesquisa por emissor |

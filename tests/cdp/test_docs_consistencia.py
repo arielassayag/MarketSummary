@@ -236,7 +236,7 @@ def test_every_full_cdp_command_in_the_docs_parses(doc: str):
     for c in _comandos_completos(_ler(doc)):
         cmd = re.sub(r"<[^<>]+>", "X", c.replace("AAAA-MM-DD", "2026-10-09"))
         cmd = cmd.split(" #")[0]
-        for sep in ("&&", ";", "|", " 2>", " >"):
+        for sep in ("&&", ";", "|", " 2>", " >", " < "):
             cmd = cmd.split(sep)[0]
         if re.search(r"[…$\[{]|\.\.\.", cmd):
             continue

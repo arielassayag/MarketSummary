@@ -39,7 +39,7 @@ PLUGIN = ROOT / "plugins" / "cdp"
 PLAYBOOKS = ROOT / "docs" / "cdp" / "playbooks"
 DOCS = ROOT / "docs" / "cdp"
 ROT = ro.carregar(ROOT / "configs" / "cdp" / "rotinas.yaml")
-SKILLS = {"semanal", "diario", "cobertura", "risco", "status", "calibracao"}
+SKILLS = {"semanal", "diario", "cobertura", "risco", "status", "calibracao", "dreaming"}
 ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
 SKILL_NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 SCRIPTS = ["cdp_setup_local.sh", "cdp_setup_local.ps1", "cdp_run_task.sh", "cdp_run_task.ps1"]
@@ -48,11 +48,12 @@ TESES = ROOT / "docs" / "cdp" / "teses"
 #: Versão do plugin e resumo das skills nessa versão. A instalação pelo marketplace do GitHub guarda
 #: uma cópia presa à ``version`` (docs/cdp/LOCAL.md): skills novas com a versão antiga nunca chegam
 #: às rotinas. Mudou uma skill ⇒ suba a ``version`` em plugin.json e atualize os dois valores.
-PLUGIN_VERSION = "1.8.0"
-SKILLS_SHA256 = "a65f5235d12bcd48be3fd878e974846ef11085dfd133fb8861daabf2089f5ece"
+PLUGIN_VERSION = "1.9.0"
+SKILLS_SHA256 = "336bb79ebe32d30a61d8d65bcb82d85e0a8b841e24970a331fb85cdc58e12607"
 #: Roteiro de cada skill do plugin e a família de tarefas de ``configs/cdp/rotinas.yaml``.
 ROTEIRO = {"semanal": "SEMANAL.md", "diario": "DIARIO.md", "cobertura": "COBERTURA.md",
-           "risco": "RISCO.md", "status": "STATUS.md", "calibracao": "CALIBRACAO.md"}
+           "risco": "RISCO.md", "status": "STATUS.md", "calibracao": "CALIBRACAO.md",
+           "dreaming": "DREAMING.md"}
 ESCRITORES = ("semanal", "diario", "cobertura", "risco", "calibracao")
 #: Comandos ``git`` que gravam: nunca num roteiro, numa skill ou num prompt (só ``cdp publicar``).
 GIT_GRAVA = re.compile(r"\bgit (?:add|commit|push|pull|merge|rebase|reset|fetch|stash|checkout)\b")
@@ -274,9 +275,14 @@ def test_plugin_skills_are_thin_wrappers_of_the_playbooks(nome: str):
     ordem.append(_idx(body, "Resumo final", ordem[-1]))
     assert ordem == sorted(ordem), ordem
     assert not GIT_GRAVA.search(body.replace("`git` que grave", "")), "git que grave numa skill"
-    assert 'action: "publish"' not in body and "Nunca publique artifacts numa rotina" in flat
-    assert "docs/cdp/LOCAL.md`, seção 10" in flat  # espelho privado: só o operador
-    assert "`python -c`, `jq`, `sleep`" in flat and "laços de espera" in flat
+    assert 'action: "publish"' not in body
+    if nome == "dreaming":
+        assert "leitura" in flat
+        assert "cdp sincronizar" not in flat and "cdp publicar" not in flat
+    else:
+        assert "Nunca publique artifacts numa rotina" in flat
+        assert "docs/cdp/LOCAL.md`, seção 10" in flat  # espelho privado: só o operador
+        assert "`python -c`, `jq`, `sleep`" in flat and "laços de espera" in flat
 
 
 def test_project_skills_are_the_generated_neutral_wrappers():
@@ -652,7 +658,8 @@ def test_rebalance_on_the_last_nyse_session_with_the_effective_deadline():
         assert not hits, (path.name, hits)
     sem = _plano(_ler(PLAYBOOKS / "SEMANAL.md"))
     assert "último pregão da semana na NYSE" in sem and "`semanal.prazo_efetivo`" in sem
-    assert "12:07, 13:07 e 14:07" in sem and "leilão de fechamento" in sem
+    assert "cdp-semanal-b` às 12:07" in sem and "leilão de fechamento" in sem
+    assert not any(tid in sem for tid in ro.TAREFAS_APOSENTADAS)
     for doc in ("ROTINAS.md", "LOCAL.md", "playbooks/SEMANAL.md"):
         text = _plano(_ler(DOCS / doc))
         assert "último pregão da semana na NYSE" in text and "prazo efetivo" in text, doc
@@ -819,23 +826,21 @@ def test_guides_teach_every_app_step_by_step():
 def test_local_guide_schedules_backups_and_is_honest_about_prompts():
     local = _ler(DOCS / "LOCAL.md")
     flat = _plano(local)
-    for needle in ("cdp-semanal-b", "cdp-semanal-c", "cdp-semanal-d", "12:07", "13:07", "14:07",
-                   "cdp-diario-reforco", "21:07", "cdp-diario-sabado", "uma tarefa por vez",
+    for needle in ("cdp-semanal-b", "12:07", "cdp-dreaming", "10:07", "uma tarefa por vez",
                    "últimos 7 dias", "último pregão da semana na NYSE", "prazo efetivo",
                    "Register-ScheduledTask", "-AllowStartIfOnBatteries",
                    "-DontStopIfGoingOnBatteries", "-StartWhenAvailable", "-WindowStyle Hidden",
                    "feche e reabra o app", "clone dedicado", "revisao_humana",
                    "`dontAsk`) só existe no CLI", "falha fechada", "`main` **e** em `cdp-trava`",
-                   "/cdp-diario cdp-diario-reforco", "/cdp:diario cdp-diario-reforco",
+                   "/cdp-diario cdp-diario", "/cdp:diario cdp-diario",
                    "kill-switch off", "Keep computer awake", "pc_menos_brasilia_horas"):
         assert needle in flat, needle
-    assert "(opcional)" not in local  # o reforço das 21:07 é parte da agenda
+    assert not any(tid in local for tid in ro.TAREFAS_APOSENTADAS)
     assert "nada fica esperando aprovação" not in flat
     for script in ("cdp_setup_local.sh", "cdp_setup_local.ps1"):
         text = (ROOT / "scripts" / script).read_bytes().decode("utf-8-sig")
-        for task in ("cdp-semanal-b", "cdp-semanal-c", "cdp-semanal-d", "cdp-diario-reforco",
-                     "cdp-diario-sabado", "cdp-risco-1603", "cdp-cobertura", "cdp-calibracao",
-                     "cdp-status"):
+        for task in ("cdp-semanal-b", "cdp-diario", "cdp-dreaming", "cdp-risco-1603",
+                     "cdp-cobertura", "cdp-calibracao", "cdp-status"):
             assert task in text, (script, task)
         assert "feche e reabra o app do Claude" in text, script
         assert "executor registrar --como local-pc" in text and "cdp trava ver" in text, script
@@ -967,7 +972,7 @@ def test_exports_from_the_cli(capsys):
     assert capsys.readouterr().out.strip() == "/cdp:risco cdp-risco-1603"
     assert main(["rotinas", "exportar", "--alvo", "claude-desktop"]) == 0
     desk = capsys.readouterr().out
-    assert "`/cdp:diario cdp-diario-reforco`" in desk and "`/cdp-risco cdp-risco-1603`" in desk
+    assert "`/cdp:dreaming cdp-dreaming`" in desk and "`/cdp-risco cdp-risco-1603`" in desk
 
 
 # ----------------------------------------------------------------------------- permissões
@@ -1187,7 +1192,7 @@ def test_local_scripts_exist_and_delegate_to_the_routine_runner():
             # quem chama o app é o script de rotina (nenhuma chamada direta do claude aqui)
             assert not re.search(r'^\s*(?:&\s*\$\w+|"\$\w+"|claude)\s+-p\b', text, re.M)
             assert "--bare" not in text
-            for t in ("cdp-semanal-b", "cdp-diario-sabado", "cdp-risco-1603"):
+            for t in ("cdp-semanal-b", "cdp-dreaming", "cdp-risco-1603"):
                 assert t in text, (name, t)
         else:
             assert "uv sync --extra dev --extra ai" in text

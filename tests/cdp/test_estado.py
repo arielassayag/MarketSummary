@@ -80,6 +80,20 @@ def test_last_runs_come_from_commit_trailers(raiz):
     assert risco["fora_do_escopo"] == ["src/y.py"]  # a rotina de risco não grava código
 
 
+def test_last_runs_keep_retired_task_identity_and_historical_paths(raiz):
+    from cdp.rotinas import carregar
+
+    _commit(raiz, "reports/daily/2026-10-09/relatorio.md",
+            "CDP: fechamento recuperado\n\nCDP-Tarefa: cdp-diario-sabado")
+    _commit(raiz, "src/z.py", "CDP: mudança fora do escopo\n\nCDP-Tarefa: cdp-semanal-d")
+    rot = carregar(raiz / "configs/cdp/rotinas.yaml")
+    semanal, diario = es.ultimas_execucoes(raiz, rot, n=2)
+    assert semanal["tarefa"] == "cdp-semanal-d" and semanal["tarefa_aposentada"]
+    assert semanal["fora_do_escopo"] == ["src/z.py"]
+    assert diario["tarefa"] == "cdp-diario-sabado" and diario["tarefa_aposentada"]
+    assert diario["fora_do_escopo"] == []
+
+
 def test_estado_is_read_only_and_complete(raiz, rt, tmp_path):
     antes = _arvore(raiz, tmp_path)
     e = es.estado(rt, raiz, agora=AGORA, env={"CDP_EXECUTOR": "local-pc"})
@@ -209,7 +223,8 @@ def test_suggested_playbook_follows_the_time_window():
 
     s = sug(datetime(2026, 10, 9, 10, 0, tzinfo=BRT))  # dia de início, antes das 11:07
     assert s["tarefa"] == "cdp-semanal" and "sessão de operador: só a pedido" in s["condicao"]
-    assert sug(datetime(2026, 10, 7, 20, 0, tzinfo=BRT))["tarefa"] == "cdp-diario"  # 21:07
+    assert sug(datetime(2026, 10, 7, 18, 0, tzinfo=BRT))["tarefa"] == "cdp-diario"  # 19:22
+    assert sug(datetime(2026, 10, 7, 20, 0, tzinfo=BRT))["tarefa"] == "cdp-semanal"
     montar = _ag(semanal={"acao": "montar", "motivo": "dia de montagem"},
                  fechamentos_pendentes=[date(2026, 10, 15)])
     assert sug(datetime(2026, 10, 16, 11, 30, tzinfo=BRT), montar)["tarefa"] == "cdp-semanal"

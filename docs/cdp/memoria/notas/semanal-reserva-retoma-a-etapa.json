@@ -3,7 +3,7 @@
   "tipo": "licao",
   "estado": "curada",
   "titulo": "A reserva semanal retoma da etapa indicada pela agenda",
-  "resumo": "Com semanal.acao igual a montar, retome de semanal.etapa e preserve o que já está gravado. Um prepare interrompido antes da promoção do briefing pode ser refeito pela reserva. Com ação tese, retome somente tese, integridade e painel, publicação e resumo, pois a decisão já está gravada.",
+  "resumo": "Com semanal.acao igual a montar, retome de semanal.etapa e preserve o que já está gravado. A reserva das 12:07 pode refazer um prepare interrompido antes da promoção do briefing. Com ação tese, retome somente tese, integridade e painel, publicação e resumo, pois a decisão já está gravada.",
   "escopos": [
     "semanal"
   ],
@@ -33,8 +33,8 @@
     },
     {
       "caminho": "docs/cdp/AUTOMACAO.md",
-      "trecho": "- **Prepare interrompido** (rede, fonte, modelo): o briefing é montado numa área temporária e\n  promovido de uma vez só no fim, então nada parcial fica para trás e a reserva seguinte refaz\n  o `weekly prepare`. Cotação intradiária vazia é falha de coleta (a análise usa o fechamento\n  anterior, sem barra provisória, e a falha aparece em `falhas_coleta`).",
-      "sha256": "86d7f708eaa7c6ebccd6aca5ae580adaf96a6216bc4943f04f445a6988b269c9"
+      "trecho": "- **Prepare interrompido** (rede, fonte, modelo): o briefing é montado numa área temporária e\n  promovido de uma vez só no fim. A reserva pode refazer o `weekly prepare` se ainda não\n  tiver disparado. Cotação intradiária vazia é falha de coleta (a análise usa o fechamento\n  anterior, sem barra provisória, e a falha aparece em `falhas_coleta`).",
+      "sha256": "33f6de425207b8754717f412717a849c6c6c3e06a0f75f4e3af90c0f2886a16d"
     }
   ]
 }

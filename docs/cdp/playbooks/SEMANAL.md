@@ -3,8 +3,8 @@
 Procedimento único da montagem semanal, igual em **qualquer harness** (Claude Code, Codex,
 Gemini/Antigravity ou outro). As skills (`cdp-semanal`, `/cdp:semanal`) e os prompts das rotinas
 só fazem a entrada e a saída da execução e mandam seguir este roteiro. Tarefas: `cdp-semanal`
-(dias úteis, 11:07) e as reservas `cdp-semanal-b`, `cdp-semanal-c` e `cdp-semanal-d` (12:07,
-13:07 e 14:07); agenda em `configs/cdp/rotinas.yaml`. Metodologia: `docs/cdp/METODOLOGIA.md`;
+(dias úteis, 11:07) e a reserva `cdp-semanal-b` às 12:07. A agenda está em
+`configs/cdp/rotinas.yaml`. Metodologia: `docs/cdp/METODOLOGIA.md`;
 tom: `docs/cdp/ESTILO.md`; tese: `docs/cdp/TESE.md`.
 
 O dia de montagem é o **último pregão da semana na NYSE** (sexta-feira, ou o dia útil anterior em
@@ -49,7 +49,7 @@ uv run python -m cdp rotinas gate --tarefa cdp-semanal --adquirir
 uv run python -m cdp sincronizar --executar
 ```
 
-- Use a tarefa que disparou a execução (`cdp-semanal`, `-b`, `-c` ou `-d`). O gate só executa
+- Use a tarefa que disparou a execução (`cdp-semanal` ou `cdp-semanal-b`). O gate só executa
   com montagem a fazer (`semanal.acao` igual a `montar` ou `tese`) ou com a abertura do livro
   pendente; `executar: false` ⇒ "Sem montagem hoje: <motivo>" e encerre. Guarde `trava.id`,
   `execucao` e `mente`.
@@ -138,7 +138,7 @@ anterior (se faltar), dados lentos (fundamentos, short interest FINRA, aluguel B
 `context.json` (fatos com `fact_id`, candidatos, emissores válidos, limites),
 `research_pack.schema.json`, `pm_decision.schema.json` e `INSTRUCTIONS.md`. Anote
 `falhas_coleta` e `barra_provisoria`. Se falhar, rode `agenda` de novo: etapa `pesquisa` ⇒ o
-briefing foi gravado; senão, pare e relate (a reserva seguinte tenta de novo; não repita em laço).
+briefing foi gravado. Senão, pare e relate. A reserva pode retomar se ainda não tiver disparado.
 
 ## 3. Pesquisa (a mente) — etapa `pesquisa`
 

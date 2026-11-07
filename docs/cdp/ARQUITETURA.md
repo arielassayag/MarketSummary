@@ -56,11 +56,12 @@ gate de código, que só deixa agir quando há trabalho pendente):
 | Quando | Rotina | O que acontece |
 |---|---|---|
 | dias úteis, 13:30 e 16:03 | `cdp-risco-*` | monitor de risco intradiário; kill switch só por gatilho HARD do código |
-| dias úteis, 19:22 (reforço 21:07; repescagem sábado 10:07) | `cdp-diario` | marcação a mercado, risco, atribuição, registro diário encadeado, comentário; retrato da cobertura do pregão (`cobertura run`) quando pendente |
+| dias úteis, 19:22 | `cdp-diario` | marcação a mercado, risco, atribuição, registro diário encadeado, comentário; retrato da cobertura do pregão (`cobertura run`) quando pendente |
 | segunda a quinta, 22:37 | `cdp-cobertura` | notas de pesquisa por emissor, fila determinística do código (até 12 por noite) |
-| sexta, 11:07 (reservas 12:07, 13:07, 14:07) | `cdp-semanal` | `weekly prepare` com todos os dados até o momento (barra intradiária provisória) → pesquisa e decisão do PM pela mente → `validate` → `weekly preview` → `weekly decide` até o **prazo efetivo** (15:00; 14:15 em fechamento antecipado nos EUA) → tese da carteira decidida |
+| sexta, 11:07 (reserva às 12:07) | `cdp-semanal` | `weekly prepare` com todos os dados até o momento (barra intradiária provisória) → pesquisa e decisão do PM pela mente → `validate` → `weekly preview` → `weekly decide` até o **prazo efetivo** (15:00; 14:15 em fechamento antecipado nos EUA) → tese da carteira decidida |
 | sexta, leilões de fechamento | — | execução ao preço oficial de fechamento de cada linha, limitada à capacidade do leilão e da janela pré-fechamento (`docs/cdp/EXECUCAO.md`) |
 | sexta, 19:22 | `cdp-diario` | efetivação ao fechamento oficial, primeiro registro da nova carteira, **relatório semanal de resultado** (`weekly close-report`), retrato da cobertura; o push em `main` dispara o portal |
+| sábado, 10:07 | `cdp-dreaming` | revisão de evidências e candidatas da memória em leitura |
 | dia 1 do mês, 09:15 | `cdp-calibracao` | backtest com todo o histórico e comparação com a execução anterior (nunca muda o mandato) |
 | segundas, 08:30 | `cdp-status` | saúde da operação (só leitura) |
 

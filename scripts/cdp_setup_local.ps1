@@ -149,16 +149,15 @@ if ($uvInstalled) {
    O executor designado em configs/cdp/executor.yaml precisa ser local-pc.
 2. Tarefas agendadas, uma por tarefa da agenda, com o id da tarefa na instrução:
      cdp-status          segundas 08:30
-     cdp-semanal         dias úteis 11:07   (reservas cdp-semanal-b 12:07, cdp-semanal-c 13:07,
-                                             cdp-semanal-d 14:07)
+     cdp-semanal         dias úteis 11:07   (reserva cdp-semanal-b 12:07)
      cdp-risco-1330      dias úteis 13:30   (e cdp-risco-1603 às 16:03)
-     cdp-diario          dias úteis 19:22   (reforço cdp-diario-reforco 21:07;
-                                             repescagem cdp-diario-sabado sábados 10:07)
+     cdp-diario          dias úteis 19:22
+     cdp-dreaming        sábados 10:07 (leitura da memória)
      cdp-cobertura       segunda a quinta 22:37
      cdp-calibracao      dia 1 de cada mês 09:15
    - Claude Code (app desktop): Code -> Routines -> New routine -> Local, pasta = $Root,
      worktree DESLIGADO, modo "Aceitar edições", instrução = /cdp:<skill> <tarefa> (ex.:
-     /cdp:diario cdp-diario-reforco). Tabela pronta:
+     /cdp:diario cdp-diario). Tabela pronta:
      uv run python -m cdp rotinas exportar --alvo claude-desktop
    - Codex: uv run python -m cdp rotinas exportar --alvo codex --formato md
    - Antigravity: uv run python -m cdp rotinas exportar --alvo windows --harness agy

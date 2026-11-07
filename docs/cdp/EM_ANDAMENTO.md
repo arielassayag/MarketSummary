@@ -7,21 +7,33 @@ motivo: `docs/cdp/DECISOES.md`.
 
 ## Confirmação prospectiva da memória em andamento — 07/11/2026
 
-A revisão `4c34b1be` amplia o vocabulário, completa blocos de evidência e permite que uma
-segunda nota complemente a primeira na mesma fonte. O original está em 52/52 e 16/16 nos
-controles. As baterias de ajuste somam 160/160 evidências e 49/49 controles. Os gabaritos e
-o limite de cinco passagens foram preservados.
+A revisão local `73c98dc3` mantém **52/52 evidências e 16/16 controles** no benchmark
+original. Com 117 notas verificadas, passou nas baterias expostas com 232/232 evidências,
+73/73 controles e zero orientação indevida. As baterias expostas orientaram a curadoria
+e o roteamento. O limite de cinco passagens, 14 linhas e 1.800 bytes por passagem continua
+fixo. O qualificador confere as fontes, o código, os scripts, os hashes e os tamanhos.
 
-A quarta confirmação, fechada antes de avaliar `4c34b1be`, retornou 18/24 evidências e
-3/8 controles. A busca direta acertou 20/24. A detecção automática perdeu dois pedidos de
-estado e aceitou três consultas externas. A meta de 100% em inéditos continua aberta. Os
-resultados e lacres das quatro rodadas estão em `outputs/cdp-memoria-rigor/`, no relatório
-`relatorio-confirmacoes.md` e no protocolo `protocolo-confirmacao.md`.
+Na sexta confirmação lacrada, a revisão `337003ff` recuperou 21/24, ante 17/24 na busca
+direta e 18/24 na contextual sem notas, com quatro ganhos pareados e nenhuma perda. Passou
+em 5/8 controles. O replay de `65661a4a` sobre o mesmo corpus teve os mesmos acertos.
 
-Próxima etapa: medir a cobertura de um conjunto maior de candidatos por seção e por oração,
-separar falta de candidato de erro de ordenação e condicionar a inclusão de notas à relevância
-das passagens. Revisar também a admissão de consultas com termos genéricos do domínio. A quarta
-bateria já está aberta para diagnóstico. O próximo teste independente usa outra amostra lacrada.
+A sétima confirmação, com o candidato `73c98dc3` fixado antes da entrega do corpus, recuperou
+18/24 contra 17/24 nos dois braços sem notas, com um ganho pareado e nenhuma perda sobre a
+direta. Passou em 7/8 controles. Uma consulta estática recuperou a evidência e recebeu
+orientação de estado indevida. A meta de 100% em inéditos continua aberta. As primeiras
+execuções, os lacres, os planos e o relatório ficam em `outputs/cdp-memoria-rigor/`.
+
+A sétima amostra está aberta para diagnóstico. A união de 30 passagens diretas, 30 contextuais
+e todas as âncoras elegíveis contém todos os grupos de 23/24 perguntas. Entre as seis
+falhas de evidência, cinco têm os trechos nesse conjunto e uma precisa de outra busca.
+Priorize seleção de evidências complementares por pergunta e teste a distinção entre um
+procedimento hipotético e uma observação de estado. Corrija também a admissão quando a
+menção ao projeto é explicitamente negativa, como em “fora do CDP”. O próximo inédito
+deve ser separado dos ajustes e ter o candidato fixado antes da primeira execução.
+
+Os experimentos locais de reranqueamento e classificação são diagnósticos. O melhor
+reranqueador subiu de 18/24 a 22/24 na quarta amostra já aberta e teve latência mediana de
+13,5 segundos por consulta nesta máquina. A versão padrão continua determinística e offline.
 
 ## Recuperação com memória qualificada — 07/11/2026
 

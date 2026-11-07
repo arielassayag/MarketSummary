@@ -18,6 +18,8 @@ from cdp.memoria import Catalogo, _fonte_atual
     ("Liste os alertas ativos no monitor desta manhã.", "relatório do monitor"),
     ("Quantos longs estão na carteira vigente?", "carteira efetivada no livro"),
     ("Qual e-mail saiu hoje?", "trilha de entrega"),
+    ("Qual carteira está efetivada no momento?", "estado e a agenda"),
+    ("Informe a liquidez medida no fechamento.", "FactBook"),
 ])
 def test_consulta_observada_indica_a_fonte_da_tarefa(consulta, origem):
     orientacao = _fonte_atual(consulta)
@@ -29,6 +31,9 @@ def test_consulta_observada_indica_a_fonte_da_tarefa(consulta, origem):
     "Quantas tentativas são previstas se a publicação ficou no clone?",
     "Com uma posição aberta, qual regra do relatório preserva a unidade?",
     "Como eu confiro a revisão atual da nota na trilha?",
+    "Qual é o papel da liquidez no momento de estimar capacidade?",
+    "Que parte do relatório entra na medida de desvio da cotação?",
+    "Calcula-se a exposição com a carteira atual ou com o alvo?",
 ])
 def test_ocorrencia_narrada_nao_converte_regra_em_pedido_de_estado(consulta):
     assert _fonte_atual(consulta) is None

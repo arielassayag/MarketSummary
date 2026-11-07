@@ -1,0 +1,34 @@
+{
+  "id": "semanal-prova-da-tese-publicada",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Trilha e autoria da tese publicada",
+  "resumo": "A tese publicada é imutável e vinculada à proposta aprovada. O evento WEEKLY_THESIS registra hashes dos arquivos de saída, hashes da proposta e da aprovação e a autoria. O painel exporta a tese publicada.",
+  "escopos": [
+    "semanal",
+    "diario",
+    "operador"
+  ],
+  "tags": [
+    "tese publicada",
+    "prova",
+    "evento",
+    "hash",
+    "proposta aprovada",
+    "arquivo",
+    "autoria",
+    "imutabilidade"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/TESE.md",
+      "trecho": "- `tese_publicada.json` e `tese.md` são gravados uma única vez (escrita exclusiva). Uma semana tem\n  no máximo uma tese publicada; depois dela, `tese prepare` não regrava nada e `tese publish`\n  recusa.\n- A tese fica vinculada à **proposta aprovada** da semana (a referenciada pela decisão que a\n  aprovou).\n- A publicação acrescenta um evento `WEEKLY_THESIS` (ator `CDP`) à trilha de auditoria encadeada\n  por hash. O payload traz o SHA-256 de `tese_publicada.json` e de `tese.md`, o `proposal_hash`, o\n  `approval_hash` e a autoria (`mente` ou `codigo`).\n- O painel exporta só a tese publicada, nunca o rascunho `tese.json`.",
+      "sha256": "b726d6ac8db836ea9d4c7edd245fd8618e3fec68040e0daeffac23f18d7d0b16"
+    }
+  ]
+}

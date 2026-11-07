@@ -1,0 +1,33 @@
+{
+  "id": "risco-liquidez-de-encerramento",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Liquidez estrutural para encerrar posição e capacidade do dia",
+  "resumo": "Fechamentos para liquidar medem a capacidade estrutural de redução em pregão regular. Recomprar um short não usa o multiplicador da abertura. Feriado no mercado da linha afeta a capacidade do dia e não altera a liquidez estrutural.",
+  "escopos": [
+    "risco",
+    "semanal"
+  ],
+  "tags": [
+    "liquidez estrutural",
+    "liquidar",
+    "recompra",
+    "feriado",
+    "capacidade",
+    "posição vendida",
+    "short",
+    "zerar"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/EXECUCAO.md",
+      "trecho": "**Liquidez em fechamentos.** Com a execução só no leilão, a liquidez de cada posição é medida\nem **fechamentos para zerá-la** à capacidade estrutural de redução da linha (a mesma fórmula num\npregão regular — `janela_regular` —, sem o multiplicador de short, porque zerar um short é uma\ncompra). Os limites do mandato `liquidity.max_days_to_liquidate_long` (3) e `_short` (2) contam\nfechamentos: entram como teto de posição na construção (origem \"liquidez\"), na compliance\n(`LIQ_DAYS_LONG`/`LIQ_DAYS_SHORT`, bloqueiam), no registro diário (`max_days_to_liquidate` e a\nfração do gross liquidável em 1 fechamento), no monitor de risco, no memorando, no relatório\nsemanal e no app interno (\"Fechamentos p/ liquidar\"). Volume desconhecido ⇒ liquidez\ndesconhecida (reprova; nunca liquidez imediata). Um feriado no mercado da linha não muda essa\nmedida (é estrutural); o dia de montagem usa a capacidade do próprio dia.",
+      "sha256": "891670f38ecd5dec83495159496557ed4ef073ac2c62d02cdbe62b4fc7e950f9"
+    }
+  ]
+}

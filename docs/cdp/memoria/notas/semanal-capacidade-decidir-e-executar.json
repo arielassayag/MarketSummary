@@ -1,0 +1,38 @@
+{
+  "id": "semanal-capacidade-decidir-e-executar",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Volume de decisão e volume realizado no leilão",
+  "resumo": "No dimensionamento, a capacidade usa uma medida conservadora de volume dos pregões anteriores. Na efetivação, usa o valor negociado no próprio pregão. Volume desconhecido é uma restrição explícita.",
+  "escopos": [
+    "semanal",
+    "risco"
+  ],
+  "tags": [
+    "capacidade",
+    "giro financeiro",
+    "volume negociado",
+    "ordem",
+    "dimensionamento",
+    "decisão",
+    "efetivação",
+    "execução"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/EXECUCAO.md",
+      "trecho": "| Parâmetro | Valor | Significado |\n|---|---|---|\n| `p_leilão` (`auction_participation`) | 10% (teto 15%) | participação máxima no leilão de fechamento |\n| `fatia_leilão` | EUA 10%, ADR 6%, ETF 1%, BR 8%, MX 10%, CL 10%, CO/PE/AR 5% | fração esperada do volume do dia no leilão |\n| `p_pré` · `fatia_pré` | 10% · 25% | participação na janela pré-fechamento (25% do volume do dia) |\n| `V_ℓ` na decisão | P25 do valor negociado diário em USD nos 20 pregões anteriores com preço | volume conservador |\n| `V_ℓ` na execução | valor negociado no próprio pregão | volume realizado |\n| shorts | × 0,75 | aluguel e regra de preço |\n| fechamento antecipado | × 0,5 nos mercados que fecham mais cedo (só neles) | leilão mais curto |",
+      "sha256": "cbf7a7847dcd168755f0a38cf1a92ad36c299c99eeb8aee4ece9b74ad87757b9"
+    },
+    {
+      "caminho": "docs/cdp/EXECUCAO.md",
+      "trecho": "Ordem de grandeza: cerca de 3,3% do ADV numa ação da B3 e 3,5% numa ação listada nos EUA ou na BMV.\n**Volume desconhecido ⇒ capacidade zero** — como restrição, nunca como dado: volume zero com\npreço válido é tratado como ausente, e menos de dez observações na janela de 20 pregões tornam o\nvolume desconhecido. O otimizador limita cada aumento de posição à capacidade da linha usada; a\nredução até zero continua permitida na construção, mas a execução também é limitada pela\ncapacidade.",
+      "sha256": "12ecdc8822ec076a323f9a116e2c3a529362d72cab44604cc92f16fc6abb025e"
+    }
+  ]
+}

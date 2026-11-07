@@ -107,6 +107,21 @@ class _Janela:
     termos: Counter[str]
     tamanho: int
     contexto: Counter[str]
+    bloco_inteiro: bool
+
+
+def _blocos_markdown(linhas: tuple[str, ...]) -> Iterable[tuple[int, int]]:
+    """Localiza parágrafos, tabelas e listas contíguas sem cortar suas linhas."""
+    inicio = 0
+    em_codigo = False
+    for pos, linha in enumerate((*linhas, "")):
+        if linha.lstrip().startswith(("```", "~~~")):
+            em_codigo = not em_codigo
+        if em_codigo or (linha.strip() and not _TITULO.match(linha)):
+            continue
+        if 2 <= pos - inicio <= LINHAS_PASSAGEM:
+            yield inicio, pos
+        inicio = pos + 1
 
 
 def _janelas(caminho: str, linhas: tuple[str, ...], *, contextual: bool = False) -> Iterable[_Janela]:
@@ -119,15 +134,20 @@ def _janelas(caminho: str, linhas: tuple[str, ...], *, contextual: bool = False)
                 titulos = {n: t for n, t in titulos.items() if n < nivel}
                 titulos[nivel] = titulo[2]
             titulos_por_linha.append(" ".join(titulos.values()))
-    for pos in range(0, len(linhas), _PASSO):
-        janela = linhas[pos:pos + LINHAS_PASSAGEM]
+    limites = {(pos, min(pos + LINHAS_PASSAGEM, len(linhas))): False
+               for pos in range(0, len(linhas), _PASSO)}
+    if contextual and caminho.endswith(".md"):
+        limites.update(dict.fromkeys(_blocos_markdown(linhas), True))
+    for (pos, fim), bloco_inteiro in sorted(limites.items()):
+        janela = linhas[pos:fim]
         corpo = "\n".join(janela)
         if len(corpo.encode()) > BYTES_PASSAGEM:
             continue
         contagem = termos_contextuais(corpo) if contextual else frequencias(corpo)
         if contagem:
             cabecalho = termos_contextuais(titulos_por_linha[pos]) if contextual else Counter()
-            yield _Janela(caminho, pos + 1, janela, contagem, contagem.total(), cabecalho)
+            yield _Janela(caminho, pos + 1, janela, contagem, contagem.total(), cabecalho,
+                          bloco_inteiro)
 
 
 def redundante(a: Local, b: Local, *, diverso: bool = False) -> bool:
@@ -167,6 +187,8 @@ class IndicePassagens:
                          for t in comuns)
             if self.contextual:
                 pontos += 0.65 * sum(idf[t] for t in idf if t in janela.contexto)
+                if janela.bloco_inteiro:
+                    pontos *= 1.12
             ranqueadas.append((-pontos, -len(comuns), janela.caminho, janela.inicio, janela))
         selecionadas: list[Local] = []
         for *_, j in sorted(ranqueadas, key=lambda linha: linha[:4]):
@@ -186,8 +208,14 @@ def combinar_evidencias(diretas: list[Local], contextuais: list[Local],
     selecao: list[Local] = []
     sobrepostas: list[Local] = []
     primaria = ancoras[0] if ancoras else []
-    primeiras = (primaria[:1], diretas[:1]) if priorizar_nota else (diretas[:1], primaria[:1])
-    ordem = (*primeiras, primaria[1:2], contextuais[:1], diretas[1:2], contextuais[1:3],
+    lexicais = (contextuais[:1], diretas[:1]) if contextuais and diretas and redundante(
+        contextuais[0], diretas[0], diverso=True
+    ) else (diretas[:1], contextuais[:1])
+    if priorizar_nota:
+        primeiras = (primaria[:1], lexicais[0], primaria[1:2], lexicais[1])
+    else:
+        primeiras = (*lexicais, primaria[:1], diretas[1:2], primaria[1:2])
+    ordem = (*primeiras, diretas[1:2], contextuais[1:3],
              *(grupo[:1] for grupo in ancoras[1:]), diretas[2:], contextuais[3:], primaria[2:],
              *(grupo[1:] for grupo in ancoras[1:]))
     for grupo in ordem:

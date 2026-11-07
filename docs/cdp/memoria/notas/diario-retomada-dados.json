@@ -22,8 +22,8 @@
   "evidencias": [
     {
       "caminho": "docs/cdp/playbooks/DIARIO.md",
-      "trecho": "- `dados não prontos` → **pare o laço** (não processe datas posteriores) e relate o `motivo`: a\n  próxima execução de `cdp-diario` retoma os pregões pendentes pela agenda. Não\n  espere nem repita em laço. Publique o que já fechou.\n- `sem carteira efetivada` → pare e relate (nenhuma decisão executável ainda).\n- Erro → pare e relate a mensagem (não tente contornar).",
-      "sha256": "64fbd2cd585b5adc2657736c035bdea9c21c02ceeea4fdfde9c51ec6d67fa13b"
+      "trecho": "registro diário encadeado por hash. Leia `status` na saída:\n\n- `registrado` → passo 3 com D (anote `alertas`).\n- `sem pregão` → próxima data.\n- `dados não prontos` → **pare o laço** (não processe datas posteriores) e relate o `motivo`: a\n  próxima execução de `cdp-diario` retoma os pregões pendentes pela agenda. Não\n  espere nem repita em laço. Publique o que já fechou.\n- `sem carteira efetivada` → pare e relate (nenhuma decisão executável ainda).\n- Erro → pare e relate a mensagem (não tente contornar).",
+      "sha256": "deb76b9b9f1573a94e5e7853f92ccce399e1488fa442dfa3d498cb87933933e1"
     },
     {
       "caminho": "docs/cdp/playbooks/DIARIO.md",

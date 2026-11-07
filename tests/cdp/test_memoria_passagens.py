@@ -8,7 +8,7 @@ import pytest
 
 from cdp.memoria import _fonte_atual
 from cdp.memoria_avaliacao import _medir
-from cdp.memoria_busca import Local, ampliar, combinar_evidencias, reunir_ancoras
+from cdp.memoria_busca import Local, _janelas, ampliar, combinar_evidencias, reunir_ancoras
 
 
 def test_avaliacao_exige_trecho_inteiro_e_todos_os_grupos():
@@ -33,10 +33,10 @@ def test_fusao_conserva_grupos_complementares_e_ignora_janelas_repetidas():
     contextuais = [repetida, Local("d", 12, 25, "")]
     ancoras = [[principal, complementar]]
     assert combinar_evidencias([direta, repetida], contextuais, ancoras, 3) == [
-        principal, direta, complementar,
+        principal, repetida, complementar,
     ]
     assert combinar_evidencias([direta, repetida], contextuais, ancoras, 5) == [
-        principal, direta, complementar, contextuais[1], repetida,
+        principal, repetida, complementar, contextuais[1], direta,
     ]
     assert combinar_evidencias([direta], [], ancoras, 1, priorizar_nota=False) == [direta]
     assert ancoras == [[principal, complementar]]
@@ -50,6 +50,18 @@ def test_ancoras_da_mesma_nota_cabem_sem_cortar_evidencia():
     juntas = reunir_ancoras([Local("a", 20, 21, ""), Local("a", 8, 12, "")], linhas)
     assert [(p.inicio, p.fim) for p in juntas] == [(8, 21)]
     assert juntas[0].sha256 == hashlib.sha256("\n".join(linhas[7:21]).encode()).hexdigest()
+
+
+def test_busca_contextual_preserva_bloco_que_cruza_limite_da_janela_lexical():
+    linhas = tuple(["# Encerramento", *["" for _ in range(12)],
+                    "Para reduzir a posição, veja as duas condições:",
+                    "- A linha precisa ter fechamento elegível;",
+                    "- a cotação deve ser da mesma linha e data.", ""])
+    janelas = list(_janelas("fonte.md", linhas, contextual=True))
+    bloco = next(j for j in janelas if j.bloco_inteiro)
+    assert bloco.inicio == 14 and bloco.linhas == linhas[13:16]
+    assert "encerr" in bloco.contexto
+    assert not any(j.bloco_inteiro for j in _janelas("fonte.md", linhas))
 
 
 def test_contexto_adjacente_preserva_ancora_e_hash():

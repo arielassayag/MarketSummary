@@ -345,7 +345,7 @@ _VOCABULARIO_TRABALHO = re.compile(
 )
 _TEMPO = re.compile(
     r"\b(?:agora|hoje|ontem|atual(?:mente|is)?|ultim[oa]s?|mais recente|proxim[oa]s?|"
-    r"neste (?:momento|instante|minuto)|no momento|"
+    r"neste (?:momento|instante|minuto)|no momento(?! (?:d[aeo]s?|em que)\b)|"
     r"(?:dest[ea]|nest[ea]) (?:manha|tarde|noite|semana|mes)|"
     r"em vigor|vigentes?)\b"
     r"|\b(?:\d{4}-\d{2}-\d{2}|\d{1,2}/\d{1,2}(?:/\d{2,4})?|"
@@ -356,8 +356,9 @@ _OCORRENCIA = re.compile(
     r"\b(?:ja|ainda) (?:rodou|executou|fechou|entregou|publicou|consta|subiu|saiu|"
     r"chegou|encerrou|concluiu|terminou|foi publicado|foi enviado)\b"
     r"|\b(?:acab(?:ou|aram) de|consta(?:m)?|aparece(?:m)?|gravou|publicou|"
-    r"selad[oa]s?|anotad[oa]s?|medid[oa]s?|observad[oa]s?|registrad[oa]s?|designad[oa]s?|"
+    r"selad[oa]s?|anotad[oa]s?|observad[oa]s?|registrad[oa]s?|designad[oa]s?|"
     r"abert[oa]s?|ativ[oa]s?|ficou|ficaram|marcou|primeir[oa]s?)\b"
+    r"|\bmedid[oa]s? (?:em|n[oa]s?|pel[oa]s?|durante)\b"
 )
 _PEDIDO_OBSERVACAO = re.compile(
     r"^(?:me )?(?:quem|qual|quais|quanto|quant[ao]s|onde|quando|em que|que|como esta|"
@@ -377,6 +378,7 @@ _PEDIDO_DE_PROCEDIMENTO = re.compile(
     r"posso\b|podemos\b|pode(?:m)?\b(?! (?:me )?(?:dizer|informar|mostrar)\b)|"
     r"devo\b|deve(?:m)?\b|precisa(?:m)?\b|permite\b|autoriza\b|atesta\b|serve para\b|"
     r"o que (?:faco|fazer|vale conferir)|de onde tiro|onde (?:consulto|confiro|preparo)|"
+    r"(?:usa|mede|calcula|considera|aplica|define)-se\b|"
     r"(?:metodo|regra|criterio|passos?|roteiro) (?:para|de|da|do)\b)"
 )
 _CONTROLES = re.compile(r"\b(?:trava|gate|mandato|limites?|autenticacao|permiss(?:ao|oes))\b")
@@ -619,7 +621,7 @@ class Catalogo:
                 if (local.fim - local.inicio + 1 <= LINHAS_PASSAGEM
                         and len(evidencia.trecho.encode()) <= BYTES_PASSAGEM):
                     fontes.setdefault(local.caminho, []).append(local)
-                    termos_ancoras[local] = bool(termos & termos_contextuais(evidencia.trecho).keys())
+                    termos_ancoras[local] = len(termos & termos_contextuais(evidencia.trecho).keys()) >= 2
             reunidas = [p for caminho, locais in fontes.items()
                         for p in reunir_ancoras(locais, self.fontes.linhas(caminho))]
             reunidas.sort(key=lambda p: -len(termos & termos_contextuais(

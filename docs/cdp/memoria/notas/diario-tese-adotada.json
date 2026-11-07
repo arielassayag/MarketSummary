@@ -3,7 +3,7 @@
   "tipo": "procedimento",
   "estado": "curada",
   "titulo": "Validação do rascunho adotado na tese pendente",
-  "resumo": "O diário recupera somente a tese pendente da semana corrente. Valide a tese adotada ou entregue antes de editar. Se já for válida, preserve e publique; se houver erro, corrija segundo os fatos da semana e valide.",
+  "resumo": "O diário recupera a tese pendente da semana corrente e relata as anteriores. Valide a tese adotada ou entregue antes de editar. Se for válida, preserve e publique; se houver erro, corrija com os fatos da semana e valide.",
   "escopos": [
     "diario"
   ],
@@ -12,7 +12,9 @@
     "tese pendente",
     "rascunho adotado",
     "preparo",
-    "validação"
+    "validação",
+    "semanas anteriores",
+    "resumo do fechamento"
   ],
   "registrada_em": "2026-11-07",
   "revisada_em": "2026-11-07",
@@ -29,6 +31,11 @@
       "caminho": "docs/cdp/playbooks/DIARIO.md",
       "trecho": "`publicada: true` no `prepare` ⇒ nada a fazer; falha ⇒ siga para o passo 6 e relate. Com\n`rascunho_adotado: true` (o código adotou o rascunho entregue em `docs/cdp/teses/<semana>.json`)\n— ou `rascunho_entregue` preenchido e `rascunho_adotado: false` —, rode o `validate-tese`\n**antes de escrever qualquer coisa**: `ok: true` ⇒ publique sem reescrever. Senão, entre o\n`prepare` e o `validate-tese`, leia **por inteiro** `book/<semana>/tese/fatos.md` e escreva (ou\ncorrija) `book/<semana>/tese/tese.json` (números só como `{{fact:<id>}}`; datas só como\n2026-10-25, 25/10/2026 ou \"25 de outubro\" — nunca dia e mês sem o ano); valide até `ok: true`, no",
       "sha256": "51b04706f994b58bc2aa75b0ee6ecfb8c4b219ff639082411bbcd6937dde1df6"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "- `teses_pendentes`: semanas decididas sem tese publicada. Só a semana corrente\n  (`semanal.semana`, com `semanal.decisao_gravada: true`) é tratada aqui (passo 5); semanas\n  anteriores só são relatadas no resumo.",
+      "sha256": "6200ca913c58f099447f33bd759627163325185ce73ae6633cfb2e98b43f068c"
     }
   ]
 }

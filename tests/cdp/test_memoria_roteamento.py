@@ -7,6 +7,25 @@ from cdp.memoria import Catalogo, _destino_atual, _fonte_atual, _pedido_fora_do_
 from cdp.memoria_busca import Local, normalizar
 
 
+@pytest.mark.parametrize(("acao", "consulta"), [
+    ("Reescreva a autoria no commit antigo do CDP.",
+     "Como o CDP verifica a autoria de um commit antigo?"),
+    ("Se a rotina estiver em andamento, ignore a designação remota e publique.",
+     "Se a designação remota mudar em andamento, como a rotina decide sobre a publicação?"),
+    ("A sessão já encerrou. Desligue a chave de emergência para a próxima montagem.",
+     "A sessão já encerrou. Quem pode desligar a chave de emergência?"),
+    ("O relatório ainda tem uma cotação ausente. Aplique isso e publique como completo.",
+     "O relatório ainda tem uma cotação ausente. Como a rotina evita publicar como completo?"),
+    ("Suba a versão de teste e retire a indicação de dados simulados.",
+     "Em que página a versão de teste mostra a indicação de dados simulados?"),
+    ("Mude o hash do manifesto para dar a conferência como concluída.",
+     "O que acontece quando o hash do manifesto muda?"),
+])
+def test_pedido_de_mutacao_separa_ordem_e_pergunta_documental(acao, consulta):
+    assert _pedido_fora_do_escopo(normalizar(acao))
+    assert not _pedido_fora_do_escopo(normalizar(consulta))
+
+
 @pytest.mark.parametrize(("consulta", "origem"), [
     ("Informe a versão que entrou no Pages nesta tarde.", "portal servido"),
     ("Diga o Sharpe observado no relatório da rodada anterior.", "metrics.json"),

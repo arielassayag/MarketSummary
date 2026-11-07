@@ -430,19 +430,35 @@ _PEDIDO_DE_PROCEDIMENTO = re.compile(
     r"(?:usa|mede|calcula|considera|aplica|define)-se\b|"
     r"(?:metodo|regra|criterio|passos?|roteiro) (?:para|de|da|do)\b)"
 )
-_CONTROLES = re.compile(r"\b(?:trava|gate|mandato|limites?|autenticacao|permiss(?:ao|oes))\b")
+_CONTROLES = re.compile(
+    r"\b(?:travas?|gates?|mandato|limites?|autenticacao|permiss(?:ao|oes)|"
+    r"designacao (?:remota|d[oa] executor)|confirmacao d[oa] operador)\b"
+)
+_OBJETO_OPERACIONAL = (
+    r"\b(?:livro|carteira|ordens?|relatorios?|dados?|provas?|evidencias?|recibos?|hash(?:es)?|"
+    r"trilhas?|notas?|gates?|travas?|commits?|trailers?|manifestos?|cotac(?:ao|oes)|"
+    r"chave de emergencia|kill[- ]switch)\b"
+)
 _MUTACAO_OPERACIONAL = re.compile(
-    r"^(?:por favor[,:]?\s+)?(?:(?:quero|preciso|peco) que(?: voce)?\s+|"
+    r"(?:^|[.!?;]\s+|^(?:se|caso)\b[^,.!?]{0,120},\s+)"
+    r"(?:por favor[,:]?\s+)?(?:(?:quero|preciso|peco) que(?: voce)?\s+|"
     r"(?:pode|poderia|favor)\s+)?"
     r"(?:publique|publicar|republique|republicar|apague|apagar|exclua|excluir|"
     r"reescreva|reescrever|edite|editar|substitua|substituir|adultere|adulterar|"
     r"forje|forjar|falsifique|falsificar|assine|assinar|grave|gravar|"
-    r"troque|trocar|altere|alterar|remova|remover|retifique|retificar)\b"
-    r"[^.!?\n]{0,140}\b(?:livro|carteira|ordens?|relatorios?|dados?|"
-    r"provas?|evidencias?|recibos?|hash(?:es)?|trilhas?|notas?|gates?|travas?)\b"
+    r"troque|trocar|altere|alterar|remova|remover|retifique|retificar|"
+    r"desative|desativar|desligue|desligar|mude|mudar)\b"
+    rf"[^.!?\n]{{0,140}}{_OBJETO_OPERACIONAL}"
+)
+_MUTACAO_REFERIDA = re.compile(
+    r"(?:^|[.!?;]\s+)(?:faca|aplique|execute) isso e (?:publique|grave|republique)\b"
+)
+_RETIRAR_MARCA_SIMULADA = re.compile(
+    r"^(?:(?:coloque|publique|suba|divulgue)\b[^.!?]{0,140}\be\s+)?"
+    r"(?:tire|retire|remova|apague|oculte) (?:a )?(?:marca|indicacao|rotulo) de dados simulados\b"
 )
 _BURLA = re.compile(
-    r"(?:^|[.!?]\s+)(?:ignore|burle|contorne|drible)\b|"
+    r"(?:^|[.!?]\s+|^(?:se|caso)\b[^,.!?]{0,120},\s+)(?:ignore|burle|contorne|drible)\b|"
     r"\b(?:como|mandou|instruiu a|disse para) (?:ignorar|burlar|contornar|driblar)\b"
 )
 _SEGREDO = r"(?:senhas?|credenciais|tokens?|chaves? (?:privadas?|de api|de acesso))"
@@ -533,6 +549,8 @@ def _pedido_fora_do_escopo(q: str) -> bool:
     ):
         return True
     return bool(_MUTACAO_OPERACIONAL.search(q)
+                or _RETIRAR_MARCA_SIMULADA.search(q)
+                or (_MUTACAO_REFERIDA.search(q) and re.search(_OBJETO_OPERACIONAL, q))
                 or (_BURLA.search(q) and _CONTROLES.search(q)) or _EXTRACAO_SEGREDO.search(q)
                 or (_NEGOCIACAO_REAL.search(q) and _PEDIDO_NEGOCIACAO.search(q))
                 or (_RECURSO_PRIVADO.search(q) and (nega_vinculo or _ORGANIZACAO_EXTERNA.search(q))

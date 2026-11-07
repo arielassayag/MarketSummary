@@ -29,6 +29,7 @@ from .memoria_busca import (
     LINHAS_PASSAGEM,
     IndicePassagens,
     Local,
+    ampliar_selecao,
     combinar_evidencias,
     completar_bloco,
     reunir_ancoras,
@@ -381,8 +382,9 @@ _PROCEDIMENTO = re.compile(
     r"(?:comprova|confirma|demonstra|distingue)m?\b))"
 )
 _PEDIDO_DE_PROCEDIMENTO = re.compile(
-    r"\b(?:como (?!esta\b|estao\b|ficou\b|anda\b|se encontra\b)|"
-    r"posso\b|podemos\b|pode(?:m)?\b(?! (?:me )?(?:dizer|informar|mostrar)\b)|"
+    r"(?:^|[,;:]\s*|\b(?:e|ou|diga|explique|mostre|descreva|ensine|saber) )"
+    r"como (?!esta\b|estao\b|ficou\b|anda\b|se encontra\b)|"
+    r"\b(?:posso\b|podemos\b|pode(?:m)?\b(?! (?:me )?(?:dizer|informar|mostrar)\b)|"
     r"devo\b|deve(?:m)?\b|precis(?:o|a|amos|am)\b|permite\b|autoriza\b|atesta\b|serve para\b|"
     r"o que (?:faco|fazer|vale conferir)|de onde tiro|onde (?:consulto|confiro|preparo)|"
     r"(?:usa|mede|calcula|considera|aplica|define)-se\b|"
@@ -425,7 +427,15 @@ _CONTEXTO_ALHEIO = re.compile(
 )
 _VINCULO_CDP = re.compile(
     r"\b(?:cdp|marketsummary|cabras? da peste|factbook|cdp-trava|kill[- ]switch|"
-    r"backtest[- ]operacional|origin/main|carteira simulada|agenda das rotinas)\b"
+    r"backtest[- ]operacional|carteira simulada|agenda das rotinas)\b"
+)
+_MEDICAO_DE_ATIVO = re.compile(
+    r"\b(?:retornos?|rentabilidade|volatilidade|cotac(?:ao|oes)) d[aeo]s? "
+    r"(?:indices?|benchmarks?|etfs?|carteiras?|ac(?:ao|oes))\b"
+)
+_TERMOS_INCIDENTAIS = frozenset(
+    "cada meu minha meus minhas seu sua seus suas ele ela eles elas eu estao estava estavam "
+    "mas num numa agora atual atualmente hoje ontem dois duas tres quatro cinco seis sete oito nove dez".split()
 )
 
 
@@ -449,7 +459,7 @@ def _pede_estado(q: str) -> bool:
         fim = frase.rsplit(", ", 1)[-1]
         if _PEDIDO_OBSERVACAO.match(fim):
             frase = fim
-        if (not (_MERCADO.search(frase) or _DOMINIO.search(frase))
+        if (not (_MERCADO.search(frase) or _DOMINIO.search(frase) or _VINCULO_CDP.search(frase))
                 or _PROCEDIMENTO.search(frase) or _PEDIDO_DE_PROCEDIMENTO.search(frase)):
             continue
         pedido = _PEDIDO_OBSERVACAO.search(frase) or frase.endswith("?")
@@ -465,6 +475,8 @@ def _fonte_atual(consulta: str, *, forcar: bool = False) -> str | None:
     q = _normalizar(consulta).strip()
     if not forcar and not _pede_estado(q):
         return None
+    if re.search(r"\b(?:frentes? de desenvolvimento|passagem de bastao|em_andamento)\b", q):
+        return "Consulte a passagem corrente em docs/cdp/EM_ANDAMENTO.md na revisão atual."
     if re.search(r"\b(?:portal|pages|implantacao|deploy)\b", q):
         return "Confira o portal servido e a procedência em docs/cdp/SITE.md."
     if re.search(r"\b(?:e-?mails?|entrega)\b", q):
@@ -622,6 +634,7 @@ class Catalogo:
 
     def _buscar_notas_contextuais(self, escopo: Escopo, consulta: str, limite: int) -> list[Registro]:
         termos = termos_contextuais(consulta).keys()
+        referencias = _tokens(" ".join(re.findall(r"\b[A-Z][A-Z0-9]{1,}\b", consulta))) - {"cdp", "ia"}
         candidatas = []
         for registro in self.ativos:
             n = registro.nota
@@ -638,8 +651,9 @@ class Catalogo:
             comuns = termos & (chaves | resumo | fonte)
             if len(comuns) < 2 or not termos & (chaves | resumo):
                 continue
-            pontos = sum(pesos[t] * (3 * (t in chaves) + 2 * (t in resumo) + (t in fonte))
-                         for t in sorted(comuns))
+            # Siglas explícitas ganham peso somente se a fonte literal as sustenta.
+            pontos = sum(pesos[t] * (3 * (t in chaves) + 2 * (t in resumo) + (t in fonte)
+                                     + 3 * (t in fonte and t in referencias)) for t in sorted(comuns))
             ranking.append((-pontos, -len(comuns), registro.nota.id, registro))
         ranking.sort(key=lambda valor: valor[:3])
         return [registro for *_, registro in ranking[:limite]]
@@ -675,10 +689,32 @@ class Catalogo:
                                          and primeira.inicio <= p.inicio <= p.fim <= primeira.fim
                                          for p, tem_apoio in termos_ancoras.items())
                 ancoras.append([primeira, *complementares])
-        contextuais = self.indice.buscar(escopo, consulta, max(limite, 5), contextual=True)
-        escolhidas = combinar_evidencias(diretas, contextuais, ancoras, limite,
+        largura = max(limite, 5)
+        contextuais = self.indice.buscar(escopo, consulta, max(largura, 10), contextual=True)
+        escolhidas = combinar_evidencias(diretas, contextuais[:largura], ancoras, limite,
                                          priorizar_nota=priorizar_nota)
-        return [completar_bloco(p, self.fontes.linhas(p.caminho)) for p in escolhidas]
+        blocos = [completar_bloco(p, self.fontes.linhas(p.caminho)) for p in escolhidas]
+        if not any(p.fim - p.inicio + 1 < LINHAS_PASSAGEM for p in blocos):
+            return blocos
+        diretas_amplas = self.indice.buscar(escopo, consulta, max(limite, 10))
+        return ampliar_selecao(blocos, (*diretas_amplas, *contextuais), self.fontes.linhas)
+
+    def _tem_apoio_no_acervo(self, escopo: Escopo, q: str, diretas: list[Local], *,
+                            observacao: bool) -> bool:
+        termos = {t for t in termos_contextuais(q) if not t.startswith("@") and not t.isdigit()}
+        termos -= _TERMOS_INCIDENTAIS
+        base = min(3, len(termos)) if _tema_do_cdp(q) else 4
+        minimo = 2 if observacao else max(2, len(termos) // 5, base)
+
+        def apoia(p: Local) -> bool:
+            texto = "\n".join(self.fontes.linhas(p.caminho)[p.inicio - 1:p.fim])
+            return len(termos & termos_contextuais(texto).keys()) >= minimo
+
+        # Uma fonte deve sustentar os termos em conjunto. Etiquetas, aliases e títulos
+        # do índice, sozinhos, não autorizam admitir um assunto novo no acervo.
+        return any(apoia(p) for p in diretas) or any(
+            apoia(p) for p in self.indice.buscar(escopo, q, 5, contextual=True)
+        )
 
     def buscar(self, escopo: Escopo, consulta: str, limite: int, *,
                estado_atual: bool = False) -> dict:
@@ -686,15 +722,12 @@ class Catalogo:
         fora = _pedido_fora_do_escopo(q)
         atual = None if fora else _fonte_atual(consulta, forcar=estado_atual)
         diretas = [] if fora or estado_atual else self.indice.buscar(escopo, consulta, limite)
-        if not (fora or atual or _tema_do_cdp(q)):
-            termos = _tokens(q)
-            minimo = max(4, (len(termos) + 3) // 4)
-            # A busca ainda aceita terminologia nova quando há apoio textual suficiente.
-            fora = not any(len(termos & _tokens("\n".join(
-                self.fontes.linhas(p.caminho)[p.inicio - 1:p.fim]
-            ))) >= minimo for p in diretas)
+        vinculo = _VINCULO_CDP.search(q) or (atual and _MEDICAO_DE_ATIVO.search(q))
+        if not (fora or estado_atual or vinculo):
+            fora = not self._tem_apoio_no_acervo(escopo, q, diretas, observacao=bool(atual))
             if fora:
                 diretas = []
+                atual = None
         notas = [] if fora or atual else self._buscar_notas(escopo, consulta, limite, expandir=True)
         if atual and not estado_atual:
             atual = "Se a pergunta for sobre o estado efetivo, consulte a fonte oficial. " + atual

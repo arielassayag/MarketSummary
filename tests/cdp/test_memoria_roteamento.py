@@ -4,7 +4,7 @@ from types import SimpleNamespace
 import pytest
 
 from cdp.memoria import Catalogo, _fonte_atual, _pedido_fora_do_escopo
-from cdp.memoria_busca import normalizar
+from cdp.memoria_busca import Local, normalizar
 
 
 @pytest.mark.parametrize(("consulta", "origem"), [
@@ -26,6 +26,8 @@ from cdp.memoria_busca import normalizar
     ("Que teste falhou no portal que acabou de subir?", "portal servido"),
     ("O portal já está exibindo a revisão do remoto?", "portal servido"),
     ("Quais emissores já tiveram os resultados refletidos no retrato?", "retrato da cobertura"),
+    ("Qual frente de desenvolvimento do CDP ficou para a próxima sessão?", "EM_ANDAMENTO.md"),
+    ("Quem ocupa a função de executor hoje e este clone está registrado como ele?", "estado e a agenda"),
 ])
 def test_consulta_observada_indica_a_fonte_da_tarefa(consulta, origem):
     orientacao = _fonte_atual(consulta)
@@ -46,6 +48,7 @@ def test_consulta_observada_indica_a_fonte_da_tarefa(consulta, origem):
     "Qual comprovante confirma a versão do portal que ficou no ar após o deploy?",
     "Que evidência demonstra qual implantação ficou disponível na última publicação?",
     "Como saber se os resultados já foram incorporados ao modelo da carteira?",
+    "Com o portal publicado ontem, como verifico se a implantação terminou?",
 ])
 def test_ocorrencia_narrada_nao_converte_regra_em_pedido_de_estado(consulta):
     assert _fonte_atual(consulta) is None
@@ -87,3 +90,18 @@ def test_recurso_privado_do_proprio_projeto_nao_e_bloqueado_por_origem(consulta)
 ])
 def test_contexto_externo_com_vinculo_operacional_nao_e_bloqueado(consulta):
     assert not _pedido_fora_do_escopo(normalizar(consulta))
+
+
+@pytest.mark.parametrize(("consulta", "trecho"), [
+    ("Qual é o risco atual de fratura no prontuário do paciente?", "O risco atual segue o mandato."),
+    ("Planeje uma janela semanal de órbita para três satélites.", "Cada janela semanal permite três ordens."),
+])
+def test_coincidencias_isoladas_na_fonte_nao_sustentam_o_tema(consulta, trecho):
+    c = object.__new__(Catalogo)
+    c.fontes = SimpleNamespace(revisao="0" * 40, linhas=lambda _: (trecho,))
+    c.data = date(2026, 11, 7)
+    c.problemas = []
+    c.indice = SimpleNamespace(buscar=lambda *args, **kwargs: [Local("AGENTS.md", 1, 1, "0" * 64)])
+    saida = c.buscar("risco", consulta, 5)
+    assert saida["notas"] == saida["fontes"] == saida["passagens"] == []
+    assert saida["orientacao_atual"] is None

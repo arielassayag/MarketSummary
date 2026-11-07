@@ -7,7 +7,7 @@ import math
 import re
 import unicodedata
 from collections import Counter
-from collections.abc import Iterable
+from collections.abc import Callable, Iterable
 from dataclasses import dataclass
 
 LINHAS_PASSAGEM = 14
@@ -43,6 +43,7 @@ _CONCEITOS = {
     "fato": r"factbook|fatos? citave(?:l|is)|placeholder(?:s)? de fato|referencia de fato",
     "fuso": r"utc|fusos?(?: horarios?)?|horario de brasilia|virada d[eo] dia|dia seguinte",
     "impressao-digital": r"hash(?:es)?|sha[- ]?256|checksum(?:s)?|digest(?:s)?|impressao digital",
+    "incerteza": r"incert[oa]s?|incertezas?|conviccao ordinal|linguagem ordinal|confianca qualitativa",
     "integridade": r"integridade|cdp verify|trilha encadeada|cadeia de auditoria",
     "janela": r"prazo efetivo|janela operacional|limite de horario|corte da decisao|tempo restante",
     "kill-switch": r"kill[- ]switch|bloqueio de risco|bloqueio de risco novo|ligar o bloqueio",
@@ -189,6 +190,33 @@ def completar_bloco(local: Local, linhas: tuple[str, ...]) -> Local:
             inicio, fim = a, b
     return (local if (inicio, fim) == (local.inicio, local.fim)
             else localizar(local.caminho, inicio, linhas[inicio - 1:fim]))
+
+
+def ampliar_selecao(passagens: list[Local], candidatas: Iterable[Local],
+                    ler: Callable[[str], tuple[str, ...]]) -> list[Local]:
+    """Usa superjanelas canônicas sem perder evidência ou exceder 4.500 bytes."""
+    def tamanho(p: Local) -> int:
+        return len("\n".join(ler(p.caminho)[p.inicio - 1:p.fim]).encode())
+
+    selecionadas = list(passagens)
+    total = sum(map(tamanho, selecionadas)) + max(0, len(selecionadas) - 1)
+    if total >= 4_500:
+        return selecionadas
+    por_fonte: dict[str, list[Local]] = {}
+    for p in candidatas:
+        por_fonte.setdefault(p.caminho, []).append(p)
+    for i, atual in enumerate(selecionadas):
+        tamanho_atual = tamanho(atual)
+        for candidata in por_fonte.get(atual.caminho, []):
+            if (candidata == atual or candidata.inicio > atual.inicio or candidata.fim < atual.fim
+                    or candidata.fim - candidata.inicio + 1 > LINHAS_PASSAGEM):
+                continue
+            maior = tamanho(candidata)
+            if maior <= BYTES_PASSAGEM and total + maior - tamanho_atual <= 4_500:
+                selecionadas[i] = candidata
+                total += maior - tamanho_atual
+                break
+    return selecionadas
 
 
 def _janelas(caminho: str, linhas: tuple[str, ...], *, contextual: bool = False) -> Iterable[_Janela]:

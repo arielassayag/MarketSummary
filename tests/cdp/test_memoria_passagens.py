@@ -12,6 +12,7 @@ from cdp.memoria_busca import (
     Local,
     _janelas,
     ampliar,
+    ampliar_selecao,
     combinar_evidencias,
     completar_bloco,
     reunir_ancoras,
@@ -102,6 +103,19 @@ def test_completa_bloco_preservando_a_evidencia_ja_encontrada():
     assert inteiro.sha256 == hashlib.sha256("\n".join(linhas[2:4]).encode()).hexdigest()
     grande = ("# Risco", "", "A" * 1500, "B" * 600)
     assert completar_bloco(recorte, grande) == recorte
+
+
+def test_amplia_selecao_por_contencao_sem_cortar_ou_exceder_orcamento():
+    linhas = {c: tuple(f"{c} {i}" for i in range(1, 21)) for c in "abcd"}
+    antiga = Local("a", 8, 10, "")
+    parcial = Local("a", 9, 16, "")
+    completa = Local("a", 5, 16, "")
+    assert ampliar_selecao([antiga], [parcial, completa], linhas.__getitem__) == [completa]
+    linhas.update({c: (c * 1400,) for c in "bcd"})
+    linhas["a"] = ("x" * 600, *linhas["a"][1:])
+    longa = Local("a", 1, 10, "")
+    base = [antiga, *(Local(c, 1, 1, "") for c in "bcd")]
+    assert ampliar_selecao(base, [longa], linhas.__getitem__) == base
 
 
 def test_contexto_adjacente_preserva_ancora_e_hash():

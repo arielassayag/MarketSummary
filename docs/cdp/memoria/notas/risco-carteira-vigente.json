@@ -3,7 +3,7 @@
   "tipo": "procedimento",
   "estado": "curada",
   "titulo": "O intradiário mede a carteira vigente até o leilão",
-  "resumo": "No dia de montagem, trate a decisão como pendente até o registro do fechamento. A agenda indica se há pregão na B3 e define a leitura ao vivo ou pelo fechamento. A cobertura das cotações acompanha o resultado estimado e as ausências ficam explícitas.",
+  "resumo": "A agenda distingue o monitor ao vivo com pregão da B3 e a leitura sem --live quando o mercado brasileiro fecha. Antes do leilão, o monitor mede a carteira vigente. Se ainda não houver registro diário, relate a decisão pendente.",
   "escopos": [
     "risco",
     "semanal"
@@ -14,7 +14,9 @@
     "cotação",
     "carteira vigente",
     "b3",
-    "nyse"
+    "nyse",
+    "monitor",
+    "sem registro"
   ],
   "registrada_em": "2026-11-07",
   "revisada_em": "2026-11-07",
@@ -24,8 +26,8 @@
   "evidencias": [
     {
       "caminho": "docs/cdp/playbooks/RISCO.md",
-      "trecho": "Com `pregao_b3_hoje: true`:\n\n```sh\nuv run python -m cdp risk --live\n```\n\nSem pregão na B3 (feriado local com a NYSE aberta):\n\n```sh\nuv run python -m cdp risk\n```",
-      "sha256": "cec2dfd4cbb7b480adbd9a1e4b1c0a1158646b31a8368ae4057d6d2371b7be18"
+      "trecho": "Com `pregao_b3_hoje: true`:\n\n```sh\nuv run python -m cdp risk --live\n```\n\nSem pregão na B3 (feriado local com a NYSE aberta):\n\n```sh\nuv run python -m cdp risk\n```\n\nO comando grava `reports/risk/<data>/risco_<HHMM>.md` e `.json` (caminhos em `relatorio`).\n`status: \"sem registro\"` = o registro diário ainda não começou; relate só `decisao_pendente`.",
+      "sha256": "90d8c97e7b67a16d804b7a255dce3dfb06df85bcf1c0bfdfda529740f7d6370b"
     },
     {
       "caminho": "docs/cdp/playbooks/RISCO.md",

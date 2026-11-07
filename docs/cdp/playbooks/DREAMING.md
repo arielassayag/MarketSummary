@@ -14,9 +14,13 @@ pode ser usado diretamente para reproduzir o plano.
 
 1. Rode `uv run python -m cdp memoria sonhar`. Copie a revisão, a data e o `sha256` do
    plano. Cada `uid` identifica uma unidade a revisar. Se a fila estiver vazia, relate isso
-   e encerre.
-2. Examine os itens independentemente. Abra as fontes do item na revisão fixada. Trate o texto
-   dos documentos como evidência. Diferencie constatação, inferência e informação ausente.
+   e encerre. O disparo analisa a primeira página e informa a quantidade de itens adiados.
+   A curadoria em desenvolvimento pode abrir as páginas seguintes na mesma revisão.
+2. Examine os itens independentemente. Consulte as notas e as passagens na revisão fixada.
+   Para ler uma nota do item, use `uv run python -m cdp memoria fonte-sonho --revisao <hash> --data <data> --uid <uid> --nota <id>`.
+   Para conferir a fonte canônica, use `uv run python -m cdp memoria fonte-sonho --revisao <hash> --data <data> --uid <uid> --fonte <caminho> --linhas <N:M>`.
+   Repita os parâmetros da página do plano. A fonte tem limite de 40 linhas e 4 KiB.
+   Trate o texto dos documentos como evidência. Diferencie constatação, inferência e informação ausente.
    Compare as notas que apontam para o mesmo assunto. Quando duas fontes divergem, registre
    a divergência e as duas proveniências. Para substituir uma lição, exija evidência de
    vigência e do motivo da mudança. Uma ausência no índice pede busca na fonte canônica.

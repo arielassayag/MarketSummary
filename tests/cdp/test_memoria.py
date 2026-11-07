@@ -230,7 +230,7 @@ def test_retirada_preserva_substituicao_e_fonte_antiga(repo):
 
 
 def test_sonho_cobre_fila_e_confere_candidatas_sem_ativacao(repo):
-    from cdp.memoria_sonho import conferir_sonho, sonhar, wiki
+    from cdp.memoria_sonho import conferir_sonho, ler_fonte_sonho, sonhar, wiki
 
     _nota(repo, "nova-licao", estado="candidata", revisada_em=None, rever_em=None,
           destaque=False, resumo="Uma hipótese sobre a consulta da moeda.")
@@ -240,6 +240,14 @@ def test_sonho_cobre_fila_e_confere_candidatas_sem_ativacao(repo):
     assert plano == sonhar(catalogo)
     item = next(i for i in plano["fila"] if i["id"] == "nova-licao")
     assert item["acao"] == "revisar_candidata" and item["origens"][0]["sha256"]
+
+    _gravar(repo, FONTE, "Edição local fora do plano.")
+    trecho = ler_fonte_sonho(catalogo, plano, item["uid"], caminho=FONTE, linhas=(3, 3),
+                             nota_id=None)
+    assert trecho["trecho"] == TRECHO
+    with pytest.raises(MemoriaErro, match="fonte do item"):
+        ler_fonte_sonho(catalogo, plano, item["uid"], caminho="AGENTS.md", linhas=(1, 1),
+                       nota_id=None)
 
     candidata = catalogo.notas["nova-licao"].model_dump(mode="json")
     candidata.update(id="licao-revisada", registrada_em=DATA.isoformat())

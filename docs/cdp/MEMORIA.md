@@ -160,6 +160,8 @@ uv run python -m cdp memoria sonhar
 uv run python -m cdp memoria wiki --escopo desenvolvimento
 ```
 
+A rotina usa `fonte-sonho` para ler apenas as notas e as passagens autorizadas pelo
+item na revisão fixada. A leitura por intervalo limita o retorno a 40 linhas e 4 KiB.
 Cada item exige uma disposição e sua justificativa. A devolutiva traz o SHA-256 do
 plano, cobre todos os IDs selecionados e pode anexar novas notas candidatas
 no esquema deste manual. A curadoria compara fontes quando elas divergem.

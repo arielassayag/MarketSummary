@@ -727,12 +727,15 @@ def _comando(args: argparse.Namespace) -> int:
             _json(rel)
             return int(bool(c.problemas))
         c = Catalogo(fontes, args.data or _hoje())
-        if acao in ("sonhar", "conferir-sonho"):
-            from .memoria_sonho import MAX_BYTES_RESPOSTA, conferir_sonho, sonhar
+        if acao in ("sonhar", "conferir-sonho", "fonte-sonho"):
+            from .memoria_sonho import MAX_BYTES_RESPOSTA, conferir_sonho, ler_fonte_sonho, sonhar
 
             plano = sonhar(c, limite=args.limite, desde=args.desde, pagina=args.pagina)
             if acao == "sonhar":
                 _json(plano)
+            elif acao == "fonte-sonho":
+                _json(ler_fonte_sonho(c, plano, args.uid, caminho=args.fonte,
+                                     linhas=args.linhas, nota_id=args.nota))
             else:
                 _json(conferir_sonho(c, plano, sys.stdin.buffer.read(MAX_BYTES_RESPOSTA + 1)))
         elif acao == "wiki":
@@ -771,12 +774,15 @@ def registrar(sub: argparse._SubParsersAction) -> None:
         ("avaliar", "executa a comparação offline do corpus da revisão Git"),
         ("sonhar", "gera um plano de revisão de memória na revisão Git"),
         ("conferir-sonho", "valida na entrada padrão uma devolutiva vinculada ao plano"),
+        ("fonte-sonho", "lê uma nota ou trecho Git permitido pelo item do plano"),
         ("wiki", "mostra tópicos e evidências do catálogo curado por escopo"),
     ):
         s = acoes.add_parser(acao, help=ajuda)
         s.set_defaults(func=_comando)
-        if acao in ("contexto", "buscar", "avaliar", "wiki", "sonhar", "conferir-sonho"):
-            s.add_argument("--revisao", help="hash completo do commit local a consultar")
+        if acao in ("contexto", "buscar", "avaliar", "wiki", "sonhar", "conferir-sonho",
+                    "fonte-sonho"):
+            s.add_argument("--revisao", required=acao == "fonte-sonho",
+                           help="hash completo do commit local a consultar")
         if acao == "avaliar":
             conjunto = s.add_mutually_exclusive_group()
             conjunto.add_argument("--reservada", action="store_true",
@@ -786,15 +792,22 @@ def registrar(sub: argparse._SubParsersAction) -> None:
             conjunto.add_argument("--sonho", action="store_true",
                                    help="executa o ensaio de revisão em Git temporário")
         else:
-            s.add_argument("--data", type=_data, help="data de referência (padrão: Brasília)")
+            s.add_argument("--data", type=_data, required=acao == "fonte-sonho",
+                           help="data de referência (padrão: Brasília)")
         if acao in ("contexto", "buscar", "propor", "wiki"):
             s.add_argument("--escopo", choices=tuple(ESCOPO), required=True)
-        if acao in ("sonhar", "conferir-sonho"):
+        if acao in ("sonhar", "conferir-sonho", "fonte-sonho"):
             s.add_argument("--desde", help="hash completo da última revisão examinada")
             s.add_argument("--limite", type=int, choices=range(1, 13), default=12,
                            help="quantidade máxima de itens do plano")
             s.add_argument("--pagina", type=int, default=1,
                            help="página da fila na revisão fixada")
+        if acao == "fonte-sonho":
+            s.add_argument("--uid", required=True, help="identificador do item do plano")
+            origem = s.add_mutually_exclusive_group(required=True)
+            origem.add_argument("--fonte", help="caminho da fonte do item")
+            origem.add_argument("--nota", help="ID de uma nota do item")
+            s.add_argument("--linhas", type=_intervalo, help="intervalo inclusivo da fonte")
         if acao == "auditar":
             s.add_argument("--revisao-git", action="store_true",
                            help="audita o HEAD em vez da árvore de trabalho")

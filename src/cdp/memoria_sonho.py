@@ -160,6 +160,30 @@ def sonhar(catalogo: Catalogo, *, limite: int = LIMITE_SONHO, desde: str | None 
     return {**pacote, "sha256": _digestir(pacote)}
 
 
+def ler_fonte_sonho(catalogo: Catalogo, plano: dict, uid: str, *,
+                   caminho: str | None, linhas: tuple[int, int] | None,
+                   nota_id: str | None) -> dict:
+    item = next((i for i in plano["fila"] if i["uid"] == uid), None)
+    if item is None:
+        raise MemoriaErro("item fora da página selecionada")
+    out = {"plano_sha256": plano["sha256"], "revisao": catalogo.fontes.revisao, "uid": uid}
+    if nota_id is not None:
+        if linhas is not None or nota_id not in {n["id"] for n in item["notas"]}:
+            raise MemoriaErro("nota fora do item ou intervalo incompatível")
+        return {**out, "nota": catalogo.notas[nota_id].model_dump(mode="json")}
+    if caminho not in item["fontes"] or linhas is None:
+        raise MemoriaErro("informe fonte do item e intervalo de linhas")
+    inicio, fim = linhas
+    todas = catalogo.fontes.linhas(caminho)
+    if not 1 <= inicio <= fim <= len(todas) or fim - inicio >= 40:
+        raise MemoriaErro("intervalo inválido ou acima de 40 linhas")
+    corpo = "\n".join(todas[inicio - 1:fim])
+    if len(corpo.encode()) > 4096:
+        raise MemoriaErro("o trecho excede 4 KiB")
+    return {**out, "caminho": caminho, "inicio": inicio, "fim": fim, "trecho": corpo,
+            "sha256": hashlib.sha256(corpo.encode()).hexdigest()}
+
+
 class ItemRevisado(_Modelo):
     uid: Sha
     decisao: Literal["manter", "investigar", "propor_candidata"]

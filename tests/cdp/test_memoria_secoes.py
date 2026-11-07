@@ -1,0 +1,54 @@
+from hashlib import sha256
+
+from cdp.memoria_busca import BYTES_PASSAGEM, LINHAS_PASSAGEM
+from cdp.memoria_secoes import IndiceSecoes
+
+
+def test_busca_por_secoes_diversifica_fontes_e_recupera_vizinha():
+    fontes = {
+        "Roteiro.md": (
+            "# Publicação",
+            "",
+            "Confira o recibo e a publicação autenticada.",
+            "",
+            "## Retomada",
+            "",
+            "Uma nova execução preserva a trilha anterior.",
+        ),
+        "Auditoria.md": (
+            "# Verificação",
+            "",
+            "O recibo da publicação autenticada inclui a revisão.",
+        ),
+    }
+    indice = IndiceSecoes(fontes.items())
+    passagens = indice.buscar("Como conferir o recibo da publicação?")
+    assert {p.caminho for p in passagens[:3]} == set(fontes)
+    assert any(p.caminho == "Roteiro.md" and p.inicio <= 7 <= p.fim for p in passagens)
+    assert indice.buscar("Como conferir o recibo da publicação?", 2) == passagens[:2]
+
+
+def test_passagens_sao_literais_e_respeitam_os_limites():
+    linhas = (
+        "# Validação",
+        "",
+        "Confira o manifesto antes de concluir a revisão.",
+        "",
+        "```sh",
+        "# Comando de validação, parte do bloco",
+        "cdp verify",
+        "```",
+        "",
+        "Validação " + "ç" * BYTES_PASSAGEM,
+        "",
+        *(f"Passo {i}: manifeste a revisão." for i in range(30)),
+    )
+    passagens = IndiceSecoes([("Roteiro.md", linhas)]).buscar("Manifesto e comando de validação")
+    assert any(p.inicio <= 5 and p.fim >= 8 for p in passagens)
+    for p in passagens:
+        trecho = linhas[p.inicio - 1:p.fim]
+        bruto = "\n".join(trecho).encode()
+        assert p.caminho == "Roteiro.md"
+        assert len(trecho) <= LINHAS_PASSAGEM
+        assert len(bruto) <= BYTES_PASSAGEM
+        assert p.sha256 == sha256(bruto).hexdigest()

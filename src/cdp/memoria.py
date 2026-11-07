@@ -15,6 +15,7 @@ import stat
 import subprocess
 import sys
 import unicodedata
+from collections.abc import Iterable
 from dataclasses import dataclass
 from datetime import date, datetime
 from pathlib import Path
@@ -39,6 +40,7 @@ from .memoria_busca import (
 from .memoria_busca import (
     normalizar as _normalizar,
 )
+from .memoria_secoes import IndiceSecoes
 
 Escopo = Literal["desenvolvimento", "operador", "status", "semanal", "diario", "risco",
                  "cobertura", "calibracao"]
@@ -765,9 +767,14 @@ class Catalogo:
             candidatas = (*diretas_amplas, *contextuais)
             blocos = ampliar_selecao(blocos, candidatas, self.fontes.linhas)
         recuperadas = reaproveitar_vagas(blocos, candidatas, self.fontes.linhas)
-        return indice_contextual.complementar_com_diretas(
+        selecionadas = indice_contextual.complementar_com_diretas(
             consulta, recuperadas, diretas, self.fontes.linhas,
         )
+        if not selecionadas or all(p.fim - p.inicio + 1 == LINHAS_PASSAGEM for p in selecionadas):
+            return selecionadas
+        estruturais = self.indice.estruturais(escopo, consulta)
+        ampliadas = ampliar_selecao(selecionadas, estruturais, self.fontes.linhas)
+        return reaproveitar_vagas(ampliadas, estruturais, self.fontes.linhas)
 
     def _tem_apoio_no_acervo(self, escopo: Escopo, q: str, diretas: list[Local], notas: list[Registro], *,
                             observacao: bool) -> bool:
@@ -858,6 +865,7 @@ class BuscaCanonica:
         self.fontes = fontes
         self.caminhos = caminhos
         self.indices: dict[tuple[Escopo, bool], IndicePassagens] = {}
+        self._indices_secoes: dict[Escopo, IndiceSecoes] = {}
 
     def buscar(self, escopo: Escopo, consulta: str, limite: int, *,
                contextual: bool = False) -> list[Local]:
@@ -866,14 +874,20 @@ class BuscaCanonica:
     def para_escopo(self, escopo: Escopo, *, contextual: bool) -> IndicePassagens:
         chave = (escopo, contextual)
         if chave not in self.indices:
-            fontes = []
-            for caminho in self.caminhos[escopo]:
-                try:
-                    fontes.append((caminho, self.fontes.linhas(caminho)))
-                except MemoriaErro:
-                    continue
-            self.indices[chave] = IndicePassagens(fontes, contextual=contextual)
+            self.indices[chave] = IndicePassagens(self._documentos(escopo), contextual=contextual)
         return self.indices[chave]
+
+    def estruturais(self, escopo: Escopo, consulta: str) -> list[Local]:
+        if escopo not in self._indices_secoes:
+            self._indices_secoes[escopo] = IndiceSecoes(self._documentos(escopo))
+        return self._indices_secoes[escopo].buscar(consulta)
+
+    def _documentos(self, escopo: Escopo) -> Iterable[tuple[str, tuple[str, ...]]]:
+        for caminho in self.caminhos[escopo]:
+            try:
+                yield caminho, self.fontes.linhas(caminho)
+            except MemoriaErro:
+                continue
 
 
 def _hoje() -> date:

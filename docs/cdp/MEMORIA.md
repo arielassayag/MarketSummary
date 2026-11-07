@@ -23,6 +23,9 @@ e `calibracao`. `contexto` mostra até três notas curadas em destaque no escopo
 6 KiB de saída em Markdown e JSON. `buscar` retorna separadamente notas elegíveis e
 fontes primárias do escopo. O limite de resultados por lista vai de um a dez e o padrão é cinco.
 A busca combina BM25 direto, passagens ranqueadas com contexto da seção e âncoras das notas.
+A busca estrutural usa títulos, parágrafos e seções vizinhas dos mesmos documentos canônicos.
+Ela pode ampliar uma passagem por inclusão literal ou ocupar uma vaga que ficou livre
+quando uma passagem já estava integralmente contida em outra.
 Flexões em português, títulos, etiquetas, resumos e trechos validados ajudam a localizar lições.
 A lista `passagens` aproveita referências complementares da nota mais pertinente e reduz janelas
 com forte sobreposição. Âncoras próximas da mesma nota podem ser reunidas sem cortar a evidência.

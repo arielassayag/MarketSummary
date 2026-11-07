@@ -1370,10 +1370,10 @@ def _devolutivas_sonho(entrada: BinaryIO, limite_bytes: int) -> Iterable[bytes]:
 def _comando(args: argparse.Namespace) -> int:
     try:
         acao = args.acao_memoria
-        trabalho = acao == "auditar" and not args.revisao_git
+        revisao = getattr(args, "revisao", None)
+        trabalho = acao == "auditar" and not (args.revisao_git or args.pontes or revisao)
         if trabalho and os.name != "posix":
             raise MemoriaErro("auditoria da árvore de trabalho requer POSIX; use --revisao-git")
-        revisao = getattr(args, "revisao", None)
         if acao == "avaliar" and args.revalidacao is not None and (
             revisao is None or not (args.reservada or args.replica)
         ):
@@ -1552,6 +1552,12 @@ def _comando(args: argparse.Namespace) -> int:
                     raise MemoriaErro("explorar fontes exige gerar ou conferir uma seleção guiada")
                 _json(c.buscar(args.escopo, args.consulta, args.limite,
                                estado_atual=args.estado_atual, orcamento_estrito=args.orcamento_estrito))
+        elif acao == "auditar" and args.pontes:
+            from .memoria_pontes import auditar_pontes
+
+            relatorio = auditar_pontes(c)
+            _json(relatorio)
+            return int(not relatorio["ok"])
         else:
             _json(_relatorio(c))
             return int(bool(c.problemas))
@@ -1583,7 +1589,7 @@ def registrar(sub: argparse._SubParsersAction) -> None:
         s = acoes.add_parser(acao, help=ajuda)
         s.set_defaults(func=_comando)
         revisao_obrigatoria = acao in ("fonte-sonho", "retomar-sonho")
-        if acao in ("contexto", "buscar", "rotear", "avaliar", "wiki", "sonhar", "conferir-sonho",
+        if acao in ("contexto", "buscar", "rotear", "avaliar", "auditar", "wiki", "sonhar", "conferir-sonho",
                     "fonte-sonho", "retomar-sonho"):
             s.add_argument("--revisao", required=revisao_obrigatoria,
                            help="hash completo do commit local a consultar")
@@ -1625,6 +1631,8 @@ def registrar(sub: argparse._SubParsersAction) -> None:
         if acao == "auditar":
             s.add_argument("--revisao-git", action="store_true",
                            help="audita o HEAD em vez da árvore de trabalho")
+            s.add_argument("--pontes", action="store_true",
+                           help="audita validade e prova literal do mapa na revisão Git")
         if acao == "contexto":
             s.add_argument("--formato", choices=("md", "json"), default="md")
             s.add_argument("--consulta", type=_consulta, help="seleciona contexto para a tarefa em mãos")

@@ -363,6 +363,634 @@
         "trecho": "- **Kill switch no leilão do dia de montagem — regra de caducidade.** A decisão vale só para o\n  leilão de fechamento do seu dia de montagem. Com o kill switch ligado nesse fechamento, a ordem\n  não é executada (só redução de risco) e a rotina diária registra o próprio dia com a recusa\n  (`daily close` → `status: \"registrado\"` com `efetivacao_recusada`; alerta \"Efetivação\n  recusada\" no registro): grava `book/<semana>/efetivacao_recusada.json` e o evento\n  `BOOKING_LAPSED` na trilha. A decisão **caduca**: nunca é efetivada depois, nem quando um\n  humano desligar o kill switch (sem efetivação retroativa, que usaria um preço já conhecido). Na\n  carteira inaugural, o histórico começa nesse dia em caixa (PL inicial, sem posições); numa\n  semana regular, a carteira anterior segue marcada. A próxima data de montagem decide de novo,\n  com dados novos (a partir da caixa, se a inaugural caducou). Recusa por dado ausente (preço ou\n  câmbio) na carteira inaugural não caduca. Nada é registrado e o próximo fechamento retoma\n  a data pendente quando a fonte estiver disponível.",
         "sha256": "0e32bc3fe22f36eca3164f23be71a79e97dc4c69229c1bcd24fe87a96e232005"
       }
+    },
+    {
+      "id": "trava-escritor-e-monitor",
+      "origem": "risco",
+      "escopos": [
+        "cobertura",
+        "calibracao",
+        "desenvolvimento"
+      ],
+      "gatilhos": [
+        "trava",
+        "monitor",
+        "escritor exclusivo",
+        "gate",
+        "risco"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/playbooks/RISCO.md",
+        "trecho": "- Use a tarefa que disparou a execução (`cdp-risco-1330` ou `cdp-risco-1603`). O risco é tarefa\n  compartilhada: o gate **não** pega a trava (só os escritores exclusivos pegam). Ele só executa\n  com carteira em vigor e pregão hoje na B3 ou na NYSE; antes da data de início do mandato, sai\n  com \"pré-início: sem carteira a monitorar\". `executar: false` ⇒ \"Sem monitoramento: <motivo>\" e\n  encerre. Guarde `execucao` e `mente`.",
+        "sha256": "1ad9714f69580f8b6fc23d9c628295be999d02c46beb86d87ac95985e62aa420"
+      }
+    },
+    {
+      "id": "trava-arquivos-da-montagem-anterior",
+      "origem": "semanal",
+      "escopos": [
+        "calibracao",
+        "desenvolvimento"
+      ],
+      "gatilhos": [
+        "trava",
+        "arquivos retidos",
+        "gravações anteriores",
+        "clone",
+        "montagem"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/playbooks/SEMANAL.md",
+        "trecho": "- **Gravações de uma execução anterior.** Antes de gravar qualquer coisa, rode\n  `git status --short -- book reports data/market data/publico` (só leitura). Arquivos\n  listados foram gravados por uma execução anterior deste clone que não chegou a publicar\n  (PC dormindo, app fechado, tempo esgotado) ou pelo kill switch retido do risco. Siga\n  normalmente: a agenda já os considera, e `cdp publicar` os leva junto, com a trava (campo\n  `anteriores` na saída). Relate-os no resumo. Num clone novo (nuvem), a lista vem sempre\n  vazia.",
+        "sha256": "b57451439813a99d260300cf313ab3f29579840281c1c1e5a632aec1659e6b82"
+      }
+    },
+    {
+      "id": "trava-etapa-da-reserva",
+      "origem": "semanal",
+      "escopos": [
+        "calibracao",
+        "desenvolvimento"
+      ],
+      "gatilhos": [
+        "reserva",
+        "trava",
+        "montagem",
+        "retomada",
+        "tese"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/playbooks/SEMANAL.md",
+        "trecho": "- `semanal.acao`:\n  - `montar` → continue a partir de `semanal.etapa` (`cobertura`, `prepare`, `pesquisa` ou\n    `validar_e_decidir`); anote `semanal.semana` (AAAA-MM-DD), `semanal.prazo_efetivo`,\n    `semanal.minutos_ate_o_prazo`, `semanal.mercados_fechados` e\n    `semanal.fechamento_antecipado` (o código congela ou roteia para o ADR os emissores cujo\n    mercado não negocia no leilão; não há o que ajustar à mão). Numa reserva, retome da etapa\n    indicada, sem refazer o que já está gravado.\n  - `tese` → a decisão já está gravada e a tese não foi publicada: faça **só** os passos 8\n    (tese), 9 (integridade e painel), 10 (publicação, com a mensagem da retomada) e 11 (resumo).\n  - `nenhuma`, `aguardar` ou `prazo_vencido` → encerre com \"Sem montagem hoje: <semanal.motivo>\".",
+        "sha256": "5ed904876427221dd6532743a236e09ed1b59d805d2a921a3103e6735b5eebfd"
+      }
+    },
+    {
+      "id": "trava-fechamento-execucao-anterior",
+      "origem": "diario",
+      "escopos": [
+        "risco",
+        "calibracao",
+        "desenvolvimento"
+      ],
+      "gatilhos": [
+        "trava",
+        "fechamento",
+        "gravações anteriores",
+        "arquivos retidos"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/playbooks/DIARIO.md",
+        "trecho": "- **Gravações de uma execução anterior.** Antes de gravar qualquer coisa, rode\n  `git status --short -- book reports data/market data/publico` (só leitura). Arquivos\n  listados foram gravados por uma execução anterior deste clone que não chegou a publicar\n  (PC dormindo, app fechado, tempo esgotado) ou pelo kill switch retido do risco. Siga\n  normalmente: a agenda já os considera, e `cdp publicar` os leva junto, com a trava (campo\n  `anteriores` na saída). Relate-os no resumo. Num clone novo (nuvem), a lista vem sempre\n  vazia.",
+        "sha256": "b57451439813a99d260300cf313ab3f29579840281c1c1e5a632aec1659e6b82"
+      }
+    },
+    {
+      "id": "trava-retomar-sem-gate-repetido",
+      "origem": "operador",
+      "escopos": [
+        "semanal",
+        "diario",
+        "risco",
+        "cobertura",
+        "calibracao"
+      ],
+      "gatilhos": [
+        "trava",
+        "gate",
+        "no-op",
+        "sincronização",
+        "retomar"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/playbooks/RETOMAR.md",
+        "trecho": "## 2. Papel\n\n| Situação | O que fazer |\n|---|---|\n| O prompt cita uma tarefa `cdp-…` (rotina agendada) | A skill da tarefa (`.agents/skills/cdp-…`): `uv run python -m cdp rotinas gate --tarefa cdp-diario --adquirir` (com a tarefa certa), sem perguntar nada |\n| Uma pessoa pede algo da operação (sessão de operador) | Leitura por padrão. Grave o livro só se `sou_o_executor` for verdadeiro e a pessoa pedir, rodando o roteiro da tarefa com `--manual` no gate |\n| Desenvolvimento (código, documentação, testes) | Nunca grave `book/`, `data/`, `reports/`, `artifacts/` nem rode `publish`, `decide` ou `reinicio`. Consulte a passagem e as decisões do item 3 |\n\nDepois de estado e agenda, abra o contexto curto da sessão, se útil.\n\n- Em sessão de operador, use `uv run python -m cdp memoria contexto --escopo operador`.\n- Em desenvolvimento, use `uv run python -m cdp memoria contexto --escopo desenvolvimento`.\n- Em rotina, consulte pelo roteiro da tarefa após o gate e a sincronização quando aplicável.\n  Com `executar: false` (código 10), encerre com \"Sem execução: <motivo>\".",
+        "sha256": "407634a45b04fe06bf4cb7f56c55391add6c742ef5025c092f51caca49990742"
+      }
+    },
+    {
+      "id": "trava-falha-por-corrida",
+      "origem": "operador",
+      "escopos": [
+        "cobertura",
+        "calibracao"
+      ],
+      "gatilhos": [
+        "trava",
+        "corrida",
+        "push",
+        "executor",
+        "remoto"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/AUTOMACAO.md",
+        "trecho": "- **Executor pausado** (`nenhum`) ou trocado no meio da execução: `cdp publicar` relê\n  `origin/main` antes do push e não publica.\n- **Push recusado** por corrida: `cdp publicar` sincroniza e tenta uma vez; se o remoto gravou o\n  livro, para e relata (nunca mescla à força, reescreve nem força).",
+        "sha256": "35aa935b6771182b5b7c3f8de1ec582ceb53bec0d6b58b20ca727241edf8df4c"
+      }
+    },
+    {
+      "id": "trava-diagnostico-do-gate",
+      "origem": "operador",
+      "escopos": [
+        "cobertura",
+        "calibracao"
+      ],
+      "gatilhos": [
+        "trava",
+        "gate",
+        "escritor exclusivo",
+        "atraso",
+        "recusa"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/AUTOMACAO.md",
+        "trecho": "| \"Sem execução: identidade deste ambiente desconhecida\" | `CDP_EXECUTOR` ausente | defina no ambiente da nuvem, ou `cdp executor registrar --como local-pc` no clone |\n| \"o executor designado é local-pc\" na nuvem | troca ainda não feita | seção 13 |\n| \"execução atrasada\" | disparo atrasado ou execução manual fora do horário | normal; para rodar já, sessão de operador com `--manual` |\n| \"<tarefa> em andamento em …\" | outra execução segura a trava | aguarde o próximo disparo aplicável. Uma trava abandonada expira |\n| \"trava distribuída indisponível\" | GitHub inacessível, disputa ou sandbox sem rede/escrita em `.git` | normal se passageiro; no Codex, confira o acesso total (seção 5.1); persistindo, rede e regras do ramo `cdp-trava` |\n| `publicar` → \"escritor exclusivo sem a trava\" | `--trava` faltando ou trava perdida | nada foi publicado; a execução seguinte refaz a partir do livro |\n| `sincronizar` → `parar` | o remoto gravou o livro, ou clone com código alterado | investigar numa sessão de operador no clone do executor; depois de conferir, `git merge origin/main` à mão; nunca forçar |",
+        "sha256": "81d8e0bd8656ef4797b4e07449766cb775ca6ae958c0cc41a7710e798c5f8ae1"
+      }
+    },
+    {
+      "id": "trava-publicacao-no-fim-da-montagem",
+      "origem": "semanal",
+      "escopos": [
+        "calibracao",
+        "desenvolvimento"
+      ],
+      "gatilhos": [
+        "trava",
+        "perdida",
+        "montagem",
+        "verify",
+        "retomada"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/playbooks/SEMANAL.md",
+        "trecho": "`--tarefa` = a tarefa que disparou a execução. Mensagens: retomada só da tese,\n\"CDP: tese da semana AAAA-MM-DD\"; abertura do livro nesta execução, a do pré-início\n(`docs/cdp/playbooks/DIARIO.md`). Decisão, tese e painel saem no mesmo commit. Sem push (verify\ncom falha, remoto mudou o livro, sem rede, trava perdida), o commit fica no clone e você relata;\nnunca tente outro caminho. Libere a trava **sempre**, mesmo em falha.",
+        "sha256": "b4a11095d1246067bdc662ffb430823612e729e854df49c09996f7abdf01d6a1"
+      }
+    },
+    {
+      "id": "portal-dados-abertos-e-manifesto",
+      "origem": "status",
+      "escopos": [
+        "cobertura",
+        "calibracao",
+        "desenvolvimento"
+      ],
+      "gatilhos": [
+        "cópias dados abertos",
+        "portal cópia fiel",
+        "datapackage sha",
+        "portal recalcular montagem",
+        "manifesto instante"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/SITE.md",
+        "trecho": "- **Dados abertos e auditoria** (`dados/`): cópias fiéis dos arquivos do livro, dos relatórios,\n  dos modelos de cobertura e do mandato — nada é recalculado na montagem do site —, com tamanho e\n  código de verificação (SHA-256) de cada arquivo, link para a origem no repositório na mesma\n  versão, catálogo `dados/datapackage.json` (Frictionless Data Package) e a página\n  `dados/index.html`.\n- **Procedência**: `manifest.json` (versão do repositório, instante, verificação de integridade,\n  SHA-256 de cada arquivo) e `SHA256SUMS` (seção \"Conferir uma publicação\").",
+        "sha256": "dd4ebe2afbe9c854d3a1e9f88f1cce04e1d9923ad2acca06f0997040418b921d"
+      }
+    },
+    {
+      "id": "portal-dados-antigos-e-trilha",
+      "origem": "status",
+      "escopos": [
+        "cobertura",
+        "calibracao",
+        "desenvolvimento"
+      ],
+      "gatilhos": [
+        "data.json semanas",
+        "comentários antigos",
+        "trilha inteira dados",
+        "data.json limite",
+        "data.json orçamento"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/SITE.md",
+        "trecho": "- **Tamanho do `data.json`** (lido inteiro antes da primeira pintura, também no celular): o que\n  cresce com o tempo fica limitado — as 8 semanas mais recentes em detalhe (as anteriores numa\n  linha, com o link para o registro completo nos dados abertos), dois anos de pregões em linhas\n  diárias (os meses anteriores consolidados no fim do mês), os 60 relatórios diários mais\n  recentes com o comentário (todos os relatórios no índice, com o texto completo em\n  `dados/relatorios/`), os 500 eventos mais recentes da trilha (a trilha inteira em\n  `dados/livro/audit_log.jsonl`) e as notas por emissor completas só na semana da carteira\n  vigente. Orçamento de referência: 3 MB com dois anos de operação (teste).",
+        "sha256": "d8daaf36c3745a9c401c050348f33b2de15aeef573d7baefd88e090f5522c192"
+      }
+    },
+    {
+      "id": "portal-paginas-por-ativo",
+      "origem": "status",
+      "escopos": [
+        "cobertura",
+        "calibracao",
+        "desenvolvimento"
+      ],
+      "gatilhos": [
+        "portal página ativo",
+        "análise quantitativa preliminar",
+        "data nota modelo",
+        "análise individual portal",
+        "download analise"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/SITE.md",
+        "trecho": "- **Cobertura de ativos**: aba carregada sob demanda (`painel-<versão>-cobertura.js`) que lê os\n  arquivos `cobertura*.json` ao lado da página — universo, tabela de cobertura, ficha do ativo\n  com o modelo aberto (memória de cálculo, insumos com fonte e data, cenários, sensibilidade),\n  histórico de acertos e metodologia de avaliação.\n- **Teses e análises por ativo**: índice pesquisável em `ativos/` e uma página estática\n  em `ativos/<iid-em-minusculas>/` para cada empresa e ETF do retrato publicado. Cada página\n  reúne a narrativa publicada, quando existente, a visão do modelo, cenários, premissas,\n  condições de qualidade, fontes e diligências. A data da nota permanece distinta da data\n  do modelo. Sem nota específica, o estado é **Análise quantitativa preliminar**.\n  Downloads `analise.md` e `analise.json`, impressão, links da ficha de cobertura, endereços\n  canônicos, sitemap e hashes fazem parte da mesma montagem. Ver [Teses por ativo](TESES_ATIVOS.md).",
+        "sha256": "a77030cbf80dac88fb5edf5780a59f90083e4ddbf8dc32ace5cf11300f7c79e9"
+      }
+    },
+    {
+      "id": "portal-versao-dos-modulos",
+      "origem": "status",
+      "escopos": [
+        "cobertura",
+        "calibracao",
+        "desenvolvimento"
+      ],
+      "gatilhos": [
+        "portal módulos versão",
+        "script central",
+        "carimbo versão painel",
+        "portal módulo cobertura",
+        "página inteira republica"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/SITE.md",
+        "trecho": "A página é uma casca pequena (`index.html`, < 8 KB) que referencia o estilo e o script\nversionados (`painel-<versão>.css`/`.js`) e busca `data.json` ao lado dela. Código novo de\nexibição nunca entra no script central (orçamento de 260 KB): vai para módulos carregados sob\ndemanda na primeira abertura da aba, com o mesmo carimbo de versão — `painel-<versão>-modelo.js`\n(modelo aberto da carteira) e `painel-<versão>-cobertura.js` (aba de cobertura). A versão é o\nSHA-256 do formato de publicação, do template e dos módulos: mudar qualquer um deles republica a\npágina inteira.",
+        "sha256": "538474ae6be63437048ac943322c0d01dcd42dd25a142a1b8d0e60e577e4e4b8"
+      }
+    },
+    {
+      "id": "portal-espelho-cobertura-integral",
+      "origem": "status",
+      "escopos": [
+        "cobertura",
+        "calibracao",
+        "desenvolvimento"
+      ],
+      "gatilhos": [
+        "espelho cobertura",
+        "espelho orçamento",
+        "cobertura publicada marcador",
+        "espelho teto",
+        "aba conferência"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/SITE.md",
+        "trecho": "O espelho privado opcional (artifact do claude.ai) usa o perfil `publicacao`, com o orçamento de\nleitura integral de quem publica (cada arquivo ≤ 260 KB e linhas ≤ 1.500 caracteres nos dados):\na formulação completa da decisão fica só no portal (o espelho leva a decomposição do risco e os\najustes escalares da decisão e, nos níveis finais, só as restrições que vinculam ou estão perto\ndo limite, com a contagem das exibidas). Tudo o que vai ao espelho numa publicação é lido por\ninteiro, com teto total de 1 MB (`painel_artifact.ORCAMENTO_LEITURA`). Os dados da cobertura que\nmudaram vão inteiros só quando cabem nesse teto junto com o resto da publicação; senão nada da\ncobertura vai (o espelho mantém a última cobertura publicada, ou mostra o aviso que aponta o\nportal público) e o marcador local `COBERTURA_PUBLICADA.json` só registra o que de fato foi\npublicado (`cdp painel --publicado` refaz a mesma conta). Falha no registro da cobertura nunca\nderruba o painel nem o portal: a aba fica \"em conferência\" e o resto segue publicado.",
+        "sha256": "714c87f48da7cfc542a81e75ad47393f75d85187cf1cdab200293e5992bbb1d9"
+      }
+    },
+    {
+      "id": "portal-construcao-local-e-demo",
+      "origem": "status",
+      "escopos": [
+        "cobertura",
+        "calibracao",
+        "desenvolvimento"
+      ],
+      "gatilhos": [
+        "site construir",
+        "site conferir",
+        "portal local",
+        "site demo",
+        "site estaticos"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/SITE.md",
+        "trecho": "## Montar e conferir localmente\n\n```sh\nuv run python -m cdp site construir --saida _site\nuv run python -m cdp site conferir --saida _site\nuv run python -m cdp site construir --demo --saida _site_demo\n```\n\n`_site/` e `_site_demo/` não são versionados. Para ver no navegador:\n`python3 -m http.server -d _site 8000`. Ícones e imagem de compartilhamento ficam em `site/`\n(regerados por `uv run python -m cdp site estaticos`, que usa o Playwright do grupo de\ndesenvolvimento).",
+        "sha256": "2d58d0aa7f7ad4ecaab081dd27c2f5602efffad364df7dde60b25c391196a492"
+      }
+    },
+    {
+      "id": "portal-ci-e-deploy-separados",
+      "origem": "operador",
+      "escopos": [
+        "cobertura",
+        "calibracao"
+      ],
+      "gatilhos": [
+        "ci portal",
+        "workflow ia portal",
+        "ci demonstração",
+        "cdp-ci cdp-site",
+        "actions somente leitura"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/AUTOMACAO.md",
+        "trecho": "- `.github/workflows/cdp-ci.yml`: lint, testes, integridade do livro, agenda das rotinas, skills\n  em dia e o portal da demonstração (DADOS SIMULADOS) como artefato de revisão. Sem segredos,\n  só leitura.\n- `.github/workflows/cdp-site.yml`: a cada push em `main` (e numa rede de segurança agendada),\n  monta o portal a partir do repositório com `cdp site construir`, confere e publica no GitHub\n  Pages. Não usa IA e não grava no repositório (`docs/cdp/SITE.md`).\n\nNenhum workflow roda a mente nas rotinas. O workflow com IA gerado por\n`--alvo github-actions` existe só como alternativa opcional, desarmada (apêndice A).",
+        "sha256": "37f9062782d5a02940b5442ab976380cc45bcbd82e53128d6cbf45bc88834371"
+      }
+    },
+    {
+      "id": "portal-nota-de-cobertura-verificada",
+      "origem": "cobertura",
+      "escopos": [
+        "semanal",
+        "calibracao",
+        "risco"
+      ],
+      "gatilhos": [
+        "coverage_note portal",
+        "nota portal push",
+        "nota verify trilha",
+        "cobertura não regenera painel"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/playbooks/COBERTURA.md",
+        "trecho": "## 3. Integridade (código)\n\n```sh\nuv run python -m cdp verify\n```\n\nRode sempre, qualquer que tenha sido o resultado do passo 2: esse `verify` confere a trilha\ndepois da última gravação desta execução — inclusive cada nota publicada contra o seu evento\n`COVERAGE_NOTE` —, e `cdp publicar` o repete antes do push. As notas aparecem no portal público,\nmontado pelo GitHub Actions a partir do que for publicado (esta rotina não regenera o painel).",
+        "sha256": "bd88fd95eca0a206ad5bfbb7d682033180866280d26079bedb6d7431dfd104fe"
+      }
+    },
+    {
+      "id": "portal-retificacao-recibo-e-original",
+      "origem": "diario",
+      "escopos": [
+        "desenvolvimento"
+      ],
+      "gatilhos": [
+        "retificação original portal",
+        "errata portal",
+        "retificação anteriores",
+        "retificação recibo",
+        "retificação artefato órfão"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+        "trecho": "O contrato existente do escritor exclusivo publica todas as diferenças locais nos caminhos\nda tarefa, incluindo o conjunto anterior que ainda não foi publicado e a nota nova. O campo\n`anteriores` identifica diferenças que já existiam no retrato inicial do gate novo. Não\natribui autoria passada a esse retrato e não modifica o recibo da execução antiga. Preserve\num recibo atual literal da saída de `cdp publicar` com `execucao`, `trava`, `arquivos`,\n`anteriores`, `commit`, `push` e `verify`. Sem push confirmado, a publicação continua local.\nNenhuma adoção genérica ou caminho alternativo de Git foi acrescentado.\n\nO portal mantém o relatório original e mostra uma indicação explícita com link para a nota.\nA agenda distingue emissores pendentes de corrigidos. Divergência dos originais, da nota ou\nda trilha impede a integridade e a publicação remota. Falha parcial ao anexar pode deixar\nartefato/evento órfão; isso é detectado e exige diagnóstico, sem limpeza ou reparo tácito.",
+        "sha256": "64ae7b60111ea35df999c8a30823a32ad0cbf28a4dc703c06eb2c6bd9b7bb596"
+      }
+    },
+    {
+      "id": "portal-painel-local-e-publicado",
+      "origem": "diario",
+      "escopos": [
+        "calibracao",
+        "desenvolvimento",
+        "risco"
+      ],
+      "gatilhos": [
+        "painel sem-local",
+        "painel falha portal",
+        "cópia local painel",
+        "artifacts painel portal",
+        "verify painel push"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/playbooks/DIARIO.md",
+        "trecho": "## 7. Integridade e painel (código)\n\n```sh\nuv run python -m cdp verify\nuv run python -m cdp painel --sem-local\n```\n\nRode os dois sempre, qualquer que tenha sido o resultado dos passos anteriores (inclusive com a\ntese recusada ou com falha): esse `verify` confere a trilha depois da última gravação desta\nexecução, e `cdp publicar` o repete antes do push. `painel --sem-local` regenera\n`artifacts/painel/` a partir do livro (só código; a pasta fica fora do git — é a cópia local do\npainel, nunca publicada). Anote o resultado do `verify` e siga mesmo se o painel falhar. O portal\npúblico é montado pelo GitHub Actions a partir do que for publicado.",
+        "sha256": "254798151baff61a6d9a7c594339037fee369c00f2e3bbaee7ed4aafe31a9a5c"
+      }
+    },
+    {
+      "id": "leilao-etapas-da-montagem",
+      "origem": "semanal",
+      "escopos": [
+        "status",
+        "desenvolvimento",
+        "calibracao"
+      ],
+      "gatilhos": [
+        "cronograma da montagem",
+        "etapas dia de montagem",
+        "registro diário após leilão",
+        "decisão gravada e leilões"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/EXECUCAO.md",
+        "trecho": "## 2. Cronograma do dia de montagem (horário de Brasília)\n\n| Horário | Etapa |\n|---|---|\n| Véspera, após o fechamento | Fechamento diário (marcação, risco, atribuição, comentário de P&L) e retrato da cobertura |\n| 11h00 | Pesquisa e preparação da semana com dados até o momento da análise |\n| até o prazo efetivo (15h00; 14h15 em fechamento antecipado nos EUA) | Decisão gravada (reserva às 12h07) |\n| 16h00–17h00 (até 01/11/2026); 18h00 a partir de 02/11/2026 | Leilões de fechamento: execução das ordens |\n| noite (19h22) | Efetivação ao fechamento oficial, registro diário e comentário de P&L; em seguida o **relatório semanal de resultado** (§10) |",
+        "sha256": "6523039df408ce5f5c6daea07a181d6dc4757fc9d0d797a40872112a61aea834"
+      }
+    },
+    {
+      "id": "leilao-validacao-e-abstencao",
+      "origem": "semanal",
+      "escopos": [
+        "calibracao",
+        "desenvolvimento"
+      ],
+      "gatilhos": [
+        "validar e decidir",
+        "abstenção antes do prazo",
+        "carteira só-quant validação",
+        "pm_decision inválida"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/playbooks/SEMANAL.md",
+        "trecho": "## 5. Validação (código) — etapa `validar_e_decidir`\n\n```sh\nuv run python -m cdp validate --week AAAA-MM-DD --mind <mente>\n```\n\nA saída é JSON (`ok` e `problemas`, como em todos os validadores). Corrija e repita até\n`\"ok\": true`. Com menos de 20 minutos para o prazo e ainda `\"ok\": false`, reescreva\n`pm_decision.json` como abstenção (`abstain: true`, sem visões) e valide de novo: o código decide\npela carteira só-quant.",
+        "sha256": "5b01aa18fe80c3ff3022b07ffd640ba239fbd5fa5b5cbbd436ed8c03dbaac884"
+      }
+    },
+    {
+      "id": "leilao-previa-sem-gravar",
+      "origem": "semanal",
+      "escopos": [
+        "calibracao",
+        "desenvolvimento"
+      ],
+      "gatilhos": [
+        "revisão pré-trade",
+        "weekly preview",
+        "prévia sem gravar",
+        "prévia juízos ordinais"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/playbooks/SEMANAL.md",
+        "trecho": "## 6. Revisão pré-trade (recomendada; pule com menos de 30 minutos para o prazo)\n\n```sh\nuv run python -m cdp weekly preview --week AAAA-MM-DD --mind <mente> --out outputs/previa_AAAA-MM-DD.json\n```\n\nRoda o pipeline do `decide` **sem gravar nada no livro**. Se uma posição relevante contradiz a\npesquisa ou depende de um fato não confirmado, ajuste **somente juízos ordinais** (visões,\nconvicções, exclusões, postura) em `pm_decision.json`, valide de novo e repita no máximo duas\nvezes. A coerência de sinal é aplicada pelo código.",
+        "sha256": "1daff7ce285ba0af23e95bd059ac98be766739e2614eafca0c0cf3cb6633fd7f"
+      }
+    },
+    {
+      "id": "leilao-monitor-carteira-vigente",
+      "origem": "risco",
+      "escopos": [
+        "desenvolvimento",
+        "calibracao"
+      ],
+      "gatilhos": [
+        "monitor antes do leilão",
+        "carteira vigente no monitor",
+        "decisao_pendente no risco",
+        "risco da carteira decidida"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/playbooks/RISCO.md",
+        "trecho": "- No dia de montagem, até o leilão de fechamento, o monitor mede a carteira vigente; a carteira\n  decidida só vale a partir do registro do fechamento (`decisao_pendente`).",
+        "sha256": "fc12b39a2ecbb3fc1f7f202f86b2bad8e3f05efdeb9b54ca4b83a7ae86ecc024"
+      }
+    },
+    {
+      "id": "leilao-volume-desconhecido",
+      "origem": "semanal",
+      "escopos": [
+        "cobertura",
+        "calibracao",
+        "desenvolvimento"
+      ],
+      "gatilhos": [
+        "volume desconhecido",
+        "volume zero preço válido",
+        "redução até zero capacidade",
+        "capacidade com poucas observações"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/EXECUCAO.md",
+        "trecho": "**Volume desconhecido ⇒ capacidade zero** — como restrição, nunca como dado: volume zero com\npreço válido é tratado como ausente, e menos de dez observações na janela de 20 pregões tornam o\nvolume desconhecido. O otimizador limita cada aumento de posição à capacidade da linha usada; a\nredução até zero continua permitida na construção, mas a execução também é limitada pela\ncapacidade.",
+        "sha256": "30c19357ec6a979e6d78eddc5b7d80cd33d86582ff71737274617677ed61de89"
+      }
+    },
+    {
+      "id": "leilao-liquidez-para-zerar",
+      "origem": "risco",
+      "escopos": [
+        "cobertura",
+        "calibracao",
+        "desenvolvimento",
+        "status"
+      ],
+      "gatilhos": [
+        "fechamentos para liquidar",
+        "fechamentos para zerar",
+        "liquidez estrutural",
+        "janela_regular",
+        "liq_days_long",
+        "liq_days_short"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/EXECUCAO.md",
+        "trecho": "`fechamentos_necessarios(nocional, capacidade)` = nocional / capacidade (sem capacidade, não\ndefinido).\n\n**Liquidez em fechamentos.** Com a execução só no leilão, a liquidez de cada posição é medida\nem **fechamentos para zerá-la** à capacidade estrutural de redução da linha (a mesma fórmula num\npregão regular — `janela_regular` —, sem o multiplicador de short, porque zerar um short é uma\ncompra). Os limites do mandato `liquidity.max_days_to_liquidate_long` (3) e `_short` (2) contam\nfechamentos: entram como teto de posição na construção (origem \"liquidez\"), na compliance\n(`LIQ_DAYS_LONG`/`LIQ_DAYS_SHORT`, bloqueiam), no registro diário (`max_days_to_liquidate` e a\nfração do gross liquidável em 1 fechamento), no monitor de risco, no memorando, no relatório\nsemanal e no app interno (\"Fechamentos p/ liquidar\"). Volume desconhecido ⇒ liquidez\ndesconhecida (reprova; nunca liquidez imediata). Um feriado no mercado da linha não muda essa\nmedida (é estrutural); o dia de montagem usa a capacidade do próprio dia.",
+        "sha256": "d93a46f37a3272eae6240ecf40180daaa5dec156f23ba0fc2535440b343d3360"
+      }
+    },
+    {
+      "id": "leilao-banda-e-encerramento",
+      "origem": "semanal",
+      "escopos": [
+        "cobertura",
+        "calibracao",
+        "desenvolvimento"
+      ],
+      "gatilhos": [
+        "banda de não negociação",
+        "min_trade_weight",
+        "ordem pequena para encerrar",
+        "max_fixed_cost_bps",
+        "posição mínima e pico"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/EXECUCAO.md",
+        "trecho": "- **Banda de não-negociação**: ordens abaixo de 0,10% do NAV (`min_trade_weight`, US$ 1 mil) não\n  são enviadas, salvo o encerramento de uma posição. Em cada mercado, a banda sobe até o nocional\n  em que o custo fixo mínimo das ordens da linha cai a 10 bps (`max_fixed_cost_bps`): cerca de\n  US$ 3,5 mil por ordem na BMV (US$ 7 mil quando a ordem tem lote padrão e pico, que pagam dois\n  mínimos), US$ 22 mil na BVC e US$ 28 mil em Santiago. A posição mínima por nome é o maior entre\n  0,2% do NAV e a banda do mercado da linha com o número máximo de ordens da linha (duas na B3 e\n  na BMV, uma nos demais; `cdp.portfolio.trades.max_order_legs`): na BMV, US$ 7 mil. Assim, uma\n  posição nova decidida nunca fica abaixo da banda que a execução aplica no fechamento.",
+        "sha256": "df5858960d4a44786755fa38c087ac1edb81fc4898fd99d0c5b3917b4b89beb0"
+      }
+    },
+    {
+      "id": "leilao-custo-previsto-e-debito",
+      "origem": "diario",
+      "escopos": [
+        "calibracao",
+        "desenvolvimento"
+      ],
+      "gatilhos": [
+        "débito da execução",
+        "custo por ordem",
+        "comissão mínima e fracionário",
+        "previsão de custo na proposta",
+        "estimativa ausente custo"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/EXECUCAO.md",
+        "trecho": "- Custo por linha negociada, em bps do valor negociado: meio spread pela faixa de ADTV (× 1,5 na\n  ADR com a bolsa local fechada) + comissão das ordens individuais + câmbio (3 bps fora do\n  dólar) + impacto raiz quadrada `0,6 · σ_diária · √(Q / ADTV)` × desconto de leilão (0,6 em EUA,\n  ADR, BR, MX e CL; 1,0 nos demais). Para cada ordem, a comissão em USD é o maior entre sua\n  comissão variável e o mínimo do mercado. A comissão da linha soma esses valores e os divide\n  pelo nocional total, convertendo para bps. Lote padrão e fracionário ou pico pagam seus\n  próprios mínimos; uma ordem pequena não divide o mínimo com a ordem padrão.\n- A estimativa da proposta decompõe as quantidades planejadas com o preço local corrente.\n  Substitui somente a comissão já incluída na mesma base de custos pela soma por ordem;\n  spread, impacto e câmbio dessa base permanecem. O débito usa as quantidades efetivamente\n  preenchidas e preço/câmbio do fechamento. A previsão não certifica o débito futuro.\n  Estimativa ausente continua indisponível; com cobertura parcial, apresenta somente o subtotal\n  conhecido e identifica a limitação. O otimizador continua com a curva convexa (custo fixo\n  não é convexo e entra pela banda e pela posição mínima).",
+        "sha256": "5bdd5f491c5bda0be6f66fec6a40898680c8d7365d39ad110003c4c5fc9bf2ec"
+      }
+    },
+    {
+      "id": "leilao-shortfall-e-deriva",
+      "origem": "diario",
+      "escopos": [
+        "calibracao",
+        "desenvolvimento",
+        "status"
+      ],
+      "gatilhos": [
+        "implementation shortfall",
+        "deriva decisão fechamento",
+        "custo de oportunidade da parcela não executada",
+        "participação na janela de fechamento"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/EXECUCAO.md",
+        "trecho": "A execução ao fechamento oficial tende a lisonjear o resultado se não for medida. Em cada dia de\nmontagem o relatório semanal apura, por linha negociada:\n\n- **deriva decisão→fechamento** = Σ ações executadas × (fechamento − preço de decisão) × câmbio\n  (positivo = custo);\n- **custo modelado** (§7) e **implementation shortfall** = deriva + custo modelado, em bps do\n  valor executado. Em paper trading o custo debitado é o próprio custo modelado; a parcela\n  mensurável do shortfall é a deriva;\n- **custo de oportunidade** da parcela não executada;\n- **participação na janela de fechamento** = ações executadas / ((fatia do leilão + fatia\n  pré-fechamento) × volume do pregão), limitada a 10% pela regra de capacidade. Toda a execução,\n  inclusive a parcela da janela pré-fechamento, é registrada ao preço oficial de fechamento;",
+        "sha256": "4f8093f4e7d27e5a89dcba96b7309eda5f33c59f33c5ba43807b1484d5429839"
+      }
+    },
+    {
+      "id": "leilao-verificacao-e-calendario",
+      "origem": "semanal",
+      "escopos": [
+        "desenvolvimento",
+        "calibracao",
+        "status"
+      ],
+      "gatilhos": [
+        "verificar execução no leilão",
+        "test_execucao",
+        "test_calendar",
+        "verify base de mercado",
+        "conferir calendário de montagem"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/EXECUCAO.md",
+        "trecho": "## 11. Verificação\n\n```\nuv run python -m cdp agenda            # dia de montagem, prazo efetivo, mercados fechados, pendências\nuv run --extra dev pytest tests/cdp/test_calendar.py tests/cdp/test_execucao.py tests/cdp/test_relatorio_semanal.py -q\nuv run python -m cdp verify            # trilha, livro, track record e base de mercado\n```",
+        "sha256": "0b323aaf9570b0b223e7d08af8cb84ad23ae127a04ed3416f1b16e9a3d808a4f"
+      }
     }
   ]
 }

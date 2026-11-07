@@ -3,8 +3,10 @@
 from __future__ import annotations
 
 import json
+from collections import Counter
 from dataclasses import dataclass
 from datetime import date
+from hashlib import sha256
 from typing import Annotated, Literal
 
 from pydantic import AfterValidator, Field, field_validator, model_validator
@@ -14,6 +16,7 @@ from .memoria import (
     Catalogo,
     Escopo,
     Evidencia,
+    Fontes,
     MemoriaErro,
     MemoriaGitIndisponivel,
     Slug,
@@ -81,9 +84,7 @@ class PonteResolvida:
     trecho: str
 
 
-def candidatas_pontes(catalogo: Catalogo, escopo: Escopo, consulta: str) -> list[PonteResolvida]:
-    """Verifica o Git e devolve apenas os recortes explicitamente curados."""
-    fontes = catalogo.fontes
+def _ler_mapa(fontes: Fontes) -> tuple[_Mapa, str]:
     if fontes.trabalho:
         raise MemoriaErro("as pontes exigem uma revisão Git")
     bruto = fontes.ler(MAPA_PONTES, MAX_BYTES_PONTES)
@@ -92,6 +93,51 @@ def candidatas_pontes(catalogo: Catalogo, escopo: Escopo, consulta: str) -> list
         mapa = _Mapa.model_validate_json(bruto)
     except (ValueError, RecursionError) as exc:
         raise MemoriaErro("mapa de pontes inválido") from exc
+    return mapa, sha256(bruto).hexdigest()
+
+
+def _ancora(fontes: Fontes, evidencia: Evidencia) -> Local | None:
+    try:
+        return _localizar(fontes, evidencia)
+    except MemoriaGitIndisponivel:
+        raise
+    except MemoriaErro:
+        return None
+
+
+def auditar_pontes(catalogo: Catalogo) -> dict:
+    """Separa validade, autoridade e prova literal na revisão Git selecionada."""
+    fontes = catalogo.fontes
+    mapa, digest = _ler_mapa(fontes)
+    papeis = catalogo.fontes_por_escopo
+    linhas = []
+    for ponte in mapa.pontes:
+        caminho = ponte.evidencia.caminho
+        destinos = [e for e in ponte.escopos if caminho not in papeis[e]]
+        if catalogo.data < ponte.revisada_em:
+            estado = "futura"
+        elif catalogo.data >= ponte.rever_em:
+            estado = "vencida"
+        elif caminho not in papeis[ponte.origem]:
+            estado = "origem_inelegivel"
+        elif not destinos:
+            estado = "sem_travessia"
+        elif _ancora(fontes, ponte.evidencia) is None:
+            estado = "prova_ausente_ou_ambigua"
+        else:
+            estado = "apta"
+        linhas.append({"id": ponte.id, "origem": ponte.origem, "destinos": destinos,
+                       "rever_em": ponte.rever_em.isoformat(), "estado": estado})
+    contagens = Counter(item["estado"] for item in linhas)
+    return {"ok": contagens["apta"] == len(linhas), "revisao": fontes.revisao,
+            "data": catalogo.data.isoformat(), "mapa_sha256": digest,
+            "contagens": dict(sorted(contagens.items())), "pontes": linhas}
+
+
+def candidatas_pontes(catalogo: Catalogo, escopo: Escopo, consulta: str) -> list[PonteResolvida]:
+    """Verifica o Git e devolve apenas os recortes explicitamente curados."""
+    fontes = catalogo.fontes
+    mapa, _ = _ler_mapa(fontes)
     permitidas = set(catalogo.fontes_por_escopo[escopo])
     termos = termos_contextuais(consulta).keys()
     candidatas = []
@@ -109,13 +155,8 @@ def candidatas_pontes(catalogo: Catalogo, escopo: Escopo, consulta: str) -> list
     resultado = []
     vistos = set()
     for _, id_, origem, ev in sorted(candidatas):
-        try:
-            local = _localizar(fontes, ev)
-        except MemoriaGitIndisponivel:
-            raise
-        except MemoriaErro:
-            continue  # A prova mudou ou deixou de ter uma ocorrência única.
-        if local in vistos:
+        local = _ancora(fontes, ev)
+        if local is None or local in vistos:
             continue
         vistos.add(local)
         resultado.append(PonteResolvida(id_, origem, local, ev.trecho))

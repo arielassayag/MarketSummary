@@ -7,7 +7,7 @@ import pytest
 
 from cdp.memoria import MemoriaErro, _sha
 from cdp.memoria_busca import localizar
-from cdp.memoria_pontes import MAPA_PONTES
+from cdp.memoria_pontes import MAPA_PONTES, auditar_pontes
 from cdp.memoria_roteamento import (
     conferir_selecao_roteada,
     preparar_rota,
@@ -135,3 +135,22 @@ def test_ponte_ignora_trecho_desatualizado_ou_sem_autorizacao(cenario, falha):
     assert len(pacote["candidatas"]) == 1
     if falha in ("prazo", "origem", "gatilho"):
         assert _DOADORA not in leituras
+
+
+def test_auditoria_de_pontes_separa_drift_e_papel_sem_expor_prova(cenario):
+    _, c, _, mapa, linhas, leituras = cenario
+    consulta = auditar_pontes(c)
+    assert consulta["ok"] and consulta["contagens"] == {"apta": 1}
+    assert consulta["pontes"][0]["destinos"] == ["calibracao"]
+    assert _TRECHO not in json.dumps(consulta, ensure_ascii=False)
+    linhas[_DOADORA] = (_TRECHO, _TRECHO)
+    assert auditar_pontes(c)["contagens"] == {"prova_ausente_ou_ambigua": 1}
+    c.fontes_por_escopo["calibracao"].append(_DOADORA)
+    leituras.clear()
+    assert auditar_pontes(c)["contagens"] == {"sem_travessia": 1}
+    assert _DOADORA not in leituras
+    c.fontes_por_escopo["status"].clear()
+    assert auditar_pontes(c)["contagens"] == {"origem_inelegivel": 1}
+    mapa["pontes"][0]["rever_em"] = _DATA.isoformat()
+    vencido = auditar_pontes(c)
+    assert not vencido["ok"] and vencido["contagens"] == {"vencida": 1}

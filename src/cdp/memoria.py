@@ -18,6 +18,7 @@ import unicodedata
 from collections.abc import Iterable
 from dataclasses import dataclass
 from datetime import date, datetime
+from functools import cached_property
 from pathlib import Path
 from typing import Annotated, BinaryIO, Literal
 from zoneinfo import ZoneInfo
@@ -430,6 +431,16 @@ _PEDIDO_DE_PROCEDIMENTO = re.compile(
     r"(?:metodo|regra|criterio|passos?|roteiro) (?:para|de|da|do)\b)"
 )
 _CONTROLES = re.compile(r"\b(?:trava|gate|mandato|limites?|autenticacao|permiss(?:ao|oes))\b")
+_MUTACAO_OPERACIONAL = re.compile(
+    r"^(?:por favor[,:]?\s+)?(?:(?:quero|preciso|peco) que(?: voce)?\s+|"
+    r"(?:pode|poderia|favor)\s+)?"
+    r"(?:publique|publicar|republique|republicar|apague|apagar|exclua|excluir|"
+    r"reescreva|reescrever|edite|editar|substitua|substituir|adultere|adulterar|"
+    r"forje|forjar|falsifique|falsificar|assine|assinar|grave|gravar|"
+    r"troque|trocar|altere|alterar|remova|remover|retifique|retificar)\b"
+    r"[^.!?\n]{0,140}\b(?:livro|carteira|ordens?|relatorios?|dados?|"
+    r"provas?|evidencias?|recibos?|hash(?:es)?|trilhas?|notas?|gates?|travas?)\b"
+)
 _BURLA = re.compile(
     r"(?:^|[.!?]\s+)(?:ignore|burle|contorne|drible)\b|"
     r"\b(?:como|mandou|instruiu a|disse para) (?:ignorar|burlar|contornar|driblar)\b"
@@ -521,7 +532,8 @@ def _pedido_fora_do_escopo(q: str) -> bool:
         _HOMONIMO_CDP.sub(" ", q)
     ):
         return True
-    return bool((_BURLA.search(q) and _CONTROLES.search(q)) or _EXTRACAO_SEGREDO.search(q)
+    return bool(_MUTACAO_OPERACIONAL.search(q)
+                or (_BURLA.search(q) and _CONTROLES.search(q)) or _EXTRACAO_SEGREDO.search(q)
                 or (_NEGOCIACAO_REAL.search(q) and _PEDIDO_NEGOCIACAO.search(q))
                 or (_RECURSO_PRIVADO.search(q) and (nega_vinculo or _ORGANIZACAO_EXTERNA.search(q))
                     and _ACESSO_A_RECURSO.search(q))
@@ -1048,6 +1060,12 @@ class Catalogo:
                 return True
         return False
 
+    @cached_property
+    def _refinador_autoridades(self):
+        from .memoria_roteamento import RefinadorAutoridades
+
+        return RefinadorAutoridades(self.fontes)
+
     def buscar(self, escopo: Escopo, consulta: str, limite: int, *,
                estado_atual: bool = False, evidencia_conferida: bool = False) -> dict:
         q = _normalizar(consulta).strip()
@@ -1062,6 +1080,10 @@ class Catalogo:
                 diretas = []
                 notas = []
                 rota = None
+        refinamento = self._refinador_autoridades.refinar(consulta, rota[0]) if rota else None
+        if refinamento:
+            codigo = refinamento["codigo"]
+            rota = codigo, _DESTINOS_ATUAIS[codigo]
         passagens = [] if fora or rota else self._recuperar_passagens(
             escopo, consulta, limite, diretas, notas
         )
@@ -1073,7 +1095,8 @@ class Catalogo:
                 "notas": [r.json() for r in notas], "fontes": list(caminhos.values()),
                 "passagens": [local.json() for local in passagens],
                 "destino_atual": rota[0] if rota else None,
-                "orientacao_atual": rota[1] if rota else None}
+                "orientacao_atual": rota[1] if rota else None,
+                **({"refinamento_destino": refinamento} if refinamento else {})}
 
     def _buscar_fontes_v1(self, escopo: Escopo, consulta: str, limite: int) -> list[dict]:
         """Busca por caminho conservada apenas para reproduzir o corpus inicial."""

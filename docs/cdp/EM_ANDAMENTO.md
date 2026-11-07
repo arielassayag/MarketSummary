@@ -5,6 +5,38 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## C22 completa e confirmação offline C26 — 07/11/2026
+
+A extensão C22 fechou a recuperação documental com a triagem assistida já
+lacrada. A busca direta, a memória offline e a busca após triagem recuperaram
+8/10 grupos completos. A seleção guiada recuperou 10/10, com cinco passagens
+e 4.500 bytes por consulta. Dois leitores e um árbitro escolheram os recortes
+sem gabarito. O fluxo assistido guiado passou nos 36 casos, incluindo 18/18
+destinos e 8/8 recusas, ambos sem contexto histórico. Dois avaliadores
+aprovaram 10/10 textos completos e fundamentados em uma reexecução sem
+ferramentas. O relatório e o rascunho do AI Notes foram atualizados.
+
+No diagnóstico C22, acrescentar exemplos C20/C21 à triagem deliberativa local
+levou os destinos de 7/18 para 16/18, mas encaminhou quatro dos oito pedidos
+externos como estado. O protótipo continua fora do uso padrão. Os reranqueadores
+de destino exigem intenção de estado e apoio de objeto e atributo. A C26
+congelou 60 consultas inéditas, com 15 por classe, para comparar esse desenho
+com a linha de base, os dois braços Qwen e a triagem assistida. A comparação
+ficou separada do diagnóstico C22 em etapas de escopo, intenção e autoridade.
+A C26 assistida acertou 45/45 determinados e 6/15 indeterminados. O melhor
+resultado local em acerto conjunto foi 31/60 no reranqueamento seletivo,
+com 8/15 destinos. O Qwen com exemplos acertou 12/15 destinos e errou
+todos os indeterminados. Os resultados estão em `relatorio-triagem-26.md`
+sob `outputs/cdp-memoria-rigor/`. O diagnóstico C22 em etapas eliminou
+os falsos encaminhamentos externos e passou de 23/36 a 22/36 tipos certos.
+
+A resolução `indeterminado` agora inclui um pedido de esclarecimento e termina
+antes de abrir o catálogo. A memória consultiva bloqueia solicitações diretas
+de mutação de registros e continua admitindo perguntas sobre procedimento.
+O preflight específico teve zero disparos na C26. A suíte focal de memória
+e roteamento passou em 174 casos após o bloqueio. O checkout da suíte ampla,
+`63afc80e`, precede essas duas mudanças e permanece congelado durante o teste.
+
 ## Continuidade de investigações entre cortes — 07/11/2026
 
 A saída de dreaming com provas separa o corte coberto das investigações em aberto.
@@ -22,18 +54,31 @@ A referência determinística da C22 acertou 9/18 destinos, 10/10 procedimentos 
 0/8 abstenções externas. O protótipo local Qwen3.5 4B acertou 8/18 destinos,
 8/10 procedimentos e 6/8 abstenções. O ganho externo veio com três falsos externos.
 As duas alternativas seguem com lacunas e o protótipo fica fora do fluxo padrão.
+O braço assistido com o prompt fixado na C20 acertou 36/36 classificações,
+18/18 destinos, 10/10 procedimentos e 8/8 abstenções. O resolvedor verificou
+histórico vazio nas 26 consultas de estado ou externas. A recuperação de
+passagens nas dez documentais ficou fora da C22.
 
 A repetição C24, com dados simulados e sem ferramentas, obteve 0/8 casos
 completos sem histórico, 5/8 com prosa e 6/8 com registro estruturado. Os dois
 formatos com histórico acertaram 8/8 evidências, próximas ações e checagens
 anteriores. A diferença restante está nas hipóteses que deveriam continuar
-em aberto. A qualificação focal desta etapa passou com 306 casos e um pulado.
+em aberto. A C25 fixou novas instruções antes da leitura de dez casos inéditos.
+Os dois formatos com histórico passaram 10/10, ante 0/10 sem histórico.
+A regressão C23 passou nos cinco microcasos de continuidade, deriva, fechamento
+e adulteração. O controle extra reabriu uma resolução com prova desatualizada
+fora do diff. Os protocolos e as pontuações ficam em `outputs/cdp-memoria-rigor/`.
+A suíte de memória, documentação, permissões, plugins, rotinas e adaptadores
+passou com 917 casos e um pulado.
 O rascunho atualizado fica em `outputs/ai-notes-15/ai-notes-15-eval-continuacao.html`.
 
 A fixture bancária fixa agora o prefixo histórico do índice e seu SHA-256. O módulo
 passou em 72/72. A guarda do replay recusou selar execução quando código mudou durante
 a suíte ampla original. Os quatro adaptadores técnicos foram regenerados na versão
 canônica e o módulo passou em 10/10. A qualificação ampla usa árvore congelada.
+A execução anterior em árvore congelada usou um diretório de testes fora de
+`TMPDIR` e foi interrompida após o diagnóstico. A nova execução de
+`63afc80e` tem os diretórios alinhados e está em andamento.
 
 ## Triagem separada, evidência encadeada e confirmação C21 — 07/11/2026
 

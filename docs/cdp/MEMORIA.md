@@ -133,7 +133,20 @@ uv run python -m cdp memoria rotear --escopo risco --consulta 'Que VaR consta no
 
 A conferência de estado e a abstenção terminam com `notas`, `fontes` e `passagens`
 vazias. O campo `catalogo_com_ressalvas` fica nulo porque o catálogo não foi lido.
-O encaminhamento indica a autoridade a consultar. A execução segue os gates do CDP.
+O encaminhamento indica a autoridade a consultar. Uma decisão `indeterminado`
+inclui `esclarecimento` para pedir o fato ou procedimento que a pessoa quer consultar
+antes de selecionar uma autoridade. A execução segue os gates do CDP.
+Pedidos explícitos para gravar, adulterar ou publicar registros operacionais ficam
+fora da memória consultiva. Consultas sobre como o procedimento funciona continuam
+passando pela busca documental.
+
+Na busca automática, uma consulta já reconhecida como estado pode ter seu destino
+refinado pelos critérios versionados de objeto e atributo. Uma alternativa só
+substitui a orientação inicial quando os dois critérios aparecem em trechos
+distintos da pergunta, a autoridade tem âncoras válidas e há margem sobre as demais.
+O campo `refinamento_destino` registra o destino anterior, os critérios encontrados
+e a origem verificada. Revisões antigas, cartões vencidos e empates conservam a
+orientação inicial.
 
 Para uma triagem de evidência, `--conferir` faz a recuperação automática. Se precisar
 da seleção guiada, use `--candidatas` com a mesma `rota.json`. O pacote de candidatas

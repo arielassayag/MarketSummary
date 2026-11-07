@@ -362,10 +362,14 @@ _OCORRENCIA = re.compile(
     r"abert[oa]s?|ativ[oa]s?|ficou|ficaram|marcou|primeir[oa]s?)\b"
     r"|\bmedid[oa]s? (?:em|n[oa]s?|pel[oa]s?|durante)\b"
     r"|\b(?:ja|ainda) (?:esta|estao) \w+(?:ando|endo|indo)\b"
-    r"|\bja (?:foi|foram|teve|tiveram) (?:\w+ ){0,7}\w+(?:ad|id)[oa]s?\b"
+    r"|\b(?:foi|foram) (?:\w+ ){0,3}\w+(?:ad|id)[oa]s?\b"
+    r"|\bja (?:teve|tiveram) (?:\w+ ){0,7}\w+(?:ad|id)[oa]s?\b"
+    r"|\bja (?:voltou|voltaram)\b"
 )
 _QUANTIFICA_TEMPO = re.compile(r"\b(?:quanto(?: tempo)?|quant[oa]s (?:segundos?|minutos?|horas?|dias?))\b")
 _TEMPO_PENDENTE = re.compile(r"\b(?:faltam?|restam?)\b")
+_OBRIGACAO_PENDENTE = re.compile(r"\bainda (?:precis(?:a|am)|deve(?:m)?|tem (?:de|que))\b")
+_SUBORDINADA = re.compile(r"\s+(?:se|caso|quando|depois que|antes que|assim que|logo que)\s+")
 _PEDIDO_OBSERVACAO = re.compile(
     r"^(?:me )?(?:quem|qual|quais|quanto|quant[ao]s|onde|quando|em que|que|como esta|"
     r"liste|informe|diga|identifique|mostre|traga|de (?:o|a|os|as))\b"
@@ -434,9 +438,12 @@ _MEDICAO_DE_ATIVO = re.compile(
     r"(?:indices?|benchmarks?|etfs?|carteiras?|ac(?:ao|oes))\b"
 )
 _TERMOS_INCIDENTAIS = frozenset(
-    "cada meu minha meus minhas seu sua seus suas ele ela eles elas eu estao estava estavam "
-    "mas num numa agora atual atualmente hoje ontem dois duas tres quatro cinco seis sete oito nove dez".split()
+    "cada meu minha meus minhas seu sua seus suas ele ela eles elas eu estao estava estavam entre "
+    "mas num numa agora atual atualmente hoje ontem ultimo ultima ultimos ultimas "
+    "dois duas tres quatro cinco seis sete oito nove dez".split()
 )
+_ARTEFATO_COBERTURA = re.compile(r"\b(?:modelos?|retratos?)\b")
+_SAIDA_COBERTURA = re.compile(r"\b(?:balancos?|resultados?|ratings?|precos?[- ]alvo)\b")
 
 
 def _pedido_fora_do_escopo(q: str) -> bool:
@@ -453,19 +460,28 @@ def _tema_do_cdp(q: str) -> bool:
                 or len(set(_VOCABULARIO_TRABALHO.findall(q))) >= 2)
 
 
+def _sobre_retrato_de_cobertura(q: str) -> bool:
+    return bool(_ARTEFATO_COBERTURA.search(q) and _SAIDA_COBERTURA.search(q))
+
+
 def _pede_estado(q: str) -> bool:
     # Uma situação narrada antes da pergunta dá contexto, mas não muda a intenção.
     for frase in re.split(r"(?<=[.!?])\s+", q):
         fim = frase.rsplit(", ", 1)[-1]
         if _PEDIDO_OBSERVACAO.match(fim):
             frase = fim
-        if (not (_MERCADO.search(frase) or _DOMINIO.search(frase) or _VINCULO_CDP.search(frase))
-                or _PROCEDIMENTO.search(frase) or _PEDIDO_DE_PROCEDIMENTO.search(frase)):
+        if not (_MERCADO.search(frase) or _DOMINIO.search(frase) or _VINCULO_CDP.search(frase)
+                or _sobre_retrato_de_cobertura(frase)):
             continue
         pedido = _PEDIDO_OBSERVACAO.search(frase) or frase.endswith("?")
-        enunciado = re.split(r"\s+(?:se|caso|quando)\s+", frase, maxsplit=1)[0]
+        enunciado = _SUBORDINADA.split(frase, maxsplit=1)[0]
+        if _PROCEDIMENTO.search(frase) or _PEDIDO_DE_PROCEDIMENTO.search(
+            _OBRIGACAO_PENDENTE.sub(" ", enunciado)
+        ):
+            continue
         tempo_restante = _QUANTIFICA_TEMPO.search(enunciado) and _TEMPO_PENDENTE.search(enunciado)
-        if pedido and (_TEMPO.search(enunciado) or _OCORRENCIA.search(enunciado) or tempo_restante):
+        if pedido and (_TEMPO.search(enunciado) or _OCORRENCIA.search(enunciado)
+                       or _OBRIGACAO_PENDENTE.search(enunciado) or tempo_restante):
             return True
     return False
 
@@ -484,6 +500,8 @@ def _fonte_atual(consulta: str, *, forcar: bool = False) -> str | None:
     if re.search(r"\bcommits?\b", q):
         return ("Consulte a procedência do commit gravado. O trailer CDP-Harness identifica "
                 "o aplicativo e CDP-Executor identifica o executor.")
+    if re.search(r"\bexecutor\b", q) and re.search(r"\b(?:remoto|origin/main)\b", q):
+        return "Consulte configs/cdp/executor.yaml na revisão remota e a identidade local em cdp estado."
     if re.search(r"\b(?:manifesto|hash|sha[- ]?256)\b", q):
         if re.search(r"\b(?:ensaio|replay)\b", q):
             return "Consulte o manifesto e a verificação da execução solicitada do ensaio isolado."
@@ -491,7 +509,9 @@ def _fonte_atual(consulta: str, *, forcar: bool = False) -> str | None:
             return "Consulte o manifesto e a verificação do snapshot ou da captura solicitada."
     if re.search(r"\btrava\b", q) and _QUANTIFICA_TEMPO.search(q) and _TEMPO_PENDENTE.search(q):
         return "Consulte cdp trava ver para conferir a ocupação e a expiração da trava distribuída."
-    if re.search(r"\b(?:balancos?|resultados?)\b", q) and re.search(r"\b(?:modelos?|retratos?)\b", q):
+    if _OBRIGACAO_PENDENTE.search(q) and re.search(r"\b(?:preg(?:ao|oes)|fechamentos?)\b", q):
+        return "Consulte fechamentos_pendentes em cdp agenda no clone de operação."
+    if _sobre_retrato_de_cobertura(q):
         return "Consulte o retrato da cobertura da data solicitada e os campos de cobertura em cdp agenda."
     if re.search(r"\b(?:cobertura|emissor(?:es)?)\b", q) and re.search(
         r"\b(?:fila|notas?|retrato|emissor(?:es)?)\b", q
@@ -699,22 +719,31 @@ class Catalogo:
         diretas_amplas = self.indice.buscar(escopo, consulta, max(limite, 10))
         return ampliar_selecao(blocos, (*diretas_amplas, *contextuais), self.fontes.linhas)
 
-    def _tem_apoio_no_acervo(self, escopo: Escopo, q: str, diretas: list[Local], *,
+    def _tem_apoio_no_acervo(self, escopo: Escopo, q: str, diretas: list[Local], notas: list[Registro], *,
                             observacao: bool) -> bool:
         termos = {t for t in termos_contextuais(q) if not t.startswith("@") and not t.isdigit()}
         termos -= _TERMOS_INCIDENTAIS
         base = min(3, len(termos)) if _tema_do_cdp(q) else 4
         minimo = 2 if observacao else max(2, len(termos) // 5, base)
 
+        def termos_em(texto: str) -> int:
+            return len(termos & termos_contextuais(texto).keys())
+
         def apoia(p: Local) -> bool:
-            texto = "\n".join(self.fontes.linhas(p.caminho)[p.inicio - 1:p.fim])
-            return len(termos & termos_contextuais(texto).keys()) >= minimo
+            return termos_em("\n".join(self.fontes.linhas(p.caminho)[p.inicio - 1:p.fim])) >= minimo
 
         # Uma fonte deve sustentar os termos em conjunto. Etiquetas, aliases e títulos
         # do índice, sozinhos, não autorizam admitir um assunto novo no acervo.
-        return any(apoia(p) for p in diretas) or any(
+        if any(apoia(p) for p in diretas) or any(
             apoia(p) for p in self.indice.buscar(escopo, q, 5, contextual=True)
-        )
+        ):
+            return True
+        for registro in notas:
+            nota = registro.nota
+            descricao = " ".join((nota.titulo, nota.resumo, *nota.tags))
+            if termos_em(descricao) >= minimo and any(termos_em(ev.trecho) >= 2 for ev in nota.evidencias):
+                return True
+        return False
 
     def buscar(self, escopo: Escopo, consulta: str, limite: int, *,
                estado_atual: bool = False) -> dict:
@@ -722,13 +751,14 @@ class Catalogo:
         fora = _pedido_fora_do_escopo(q)
         atual = None if fora else _fonte_atual(consulta, forcar=estado_atual)
         diretas = [] if fora or estado_atual else self.indice.buscar(escopo, consulta, limite)
+        notas = [] if fora or atual else self._buscar_notas(escopo, consulta, limite, expandir=True)
         vinculo = _VINCULO_CDP.search(q) or (atual and _MEDICAO_DE_ATIVO.search(q))
         if not (fora or estado_atual or vinculo):
-            fora = not self._tem_apoio_no_acervo(escopo, q, diretas, observacao=bool(atual))
+            fora = not self._tem_apoio_no_acervo(escopo, q, diretas, notas, observacao=bool(atual))
             if fora:
                 diretas = []
+                notas = []
                 atual = None
-        notas = [] if fora or atual else self._buscar_notas(escopo, consulta, limite, expandir=True)
         if atual and not estado_atual:
             atual = "Se a pergunta for sobre o estado efetivo, consulte a fonte oficial. " + atual
         passagens = [] if fora or estado_atual else self._recuperar_passagens(

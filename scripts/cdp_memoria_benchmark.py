@@ -42,11 +42,16 @@ def _ler_corpus(arquivo: Path, revisao: str) -> tuple[CorpusReservado, dict[str,
 
 
 def _passagens_limitadas(fontes: Fontes, passagens: list[Local]) -> tuple[list[Local], int]:
+    if len(passagens) > K:
+        raise ValueError("quantidade de passagens fora do orçamento de produção")
     prefixo = []
     bytes_total = 0
     truncado = False
     for passagem in passagens:
-        linhas = fontes.linhas(passagem.caminho)[passagem.inicio - 1:passagem.fim]
+        fonte = fontes.linhas(passagem.caminho)
+        if not 1 <= passagem.inicio <= passagem.fim <= len(fonte):
+            raise ValueError("coordenadas de passagem fora da fonte fixada")
+        linhas = fonte[passagem.inicio - 1:passagem.fim]
         trecho = "\n".join(linhas).encode()
         if len(linhas) > LINHAS_PASSAGEM or len(trecho) > BYTES_PASSAGEM:
             raise ValueError("passagem fora do orçamento de produção")

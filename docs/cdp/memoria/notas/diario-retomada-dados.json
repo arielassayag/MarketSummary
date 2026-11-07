@@ -3,7 +3,7 @@
   "tipo": "licao",
   "estado": "curada",
   "titulo": "Fechamento indisponível interrompe a sequência",
-  "resumo": "Se o fechamento retornar dados não prontos, interrompa a sequência de pregões e publique os que já fecharam. Uma falha do código em relatório semanal é relatada e a rotina passa à próxima data. Em cada comentário recuperado use o contexto do próprio pregão.",
+  "resumo": "Se a coleta retornar dados não prontos por falta de insumos, interrompa a sequência de pregões pendentes e publique os registros que já fecharam. Uma falha do código em relatório semanal é relatada e a rotina passa à próxima data. Em cada comentário recuperado use o contexto do próprio pregão.",
   "escopos": [
     "diario"
   ],
@@ -14,7 +14,7 @@
     "pregão pendente",
     "relatório semanal",
     "falha do código",
-    "retomada",
+    "insumos de fechamento",
     "próxima data"
   ],
   "registrada_em": "2026-11-07",

@@ -28,6 +28,9 @@ from cdp.memoria_busca import Local, normalizar
     ("Quais emissores já tiveram os resultados refletidos no retrato?", "retrato da cobertura"),
     ("Qual frente de desenvolvimento do CDP ficou para a próxima sessão?", "EM_ANDAMENTO.md"),
     ("Quem ocupa a função de executor hoje e este clone está registrado como ele?", "estado e a agenda"),
+    ("A escrita do executor foi desabilitada no remoto?", "executor.yaml"),
+    ("Quais fechamentos a rotina ainda deve registrar?", "fechamentos_pendentes"),
+    ("Os preços-alvo mudaram no último retrato completo?", "retrato da cobertura"),
 ])
 def test_consulta_observada_indica_a_fonte_da_tarefa(consulta, origem):
     orientacao = _fonte_atual(consulta)
@@ -49,6 +52,8 @@ def test_consulta_observada_indica_a_fonte_da_tarefa(consulta, origem):
     "Que evidência demonstra qual implantação ficou disponível na última publicação?",
     "Como saber se os resultados já foram incorporados ao modelo da carteira?",
     "Com o portal publicado ontem, como verifico se a implantação terminou?",
+    "Quais passos a rotina ainda precisa seguir para publicar um relatório antigo?",
+    "Que validação acontece depois que o relatório semanal foi montado?",
 ])
 def test_ocorrencia_narrada_nao_converte_regra_em_pedido_de_estado(consulta):
     assert _fonte_atual(consulta) is None
@@ -95,13 +100,34 @@ def test_contexto_externo_com_vinculo_operacional_nao_e_bloqueado(consulta):
 @pytest.mark.parametrize(("consulta", "trecho"), [
     ("Qual é o risco atual de fratura no prontuário do paciente?", "O risco atual segue o mandato."),
     ("Planeje uma janela semanal de órbita para três satélites.", "Cada janela semanal permite três ordens."),
+    ("Que atalho do VS Code alterna entre as últimas abas?", "A última comparação foi entre VS Code e outro app."),
 ])
 def test_coincidencias_isoladas_na_fonte_nao_sustentam_o_tema(consulta, trecho):
     c = object.__new__(Catalogo)
     c.fontes = SimpleNamespace(revisao="0" * 40, linhas=lambda _: (trecho,))
     c.data = date(2026, 11, 7)
     c.problemas = []
+    c.ativos = []
     c.indice = SimpleNamespace(buscar=lambda *args, **kwargs: [Local("AGENTS.md", 1, 1, "0" * 64)])
     saida = c.buscar("risco", consulta, 5)
     assert saida["notas"] == saida["fontes"] == saida["passagens"] == []
     assert saida["orientacao_atual"] is None
+
+
+@pytest.mark.parametrize(("evidencia", "admitida"), [
+    ("O JSON gerado pelo assistente é aceito pelo modo de importação.", True),
+    ("O arquivo de configuração permanece íntegro.", False),
+])
+def test_nota_so_ampara_admissao_com_apoio_na_ancora(evidencia, admitida):
+    c = object.__new__(Catalogo)
+    c.fontes = SimpleNamespace(revisao="0" * 40)
+    c.data = date(2026, 11, 7)
+    c.problemas = []
+    c.indice = SimpleNamespace(buscar=lambda *args, **kwargs: [])
+    nota = SimpleNamespace(titulo="Provedor para testar JSON do assistente", resumo="Importe sem rede.",
+                           tags=[], evidencias=[SimpleNamespace(trecho=evidencia)])
+    reg = SimpleNamespace(nota=nota, json=lambda: {"id": "importacao"})
+    c._buscar_notas = lambda *args, **kwargs: [reg]
+    c._recuperar_passagens = lambda *args: []
+    resultado = c.buscar("desenvolvimento", "Que provedor processa JSON do assistente sem rede?", 5)
+    assert bool(resultado["notas"]) == admitida

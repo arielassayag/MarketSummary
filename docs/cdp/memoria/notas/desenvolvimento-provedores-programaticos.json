@@ -1,0 +1,29 @@
+{
+  "id": "desenvolvimento-provedores-programaticos",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Seleção do provedor para importar o JSON da mente",
+  "resumo": "Use imported para receber o JSON produzido por um assistente externo. Use demo para executar o modo programático com regras determinísticas sem rede. Os provedores opcionais anthropic e openrouter dependem de configuração no ambiente.",
+  "escopos": [
+    "desenvolvimento"
+  ],
+  "tags": [
+    "provedor programático",
+    "imported",
+    "JSON",
+    "assistente externo",
+    "demo"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/ARQUITETURA.md",
+      "trecho": "depois de três tentativas ⇒ o código publica o texto automático. Provedores do modo programático:\n`demo` (regras determinísticas, offline), `imported` (JSON de qualquer assistente),\n`anthropic` e `openrouter` (opcionais, por variável de ambiente).",
+      "sha256": "e41835a65b24ddd4eb846d07ddb35f81550a6c84e56dc31bdf6ca1dd5a3203d4"
+    }
+  ]
+}

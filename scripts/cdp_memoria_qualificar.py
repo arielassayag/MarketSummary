@@ -7,10 +7,17 @@ import argparse
 import json
 from pathlib import Path
 
-from cdp_memoria_benchmark import _ler_corpus, _medir_caso, _pares, _sha, _validar_gabarito
+from cdp_memoria_benchmark import (
+    _ler_corpus,
+    _medir_caso,
+    _pares,
+    _passagens_limitadas,
+    _sha,
+    _validar_gabarito,
+)
 
 from cdp.memoria import MAX_BYTES_FONTE, Catalogo, Fontes, raiz_repo
-from cdp.memoria_avaliacao import K, _medir
+from cdp.memoria_avaliacao import K, _atingidos, _medir
 
 
 def main() -> None:
@@ -23,15 +30,22 @@ def main() -> None:
     raiz = raiz_repo()
     fontes = Fontes(raiz, revisao=args.revisao)
     base = Fontes(raiz, revisao=args.revisao_fontes)
-    for nome in ("memoria", "memoria_busca", "memoria_avaliacao", "memoria_linhagem"):
-        caminho = f"src/cdp/{nome}.py"
+    for caminho in (
+        "src/cdp/memoria.py",
+        "src/cdp/memoria_busca.py",
+        "src/cdp/memoria_avaliacao.py",
+        "src/cdp/memoria_linhagem.py",
+        "scripts/cdp_memoria_benchmark.py",
+        "scripts/cdp_memoria_qualificar.py",
+    ):
         if (raiz / caminho).read_bytes() != fontes.ler(caminho, 256 * 1024):
             raise ValueError(f"código local diferente da revisão: {caminho}")
     lotes = [(p.stem, *_ler_corpus(p, base.revisao)) for p in args.corpora]
     datas = {lote.data for _, lote, _, _ in lotes}
-    ids = [c.id for _, lote, _, _ in lotes for c in lote.casos]
-    if len(datas) != 1 or len(ids) != len(set(ids)):
-        raise ValueError("corpora com datas diferentes ou IDs repetidos")
+    consultas = [c for _, lote, _, _ in lotes for c in lote.casos]
+    if (len(datas) != 1 or len({c.id for c in consultas}) != len(consultas)
+            or len({c.consulta.casefold().strip() for c in consultas}) != len(consultas)):
+        raise ValueError("corpora com datas diferentes, IDs repetidos ou consultas duplicadas")
 
     catalogo = Catalogo(fontes, datas.pop())
     if catalogo.problemas:
@@ -53,7 +67,12 @@ def main() -> None:
             if caso.tipo == "evidencia":
                 diretas = catalogo.indice.buscar(caso.escopo, caso.consulta, K)
                 contextuais = catalogo._recuperar_passagens(caso.escopo, caso.consulta, K, diretas, [])
-                resultado["contextual_sem_notas"] = _medir(contextuais, evidencias)
+                prefixo, tamanho = _passagens_limitadas(fontes, contextuais)
+                resultado["contextual_sem_notas"] = {
+                    **_medir(contextuais, evidencias),
+                    "bytes_evidencia": tamanho,
+                    "completo_4500b": all(_atingidos(prefixo, evidencias)),
+                }
             casos.append(resultado)
 
     evidencias = [c for c in casos if c["tipo"] == "evidencia"]
@@ -73,6 +92,7 @@ def main() -> None:
         "limite_passagens": K,
         "principal": principal,
         "contextual_sem_notas": sum(c["contextual_sem_notas"]["completo_5"] for c in evidencias),
+        "contextual_sem_notas_4500b": sum(c["contextual_sem_notas"]["completo_4500b"] for c in evidencias),
         "sensibilidade": {m: _pares(evidencias, m) for m in ("completo_1", "completo_3", "completo_4500b")},
         "controles": {
             "estado_sem_notas": estado_ok,

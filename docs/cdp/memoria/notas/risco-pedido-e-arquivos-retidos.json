@@ -3,7 +3,7 @@
   "tipo": "licao",
   "estado": "curada",
   "titulo": "O pedido de kill switch pode sair antes da gravação no livro",
-  "resumo": "Código 6 com retidos indica que o relatório e o pedido saíram, mas a marca do kill switch e seu evento ficaram fora do livro publicado. Destaque os arquivos retidos. A próxima montagem ou fechamento aplica o pedido publicado. No clone persistente, os arquivos retidos podem seguir como anteriores.",
+  "resumo": "Copie as métricas do monitor da saída ou do relatório e destaque retidos no resumo da publicação. Com código 6, o relatório e o pedido saem, e a marca do kill switch e seu evento ficam retidos. A próxima montagem ou fechamento aplica o pedido. No clone persistente, os arquivos retidos podem seguir como anteriores.",
   "escopos": [
     "risco",
     "operador",
@@ -18,7 +18,8 @@
     "trava exclusiva",
     "clone descartável",
     "aplicar pedido",
-    "trilha de auditoria"
+    "trilha de auditoria",
+    "resumo de risco"
   ],
   "registrada_em": "2026-11-07",
   "revisada_em": "2026-11-07",
@@ -40,6 +41,11 @@
       "caminho": "docs/cdp/playbooks/RISCO.md",
       "trecho": "  retido some com ele, e só o pedido publicado conta. No clone persistente do PC, a próxima\n  montagem ou o próximo fechamento publica o que ficou retido (`anteriores` na saída do\n  `cdp publicar`; `docs/cdp/LOCAL.md`, seção 14).",
       "sha256": "be903c7700835b096f5748d8ed2fc7e2eeb18e58415c60aafa7eb9fefaae0bb7"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/RISCO.md",
+      "trecho": "Até 10 linhas, números **copiados** da saída ou do relatório: modo (intradiário ou fechamento),\nNAV e drawdown, estágio da escada de drawdown, resultado intradiário e cobertura, vol ex-ante e\nbanda, beta, net e gross, gatilhos HARD e SOFT, kill switch (e o motivo, se ligado), caminho do\nrelatório, publicação e, se houver, os arquivos `retidos`.",
+      "sha256": "ba358d6d1d1a9c2c554e912ec864c3a4b345392ca54fc8464c8377a983b2b6a5"
     }
   ]
 }

@@ -1,0 +1,40 @@
+{
+  "id": "semanal-reserva-retoma-a-etapa",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "A reserva semanal retoma da etapa indicada pela agenda",
+  "resumo": "Com semanal.acao igual a montar, retome de semanal.etapa e preserve o que já está gravado. Um prepare interrompido antes da promoção do briefing pode ser refeito pela reserva. Com ação tese, retome somente tese, integridade e painel, publicação e resumo, pois a decisão já está gravada.",
+  "escopos": [
+    "semanal"
+  ],
+  "tags": [
+    "rotina de reserva",
+    "briefing incompleto",
+    "pesquisa interrompida",
+    "etapa da montagem",
+    "decisão já gravada",
+    "tese pendente"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/SEMANAL.md",
+      "trecho": "- `semanal.acao`:\n  - `montar` → continue a partir de `semanal.etapa` (`cobertura`, `prepare`, `pesquisa` ou\n    `validar_e_decidir`); anote `semanal.semana` (AAAA-MM-DD), `semanal.prazo_efetivo`,",
+      "sha256": "a45cbc78804fd6e74b5cee96da58d851dc3870ea23a71dc0f3e67bdee2af55f8"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/SEMANAL.md",
+      "trecho": "    mercado não negocia no leilão; não há o que ajustar à mão). Numa reserva, retome da etapa\n    indicada, sem refazer o que já está gravado.\n  - `tese` → a decisão já está gravada e a tese não foi publicada: faça **só** os passos 8\n    (tese), 9 (integridade e painel), 10 (publicação, com a mensagem da retomada) e 11 (resumo).",
+      "sha256": "845843847c79a41148afcd76d2a88334deeeedb75a3807bec4f23883b7883f55"
+    },
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "- **Prepare interrompido** (rede, fonte, modelo): o briefing é montado numa área temporária e\n  promovido de uma vez só no fim, então nada parcial fica para trás e a reserva seguinte refaz\n  o `weekly prepare`. Cotação intradiária vazia é falha de coleta (a análise usa o fechamento\n  anterior, sem barra provisória, e a falha aparece em `falhas_coleta`).",
+      "sha256": "86d7f708eaa7c6ebccd6aca5ae580adaf96a6216bc4943f04f445a6988b269c9"
+    }
+  ]
+}

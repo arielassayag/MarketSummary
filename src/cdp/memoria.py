@@ -24,6 +24,17 @@ from zoneinfo import ZoneInfo
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_validator, model_validator
 
 from .leitura_arquivos import receber_fd
+from .memoria_busca import (
+    BYTES_PASSAGEM,
+    LINHAS_PASSAGEM,
+    IndicePassagens,
+    Local,
+    ampliar,
+    intercalar,
+)
+from .memoria_busca import (
+    normalizar as _normalizar,
+)
 
 Escopo = Literal["desenvolvimento", "operador", "status", "semanal", "diario", "risco",
                  "cobertura", "calibracao"]
@@ -172,6 +183,10 @@ class MemoriaErro(ValueError):
     """O catálogo ou uma evidência não pôde ser lido."""
 
 
+class MemoriaGitIndisponivel(MemoriaErro):
+    """Git não pôde provar a revisão ou ler os objetos locais."""
+
+
 def _chaves_unicas(pares: list[tuple[str, object]]) -> dict:
     out = dict(pares)
     if len(out) != len(pares):
@@ -183,10 +198,12 @@ def _git(raiz: Path, *args: str) -> bytes:
     try:
         proc = subprocess.run(
             ["git", "--no-replace-objects", "--literal-pathspecs", "-C", str(raiz), *args],
-            env={**os.environ, "GIT_NO_LAZY_FETCH": "1", "GIT_ALLOW_PROTOCOL": ""}, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, timeout=5, check=True,
+            env={**os.environ, "GIT_NO_LAZY_FETCH": "1", "GIT_ALLOW_PROTOCOL": "",
+                 "GIT_GRAFT_FILE": os.devnull},
+            stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, timeout=5, check=True,
         )
     except (OSError, subprocess.SubprocessError) as exc:
-        raise MemoriaErro("Git indisponível para a leitura local") from exc
+        raise MemoriaGitIndisponivel("Git indisponível para a leitura local") from exc
     return proc.stdout
 
 
@@ -195,10 +212,15 @@ def raiz_repo() -> Path:
 
 
 class Fontes:
-    def __init__(self, raiz: Path, *, trabalho: bool = False):
+    def __init__(self, raiz: Path, *, trabalho: bool = False, revisao: str | None = None):
         self.raiz = raiz.resolve()
         self.trabalho = trabalho
-        self.revisao = _git(self.raiz, "rev-parse", "--verify", "HEAD").decode().strip()
+        if revisao is not None and (
+            trabalho or not re.fullmatch(r"(?:[0-9a-f]{40}|[0-9a-f]{64})", revisao)
+            or _git(self.raiz, "cat-file", "-t", revisao).strip() != b"commit"
+        ):
+            raise MemoriaErro("revisão exige o hash completo de um commit local")
+        self.revisao = revisao or _git(self.raiz, "rev-parse", "--verify", "HEAD").decode().strip()
         self._cache: dict[str, tuple[str, ...] | None] = {}
 
     def catalogo(self) -> list[str]:
@@ -231,8 +253,12 @@ class Fontes:
         if not separador or nome != caminho.encode() or b"\n" in meta:
             raise MemoriaErro("fonte ausente na revisão")
         modo, tipo, objeto, tamanho = meta.split()
-        if modo not in (b"100644", b"100755") or tipo != b"blob" or int(tamanho) > limite:
-            raise MemoriaErro("fonte não regular ou acima do limite")
+        if modo not in (b"100644", b"100755") or tipo != b"blob":
+            raise MemoriaErro("fonte não regular")
+        if not tamanho.isdigit():
+            raise MemoriaGitIndisponivel("objeto Git indisponível para a leitura local")
+        if int(tamanho) > limite:
+            raise MemoriaErro("fonte acima do limite")
         return _git(self.raiz, "cat-file", "blob", objeto.decode())
 
     def linhas(self, caminho: str) -> tuple[str, ...]:
@@ -242,24 +268,14 @@ class Fontes:
                 self._cache[caminho] = tuple(
                     self.ler(caminho, MAX_BYTES_FONTE).decode("utf-8").splitlines()
                 )
+            except MemoriaGitIndisponivel:
+                raise
             except (ValueError, OSError, RuntimeError):
                 self._cache[caminho] = None
         valor = self._cache[caminho]
         if valor is None:
             raise MemoriaErro("fonte ausente, ilegível ou fora dos limites")
         return valor
-
-
-@dataclass(frozen=True)
-class Local:
-    caminho: str
-    inicio: int
-    fim: int
-    sha256: str
-
-    def json(self) -> dict:
-        return {"caminho": self.caminho, "inicio": self.inicio, "fim": self.fim,
-                "sha256": self.sha256}
 
 
 def _localizar(fontes: Fontes, ev: Evidencia) -> Local:
@@ -287,10 +303,6 @@ class Registro:
         }
 
 
-def _normalizar(s: str) -> str:
-    return "".join(c for c in unicodedata.normalize("NFKD", s.lower()) if not unicodedata.combining(c))
-
-
 def _tokens(s: str) -> set[str]:
     termos = set(re.findall(r"[a-z0-9]{2,}", _normalizar(s))) - _STOP
     # Normalização leve de plural em português; não exige modelo, dicionário ou rede.
@@ -299,25 +311,65 @@ def _tokens(s: str) -> set[str]:
             for t in termos}
 
 
-def _fonte_atual(consulta: str) -> str | None:
-    """Encaminha perguntas diretas de estado; consultas de procedimento continuam na busca."""
+_MERCADO = re.compile(
+    r"\b(?:p&l|pnl|retornos?|resultados?|pl|precos?|patrimonio|rentabilidade|"
+    r"cotac(?:ao|oes)|perdas?|ganhos?|drawdown|volatilidade|moedas?|pesos?|liquidez)\b"
+)
+_DOMINIO = re.compile(
+    r"\b(?:kill[- ]switch|executor|rotinas?|agenda|carteira|posic(?:ao|oes)|exposicao|"
+    r"montagem|pendencias?|fechamento|trava|cobertura|risco|relatorios?|calibracao|"
+    r"publicacao|portal|pages|revisao|disparo|rodada|livro|emails?|entrega|snapshot)\b"
+)
+_TEMPO = re.compile(
+    r"\b(?:agora|hoje|ontem|atual(?:mente|is)?|ultim[oa]s?|neste momento|em vigor|vigentes?|"
+    r"no momento|esta semana|nesta semana|desde o inicio|mais recente)\b"
+    r"|\b(?:\d{4}-\d{2}-\d{2}|\d{1,2}/\d{1,2}(?:/\d{2,4})?)\b"
+)
+_OCORRENCIA = re.compile(
+    r"\b(?:ja|ainda|houve|ocorreu|consta[m]?|aparece[m]?|rodou|executou|fechou|"
+    r"entregou|publicou|virou|mudou|caiu|ficou|subiu|saiu|chegou|encerrou|"
+    r"concluiu|esta[o]?|foi|foram|acabou|resta[m]?)\b"
+)
+_PROCEDIMENTO = re.compile(
+    r"^(?:como (?!esta\b|estao\b|ficou\b|anda\b|se encontra\b)|"
+    r"em (?:que situacao|que caso|qual situacao|qual caso)|"
+    r"se\b|quando (?:um|uma|a fonte|os dados|a regra)\b|no dia (?:de|da|do)\b|"
+    r"o que (?:fazer|faco|acontece quando)|qual (?:e )?[ao]s? "
+    r"(?:procedimento|roteiro|comando|regra|diferenca|criterio|ordem|fluxo)\b)"
+)
+_VALOR = re.compile(
+    r"^(?:quanto|quant[oa]s)\b|^qual(?: e| foi)? [oa] "
+    r"(?:valor|pnl|p&l|pl|retorno|preco|cotacao|patrimonio|rentabilidade|drawdown|peso)\b"
+)
+_PEDIDO_DE_PROCEDIMENTO = re.compile(
+    r"\b(?:como (?:eu )?(?:confiro|confirmo|verifico|faco|validar|usar|confirmar|proceder)|"
+    r"posso|devo|permite|autoriza|atesta|serve para|replay|point-in-time|pit)\b"
+)
+
+
+def _fonte_atual(consulta: str, *, forcar: bool = False) -> str | None:
+    """Reconhece pedidos de observação e distingue instruções de procedimento."""
     q = _normalizar(consulta).strip()
-    if re.match(r"^(como|por que|porque|quando|onde|em que)\b", q):
-        return None
-    if not re.search(r"\b(agora|hoje|atualmente|ultim[oa]s?)\b|\bestado atual\b", q):
-        return None
-    if re.search(r"\b(portal|pages)\b", q):
+    mercado, dominio = bool(_MERCADO.search(q)), bool(_DOMINIO.search(q))
+    if not forcar:
+        if (not (mercado or dominio) or _PROCEDIMENTO.search(q)
+                or _PEDIDO_DE_PROCEDIMENTO.search(q)):
+            return None
+        observacao = _TEMPO.search(q) or _OCORRENCIA.search(q)
+        consulta_valor = mercado and _VALOR.match(q)
+        if not (observacao or consulta_valor):
+            return None
+    if re.search(r"\b(?:portal|pages)\b", q):
         return "Confira o portal servido e a procedência em docs/cdp/SITE.md."
-    if re.search(r"\b(p&l|retorno|resultado|pl|preco|patrimonio)\b", q):
+    if re.search(r"\b(?:e-?mails?|entrega)\b", q):
+        return "Confira a trilha de entrega descrita em docs/cdp/playbooks/DIARIO.md."
+    if mercado:
         return "Consulte o relatório oficial da data e os fatos calculados pelo código."
-    if re.search(r"\b(cobertura|emissor(?:es)?)\b", q) and re.search(
-        r"\b(fila|notas?|emissor(?:es)?)\b", q
+    if re.search(r"\b(?:cobertura|emissor(?:es)?)\b", q) and re.search(
+        r"\b(?:fila|notas?|emissor(?:es)?)\b", q
     ):
         return "Consulte a agenda de cobertura e a fila da nota no clone de operação."
-    if re.search(r"\b(kill switch|executor|rotina|agenda|cotacoes?|carteira|posic(?:ao|oes)|"
-                 r"montagem|pendencias?|fechamento|trava|cobertura|risco)\b", q):
-        return "Consulte o estado e a agenda no clone de operação."
-    return None
+    return "Consulte o estado e a agenda no clone de operação."
 
 
 class Catalogo:
@@ -341,6 +393,8 @@ class Catalogo:
                                            for e in exc.errors(include_input=False)}))
                 self._problema(id_, "schema", campos)
                 continue
+            except MemoriaGitIndisponivel:
+                raise
             except (ValueError, OSError, RuntimeError):
                 self._problema(id_, "arquivo", "arquivo ilegível ou ID divergente")
                 continue
@@ -357,21 +411,12 @@ class Catalogo:
             if len(locais) == len(nota.evidencias):
                 registros[id_] = Registro(nota, tuple(locais))
 
-        for id_, nota in notas.items():
-            for alvo in nota.substitui:
-                anterior = notas.get(alvo)
-                if (not anterior or nota.registrada_em <= anterior.registrada_em
-                        or not set(anterior.escopos).issubset(nota.escopos)):
-                    self._problema(id_, "substituicao", f"alvo inexistente, sem precedência ou escopo: {alvo}")
+        from .memoria_linhagem import substituicoes_confirmadas
+
         self.notas = notas
+        substitu, problemas = substituicoes_confirmadas(fontes, data, notas, registros)
+        self.problemas.extend(problemas)
         invalidas = {p["id"] for p in self.problemas}
-        # Uma substituição com data de revisão alcançada encerra o uso da versão anterior.
-        # Se a evidência da sucessora falhar depois, não ressuscite a versão conhecida como antiga.
-        substitu = {alvo for n in notas.values() if n.estado in ("curada", "retirada")
-                    and n.revisada_em <= data and n.registrada_em <= data
-                    and not any(p["id"] == n.id and p["codigo"] == "substituicao"
-                                for p in self.problemas)
-                    for alvo in n.substitui}
         self.ativos: list[Registro] = []
         for id_, nota in notas.items():
             if nota.estado != "curada":
@@ -395,6 +440,14 @@ class Catalogo:
         self.ativos = [r for r in self.ativos if r.nota.id not in duplicatas]
         self.contagens["disponivel"] = len(self.ativos)
         self._primarias: dict[str, list[tuple[int, set[str]]]] = {}
+        self.fontes_por_escopo = {
+            escopo: tuple(dict.fromkeys((*_primarias(escopo), *(
+                local.caminho for registro in self.ativos if escopo in registro.nota.escopos
+                for local in registro.locais
+            ))))
+            for escopo in ESCOPO
+        }
+        self.indice = BuscaCanonica(fontes, self.fontes_por_escopo)
 
     def _problema(self, id_: str, codigo: str, detalhe: str) -> None:
         self.problemas.append({"id": id_, "codigo": codigo, "detalhe": detalhe})
@@ -413,31 +466,55 @@ class Catalogo:
                 break
         return out
 
-    def buscar(self, escopo: Escopo, consulta: str, limite: int) -> dict:
-        atual = _fonte_atual(consulta)
+    def _buscar_notas(self, escopo: Escopo, consulta: str, limite: int, *,
+                      expandir: bool = False) -> list[Registro]:
         termos = _tokens(consulta)
         notas = []
-        if termos and not atual:
+        if termos:
             for reg in self.ativos:
                 n = reg.nota
                 if escopo not in n.escopos:
                     continue
                 chave = _tokens(n.titulo + " " + " ".join(n.tags))
                 resumo = _tokens(n.resumo)
-                comuns = termos & (chave | resumo)
+                ancora = set()
+                if expandir:
+                    ancora = _tokens(" ".join(ev.trecho for ev in n.evidencias))
+                comuns = termos & (chave | resumo | ancora)
                 # Sobreposição mínima evita forçar uma lembrança com coincidência incidental.
                 if (len(comuns) >= min(2, len(termos)) and termos & chave
                         and len(comuns) * 3 >= len(termos)):
-                    pontos = 3 * len(termos & chave) + len(termos & resumo)
+                    pontos = 6 * len(termos & chave) + 2 * len(termos & resumo) + len(termos & ancora)
                     notas.append((-pontos, -len(comuns), n.id, reg))
         notas.sort(key=lambda v: v[:3])
-        primarias = self.buscar_fontes(escopo, consulta, limite)
+        return [r for *_, r in notas[:limite]]
+
+    def buscar(self, escopo: Escopo, consulta: str, limite: int, *,
+               estado_atual: bool = False) -> dict:
+        atual = _fonte_atual(consulta, forcar=estado_atual)
+        notas = [] if atual else self._buscar_notas(escopo, consulta, limite, expandir=True)
+        diretas = [] if atual else self.indice.buscar(escopo, consulta, limite)
+        termos = _tokens(consulta)
+        ancoras = []
+        for registro in notas:
+            elegiveis = [(local, evidencia) for local, evidencia in
+                         zip(registro.locais, registro.nota.evidencias, strict=True)
+                         if local.fim - local.inicio + 1 <= LINHAS_PASSAGEM
+                         and len(evidencia.trecho.encode()) <= BYTES_PASSAGEM]
+            ordenadas = sorted(elegiveis, key=lambda par: -len(termos & _tokens(par[1].trecho)))
+            ancoras.append([ampliar(local, self.fontes.linhas(local.caminho))
+                            for local, _ in ordenadas])
+        passagens = intercalar(diretas, ancoras, limite)
+        caminhos = {}
+        for local in diretas:
+            caminhos.setdefault(local.caminho, local.json())
         return {"revisao": self.fontes.revisao, "data": self.data.isoformat(), "escopo": escopo,
                 "aviso": _AVISO, "catalogo_com_ressalvas": bool(self.problemas),
-                "notas": [r.json() for *_, r in notas[:limite]],
-                "fontes": primarias, "orientacao_atual": atual}
+                "notas": [r.json() for r in notas], "fontes": list(caminhos.values()),
+                "passagens": [local.json() for local in passagens], "orientacao_atual": atual}
 
-    def buscar_fontes(self, escopo: Escopo, consulta: str, limite: int) -> list[dict]:
+    def _buscar_fontes_v1(self, escopo: Escopo, consulta: str, limite: int) -> list[dict]:
+        """Busca por caminho conservada apenas para reproduzir o corpus inicial."""
         termos = _tokens(consulta)
         achados = []
         if not termos:
@@ -465,6 +542,24 @@ def _primarias(escopo: Escopo) -> tuple[str, ...]:
             + FONTES_CODIGO.get(escopo, ()))
 
 
+class BuscaCanonica:
+    def __init__(self, fontes: Fontes, caminhos: dict[Escopo, tuple[str, ...]]):
+        self.fontes = fontes
+        self.caminhos = caminhos
+        self.indices: dict[Escopo, IndicePassagens] = {}
+
+    def buscar(self, escopo: Escopo, consulta: str, limite: int) -> list[Local]:
+        if escopo not in self.indices:
+            fontes = []
+            for caminho in self.caminhos[escopo]:
+                try:
+                    fontes.append((caminho, self.fontes.linhas(caminho)))
+                except MemoriaErro:
+                    continue
+            self.indices[escopo] = IndicePassagens(fontes)
+        return self.indices[escopo].buscar(consulta, limite)
+
+
 def _hoje() -> date:
     return datetime.now(ZoneInfo("America/Sao_Paulo")).date()
 
@@ -486,11 +581,13 @@ def avaliar(catalogo: Catalogo, casos: list[_Caso], limite: int = 3) -> dict:
     """Compara recuperação de caminhos com o mesmo orçamento nas duas abordagens."""
     resultados = []
     for caso in casos:
-        busca = catalogo.buscar(caso.escopo, caso.consulta, limite)
-        ids = [n["id"] for n in busca["notas"]]
-        direta = [f["caminho"] for f in busca["fontes"]]
+        notas = ([] if _fonte_atual(caso.consulta) else
+                 catalogo._buscar_notas(caso.escopo, caso.consulta, limite))
+        ids = [r.nota.id for r in notas]
+        direta = [f["caminho"] for f in catalogo._buscar_fontes_v1(
+            caso.escopo, caso.consulta, limite)]
         com_memoria = list(dict.fromkeys(
-            [e["caminho"] for n in busca["notas"] for e in n["evidencias"]] + direta
+            [local.caminho for r in notas for local in r.locais] + direta
         ))[:limite]
         resultados.append({
             "id": caso.id, "notas": ids, "busca_direta": direta, "memoria_e_busca": com_memoria,
@@ -581,7 +678,10 @@ def _comando(args: argparse.Namespace) -> int:
         trabalho = acao == "auditar" and not args.revisao_git
         if trabalho and os.name != "posix":
             raise MemoriaErro("auditoria da árvore de trabalho requer POSIX; use --revisao-git")
-        fontes = Fontes(raiz_repo(), trabalho=trabalho)
+        revisao = getattr(args, "revisao", None)
+        if revisao is not None and args.data is None:
+            raise MemoriaErro("a consulta por revisão exige a data explícita de referência")
+        fontes = Fontes(raiz_repo(), trabalho=trabalho, revisao=revisao)
         if acao == "propor":
             inicio, fim = args.linhas
             nota = propor(fontes, id_=args.id, escopo=args.escopo, caminho=args.evidencia,
@@ -590,6 +690,11 @@ def _comando(args: argparse.Namespace) -> int:
             print(nota.model_dump_json(indent=2))
             return 0
         if acao == "avaliar":
+            if args.reservada or args.replica:
+                from .memoria_avaliacao import avaliar_reservada
+
+                _json(avaliar_reservada(fontes, replica=args.replica))
+                return 0
             bruto = fontes.ler(AVALIACAO, 65536)
             json.loads(bruto, object_pairs_hook=_chaves_unicas)
             corpus = _Avaliacao.model_validate_json(bruto)
@@ -612,7 +717,8 @@ def _comando(args: argparse.Namespace) -> int:
             else:
                 _json(out)
         elif acao == "buscar":
-            _json(c.buscar(args.escopo, args.consulta, args.limite))
+            _json(c.buscar(args.escopo, args.consulta, args.limite,
+                           estado_atual=args.estado_atual))
         else:
             _json(_relatorio(c))
             return int(bool(c.problemas))
@@ -637,7 +743,15 @@ def registrar(sub: argparse._SubParsersAction) -> None:
     ):
         s = acoes.add_parser(acao, help=ajuda)
         s.set_defaults(func=_comando)
-        if acao != "avaliar":
+        if acao in ("contexto", "buscar"):
+            s.add_argument("--revisao", help="hash completo do commit local a consultar")
+        if acao == "avaliar":
+            conjunto = s.add_mutually_exclusive_group()
+            conjunto.add_argument("--reservada", action="store_true",
+                                   help="mede recuperação de passagens no primeiro corpus reservado")
+            conjunto.add_argument("--replica", action="store_true",
+                                   help="mede recuperação de passagens no corpus de verificação")
+        else:
             s.add_argument("--data", type=_data, help="data de referência (padrão: Brasília)")
         if acao in ("contexto", "buscar", "propor"):
             s.add_argument("--escopo", choices=tuple(ESCOPO), required=True)
@@ -649,6 +763,8 @@ def registrar(sub: argparse._SubParsersAction) -> None:
         if acao == "buscar":
             s.add_argument("--consulta", required=True, type=_consulta)
             s.add_argument("--limite", type=int, choices=range(1, 11), default=5)
+            s.add_argument("--estado-atual", action="store_true",
+                           help="encaminha à fonte do estado sem recuperar memória")
         if acao == "propor":
             s.add_argument("--id", required=True)
             s.add_argument("--evidencia", required=True, help="caminho relativo da fonte")

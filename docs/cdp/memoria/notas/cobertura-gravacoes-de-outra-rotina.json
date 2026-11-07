@@ -1,0 +1,36 @@
+{
+  "id": "cobertura-gravacoes-de-outra-rotina",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "A rotina de notas preserva gravações pendentes de outras rotinas",
+  "resumo": "No clone persistente, confira os caminhos pendentes antes de gravar. Se a lista estiver restrita ao livro de cobertura e à trilha, a publicação da rotina pode levar os anteriores. Para alterações de fechamento, montagem ou kill switch, pare e relate. A próxima rotina diária as publica. A liberação da trava segue o modo de execução.",
+  "escopos": [
+    "cobertura",
+    "operador"
+  ],
+  "tags": [
+    "clone persistente",
+    "mudanças locais",
+    "gravação interrompida",
+    "arquivos não publicados",
+    "pendência de outra rotina",
+    "status do git"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/COBERTURA.md",
+      "trecho": "- **Gravações de uma execução anterior.** Antes de gravar qualquer coisa, rode\n  `git status --short -- book reports data/market data/publico` (só leitura). Num clone novo\n  (nuvem), a lista vem sempre vazia. No clone persistente do PC:\n  - arquivos só em `book/cobertura/` (e `book/audit_log.jsonl`) são de uma execução anterior\n    desta rotina que não chegou a publicar: siga — `cdp publicar` os leva junto, com a trava",
+      "sha256": "37c63d95a8ac360fd041a8b2ad5fdca970e01da30f12f66d9f06f3822e1c4f50"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/COBERTURA.md",
+      "trecho": "    (campo `anteriores` na saída) — e relate-os no resumo;\n  - qualquer outro arquivo é gravação do fechamento diário, da montagem ou do kill switch\n    retido que ainda não foi publicada, fora dos caminhos desta rotina: **não grave nada**,\n    libere a trava (no modo executor, não) e encerre relatando em destaque; a próxima rotina\n    diária a publica.",
+      "sha256": "61945d0252178b622bd0f4dc8cab1e0673058b4756853dc0664a6473afa658f4"
+    }
+  ]
+}

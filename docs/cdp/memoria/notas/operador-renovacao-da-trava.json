@@ -1,0 +1,38 @@
+{
+  "id": "operador-renovacao-da-trava",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "Perda da trava transfere a execução para quem assumiu",
+  "resumo": "Confira o estado ao renovar a trava no fim de uma etapa. Se vier perdida, interrompa as gravações e encerre relatando, sem publicar ou liberar a trava de quem assumiu. Se vier indisponivel, siga e tente a renovação ao fim da etapa seguinte. A publicação recusa se a trava se perder até lá.",
+  "escopos": [
+    "operador",
+    "semanal",
+    "diario",
+    "cobertura"
+  ],
+  "tags": [
+    "trava expirada",
+    "renovar trava",
+    "disputa pela trava",
+    "rede indisponível",
+    "perda de titularidade",
+    "execução concorrente"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/SEMANAL.md",
+      "trecho": "- Ao fim de cada etapa (cobertura, coleta, cada bloco de pesquisa, validação, decisão, tese), renove a\n  trava: `uv run python -m cdp trava renovar --id <trava.id>`. Sem `\"estado\": \"renovada\"`:\n  - `perdida` (a validade venceu e outra execução assumiu a trava) ⇒ pare de gravar, **não** rode\n    `cdp publicar` nem `trava liberar` e encerre relatando: quem assumiu conclui a montagem;",
+      "sha256": "3f0e68c2fe46ae811bacad4b4e46632f61ee25018552994dbfd0ce73e7d7c861"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/SEMANAL.md",
+      "trecho": "  - `indisponivel` (rede ou disputa) ⇒ siga e renove de novo ao fim da etapa seguinte; se a trava\n    se perder até a publicação, `cdp publicar` recusa e você relata.",
+      "sha256": "3c6803facf0a552ea01ef02fc679b5edb2f5e39590703f84f57fc12623c5083e"
+    }
+  ]
+}

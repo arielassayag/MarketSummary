@@ -5,6 +5,20 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## Qualificação da memória por passagem — 07/11/2026
+
+A consulta passou a fornecer passagens com linhas inclusivas e SHA-256. O índice usa
+BM25 e a memória acrescenta âncoras em rodízio, com o primeiro resultado direto preservado.
+A busca também encaminha pedidos de estado e permite fixar a revisão Git com a data de
+aplicação. Sucessões exigem evidência válida na revisão que as registra e o histórico
+de primeiro pai conserva os vínculos comprovados.
+
+O primeiro corpus reservado e a réplica cega medem evidência completa por pergunta,
+cobertura parcial e abstenção. Consulte os comandos e o método no
+[manual de memória](MEMORIA.md). O renderizador usa o JSON da réplica para gerar duas
+figuras, com transições pareadas e os denominadores dos controles. A validação cobre
+recuperação de evidência em desenvolvimento. A adoção operacional segue pendente.
+
 ## Memória entre sessões — 07/11/2026
 
 A implementação está no ramo de desenvolvimento `codex/cdp-memoria`, sobre o fechamento

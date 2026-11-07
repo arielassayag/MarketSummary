@@ -1,0 +1,41 @@
+{
+  "id": "diario-relatorio-com-carteira-mantida",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "O dia de montagem com carteira mantida também tem relatório semanal",
+  "resumo": "Use relatorio_semanal.pendentes para recuperar, em ordem de data, os dias de montagem com fechamento registrado e relatório ausente. Inclua os dias sem decisão gravada e descreva a carteira mantida com os fatos do relatório. Se a preparação falhar em uma data, relate e passe à seguinte.",
+  "escopos": [
+    "diario",
+    "semanal"
+  ],
+  "tags": [
+    "relatório semanal de resultado",
+    "carteira mantida",
+    "sem decisão",
+    "dia de montagem",
+    "relatório atrasado",
+    "resultado da semana"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "1. **Relatórios semanais de resultado** — `relatorio_semanal.pendentes` lista, do mais antigo ao\n   mais recente, todo dia de montagem da regra semanal com o registro do fechamento e sem\n   relatório publicado — **inclusive os dias sem decisão gravada** (carteira mantida). Trate\n   cada data da lista, nessa ordem:",
+      "sha256": "e6a5ca702704b8e2a63032fbee0f14f33dddddd2a76ce38fdf3f66e2fe68e15d"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "   Entre o primeiro comando e a validação, leia **por inteiro** `reports/semanal/<data>/fatos.md`\n   e escreva `reports/semanal/<data>/comentario.json` conforme `comentario.schema.json`, com\n   `\"mind\": \"<mente>\"` e só fatos: as mudanças da carteira feitas no fechamento (entradas, saídas,\n   aumentos e reduções; num dia sem decisão, a carteira mantida), o resultado e a atribuição de\n   performance da semana e desde o início, o risco da carteira e a execução — números **apenas**",
+      "sha256": "0e041cde5d99e928b7dd345d581fb87371688f25c9e8a96af4d2696769c6533b"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "   Falha do código numa data: relate e passe à seguinte; a próxima rotina retoma pelo\n   `cdp agenda`.",
+      "sha256": "72b8afc49405c7c8526b250859dac6fcd56a5919d3bdc05e5c4247d3c87387bb"
+    }
+  ]
+}

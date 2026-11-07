@@ -1,0 +1,41 @@
+{
+  "id": "semanal-corte-da-decisao",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "O prazo efetivo da montagem vem da agenda",
+  "resumo": "Consulte semanal.prazo_efetivo. O código aplica o menor entre o teto de Brasília, o prazo do mandato e o primeiro fechamento entre NYSE, B3 e BMV menos a margem. Com o prazo vencido e sem decisão gravada, a carteira anterior segue vigente. Na inauguração, o fundo segue sem carteira.",
+  "escopos": [
+    "semanal",
+    "operador"
+  ],
+  "tags": [
+    "prazo efetivo",
+    "horário limite",
+    "fechamento antecipado",
+    "calendário de pregão",
+    "carteira mantida",
+    "decisão perdida"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/EXECUCAO.md",
+      "trecho": "```\nprazo = min( teto de 15h00 (Brasília),\n             prazo do mandato (fund.decision_deadline_local),\n             fechamento mais cedo entre NYSE, B3 e BMV no dia − 45 minutos )\n```",
+      "sha256": "7b716e0bb462e0a4a022712c29cdc8330d6f261128fb15a03a68bdeaa65e03fa"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/SEMANAL.md",
+      "trecho": "O dia de montagem é o **último pregão da semana na NYSE** (sexta-feira, ou o dia útil anterior em\nferiado nos EUA) e a data de início do mandato (carteira inaugural, ao preço de fechamento). A\ndecisão precisa estar gravada antes do **prazo efetivo** (`semanal.prazo_efetivo` em\n`cdp agenda`: o teto de 15:00 de Brasília ou o fechamento mais cedo entre NYSE, B3 e BMV menos a\nmargem — mais cedo nos fechamentos antecipados dos EUA); depois dele o código recusa decidir. A",
+      "sha256": "1f2547b9034f098bcd01f4429892ab33533096d048cc10a938deb9a7337b88ba"
+    },
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "  renovação usa a validade da tarefa e nunca a encurta). Passado o prazo efetivo sem decisão, o\n  código não decide: a carteira anterior é mantida — na carteira inaugural, o fundo segue sem\n  carteira (`decisao_perdida` na agenda; `weekly decide` devolve `status: \"prazo_vencido\"`).",
+      "sha256": "91b6de945601919dc692a3c3c3f2c00d13e03962abf15eb5420f87ca7a93af75"
+    }
+  ]
+}

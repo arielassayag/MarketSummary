@@ -1,0 +1,30 @@
+{
+  "id": "risco-publicacao-longa",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "A publicação de risco aguarda a trava em primeiro plano",
+  "resumo": "Reserve ao menos 15 minutos para cdp publicar na rotina de risco. A espera pela trava, a verificação e o push podem passar de 10 minutos. Deixe o comando em primeiro plano até o resultado, sem disparar outra cópia.",
+  "escopos": [
+    "risco"
+  ],
+  "tags": [
+    "publicação demorada",
+    "limite de tempo",
+    "timeout",
+    "comando em andamento",
+    "espera pela trava",
+    "primeiro plano"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/RISCO.md",
+      "trecho": "- **Tempo do comando.** `cdp publicar` pode passar de 10 minutos (espera da trava, `verify` e\n  push): rode-o em primeiro plano com limite de ao menos 15 minutos — no Claude Code, `timeout`\n  de 900000 ms no Bash (o projeto permite até 30 minutos). Nunca o deixe em segundo plano nem\n  repita o comando.",
+      "sha256": "109da00d0a2f90e46c5fec3935405e0e991a9d8a84a6c87549739731139133ce"
+    }
+  ]
+}

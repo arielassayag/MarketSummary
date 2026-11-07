@@ -148,3 +148,31 @@ abstenção de notas. Os testes estruturais cobrem elegibilidade e invariantes p
 Um ensaio posterior com agentes em sessões novas pode medir respostas com evidência, abstenção e
 custo, registrando o modelo e a versão do acervo. Os resultados da literatura sustentam o desenho
 e as hipóteses. Ganho de desempenho no CDP depende da comparação local sob essas condições.
+
+
+## Qualificação posterior por passagem
+
+A unidade de avaliação passou de arquivo para trecho. Uma pergunta sobre vários registros
+só recebe crédito completo se a consulta localizar pelo menos uma âncora de cada grupo
+obrigatório. O desenho separa recuperação, atualizações temporais e abstenção, conforme
+as dimensões do LongMemEval. Para perguntas de estado, mede-se se a busca deixa de oferecer
+passagens históricas e indica uma fonte canônica. A experiência de seleção sob mudanças de
+domínio reforça a necessidade de testar a abstenção em conjuntos separados.
+[LongMemEval](https://arxiv.org/abs/2410.10813).
+[Selective Question Answering](https://aclanthology.org/2020.acl-main.503/).
+
+A busca direta usa BM25 em janelas limitadas. As notas acrescentam vocabulário de tarefa e
+referências para evidência textual. O primeiro resultado direto fica reservado e as vagas
+seguintes alternam fontes e âncoras. Isso limita a influência de uma nota com muitas
+referências. A busca nas fontes é o controle também para as perguntas que só exigem um
+documento. A mesma lista de caminhos serve aos dois modos na revisão atual.
+[BM25](https://doi.org/10.1561/1500000019).
+[Document Expansion by Query Prediction](https://arxiv.org/abs/1904.08375).
+
+A verificação de linhagem distingue a primeira aceitação de uma substituição da validade
+atual de sua evidência. A prova deve aparecer em um commit da história de primeiro pai da
+revisão consultada. Um rascunho ou uma evidência ausente na aceitação não prova sucessão.
+Uma relação já comprovada persiste após retirada ou remoção. Histórico incompleto bloqueia
+essa prova. Os controles de recuperação medem sugestões indevidas em consultas do corpus.
+Os testes de linhagem verificam separadamente a integridade do histórico.
+[git log e primeiro pai](https://git-scm.com/docs/git-log).

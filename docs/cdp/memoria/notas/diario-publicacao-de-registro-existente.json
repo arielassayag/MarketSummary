@@ -1,0 +1,40 @@
+{
+  "id": "diario-publicacao-de-registro-existente",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "Fechamento registrado retoma pela publicação pendente",
+  "resumo": "Separe pregão sem registro de pregão com registro e relatório ausente. Em publicacoes_pendentes, escreva o comentário completo se ele faltar. Se já estiver escrito, rode validate-daily, corrija e publique. Quando a retomada reconciliar anexos de um fechamento gravado, preserve o MOC e o registro existentes.",
+  "escopos": [
+    "diario"
+  ],
+  "tags": [
+    "registro diário existente",
+    "relatório ausente",
+    "comentário escrito",
+    "recuperar publicação",
+    "reconciliação",
+    "efetivação no leilão"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "- `fechamentos_pendentes`: pregões sem registro, em ordem (inclui dias em que nenhuma rotina\n  rodou; o de hoje só aparece depois de `horario_fechamento_diario`).\n- `publicacoes_pendentes`: registros sem `relatorio.md` (com `comentario_escrito`).",
+      "sha256": "a6b43aabf3057a4568f511c3a110b7c53b658d14f6f5937c6962f5254bb9fb2d"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "## 4. Publicações pendentes\n\nPara cada data de `publicacoes_pendentes` ainda não tratada: com `comentario_escrito: false`,\nfaça o passo 3 completo; com `true`, rode `validate-daily`, corrija e publique.",
+      "sha256": "ef8832b524dfda93a24b99dbfa423ff5e7aa875ac0a8faa6168119a036079446"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "`daily close` resolve automaticamente coortes maduras com fontes autenticadas. A retomada\nde um fechamento já registrado reconcilia esses anexos sem repetir MOC ou registro diário.",
+      "sha256": "de26742ce41a490f20db700d802ba0366c3ddd5809b4f1d45e649c8d47075917"
+    }
+  ]
+}

@@ -212,9 +212,12 @@ def test_json_ambiguo_nao_ativa_nota(repo):
 
 
 def test_retirada_preserva_substituicao_e_fonte_antiga(repo):
-    _nota(repo, "moeda-retirada", estado="retirada", destaque=False,
-          resumo="A fonte da etapa contém a moeda.", registrada_em="2026-10-10",
+    _nota(repo, "moeda-retirada", resumo="A fonte da etapa contém a moeda.", registrada_em="2026-10-10",
           revisada_em="2026-10-15", rever_em="2026-11-15", substitui=["moeda-original"])
+    _commit(repo)
+    p = repo / PASTA / "moeda-retirada.json"
+    nota = json.loads(p.read_text(encoding="utf-8"))
+    p.write_text(json.dumps(nota | {"estado": "retirada", "destaque": False}), encoding="utf-8")
     _commit(repo)
     c = Catalogo(Fontes(repo), DATA)
     assert c.contagens["substituida"] == c.contagens["retirada"] == 1

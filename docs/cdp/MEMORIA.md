@@ -22,10 +22,15 @@ Os escopos são `desenvolvimento`, `operador`, `status`, `semanal`, `diario`, `r
 e `calibracao`. `contexto` mostra até três notas curadas em destaque no escopo, com orçamento de
 6 KiB de saída em Markdown e JSON. `buscar` retorna separadamente notas elegíveis e
 fontes primárias do escopo. O limite de resultados por lista vai de um a dez e o padrão é cinco.
-A busca compara termos com os títulos, as etiquetas, os resumos e trechos dos documentos de
-referência do escopo. Consultas sem correspondência suficiente podem retornar listas vazias. Em perguntas diretas
-sobre o estado atual reconhecidas pela busca, `orientacao_atual` aponta onde verificar e a
-lista de notas fica vazia.
+A busca ordena passagens de fontes canônicas com BM25. Títulos, etiquetas, resumos e trechos
+validados ajudam a localizar lições. A lista `passagens` preserva o primeiro resultado direto
+e intercala referências de notas distintas. Uma passagem ocupa até 14 linhas e 1.800 bytes.
+O retorno `fontes` contém os caminhos da busca direta, enquanto `notas` identifica os
+registros recuperados. Cada passagem vem com linhas inclusivas e SHA-256.
+
+Quando a busca reconhece um pedido de estado, `orientacao_atual` indica a fonte a consultar.
+Notas e passagens históricas ficam fora do resultado. Use `--estado-atual` quando a intenção
+já estiver estabelecida. A classificação automática depende da redação da pergunta.
 
 Abra a fonte na revisão indicada e confira o trecho e seu contexto antes de usar a lição. O
 resultado inclui caminho, linhas inclusivas e SHA-256 para as evidências das notas. Se faltarem
@@ -41,10 +46,11 @@ O hash da revisão informa os bytes consultados. A integração revisável é o 
 estabelece a aceitação das notas operacionais.
 
 `--data` usa `AAAA-MM-DD` e, quando omitido, usa o calendário de Brasília. É uma data para aplicar
-revisão, vencimento e substituição às notas da revisão Git selecionada. Para um ensaio histórico,
-use também um checkout isolado da revisão que existia no corte. A opção `--data` em um checkout
-atual conserva os arquivos atuais e, sozinha, é insuficiente para estabelecer disponibilidade
-histórica ou origem *point-in-time*. `avaliar` usa a data fixa do seu próprio corpus.
+revisão, vencimento e substituição às notas da revisão Git selecionada. Para uma consulta reproduzível, informe `--revisao` com o hash completo do commit Git
+local e a `--data` de aplicação. Para um ensaio histórico, selecione a revisão que existia
+no corte. A data filtra a elegibilidade dentro da revisão escolhida. Ela, sozinha, é
+insuficiente para estabelecer disponibilidade histórica ou origem *point-in-time*.
+A avaliação usa a data fixa do corpus.
 
 ## Registrar uma lição
 
@@ -122,11 +128,12 @@ evidência cabe a quem revisa, com as fontes abertas.
    `registrada_em` até `revisada_em`, e `rever_em` posterior à revisão. `destaque` serve a lições
    cuja descoberta antecipada vale o espaço no índice. A consulta admite uma nota curada desde a
    data de revisão e deixa de admiti-la a partir da data `rever_em`, inclusive.
-3. Para substituir uma lição, use um novo ID, data de registro posterior e escopos que cubram os
-   da nota anterior. Inclua o ID anterior em `substitui`. Quando a sucessora curada chega à data
-   de revisão, a versão anterior sai da consulta. Uma quebra posterior de evidência ou expiração
-   da sucessora mantém o bloqueio da anterior. Retirar a sucessora também conserva esse efeito
-   enquanto o vínculo de substituição permanecer válido.
+3. Para substituir uma lição, use um novo ID, data de registro posterior e escopos que cubram
+   os da nota anterior. Inclua o ID anterior em `substitui` e valide a evidência na mesma
+   revisão Git que registra a sucessora como curada. A sucessão comprovada persiste quando
+   a sucessora vence, perde sua evidência atual ou é retirada. Se a prova falhar na primeira
+   revisão, corrija e registre a sucessora em outro commit. A leitura precisa de histórico
+   local completo e verifica até 128 revisões e 1.024 mudanças de arquivos de notas.
 4. Uma nota curada que perdeu utilidade pode passar a `retirada`, mantendo datas, fonte e
    histórico no Git e com `destaque: false`. Para renovar a validade, confira a fonte atual e
    proponha novas datas. Preserve a razão da mudança no diff e no registro da integração.
@@ -141,18 +148,30 @@ em sessão de desenvolvimento, com suas mudanças apresentadas como diff para re
 
 ```sh
 uv run python -m cdp memoria avaliar
+uv run python -m cdp memoria avaliar --reservada
+uv run python -m cdp memoria avaliar --replica
 ```
 
-O corpus de [avaliação](memoria/avaliacao.json) fixa a data e os casos. Para cada consulta, a
-comparação dá o mesmo orçamento de até três caminhos às duas abordagens. A primeira usa busca
-nos documentos e no código canônicos do escopo. A segunda prioriza evidências das notas recuperadas e
-preenche as vagas com a busca canônica, sem repetir caminhos. As medidas incluem recuperação de
-pelo menos uma nota esperada, abstenção de nota em perguntas fora do acervo, abstenção de nota em
-perguntas respondíveis pela busca direta e recuperação de pelo menos uma fonte esperada em cada
-abordagem. Um caso pode listar fontes alternativas.
+O primeiro comando reproduz a metodologia inicial por caminho. Os dois conjuntos posteriores
+foram congelados separadamente. As perguntas vieram de um anotador que não recebeu os
+resultados de recuperação. Cada pergunta estática tem um ou mais grupos de evidências. Uma
+passagem satisfaz um grupo quando contém integralmente um trecho aceito. Um acerto completo
+exige todos os grupos. A avaliação também mede cobertura parcial e abstenção em perguntas de
+estado ou fora do acervo.
 
-A avaliação funciona offline, sem chamada a modelo. O resultado é reproduzível para a mesma
-revisão e o mesmo corpus. O código de saída indica problema no catálogo ou na leitura. As taxas
-precisam ser lidas no relatório. Esta comparação mede recuperação de caminhos no corpus inicial.
-Aderência de agentes, tempo de resolução e qualidade de respostas exigem um ensaio separado em
-sessões novas, com casos reservados e a mesma base para as duas abordagens.
+A comparação usa três braços com até três passagens cada. A busca direta BM25 é executada
+no commit de 06/11 (`afee26ce`) e na revisão atual. O terceiro braço consulta a memória na
+revisão atual. As duas buscas diretas recebem a mesma lista de caminhos, inclusive caminhos
+citados nas notas, para separar o efeito das referências do acesso aos arquivos. O relatório
+registra as revisões, o hash do corpus e as passagens recuperadas. São medidas descritivas
+do corpus, com a pergunta como unidade. Elas avaliam localização de evidência e abstenção
+da busca, sem medir a resposta de um agente em operação.
+
+A partir da raiz do repositório, gere o relatório e as duas figuras. O renderizador requer
+Matplotlib. [Código das figuras](../../scripts/cdp_memoria_figuras.py).
+
+```sh
+mkdir -p outputs/cdp-memoria
+uv run python -m cdp memoria avaliar --replica > outputs/cdp-memoria/replica.json
+python3 scripts/cdp_memoria_figuras.py outputs/cdp-memoria/replica.json
+```

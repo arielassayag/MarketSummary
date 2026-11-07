@@ -1,0 +1,39 @@
+{
+  "id": "aud-reproduzir-cenarios-da-cobertura",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Versões do ambiente e semente no recálculo da cobertura",
+  "resumo": "O manifesto do snapshot registra as versões de Python e das bibliotecas. Confira o ambiente local antes de comparar números. O recálculo do preço-alvo e da grade de sensibilidade usa os insumos e a configuração arquivados e preserva a semente de cada emissor e data.",
+  "escopos": [
+    "desenvolvimento",
+    "calibracao",
+    "cobertura"
+  ],
+  "tags": [
+    "ambiente",
+    "versões",
+    "sensibilidade",
+    "preço-alvo",
+    "cenários",
+    "sorteio",
+    "semente",
+    "manifesto"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/REPRODUZIR.md",
+      "trecho": "`verify` responde `ÍNTEGRO` ou lista cada divergência. Para conferir o ambiente que você usa\ncontra o registrado, rode `uv pip show numpy pandas scipy cvxpy`; cada snapshot da cobertura grava\nas versões de Python, numpy, pandas e scipy em `manifest.json` (campo `ambiente`).",
+      "sha256": "8164c5e0be572c097ab010eb27fbc1f507e41be8c68a0802600b766a2177dac4"
+    },
+    {
+      "caminho": "docs/cdp/REPRODUZIR.md",
+      "trecho": "Refaz cada modelo aberto — custo de capital, cada método de valuation, pesos, roll-forward ao\npreço-alvo de 12 meses, cenários e grade de sensibilidade — a partir dos insumos públicos e da\nconfiguração arquivados no próprio snapshot. Tolerância: 1e-5 relativo por valor (o armazenamento\nguarda seis algarismos significativos). As simulações dos cenários usam semente fixa por emissor\ne data: o recálculo reproduz os mesmos sorteios.",
+      "sha256": "991ea1c446caf3b537b9048e692464d3602b2d263234bccef58fa9fbbd9a79fd"
+    }
+  ]
+}

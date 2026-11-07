@@ -1,0 +1,36 @@
+{
+  "id": "aud-reproducibilidade-texto-mente",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Reprodução de texto entre assistentes preserva regras e fatos",
+  "resumo": "Uma tese ou nota refeita por outro modelo pode divergir no texto byte a byte. Os números continuam no FactBook e entram como referências. A validação cobra fonte pública e as regras da etapa, com texto automático quando o agente esgota as tentativas.",
+  "escopos": [
+    "desenvolvimento"
+  ],
+  "tags": [
+    "assistente",
+    "reprodução textual",
+    "tese",
+    "byte",
+    "factbook",
+    "guardrails",
+    "validação"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/REPRODUZIR.md",
+      "trecho": "O campo `mind` registra o assistente (`claude-code`, `codex`, `chatgpt`, `gemini` ou `outro`); o\ncampo opcional `modelo_ia` da nota registra o modelo usado. Textos de assistentes diferentes\nnunca mudam um número: o preço-alvo, os pesos e o risco continuam do código. Como juízos de\nassistentes diferentes podem divergir, a reprodução de um texto não é idêntica byte a byte; o que\nse reproduz é o processo, as regras e a validação.",
+      "sha256": "989c60d6c515668176a0ff62a08fc6ad6d105f49bcf89ef988ab24e2689a5e48"
+    },
+    {
+      "caminho": "docs/cdp/ARQUITETURA.md",
+      "trecho": "Guardrails: números no texto só como `{{fact:id}}` de fatos existentes; fontes públicas por URL\n(domínios oficiais para fontes regulatórias e de bolsa); notícias delimitadas e tratadas como\ndado não confiável; guia de estilo pt-BR institucional (`docs/cdp/ESTILO.md`). Texto inválido\ndepois de três tentativas ⇒ o código publica o texto automático. Provedores do modo programático:\n`demo` (regras determinísticas, offline), `imported` (JSON de qualquer assistente),\n`anthropic` e `openrouter` (opcionais, por variável de ambiente).",
+      "sha256": "723c10d3e2244442889d06f5e70ae979f4290c1c136e8555e322381da098a04e"
+    }
+  ]
+}

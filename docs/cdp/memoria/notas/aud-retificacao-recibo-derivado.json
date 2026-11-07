@@ -1,0 +1,41 @@
+{
+  "id": "aud-retificacao-recibo-derivado",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Recompor o recibo de uma retificação com origens explícitas",
+  "resumo": "A saída original de publicação fornece os arquivos e digests do relatório e a situação do comentário. Recupere registro e FactBook na seção Integridade do relatório selado. Declare o corpo como recomposto e confira seu hash contra o evento original. A falta de fonte ou hash divergente bloqueia a correção.",
+  "escopos": [
+    "operador",
+    "diario"
+  ],
+  "tags": [
+    "retificação",
+    "recibo",
+    "FactBook",
+    "registro diário",
+    "payload",
+    "hash"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+      "trecho": "O payload original contém `md`, `html`, `md_sha256`, `html_sha256`, `registro`, `factbook`,\n`comentario_da_mente`, `apontamentos` e `tipo`. Este fluxo admite somente comentário da mente\nsem apontamentos no recibo original. O evento guarda o hash do payload, não seu corpo. A saída\nde `weekly close-report --publish` contém `relatorio`, `comentario_da_mente`,\n`apontamentos_comentario` e `tipo`, mas omite `registro` e `factbook`; a saída de preparação\ntambém não fornece esses dois hashes. Não prometa recuperar o corpo completo de uma única\nsaída nem afirme que esse corpo foi persistido originalmente.",
+      "sha256": "8d70a47cc8c9679987eb19db4732ee996da1af0781733a8177d1519053cf6b2c"
+    },
+    {
+      "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+      "trecho": "Se o corpo original completo não foi observado, admitem-se somente cópias determinísticas\nde campos observados, com a recomposição declarada como derivada:\n\n- `md`, `html`, `md_sha256` e `html_sha256`: os quatro campos de `relatorio` na saída original\n  da publicação local; os arquivos físicos preservados devem conferir com eles.\n- `registro`: o valor literal de “Registro diário do fechamento” na seção Integridade do\n  relatório selado, conferido com `record_hash` do registro diário original quando disponível.\n- `factbook`: o valor literal de “Base de fatos da semana” na mesma seção. A validação o\n  confronta com `FactBook.factbook_hash()` do corpo preservado de `factbook.json`; esse hash de\n  objeto é distinto do SHA-256 do arquivo, que vai em `factbook_original_sha256`.\n- `comentario_da_mente` e `tipo`: os campos homônimos da saída original da publicação local;\n  `apontamentos`: cópia literal de `apontamentos_comentario` daquela saída.",
+      "sha256": "037eb5c310d943d197bc4715c5ded4ed59a6049203f939a3e51fadf70f103f5a"
+    },
+    {
+      "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+      "trecho": "Registre quais evidências forneceram cada campo e que o corpo é recomposto, sem atribuir\nautoria, data de coleta ou persistência histórica ao recibo novo. Falta de qualquer fonte\nnecessária, corpo incompleto ou divergência do hash ao evento bloqueia a retificação. Não\ninferir valores só do hash, nem chamar preparação, `calcular_semana`, modelos, fechamento ou\npublicação do relatório para reconstruir o recibo. O código cruza o corpo completo com o\nevento encadeado, os hashes dos relatórios e o FactBook\npreservado. Os hashes atuais dos insumos não comprovam quando foram coletados ou quem os\nescreveu; o trecho corrigido deve constar nos dois relatórios originalmente autenticados.",
+      "sha256": "50788716cc1afc3b99ebdfd72cf68e6829442820ce8dce5dfaee6149b377878f"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "id": "aud-estado-superficies",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "Diagnósticos separam o clone, o remoto e o portal",
+  "resumo": "Use estado com rede para observar o remoto, a trava e o portal servido. CLONE_DIVERGENTE aponta gravações do livro no clone ausentes de origin/main. PORTAL_DEFASADO aponta a versão servida diferente de origin/main. A ação depende de qual superfície está atrasada.",
+  "escopos": [
+    "status",
+    "operador"
+  ],
+  "tags": [
+    "clone",
+    "portal",
+    "remoto",
+    "estado",
+    "defasagem",
+    "divergência"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/STATUS.md",
+      "trecho": "`estado` já reúne fase, executor designado × este ambiente, trava das rotinas, integridade,\núltimos registros, últimas execuções (com a procedência de cada commit), pendências, incidentes\ne o próximo passo. Com acesso à rede, `uv run python -m cdp estado --rede --formato md` consulta\ntambém o remoto, a trava e o portal publicado.",
+      "sha256": "e112c23365f7cdfa9daae55adc15fad6741985411ac5512e41cc5ae79ba94a6b"
+    },
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "| `EXECUTOR_PAUSADO` | média | executor `nenhum` há mais de 24 h |\n| `CLONE_DIVERGENTE` | média | gravações do livro neste clone fora de `origin/main` |\n| `PORTAL_DEFASADO` | média | portal publicado ≠ `origin/main` (com `--rede`) |\n| `SLA_RISCO` | baixa | nenhum relatório de risco até 16:45 num pregão |",
+      "sha256": "58e65efdb9b4babf6608656743f87605726a69a17d9ee5564ec9a9721f7a67b4"
+    },
+    {
+      "caminho": "src/cdp/estado.py",
+      "trecho": "    if repo.get(\"a_frente\"):\n        loc = ex.git([\"log\", \"--format=\", \"--name-only\", f\"{ex.REMOTO}/main..HEAD\"], raiz).stdout\n        if any(ex._no_livro(p, CAMINHOS_DO_LIVRO) for p in loc.splitlines() if p.strip()):\n            out.append(_inc(\"CLONE_DIVERGENTE\", \"media\", \"Há gravações do livro neste clone que \"\n                            \"não estão em origin/main (push retido).\",\n                            \"Rodar `cdp publicar` no executor ou investigar a recusa.\"))",
+      "sha256": "b71005b870d20c3d8e18fbe5db00eed11ba6484bda500e139020ea79226118e0"
+    },
+    {
+      "caminho": "src/cdp/estado.py",
+      "trecho": "    if portal and portal.get(\"defasado\"):\n        out.append(_inc(\"PORTAL_DEFASADO\", \"media\", \"O portal publicado não corresponde a \"\n                        \"origin/main.\", \"Rodar o workflow cdp-site (Actions) e conferir o \"\n                        \"registro.\"))",
+      "sha256": "16f62e26cbe480277683ad852daa60b2d18836bb10b0322f3c09c8258a94e6ec"
+    }
+  ]
+}

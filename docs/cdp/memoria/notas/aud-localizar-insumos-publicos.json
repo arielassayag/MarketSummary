@@ -1,0 +1,31 @@
+{
+  "id": "aud-localizar-insumos-publicos",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Rastrear arquivos públicos usados na cobertura",
+  "resumo": "Comece nos extratos do snapshot de cobertura. O índice de data/publico registra a URL e o SHA-256 de cada coleta. Pacotes anuais da CVM e companyfacts da SEC ficam fora do Git. Use a URL do índice para obter o arquivo e compare seu digest antes de tratar o corpo como o mesmo insumo.",
+  "escopos": [
+    "desenvolvimento",
+    "cobertura"
+  ],
+  "tags": [
+    "insumos públicos",
+    "arquivo bruto",
+    "CVM",
+    "SEC",
+    "digest",
+    "cobertura"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/REPRODUZIR.md",
+      "trecho": "| Base de mercado (preços, volumes, câmbio, fundamentos; base e incrementos diários) | `data/market/` | `cdp verify` (manifesto e sha256 de cada arquivo) |\n| Insumos públicos dos modelos (demonstrações da CVM e da SEC, consenso público, composição de ETFs, juros) | `book/cobertura/<data>/insumos/` (extratos usados) e `data/publico/` (índice com URL e SHA-256 de cada coleta; os pacotes anuais da CVM e o `companyfacts` da SEC ficam fora do git — baixe-os da URL do índice) | `cdp cobertura verify` |\n| Modelos de cobertura e preços-alvo de 12 meses | `book/cobertura/<data>/` e o livro `book/cobertura/livro.jsonl` | `cdp cobertura verify` (recalcula cada preço-alvo) |",
+      "sha256": "3502b200a20d48d6762665e5354bdeecda831cef8dec57f0a51ee375f37fa25a"
+    }
+  ]
+}

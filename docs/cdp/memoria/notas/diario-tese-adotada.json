@@ -1,0 +1,34 @@
+{
+  "id": "diario-tese-adotada",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Validação do rascunho adotado na tese pendente",
+  "resumo": "O diário recupera somente a tese pendente da semana corrente. Valide a tese adotada ou entregue antes de editar. Se já for válida, preserve e publique; se houver erro, corrija segundo os fatos da semana e valide.",
+  "escopos": [
+    "diario"
+  ],
+  "tags": [
+    "tese semanal",
+    "tese pendente",
+    "rascunho adotado",
+    "preparo",
+    "validação"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "## 5. Tese de investimento pendente (só a semana corrente)\n\nSó se `teses_pendentes` contiver `semanal.semana` (a montagem decidiu, mas parou antes de publicar\na tese). Faça o passo da tese como na seção 8 de `docs/cdp/playbooks/SEMANAL.md`:",
+      "sha256": "38b64da315f56f45994bd6fbfe8b4aa2c602632af44e52e34c5766b2b905e4e7"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "`publicada: true` no `prepare` ⇒ nada a fazer; falha ⇒ siga para o passo 6 e relate. Com\n`rascunho_adotado: true` (o código adotou o rascunho entregue em `docs/cdp/teses/<semana>.json`)\n— ou `rascunho_entregue` preenchido e `rascunho_adotado: false` —, rode o `validate-tese`\n**antes de escrever qualquer coisa**: `ok: true` ⇒ publique sem reescrever. Senão, entre o\n`prepare` e o `validate-tese`, leia **por inteiro** `book/<semana>/tese/fatos.md` e escreva (ou\ncorrija) `book/<semana>/tese/tese.json` (números só como `{{fact:<id>}}`; datas só como\n2026-10-25, 25/10/2026 ou \"25 de outubro\" — nunca dia e mês sem o ano); valide até `ok: true`, no",
+      "sha256": "51b04706f994b58bc2aa75b0ee6ecfb8c4b219ff639082411bbcd6937dde1df6"
+    }
+  ]
+}

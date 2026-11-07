@@ -1,0 +1,36 @@
+{
+  "id": "aud-descritores-net",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "Custódia de arquivos em validações NET simultâneas",
+  "resumo": "PhysicalSources compartilha descritores somente entre leituras sobrepostas da mesma thread e processo, até o último encerramento. Cada leitura preserva recibos, namespace e rechecagens próprios. A mudança de PID reinicia o pool. A autoridade dos eventos novos continua nas validações nativas.",
+  "escopos": [
+    "desenvolvimento"
+  ],
+  "tags": [
+    "NET",
+    "descritores",
+    "custódia",
+    "PhysicalSources",
+    "recibos",
+    "thread",
+    "processo"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "src/cdp/workflow/net_moc.py",
+      "trecho": "class PhysicalSources:\n    \"\"\"Custódia dos FDs e namespace fechado, sob o escritor único cooperativo.\n\n    A trilha conserva o prefixo integral recebido; a autoridade dos eventos acrescidos\n    pertence às validações nativas de Book e da prova preparatória, nunca a este hash.\n    Contextos sobrepostos da mesma thread e processo compartilham cada FD até\n    o último close; cada contexto conserva seus próprios recibos e rechecagens.\n    \"\"\"",
+      "sha256": "36e247f910afc7da896c070932ff092d77895e3ea74c4bc864f18bb32891d79f"
+    },
+    {
+      "caminho": "src/cdp/workflow/net_moc.py",
+      "trecho": "        self._fds: dict[str, int] = {}\n        pid = os.getpid()\n        if getattr(_PHYSICAL_FDS, \"pid\", None) != pid:\n            _PHYSICAL_FDS.pool = {}\n            _PHYSICAL_FDS.pid = pid\n        self._pool: dict[Path, tuple[int, int]] = _PHYSICAL_FDS.pool\n        self.receipts: dict[str, dict] = {}\n        self.namespace: dict[str, list[str]] = {}\n        self.directories: dict[str, dict] = {}",
+      "sha256": "73e7ff6e30d860525524894ad404da469e7264093c60903ad6d520ff9b3e3680"
+    }
+  ]
+}

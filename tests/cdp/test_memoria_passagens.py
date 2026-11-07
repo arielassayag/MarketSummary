@@ -8,7 +8,7 @@ import pytest
 
 from cdp.memoria import _fonte_atual
 from cdp.memoria_avaliacao import _medir
-from cdp.memoria_busca import Local, ampliar, intercalar
+from cdp.memoria_busca import Local, ampliar, combinar_evidencias, reunir_ancoras
 
 
 def test_avaliacao_exige_trecho_inteiro_e_todos_os_grupos():
@@ -25,14 +25,31 @@ def test_avaliacao_exige_trecho_inteiro_e_todos_os_grupos():
     assert _medir([primeira, completa], [[a], [b]])["completo_3"] is True
 
 
-def test_intercalacao_preserva_tres_diretas_e_ignora_redundancia():
-    diretas = [Local("a", i, i + 13, "") for i in (1, 40, 60, 80)]
-    repetida = Local("a", 3, 7, "")
-    nova = Local("b", 5, 8, "")
-    ancoras = [[repetida, nova]]
-    assert intercalar(diretas, ancoras, 3) == diretas[:3]
-    assert intercalar(diretas, ancoras, 5) == [*diretas[:3], nova, diretas[3]]
-    assert ancoras == [[repetida, nova]]
+def test_fusao_conserva_grupos_complementares_e_ignora_janelas_repetidas():
+    direta = Local("a", 1, 14, "")
+    repetida = Local("a", 5, 18, "")
+    principal = Local("b", 5, 8, "")
+    complementar = Local("c", 42, 48, "")
+    contextuais = [repetida, Local("d", 12, 25, "")]
+    ancoras = [[principal, complementar]]
+    assert combinar_evidencias([direta, repetida], contextuais, ancoras, 3) == [
+        principal, direta, complementar,
+    ]
+    assert combinar_evidencias([direta, repetida], contextuais, ancoras, 5) == [
+        principal, direta, complementar, contextuais[1], repetida,
+    ]
+    assert combinar_evidencias([direta], [], ancoras, 1, priorizar_nota=False) == [direta]
+    assert ancoras == [[principal, complementar]]
+
+
+def test_ancoras_da_mesma_nota_cabem_sem_cortar_evidencia():
+    linhas = tuple(f"Linha {i}" for i in range(1, 42))
+    ancoras = [Local("a", 20, 24, ""), Local("a", 8, 12, ""), Local("a", 40, 41, "")]
+    juntas = reunir_ancoras(ancoras, linhas)
+    assert [(p.inicio, p.fim) for p in juntas] == [(5, 15), (17, 27), (37, 41)]
+    juntas = reunir_ancoras([Local("a", 20, 21, ""), Local("a", 8, 12, "")], linhas)
+    assert [(p.inicio, p.fim) for p in juntas] == [(8, 21)]
+    assert juntas[0].sha256 == hashlib.sha256("\n".join(linhas[7:21]).encode()).hexdigest()
 
 
 def test_contexto_adjacente_preserva_ancora_e_hash():

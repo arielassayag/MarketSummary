@@ -1,0 +1,39 @@
+{
+  "id": "aud-retificacao-anteriores-procedencia",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "Nota local da errata e prova de publicação remota",
+  "resumo": "O comando da errata anexa a nota local e o evento de auditoria. A publicação remota exige o push confirmado do publicador normal. O campo anteriores identifica diferenças presentes na entrada do novo gate sem atribuir autoria passada.",
+  "escopos": [
+    "operador",
+    "diario",
+    "status"
+  ],
+  "tags": [
+    "errata",
+    "retificação",
+    "evento",
+    "nota local",
+    "remoto",
+    "recibo",
+    "push",
+    "anteriores"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+      "trecho": "`--publish` deste comando cria somente a nota local e o evento\n`WEEKLY_EDITORIAL_RECTIFICATION`; não faz commit nem push. A nota fica em\n`reports/semanal/<data>/retificacoes/<id>/`, com JSON, Markdown e HTML novos. O original e os\neventos anteriores permanecem literais. Uma tentativa repetida não sobrescreve a nota.",
+      "sha256": "d602c116ee7bfc5ef81aeabeebfdbf77835a979b17908e203aa21e985fb162bf"
+    },
+    {
+      "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+      "trecho": "O contrato existente do escritor exclusivo publica todas as diferenças locais nos caminhos\nda tarefa, incluindo o conjunto anterior que ainda não foi publicado e a nota nova. O campo\n`anteriores` identifica diferenças que já existiam no retrato inicial do gate novo. Não\natribui autoria passada a esse retrato e não modifica o recibo da execução antiga. Preserve\num recibo atual literal da saída de `cdp publicar` com `execucao`, `trava`, `arquivos`,\n`anteriores`, `commit`, `push` e `verify`. Sem push confirmado, a publicação continua local.",
+      "sha256": "0321d9d08914ea5edd6399f4b9165f6c0f67c99cdfb5ef0dd419af0810cbf385"
+    }
+  ]
+}

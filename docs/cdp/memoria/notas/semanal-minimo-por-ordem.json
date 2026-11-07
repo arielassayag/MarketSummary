@@ -1,0 +1,35 @@
+{
+  "id": "semanal-minimo-por-ordem",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Comissão mínima e decomposição por ordem",
+  "resumo": "Quando há mínimo aplicável, cada ordem paga o maior entre sua comissão variável e esse mínimo. Os lotes padrão e fracionário têm custos separados. Confira o mercado e a convenção da execução antes de extrapolar para o débito.",
+  "escopos": [
+    "semanal"
+  ],
+  "tags": [
+    "corretagem",
+    "comissão",
+    "lote padrão",
+    "fracionário",
+    "pico",
+    "custos"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/EXECUCAO.md",
+      "trecho": "- Custo por linha negociada, em bps do valor negociado: meio spread pela faixa de ADTV (× 1,5 na\n  ADR com a bolsa local fechada) + comissão das ordens individuais + câmbio (3 bps fora do\n  dólar) + impacto raiz quadrada `0,6 · σ_diária · √(Q / ADTV)` × desconto de leilão (0,6 em EUA,\n  ADR, BR, MX e CL; 1,0 nos demais). Para cada ordem, a comissão em USD é o maior entre sua\n  comissão variável e o mínimo do mercado. A comissão da linha soma esses valores e os divide\n  pelo nocional total, convertendo para bps. Lote padrão e fracionário ou pico pagam seus\n  próprios mínimos; uma ordem pequena não divide o mínimo com a ordem padrão.\n- A estimativa da proposta decompõe as quantidades planejadas com o preço local corrente.\n  Substitui somente a comissão já incluída na mesma base de custos pela soma por ordem;\n  spread, impacto e câmbio dessa base permanecem. O débito usa as quantidades efetivamente\n  preenchidas e preço/câmbio do fechamento. A previsão não certifica o débito futuro.",
+      "sha256": "df80560616813577f50eacf85356d667b44f20d64eb6084c95a37eb819783071"
+    },
+    {
+      "caminho": "docs/cdp/METODOLOGIA.md",
+      "trecho": "**Custos fixos e lotes (PL pequeno).** Cada ordem paga ao menos o mínimo por ordem das tabelas\npúblicas do mercado (US$ 1,00 nos EUA; MXN 60 na BMV; 0,5 UF de direitos de bolsa mais a tarifa da\ncorretora em Santiago; COP 60 mil na BVC; na B3 as tarifas são ad valorem, sem mínimo). Custo fixo\nnão é convexo e não entra no otimizador; entra em três lugares, todos em código: (i) a banda de\nnão-negociação é de 0,10% do NAV e, em cada mercado, a ordem só é enviada se o custo fixo mínimo\nfor de no máximo 10 bps do nocional (US$ 1 mil nos EUA e na B3, cerca de US$ 3,5 mil na BMV e",
+      "sha256": "1fefc65f97c6e051d319b0d46629963efad11276cf744e20e6f9c638f7e87693"
+    }
+  ]
+}

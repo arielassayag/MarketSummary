@@ -1,0 +1,36 @@
+{
+  "id": "cobertura-data-desconhecida-da-fonte",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Data da fonte e registro de consulta são campos distintos",
+  "resumo": "Quando um documento não informa a data de publicação, mantenha publicado_em nulo e preencha consultado_em com a data real da consulta. Uma consulta posterior não demonstra que a informação estava disponível no passado.",
+  "escopos": [
+    "cobertura"
+  ],
+  "tags": [
+    "publicação desconhecida",
+    "divulgação",
+    "documento",
+    "data da fonte",
+    "consulta",
+    "publicado_em",
+    "consultado_em"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/COBERTURA.md",
+      "trecho": "  imprensa. Nenhuma base paga ou de acesso restrito. Cada fonte entra em `fontes` (URL https e\n  data de publicação conhecida não posterior à nota; sem data informada, `publicado_em: null`\n  e `consultado_em` com a data real da consulta, não posterior à nota) e é citada pelo id nas evidências; emissor real exige\n  ao menos uma **fonte primária** (regulador, relações com investidores ou bolsa).",
+      "sha256": "3ed55e531cec124d6704447a6662360c96e3771cc2bef5b4f0597f5b364d198c"
+    },
+    {
+      "caminho": "docs/cdp/NOTAS.md",
+      "trecho": "- Fontes: URL https com domínio público (nunca endereço IP, `localhost`, rede local, intranet\n  ou domínio de teste); publicação conhecida e consulta não posteriores à nota (sem look-ahead); publicação\n  desconhecida exige `publicado_em: null` e data real em `consultado_em`, nunca uma data\n  inventada. Consulta não comprova disponibilidade histórica; fontes `regulatorio` e\n  `bolsa` só com URL do domínio oficial (CVM, agências e BCB sob gov.br; sec.gov e finra.org;",
+      "sha256": "37ad06f5f8efbc1ddda2bf9ba7ef5fc09e38ce843b941929eca8b810b0bfa59e"
+    }
+  ]
+}

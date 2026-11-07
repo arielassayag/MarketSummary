@@ -1,0 +1,35 @@
+{
+  "id": "aud-retificacao-fato-direcional",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "A errata semanal corrige uma direção comprovada",
+  "resumo": "Informe emissor e trecho original exato do racional renderizado. O código obtém do fato selado a indicação comprada, vendida ou zerada. O fluxo recusa frase correta ou neutra e fato de peso inválido ou ausente. O mesmo emissor no mesmo evento recebe uma única retificação.",
+  "escopos": [
+    "operador",
+    "diario"
+  ],
+  "tags": [
+    "errata",
+    "lado da posição",
+    "emissor",
+    "racional",
+    "imutabilidade"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+      "trecho": "# Retificação editorial vinculada do relatório semanal\n\nUm relatório semanal selado nunca é regravado. Este fluxo anexa uma nota que corrige somente\na indicação do lado final de um emissor. O texto novo vem do código usando o fato publicado\n`mud.<emissor>.depois`, sem refazer decisão, efetivação, marcação, registro diário ou NAV.",
+      "sha256": "a004a8fecf566b5390e52c12f44740f822da75ec83b266891814d095183e950d"
+    },
+    {
+      "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+      "trecho": "Em `correcoes`, informe o `emissor` e seu `texto_original` exato, copiado do racional selado.\nNão escreva peso novo, retorno, NAV ou texto substituto: o código produz a indicação final de\ncomprada, vendida ou zerada. Peso ausente, não finito, com unidade distinta de percentual ou\nde outro emissor é recusado, sem inventar posição zero. O racional precisa conter uma\ncontradição direcional canônica comprovada no texto renderizado; frase correta ou neutra não\nautoriza errata. Cada par de evento original e emissor admite uma única retificação, ainda\nque a mente, o texto ou o id de uma tentativa posterior mudem. Emissores distintos do mesmo\nrelatório podem receber suas próprias correções legítimas.",
+      "sha256": "673b29a216e26601bdb5ff6cb7b70d7392f24b03893a6f90bad86502eb780d44"
+    }
+  ]
+}

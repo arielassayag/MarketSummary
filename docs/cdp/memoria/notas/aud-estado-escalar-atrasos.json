@@ -1,0 +1,36 @@
+{
+  "id": "aud-estado-escalar-atrasos",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Severidade dos atrasos financeiros e editoriais",
+  "resumo": "Relate incidentes da maior severidade para a menor, com a ação indicada. Fechamento pendente após 22h do pregão é alta. Tese ou relatório semanal pendente depois do meio-dia do dia seguinte é média. Use os incidentes emitidos pelo estado para o diagnóstico atual.",
+  "escopos": [
+    "status",
+    "operador"
+  ],
+  "tags": [
+    "SLA",
+    "incidentes",
+    "severidade",
+    "fechamento",
+    "tese",
+    "relatório semanal"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/STATUS.md",
+      "trecho": "- **Integridade** e **kill switch**.\n- **Fase**: antes da data de início, a data da carteira inaugural; com a abertura do livro\n  pendente, destaque que a próxima rotina diária a faz.\n- **Executor**: quem grava o livro e desde quando; se este ambiente não é o executor, diga\n  \"somente leitura\".\n- **Incidentes** por severidade (alta primeiro), com a ação indicada.",
+      "sha256": "d98f54be68a4241347b0f25a9453a6b7e0de8b712dd8f212a6d74d8a4fbd5eec"
+    },
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "| Incidente | Severidade | Quando |\n|---|---|---|\n| `INTEGRIDADE` | alta | `cdp verify` falha |\n| `KILL_SWITCH` | alta | kill switch ligado (revisão humana) |\n| `REINICIO_PENDENTE` | alta a partir da data de início (média antes) | livro aguardando a abertura |\n| `SLA_FECHAMENTO` | alta | fechamento pendente depois das 22:00 do pregão |\n| `DECISAO_PERDIDA` | alta | semana sem decisão no dia de montagem |\n| `EXECUTOR_INVALIDO` | alta | `executor.yaml` inválido |\n| `COMMIT_FORA_DO_ESCOPO` | alta | commit de rotina fora dos caminhos da tarefa |\n| `SLA_TESE` | média | tese da semana não publicada até 12:00 do dia seguinte |\n| `SLA_RELATORIO_SEMANAL` | média | relatório semanal pendente até 12:00 do dia seguinte |",
+      "sha256": "9f6821f43318c0fb5653438018a6795dfa45f81f4fe7a5a37ba2243b335c5c0f"
+    }
+  ]
+}

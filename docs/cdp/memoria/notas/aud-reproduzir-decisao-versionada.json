@@ -1,0 +1,41 @@
+{
+  "id": "aud-reproduzir-decisao-versionada",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Reproduzir a proposta semanal em uma cópia",
+  "resumo": "Abra um checkout separado no commit que gravou a decisão. Use código, mandato, livro e base de mercado daquela revisão. A prévia semanal reconstrói o pipeline com insumos conferidos pelo manifesto e permite comparar as posições com a proposta aprovada sem gravar no livro.",
+  "escopos": [
+    "desenvolvimento",
+    "semanal"
+  ],
+  "tags": [
+    "prévia",
+    "reprodução",
+    "decisão gravada",
+    "commit",
+    "manifesto",
+    "proposta"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/REPRODUZIR.md",
+      "trecho": "### 4.2 Decisão da carteira\n\nA decisão de cada semana usou o código, a configuração e o estado do livro do momento da decisão.\nPara recalcular, trabalhe numa cópia do repositório no commit da decisão (mensagem\n\"CDP: decisão da semana AAAA-MM-DD\"):",
+      "sha256": "03d1d718c203e935ace0d75604c7a5a6adcf4b2ff1a7836e55a7ac061957ff2b"
+    },
+    {
+      "caminho": "docs/cdp/REPRODUZIR.md",
+      "trecho": "Na cópia, rode `uv sync --extra dev` e a prévia, que refaz o mesmo processo da decisão — insumos\nreconstruídos e conferidos pelos hashes do manifesto da semana, sinais, modelo de risco,\notimizador e verificações de conformidade — sem gravar nada:\n\n```sh\nuv run python -m cdp --book /tmp/cdp-copia/book --market /tmp/cdp-copia/data/market --reports /tmp/cdp-copia/reports weekly preview --week AAAA-MM-DD --mind claude-code --out /tmp/previa.json",
+      "sha256": "a01cb5dbd56bedf3d22cbe7fd6c04528964360f8ce5ac9e03db213d825b28a92"
+    },
+    {
+      "caminho": "docs/cdp/REPRODUZIR.md",
+      "trecho": "Compare `posicoes[].peso` de `/tmp/previa.json` com as posições de\n`book/<semana>/proposal_v1.json` (a proposta aprovada). Tolerância de referência: 1e-4 do NAV por\nposição (1 ponto-base) e 1e-4 relativo nas métricas de risco (vol ex-ante, beta, gross, net).\nDiferenças maiores indicam versão de biblioteca ou solver diferente da fixada em `uv.lock`.",
+      "sha256": "402cb9ca9f269b7000933a1b744fcbe3efee36306b93cca9613633b6d464f9dc"
+    }
+  ]
+}

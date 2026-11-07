@@ -1,0 +1,30 @@
+{
+  "id": "aud-demo-offline",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Demonstração offline com saída separada",
+  "resumo": "Com o ambiente preparado, cdp demo exercita o fluxo completo sem consultar mercado externo. Os insumos e resultados são sintéticos e vêm marcados DADOS SIMULADOS. Use a opção out para direcionar os arquivos a uma pasta de demonstração, como /tmp/cdp-demo.",
+  "escopos": [
+    "desenvolvimento",
+    "calibracao"
+  ],
+  "tags": [
+    "demo",
+    "offline",
+    "dados simulados",
+    "mercado sintético",
+    "pasta de saída"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/REPRODUZIR.md",
+      "trecho": "Uma demonstração completa e offline, com mercado sintético (DADOS SIMULADOS), roda o mesmo\ncaminho operacional em poucos segundos:\n\n```sh\nuv run python -m cdp demo --out /tmp/cdp-demo\n```",
+      "sha256": "96514d2c88f9b4f387b04a8cce55182e66be7f83a90f9dfcefba8482fff88e75"
+    }
+  ]
+}

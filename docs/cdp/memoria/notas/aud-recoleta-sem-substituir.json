@@ -1,0 +1,35 @@
+{
+  "id": "aud-recoleta-sem-substituir",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "Recoleta preserva os insumos do cálculo original",
+  "resumo": "Para conferir uma fonte pública, faça a coleta de novo em pasta separada e preserve o arquivo que entrou no modelo. Proventos e reapresentações podem mudar os bytes recebidos depois. Confira datas de divulgação e compare os valores pela tolerância documentada.",
+  "escopos": [
+    "desenvolvimento",
+    "cobertura"
+  ],
+  "tags": [
+    "recoleta",
+    "arquivo original",
+    "proventos",
+    "reapresentação",
+    "tolerância"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/REPRODUZIR.md",
+      "trecho": "## 6. Coletar de novo os dados públicos\n\nOs arquivos arquivados são os insumos oficiais. Para conferir que vieram das fontes públicas,\ncolete de novo numa pasta separada e compare:",
+      "sha256": "2efdecee2afab8f16d50530d0522da3e60b68b18a5b380f618964553950e6401"
+    },
+    {
+      "caminho": "docs/cdp/REPRODUZIR.md",
+      "trecho": "Fornecedores revisam séries (ajustes por proventos, reapresentações de demonstrações), então a\ncoleta nova pode diferir em bytes; compare valores com tolerância e confira datas de publicação\n— os insumos usados num modelo nunca têm data de publicação posterior à data do modelo.",
+      "sha256": "2d2ddc1b425b69e1314e0599554551da96ee110115b7ff328d6b2f2b261c0fa5"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "id": "aud-replay-retomada-identica",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Retomar um replay com a mesma origem",
+  "resumo": "Para continuar um ensaio operacional, use resume com os mesmos argumentos. Compare captura de origem, configuração, código, janela e horários com o manifesto do ensaio. Use verify_replay para conferir sem gravação. Se a preparação parou antes do manifesto, guarde a pasta parcial e abra outra saída.",
+  "escopos": [
+    "desenvolvimento",
+    "calibracao"
+  ],
+  "tags": [
+    "replay",
+    "resume",
+    "retomada",
+    "captura",
+    "manifesto",
+    "saída parcial"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/REPLAY_OPERACIONAL.md",
+      "trecho": "Este exemplo define a chamada; não certifica que essa janela já foi executada. A retomada\nusa os mesmos argumentos e `--resume`. Fonte, configuração, código, janela e horários precisam\nser idênticos. `verify_replay(pasta)` é a API de conferência somente leitura.",
+      "sha256": "bc7f0937e5d78693717515f2fcb889c382c33d46621ac91ee53d0badf408cd9e"
+    },
+    {
+      "caminho": "docs/cdp/REPLAY_OPERACIONAL.md",
+      "trecho": "A conclusão guarda inventário integral, `result.json` e uma única âncora `REPLAY_COMPLETE`.\nUma interrupção nessa conclusão só é recuperada após comparar inventário, etapas e recálculo\noperacional exato. Remoção, adulteração, caminho redirecionado e resultado sem seus selos são\nrecusados. Uma falha durante a preparação inicial, antes do manifesto, exige uma nova pasta;\na pasta parcial é preservada como evidência.",
+      "sha256": "9f5057f597021253c85ae9acc444b8bb9174646fc5694a5cef3527d3bce1165e"
+    }
+  ]
+}

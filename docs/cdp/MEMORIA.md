@@ -22,9 +22,12 @@ Os escopos são `desenvolvimento`, `operador`, `status`, `semanal`, `diario`, `r
 e `calibracao`. `contexto` mostra até três notas curadas em destaque no escopo, com orçamento de
 6 KiB de saída em Markdown e JSON. `buscar` retorna separadamente notas elegíveis e
 fontes primárias do escopo. O limite de resultados por lista vai de um a dez e o padrão é cinco.
-A busca ordena passagens de fontes canônicas com BM25. Títulos, etiquetas, resumos e trechos
-validados ajudam a localizar lições. A lista `passagens` preserva os três primeiros resultados diretos
-e intercala referências de notas distintas. Uma passagem ocupa até 14 linhas e 1.800 bytes.
+A busca combina BM25 direto, passagens ranqueadas com contexto da seção e âncoras das notas.
+Flexões em português, títulos, etiquetas, resumos e trechos validados ajudam a localizar lições.
+A lista `passagens` aproveita referências complementares da nota mais pertinente e reduz janelas
+com forte sobreposição. Âncoras próximas da mesma nota podem ser reunidas sem cortar a evidência.
+Uma passagem ocupa até 14 linhas e 1.800 bytes. Títulos e resumos ajudam na ordenação. O hash
+continua vinculado ao trecho literal da fonte.
 O retorno `fontes` contém os caminhos da busca direta, enquanto `notas` identifica os
 registros recuperados. Cada passagem vem com linhas inclusivas e SHA-256.
 
@@ -209,8 +212,8 @@ mostrou que a fusão descartava referências úteis. O ajuste posterior passou a
 as três primeiras passagens diretas. As figuras mostram a medição após esse ajuste.
 A revisão da fonte e o código aparecem separadamente no rodapé.
 
-A partir da raiz do repositório, gere os relatórios e as duas figuras. O renderizador
-requer Matplotlib. [Código das figuras](../../scripts/cdp_memoria_figuras.py).
+A partir da raiz de um checkout na revisão histórica `42f19b27`, gere os relatórios e as duas
+figuras. O renderizador requer Matplotlib. [Código das figuras](../../scripts/cdp_memoria_figuras.py).
 
 ```sh
 mkdir -p outputs/cdp-memoria

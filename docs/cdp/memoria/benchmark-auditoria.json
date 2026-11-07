@@ -1,0 +1,449 @@
+{
+  "versao": 1,
+  "data": "2026-11-07",
+  "casos": [
+    {
+      "id": "aud-replay-terca-no-limite",
+      "familia": "replay",
+      "escopo": "desenvolvimento",
+      "consulta": "Meu ensaio termina numa terça. Posso estrear a carteira nessa data para ganhar mais uma observação? O resultado real reconstruído conta para avaliar a mente?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/REPLAY_OPERACIONAL.md",
+            "trecho": "A única mudança contrafactual do mandato é a data inaugural na configuração interna do ensaio.\nEla usa a primeira montagem canônica elegível; uma terça-feira no fim de uma janela não cria\noutra decisão. O arquivo oficial do mandato permanece intacto. `replay_origin.json` e o evento",
+            "sha256": "183218810d8dcdd2c2fde69314ec63f84b83c1031f1291741e8e70999c3e745b"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/REPLAY_OPERACIONAL.md",
+            "trecho": "inicial `REPLAY_ORIGIN` autenticam o modo e o instante real de início. Mesmo com dados reais,\no ensaio retrospectivo fica fora do IC prospectivo e não promove a fase das mentes.",
+            "sha256": "7f82cf0e43b35f6944c8c74cee057aaebdbc265d213eff664bb2e0adfeea5f05"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "aud-replay-cambio-de-marcacao",
+      "familia": "replay",
+      "escopo": "desenvolvimento",
+      "consulta": "A ação ficou sem câmbio próprio no pregão, mas ainda aparece marcada pelo último dado. Posso fechar a posição trocando para outro ticker do mesmo emissor?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/REPLAY_OPERACIONAL.md",
+            "trecho": "Preço, volume e câmbio usados para negociar precisam ser observados no próprio pregão;\ncarry usado na marcação ou no ADV não autoriza um fill. Uma linha detida sem fechamento ou\ncâmbio próprios congela o emissor inteiro, inclusive a abertura de outra linha. USD/USD=1 é\na identidade da unidade; moeda desconhecida não recebe câmbio presumido.",
+            "sha256": "1379feaa210cb78e2a9e390aad14ee0670a440577086e2b189d23e04c5ce73ef"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "aud-replay-igualdade-e-hashes",
+      "familia": "replay",
+      "escopo": "desenvolvimento",
+      "consulta": "Duas rodadas têm os mesmos valores da carteira, mas tempos de otimização e selos diferentes. O que esse contraste permite afirmar e como avaliar pequenas diferenças numéricas?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/REPLAY_OPERACIONAL.md",
+            "trecho": "consumidores de cotações inválidas. A fonte física final 8-5 da metodologia `.8` repetiu\nos 23 pregões/cinco montagens/94 etapas com integridade verde e economia preservada;\ntempos do solver e hashes de encadeamento são distintos das grandezas financeiras.",
+            "sha256": "f2c871e1f22c01eecc5de513dc5b39954335838e53cb3e7abf22092742999139"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/REPRODUZIR.md",
+            "trecho": "Números recalculados não são comparados por hash: álgebra linear e solvers de otimização convexa\npodem diferir no último dígito entre versões de biblioteca, sistema e processador. A comparação é\npor tolerância documentada.",
+            "sha256": "ef84e10fde071449b3db16ec7eed4db7306d107bb57794c07f9b3d21b73b32ed"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "aud-replay-falha-antes-da-receita",
+      "familia": "replay",
+      "escopo": "desenvolvimento",
+      "consulta": "Uma tentativa caiu antes de gravar o manifesto inicial. Posso reutilizar o destino parcial? Se o ensaio já tinha sido preparado, quais entradas tenho de conservar para retomar?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/REPLAY_OPERACIONAL.md",
+            "trecho": "recusados. Uma falha durante a preparação inicial, antes do manifesto, exige uma nova pasta;\na pasta parcial é preservada como evidência.",
+            "sha256": "cdf8b0afeb37ff2db368ffbf1d819942b8779a379e51e0b8a182d5d0de2d8d31"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/REPLAY_OPERACIONAL.md",
+            "trecho": "Este exemplo define a chamada; não certifica que essa janela já foi executada. A retomada\nusa os mesmos argumentos e `--resume`. Fonte, configuração, código, janela e horários precisam\nser idênticos. `verify_replay(pasta)` é a API de conferência somente leitura.",
+            "sha256": "bc7f0937e5d78693717515f2fcb889c382c33d46621ac91ee53d0badf408cd9e"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "aud-replay-origem-e-previsao",
+      "familia": "replay",
+      "escopo": "desenvolvimento",
+      "consulta": "Se um replay com dados reais produziu um relatório convincente, ele saiu de um agente fazendo previsões? Que registros identificam a natureza da execução?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/REPLAY_OPERACIONAL.md",
+            "trecho": "Os relatórios e teses deste comando são modelos determinísticos dos fatos, sem previsão de IA.",
+            "sha256": "299ad6c64f8784343a8657725eaee6045d0c4991d7c88de1c25087d70b3d8cff"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/REPLAY_OPERACIONAL.md",
+            "trecho": "outra decisão. O arquivo oficial do mandato permanece intacto. `replay_origin.json` e o evento\ninicial `REPLAY_ORIGIN` autenticam o modo e o instante real de início. Mesmo com dados reais,",
+            "sha256": "ee290c85b7f973c06e4a1c4923f51c3c3577711b49911fef2058a32e3f699339"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "aud-reprod-fornecedor-reapresentou",
+      "familia": "reproducao",
+      "escopo": "desenvolvimento",
+      "consulta": "Baixei novamente uma série pública, mas o fornecedor revisou os valores. Qual cópia tem valor para reproduzir o cálculo e o que devo conferir na versão nova?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/REPRODUZIR.md",
+            "trecho": "Os arquivos arquivados são os insumos oficiais. Para conferir que vieram das fontes públicas,\ncolete de novo numa pasta separada e compare:",
+            "sha256": "a3879d285fe8efa93df8c5e344374186f279156d9077ee29c5d237462dfcda9c"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/REPRODUZIR.md",
+            "trecho": "Fornecedores revisam séries (ajustes por proventos, reapresentações de demonstrações), então a\ncoleta nova pode diferir em bytes; compare valores com tolerância e confira datas de publicação\n— os insumos usados num modelo nunca têm data de publicação posterior à data do modelo.",
+            "sha256": "2d2ddc1b425b69e1314e0599554551da96ee110115b7ff328d6b2f2b261c0fa5"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "aud-reprod-relato-entre-modelos",
+      "familia": "reproducao",
+      "escopo": "desenvolvimento",
+      "consulta": "Se eu repetir uma tese usando outro assistente, preciso obter o mesmo texto byte a byte? Qual contrato limita os números e como a entrega é examinada?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/REPRODUZIR.md",
+            "trecho": "nunca mudam um número: o preço-alvo, os pesos e o risco continuam do código. Como juízos de\nassistentes diferentes podem divergir, a reprodução de um texto não é idêntica byte a byte; o que\nse reproduz é o processo, as regras e a validação.",
+            "sha256": "7653b2aec6975ffc442eb17a347c8aa2b28a9b992f8b7a8f7148e5641a6e1a37"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/ARQUITETURA.md",
+            "trecho": "Guardrails: números no texto só como `{{fact:id}}` de fatos existentes; fontes públicas por URL\n(domínios oficiais para fontes regulatórias e de bolsa); notícias delimitadas e tratadas como\ndado não confiável; guia de estilo pt-BR institucional (`docs/cdp/ESTILO.md`). Texto inválido",
+            "sha256": "8f66e4c324336814fb4adccc442eec2e47366054398b892fee8cdea8b558fbf1"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "aud-reprod-pesquisa-corrigida",
+      "familia": "reproducao",
+      "escopo": "desenvolvimento",
+      "consulta": "Corrigi a pesquisa depois que a decisão do gestor já estava salva. Posso reaproveitar o JSON da decisão? Em que ordem confiro e reconstruo as duas partes?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/REPRODUZIR.md",
+            "trecho": "A pesquisa vem antes da decisão: a decisão cita os ids das notas da pesquisa, então uma pesquisa\nnova invalida a decisão gravada antes dela. Valide a pesquisa sozinha (`--so-pesquisa`), depois\nexporte o pacote da decisão — que traz um resumo da pesquisa salva — e valide a semana inteira.",
+            "sha256": "c8ad66736f0a13c3916433ccbb66266102c9cae600e93812eb86b57b7cbbd6e0"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "aud-reprod-sorteios-e-ambiente",
+      "familia": "reproducao",
+      "escopo": "desenvolvimento",
+      "consulta": "Para reproduzir a sensibilidade do preço-alvo em outro computador, como identifico as versões usadas e por que os cenários não mudam de sorteio?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/REPRODUZIR.md",
+            "trecho": "contra o registrado, rode `uv pip show numpy pandas scipy cvxpy`; cada snapshot da cobertura grava\nas versões de Python, numpy, pandas e scipy em `manifest.json` (campo `ambiente`).",
+            "sha256": "4b2f1e66c17742264dc9a525908023e7470948f974ce5db33e224da2ad58e2be"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/REPRODUZIR.md",
+            "trecho": "configuração arquivados no próprio snapshot. Tolerância: 1e-5 relativo por valor (o armazenamento\nguarda seis algarismos significativos). As simulações dos cenários usam semente fixa por emissor\ne data: o recálculo reproduz os mesmos sorteios.",
+            "sha256": "d26c610777f52ab5ad457816b2c84798b96b3b2fce4530506331424553e5a94d"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "aud-reprod-pacote-nunca-publica",
+      "familia": "reproducao",
+      "escopo": "desenvolvimento",
+      "consulta": "Quero experimentar um assistente externo com uma tese existente. Onde preparo os fatos, o que o arquivo exportado leva e como o rascunho entra na operação oficial?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/REPRODUZIR.md",
+            "trecho": "1. O código prepara os fatos da etapa (na sua cópia do livro; nada vai para o livro oficial).\n2. `cdp mente pacote` exporta **um único arquivo markdown autocontido**: papel, regras\n   invioláveis, guia de estilo (`docs/cdp/ESTILO.md`), os fatos do código, o JSON Schema, um\n   esqueleto de exemplo e o comando exato de validação. O pacote vai para fora do repositório\n   (por exemplo `/tmp/…`) ou para `outputs/` (pasta ignorada pelo git); o comando só substitui um\n   pacote gerado antes.",
+            "sha256": "5ddf8a349638d9353b9fa6ad7a528b32f65eb97c00639e44a087b597c23ff106"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/ARQUITETURA.md",
+            "trecho": "uma decisão válida e recalcula todos os hashes. Uma tese escrita fora do clone das rotinas é\nentregue como rascunho em `docs/cdp/teses/<semana>.json` e adotada pelo `tese prepare`.",
+            "sha256": "fdb5aaad210e454d4973de8f52fe4e73c468519f51252526eeaff41325b106e6"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "aud-custodia-corpo-nao-retido",
+      "familia": "custodia-editorial",
+      "escopo": "operador",
+      "consulta": "Perdi o recibo completo do relatório, mas tenho a saída que mostrou a publicação. Quais campos ainda faltam e que critério permite aceitar a recomposição?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+            "trecho": "de `weekly close-report --publish` contém `relatorio`, `comentario_da_mente`,\n`apontamentos_comentario` e `tipo`, mas omite `registro` e `factbook`; a saída de preparação\ntambém não fornece esses dois hashes. Não prometa recuperar o corpo completo de uma única",
+            "sha256": "df8623198fb327541257d570c067d8d7266e502efeedc25c9180c74941f9bbbd"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+            "trecho": "Registre quais evidências forneceram cada campo e que o corpo é recomposto, sem atribuir\nautoria, data de coleta ou persistência histórica ao recibo novo. Falta de qualquer fonte\nnecessária, corpo incompleto ou divergência do hash ao evento bloqueia a retificação. Não",
+            "sha256": "e54219fedf27eeacebbcb9733c659cbb7d0e9fc6070494cbdfae545e372051ce"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "aud-custodia-fato-versus-arquivo",
+      "familia": "custodia-editorial",
+      "escopo": "operador",
+      "consulta": "O selo da base de fatos impresso no relatório difere do SHA-256 do arquivo baixado. Que valor vai no payload reconstituído e qual identifica o arquivo físico?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+            "trecho": "- `factbook`: o valor literal de “Base de fatos da semana” na mesma seção. A validação o\n  confronta com `FactBook.factbook_hash()` do corpo preservado de `factbook.json`; esse hash de\n  objeto é distinto do SHA-256 do arquivo, que vai em `factbook_original_sha256`.",
+            "sha256": "4a73e44097a20307cd0894182b81739743e8a4710652bf6da2cb47bf53304d0c"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "aud-custodia-nota-local",
+      "familia": "custodia-editorial",
+      "escopo": "operador",
+      "consulta": "Recebi a nota e o evento da errata, mas não vejo mudança no remoto. O que já aconteceu e qual prova falta para dizer que saiu do clone?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+            "trecho": "`--publish` deste comando cria somente a nota local e o evento\n`WEEKLY_EDITORIAL_RECTIFICATION`; não faz commit nem push. A nota fica em\n`reports/semanal/<data>/retificacoes/<id>/`, com JSON, Markdown e HTML novos. O original e os\neventos anteriores permanecem literais. Uma tentativa repetida não sobrescreve a nota.",
+            "sha256": "d602c116ee7bfc5ef81aeabeebfdbf77835a979b17908e203aa21e985fb162bf"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+            "trecho": "um recibo atual literal da saída de `cdp publicar` com `execucao`, `trava`, `arquivos`,\n`anteriores`, `commit`, `push` e `verify`. Sem push confirmado, a publicação continua local.",
+            "sha256": "8471fc0f796056f04d6ca14d4ed29f5c8676a17eafb55ef734b11b66775d5dbf"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "aud-custodia-peso-inutilizavel",
+      "familia": "custodia-editorial",
+      "escopo": "operador",
+      "consulta": "Quero corrigir uma frase sobre o lado final da carteira, mas o fato arquivado está com unidade incompatível. Posso assumir posição zero ou fornecer minha própria redação?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+            "trecho": "Em `correcoes`, informe o `emissor` e seu `texto_original` exato, copiado do racional selado.\nNão escreva peso novo, retorno, NAV ou texto substituto: o código produz a indicação final de\ncomprada, vendida ou zerada. Peso ausente, não finito, com unidade distinta de percentual ou\nde outro emissor é recusado, sem inventar posição zero. O racional precisa conter uma\ncontradição direcional canônica comprovada no texto renderizado; frase correta ou neutra não",
+            "sha256": "f313af0692ddb8bd2af8a6271864f0b760a0aa05891eba346b338c40945e0a27"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "aud-custodia-falha-parcial",
+      "familia": "custodia-editorial",
+      "escopo": "operador",
+      "consulta": "A anexação falhou e deixou um arquivo novo sem a evidência correspondente. O portal deveria substituir o original? A rotina apaga a sobra automaticamente?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+            "trecho": "O portal mantém o relatório original e mostra uma indicação explícita com link para a nota.\nA agenda distingue emissores pendentes de corrigidos. Divergência dos originais, da nota ou\nda trilha impede a integridade e a publicação remota. Falha parcial ao anexar pode deixar\nartefato/evento órfão; isso é detectado e exige diagnóstico, sem limpeza ou reparo tácito.",
+            "sha256": "5ed0e098a7b62a3a284e0691dc469cc42860b23f22146d3b0e6e00116cb7f6f5"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "aud-infra-sandbox-e-escritor",
+      "familia": "infraestrutura",
+      "escopo": "operador",
+      "consulta": "O aplicativo pode pesquisar e devolver JSON, mas o ambiente bloqueia gravação no Git. Quem assume a sincronização, a publicação e a liberação nesse arranjo?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/AUTOMACAO.md",
+            "trecho": "- `--publicacao executor` (padrão no `codex exec`): o script pega a trava, sincroniza, chama a\n  mente com o prompt sem git, publica (`cdp publicar --trava … --execucao …`) e libera a trava.\n  Use-o com qualquer app cujo sandbox proteja `.git`.",
+            "sha256": "58772c1f77f5bd3993b1ea2d3845649b4d8a87d3e9798c4c65cf63d2580e4ff3"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "aud-infra-ensaio-nao-fura",
+      "familia": "infraestrutura",
+      "escopo": "operador",
+      "consulta": "Posso ensaiar o ciclo inteiro no clone de produção e depois desligar a variável para enviar os commits locais? Que proteção o código aplica?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/AUTOMACAO.md",
+            "trecho": "`pre-push` que recusa todo push enquanto essa variável estiver no ambiente, `cdp trava` não\ngrava nada no remoto e `cdp publicar` faz só o **commit local** (com o trailer\n`CDP-Ensaio: sim`, sem trava e sem push) — a rotina seguinte do ensaio encontra o livro em dia,\ncomo numa semana real. Um clone com commits de ensaio nunca publica fora do ensaio\n(`cdp publicar` recusa o push): o ensaio usa sempre um clone próprio. A opção `--ensaio` sozinha\nsó muda o prompt. Compare: terminou no prazo, validadores ok, transcrição limpa.",
+            "sha256": "5e6836b95d9a1c183fa904fd3dc7178867954a80e14a70e0eecd3ce05b201d41"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "aud-infra-site-demo-e-credenciais",
+      "familia": "infraestrutura",
+      "escopo": "status",
+      "consulta": "O workflow de demonstração concluiu e gerou um arquivo do site. Isso coloca os dados simulados no endereço público e dá permissão para escrever no repositório?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/SITE.md",
+            "trecho": "- O workflow só **lê** o repositório (`contents: read`); a escrita no Pages usa o ambiente\n  `github-pages`.",
+            "sha256": "a757f5ec561d6c0a571d653e6f9daabe42c159c11bd779576aaa3518f34b6185"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/SITE.md",
+            "trecho": "- A demonstração (`--demo`) é marcada \"DADOS SIMULADOS\" em todas as páginas, leva `noindex` nas\n  páginas HTML e **nunca vai ao endereço público**: no workflow, a opção de demonstração só\n  monta o site como artefato `github-pages` da execução (baixe e abra localmente).",
+            "sha256": "2bf081cffb5abfe99e6e3b804318afa2e3eb3fee7d88d781b4de76e18b1af8a2"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "aud-infra-site-arquivo-mudou",
+      "familia": "infraestrutura",
+      "escopo": "status",
+      "consulta": "O commit anunciado no portal confere, mas suspeito que um HTML baixado mudou. Que verificações separadas posso fazer no livro e no arquivo servido?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/SITE.md",
+            "trecho": "git checkout <source_commit do manifest.json>\nuv sync\nuv run python -m cdp verify",
+            "sha256": "86d5c7a7ea73fdc06d140414ea537a1cf327f1515765050f0fe49914fd8268e4"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/SITE.md",
+            "trecho": "Na pasta do portal baixado (por exemplo, o artefato do workflow), `sha256sum -c SHA256SUMS`\nconfere cada byte; `dados/datapackage.json` (Frictionless Data Package) traz tamanho, SHA-256 e\norigem de cada arquivo. Para recalcular etapas da mente em qualquer assistente:",
+            "sha256": "b2c42bca8b4de21ec967a38d6f138d1f1424c9b714c29041e5353150c79418f1"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "aud-infra-troca-e-ensaio",
+      "familia": "infraestrutura",
+      "escopo": "operador",
+      "consulta": "Fiz uma transferência do agendador para outro aplicativo. Qual é a evidência da primeira operação real e o que faço com as agendas de teste e com o executor anterior?",
+      "tipo": "evidencia",
+      "grupos": [
+        [
+          {
+            "caminho": "docs/cdp/AUTOMACAO.md",
+            "trecho": "4. Ligue o novo: rotinas ligadas; execute agora uma tarefa sem pendência; confira\n   `uv run python -m cdp estado --rede --formato md`. **Desligue as rotinas do ensaio**",
+            "sha256": "220ccc6aa31a2c605c4d9d88ca957d5dbd059158b645dd6634bdd1496bc347da"
+          }
+        ],
+        [
+          {
+            "caminho": "docs/cdp/AUTOMACAO.md",
+            "trecho": "5. Acompanhe a primeira execução real (transcrição, trailers do commit, portal). O executor\n   antigo fica instalado como reserva quente por duas semanas.",
+            "sha256": "4c54c84b9f1d01dfb0084ee10de3f6469f27a8e5e882f17a5b95b52fd4b30e46"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "aud-controle-commit-acabou",
+      "familia": "controles",
+      "escopo": "status",
+      "consulta": "Já terminou a implantação que está rodando neste minuto? Qual versão está efetivamente aparecendo no navegador?",
+      "tipo": "estado_atual",
+      "grupos": []
+    },
+    {
+      "id": "aud-controle-encargo-hoje",
+      "familia": "controles",
+      "escopo": "operador",
+      "consulta": "Alguém acabou de assumir a operação neste computador? Quero o nome do executor designado agora.",
+      "tipo": "estado_atual",
+      "grupos": []
+    },
+    {
+      "id": "aud-controle-fora-receita",
+      "familia": "controles",
+      "escopo": "desenvolvimento",
+      "consulta": "Quanto tempo devo deixar a massa de pão de fermentação natural na geladeira antes de assar?",
+      "tipo": "fora_escopo",
+      "grupos": []
+    },
+    {
+      "id": "aud-controle-fora-enxadrista",
+      "familia": "controles",
+      "escopo": "operador",
+      "consulta": "Em uma partida de xadrez de dez minutos, qual defesa jogo contra a abertura italiana?",
+      "tipo": "fora_escopo",
+      "grupos": []
+    }
+  ]
+}

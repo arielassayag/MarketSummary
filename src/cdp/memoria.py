@@ -29,8 +29,9 @@ from .memoria_busca import (
     LINHAS_PASSAGEM,
     IndicePassagens,
     Local,
-    ampliar,
-    intercalar,
+    combinar_evidencias,
+    reunir_ancoras,
+    termos_contextuais,
 )
 from .memoria_busca import (
     normalizar as _normalizar,
@@ -315,66 +316,153 @@ def _tokens(s: str) -> set[str]:
 
 _MERCADO = re.compile(
     r"\b(?:p&l|pnl|retornos?|resultados?|pl|precos?|patrimonio|rentabilidade|"
-    r"cotac(?:ao|oes)|perdas?|ganhos?|drawdown|volatilidade|moedas?|pesos?|liquidez)\b"
+    r"cotac(?:ao|oes)|perdas?|ganhos?|drawdown|volatilidade|moedas?|pesos?|liquidez|"
+    r"sharpe|shorts?|longs?|papeis)\b"
 )
 _DOMINIO = re.compile(
     r"\b(?:kill[- ]switch|executor|rotinas?|agenda|carteira|posic(?:ao|oes)|exposicao|"
     r"montagem|pendencias?|fechamento|trava|cobertura|risco|relatorios?|calibracao|"
-    r"publicacao|portal|pages|revisao|disparo|rodada|livro|emails?|entrega|snapshot)\b"
+    r"publicacao|portal|pages|implantacao|deploy|revisao|disparo|rodada|livro|e-?mails?|"
+    r"entrega|snapshot|ensaio|captura|manifesto|sha[- ]?256|commits?|fila|emissor(?:es)?|"
+    r"incidentes?|monitor|alertas?)\b"
 )
-_AGORA = re.compile(r"\b(?:agora|hoje|ontem|neste momento|no momento|atualmente)\b")
+_TEMA_CDP = re.compile(
+    r"\b(?:cdp|cabras? da peste|leilao|mandato|gate|benchmark|factbook|fundos?|"
+    r"custodia|auditoria|origem|reproducao|linhagem|evidencias?|playbooks?|skills?|"
+    r"replay|point-in-time|pit|validador(?:es)?|fontes? primarias?|recepcao|"
+    r"substituic(?:ao|oes)|candidatas?|curadoria|proveniencia|hash|cortes?|"
+    r"rebalanceamento|retificacao|selagem|agendamento|execucao|publicar|taxas?|"
+    r"indices?|dados simulados|atestado|certificac(?:ao|oes)|backtest|bolsa|"
+    r"corretagem|lotes? fracionarios?|xbrl|balancos?|brier|valuation|etfs?|cotistas?|"
+    r"preg(?:ao|oes)|cambio|desfechos?)\b"
+)
+_VOCABULARIO_TRABALHO = re.compile(
+    r"\b(?:arquivos?|coletas?|clones?|consultas?|fontes?|modelos?|notas?|dados?|"
+    r"teses?|pesquisas?|rascunhos?|propostas?|previs(?:ao|oes)|decis(?:ao|oes)|"
+    r"documentos?|comunicados?|divulgac(?:ao|oes)|publicad[oa]s?|fatos?|atrasos?|"
+    r"etapas?|datas?|prazos?|vers(?:ao|oes)|gestor(?:es)?|saude|autoria|"
+    r"testes?|validac(?:ao|oes)|resumos?|remot[oa]s?|autor(?:es)?)\b"
+)
 _TEMPO = re.compile(
-    r"\b(?:atual|ultim[oa]s?|mais recente)\b"
-    r"|\b(?:\d{4}-\d{2}-\d{2}|\d{1,2}/\d{1,2}(?:/\d{2,4})?)\b"
+    r"\b(?:agora|hoje|ontem|atual(?:mente|is)?|ultim[oa]s?|mais recente|proxim[oa]s?|"
+    r"neste (?:momento|instante|minuto)|no momento|"
+    r"(?:dest[ea]|nest[ea]) (?:manha|tarde|noite|semana|mes)|"
+    r"em vigor|vigentes?)\b"
+    r"|\b(?:\d{4}-\d{2}-\d{2}|\d{1,2}/\d{1,2}(?:/\d{2,4})?|"
+    r"\d{1,2} de (?:janeiro|fevereiro|marco|abril|maio|junho|julho|agosto|"
+    r"setembro|outubro|novembro|dezembro))\b"
 )
 _OCORRENCIA = re.compile(
-    r"\b(?:ja|ainda) (?:rodou|executou|fechou|entregou|publicou|consta|"
-    r"subiu|saiu|chegou|encerrou|concluiu|foi publicado|foi enviado)\b"
+    r"\b(?:ja|ainda) (?:rodou|executou|fechou|entregou|publicou|consta|subiu|saiu|"
+    r"chegou|encerrou|concluiu|terminou|foi publicado|foi enviado)\b"
+    r"|\b(?:acab(?:ou|aram) de|consta(?:m)?|aparece(?:m)?|gravou|publicou|"
+    r"selad[oa]s?|anotad[oa]s?|medid[oa]s?|observad[oa]s?|registrad[oa]s?|designad[oa]s?|"
+    r"abert[oa]s?|ativ[oa]s?|ficou|ficaram|marcou|primeir[oa]s?)\b"
 )
-_INTERROGATIVA = re.compile(r"^(?:quem|qual|quais|quanto|quant[ao]s|onde|quando|como esta)\b")
+_PEDIDO_OBSERVACAO = re.compile(
+    r"^(?:me )?(?:quem|qual|quais|quanto|quant[ao]s|onde|quando|em que|que|como esta|"
+    r"liste|informe|diga|identifique|mostre|traga|de (?:o|a|os|as))\b"
+    r"|\bquero (?:saber|o nome|a data|o valor)\b"
+)
 _PROCEDIMENTO = re.compile(
     r"^(?:como (?!esta\b|estao\b|ficou\b|anda\b|se encontra\b)|"
     r"em (?:que situacao|que caso|qual situacao|qual caso)|"
     r"se\b|quando (?:um|uma|a fonte|os dados|a regra)\b|no dia (?:de|da|do)\b|"
-    r"o que (?:fazer|faco|acontece quando)|qual (?:e )?[ao]s? "
-    r"(?:procedimento|roteiro|comando|regra|diferenca|criterio|ordem|fluxo)\b)"
-)
-_VALOR = re.compile(
-    r"^(?:quanto|quant[oa]s)\b|^qual(?: e| foi)? [oa] (?:ultim[oa] )?"
-    r"(?:valor|pnl|p&l|pl|retorno|preco|cotacao|patrimonio|rentabilidade|drawdown|peso)\b"
+    r"o que (?:fazer|faco|acontece quando)|qu(?:al|ais)(?: e| sao)? (?:[ao]s? )?"
+    r"(?:procedimentos?|roteiros?|comandos?|regras?|diferencas?|criterios?|ordem|fluxos?|"
+    r"passos?|condic(?:ao|oes)|campos?)\b)"
 )
 _PEDIDO_DE_PROCEDIMENTO = re.compile(
-    r"\b(?:como (?:eu )?(?:confiro|confirmo|verifico|faco|validar|usar|confirmar|proceder)|"
-    r"posso|devo|permite|autoriza|atesta|serve para|replay|point-in-time|pit)\b"
+    r"\b(?:como (?!esta\b|estao\b|ficou\b|anda\b|se encontra\b)|"
+    r"posso\b|podemos\b|pode(?:m)?\b(?! (?:me )?(?:dizer|informar|mostrar)\b)|"
+    r"devo\b|deve(?:m)?\b|precisa(?:m)?\b|permite\b|autoriza\b|atesta\b|serve para\b|"
+    r"o que (?:faco|fazer|vale conferir)|de onde tiro|onde (?:consulto|confiro|preparo)|"
+    r"(?:metodo|regra|criterio|passos?|roteiro) (?:para|de|da|do)\b)"
 )
+_CONTROLES = re.compile(r"\b(?:trava|gate|mandato|limites?|autenticacao|permiss(?:ao|oes))\b")
+_BURLA = re.compile(
+    r"(?:^|[.!?]\s+)(?:ignore|burle|contorne|drible)\b|"
+    r"\b(?:como|mandou|instruiu a|disse para) (?:ignorar|burlar|contornar|driblar)\b"
+)
+_SEGREDO = r"(?:senhas?|credenciais|tokens?|chaves? (?:privadas?|de api|de acesso))"
+_EXTRACAO_SEGREDO = re.compile(
+    rf"\b(?:recupere|mostre|revele|divulgue|exiba|exponha|imprima|envie|copie|extraia)\b"
+    rf"(?:[\w\s]{{0,40}})\b{_SEGREDO}\b|\bqual(?: e)? [oa] {_SEGREDO}\b"
+)
+_NEGOCIACAO_REAL = re.compile(
+    r"\b(?:corretoras?|ord(?:em|ens) rea(?:l|is)|capital real|dinheiro de verdade|"
+    r"conta real|dinheiro real)\b"
+)
+_PEDIDO_NEGOCIACAO = re.compile(
+    r"(?:^|[.!?]\s+|\be\s+)(?:conecte|execute|mande|envie|emita|transmita|"
+    r"negocie|compre|venda|opere)\b"
+)
+
+
+def _pedido_fora_do_escopo(q: str) -> bool:
+    """Filtra pedidos de execução ou acesso que a memória consultiva não atende."""
+    return bool((_BURLA.search(q) and _CONTROLES.search(q)) or _EXTRACAO_SEGREDO.search(q)
+                or (_NEGOCIACAO_REAL.search(q) and _PEDIDO_NEGOCIACAO.search(q)))
+
+
+def _tema_do_cdp(q: str) -> bool:
+    return bool(_DOMINIO.search(q) or _MERCADO.search(q) or _TEMA_CDP.search(q)
+                or len(set(_VOCABULARIO_TRABALHO.findall(q))) >= 2)
+
+
+def _pede_estado(q: str) -> bool:
+    # Uma situação narrada antes da pergunta dá contexto, mas não muda a intenção.
+    for frase in re.split(r"(?<=[.!?])\s+", q):
+        fim = frase.rsplit(", ", 1)[-1]
+        if _PEDIDO_OBSERVACAO.match(fim):
+            frase = fim
+        if (not (_MERCADO.search(frase) or _DOMINIO.search(frase))
+                or _PROCEDIMENTO.search(frase) or _PEDIDO_DE_PROCEDIMENTO.search(frase)):
+            continue
+        pedido = _PEDIDO_OBSERVACAO.search(frase) or frase.endswith("?")
+        enunciado = re.split(r"\s+(?:se|caso|quando)\s+", frase, maxsplit=1)[0]
+        if pedido and (
+            _TEMPO.search(enunciado) or _OCORRENCIA.search(enunciado)
+        ):
+            return True
+    return False
 
 
 def _fonte_atual(consulta: str, *, forcar: bool = False) -> str | None:
     """Reconhece pedidos de observação e distingue instruções de procedimento."""
     q = _normalizar(consulta).strip()
-    mercado, dominio = bool(_MERCADO.search(q)), bool(_DOMINIO.search(q))
-    if not forcar:
-        if (not (mercado or dominio) or _PROCEDIMENTO.search(q)
-                or _PEDIDO_DE_PROCEDIMENTO.search(q)):
-            return None
-        pergunta = bool(_INTERROGATIVA.match(q) or q.endswith("?"))
-        medida_com_data = mercado and _VALOR.match(q) and _TEMPO.search(q)
-        pessoa_ou_versao_atual = _INTERROGATIVA.match(q) and re.search(
-            r"\b(?:executor|portal|pages)\b.*\batual\b", q)
-        ocorrencia = _OCORRENCIA.search(q)
-        if not (pergunta and (_AGORA.search(q) or medida_com_data
-                              or pessoa_ou_versao_atual or ocorrencia)):
-            return None
-    if re.search(r"\b(?:portal|pages)\b", q):
+    if not forcar and not _pede_estado(q):
+        return None
+    if re.search(r"\b(?:portal|pages|implantacao|deploy)\b", q):
         return "Confira o portal servido e a procedência em docs/cdp/SITE.md."
     if re.search(r"\b(?:e-?mails?|entrega)\b", q):
         return "Confira a trilha de entrega descrita em docs/cdp/playbooks/DIARIO.md."
-    if mercado:
-        return "Consulte o relatório oficial da data e os fatos calculados pelo código."
-    if re.search(r"\b(?:cobertura|emissor(?:es)?)\b", q) and re.search(
-        r"\b(?:fila|notas?|emissor(?:es)?)\b", q
+    if re.search(r"\bcommits?\b", q):
+        return ("Consulte a procedência do commit gravado. O trailer CDP-Harness identifica "
+                "o aplicativo e CDP-Executor identifica o executor.")
+    if re.search(r"\b(?:ensaio|captura|replay)\b", q) and re.search(
+        r"\b(?:manifesto|sha[- ]?256)\b", q
     ):
-        return "Consulte a agenda de cobertura e a fila da nota no clone de operação."
+        return "Consulte o manifesto e a verificação da execução solicitada do ensaio isolado."
+    if re.search(r"\b(?:cobertura|emissor(?:es)?)\b", q) and re.search(
+        r"\b(?:fila|notas?|retrato|emissor(?:es)?)\b", q
+    ):
+        return "Consulte a fila da nota na saída corrente de nota agenda no clone de operação."
+    if re.search(r"\b(?:calibracao|sharpe|rodada mensal)\b", q):
+        return "Consulte o metrics.json ou o relatório da calibração correspondente à rodada."
+    if re.search(r"\b(?:propostas?|previa)\b", q):
+        return ("Consulte a proposta da montagem efetivamente gravada. "
+                "Se não houver proposta para essa etapa, registre a ausência.")
+    if re.search(r"\b(?:alertas?|monitor|hard|soft)\b", q) and not re.search(
+        r"\bkill[- ]switch\b", q
+    ):
+        return "Consulte o relatório do monitor de risco da rodada solicitada."
+    if re.search(r"\b(?:longs?|shorts?|posic(?:ao|oes))\b", q) and re.search(
+        r"\b(?:carteira|livro)\b", q
+    ):
+        return "Consulte a carteira efetivada no livro ou o relatório correspondente ao corte."
+    if _MERCADO.search(q) or re.search(r"\bquanto (?:marcou|rendeu|valeu|fechou)\b", q):
+        return "Consulte o relatório oficial da data ou os fatos correspondentes no FactBook."
     return "Consulte o estado e a agenda no clone de operação."
 
 
@@ -475,6 +563,8 @@ class Catalogo:
 
     def _buscar_notas(self, escopo: Escopo, consulta: str, limite: int, *,
                       expandir: bool = False) -> list[Registro]:
+        if expandir:
+            return self._buscar_notas_contextuais(escopo, consulta, limite)
         termos = _tokens(consulta)
         notas = []
         if termos:
@@ -484,36 +574,88 @@ class Catalogo:
                     continue
                 chave = _tokens(n.titulo + " " + " ".join(n.tags))
                 resumo = _tokens(n.resumo)
-                ancora = set()
-                if expandir:
-                    ancora = _tokens(" ".join(ev.trecho for ev in n.evidencias))
-                comuns = termos & (chave | resumo | ancora)
+                comuns = termos & (chave | resumo)
                 # Sobreposição mínima evita forçar uma lembrança com coincidência incidental.
                 if (len(comuns) >= min(2, len(termos)) and termos & chave
                         and len(comuns) * 3 >= len(termos)):
-                    pontos = 6 * len(termos & chave) + 2 * len(termos & resumo) + len(termos & ancora)
+                    pontos = 6 * len(termos & chave) + 2 * len(termos & resumo)
                     notas.append((-pontos, -len(comuns), n.id, reg))
         notas.sort(key=lambda v: v[:3])
         return [r for *_, r in notas[:limite]]
 
+    def _buscar_notas_contextuais(self, escopo: Escopo, consulta: str, limite: int) -> list[Registro]:
+        termos = termos_contextuais(consulta).keys()
+        candidatas = []
+        for registro in self.ativos:
+            n = registro.nota
+            if escopo not in n.escopos:
+                continue
+            chaves = termos_contextuais(n.titulo + " " + " ".join(n.tags)).keys()
+            resumo = termos_contextuais(n.resumo).keys()
+            fonte = termos_contextuais(" ".join(ev.trecho for ev in n.evidencias)).keys()
+            candidatas.append((registro, chaves, resumo, fonte))
+        pesos = {t: 1 / (1 + sum(t in ch or t in r for _, ch, r, _ in candidatas)) ** 0.5
+                 for t in termos}
+        ranking = []
+        for registro, chaves, resumo, fonte in candidatas:
+            comuns = termos & (chaves | resumo | fonte)
+            if len(comuns) < 2 or not termos & (chaves | resumo):
+                continue
+            pontos = sum(pesos[t] * (3 * (t in chaves) + 2 * (t in resumo) + (t in fonte))
+                         for t in sorted(comuns))
+            ranking.append((-pontos, -len(comuns), registro.nota.id, registro))
+        ranking.sort(key=lambda valor: valor[:3])
+        return [registro for *_, registro in ranking[:limite]]
+
+    def _recuperar_passagens(self, escopo: Escopo, consulta: str, limite: int,
+                             diretas: list[Local], notas: list[Registro]) -> list[Local]:
+        termos = termos_contextuais(consulta).keys()
+        ancoras = []
+        priorizar_nota = False
+        for registro in notas:
+            fontes: dict[str, list[Local]] = {}
+            termos_ancoras: dict[Local, bool] = {}
+            for local, evidencia in zip(registro.locais, registro.nota.evidencias, strict=True):
+                if (local.fim - local.inicio + 1 <= LINHAS_PASSAGEM
+                        and len(evidencia.trecho.encode()) <= BYTES_PASSAGEM):
+                    fontes.setdefault(local.caminho, []).append(local)
+                    termos_ancoras[local] = bool(termos & termos_contextuais(evidencia.trecho).keys())
+            reunidas = [p for caminho, locais in fontes.items()
+                        for p in reunir_ancoras(locais, self.fontes.linhas(caminho))]
+            reunidas.sort(key=lambda p: -len(termos & termos_contextuais(
+                "\n".join(self.fontes.linhas(p.caminho)[p.inicio - 1:p.fim])).keys()))
+            if reunidas:
+                if not ancoras:
+                    primeira = reunidas[0]
+                    priorizar_nota = any(tem_apoio and p.caminho == primeira.caminho
+                                         and primeira.inicio <= p.inicio <= p.fim <= primeira.fim
+                                         for p, tem_apoio in termos_ancoras.items())
+                ancoras.append(reunidas)
+        contextuais = self.indice.buscar(escopo, consulta, max(limite, 5), contextual=True)
+        return combinar_evidencias(diretas, contextuais, ancoras, limite,
+                                  priorizar_nota=priorizar_nota)
+
     def buscar(self, escopo: Escopo, consulta: str, limite: int, *,
                estado_atual: bool = False) -> dict:
-        atual = _fonte_atual(consulta, forcar=estado_atual)
-        notas = [] if atual else self._buscar_notas(escopo, consulta, limite, expandir=True)
-        diretas = [] if estado_atual else self.indice.buscar(escopo, consulta, limite)
+        q = _normalizar(consulta).strip()
+        fora = _pedido_fora_do_escopo(q)
+        atual = None if fora else _fonte_atual(consulta, forcar=estado_atual)
+        diretas = [] if fora or estado_atual else self.indice.buscar(escopo, consulta, limite)
+        if not (fora or atual or _tema_do_cdp(q)):
+            termos = _tokens(q)
+            minimo = max(4, (len(termos) + 3) // 4)
+            # A busca ainda aceita terminologia nova quando há apoio textual suficiente.
+            fora = not any(len(termos & _tokens("\n".join(
+                self.fontes.linhas(p.caminho)[p.inicio - 1:p.fim]
+            ))) >= minimo for p in diretas)
+            if fora:
+                diretas = []
+        notas = [] if fora or atual else self._buscar_notas(escopo, consulta, limite, expandir=True)
         if atual and not estado_atual:
             atual = "Se a pergunta for sobre o estado efetivo, consulte a fonte oficial. " + atual
-        termos = _tokens(consulta)
-        ancoras = []
-        for registro in notas:
-            elegiveis = [(local, evidencia) for local, evidencia in
-                         zip(registro.locais, registro.nota.evidencias, strict=True)
-                         if local.fim - local.inicio + 1 <= LINHAS_PASSAGEM
-                         and len(evidencia.trecho.encode()) <= BYTES_PASSAGEM]
-            ordenadas = sorted(elegiveis, key=lambda par: -len(termos & _tokens(par[1].trecho)))
-            ancoras.append([ampliar(local, self.fontes.linhas(local.caminho))
-                            for local, _ in ordenadas])
-        passagens = intercalar(diretas, ancoras, limite)
+        passagens = [] if fora or estado_atual else self._recuperar_passagens(
+            escopo, consulta, limite, diretas, notas
+        )
         caminhos = {}
         for local in diretas:
             caminhos.setdefault(local.caminho, local.json())
@@ -555,18 +697,20 @@ class BuscaCanonica:
     def __init__(self, fontes: Fontes, caminhos: dict[Escopo, tuple[str, ...]]):
         self.fontes = fontes
         self.caminhos = caminhos
-        self.indices: dict[Escopo, IndicePassagens] = {}
+        self.indices: dict[tuple[Escopo, bool], IndicePassagens] = {}
 
-    def buscar(self, escopo: Escopo, consulta: str, limite: int) -> list[Local]:
-        if escopo not in self.indices:
+    def buscar(self, escopo: Escopo, consulta: str, limite: int, *,
+               contextual: bool = False) -> list[Local]:
+        chave = (escopo, contextual)
+        if chave not in self.indices:
             fontes = []
             for caminho in self.caminhos[escopo]:
                 try:
                     fontes.append((caminho, self.fontes.linhas(caminho)))
                 except MemoriaErro:
                     continue
-            self.indices[escopo] = IndicePassagens(fontes)
-        return self.indices[escopo].buscar(consulta, limite)
+            self.indices[chave] = IndicePassagens(fontes, contextual=contextual)
+        return self.indices[chave].buscar(consulta, limite)
 
 
 def _hoje() -> date:

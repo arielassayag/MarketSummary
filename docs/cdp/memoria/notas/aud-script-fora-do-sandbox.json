@@ -1,0 +1,38 @@
+{
+  "id": "aud-script-fora-do-sandbox",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Modo executor mantém Git fora do sandbox",
+  "resumo": "Se o app protege .git, escolha o modo de publicação do executor. O script adquire a trava, sincroniza e chama a mente com o prompt sem Git. Depois publica pelo código, usando a trava e a execução, e libera a trava. A mente executa o roteiro que o prompt lhe atribui.",
+  "escopos": [
+    "operador",
+    "desenvolvimento"
+  ],
+  "tags": [
+    "sandbox",
+    "script",
+    "git",
+    "gravação",
+    "bloqueio",
+    "publicação",
+    "sincronização",
+    "liberação"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "- `--publicacao agente` (padrão no Claude Code, Gemini CLI, Antigravity e `custom`): a mente\n  segue o prompt inteiro (gate com a trava → sincronizar → roteiro → publicar → liberar);\n- `--publicacao executor` (padrão no `codex exec`): o script pega a trava, sincroniza, chama a\n  mente com o prompt sem git, publica (`cdp publicar --trava … --execucao …`) e libera a trava.\n  Use-o com qualquer app cujo sandbox proteja `.git`.",
+      "sha256": "2b568f57859171bdaf0b8cc15971f62458c07c85b72649e7fb746b5969bfe9e1"
+    },
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "   push em main ──► GitHub Actions cdp-site.yml (sem IA) ──► GitHub Pages (portal público)\n```\n\n- **Quem grava**: só o executor designado em `configs/cdp/executor.yaml` (hoje, `local-pc`).\n  Cada ambiente diz quem é por `CDP_EXECUTOR` (nuvem) ou por `.cdp/local.yaml` (clone num\n  computador, gravado por `uv run python -m cdp executor registrar --como local-pc`). Um\n  ambiente que não é o executor sai no gate, sem gravar nada. Ligue as rotinas em **um** app por\n  vez.",
+      "sha256": "d72f8c6b8400f7908b441b462f65f750043d5eeae2b0c20b0ccab2ef45c83680"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "id": "aud-estado-abertura-inicial",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Estado do livro antes da carteira inaugural",
+  "resumo": "No pré-início, mostre a data inaugural e a pendência de abertura no resumo. O estado identifica a primeira rotina capaz de abrir o livro. A severidade passa de média para alta após o corte no dia inaugural. O estado avalia atrasos de fechamento só fora do pré-início pendente.",
+  "escopos": [
+    "status"
+  ],
+  "tags": [
+    "gênese",
+    "abertura",
+    "carteira inaugural",
+    "pré-início",
+    "reinício",
+    "pendência"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/STATUS.md",
+      "trecho": "- **Integridade** e **kill switch**.\n- **Fase**: antes da data de início, a data da carteira inaugural; com a abertura do livro\n  pendente, destaque que a próxima rotina diária a faz.\n- **Executor**: quem grava o livro e desde quando; se este ambiente não é o executor, diga\n  \"somente leitura\".",
+      "sha256": "e4fbc02490264b6298ee0cea609aa7f2de28d63401f827f3528fa9f1ab18983c"
+    },
+    {
+      "caminho": "src/cdp/estado.py",
+      "trecho": "    pre = _reinicio_pendente(ag)\n    if pre:\n        # alta só depois da primeira rotina do dia de início (semanal 11:07, reserva às 12:07)\n        sev = (\"alta\" if inicio is not None and (hoje > inicio or (hoje == inicio\n                                                                  and local >= _em(hoje, \"12:30\")))\n               else \"media\")\n        out.append(_inc(\"REINICIO_PENDENTE\", sev, \"Livro aguardando a abertura na data de início.\",\n                        \"A primeira rotina que rodar (semanal ou diária) abre o livro \"\n                        \"(`cdp reinicio --executar`).\"))\n    for d in ([] if pre else ag.get(\"fechamentos_pendentes\") or []):\n        dd = _d(d)\n        if dd is not None and local > _em(dd, \"22:00\"):\n            out.append(_inc(\"SLA_FECHAMENTO\", \"alta\",\n                            f\"Fechamento de {dd:%d/%m/%Y} pendente após as 22:00.\",\n                            \"Conferir cdp-diario; o próximo disparo diário recupera \"\n                            \"as datas pendentes.\", _em(dd, \"22:00\")))",
+      "sha256": "813f4d12f7ee0142bda9591b6092f5b3a1eb38dfc238666fa9b40cec8217a164"
+    }
+  ]
+}

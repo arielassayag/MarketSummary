@@ -1,0 +1,43 @@
+{
+  "id": "aud-bytes-e-recalculo",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "Selos do replay, valores econômicos e tolerância numérica",
+  "resumo": "Separe equivalência econômica do replay de igualdade dos hashes de encadeamento ou tempos de otimização. Confira os bytes arquivados na trilha. Compare valores recalculados pela tolerância, pois biblioteca e solver podem mudar o último dígito.",
+  "escopos": [
+    "desenvolvimento",
+    "calibracao"
+  ],
+  "tags": [
+    "replay",
+    "rodadas",
+    "hash",
+    "selo",
+    "otimização",
+    "solver",
+    "tolerância",
+    "valores"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/REPLAY_OPERACIONAL.md",
+      "trecho": "preservadas. A mesma janela foi repetida na fonte temporal 8.4 congelada: integridade,\n23 pregões, cinco montagens e 94 etapas confirmados. A comparação por leitura com a fonte 7\nconfirmou economia diária, propostas e CSVs de posições/trades exatamente iguais, preservando\nos dois livros e seus onze arquivos originais de mercado. Essa prova antecede o reparo dos\nconsumidores de cotações inválidas. A fonte física final 8-5 da metodologia `.8` repetiu\nos 23 pregões/cinco montagens/94 etapas com integridade verde e economia preservada;\ntempos do solver e hashes de encadeamento são distintos das grandezas financeiras.",
+      "sha256": "b7b308e68008c55255ef9ce7d19f314d9700516e2e28116d5003dcd928b405ad"
+    },
+    {
+      "caminho": "docs/cdp/REPRODUZIR.md",
+      "trecho": "## 4. Recalcular a partir dos insumos arquivados (tolerância)\n\nNúmeros recalculados não são comparados por hash: álgebra linear e solvers de otimização convexa\npodem diferir no último dígito entre versões de biblioteca, sistema e processador. A comparação é\npor tolerância documentada.",
+      "sha256": "7fed8e9c9298ec06d1f39acb7e0ef51da1a69eddd096557765433f63322a34f2"
+    },
+    {
+      "caminho": "docs/cdp/REPRODUZIR.md",
+      "trecho": "contra o registrado, rode `uv pip show numpy pandas scipy cvxpy`; cada snapshot da cobertura grava\nas versões de Python, numpy, pandas e scipy em `manifest.json` (campo `ambiente`).",
+      "sha256": "4b2f1e66c17742264dc9a525908023e7470948f974ce5db33e224da2ad58e2be"
+    }
+  ]
+}

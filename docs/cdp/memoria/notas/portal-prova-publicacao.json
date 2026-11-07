@@ -3,7 +3,7 @@
   "tipo": "licao",
   "estado": "curada",
   "titulo": "Push e publicação no portal exigem provas diferentes",
-  "resumo": "Um commit no remoto é evidência de publicação no repositório. Para confirmar a versão no portal, confira o source_commit do manifest.json servido e, quando necessário, compare os hashes dos arquivos da publicação.",
+  "resumo": "Um commit no remoto demonstra publicação no repositório. Confira a versão do portal pelo source_commit servido. Para auditar o livro, rode verify nessa revisão; para auditar o HTML baixado, confira a lista SHA256SUMS do artefato.",
   "escopos": [
     "operador",
     "status",
@@ -12,11 +12,13 @@
   ],
   "tags": [
     "portal",
-    "pages",
-    "manifesto",
-    "source_commit",
-    "push",
-    "versão"
+    "commit",
+    "livro",
+    "arquivo servido",
+    "html",
+    "sha256",
+    "verify",
+    "publicação"
   ],
   "registrada_em": "2026-11-07",
   "revisada_em": "2026-11-07",
@@ -33,6 +35,11 @@
       "caminho": "docs/cdp/SITE.md",
       "trecho": "Na pasta do portal baixado (por exemplo, o artefato do workflow), `sha256sum -c SHA256SUMS`\nconfere cada byte; `dados/datapackage.json` (Frictionless Data Package) traz tamanho, SHA-256 e\norigem de cada arquivo. Para recalcular etapas da mente em qualquer assistente:",
       "sha256": "b2c42bca8b4de21ec967a38d6f138d1f1424c9b714c29041e5353150c79418f1"
+    },
+    {
+      "caminho": "docs/cdp/SITE.md",
+      "trecho": "git checkout <source_commit do manifest.json>\nuv sync\nuv run python -m cdp verify",
+      "sha256": "86d5c7a7ea73fdc06d140414ea537a1cf327f1515765050f0fe49914fd8268e4"
     }
   ]
 }

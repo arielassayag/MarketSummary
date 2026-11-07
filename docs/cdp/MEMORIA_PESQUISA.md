@@ -253,6 +253,34 @@ como anotar tentativas anteriores evita voltar aos mesmos caminhos sem saída.
 [Componentes da memória](https://www.anthropic.com/research/components-of-agent-memory) ·
 [Memória em pesquisas longas](https://www.anthropic.com/research/long-running-claude).
 
+## Escolher a autoridade e testar quando pedir esclarecimento
+
+A C22 congela pergunta, gabarito e âncoras antes de executar. Os mesmos 36 pedidos
+passaram pelos braços offline, de triagem assistida seguida de busca automática e
+de seleção guiada. O teto de evidência permaneceu em cinco passagens e 4.500
+bytes. Os acertos conjuntos foram 17/36, 34/36 e 36/36, respectivamente. O
+fluxo guiado fez leituras adicionais. Uma busca direta também recuperou 8/10
+grupos documentais, ante 10/10 na seleção guiada. O ganho combinado inclui a
+classificação do pedido, a autoridade de estado e a recuperação documental.
+
+Na C26, acrescentar critérios de objeto e atributo após o gate de estado
+elevou os destinos offline de 8/15 a 10/15, com dois ganhos e nenhuma perda.
+O refinamento usa o mapa de autoridades e depende de âncoras válidas no Git.
+Como o teste de intenção permanece separado, o ganho foi restrito a destino.
+O total offline passou de 23/60 a 25/60.
+
+Na C27, oito famílias inéditas continham cada uma uma consulta de estado,
+uma documental, uma externa e uma ambígua. A pontuação começou após lacrar
+as saídas da triagem única, da segunda leitura e de uma contraprova adicional.
+A segunda leitura só propõe esclarecimento quando identifica duas intenções
+ou autoridades plausíveis e o que falta para distingui-las. Passou de 26/32
+a 32/32, com seis ganhos e nenhuma perda. Os 24 determinados continuaram
+corretos e as ambiguidades passaram de 2/8 a 8/8. A contraprova descartou
+quatro dos esclarecimentos corretos e chegou a 28/32. A segunda leitura
+segue experimental porque, na C26 já aberta, a mesma abordagem também
+introduziu duas abstenções indevidas. A C27 mede triagem e destino, com
+uma rodada por desenho e famílias escolhidas para cobrir contrastes.
+
 ## Transferência de uma lição para outra sessão
 
 O teste temporal do CDP usa uma fixture Git sem remoto. O revisor lê a fila lacrada
@@ -263,6 +291,16 @@ um apelido de operação a uma regra pública do ensaio. Os controles incluem va
 conflito de escopo, ausência de fonte, episódio isolado e conhecimento introduzido no
 futuro. Os leitores acertaram 7/7 casos após a revisão, ante 6/7 antes. A amostra
 dirigida mede essa transferência sob o corte fixado.
+
+A C23 verificou em cinco microcasos que uma investigação reaparece após avançar
+o corte e que a perda de uma prova pode reabrir uma resolução com seu histórico.
+A primeira candidata perdeu o vínculo com a resolução. A reexecução com o
+mesmo gabarito conferiu os cinco controles após a correção. Em uma prova
+comportamental posterior, a C25 comparou a mesma informação em prosa e registro
+estruturado. Ambos passaram em 10/10 casos inéditos, ante 0/10 sem acesso ao
+histórico. A vantagem do registro em código é permitir a verificação dos
+vínculos e da vigência. O contraste comportamental confirmou o valor do acesso
+ao histórico nessa amostra.
 
 Na resposta, separe uma ausência documentada de uma pergunta que ficou sem prova.
 A primeira é uma afirmação que deve citar a fonte que registra a ausência. A segunda

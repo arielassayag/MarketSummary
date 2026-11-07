@@ -1342,11 +1342,15 @@ def _comando(args: argparse.Namespace) -> int:
             return int(bool(c.problemas))
         if acao == "rotear":
             from .memoria_roteamento import (
+                MAX_BYTES_AMBIGUIDADE,
                 MAX_BYTES_ENVELOPE,
                 MAX_BYTES_ROTA,
+                conferir_ambiguidade,
                 conferir_selecao_roteada,
+                preparar_ambiguidade,
                 preparar_rota,
                 preparar_selecao_roteada,
+                renderizar_ambiguidade,
                 renderizar_rota,
                 resolver_rota,
             )
@@ -1354,17 +1358,27 @@ def _comando(args: argparse.Namespace) -> int:
             data = args.data or _hoje()
             pacote = preparar_rota(fontes, data, args.escopo, args.consulta, args.limite,
                                    com_autoridades=args.com_autoridades)
-            if not (args.conferir or args.candidatas or args.conferir_selecao):
+            if not any((args.conferir, args.candidatas, args.conferir_selecao,
+                        args.pacote_ambiguidade, args.conferir_ambiguidade)):
                 if args.formato == "prompt":
                     print(renderizar_rota(pacote), end="")
                 else:
                     _json(pacote)
                 return 0
-            if args.formato != "json":
-                raise MemoriaErro("o formato prompt é exclusivo da preparação da triagem")
+            if args.formato != "json" and not args.pacote_ambiguidade:
+                raise MemoriaErro("o formato prompt é exclusivo da preparação da leitura")
             if revisao is None:
                 raise MemoriaErro("a conferência exige a revisão e a data do pacote")
-            if args.conferir_selecao:
+            if args.pacote_ambiguidade:
+                segunda = preparar_ambiguidade(pacote, sys.stdin.buffer.read(MAX_BYTES_ROTA + 1))
+                if args.formato == "prompt":
+                    print(renderizar_ambiguidade(segunda), end="")
+                else:
+                    _json(segunda)
+            elif args.conferir_ambiguidade:
+                decisao = conferir_ambiguidade(pacote, sys.stdin.buffer.read(MAX_BYTES_AMBIGUIDADE + 1))
+                _json(decisao.model_dump())
+            elif args.conferir_selecao:
                 _json(conferir_selecao_roteada(fontes, pacote, sys.stdin.buffer.read(MAX_BYTES_ENVELOPE + 1)))
             else:
                 bruto = sys.stdin.buffer.read(MAX_BYTES_ROTA + 1)
@@ -1517,6 +1531,10 @@ def registrar(sub: argparse._SubParsersAction) -> None:
                               help="prepara candidatas após conferir a triagem de evidência")
             modo.add_argument("--conferir-selecao", action="store_true",
                               help="confere o envelope com triagem e seleção lacradas")
+            modo.add_argument("--pacote-ambiguidade", action="store_true",
+                              help="prepara a segunda leitura a partir da triagem na entrada padrão")
+            modo.add_argument("--conferir-ambiguidade", action="store_true",
+                              help="confere a segunda leitura e devolve a triagem resultante")
             s.add_argument("--com-autoridades", action="store_true",
                            help="inclui os cartões de autoridade com âncoras Git validadas")
             s.add_argument("--formato", choices=("json", "prompt"), default="json",

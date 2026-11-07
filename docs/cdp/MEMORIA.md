@@ -148,6 +148,34 @@ O campo `refinamento_destino` registra o destino anterior, os critérios encontr
 e a origem verificada. Revisões antigas, cartões vencidos e empates conservam a
 orientação inicial.
 
+### Verificar uma ambiguidade antes de abrir fontes
+
+Para uma triagem inicial de estado ou evidência, `--pacote-ambiguidade` recebe o
+JSON da triagem. Repita a consulta, a revisão, a data, o limite e as opções do
+pacote original. Com `--formato prompt`, a saída pode ser entregue a outra
+sessão de leitura. Ela recebe a pergunta e os destinos, com um lacre vinculado
+à triagem inicial. O pacote omite a decisão inicial e os trechos históricos.
+
+```sh
+uv run python -m cdp memoria rotear --escopo diario --consulta 'A versão de ontem já saiu?' \
+  --revisao "$REVISAO_DO_PACOTE" --data "$DATA_DO_PACOTE" \
+  --pacote-ambiguidade --formato prompt < triagem.json
+uv run python -m cdp memoria rotear --escopo diario --consulta 'A versão de ontem já saiu?' \
+  --revisao "$REVISAO_DO_PACOTE" --data "$DATA_DO_PACOTE" \
+  --conferir-ambiguidade < verificacao.json
+```
+
+`verificacao.json` contém as chaves `triagem` e `verificacao` com os dois
+objetos originais. A conferência aceita duas interpretações com intenções
+ou destinos diferentes, uma lacuna a esclarecer e o lacre do pacote. A
+triagem resultante é compatível com `--conferir` e `--candidatas`.
+Esse passo opcional conserva a decisão inicial ou pede esclarecimento.
+A plausibilidade das duas leituras é avaliada pelo leitor. O código confere
+a estrutura, o vínculo e os destinos permitidos. Se o segundo leitor devolver
+uma análise inválida, a conferência a rejeita.
+
+### Recuperar após a triagem
+
 Para uma triagem de evidência, `--conferir` faz a recuperação automática. Se precisar
 da seleção guiada, use `--candidatas` com a mesma `rota.json`. O pacote de candidatas
 carrega `lacre_rota` e conserva o teto de cinco passagens e 4.500 bytes. Para conferir

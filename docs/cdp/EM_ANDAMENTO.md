@@ -5,7 +5,7 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
-## C22 completa e confirmação offline C26 — 07/11/2026
+## C22 completa, refinamento offline C26 e confirmação C27 — 07/11/2026
 
 A extensão C22 fechou a recuperação documental com a triagem assistida já
 lacrada. A busca direta, a memória offline e a busca após triagem recuperaram
@@ -33,9 +33,22 @@ os falsos encaminhamentos externos e passou de 23/36 a 22/36 tipos certos.
 A resolução `indeterminado` agora inclui um pedido de esclarecimento e termina
 antes de abrir o catálogo. A memória consultiva bloqueia solicitações diretas
 de mutação de registros e continua admitindo perguntas sobre procedimento.
-O preflight específico teve zero disparos na C26. A suíte focal de memória
-e roteamento passou em 174 casos após o bloqueio. O checkout da suíte ampla,
-`63afc80e`, precede essas duas mudanças e permanece congelado durante o teste.
+O preflight específico teve zero disparos na C26. A busca offline incorporou o
+refinamento de destino por objeto e atributo somente após o gate de estado,
+com âncoras canônicas verificadas. A reexecução da C26 pela API de produção
+reproduziu os 60 resultados do braço combinado lacrado. Passou de 8/15 a
+10/15 destinos exatos, com dois ganhos e nenhuma perda. A suíte focal de
+memória e roteamento passou em 175 casos após a integração. A suíte ampla
+usa o checkout congelado `63afc80e`, anterior às mudanças desta seção.
+
+A C27 reuniu 32 consultas inéditas em oito famílias. A comparação em
+pares passou de 26/32 na triagem inicial a 32/32 com uma segunda leitura
+dedicada a ambiguidades. Os 24 determinados foram preservados e os oito
+indeterminados passaram de 2/8 a 8/8. Uma terceira leitura de contraprova
+reduziu o placar a 28/32. O verificador segue experimental. No diagnóstico
+C26 após a abertura do gabarito, ele havia recuperado oito ambiguidades
+e introduzido duas abstenções indevidas. Os protocolos, resultados e
+artefatos de comparação ficam em `outputs/cdp-memoria-rigor/`.
 
 ## Continuidade de investigações entre cortes — 07/11/2026
 

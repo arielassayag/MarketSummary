@@ -284,6 +284,63 @@ def test_triagem_lacra_candidatas_de_evidencia_sem_reabrir_intencao(repo, monkey
     assert not capsys.readouterr().out
 
 
+def test_segunda_leitura_lacrada_so_pede_esclarecimento_ou_preserva_rota(repo, monkeypatch, capsys):
+    monkeypatch.chdir(repo)
+    args = ["rotear", "--escopo", "diario", "--consulta", "A versão de ontem já saiu?", "--data", DATA.isoformat()]
+    assert _cli_memoria(*args) == 0
+    pacote = json.loads(capsys.readouterr().out)
+    args.extend(("--revisao", pacote["revisao"]))
+    triagem = {"lacre": pacote["lacre"], "intencao": "estado_atual", "destino_atual": "relatorio-diario"}
+
+    def rodar(entrada, *modo):
+        monkeypatch.setattr("sys.stdin", SimpleNamespace(buffer=BytesIO(json.dumps(entrada).encode())))
+        codigo = _cli_memoria(*args, *modo)
+        return codigo, capsys.readouterr()
+
+    def sem_catalogo(*_a, **_kw):
+        pytest.fail("segunda leitura e abstenção não podem abrir o catálogo")
+
+    monkeypatch.setattr("cdp.memoria.Catalogo", sem_catalogo)
+    codigo, saida = rodar(triagem, "--pacote-ambiguidade")
+    assert codigo == 0
+    segunda = json.loads(saida.out)
+    assert segunda["lacre_rota"] == triagem["lacre"] and segunda["consulta"] == pacote["consulta"]
+    assert segunda.keys().isdisjoint(("intencao", "destino_atual", "triagem", "autoridades"))
+    codigo, saida = rodar(triagem, "--pacote-ambiguidade", "--formato", "prompt")
+    assert codigo == 0 and segunda["lacre"] in saida.out
+
+    verifica = {"lacre": segunda["lacre"], "indeterminado": True, "falta": "Qual versão?",
+                "leituras": [
+                    {"intencao": "estado_atual", "destino_atual": "relatorio-diario", "objeto": "relatório diário"},
+                    {"intencao": "estado_atual", "destino_atual": "portal-publicado", "objeto": "versão do portal"},
+                ]}
+    envelope = {"triagem": triagem, "verificacao": verifica}
+    codigo, saida = rodar(envelope, "--conferir-ambiguidade")
+    assert codigo == 0
+    rota = json.loads(saida.out)
+    assert rota == {"lacre": triagem["lacre"], "intencao": "indeterminado", "destino_atual": None}
+    codigo, saida = rodar(rota, "--conferir")
+    assert codigo == 0
+    consulta = json.loads(saida.out)
+    assert consulta["esclarecimento"] and consulta["notas"] == consulta["fontes"] == consulta["passagens"] == []
+
+    confirmacao = {"lacre": segunda["lacre"], "indeterminado": False, "leituras": [], "falta": None}
+    codigo, saida = rodar({"triagem": triagem, "verificacao": confirmacao}, "--conferir-ambiguidade")
+    assert codigo == 0 and json.loads(saida.out) == triagem
+
+    alterada = triagem | {"destino_atual": "portal-publicado"}
+    repetida = verifica | {"leituras": [verifica["leituras"][0]] * 2}
+    desconhecida = verifica | {"leituras": [
+        verifica["leituras"][0], verifica["leituras"][1] | {"destino_atual": "destino-fora-do-mapa"},
+    ]}
+    for entrada in (envelope | {"triagem": alterada}, envelope | {"verificacao": repetida},
+                    envelope | {"verificacao": desconhecida}):
+        codigo, saida = rodar(entrada, "--conferir-ambiguidade")
+        assert codigo == 1 and not saida.out
+    codigo, saida = rodar(rota, "--pacote-ambiguidade")
+    assert codigo == 1 and not saida.out
+
+
 def test_triagem_renderiza_prompt_portavel_com_mesmo_lacre(repo, monkeypatch, capsys):
     monkeypatch.chdir(repo)
     consulta = "Que versão o portal do CDP está servindo hoje?"

@@ -1398,7 +1398,10 @@ def _comando(args: argparse.Namespace) -> int:
 
                 revalidacao = None
                 if args.revalidacao is not None:
-                    with args.revalidacao.open("rb") as arquivo:
+                    fd = os.open(args.revalidacao, os.O_RDONLY | getattr(os, "O_NONBLOCK", 0))
+                    with os.fdopen(fd, "rb") as arquivo:
+                        if not stat.S_ISREG(os.fstat(arquivo.fileno()).st_mode):
+                            raise MemoriaErro("manifesto de revalidação não é arquivo regular")
                         revalidacao = arquivo.read(MAX_BYTES_REVALIDACAO + 1)
                 _json(avaliar_reservada(fontes, replica=args.replica, revalidacao=revalidacao))
                 return 0
@@ -1420,34 +1423,50 @@ def _comando(args: argparse.Namespace) -> int:
             from .memoria_roteamento import (
                 MAX_BYTES_AMBIGUIDADE,
                 MAX_BYTES_ENVELOPE,
+                MAX_BYTES_ESCOPO,
                 MAX_BYTES_ROTA,
                 conferir_ambiguidade,
                 conferir_selecao_roteada,
                 preparar_ambiguidade,
+                preparar_escopo,
                 preparar_rota,
                 preparar_selecao_roteada,
                 renderizar_ambiguidade,
+                renderizar_escopo,
                 renderizar_rota,
+                resolver_escopo,
                 resolver_rota,
             )
 
             data = args.data or _hoje()
             if args.ancorar_ambiguidade and not (args.pacote_ambiguidade or args.conferir_ambiguidade):
                 raise MemoriaErro("a ancoragem exige preparar ou conferir a segunda leitura")
+            if args.com_autoridades and (args.pacote_escopo or args.conferir_escopo):
+                raise MemoriaErro("a leitura de escopo não recebe cartões de autoridade")
             pacote = preparar_rota(fontes, data, args.escopo, args.consulta, args.limite,
                                    com_autoridades=args.com_autoridades)
             if not any((args.conferir, args.candidatas, args.conferir_selecao,
-                        args.pacote_ambiguidade, args.conferir_ambiguidade)):
+                        args.pacote_ambiguidade, args.conferir_ambiguidade,
+                        args.pacote_escopo, args.conferir_escopo)):
                 if args.formato == "prompt":
                     print(renderizar_rota(pacote), end="")
                 else:
                     _json(pacote)
                 return 0
-            if args.formato != "json" and not args.pacote_ambiguidade:
+            if args.formato != "json" and not (args.pacote_ambiguidade or args.pacote_escopo):
                 raise MemoriaErro("o formato prompt é exclusivo da preparação da leitura")
             if revisao is None:
                 raise MemoriaErro("a conferência exige a revisão e a data do pacote")
-            if args.pacote_ambiguidade:
+            if args.pacote_escopo:
+                escopo = preparar_escopo(pacote)
+                if args.formato == "prompt":
+                    print(renderizar_escopo(escopo), end="")
+                else:
+                    _json(escopo)
+            elif args.conferir_escopo:
+                bruto = b"" if pacote["bloqueio_escopo"] else sys.stdin.buffer.read(MAX_BYTES_ESCOPO + 1)
+                _json(resolver_escopo(fontes, pacote, bruto))
+            elif args.pacote_ambiguidade:
                 segunda = preparar_ambiguidade(
                     pacote, sys.stdin.buffer.read(MAX_BYTES_ROTA + 1), ancorada=args.ancorar_ambiguidade)
                 if args.formato == "prompt":
@@ -1617,6 +1636,10 @@ def registrar(sub: argparse._SubParsersAction) -> None:
                               help="prepara a segunda leitura a partir da triagem na entrada padrão")
             modo.add_argument("--conferir-ambiguidade", action="store_true",
                               help="confere a segunda leitura e devolve a triagem resultante")
+            modo.add_argument("--pacote-escopo", action="store_true",
+                              help="prepara a revisão assistida de pedidos de mutação ou burla")
+            modo.add_argument("--conferir-escopo", action="store_true",
+                              help="confere os recortes literais antes da triagem")
             s.add_argument("--com-autoridades", action="store_true",
                            help="inclui os cartões de autoridade com âncoras Git validadas")
             s.add_argument("--ancorar-ambiguidade", action="store_true",

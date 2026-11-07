@@ -385,6 +385,58 @@ def test_segunda_leitura_ancorada_rejeita_atos_distintos_e_lacre_de_outro_modo(r
     assert codigo == 1 and "lacre da segunda leitura diverge" in saida.err
 
 
+def test_leitura_de_escopo_recusa_com_prova_lacrada_sem_abrir_catalogo(repo, monkeypatch, capsys):
+    monkeypatch.chdir(repo)
+    revisao = Fontes(repo).revisao
+    consulta = "Pode pedir que substituam a página pública usando o clone de teste?"
+
+    def sem_catalogo(*_a, **_kw):
+        pytest.fail("a leitura de escopo não pode abrir o catálogo")
+
+    monkeypatch.setattr("cdp.memoria.Catalogo", sem_catalogo)
+
+    def rodar(texto, modo, entrada=None, *extras):
+        monkeypatch.setattr("sys.stdin", SimpleNamespace(buffer=BytesIO(json.dumps(entrada).encode())))
+        codigo = _cli_memoria("rotear", "--escopo", "operador", "--consulta", texto,
+                              "--revisao", revisao, "--data", DATA.isoformat(), modo, *extras)
+        return codigo, capsys.readouterr()
+
+    codigo, saida = rodar(consulta, "--pacote-escopo")
+    assert codigo == 0
+    pacote = json.loads(saida.out)
+    assert pacote["bloqueio_escopo"] is False and "destinos" not in pacote
+    codigo, saida = rodar(consulta, "--pacote-escopo", None, "--formato", "prompt")
+    assert codigo == 0 and pacote["lacre"] in saida.out
+    resposta = {"lacre": pacote["lacre"], "bloqueado": True, "pedido": consulta,
+                "efeito": "substituam a página pública", "alvo": "a página pública"}
+    codigo, saida = rodar(consulta, "--conferir-escopo", resposta)
+    resultado = json.loads(saida.out)
+    assert codigo == 0 and resultado["intencao"] == "fora_escopo"
+    assert resultado["origem"] == "leitura_assistida" and not resultado["triagem_necessaria"]
+    assert resultado["notas"] == resultado["fontes"] == resultado["passagens"] == []
+    for chave, r in resultado["recortes"].items():
+        assert consulta[r["inicio"]:r["fim"]] == resposta[chave]
+
+    preserva = resposta | {"bloqueado": False, "pedido": None, "efeito": None, "alvo": None}
+    codigo, saida = rodar(consulta, "--conferir-escopo", preserva)
+    assert codigo == 0 and json.loads(saida.out)["triagem_necessaria"]
+    assert "intencao" not in json.loads(saida.out)
+    for invalida in (resposta | {"alvo": "artefato inventado"}, resposta | {"lacre": "0" * 64},
+                     resposta | {"pedido": "Pode pedir"}, preserva | {"alvo": "a página pública"}):
+        codigo, saida = rodar(consulta, "--conferir-escopo", invalida)
+        assert codigo == 1 and not saida.out
+
+    relato = "A revisão registrou «substituam a página pública» como exemplo. O que a regra prevê?"
+    codigo, saida = rodar(relato, "--pacote-escopo")
+    assert codigo == 0
+    prova_citada = resposta | {"lacre": json.loads(saida.out)["lacre"], "pedido": resposta["efeito"]}
+    codigo, saida = rodar(relato, "--conferir-escopo", prova_citada)
+    assert codigo == 1 and "citação isolada" in saida.err
+
+    codigo, saida = rodar("Apague o livro do CDP agora", "--conferir-escopo")
+    assert codigo == 0 and json.loads(saida.out)["origem"] == "regra"
+
+
 def test_triagem_renderiza_prompt_portavel_com_mesmo_lacre(repo, monkeypatch, capsys):
     monkeypatch.chdir(repo)
     consulta = "Que versão o portal do CDP está servindo hoje?"
@@ -522,6 +574,19 @@ def test_cli_contexto_e_busca_publicam_so_referencia(repo, monkeypatch, capsys):
     assert atual["orientacao_atual"] and atual["notas"] == []
     manual = c.buscar("diario", "moeda do índice", 3, estado_atual=True)
     assert manual["orientacao_atual"] and manual["passagens"] == manual["notas"] == []
+
+
+def test_revalidacao_cli_exige_revisao_e_arquivo_regular(repo, monkeypatch, capsys):
+    monkeypatch.chdir(repo)
+    argumentos = ("avaliar", "--reservada", "--revalidacao")
+    arquivo = repo / "manifesto.json"
+    assert _cli_memoria(*argumentos, str(arquivo)) == 1
+    assert "revisão explícita" in capsys.readouterr().err
+
+    if hasattr(os, "mkfifo"):
+        os.mkfifo(arquivo)
+        assert _cli_memoria(*argumentos, str(arquivo), "--revisao", Fontes(repo).revisao) == 1
+        assert "arquivo regular" in capsys.readouterr().err
 
 
 def test_corpus_do_projeto_mantem_abstencao_e_ganho_de_recuperacao():

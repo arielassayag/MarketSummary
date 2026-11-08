@@ -995,6 +995,10 @@ def _solve(p: _Problem, relax: _Relax, fixed_zero: np.ndarray,
             if np.any(pinned):
                 lval[pinned] = l0[pinned]
                 sval[pinned] = s0[pinned]
+        else:
+            # No legado, zera só o resíduo de viabilidade em pernas com cota zero.
+            lval[(ub_l == 0) & (lval <= INACCURATE_MAX_VIOLATION)] = 0.0
+            sval[(ub_s == 0) & (sval <= INACCURATE_MAX_VIOLATION)] = 0.0
         wv = lval - sval
         wv[np.abs(wv) < WEIGHT_NOISE] = 0.0
         duals = _duals(named) if p.extended else None

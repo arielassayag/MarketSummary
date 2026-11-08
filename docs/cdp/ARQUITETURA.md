@@ -50,8 +50,8 @@ qualquer app de IA está em `AGENTS.md` e `docs/cdp/AUTOMACAO.md`.
 └──────────────────┘ └──────────────┘ └────────────────────────────────┘ └──────────────┘ └──────────────────────────┘
 ```
 
-Horários de Brasília (agenda em `configs/cdp/rotinas.yaml`; cada disparo passa primeiro pelo
-gate de código, que só deixa agir quando há trabalho pendente):
+Horários de Brasília (agenda em `configs/cdp/rotinas.yaml`). Cada disparo passa pelo gate da
+tarefa. No dreaming, o gate admite a leitura e o plano de memória indica se há itens a revisar.
 
 | Quando | Rotina | O que acontece |
 |---|---|---|
@@ -219,6 +219,9 @@ base de mercado; `uv run python -m cdp cobertura verify` confere o livro da cobe
 recalcula os preços-alvo.
 
 ## 8. Operação em qualquer app de IA e publicação
+
+O fluxo abaixo é o de uma rotina exclusiva no modo agente. Em tarefas de leitura, siga o gate
+e o roteiro do prompt gerado. No dreaming, o resultado é a devolutiva de curadoria.
 
 ```
  agendador dentro do app de IA (rotinas na nuvem do Claude Code | tarefas agendadas do Codex |

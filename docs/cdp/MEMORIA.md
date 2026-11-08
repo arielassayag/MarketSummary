@@ -543,8 +543,11 @@ uv run python -m cdp memoria avaliar --reservada
 uv run python -m cdp memoria avaliar --replica
 ```
 
-O primeiro comando usa o corpus e o catálogo iniciais, em `d60cc15f`, para medir por caminho. Os dois conjuntos posteriores
-foram congelados separadamente. As perguntas vieram de um anotador que não recebeu os
+O primeiro comando usa o corpus e o catálogo iniciais, em `d60cc15f`, para medir por caminho.
+Os dois conjuntos posteriores foram congelados separadamente e usam por padrão a revisão
+`42f19b27ff7842d36f475a05785e408701ec12f8`. Com `--revisao`, a avaliação exige que a revisão
+indicada contenha as evidências do gabarito. Se uma âncora esperada perdeu a validade, o
+comando interrompe a comparação. As perguntas vieram de um anotador que não recebeu os
 resultados de recuperação. Cada pergunta estática tem um ou mais grupos de evidências. Uma
 passagem satisfaz um grupo quando contém integralmente um trecho aceito. Um acerto completo
 exige todos os grupos. A avaliação também mede cobertura parcial e abstenção em perguntas de

@@ -19,6 +19,10 @@ das rotinas: `docs/cdp/ROTINAS.md`. Portal público: `docs/cdp/SITE.md`.
 
 ## 1. Como uma rotina funciona (igual em qualquer app)
 
+O fluxo abaixo é o de uma rotina exclusiva no modo agente. Para cada tarefa, use o prompt
+gerado. Em `cdp-status` e `cdp-dreaming`, o gate admite a leitura e a execução segue
+diretamente ao roteiro.
+
 ```text
  agendador DO APP (rotinas na nuvem do Claude Code | tarefas agendadas do Codex | Antigravity)
    └─ prompt neutro gerado por `cdp rotinas` (o mesmo texto em qualquer app)

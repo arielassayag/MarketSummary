@@ -14,7 +14,7 @@ from cdp.memoria_avaliacao import CorpusReservado, _atingidos, _grupos
 RAIZ = Path(__file__).resolve().parents[2]
 PASTA = RAIZ / "docs/cdp/memoria"
 LACRE = {
-    "operacional": "877c5b294bee0509e09a292ac22eaa91f89304c385872214fe13f22a06660b56",
+    "operacional": "9f6d7195aa864eab98f5dd73b90fa399d6b61b24853a92c17da398f8c0d40624",
     "auditoria": "68cb21b52cbfcae97b57612b6953189f19b197653e9a46f328a7a75b650c3f37",
 }
 

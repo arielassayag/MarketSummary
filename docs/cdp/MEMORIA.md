@@ -518,6 +518,8 @@ sustentam a resposta.
 O [benchmark operacional](memoria/benchmark-operacional.json) e o [benchmark de auditoria](memoria/benchmark-auditoria.json)
 fixam as perguntas e os trechos esperados da comparação por passagem. O teste
 `tests/cdp/test_memoria_benchmark.py` confere seus hashes e a recuperação com a política atual.
+A revisão atual usa o roteiro de status com a primeira rotina elegível para abertura do livro.
+O corpus anterior à mudança permanece em `e4359c45`, com as fontes de `ac5f8481`.
 O [qualificador](../../scripts/cdp_memoria_qualificar.py) permite indicar separadamente a revisão
 do código e a das fontes do gabarito. Ele comprova a igualdade dos bytes das fontes e compara
 busca direta, busca contextual sem notas e busca com notas, sob o mesmo limite de cinco passagens.

@@ -1,7 +1,7 @@
 {
   "versao": 1,
   "data": "2026-11-07",
-  "revisao_fontes": "ac5f8481be256ce695a1c886927ef9a1c6fe2954",
+  "revisao_fontes": "deb50b60d119f4d28c08ce26dc5933dd6a999041",
   "casos": [
     {
       "id": "rigor-dev-retomar-versao-da-proposta",
@@ -229,13 +229,13 @@
       "familia": "prazo-e-fase",
       "consulta": "O livro ainda aguarda a abertura. Que data e que próximo passo precisam aparecer no resumo de saúde?",
       "tipo": "evidencia",
-      "expectativa": "Indicar a data da carteira inaugural e destacar que a próxima rotina diária faz a abertura.",
+      "expectativa": "Indicar a data da carteira inaugural e que a primeira rotina elegível de montagem ou de fechamento abre o livro.",
       "grupos": [
         [
           {
             "caminho": "docs/cdp/playbooks/STATUS.md",
-            "trecho": "- **Integridade** e **kill switch**.\n- **Fase**: antes da data de início, a data da carteira inaugural; com a abertura do livro\n  pendente, destaque que a próxima rotina diária a faz.",
-            "sha256": "922dd6994cdebd055168fdddcc4b8ed1a9b198780fe537f3dfcf842b7b1ba624"
+            "trecho": "- **Integridade** e **kill switch**.\n- **Fase**: antes da data de início, a data da carteira inaugural; com a abertura do livro\n  pendente, destaque que a primeira rotina elegível de montagem ou de fechamento abre o livro.",
+            "sha256": "c88079df64cd058031b9729c9633aa8cf45fcac694f71b2d08a351b147d5d21a"
           }
         ]
       ]

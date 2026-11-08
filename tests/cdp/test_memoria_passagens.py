@@ -16,6 +16,8 @@ from cdp.memoria_busca import (
     ampliar_selecao,
     combinar_evidencias,
     completar_bloco,
+    limitar_contexto,
+    localizar,
     reaproveitar_vagas,
     reunir_ancoras,
     termos_contextuais,
@@ -34,6 +36,14 @@ def test_avaliacao_exige_trecho_inteiro_e_todos_os_grupos():
     assert parcial_medida["completo_3"] is False
     assert parcial_medida["cobertura_3"] == 0.5
     assert _medir([primeira, completa], [[a], [b]])["completo_3"] is True
+
+
+def test_orcamento_conta_utf8_e_separadores_sem_cortar_passagens():
+    linhas = ("ç" * 900, "á" * 900, "ü" * 450, "ó" * 449)
+    passagens = [localizar("fonte.md", pos, (linha,)) for pos, linha in enumerate(linhas, 1)]
+    selecionadas = limitar_contexto(passagens, lambda _caminho: linhas)
+    assert selecionadas == [passagens[0], passagens[1], passagens[3]]
+    assert sum(len(linhas[p.inicio - 1].encode()) for p in selecionadas) + len(selecionadas) - 1 == 4500
 
 
 def test_fusao_conserva_grupos_complementares_e_ignora_janelas_repetidas():

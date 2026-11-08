@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import subprocess
 from collections import Counter
 from functools import cache
@@ -14,6 +15,9 @@ from pathlib import Path
 _MODOS = ('direta', 'memoria', 'guiada')
 _TIPOS = ('evidencia', 'estado_atual', 'fora_escopo')
 _REF = ('caminho', 'inicio', 'fim', 'sha256')
+_CODIGO_DESTINO = re.compile(r'[a-z0-9]+(?:-[a-z0-9]+)*')
+_CAMPOS_DESTINO = {'destino_atual', 'destino_aceito', 'retornou_fontes', 'estado_destino_correto_sem_contexto'}
+_CONTAGENS_DESTINO = ('estado_destino_n', 'estado_destino_aceito', 'estado_destino_correto_sem_contexto')
 
 
 def hash_(bruto):
@@ -49,7 +53,7 @@ def _recortar(linhas, caminho, inicio, fim):
 def _conferir_guiada(pacote, resposta, medicao, linhas, fontes, explorar):
     assert {'lacre', 'ids'} <= resposta.keys()
     if explorar:
-        assert resposta.keys() <= {'lacre', 'ids', 'intencao', 'recortes'}
+        assert resposta.keys() <= {'lacre', 'ids', 'intencao', 'recortes', 'destino_atual'}
         lista = pacote['fontes_permitidas']
         assert isinstance(lista, list) and all(isinstance(p, str) for p in lista)
         assert len(lista) == len(set(lista)) and set(lista) <= fontes.keys()
@@ -71,6 +75,14 @@ def _conferir_guiada(pacote, resposta, medicao, linhas, fontes, explorar):
     assert len(ids) == len(set(ids))
     intencao = resposta.get('intencao')
     assert intencao is None or intencao in _TIPOS
+    if 'intencao' in medicao:
+        assert medicao['intencao'] == intencao
+    destino = resposta.get('destino_atual')
+    if destino is not None:
+        assert intencao == 'estado_atual' and _codigo_destino(destino)
+        assert destino in pacote['destinos_permitidos']
+        if 'destino_atual' in medicao:
+            assert destino == medicao['destino_atual']
     assert not recortes or intencao == 'evidencia'
     assert intencao not in ('evidencia', 'estado_atual') or permitidas
 
@@ -103,6 +115,22 @@ def _conferir_guiada(pacote, resposta, medicao, linhas, fontes, explorar):
 def _atingidos(passagens, gabarito):
     return [any(p['caminho'] == f and p['inicio'] <= a <= b <= p['fim']
                 for p in passagens for f, a, b in grupo) for grupo in gabarito]
+
+
+def _codigo_destino(valor):
+    return isinstance(valor, str) and 2 <= len(valor) <= 64 and bool(_CODIGO_DESTINO.fullmatch(valor))
+
+
+def _conferir_destino(medicao, destinos, encaminhou_sem_notas_ou_passagens):
+    assert _CAMPOS_DESTINO <= medicao.keys()
+    destino = medicao['destino_atual']
+    assert destino is None or _codigo_destino(destino)
+    aceito = destino in destinos
+    assert medicao['destino_aceito'] is aceito
+    assert type(medicao['retornou_fontes']) is bool
+    correto = aceito and encaminhou_sem_notas_ou_passagens and not medicao['retornou_fontes']
+    assert medicao['estado_destino_correto_sem_contexto'] is correto
+    return aceito, correto
 
 
 def main():
@@ -151,8 +179,16 @@ def main():
         c = casos[medido['id']]
         opaco = mapa[c['id']]['opaco']
         assert medido['opaco'] == opaco and medido['tipo'] == c['tipo']
+        destinos = c.get('destinos_aceitos')
+        if destinos is None:
+            assert 'destinos_aceitos' not in medido
+        else:
+            assert c['tipo'] == 'estado_atual' and isinstance(destinos, list) and 1 <= len(destinos) <= 4
+            assert all(_codigo_destino(d) for d in destinos) and len(set(destinos)) == len(destinos)
+            assert medido['destinos_aceitos'] == destinos
         path_pacote = args.ensaio / 'pacotes' / f'{opaco}.json'
         pacote = ler_json(path_pacote)
+        assert not {'destinos_aceitos', 'destino_atual'} & pacote.keys()
         assert hash_(path_pacote.read_bytes()) == mapa[c['id']]['sha256_pacote']
         assert pacote['lacre'] == mapa[c['id']]['lacre'] == respostas[opaco]['lacre']
         assert pacote['escopo'] == c['escopo'] and pacote['consulta'] == c['consulta']
@@ -194,6 +230,21 @@ def main():
             cenario[c['tipo']] += 1
             assert medicao['grupos_atingidos'] == _atingidos(passagens, gabarito)
             assert medicao['abstencao'] is (None if gabarito else not (passagens or medicao['retornou_notas']))
+            if destinos is not None and modo in ('memoria', 'guiada'):
+                aceito, correto = _conferir_destino(
+                    medicao, destinos, medicao['encaminhou'] and not (passagens or medicao['retornou_notas'])
+                )
+                cenario['estado_destino_n'] += 1
+                cenario['estado_destino_aceito'] += aceito
+                cenario['estado_destino_correto_sem_contexto'] += correto
+                if modo == 'memoria':
+                    explicito = medicao['destino_explicito']
+                    assert explicito.keys() == _CAMPOS_DESTINO and type(medicao['explicito_sem_memoria']) is bool
+                    _conferir_destino(explicito, destinos, medicao['explicito_sem_memoria'])
+                else:
+                    assert 'destino_explicito' not in medicao
+            else:
+                assert not (_CAMPOS_DESTINO | {'destino_explicito'}) & medicao.keys()
             if c['tipo'] == 'evidencia':
                 for limite in (1, 3, 5):
                     assert medicao[f'completo_{limite}'] is all(_atingidos(passagens[:limite], gabarito))
@@ -205,8 +256,10 @@ def main():
                 cenario['estado_encaminhado_sem_contexto'] += bool(medicao['encaminhou']) and not (
                     passagens or medicao['retornou_notas'])
             else:
-                cenario['fora_abstencao'] += not (
-                    passagens or medicao['retornou_notas'] or medicao['encaminhou'])
+                cenario['fora_abstencao'] += (
+                    not (passagens or medicao['retornou_notas'] or medicao['encaminhou'])
+                    and medicao.get('intencao', 'fora_escopo') == 'fora_escopo'
+                )
     for modo, contagem in resumido.items():
         resumo = resultado['modos'][modo]
         for medida in ('completo_4500b', 'falsas_orientacoes_estaticas',
@@ -215,10 +268,16 @@ def main():
         assert resumo['n_evidencia'] == contagem['evidencia']
         assert resumo['estado_n'] == contagem['estado_atual']
         assert resumo['fora_n'] == contagem['fora_escopo']
+        if contagem['estado_destino_n']:
+            for medida in _CONTAGENS_DESTINO:
+                assert type(resumo[medida]) is int and resumo[medida] == contagem[medida]
+        else:
+            assert not set(_CONTAGENS_DESTINO) & resumo.keys()
     guiada = resumido['guiada']
     integral = (guiada['evidencia'] == guiada['completo_4500b']
                 and not guiada['falsas_orientacoes_estaticas']
                 and guiada['estado_atual'] == guiada['estado_encaminhado_sem_contexto']
+                and guiada['estado_destino_n'] == guiada['estado_destino_correto_sem_contexto']
                 and guiada['fora_escopo'] == guiada['fora_abstencao'])
     assert resultado['integral'] is integral
     print(json.dumps({'revisao': resultado['revisao'], 'casos': len(casos),

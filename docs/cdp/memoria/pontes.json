@@ -1,0 +1,368 @@
+{
+  "versao": 1,
+  "pontes": [
+    {
+      "id": "trava-no-gate",
+      "origem": "operador",
+      "escopos": [
+        "cobertura",
+        "calibracao"
+      ],
+      "gatilhos": [
+        "trava",
+        "escritor exclusivo",
+        "ramo cdp-trava"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/AUTOMACAO.md",
+        "trecho": "   └─ prompt neutro gerado por `cdp rotinas` (o mesmo texto em qualquer app)\n        1. uv sync --frozen\n        2. cdp rotinas gate --tarefa T --adquirir   ← código: executor? atrasada? há trabalho?\n           │                                          trava distribuída (ramo cdp-trava):\n           │                                          sem a trava, o escritor exclusivo não roda\n           ├─ executar: false → \"Sem execução: <motivo>\" (custo mínimo de modelo)\n           └─ executar: true (guarda trava.id e execucao)",
+        "sha256": "76f1d21db1debb94a4f18d13e0cbc2f5ec276065fc76399fc4c13c1a53493855"
+      }
+    },
+    {
+      "id": "trava-sem-renovacao",
+      "origem": "operador",
+      "escopos": [
+        "cobertura",
+        "calibracao"
+      ],
+      "gatilhos": [
+        "trava",
+        "reserva",
+        "retomar montagem"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/AUTOMACAO.md",
+        "trecho": "- **Montagem.** A reserva das 12:07 pode retomar se a principal parou. A trava impede duas\n  execuções ao mesmo tempo e, sem renovação, expira em 50 min, antes da reserva.\n  `cdp rotinas verificar` recusa validade que alcance a reserva. A renovação usa a validade\n  da tarefa e nunca a encurta. Passado o prazo efetivo sem decisão, o\n  código não decide: a carteira anterior é mantida — na carteira inaugural, o fundo segue sem\n  carteira (`decisao_perdida` na agenda; `weekly decide` devolve `status: \"prazo_vencido\"`).",
+        "sha256": "5d9c630865c15ec3c02185b30593c9d702aa1a62b9f13b1dead0bd186428fb56"
+      }
+    },
+    {
+      "id": "trava-sem-acesso",
+      "origem": "operador",
+      "escopos": [
+        "cobertura",
+        "calibracao"
+      ],
+      "gatilhos": [
+        "trava",
+        "indisponibilidade",
+        "escritor exclusivo"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/AUTOMACAO.md",
+        "trecho": "- **Trava inacessível** (GitHub fora do ar, disputa): o escritor exclusivo **não executa**\n  (falha fechada). A próxima tarefa da agenda volta a consultar a trava. Só uma sessão de operador,\n  explicitamente, usa `--sem-trava` (no gate e em `cdp publicar`).",
+        "sha256": "e3bf6294bd7df9d8194385197e694645d830a86c8eef6e0369be657700d1142a"
+      }
+    },
+    {
+      "id": "trava-da-montagem",
+      "origem": "semanal",
+      "escopos": [
+        "calibracao",
+        "desenvolvimento"
+      ],
+      "gatilhos": [
+        "trava",
+        "renovar",
+        "disparo"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/playbooks/SEMANAL.md",
+        "trecho": "- Use a tarefa que disparou a execução (`cdp-semanal` ou `cdp-semanal-b`). O gate só executa\n  com montagem a fazer (`semanal.acao` igual a `montar` ou `tese`) ou com a abertura do livro\n  pendente; `executar: false` ⇒ \"Sem montagem hoje: <motivo>\" e encerre. Guarde `trava.id`,\n  `execucao` e `mente`.\n- `sincronizar` com `acao: \"parar\"` ⇒ libere a trava e encerre relatando o `motivo`.\n- **Modo executor.** Se o prompt disser que a agenda, a trava, a sincronização e a publicação são\n  do executor, pule esta seção e a seção 10: faça os passos 1 a 9 e o resumo.\n- Ao fim de cada etapa (cobertura, coleta, cada bloco de pesquisa, validação, decisão, tese), renove a\n  trava: `uv run python -m cdp trava renovar --id <trava.id>`. Sem `\"estado\": \"renovada\"`:\n  - `perdida` (a validade venceu e outra execução assumiu a trava) ⇒ pare de gravar, **não** rode\n    `cdp publicar` nem `trava liberar` e encerre relatando: quem assumiu conclui a montagem;\n  - `indisponivel` (rede ou disputa) ⇒ siga e renove de novo ao fim da etapa seguinte; se a trava\n    se perder até a publicação, `cdp publicar` recusa e você relata.",
+        "sha256": "507433d574b9e428e4900aa6f2d1f30a168e95549e72bdb2ef21379897e6a40e"
+      }
+    },
+    {
+      "id": "publicacao-sem-rede",
+      "origem": "diario",
+      "escopos": [
+        "risco",
+        "calibracao",
+        "desenvolvimento"
+      ],
+      "gatilhos": [
+        "publicação",
+        "sem rede",
+        "push"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/playbooks/DIARIO.md",
+        "trecho": "- `sincronizar` com `acao: \"parar\"` ⇒ libere a trava\n  (`uv run python -m cdp trava liberar --id <trava.id>`) e encerre relatando o `motivo`.\n  `acao: \"seguir_sem_push\"` (sem rede) ⇒ siga: a publicação fica local e você relata.\n- **Modo executor.** Se o prompt disser que a agenda, a trava, a sincronização e a publicação são\n  do executor (script de rotina ou workflow), pule esta seção e a seção 8: faça os passos 1 a 7 e\n  o resumo, sem nenhum comando de gate, trava, sincronização ou publicação.",
+        "sha256": "0d3a8a064793188fa97ab0c9444632cdcfbcb6c289c87d17ae8b10590ce24e71"
+      }
+    },
+    {
+      "id": "trava-do-fechamento",
+      "origem": "diario",
+      "escopos": [
+        "risco",
+        "calibracao",
+        "desenvolvimento"
+      ],
+      "gatilhos": [
+        "trava",
+        "renovar",
+        "perda da trava"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/playbooks/DIARIO.md",
+        "trecho": "  cobertura e da revisão mensal, renove a trava com `uv run python -m cdp trava renovar --id <trava.id>`.\n  Sem `\"estado\": \"renovada\"`: `perdida` (a validade venceu e outra execução assumiu a trava)\n  ⇒ pare de gravar, **não** rode `cdp publicar` nem `trava liberar` e encerre relatando (quem\n  assumiu conclui); `indisponivel` (rede ou disputa) ⇒ siga e renove de novo ao fim da etapa\n  seguinte; se a trava se perder até a publicação, `cdp publicar` recusa e você relata.",
+        "sha256": "0a3577a731cfa73fc1fffe7fa6e65bc6324683b3593fd01f356d1539a5c853ce"
+      }
+    },
+    {
+      "id": "pedido-de-risco-retido",
+      "origem": "risco",
+      "escopos": [
+        "cobertura",
+        "calibracao",
+        "desenvolvimento"
+      ],
+      "gatilhos": [
+        "pedido de kill switch",
+        "livro retido",
+        "retidos",
+        "trava"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/playbooks/RISCO.md",
+        "trecho": "- O relatório de risco e, se você ligou o kill switch, o **pedido de kill switch**\n  (`reports/risk/<data>/kill_switch_<HHMM>.yaml`, gravado pelo `kill-switch on`) são arquivos\n  novos e saem sempre. `book/KILL_SWITCH` e o evento em `book/audit_log.jsonl` só entram com a\n  trava exclusiva das rotinas: `cdp publicar` espera por ela até 10 minutos; se outra execução a\n  segura (por exemplo, a montagem semanal), publica o relatório e o pedido e devolve código 6,\n  com o restante em `retidos`. **Relate `retidos` em destaque no resumo**: o kill switch ainda\n  não está no livro publicado. O pedido publicado faz com que ele valha: a próxima montagem ou\n  o próximo fechamento o aplica antes de decidir ou de fechar o dia (a montagem sincroniza logo\n  antes do `weekly decide`). Na nuvem, cada execução tem um clone descartável: o que ficou\n  retido some com ele, e só o pedido publicado conta. No clone persistente do PC, a próxima\n  montagem ou o próximo fechamento publica o que ficou retido (`anteriores` na saída do",
+        "sha256": "8c4e421fea7f1678c86fe5f3cea127c184806b75fc28a2e9dca1c475d425c78a"
+      }
+    },
+    {
+      "id": "portal-leitura-e-verificacao",
+      "origem": "status",
+      "escopos": [
+        "cobertura",
+        "calibracao",
+        "desenvolvimento"
+      ],
+      "gatilhos": [
+        "portal",
+        "manifesto",
+        "github pages",
+        "verify"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/SITE.md",
+        "trecho": "- O workflow só **lê** o repositório (`contents: read`); a escrita no Pages usa o ambiente\n  `github-pages`.\n- O site não é montado com o livro aguardando a abertura na data de início do mandato (o workflow\n  pula a publicação) e não é publicado com `cdp verify` falhando (o workflow falha).\n- Montagem determinística por versão do repositório: dois builds da mesma versão geram os mesmos\n  arquivos.\n- Depois de publicar, o workflow confere no ar que `manifest.json` traz a versão que acabou de ser\n  publicada.\n- A demonstração (`--demo`) é marcada \"DADOS SIMULADOS\" em todas as páginas, leva `noindex` nas\n  páginas HTML e **nunca vai ao endereço público**: no workflow, a opção de demonstração só\n  monta o site como artefato `github-pages` da execução (baixe e abra localmente).",
+        "sha256": "f3b8be7d7e812310c4fff9c4d0c13acb242baf460fc9b22df38b4e37bdf904c4"
+      }
+    },
+    {
+      "id": "portal-procedencia-da-versao",
+      "origem": "status",
+      "escopos": [
+        "cobertura",
+        "calibracao",
+        "desenvolvimento"
+      ],
+      "gatilhos": [
+        "portal",
+        "source_commit",
+        "manifesto",
+        "recalcular"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/SITE.md",
+        "trecho": "Qualquer pessoa confere o portal publicado contra o repositório público:\n\n```sh\ngit clone https://github.com/arielassayag/MarketSummary.git\ncd MarketSummary\ngit checkout <source_commit do manifest.json>\nuv sync\nuv run python -m cdp verify\n```\n\nNa pasta do portal baixado (por exemplo, o artefato do workflow), `sha256sum -c SHA256SUMS`\nconfere cada byte; `dados/datapackage.json` (Frictionless Data Package) traz tamanho, SHA-256 e\norigem de cada arquivo. Para recalcular etapas da mente em qualquer assistente:\n`docs/cdp/REPRODUZIR.md`.",
+        "sha256": "252edac159ae33902c3216b3f14ce4953650ebcc56d779a02817ca381c6cbde8"
+      }
+    },
+    {
+      "id": "portal-disparos",
+      "origem": "status",
+      "escopos": [
+        "cobertura",
+        "calibracao",
+        "desenvolvimento"
+      ],
+      "gatilhos": [
+        "portal",
+        "github pages",
+        "atualização",
+        "push"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/SITE.md",
+        "trecho": "## Quando o portal atualiza\n\n- A cada push em `main` que toque o livro, os relatórios, os dados, a configuração, o código do\n  CDP ou `site/`.\n- Rede de segurança agendada às 20:41 de Brasília nos dias úteis e às 23:41 de sexta.\n- Manualmente: Actions → cdp-site → Run workflow.\n- `uv run python -m cdp estado --rede` aponta `PORTAL_DEFASADO` quando o portal não corresponde a\n  `origin/main`.",
+        "sha256": "f07db30477510ab33d04dac340ecd28397841613642522698f2c5eb828227116"
+      }
+    },
+    {
+      "id": "portal-trailers-da-rotina",
+      "origem": "operador",
+      "escopos": [
+        "cobertura",
+        "calibracao"
+      ],
+      "gatilhos": [
+        "portal",
+        "trailers",
+        "execução"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/AUTOMACAO.md",
+        "trecho": "- `uv run python -m cdp estado --formato md` (com `--rede`, consulta remoto, trava e portal;\n  `--sla` sai com 1 quando há incidente de severidade alta).\n- A lista de execuções e as transcrições do app (claude.ai/code, aba de tarefas agendadas do\n  Codex ou do Antigravity); trailers dos commits; o manifesto do portal (`manifest.json` →\n  `source_commit`).",
+        "sha256": "21499fa7210d27a26489dc155b5438a731352919bd9cf642ed2e0e8769464b5e"
+      }
+    },
+    {
+      "id": "portal-defasagem",
+      "origem": "operador",
+      "escopos": [
+        "cobertura",
+        "calibracao"
+      ],
+      "gatilhos": [
+        "portal",
+        "defasado",
+        "origin/main"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/AUTOMACAO.md",
+        "trecho": "| `CLONE_DIVERGENTE` | média | gravações do livro neste clone fora de `origin/main` |\n| `PORTAL_DEFASADO` | média | portal publicado ≠ `origin/main` (com `--rede`) |\n| `SLA_RISCO` | baixa | nenhum relatório de risco até 16:45 num pregão |\n| `TRAVA_EXPIRADA` | baixa | trava ocupada e vencida há mais de 2 h |\n| `TRAVA_LOCAL_ORFA` | baixa | `logs/cdp/.lock` com mais de 6 h |",
+        "sha256": "031f6dde6b522a289a1919cbf796980b53fb820d995496d38cd320492d4aae30"
+      }
+    },
+    {
+      "id": "leilao-prazo-e-fechamento",
+      "origem": "semanal",
+      "escopos": [
+        "cobertura",
+        "calibracao",
+        "desenvolvimento",
+        "status"
+      ],
+      "gatilhos": [
+        "leilão",
+        "prazo efetivo",
+        "fechamento antecipado"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/EXECUCAO.md",
+        "trecho": "- 09/10/2026: 15h00. 27/11/2026 e 24/12/2026 (NYSE fecha às 13h00 de Nova York = 15h00 de\n  Brasília): 14h15. O dia só é \"de fechamento antecipado\" quando NYSE, B3 ou BMV (os mercados\n  que definem o prazo) fecham mais cedo; o fechamento antecipado de outro mercado não muda o\n  prazo. Esse mercado executa com a capacidade reduzida (× `early_close_multiplier`, §5) só se\n  ainda fechar em `prazo + 45 min` ou depois; se fechar antes, não executa nesse dia — é o caso\n  de Buenos Aires em 31/12/2026 (13h00 de Brasília) e de Santiago em 25/03/2027 (13h30 de\n  Brasília), ambos antes de 15h45: posições detidas nesses mercados ficam congeladas (§6).\n- Um mercado só executa no fechamento do dia se estiver aberto, tiver horário oficial\n  conferido e fechar em `prazo + 45 min` ou depois (corte de ordens posterior ao prazo). Com o\n  teto de 15h00, Santiago (16h00 locais = 16h00 de Brasília em outubro) é elegível; em\n  fechamentos antecipados com encerramento antes de 15h45, não.",
+        "sha256": "bd66cd8d085c602caf26c31082abc0312485d524ea1da7eff9e8196aa2259a2e"
+      }
+    },
+    {
+      "id": "leilao-ordem-e-preco",
+      "origem": "semanal",
+      "escopos": [
+        "cobertura",
+        "calibracao",
+        "desenvolvimento",
+        "status"
+      ],
+      "gatilhos": [
+        "leilão",
+        "preço de fechamento",
+        "efetivação"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/EXECUCAO.md",
+        "trecho": "## 7. Efetivação, banda de não-negociação e custos\n\n- Ordem por linha = ações-alvo da decisão − ações detidas; execução =\n  `sinal × min(|ordem|, ⌊capacidade / preço⌋)`, ao **fechamento oficial do próprio pregão** —\n  nunca a um preço defasado, nunca ao preço de outra linha.\n- Ações-alvo arredondadas à ação inteira. Na B3 a ordem é dividida em lote padrão (múltiplos de\n  100 ações, no código da linha) e mercado fracionário (1 a 99 ações, código com sufixo `F`,\n  ex.: `PETR4F`) — `cdp.portfolio.trades.order_legs`; a posição é uma só, marcada ao fechamento\n  oficial da linha. Com PL de US$ 1,0 mi, arredondar ao lote de 100 distorceria posições pequenas\n  em até meio lote (até ~US$ 640 numa posição mínima de US$ 2 mil).",
+        "sha256": "d0fffb7b18c3bfcc5f8791abf75a6f6d0d62e0d5d5434943ca176b6a3edfd269"
+      }
+    },
+    {
+      "id": "leilao-linha-e-adr",
+      "origem": "semanal",
+      "escopos": [
+        "cobertura",
+        "calibracao",
+        "desenvolvimento",
+        "status"
+      ],
+      "gatilhos": [
+        "leilão",
+        "adr",
+        "mercado fechado",
+        "posição detida"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/EXECUCAO.md",
+        "trecho": "## 6. Mercados fechados, congelamento e roteamento por ADR\n\n- Linha cujo mercado não tem pregão elegível (fechado, horário não conferido ou fechamento antes\n  do prazo mais a margem) não negocia. Emissor com **linha detida** nessa situação fica\n  **congelado**: mantém as ações e nenhuma linha dele é negociada no dia (o otimizador fixa\n  `w = w⁰`).\n- Política `adr_if_eligible_else_freeze`: um emissor sem posição, com o mercado local fechado,\n  pode ser negociado pela ADR/listagem nos EUA se houver linha elegível com dados; sem ela, fica\n  congelado. O roteamento (`rotear_linhas`) troca a linha comprada do emissor pela linha elegível\n  de maior ADTV antes da construção, de modo que capacidade, custo, ordem e execução usem a\n  ADR; a linha vendida (aluguel) não muda. A ADR negociada com a bolsa local fechada tem\n  spread × 1,5 no custo.",
+        "sha256": "cf0742bb63f58e1c93386df3e2868970615463c1a56ced8b33824792b1a9ba27"
+      }
+    },
+    {
+      "id": "leilao-capacidade-verificada",
+      "origem": "semanal",
+      "escopos": [
+        "cobertura",
+        "calibracao",
+        "desenvolvimento",
+        "status"
+      ],
+      "gatilhos": [
+        "leilão",
+        "efetivação",
+        "capacidade",
+        "booking_refused"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/EXECUCAO.md",
+        "trecho": "- Ordem posterior ao corte de ordens do mercado não executa.\n- `booked_at` = fechamento oficial mais tardio entre as linhas negociadas; a efetivação lista a\n  carteira resultante (linhas negociadas, saldos de saídas parciais e emissores congelados).\n- A regra de execução por linha é uma só (`preenchimentos_esperados`) e serve à rotina diária,\n  ao livro e à verificação: o livro recalcula, com os dados do pregão, a execução esperada de\n  cada linha e recusa (`BOOKING_REFUSED`) qualquer efetivação que negocie acima da capacidade\n  pelo volume realizado, num mercado sem fechamento elegível, num emissor congelado, depois do\n  corte de ordens ou abaixo da banda; `cdp verify` refaz a mesma conferência para todas as\n  efetivações do livro.",
+        "sha256": "7d7b775933a8778f7ecc3a9bde6347efb592dd837f810258cf11a67ec35a7dc2"
+      }
+    },
+    {
+      "id": "leilao-caducidade",
+      "origem": "semanal",
+      "escopos": [
+        "cobertura",
+        "calibracao",
+        "desenvolvimento",
+        "status"
+      ],
+      "gatilhos": [
+        "leilão",
+        "caducidade",
+        "decisão caduca",
+        "kill switch"
+      ],
+      "revisada_em": "2026-11-07",
+      "rever_em": "2027-01-07",
+      "evidencia": {
+        "caminho": "docs/cdp/EXECUCAO.md",
+        "trecho": "- **Kill switch no leilão do dia de montagem — regra de caducidade.** A decisão vale só para o\n  leilão de fechamento do seu dia de montagem. Com o kill switch ligado nesse fechamento, a ordem\n  não é executada (só redução de risco) e a rotina diária registra o próprio dia com a recusa\n  (`daily close` → `status: \"registrado\"` com `efetivacao_recusada`; alerta \"Efetivação\n  recusada\" no registro): grava `book/<semana>/efetivacao_recusada.json` e o evento\n  `BOOKING_LAPSED` na trilha. A decisão **caduca**: nunca é efetivada depois, nem quando um\n  humano desligar o kill switch (sem efetivação retroativa, que usaria um preço já conhecido). Na\n  carteira inaugural, o histórico começa nesse dia em caixa (PL inicial, sem posições); numa\n  semana regular, a carteira anterior segue marcada. A próxima data de montagem decide de novo,\n  com dados novos (a partir da caixa, se a inaugural caducou). Recusa por dado ausente (preço ou\n  câmbio) na carteira inaugural não caduca. Nada é registrado e o próximo fechamento retoma\n  a data pendente quando a fonte estiver disponível.",
+        "sha256": "0e32bc3fe22f36eca3164f23be71a79e97dc4c69229c1bcd24fe87a96e232005"
+      }
+    }
+  ]
+}

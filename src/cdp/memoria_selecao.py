@@ -11,15 +11,18 @@ from typing import Literal
 from pydantic import Field, ValidationError, field_validator, model_validator
 
 from .memoria import (
+    _DESTINOS_ATUAIS,
     ESCOPO,
+    LIMITE_CONSULTA,
     Catalogo,
     Escopo,
     MemoriaErro,
     Sha,
+    Slug,
     _caminho,
     _chaves_unicas,
     _consulta,
-    _fonte_atual,
+    _destino_atual,
     _Modelo,
     _normalizar,
     _pedido_fora_do_escopo,
@@ -33,18 +36,20 @@ from .memoria_busca import (
     completar_bloco,
     localizar,
 )
+from .memoria_pontes import LIMITE_PONTES, candidatas_pontes
 from .memoria_reforcos import LIMITE_REFORCOS
 
 MAX_BYTES_RESPOSTA = 4096
 _LIMITE_BASE = 64
 LIMITE_CANDIDATAS = _LIMITE_BASE + LIMITE_REFORCOS
+_LIMITE_COM_PONTES = LIMITE_CANDIDATAS + LIMITE_PONTES
 _LIMITE_PASSAGENS = 5
 _LIMITE_BYTES = 4500
 _LARGURA_CANONICA = 20
 
 
 class _Candidata(_Modelo):
-    id: int = Field(ge=1, le=LIMITE_CANDIDATAS)
+    id: int = Field(ge=1, le=_LIMITE_COM_PONTES)
     caminho: str
     inicio: int = Field(ge=1)
     fim: int = Field(ge=1)
@@ -70,16 +75,25 @@ class _Candidata(_Modelo):
         return Local(self.caminho, self.inicio, self.fim, self.sha256).json()
 
 
+class _PonteLacrada(_Modelo):
+    id: Slug
+    origem: Escopo
+    candidata: int = Field(ge=1, le=_LIMITE_COM_PONTES)
+
+
 class _Pacote(_Modelo):
     versao: Literal[1]
     revisao: str = Field(pattern=r"^(?:[0-9a-f]{40}|[0-9a-f]{64})$")
     data: str = Field(pattern=r"^\d{4}-\d{2}-\d{2}$")
-    consulta: str = Field(min_length=1, max_length=240)
+    consulta: str = Field(min_length=1, max_length=LIMITE_CONSULTA)
     escopo: Escopo
     limite: int = Field(ge=1, le=_LIMITE_PASSAGENS)
     orcamento_bytes: int = Field(ge=_LIMITE_BYTES, le=_LIMITE_BYTES)
-    candidatas: list[_Candidata] = Field(max_length=LIMITE_CANDIDATAS)
+    candidatas: list[_Candidata] = Field(max_length=_LIMITE_COM_PONTES)
     fontes_permitidas: list[str] | None = None
+    destinos_permitidos: dict[str, str] | None = None
+    lacre_rota: Sha | None = None
+    pontes: list[_PonteLacrada] | None = Field(default=None, max_length=LIMITE_PONTES)
     base: dict
     lacre: Sha
 
@@ -89,7 +103,21 @@ class _Pacote(_Modelo):
             raise ValueError("candidatas sem numeração consecutiva")
         if any(self.base.get(k) != getattr(self, k) for k in ("revisao", "data", "escopo")):
             raise ValueError("a busca base diverge do pacote")
-        if self.candidatas and not _tem_contexto(self.base):
+        pontes = self.pontes or []
+        ids = {p.candidata for p in pontes}
+        normais = len(self.candidatas) - len(pontes)
+        if self.pontes is not None and (not self.lacre_rota or self.fontes_permitidas is None):
+            raise ValueError("pontes exigem seleção documental roteada")
+        if (ids != set(range(normais + 1, len(self.candidatas) + 1))
+                or len({p.id for p in pontes}) != len(pontes) or normais > LIMITE_CANDIDATAS
+                or any(p.origem == self.escopo for p in pontes)):
+            raise ValueError("referências de pontes fora da faixa ou repetidas")
+        if self.fontes_permitidas is not None:
+            permitidas = set(self.fontes_permitidas)
+            fora = {p.id for p in self.candidatas if p.caminho not in permitidas}
+            if fora != ids or (pontes and (not permitidas or self.base.get("orientacao_atual"))):
+                raise ValueError("candidata fora das fontes ou pontes lacradas")
+        if normais and not _tem_contexto(self.base):
             raise ValueError("busca sem contexto não pode oferecer candidatas")
         return self
 
@@ -105,6 +133,7 @@ class _Resposta(_Modelo):
     ids: list[int] = Field(max_length=_LIMITE_PASSAGENS)
     intencao: Literal["evidencia", "estado_atual", "fora_escopo"] | None = None
     recortes: list[_Recorte] = Field(default_factory=list, max_length=_LIMITE_PASSAGENS)
+    destino_atual: str | None = Field(default=None, max_length=64)
 
 
 def _lacre(pacote: dict) -> str:
@@ -174,10 +203,13 @@ def _candidatas(catalogo: Catalogo, escopo: Escopo, consulta: str, busca: dict) 
 
 
 def preparar(catalogo: Catalogo, escopo: Escopo, consulta: str, limite: int, *,
-             explorar_fontes: bool = False) -> dict:
+             explorar_fontes: bool = False, lacre_rota: str | None = None,
+             com_pontes: bool = False) -> dict:
     """Lê uma revisão Git e lacra o conjunto ordenado de candidatas e a busca base."""
     if catalogo.fontes.trabalho:
         raise MemoriaErro("a seleção exige fontes de uma revisão Git")
+    if com_pontes and (not explorar_fontes or lacre_rota is None):
+        raise MemoriaErro("pontes exigem seleção documental roteada")
     if escopo not in ESCOPO or type(limite) is not int or not 1 <= limite <= _LIMITE_PASSAGENS:
         raise MemoriaErro("a seleção exige escopo válido e limite entre um e cinco")
     if not isinstance(consulta, str):
@@ -186,7 +218,10 @@ def preparar(catalogo: Catalogo, escopo: Escopo, consulta: str, limite: int, *,
         consulta = _consulta(consulta)
     except argparse.ArgumentTypeError as exc:
         raise MemoriaErro(str(exc)) from exc
-    busca = catalogo.buscar(escopo, consulta, limite)
+    if lacre_rota is None:
+        busca = catalogo.buscar(escopo, consulta, limite)
+    else:
+        busca = catalogo.buscar(escopo, consulta, limite, evidencia_conferida=True)
     candidatas = _candidatas(catalogo, escopo, consulta, busca) if _tem_contexto(busca) else []
     pacote = {"versao": 1, "revisao": catalogo.fontes.revisao, "data": catalogo.data.isoformat(),
               "consulta": consulta, "escopo": escopo, "limite": limite,
@@ -194,6 +229,18 @@ def preparar(catalogo: Catalogo, escopo: Escopo, consulta: str, limite: int, *,
     if explorar_fontes:
         fora = _pedido_fora_do_escopo(_normalizar(consulta).strip())
         pacote["fontes_permitidas"] = [] if fora else sorted(catalogo.fontes_por_escopo[escopo])
+        pacote["destinos_permitidos"] = (dict(_DESTINOS_ATUAIS)
+                                        if pacote["fontes_permitidas"] and lacre_rota is None else {})
+    if lacre_rota is not None:
+        pacote["lacre_rota"] = lacre_rota
+    if com_pontes:
+        pacote["pontes"] = []
+        if pacote["fontes_permitidas"]:
+            for ponte in candidatas_pontes(catalogo, escopo, consulta):
+                id_ = len(candidatas) + 1
+                candidatas.append({"id": id_, **ponte.local.json(), "trecho": ponte.trecho,
+                                   "bytes": len(ponte.trecho.encode())})
+                pacote["pontes"].append({"id": ponte.id, "origem": ponte.origem, "candidata": id_})
     pacote["lacre"] = _lacre(pacote)
     return pacote
 
@@ -203,10 +250,11 @@ def _completar_margens(pacote: _Pacote, escolhidas: list[_Candidata], total: int
     """Anexa blocos íntegros já lacrados quando uma passagem corta sua margem."""
     saida = list(escolhidas)
     por_intervalo = {(p.caminho, p.inicio, p.fim): p for p in pacote.candidatas}
+    ids_pontes = {p.candidata for p in pacote.pontes or []}
     for passagem in escolhidas:
         if len(saida) == pacote.limite:
             break
-        if not passagem.caminho.endswith(".md"):
+        if passagem.id in ids_pontes or not passagem.caminho.endswith(".md"):
             continue
         linhas = ler(passagem.caminho)
         for inicio, fim in _blocos_markdown(linhas):
@@ -249,6 +297,14 @@ def aplicar(pacote: dict, bruto: bytes, *,
         raise MemoriaErro("JSON inválido no pacote") from exc
     if resposta.lacre != selada.lacre or selada.lacre != lacre:
         raise MemoriaErro("o lacre da seleção diverge do pacote")
+    destino = resposta.destino_atual
+    if selada.lacre_rota is not None and resposta.intencao not in (None, "evidencia"):
+        raise MemoriaErro("a seleção não pode reabrir a intenção da triagem")
+    if destino is not None and (resposta.intencao != "estado_atual"
+                                or not selada.destinos_permitidos
+                                or destino not in selada.destinos_permitidos
+                                or selada.destinos_permitidos[destino] != _DESTINOS_ATUAIS.get(destino)):
+        raise MemoriaErro("destino exige intenção de estado e código canônico oferecido no pacote")
     base = selada.base
     if resposta.intencao is not None:
         if selada.fontes_permitidas is None:
@@ -256,13 +312,17 @@ def aplicar(pacote: dict, bruto: bytes, *,
         if resposta.intencao != "fora_escopo" and not selada.fontes_permitidas:
             raise MemoriaErro("a consulta está bloqueada pelas regras de escopo")
         if resposta.intencao == "evidencia":
-            base = {**base, "orientacao_atual": None}
+            base = {**base, "destino_atual": None, "orientacao_atual": None}
         else:
             if resposta.ids or resposta.recortes:
                 raise MemoriaErro("estado e fora do escopo exigem seleção vazia")
-            atual = (_fonte_atual(selada.consulta, forcar=True)
-                     if resposta.intencao == "estado_atual" else None)
-            return {**base, "notas": [], "fontes": [], "passagens": [], "orientacao_atual": atual}
+            rota = None
+            if resposta.intencao == "estado_atual":
+                rota = ((destino, _DESTINOS_ATUAIS[destino]) if destino is not None
+                        else _destino_atual(selada.consulta, forcar=True))
+            return {**base, "notas": [], "fontes": [], "passagens": [],
+                    "destino_atual": rota[0] if rota else None,
+                    "orientacao_atual": rota[1] if rota else None}
     ids = resposta.ids
     if len(ids) + len(resposta.recortes) > selada.limite or len(ids) != len(set(ids)):
         raise MemoriaErro("a seleção excede o limite ou repete IDs")

@@ -5,6 +5,644 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## Curadoria e análise no harness Codex — 07/11/2026
+
+A tarefa nativa de dreaming permanece aos sábados, às 10h07
+de Brasília. O Codex sintetiza as provas e entrega candidatas
+com lacre no resultado. Uma segunda tarefa nativa, aos
+domingos às 10h37, revê as propostas usando o histórico do
+app e registra recibos fora do clone executor. A promoção
+continua sujeita à revisão do diff.
+
+O eval nativo compara sessões históricas com os mesmos fatos.
+Um bloco examina MercadoLibre e Nu, com fontes de 3T24 e 4T24.
+O outro examina risco, elegibilidade e execução nas montagens
+de 23/10 e 06/11 do CDP. A memória de cada bloco é anterior
+aos casos, vem de outra tarefa e passa por revisão independente.
+Dois corretores nativos e cegos deram 18/28 aos dois braços e
+concordaram nas 36 decisões por critério e resposta. Em cada
+correção, 12 critérios passaram nos dois braços e 6 falharam nos
+dois. O ensaio de histórico encontrou o disparo de 07/11 e
+respeitou a rejeição posterior das duas propostas. O primeiro
+disparo recorrente com os novos prompts ainda está por observar.
+As lições do ensaio ficam fora do catálogo. A C46 documental
+permanece em custódia.
+
+### Transferência após corrigir a memória
+
+Em quatro casos novos, o Codex comparou as mesmas entradas sem cartas,
+com as cartas originais e com cartas revisadas a partir das falhas do eval.
+Os dois corretores cegos deram, respectivamente, 9/20, 12/20 e 11/20 e
+10/20, 12/20 e 12/20. Concordaram em 58 das 60 decisões por critério.
+Os casos de dLocal e Globant usaram fontes de 1T25. Os dois de risco
+foram cenários de mesa rotulados como dados simulados. A revisão trouxe
+uma ponte de caixa para valuation de dLocal e perdeu a exigência de
+terminal humano próprio para desligar o kill switch no caso de stop.
+As substituições ficam no ensaio. A próxima comparação deve testar o
+uso das lições numa revisão da resposta com rascunho comum aos braços,
+separando a contribuição da memória do benefício de uma segunda leitura.
+
+### Revisar o mesmo rascunho com memória seletiva
+
+Em quatro casos novos, o rascunho comum recebeu 12/21 e 13/21. A segunda
+leitura sem fichas ganhou quatro critérios sem perdas e chegou a 16/21 e
+17/21. A revisão com acesso às fichas ficou em 15/21 e 16/21. As duas
+revisões empataram em todos os critérios de valuation. No cenário de
+piso idiossincrático, a revisão com índice omitiu a proteção do limite
+líquido. Nenhuma ficha foi aberta nesse caso. Houve acordo em 60/63
+julgamentos, sem violações fatais. As fichas permanecem no ensaio.
+
+O próximo teste deve usar a revisão comum como referência e pedir à
+memória propostas localizadas e ancoradas no caso. Sem proposta aceita,
+o texto de referência fica íntegro. A comparação precisa distinguir o
+ganho de uma checagem localizada do efeito de consultar memória.
+
+### Correções pontuais sem reescrever a referência
+
+Em quatro casos inéditos, a referência e as duas revisões ficaram em
+15/20 nas duas correções, com concordância de 60/60 e sem violações
+fatais. Risco ficou em 8/8 desde a referência. Os revisores propuseram
+zero mudanças e o fluxo preservou os textos byte a byte. Em valuation,
+os revisores propuseram duas e quatro inserções, sem e com fichas. As
+seis passaram pela verificação literal e por outra tarefa Codex com
+origem cega. Todas preservaram a referência, sem recuperar critérios.
+
+As duas análises de valuation omitiram a janela do teste da tese e
+um insumo da outra ponta da posição. A próxima comparação deve fazer
+o Codex propor perguntas de cobertura antes de redigir as correções,
+com o mesmo orçamento para o braço sem fichas. As intervenções seguem
+experimentais.
+
+### Perguntas de cobertura antes de editar
+
+Em quatro casos inéditos, a referência relida fez 19/22 e 20/22. As
+perguntas sem fichas fizeram 20/22 nas duas correções, e as perguntas
+com fichas, 21/22. Em Ambev, as duas correções recuperaram o mesmo
+critério ao explicitar a janela do teste causal. Valuation ficou em
+12/12 com memória, sem perdas nem portas fatais. Risco ficou em 9/10
+nos três braços. Faltou explicitar que a publicação vem depois do
+fechamento e registro cabíveis. O acordo foi de 65/66 julgamentos.
+
+O app mostra que cada plano foi gravado antes das propostas. As
+intervenções aprovadas preservaram a referência. A comparação atende
+ao critério pareado predefinido nesta amostra. Antes de generalizar,
+repita em casos novos e com mais de uma geração por condição. O caso
+de prazo e recibo orienta a próxima ficha sobre a ordem das etapas.
+
+## Cobertura do acervo e união de provas — 07/11/2026
+
+A C45 congelou 31 concessões de 13 documentos a papéis
+específicos. A política compilou 105 seções no Git, ante
+45 no acervo de referência. Os dois braços residuais
+compartilham a triagem, as lacunas da C44, o prefixo inicial
+e o teto de prova. As fontes de leitura livre permanecem
+as do papel.
+
+Um quarto braço preserva a seleção validada da referência
+e acrescenta provas válidas do acervo ampliado quando há
+espaço. A união é determinística e mantém o teto final
+de cinco passagens e 4.500 bytes. A validação de laboratório
+conferiu o acervo, a fronteira de papéis e a união.
+
+Na C45 cega, o primeiro passe completou 5/15 travessias.
+Os três braços restantes completaram 6/15. O teto literal
+dos dois acervos ficou em 9/15 grupos de outro papel.
+Treze grupos tinham documento autorizado no acervo ampliado.
+Quatro deles ficaram fora dos intervalos aprovados. Com
+prefixo e orçamento fixos, quatro das cinco travessias
+incompletas viáveis ficaram sem lacuna aceita. A união
+preservou a referência em todos os 30 pedidos e adicionou
+duas passagens, sem novo grupo de prova. Os oito controles
+passaram. As alternativas pré-registradas acrescentaram uma
+travessia a cada braço. A próxima avaliação deve separar
+o benefício da busca residual do efeito de condicionar seu
+disparo à lacuna declarada.
+
+## Verificação independente das lacunas — 07/11/2026
+
+A C44 conserva a triagem, o primeiro leitor, o acervo e a
+busca residual da C43. Quando há espaço e o primeiro leitor
+fica sem lacuna válida, outro leitor recebe somente o
+enunciado, o papel e as passagens já validadas. A devolutiva
+amarra cada lacuna a um trecho literal único da pergunta.
+O código confere o lacre e usa o trecho mais os termos
+propostos para buscar novas provas dentro da mesma fronteira.
+
+A releitura originada no primeiro leitor é compartilhada
+pelos dois braços. A revisão independente pode acrescentar
+provas em outros pedidos e conserva as referências iniciais
+na mesma ordem.
+
+Na C44 cega, a seleção inicial e a busca por lacunas
+declaradas completaram 3/15 travessias. A revisão independente
+completou 4/15, com um ganho e nenhuma perda. O verificador
+revisou 12 pedidos, dos quais três estavam incompletos.
+Acionou uma busca e completou esse pedido com uma candidata
+já disponível. Os oito controles permaneceram corretos.
+
+O diagnóstico adaptativo exigiu inventário e citação literal
+nos 11 casos restantes e não abriu novas buscas. Duas
+respostas excederam o limite de caracteres das citações.
+O ajuste literal de comprimento validou ambas e preservou
+a decisão de não buscar. As duas formas de revisão seguem
+no laboratório.
+
+## Segunda busca com provas congeladas — 07/11/2026
+
+A C43 lacrou 45 seções, com 12 novos intervalos doadores.
+O primeiro leitor devolve sua seleção e até três lacunas.
+Quando a seleção é válida ou aceita após a retirada de um
+recorte livre inválido, as passagens finais ficam congeladas,
+incluindo as margens canônicas já acrescentadas.
+
+Dois braços podem fazer uma segunda leitura com o mesmo
+prefixo. A releitura simples busca nas candidatas originais.
+A busca residual pode oferecer até três janelas doadoras com
+linhas novas. A segunda devolutiva só aceita IDs. O código
+confere o lacre, a fonte canônica e o teto da união antes
+de acrescentar as referências.
+
+A auditoria da C43 conferiu os 30 prefixos e as 26 janelas
+inéditas ofertadas. A suíte integral da revisão `60be5256`
+terminou com 6.370 aprovados, 17 pulados e zero falhas.
+Os lacres confirmaram que o checkout permaneceu idêntico.
+
+A C43 completou 2/15 travessias no primeiro passe e na
+releitura simples. A busca residual completou 4/15 e
+recuperou três grupos de outro papel ausentes da oferta
+inicial, sem perder provas. Os documentais comuns ficaram
+em 6/7 e os controles em 8/8 nos três braços. A expansão
+segue no laboratório. Os três grupos novos para o leitor
+vieram de seções já curadas. Nenhum veio das 12 seções
+adicionadas. No diagnóstico retrospectivo, duas das cinco
+travessias incompletas que cabiam no acervo ficaram sem
+segunda leitura por ausência de lacuna válida.
+
+## Oferta por vínculos canônicos — 07/11/2026
+
+A C42 lacrou 28 vínculos em oito papéis antes de receber 30
+pedidos inéditos. Dois braços receberam o mesmo acervo adicional
+com até duas novas pontes, preservando as candidatas locais, as
+fontes livres e as pontes fixas. Um ranqueou os alvos pelo texto
+da pergunta. O outro priorizou relações ancoradas nas primeiras
+12 candidatas locais e completou as vagas com o mesmo ranqueamento.
+
+As 12 primeiras candidatas não ativaram relações nos 22 pedidos
+documentais. As duas expansões tiveram ofertas idênticas e
+compartilharam as leituras. Um diagnóstico adaptativo, congelado
+após observar as ofertas e antes da pontuação, encontrou 13
+ocorrências entre as candidatas já expostas e mudou cinco
+ofertas ao considerar toda a lista de candidatas locais.
+
+A referência completou 5/15 travessias. Ambos os braços de
+expansão completaram 4/15. Os grupos externos na oferta
+passaram de 7/17 para 6/17 e os recuperados, de 7/17 para
+5/17. Dos sete grupos perdidos na seleção, dois saíram da
+oferta e cinco ainda estavam visíveis. Os oito controles
+passaram nos três braços.
+
+O acervo adicional continha um dos 17 grupos externos, já
+coberto pelo acervo de referência. A ampliação da profundidade
+mudou cinco ofertas e manteve os mesmos grupos selecionados e
+pedidos completos. Os vínculos seguem no laboratório. O
+próximo contraste deve separar cobertura adicional real de
+reordenação e conservar a prova validada numa segunda busca.
+
+## Preservação de provas após uma recusa — 07/11/2026
+
+A C41 compara a recusa integral, a preservação dos trechos
+autorizados e uma segunda seleção que só pode acrescentar
+passagens. O primeiro leitor e a oferta são comuns. Lacre,
+papel, intenção, IDs, limites e fonte canônica continuam
+sujeitos à validação estrita.
+
+O replay da C40 reproduziu as 63 seleções documentais originais
+e preservou dez passagens nas seis recusas por recorte fora do
+papel, sem outra inferência. Quatro dessas seleções recuperaram
+provas parciais do gabarito e nenhuma ficou completa. A bateria
+prospectiva da C41 ficou separada desse replay. O protótipo e o
+teste de laboratório ficam fora do caminho de execução do CDP.
+
+Na C41 cega, os 30 pedidos renderam 22 seleções e duas recusas.
+O reparo recuperou dois grupos locais. A releitura acrescentou
+dois grupos de outros papéis e elevou a completude de 6/15 a
+8/15 travessias, todas as que tinham prova conjunta na oferta.
+Os três braços preservaram 6/7 documentais
+comuns e 8/8 controles. Foram dois ganhos e nenhuma perda de
+travessia. A confirmação em outra amostra precisa aumentar o
+número de recusas naturais observadas.
+
+O laboratório C42 conferiu quatro vínculos Git entre procedimentos.
+Uma referência em candidata local permite oferecer o recorte
+aprovado de outro papel por ID. Ausência da referência, papel
+divergente ou hash inválido bloqueiam a expansão. Falta comparar
+esse acervo em índice plano e por navegação numa bateria inédita.
+
+## Busca por requisitos e seleção de provas — 07/11/2026
+
+A C40 congelou 33 seções de dez documentos canônicos e comparou
+três braços em 27 pedidos inéditos. O primeiro buscou pelo enunciado.
+O segundo distribuiu as vagas por requisitos de prova. O terceiro
+mostrou esses requisitos ao leitor com a mesma oferta do segundo.
+A triagem e os limites foram comuns. As provas de cada pedido
+cabiam em até três passagens e 2.586 bytes no pré-teste.
+
+Os braços completaram 5/15, 5/15 e 2/15 travessias. A busca por
+requisitos ofereceu os mesmos nove grupos externos que a busca
+pelo enunciado e selecionou um grupo externo a mais, com uma perda
+em pedidos documentais comuns. Mostrar o plano ao leitor perdeu
+três travessias e um pedido comum, sem nenhum ganho de grupo. Os
+seis controles passaram nos três braços. O plano e o índice de
+seções ficaram no laboratório.
+
+As seções contêm 10/18 grupos externos e todos são indexáveis.
+Para o segundo braço, oito grupos faltavam no acervo, um ficou
+fora da oferta, dois foram oferecidos e ficaram fora da seleção,
+e sete foram selecionados. O próximo teste precisa separar a
+cobertura de novas fontes da validação da seleção final.
+
+## Oferta lexical e blocos delimitados — 07/11/2026
+
+A C39 comparou três ofertas com o mesmo mapa experimental de 45 pontes
+e a mesma triagem. O segundo braço preencheu vagas com busca lexical.
+O terceiro acrescentou recortes derivados de 22 blocos canônicos,
+sem sobreposição com as 45 pontes e sem liberar arquivos doadores para
+recorte livre. Os recortes carregam o vínculo com o bloco no Git.
+Uma mudança fora do recorte, mas dentro do bloco, suspende o recorte.
+
+As ofertas preservaram todas as candidatas dos braços anteriores.
+Pacotes visíveis idênticos reaproveitaram a mesma seleção, 46 leituras
+para 63 ofertas documentais. A conferência recusou recortes livres de
+texto que o leitor não recebeu. O protótipo foi exercitado em laboratório.
+
+Os três braços C39 completaram 0/15 travessias e preservaram os 6/6
+controles. A oferta conjunta viável foi de 0, 1 e 2 travessias. Dos
+17 grupos externos ao papel, 11 estavam ausentes do acervo, quatro
+ficaram fora do pacote, um foi oferecido e um foi selecionado. Os
+22 blocos deram quatro grupos ao teto literal do acervo, e os 45
+recortes deram dois, sem interseção. A recuperação final continua
+abaixo do teto do acervo experimental.
+
+## Curadoria por tarefa e auditoria de pontes — 07/11/2026
+
+`memoria auditar --pontes` verifica validade, autoridade e unicidade
+da prova no Git. Em C38, 45 entradas passaram na data do corte e
+foram classificadas como vencidas na data posterior de controle.
+O comando devolve o hash do mapa e estados de revisão por entrada.
+
+A C38 comparou 17 e 45 entradas em 27 pedidos inéditos. A oferta de
+provas fora do papel ficou em 1/16 nos dois mapas. A única travessia
+completa do braço ampliado usou uma ponte do mapa original. Ambos
+fizeram 11/27, com um ganho e uma perda por pedido. O acervo ampliado
+ficou congelado na revisão do ensaio. O mapa de trabalho voltou à
+referência de 17. O replay da C37 preservou as duas pontes usadas e
+os quatro grupos que já estavam ao alcance do leitor.
+
+O potencial dos 45 trechos em C38 é de 6/16 grupos com os papéis
+preservados e os gatilhos dispensados. O limite de acesso precisa ser
+medido à parte da ativação. O próximo ensaio deve separar novos blocos
+revisados, cobertura lexical e escolha da prova final.
+
+A suíte ampla da revisão `a3b7ee0e` terminou com 6.357 aprovados,
+17 pulados e zero falhas. A comparação do checkout antes e depois
+confirmou a mesma revisão, árvore e bytes versionados.
+
+## Pontes literais na seleção documental — 07/11/2026
+
+`memoria rotear --candidatas --com-pontes` e
+`--conferir-selecao --com-pontes` usam o mapa Git com origem, papéis de
+destino, prazo de revisão e SHA-256 literal. A ponte ocupa um ID e o
+arquivo dela fica fora da lista de recortes livres. O modo é consultivo
+e experimental. A CLI confirmou o intervalo exato e rejeitou um recorte
+que tentava ampliá-lo. A validação focada de seleção e triagem passou em
+187 casos, incluindo vencimento, mudança e duplicidade da fonte.
+
+Na C34 já aberta, acrescentar apenas os seis recortes do gabarito
+levou o alcance de 26/32 a 32/32 grupos e de 10/16 a 16/16 casos
+documentais. Os recortes somaram 2.057 bytes e a maior seleção completa
+coube em 1.538 bytes. A C37 congelou separadamente 17 trechos antes de
+receber os pedidos inéditos.
+
+Na C37, a seleção com pontes completou 2/12 travessias, ante 0/12.
+Os 6/6 controles e os 4/6 documentais comuns completos foram preservados.
+Os grupos cobertos passaram de 14/34 a 16/34, com cinco ganhos e três
+perdas. A lista de recortes livres ficou idêntica. Uma tentativa de
+recorte fora da lista foi recusada no braço com pontes.
+O diagnóstico dos 17 trechos mostrou 4/13 grupos fora do papel
+oferecidos e 5/13 sem gatilhos. Dispensar também o papel de destino
+conserva 5/13. A próxima curadoria precisa de novos recortes.
+
+## Wiki de procedimentos e lacunas de evidência — 07/11/2026
+
+Na C34, os 16 documentais eram recuperáveis no Git dentro do teto.
+O pacote guiado admitia no máximo 10 completos e 26/32 grupos.
+Os seis grupos ausentes pertenciam a fontes fora do catálogo por
+escopo. A seleção guiada entregou 17/32, deixando nove grupos
+que já estavam ao alcance do pacote. Os dois estágios precisam de
+medidas separadas. Reutilizar 243 âncoras compactas de todos os
+papéis recuperaria zero dos seis grupos ausentes.
+
+A C36 congelou 16 páginas de etapas ligadas a trechos de notas curadas.
+Em 24 pedidos inéditos, a referência completou 6/16 documentais
+multigrupo. A lista plana e a wiki ficaram em 5/16. Todas completaram
+os quatro documentais simples. Todos os 40 grupos tinham uma fonte
+no próprio escopo. A triagem offline errou os quatro controles
+nos três braços. O protótipo permanece experimental.
+O próximo ensaio deve separar pontes explícitas entre papéis, que
+exponham apenas trechos curados, da escolha das passagens já expostas.
+O benchmark externo ganhou `--preflight-conjunto` e confirmou que os
+52 documentais das duas baterias de referência cabem no teto.
+
+## Orçamento de evidência e perguntas compostas — 07/11/2026
+
+A C34 separou a seleção por partes da nova referência cruzada na nota
+da trava. Os quatro braços acertaram 13/24 sob o mesmo teto. O seletor
+foi de 19/32 para 20/32 grupos, sem completar outra consulta. A nota
+com o vínculo ao roteiro recuperou 16/16 na C33 já aberta e não alterou
+a C34. A referência do roteiro está na candidata do acervo, com três
+âncoras verificadas. Ela ainda aguarda curadoria para ficar ativa.
+
+`memoria buscar --orcamento-estrito` preserva trechos inteiros dentro de
+4.500 bytes. Em uma consulta da C33, a CLI passou de 4.745 a 3.856 bytes
+com a opção. Seis perguntas da C34 excederam o limite antigo de 240
+caracteres e a primeira seleção guiada parou antes de pedir recortes.
+O limite de 480 caracteres passou a valer para busca, triagem, seleção
+e corpus de avaliação. Na repetição C34, a triagem acertou 24/24.
+A busca automática obteve 14/24 e a guiada 12/24, com duas perdas.
+
+A contraprova retrospectiva reduziu a C31 de 45/48 para 41/48 na
+leitura livre e 44/48 na ancorada. A concordância entre as duas segundas
+leituras, conservando a triagem inicial em desacordos, fez 46/48.
+Na C35 cega, a leitura ancorada obteve 46/48 e a concordância 45/48.
+Um antecedente necessário ficou de fora da interpretação de estado.
+
+## Prova literal e memória quando a fonte muda — 07/11/2026
+
+`memoria rotear --ancorar-ambiguidade` vincula as duas interpretações
+ao mesmo trecho literal, sem abrir o catálogo. Na C31 cega, a triagem
+inicial fez 36/48 e as duas segundas leituras fizeram 45/48. As duas
+recuperaram 12 ambiguidades e confundiram três determinados. A opção
+acrescenta custódia do trecho, com saldo zero de acertos ante a segunda
+leitura livre. A próxima revisão deve verificar se as duas leituras
+preservam o atributo pedido, além de citar o mesmo trecho.
+
+A revisão assistida de escopo ficou disponível em
+`memoria rotear --pacote-escopo` e `--conferir-escopo`. A C32 cega
+passou em 36/36 nos dois leitores assistidos. Cada um bloqueou 12/12
+ordens e preservou 24/24 consultas legítimas. A guarda offline bloqueou
+0/12, e o protótipo v2 bloqueou 3/12. O braço com prova literal produziu
+as mesmas decisões e a API da CLI reproduziu as 36. Bloqueios retornam
+histórico vazio. Casos preservados seguem para triagem de intenção.
+O protótipo v2 continua fora do fluxo padrão.
+
+`memoria avaliar --revalidacao` confere um manifesto por revisão e
+hash do corpus. Preserva o braço histórico e separa as medições com
+provas revalidadas. O caso da trava foi revalidado com duas passagens
+de `AUTOMACAO.md`. A memória recuperou 24/29 documentais com provas
+intactas e perdeu o caso revalidado. Uma candidata para a lição da
+trava recuperou esse caso em simulação de curadoria, sem perdas nos
+outros 41. Ela permanece candidata no acervo. A C33 cega passou de
+9/16 para 14/16. Em aquisição e retomada, passou de 1/8 para 6/8.
+Os oito controles de renovação, estado e burla foram preservados.
+
+## Segunda leitura lacrada e guarda consultiva — 07/11/2026
+
+`memoria rotear` ganhou uma segunda leitura opcional. O pacote vincula
+consulta, revisão e triagem, omite a decisão inicial e limita o leitor a
+identificar duas interpretações plausíveis. A conferência aceita apenas
+preservar a rota ou pedir esclarecimento. A API reproduziu as 32 decisões
+lacradas da C27. Na C28, 48 consultas inéditas passaram por quatro braços.
+A referência offline acertou 19/48, a triagem assistida 39/48, a segunda
+leitura 44/48 e a segunda leitura com cartões contrastivos 43/48. A
+segunda leitura recuperou oito ambiguidades e confundiu três métodos.
+Os cartões continuam experimentais. Toda rota emitida sem evidência
+conservou o histórico vazio nos quatro braços.
+
+A guarda consultiva foi ampliada para detectar pedidos diretos, ordens
+coordenadas, ações depois de uma premissa e pedidos dirigidos ao agente.
+O replay da C26 após o gabarito passou de 25/60 a 32/60 com a primeira
+ampliação. Ela não alterou a C28. A C29 cega expôs 12 ordens proibidas que
+a primeira guarda deixou passar, com 24 pedidos de leitura ou relatos
+preservados. A segunda ampliação considera o efeito da ação, o alvo
+protegido e o contexto de relato. No diagnóstico após o gabarito, os 36
+casos da C29 passaram pela função e pelo resolvedor. Na C30 cega, a mesma
+guarda passou de 27/36 a 28/36, com 4/12 ordens proibidas reconhecidas e
+24/24 pedidos consultivos preservados. O ganho de uma ordem veio sem
+perdas. O próximo contraste precisa separar destinatário da ação, efeito
+pedido e artefato mesmo quando nenhum termo explícito nomeia a mutação.
+
+A suíte ampla terminou com código zero no checkout congelado
+`63afc80e`. Foram 6.330 aprovados e 17 pulados, sem falhas nem erros.
+Os manifestos antes e depois são idênticos, e os dois replays da suíte
+foram conferidos à parte. Na árvore atual, a suíte de memória e módulos
+relacionados passou em 919 casos, com um pulado. A rodada do dreaming
+pela CLI recuperou 9/9 evidências, preservou quatro abstenções e dois
+encaminhamentos. A avaliação reservada histórica roda na revisão fixada.
+Ao reaplicá-la à revisão atual, a conferência rejeita um trecho de
+`AUTOMACAO.md` cujo texto mudou. O gabarito histórico permanece fixo.
+
+## C22 completa, refinamento offline C26 e confirmação C27 — 07/11/2026
+
+A extensão C22 fechou a recuperação documental com a triagem assistida já
+lacrada. A busca direta, a memória offline e a busca após triagem recuperaram
+8/10 grupos completos. A seleção guiada recuperou 10/10, com cinco passagens
+e 4.500 bytes por consulta. Dois leitores e um árbitro escolheram os recortes
+sem gabarito. O fluxo assistido guiado passou nos 36 casos, incluindo 18/18
+destinos e 8/8 recusas, ambos sem contexto histórico. Dois avaliadores
+aprovaram 10/10 textos completos e fundamentados em uma reexecução sem
+ferramentas. O relatório e o rascunho do AI Notes foram atualizados.
+
+No diagnóstico C22, acrescentar exemplos C20/C21 à triagem deliberativa local
+levou os destinos de 7/18 para 16/18, mas encaminhou quatro dos oito pedidos
+externos como estado. O protótipo continua fora do uso padrão. Os reranqueadores
+de destino exigem intenção de estado e apoio de objeto e atributo. A C26
+congelou 60 consultas inéditas, com 15 por classe, para comparar esse desenho
+com a linha de base, os dois braços Qwen e a triagem assistida. A comparação
+ficou separada do diagnóstico C22 em etapas de escopo, intenção e autoridade.
+A C26 assistida acertou 45/45 determinados e 6/15 indeterminados. O melhor
+resultado local em acerto conjunto foi 31/60 no reranqueamento seletivo,
+com 8/15 destinos. O Qwen com exemplos acertou 12/15 destinos e errou
+todos os indeterminados. Os resultados estão em `relatorio-triagem-26.md`
+sob `outputs/cdp-memoria-rigor/`. O diagnóstico C22 em etapas eliminou
+os falsos encaminhamentos externos e passou de 23/36 a 22/36 tipos certos.
+
+A resolução `indeterminado` agora inclui um pedido de esclarecimento e termina
+antes de abrir o catálogo. A memória consultiva bloqueia solicitações diretas
+de mutação de registros e continua admitindo perguntas sobre procedimento.
+O preflight específico teve zero disparos na C26. A busca offline incorporou o
+refinamento de destino por objeto e atributo somente após o gate de estado,
+com âncoras canônicas verificadas. A reexecução da C26 pela API de produção
+reproduziu os 60 resultados do braço combinado lacrado. Passou de 8/15 a
+10/15 destinos exatos, com dois ganhos e nenhuma perda. A suíte focal de
+memória e roteamento passou em 175 casos após a integração. A suíte ampla
+usa o checkout congelado `63afc80e`, anterior às mudanças desta seção.
+
+A C27 reuniu 32 consultas inéditas em oito famílias. A comparação em
+pares passou de 26/32 na triagem inicial a 32/32 com uma segunda leitura
+dedicada a ambiguidades. Os 24 determinados foram preservados e os oito
+indeterminados passaram de 2/8 a 8/8. Uma terceira leitura de contraprova
+reduziu o placar a 28/32. O verificador segue experimental. No diagnóstico
+C26 após a abertura do gabarito, ele havia recuperado oito ambiguidades
+e introduzido duas abstenções indevidas. Os protocolos, resultados e
+artefatos de comparação ficam em `outputs/cdp-memoria-rigor/`.
+
+## Continuidade de investigações entre cortes — 07/11/2026
+
+A saída de dreaming com provas separa o corte coberto das investigações em aberto.
+`--continuar` recebe o lacre esperado e o objeto na primeira linha da entrada.
+O código reconstitui o item de origem, confere a história no Git, revalida as provas
+na revisão anterior e marca as que ainda constam da revisão nova. Uma pendência
+reaparece mesmo que a sua fonte fique fora do diff novo. O curador pode registrar
+hipóteses concorrentes, seus apoios e contrários e o próximo teste discriminante.
+Uma resolução exige prova da revisão corrente. A continuidade preserva resoluções
+e reabre o item se a prova de encerramento perder a âncora. Lacres esperados da
+continuidade e, em rechecagem, das respostas brutas verificam os recibos separados
+do conteúdo. As hipóteses ficam na curadoria.
+
+A referência determinística da C22 acertou 9/18 destinos, 10/10 procedimentos e
+0/8 abstenções externas. O protótipo local Qwen3.5 4B acertou 8/18 destinos,
+8/10 procedimentos e 6/8 abstenções. O ganho externo veio com três falsos externos.
+As duas alternativas seguem com lacunas e o protótipo fica fora do fluxo padrão.
+O braço assistido com o prompt fixado na C20 acertou 36/36 classificações,
+18/18 destinos, 10/10 procedimentos e 8/8 abstenções. O resolvedor verificou
+histórico vazio nas 26 consultas de estado ou externas. A recuperação de
+passagens nas dez documentais ficou fora da C22.
+
+A repetição C24, com dados simulados e sem ferramentas, obteve 0/8 casos
+completos sem histórico, 5/8 com prosa e 6/8 com registro estruturado. Os dois
+formatos com histórico acertaram 8/8 evidências, próximas ações e checagens
+anteriores. A diferença restante está nas hipóteses que deveriam continuar
+em aberto. A C25 fixou novas instruções antes da leitura de dez casos inéditos.
+Os dois formatos com histórico passaram 10/10, ante 0/10 sem histórico.
+A regressão C23 passou nos cinco microcasos de continuidade, deriva, fechamento
+e adulteração. O controle extra reabriu uma resolução com prova desatualizada
+fora do diff. Os protocolos e as pontuações ficam em `outputs/cdp-memoria-rigor/`.
+A suíte de memória, documentação, permissões, plugins, rotinas e adaptadores
+passou com 917 casos e um pulado.
+O rascunho atualizado fica em `outputs/ai-notes-15/ai-notes-15-eval-continuacao.html`.
+
+A fixture bancária fixa agora o prefixo histórico do índice e seu SHA-256. O módulo
+passou em 72/72. A guarda do replay recusou selar execução quando código mudou durante
+a suíte ampla original. Os quatro adaptadores técnicos foram regenerados na versão
+canônica e o módulo passou em 10/10. A qualificação ampla usa árvore congelada.
+A execução anterior em árvore congelada usou um diretório de testes fora de
+`TMPDIR` e foi interrompida após o diagnóstico. A nova execução de
+`63afc80e` tem os diretórios alinhados e está em andamento.
+
+## Triagem separada, evidência encadeada e confirmação C21 — 07/11/2026
+
+`memoria rotear` prepara um pacote compacto e pode renderizá-lo como prompt
+portátil. O código recompõe e confere o lacre e os destinos permitidos.
+Estado, fora de escopo e intenção indeterminada saem sem abrir o catálogo.
+Só a triagem conferida de evidência habilita o pacote de seleção encadeado.
+O mapa opcional registra 26 autoridades com 45 âncoras literais, conferidas
+no Git. Na C20, a triagem acertou 34/34 casos com e sem os cartões. As
+orientações compactas são o padrão.
+
+A C21, qualificação `781a5afb`, passou de 14/32 para 32/32 acertos nas
+mesmas consultas, frente à memória automática. Foram 12/12 evidências
+completas, 14/14 destinos exatos sem histórico e 6/6 abstenções. A busca
+direta empatou nas 12 perguntas documentais. A triagem seguida de busca
+automática recuperou 8/12, ante 7/12 da memória automática sem triagem.
+Dois julgadores aprovaram as 12 respostas curtas redigidas com prova por
+alegação. O protocolo, os placares e a auditoria estão em
+`outputs/cdp-memoria-rigor/`. O rascunho local com as figuras está em
+`outputs/ai-notes-15/ai-notes-15-eval-fluxo-21.html`.
+
+A triagem avaliada usou Codex. O roteador offline tem lacunas em casos
+inéditos. Embeddings locais e o ensaio com Qwen3 1.7B ficaram abaixo
+da referência avaliada e seguem fora do fluxo padrão. A confirmação
+restringe-se a perguntas documentais, estado e escopo deste corpus. O
+ensaio temporal segue separado, com fontes simuladas. A suíte focal
+da CLI, da seleção e da documentação passou com 326 testes e um pulado.
+Uma falha de hash na preparação das fixtures bancárias da suíte ampla
+foi reproduzida isoladamente. O livro e a operação seguem no executor.
+
+## Confirmação integral C18 do fluxo guiado — 07/11/2026
+
+A qualificação `27595955` passou em **26/26 casos inéditos**, com 8/8 perguntas
+de evidência e 13/13 grupos, 12/12 destinos exatos, 6/6 abstenções e zero rotas
+indevidas. A busca direta e a automática recuperaram 6/8 perguntas no mesmo
+teto de saída. A automática acertou 7/12 destinos e 2/6 abstenções na C18.
+Dois julgadores aprovaram também **8/8 respostas** estruturadas com prova por
+alegação. O placar congelado e a auditoria ficam em `outputs/cdp-memoria-rigor/`.
+
+Após a medição, o roteador automático recebeu correções para formulações de
+tese, agenda, executor e trava, além de colisões de vocabulário externo. A
+regressão das amostras já abertas C17 e C18 passou em 28/28 destinos, 12/12
+abstenções e zero falsos encaminhamentos em 20 perguntas documentais. Esses
+são casos conhecidos. A C19 é a confirmação independente do roteador.
+Na primeira execução inédita da C19, `3d1ff986`, o automático acertou 8/16
+destinos e 2/8 abstenções. Nenhuma das oito perguntas documentais recebeu
+rota de estado e seis recuperaram todos os trechos. As novas formulações
+confirmam que a regressão conhecida ainda é insuficiente para a generalização
+do roteador. Resultado e protocolo em `outputs/cdp-memoria-rigor/`.
+
+O ensaio temporal prospectivo passou de 6/7 a 7/7, com as quatro abstenções
+preservadas e 8/8 controles temporais. Foram integradas duas notas somente
+no Git da fixture após revisão explícita. A versão do artigo com os placares
+e as duas figuras é `outputs/ai-notes-15/ai-notes-15-eval-prospectivo-18.html`.
+O ramo de desenvolvimento conserva as alterações e a operação segue no executor.
+A suíte focal final passou com 898 testes e um pulado. A suíte integral foi
+iniciada na qualificação anterior e ainda está em andamento. Um teste de recuperação
+de replay sinalizado nessa execução passou quando reexecutado isoladamente.
+
+## Roteamento com fontes canônicas e confirmação C17 — 07/11/2026
+
+O modo guiado pode escolher o `destino_atual` no mapa canônico lacrado no pacote.
+O verificador exige intenção de estado e saída vazia de notas, fontes e passagens.
+A C16 confirmou 20/20 destinos, 6/6 abstenções e 11/12 evidências literais.
+Um parecer independente considerou suficiente a seleção alternativa no 12º caso.
+A C17 confirmou 16/16 destinos, 6/6 abstenções e 11/12 evidências literais. A única
+falha de evidência veio de tratar o alcance de um replay documentado como estado.
+A distinção foi corrigida no código e passa a ser testada na confirmação C18.
+
+No teste de texto da C17, os dois julgadores aprovaram 8/12 com texto corrido e
+10/12 com referências por alegação. Ficaram em aberto o replay sem passagem e
+uma ausência documentada que o leitor registrou como lacuna sem citação.
+Os protocolos e entregas lacrados ficam em `outputs/cdp-memoria-rigor/`.
+
+O roteiro semanal de dreaming exige prova agora, confere a devolutiva em leitura
+e preserva as investigações. As skills geradas e o plugin 1.9.1 usam as permissões
+fechadas para os comandos de leitura e conferência. A C17 temporal simulada conferiu
+9/9 itens em três páginas. Duas notas foram integradas explicitamente só na fixture.
+Sessões novas passaram de 6/7 para 7/7 no critério fixado antes do teste, com 4/4
+abstenções preservadas e 8/8 controles de corte, validade e proveniência. O ensaio
+histórico de curadoria recuperou 9/9 evidências com até cinco passagens.
+
+O artigo atualizado está em `outputs/ai-notes-15/ai-notes-15-eval-prospectivo-17.html`.
+A agenda versionada contém uma reserva semanal e o dreaming de sábado. A verificação
+deste ramo é de desenvolvimento. A operação e a entrega de rotinas permanecem no executor.
+
+## Ablação pareada C15 e retomada da memória — 07/11/2026
+
+A qualificação `1b3df366`, com fontes `ac5f8481`, mediu 24 perguntas inéditas de
+evidência, 12 destinos de estado e quatro controles externos. A busca direta
+acertou 14/24, a memória automática 18/24 e o Codex guiado 23/24 tanto com
+quanto sem as notas ativas. O fluxo guiado com notas ganhou dez e perdeu uma
+frente à direta, saldo de 37,5 pontos percentuais. O contraste entre leitores
+empatou nas mesmas 23 perguntas. Ambos acertaram 7/12 destinos de estado e 4/4
+abstenções externas, com zero encaminhamentos indevidos nas perguntas de evidência.
+
+A auditoria recontou 80 escolhas diretamente no Git. Os cinco erros de destino
+ficaram no roteador determinístico, embora os leitores tenham reconhecido a
+intenção de estado. A regressão dos 14 destinos anotados no original e na C14
+ficou em 14/14. Para a próxima confirmação prospectiva, trate os erros da C15
+como diagnóstico conhecido. Em evidência, os dois leitores falharam na mesma
+pergunta sobre divergência de participações e a busca direta recuperou o trecho.
+A comparação mede recuperação, com dependência potencial entre perguntas da
+mesma sessão. O ensaio e as figuras ficam em `outputs/cdp-memoria-rigor/`.
+
+`memoria contexto --consulta` seleciona notas pertinentes no mesmo orçamento
+de 6 KiB. Consultas de estado retornam um destino estável sem contexto histórico.
+`memoria retomar-sonho` confere páginas sucessivas e conserva pendências.
+`--exigir-provas` valida trecho literal ou diagnóstico verificável na revisão.
+A reexecução simulada do dreaming passou de 4/9 a 7/9 na primeira passagem e
+ficou em 8/9 nos dois estágios com até cinco. As disposições editoriais do
+ensaio eram predefinidas. A avaliação semântica de um curador autônomo e da
+análise final segue em aberto. O livro e as rotinas operacionais não foram
+acionados nesta avaliação. A suíte focal passou com 450 e um pulado.
+
 ## Confirmação 14 integral da seleção guiada — 07/11/2026
 
 Na revisão `6c5c85b0`, qualificação `f85c9acf`, a seleção exploratória

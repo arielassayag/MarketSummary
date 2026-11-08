@@ -136,6 +136,26 @@ def test_exploracao_soma_recortes_e_ids_e_rejeita_repeticao():
                 ler=catalogo.fontes.linhas)
 
 
+def test_exploracao_revisa_destino_apenas_com_codigo_lacrado_e_estado():
+    catalogo = _catalogo("Regra completa", orientacao="Consulte o estado e a agenda.")
+    pacote = preparar(catalogo, "diario", _CONSULTA, 5, explorar_fontes=True)
+    destino = "trilha-entrega"
+    assert "trilha de entrega" in pacote["destinos_permitidos"][destino]
+    saida = aplicar(pacote, _resposta(pacote, [], intencao="estado_atual", destino_atual=destino))
+    assert saida["destino_atual"] == destino
+    assert saida["orientacao_atual"] == pacote["destinos_permitidos"][destino]
+    assert saida["fontes"] == saida["passagens"] == saida["notas"] == []
+    for intencao in ("evidencia", "fora_escopo", None):
+        with pytest.raises(MemoriaErro, match="destino"):
+            aplicar(pacote, _resposta(pacote, [], intencao=intencao, destino_atual=destino))
+    with pytest.raises(MemoriaErro, match="destino"):
+        aplicar(pacote, _resposta(pacote, [], intencao="estado_atual", destino_atual="fonte-inventada"))
+    alterado = deepcopy(pacote)
+    alterado["destinos_permitidos"][destino] = "Fonte adulterada"
+    with pytest.raises(MemoriaErro, match="lacre"):
+        aplicar(alterado, _resposta(pacote, [], intencao="estado_atual", destino_atual=destino))
+
+
 @pytest.mark.parametrize(
     "ids,extras",
     [([1, 1], {}), ([False], {}), ([99], {}), ([1, 2, 3], {}), ([1], {"trecho": "novo"})],

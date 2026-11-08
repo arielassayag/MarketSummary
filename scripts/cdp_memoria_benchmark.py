@@ -13,11 +13,20 @@ from random import Random
 from statistics import fmean
 
 from cdp.memoria import Catalogo, Fontes, Local, _chaves_unicas, raiz_repo
-from cdp.memoria_avaliacao import CasoReservado, CorpusReservado, K, _atingidos, _grupos, _medir
-from cdp.memoria_busca import BYTES_PASSAGEM, LINHAS_PASSAGEM, _janelas
+from cdp.memoria_avaliacao import (
+    CasoReservado,
+    CorpusReservado,
+    K,
+    _atingidos,
+    _grupos,
+    _medir,
+    _medir_destino,
+    _resumo_destinos,
+)
+from cdp.memoria_busca import BYTES_CONTEXTO, BYTES_PASSAGEM, LINHAS_PASSAGEM, _janelas
 
 MODOS = ("direta", "memoria")
-TETO_BYTES = 4_500
+TETO_BYTES = BYTES_CONTEXTO
 SEMENTE = 20261107
 REAMOSTRAGENS = 10_000
 Lote = tuple[str, CorpusReservado, dict[str, str], str]
@@ -64,24 +73,57 @@ def _passagens_limitadas(fontes: Fontes, passagens: list[Local]) -> tuple[list[L
     return prefixo, bytes_total
 
 
-def _validar_gabarito(catalogo: Catalogo, lotes: list[Lote]) -> dict[str, list[list[Local]]]:
+def _cabe_em_conjunto(janelas: dict[Local, int], grupos: list[list[Local]]) -> bool:
+    """Conserva o menor custo por máscara de grupos e número de passagens."""
+    alvo = (1 << len(grupos)) - 1
+    if alvo == 0:
+        return True
+    por_mascara: dict[int, int] = {}
+    for janela, tamanho in janelas.items():
+        mascara = sum(1 << i for i, cobre in enumerate(_atingidos([janela], grupos)) if cobre)
+        if mascara:
+            custo = tamanho + 1  # Um separador por passagem, compensado no teto.
+            por_mascara[mascara] = min(custo, por_mascara.get(mascara, custo))
+    estados: list[dict[int, int]] = [{0: 0}, *({} for _ in range(K))]
+    teto = TETO_BYTES + 1
+    for mascara, custo in por_mascara.items():
+        for n in range(K, 0, -1):
+            for anterior, gasto in estados[n - 1].items():
+                combinado = anterior | mascara
+                total = gasto + custo
+                if total <= teto:
+                    if combinado == alvo:
+                        return True
+                    estados[n][combinado] = min(total, estados[n].get(combinado, total))
+    return False
+
+
+def _validar_gabarito(catalogo: Catalogo, lotes: list[Lote], *,
+                      conjunto: bool = False) -> dict[str, list[list[Local]]]:
     fontes = catalogo.fontes
     grupos_por_id = {}
-    janelas_por_caminho: dict[str, list[Local]] = {}
+    janelas_por_caminho: dict[str, dict[Local, int]] = {}
     for _, corpus, _, _ in lotes:
         for caso in corpus.casos:
             grupos = _grupos(fontes, caso)
             for grupo in grupos:
                 for ev in grupo:
                     if ev.caminho not in janelas_por_caminho:
-                        janelas_por_caminho[ev.caminho] = [
-                            Local(ev.caminho, j.inicio, j.inicio + len(j.linhas) - 1, "")
+                        janelas_por_caminho[ev.caminho] = {
+                            Local(ev.caminho, j.inicio, j.inicio + len(j.linhas) - 1, ""):
+                            len("\n".join(j.linhas).encode())
                             for j in _janelas(ev.caminho, fontes.linhas(ev.caminho))
-                        ]
+                        }
                 janelas = [j for ev in grupo if ev.caminho in catalogo.fontes_por_escopo[caso.escopo]
                            for j in janelas_por_caminho[ev.caminho]]
                 if not _atingidos(janelas, [grupo])[0]:
                     raise ValueError(f"gabarito fora das janelas diretas: {caso.id}")
+            if conjunto:
+                permitidos = set(catalogo.fontes_por_escopo[caso.escopo])
+                opcoes = {p: custo for caminho in {ev.caminho for g in grupos for ev in g} & permitidos
+                          for p, custo in janelas_por_caminho[caminho].items()}
+                if not _cabe_em_conjunto(opcoes, grupos):
+                    raise ValueError(f"gabarito fora do teto conjunto de passagens e bytes: {caso.id}")
             grupos_por_id[caso.id] = grupos
     return grupos_por_id
 
@@ -166,7 +208,7 @@ def _medir_caso(catalogo: Catalogo, caso: CasoReservado, ouro: list[list[Local]]
     modos = {
         "direta": _medir(direta, ouro),
         "memoria": _medir(memoria, ouro, encaminhou=bool(hibrida["orientacao_atual"]),
-                           notas=bool(hibrida["notas"])),
+                           notas=bool(hibrida["notas"])) | _medir_destino(caso, hibrida),
     }
     for modo, passagens in zip(MODOS, (direta, memoria), strict=True):
         prefixo, tamanho = _passagens_limitadas(catalogo.fontes, passagens)
@@ -178,26 +220,35 @@ def _medir_caso(catalogo: Catalogo, caso: CasoReservado, ouro: list[list[Local]]
         modos["memoria"]["explicito_sem_memoria"] = bool(explicita["orientacao_atual"]) and not (
             explicita["notas"] or explicita["passagens"]
         )
+        if caso.destinos_aceitos is not None:
+            modos["memoria"]["destino_explicito"] = _medir_destino(caso, explicita)
     return {
         "id": caso.id, "bateria": bateria, "familia": familia, "escopo": caso.escopo,
         "consulta": caso.consulta, "tipo": caso.tipo, "grupos": len(ouro),
         "grupos_cobertos_catalogo": grupos_cobertos, "modos": modos,
         "gabarito": [[e.json() for e in grupo] for grupo in ouro],
+        **({"destinos_aceitos": caso.destinos_aceitos} if caso.destinos_aceitos is not None else {}),
     }
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--revisao", required=True, help="commit completo do código e do acervo")
+    parser.add_argument("--preflight-conjunto", action="store_true",
+                        help="só verifica se os grupos cabem juntos no teto das janelas diretas")
     parser.add_argument("corpora", nargs="+", type=Path, help="baterias JSON congeladas")
     args = parser.parse_args()
     fontes = Fontes(raiz_repo(), revisao=args.revisao)
-    for arquivo in (
+    modulos = (
         "memoria", "memoria_busca", "memoria_avaliacao", "memoria_linhagem", "memoria_secoes",
         "memoria_selecao", "memoria_reforcos",
-    ):
+    )
+    codigo_local = {}
+    for arquivo in modulos:
         caminho = f"src/cdp/{arquivo}.py"
-        if (fontes.raiz / caminho).read_bytes() != fontes.ler(caminho, 256 * 1024):
+        atual = (fontes.raiz / caminho).read_bytes()
+        codigo_local[caminho] = _sha(atual)
+        if not args.preflight_conjunto and atual != fontes.ler(caminho, 256 * 1024):
             raise ValueError(f"o código local diverge da revisão: {caminho}")
 
     lotes = [(p.stem, *_ler_corpus(p, fontes.revisao)) for p in args.corpora]
@@ -212,7 +263,15 @@ def main() -> None:
     catalogo = Catalogo(fontes, datas.pop())
     if catalogo.problemas:
         raise ValueError("catálogo com ressalvas")
-    ouro = _validar_gabarito(catalogo, lotes)
+    ouro = _validar_gabarito(catalogo, lotes, conjunto=args.preflight_conjunto)
+    if args.preflight_conjunto:
+        print(json.dumps({"revisao_fontes": fontes.revisao, "codigo_local_sha256": codigo_local,
+                          "preflight_sha256": _sha(Path(__file__).read_bytes()),
+                          "corpora": {nome: sha for nome, _, _, sha in lotes},
+                          "casos": len(ouro), "documentais_conjuntos": sum(bool(g) for g in ouro.values()),
+                          "grupos": sum(map(len, ouro.values())), "limite_passagens": K,
+                          "limite_bytes": TETO_BYTES}, ensure_ascii=False, indent=2))
+        return
     manifesto_fontes = {
         caminho: _sha(fontes.ler(caminho, 1024 * 1024))
         for caminho in sorted({p for caminhos in catalogo.fontes_por_escopo.values()
@@ -229,6 +288,7 @@ def main() -> None:
         raise ValueError("cada bateria precisa de perguntas de evidência")
     principal = _pares(positivos, "completo_5")
     baterias = {nome: _pares(c, "completo_5") for nome, c in por_bateria.items()}
+    destinos = _resumo_destinos(estados)
     resultado = {
         "revisao": fontes.revisao, "data": catalogo.data.isoformat(),
         "corpora": {nome: sha for nome, _, _, sha in lotes},
@@ -254,6 +314,10 @@ def main() -> None:
             "estado_com_notas": sum(e["retornou_notas"] for e in estados),
             "estaticas_encaminhadas": sum(c["modos"]["memoria"]["encaminhou"] for c in positivos),
             "fora_abstencao": {m: sum(c["modos"][m]["abstencao"] for c in fora) for m in MODOS},
+            **destinos,
+            **({"estado_destinos_explicitos": _resumo_destinos(
+                [e.get("destino_explicito", {}) for e in estados]
+            )} if destinos else {}),
         },
         "casos": casos,
     }

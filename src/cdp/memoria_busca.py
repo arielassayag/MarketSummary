@@ -12,7 +12,7 @@ from dataclasses import dataclass
 
 LINHAS_PASSAGEM = 14
 BYTES_PASSAGEM = 1800
-_BYTES_AMPLIACAO = 4_500
+BYTES_CONTEXTO = 4_500
 _PASSO = 4
 _STOP = set(
     "a ao aos as com como da das de do dos e em essa esse esta isto mais na nas no nos "
@@ -34,6 +34,7 @@ _CONCEITOS = {
     "arquivo-orfa": r"orfa(?:o|os|s)?|sem par|artefato isolado|evento isolado|arquivo avulso",
     "autoria": r"autoria|autor(?:es)?|autor[ai]s?|quem (?:redigiu|escreveu|produziu)|mind",
     "congelamento": r"congelad[oa]s?|congelamento|freeze|posicao mantida|linha detida sem",
+    "correcao": r"corrig(?:ir|id[oa]s?)|corrij[ae]|correc(?:ao|oes)",
     "cotacao": r"cotac(?:ao|oes)|preco(?:s)? de (?:mercado|fechamento)|barra (?:diaria|provisoria)",
     "defasagem": r"defasad[oa]s?|defasagem|desatualizad[oa]s?|atrasad[oa]s?|retrato antigo",
     "desfecho": r"desfechos?|outcomes?|resultado observado|realizacao da previsao",
@@ -59,12 +60,14 @@ _CONCEITOS = {
     "portal-publico": r"portal(?:is)?|github pages|publicado no ar|pagina publica",
     "procedencia": r"procedencia|proveniencia|origem comprovada|tra(?:iler|ilers)|fonte original",
     "proposta": r"propostas?|carteira sugerida|previa(?:s)? de decisao|proposta aprovada",
+    "rejeicao-validacao": r'reprovad[oa]s?|texto invalid[oa]|ok"\s*:\s*false',
     "replay": r"replays?|reexecuc(?:ao|oes)|reproduzir uma montagem|ensaio retrospectivo",
     "retrato": r"retratos?|snapshots?|base do modelo|modelos atualizados",
     "relatorio-arquivado": r"relatorios? (?:antigos?|arquivad[oa]s?|historicos?)|dados/relatorios|texto integral",
     "rotina": r"rotinas?|tarefas? recorrentes?|agendamentos?|disparos?",
     "saida-automatica": r"texto automatico|nota automatica|autoria.{0,6}codigo|fallback editorial",
     "sincronizacao": r"sincroniz\w*|reconcili\w*|atualizar (?:o clone|do remoto)",
+    "texto-editorial": r"narrativas?|comentarios?|texto (?:da mente|deterministico|automatico)",
     "trava": r"travas?|bloqueio de escrita|escritor exclusivo|lock",
     "validacao": r"validadores?|validac(?:ao|oes)|valida(?:r|do|da)|texto invalid[oa]|reprovad[oa]",
 }
@@ -201,7 +204,7 @@ def ampliar_selecao(passagens: list[Local], candidatas: Iterable[Local],
 
     selecionadas = list(passagens)
     total = sum(map(tamanho, selecionadas)) + max(0, len(selecionadas) - 1)
-    if total >= _BYTES_AMPLIACAO:
+    if total >= BYTES_CONTEXTO:
         return selecionadas
     por_fonte: dict[str, list[Local]] = {}
     for p in candidatas:
@@ -213,7 +216,7 @@ def ampliar_selecao(passagens: list[Local], candidatas: Iterable[Local],
                     or candidata.fim - candidata.inicio + 1 > LINHAS_PASSAGEM):
                 continue
             maior = tamanho(candidata)
-            if maior <= BYTES_PASSAGEM and total + maior - tamanho_atual <= _BYTES_AMPLIACAO:
+            if maior <= BYTES_PASSAGEM and total + maior - tamanho_atual <= BYTES_CONTEXTO:
                 selecionadas[i] = candidata
                 total += maior - tamanho_atual
                 break
@@ -239,9 +242,25 @@ def reaproveitar_vagas(passagens: list[Local], candidatas: Iterable[Local],
         if len(selecionadas) == len(passagens):
             break
         custo = tamanho(p) + 1
-        if (total + custo <= _BYTES_AMPLIACAO
+        if (total + custo <= BYTES_CONTEXTO
                 and not any(redundante(p, a, diverso=True) for a in selecionadas)):
             selecionadas.append(p)
+            total += custo
+    return selecionadas
+
+
+def limitar_contexto(passagens: Iterable[Local], ler: Callable[[str], tuple[str, ...]]) -> list[Local]:
+    """Conserva a ordem e admite apenas passagens inteiras que cabem em bytes UTF-8."""
+    selecionadas: list[Local] = []
+    total = 0
+    for local in passagens:
+        if local.fim - local.inicio + 1 > LINHAS_PASSAGEM:
+            continue
+        trecho = "\n".join(ler(local.caminho)[local.inicio - 1:local.fim])
+        tamanho = len(trecho.encode())
+        custo = tamanho + bool(selecionadas)
+        if tamanho <= BYTES_PASSAGEM and total + custo <= BYTES_CONTEXTO:
+            selecionadas.append(local)
             total += custo
     return selecionadas
 

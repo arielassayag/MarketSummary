@@ -1,0 +1,43 @@
+{
+  "id": "operador-trava-inacessivel-no-gate",
+  "tipo": "licao",
+  "estado": "candidata",
+  "titulo": "Trava inacessível no gate impede a execução exclusiva",
+  "resumo": "Se a trava distribuída não puder ser adquirida no gate por falha de rede, GitHub fora do ar ou disputa, a rotina exclusiva para antes de gravar. A próxima tarefa aplicável volta a consultar a trava. Na montagem, a reserva pode retomar se a principal parou. Use o identificador da tarefa que disparou o novo gate.",
+  "escopos": [
+    "operador",
+    "semanal"
+  ],
+  "tags": [
+    "trava distribuída",
+    "gate exclusivo",
+    "Git remoto",
+    "reserva da montagem",
+    "rede indisponível",
+    "falha fechada",
+    "adquirir trava",
+    "identificador da tarefa"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": null,
+  "rever_em": null,
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "- **Trava inacessível** (GitHub fora do ar, disputa): o escritor exclusivo **não executa**\n  (falha fechada). A próxima tarefa da agenda volta a consultar a trava. Só uma sessão de operador,\n  explicitamente, usa `--sem-trava` (no gate e em `cdp publicar`).",
+      "sha256": "e3bf6294bd7df9d8194385197e694645d830a86c8eef6e0369be657700d1142a"
+    },
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "- **Montagem.** A reserva das 12:07 pode retomar se a principal parou. A trava impede duas\n  execuções ao mesmo tempo e, sem renovação, expira em 50 min, antes da reserva.",
+      "sha256": "d6ae1fe7dc7e3d9753579587261cf4080b3b4a77094d277aab2cca9df2f9ae98"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/SEMANAL.md",
+      "trecho": "- Use a tarefa que disparou a execução (`cdp-semanal` ou `cdp-semanal-b`). O gate só executa\n  com montagem a fazer (`semanal.acao` igual a `montar` ou `tese`) ou com a abertura do livro\n  pendente; `executar: false` ⇒ \"Sem montagem hoje: <motivo>\" e encerre. Guarde `trava.id`,\n  `execucao` e `mente`.",
+      "sha256": "4d16a42311482da0885a82aae466831102cffc56611458941674dd11177fbc33"
+    }
+  ]
+}

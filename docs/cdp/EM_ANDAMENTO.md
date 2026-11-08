@@ -89,6 +89,11 @@ ao critério pareado predefinido nesta amostra. Antes de generalizar,
 repita em casos novos e com mais de uma geração por condição. O caso
 de prazo e recibo orienta a próxima ficha sobre a ordem das etapas.
 
+O [roteiro de reprodução](../../scripts/cdp_memoria_harness/README.md)
+separa as tarefas de julgamento no Codex dos verificadores mecânicos
+que acompanham o código. Casos, pareceres e recibos ficam no pacote
+de evidências da rodada.
+
 ## Cobertura do acervo e união de provas — 07/11/2026
 
 A C45 congelou 31 concessões de 13 documentos a papéis

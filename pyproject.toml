@@ -42,6 +42,7 @@ gemini = [
 ]
 dev = [
     "pytest>=8.0",
+    "pytest-xdist==3.8.0",
     "ruff>=0.5",
     # scripts/cdp_marca.py (máscaras WebP da marca do portal)
     "pillow>=10.0",

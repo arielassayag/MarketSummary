@@ -23,8 +23,8 @@
   "evidencias": [
     {
       "caminho": "docs/cdp/playbooks/STATUS.md",
-      "trecho": "- **Integridade** e **kill switch**.\n- **Fase**: antes da data de início, a data da carteira inaugural; com a abertura do livro\n  pendente, destaque que a próxima rotina diária a faz.\n- **Executor**: quem grava o livro e desde quando; se este ambiente não é o executor, diga\n  \"somente leitura\".",
-      "sha256": "e4fbc02490264b6298ee0cea609aa7f2de28d63401f827f3528fa9f1ab18983c"
+      "trecho": "- **Integridade** e **kill switch**.\n- **Fase**: antes da data de início, a data da carteira inaugural; com a abertura do livro\n  pendente, destaque que a primeira rotina elegível de montagem ou de fechamento abre o livro.\n- **Executor**: quem grava o livro e desde quando; se este ambiente não é o executor, diga\n  \"somente leitura\".",
+      "sha256": "4d620216f8a7036b5f0069a70593c0e7b7b2d0cfe009b9ec239e6104ff373606"
     },
     {
       "caminho": "src/cdp/estado.py",

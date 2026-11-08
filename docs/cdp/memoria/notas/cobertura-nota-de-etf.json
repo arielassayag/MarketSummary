@@ -1,0 +1,32 @@
+{
+  "id": "cobertura-nota-de-etf",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Pesquisa de ETF distingue o produto de uma empresa",
+  "resumo": "Use documentos públicos do administrador e do índice para avaliar objetivo, exposição, replicação, custos e aderência contratual. Não atribua resultado ou guidance de empresa a um ETF e mantenha ausentes os dados que faltarem.",
+  "escopos": [
+    "cobertura"
+  ],
+  "tags": [
+    "ETF",
+    "fundo de índice",
+    "replicação",
+    "administrador",
+    "aderência",
+    "spread",
+    "guidance",
+    "ILF"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/COBERTURA.md",
+      "trecho": "   Para ETF, pesquise documentos públicos do administrador e do índice: objetivo,\n   exposição, composição, concentração, moeda, regras de replicação, custos, negociação\n   e aderência ao índice contratual. Preencha os complementos próprios do produto; não\n   atribua a ele resultado ou guidance de uma empresa. Dados de spread, patrimônio ou\n   aderência ausentes não são presumidos; comparação com ILF tem finalidade distinta.",
+      "sha256": "9f1b62fc40d01f0334c3fc2a9b554451c20eb3a902240ab3109151f9f983416c"
+    }
+  ]
+}

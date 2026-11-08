@@ -12,7 +12,7 @@ código (`src/cdp/calendar.py`, `src/cdp/portfolio/execucao.py`, `src/cdp/portfo
 - **Dia de montagem:** o último pregão da semana na NYSE — sexta-feira ou, com feriado nos EUA, o
   pregão anterior (ex.: quinta-feira 25/03/2027, véspera da Sexta-Feira Santa). A data de início
   do mandato (`fund.inception_date`, 09/10/2026) é sempre dia de montagem: a carteira inaugural.
-- **Decisão antes do fechamento:** a pesquisa começa às 11h00 de Brasília do dia de montagem, com
+- **Decisão antes do fechamento:** a pesquisa começa às 11h07 de Brasília do dia de montagem, com
   todos os dados disponíveis até o momento da análise (fechamento do pregão de dados anterior,
   cotações intradiárias e dados lentos atualizados), e a decisão é gravada até o **prazo
   efetivo** (§3). Decidir depois do prazo seria conhecer o fechamento: o código recusa
@@ -34,7 +34,7 @@ antecipada, B3 fechada), 31/12 (quinta; B3, Santiago e Bogotá fechadas).
 | Horário | Etapa |
 |---|---|
 | Véspera, após o fechamento | Fechamento diário (marcação, risco, atribuição, comentário de P&L) e retrato da cobertura |
-| 11h00 | Pesquisa e preparação da semana com dados até o momento da análise |
+| 11h07 | Pesquisa e preparação da semana com dados até o momento da análise |
 | até o prazo efetivo (15h00; 14h15 em fechamento antecipado nos EUA) | Decisão gravada (reserva às 12h07) |
 | 16h00–17h00 (até 01/11/2026); 18h00 a partir de 02/11/2026 | Leilões de fechamento: execução das ordens |
 | noite (19h22) | Efetivação ao fechamento oficial, registro diário e comentário de P&L; em seguida o **relatório semanal de resultado** (§10) |

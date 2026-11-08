@@ -1,0 +1,34 @@
+{
+  "id": "desenvolvimento-escalas-do-modelo-de-risco",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "RiskModel distingue covariância dos fatores e variância específica",
+  "resumo": "O objeto de risco traz exposições B, covariância anual de fatores F e variância específica anual D, além das séries de retornos. Use specific_var para o componente específico de cada emissor e factor_cov para a matriz dos fatores.",
+  "escopos": [
+    "desenvolvimento",
+    "risco",
+    "calibracao"
+  ],
+  "tags": [
+    "RiskModel",
+    "covariância",
+    "variância específica",
+    "fatores",
+    "anualização",
+    "exposições",
+    "factor_cov",
+    "specific_var"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/ARQUITETURA.md",
+      "trecho": "- `RiskModel` (`risk/types.py`): `exposures` (B), `factor_cov` (F, anual), `specific_var` (D,\n  anual), `factor_returns`, `specific_returns`, `factor_groups`. Fatores: `market`,\n  `country:<XX>`, `sector:<GICS>` e estilos; a definição completa está em\n  `docs/cdp/METODOLOGIA.md`, seção 4.1.",
+      "sha256": "6408684fb414f9e48eb47ae3723e810777f80f8b0dfd5159211176982816fc94"
+    }
+  ]
+}

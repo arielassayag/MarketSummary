@@ -1,0 +1,38 @@
+{
+  "id": "diario-escolher-escopo-da-cobertura",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Evento macro e divulgação de resultados afetam o retrato da cobertura",
+  "resumo": "A agenda define retrato completo para evento macro de alto impacto, abertura, atualização pré-decisão e concentração de resultados. Para balanços recentes isolados, o retrato parcial abrange somente os emissores pertinentes.",
+  "escopos": [
+    "diario",
+    "cobertura"
+  ],
+  "tags": [
+    "retrato da cobertura",
+    "macro",
+    "balanço",
+    "resultado",
+    "completo",
+    "parcial",
+    "agenda",
+    "evento de impacto alto"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "   - `cobertura.tipo: \"completo\"` — todo o universo: gênese, atualização antes da decisão que não\n     foi gravada, evento macro de impacto alto do calendário público\n     (`configs/cdp/cobertura/eventos_macro.yaml`: Copom, FOMC, Banxico, IPCA, CPI dos EUA) que\n     reagiu neste pregão (os modelos dependem de juros e inflação) ou resultados demais para uma\n     execução parcial:",
+      "sha256": "cc821ce3eee60465742ed235c19af3b5b9deb32f6a819b6d2459d8602cd0f062"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "   - `cobertura.tipo: \"parcial\"` — só os emissores com resultado divulgado depois do último\n     modelo (`cobertura.emissores`, `cobertura.adhoc.itens`: CVM, SEC ou Yahoo, com data efetiva\n     ou anunciada, nunca estimada), dentro de um pregão da divulgação:",
+      "sha256": "a42cbba086bd45e6a18c0ebec939da62763832dc9f349de40df35b21daeb0767"
+    }
+  ]
+}

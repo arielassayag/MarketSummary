@@ -1,0 +1,35 @@
+{
+  "id": "calibracao-mesma-tarefa-com-assistente-externo",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Comparação entre assistentes com pacote e validação comuns",
+  "resumo": "Use cdp mente pacote para entregar as entradas e o schema a um assistente sem acesso ao repositório. Recolha apenas o JSON, aplique o mesmo validador da etapa e registre a autoria no campo mind. O painel de gestão omite essa identidade.",
+  "escopos": [
+    "calibracao"
+  ],
+  "tags": [
+    "comparação entre mentes",
+    "pacote autocontido",
+    "assistente externo",
+    "validação",
+    "JSON",
+    "mind"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/METODOLOGIA.md",
+      "trecho": "Qualquer outro assistente (inclusive um chat sem acesso ao repositório) faz os passos da mente\ncom `cdp mente pacote` (pacote markdown autocontido) e devolve o JSON, validado pelos mesmos\ncomandos (`docs/cdp/REPRODUZIR.md`). O campo `mind` em cada pacote de pesquisa, decisão,\ncomentário e tese registra quem conduziu; o painel de gestão nunca exibe o nome da mente.",
+      "sha256": "cad39b5b0eec633b1c18683f1cff075db50c9854b9dd60b32d58783c2eee3f40"
+    },
+    {
+      "caminho": "docs/cdp/REPRODUZIR.md",
+      "trecho": "3. Você cola o pacote no assistente e salva a resposta (só o objeto JSON) no caminho indicado.\n4. O validador da CLI — o mesmo das rotinas — aceita ou lista apontamentos precisos (número fora\n   de placeholder, fato inexistente, evidência inválida, data posterior, marcação, injeção de\n   instruções, guia de estilo). Cole os apontamentos no assistente e repita até a validação passar.",
+      "sha256": "53cf669e74e195a7de2f72923829a57e7e505afbe54eec430db3c4c03e69608d"
+    }
+  ]
+}

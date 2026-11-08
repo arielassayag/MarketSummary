@@ -82,6 +82,9 @@ primeira rotina que gravar com `reinicio.pendente: true` abre o livro na data de
 
 ## 2. Como cada execução funciona (igual em qualquer app)
 
+Siga o prompt gerado para a tarefa. O fluxo abaixo é o de uma rotina exclusiva no modo
+agente. As tarefas de leitura seguem do gate ao roteiro.
+
 1. `uv sync --frozen --extra dev --extra ai`
 2. `uv run python -m cdp rotinas gate --tarefa <tarefa> --adquirir` — o código diz se há o que
    fazer, se este ambiente é o executor designado e, nos escritores exclusivos, pega a trava
@@ -101,8 +104,8 @@ todos. Skills: `.claude/skills/cdp-*` (Claude Code, inclusive na nuvem), `.agent
 (Codex, Gemini, Antigravity e outros; mesmo conteúdo, gerado por
 `uv run python -m cdp skills sincronizar --claude`) e o plugin `cdp` (`/cdp:<skill> <tarefa>`, PC
 local). Quando o app protege `.git` no sandbox, `scripts/cdp_rotina.sh` faz os passos de git por
-fora e o prompt avisa a mente (modo executor). As tarefas de leitura (`cdp-status`) e as
-compartilhadas (risco, calibração) não pegam a trava.
+fora e o prompt avisa a mente (modo executor). As tarefas de leitura (`cdp-status` e
+`cdp-dreaming`) e as compartilhadas (risco, calibração) dispensam a trava no gate.
 
 ## 3. Claude Code — rotinas na nuvem
 

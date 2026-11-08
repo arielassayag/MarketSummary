@@ -1,0 +1,30 @@
+{
+  "id": "ref-configuracao-original-da-tese",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Tese histórica usa a proposta aprovada e o mandato original",
+  "resumo": "A reconstrução usa a proposta aprovada sem reotimizar, a configuração com hash conferido e a decisão do PM usada na aprovação. Com mandato recalibrado e sem a configuração original, os fatos afetados saem como indisponíveis. Sem prova da decisão do PM, visões e postura também saem indisponíveis.",
+  "escopos": [
+    "semanal"
+  ],
+  "tags": [
+    "tese histórica",
+    "config_decisao",
+    "config_hash",
+    "recalibração",
+    "proposta aprovada",
+    "fatos ausentes"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/TESE.md",
+      "trecho": "Reconstrução da semana: os números saem da proposta aprovada, sem reotimizar, com a configuração\ndo mandato vigente no `decide` (`book/<semana>/config_decisao.json`, gravada pelo decide e aceita\nsó se o `config_hash` conferir com o da proposta) e com a decisão do PM **verificada** que o decide\nusou (conferida pelo hash gravado na decisão), nunca o `pm_decision.json` bruto. Sem essa\nconfiguração e com o mandato recalibrado, alpha quantitativo, sinais, inclinação das visões,\nmotivo do tamanho e grupos de risco saem `n/d` com nota; sem a decisão do PM conferida, visões e\npostura do PM saem `n/d` com nota.",
+      "sha256": "237c9f431409b709feafe56fa9c55ad163b32c72201a30d5cf147a877ae9add6"
+    }
+  ]
+}

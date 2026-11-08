@@ -1,0 +1,44 @@
+{
+  "id": "aud-retificacao-anteriores-procedencia",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "Nota local da errata e prova de publicação remota",
+  "resumo": "O comando da errata anexa nota local e evento. Na retomada, anteriores identifica diferenças já presentes ao abrir o novo gate. A autoria e o recibo antigos continuam vinculados à sua execução. Preserve o recibo novo com o push. O portal mantém o original e exibe um aviso com link para a correção.",
+  "escopos": [
+    "operador",
+    "diario",
+    "status"
+  ],
+  "tags": [
+    "errata",
+    "retificação",
+    "evento",
+    "nota local",
+    "remoto",
+    "recibo",
+    "push",
+    "publicador e portal"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+      "trecho": "`--publish` deste comando cria somente a nota local e o evento\n`WEEKLY_EDITORIAL_RECTIFICATION`; não faz commit nem push. A nota fica em\n`reports/semanal/<data>/retificacoes/<id>/`, com JSON, Markdown e HTML novos. O original e os\neventos anteriores permanecem literais. Uma tentativa repetida não sobrescreve a nota.\n\nDepois da integridade e do painel previstos no roteiro diário, use exclusivamente o\npublicador normal:\n\n```sh\nuv run python -m cdp publicar --tarefa <tarefa-diaria> --mensagem \"CDP: retificação editorial semanal\" --execucao <execucao> --trava <trava.id>\nuv run python -m cdp trava liberar --id <trava.id>",
+      "sha256": "8924b8e2d571923ae3a0a73c9a3a118b69fca41058f505772e46da3ebed012f4"
+    },
+    {
+      "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+      "trecho": "O contrato existente do escritor exclusivo publica todas as diferenças locais nos caminhos\nda tarefa, incluindo o conjunto anterior que ainda não foi publicado e a nota nova. O campo\n`anteriores` identifica diferenças que já existiam no retrato inicial do gate novo. Não\natribui autoria passada a esse retrato e não modifica o recibo da execução antiga. Preserve\num recibo atual literal da saída de `cdp publicar` com `execucao`, `trava`, `arquivos`,\n`anteriores`, `commit`, `push` e `verify`. Sem push confirmado, a publicação continua local.",
+      "sha256": "0321d9d08914ea5edd6399f4b9165f6c0f67c99cdfb5ef0dd419af0810cbf385"
+    },
+    {
+      "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+      "trecho": "O portal mantém o relatório original e mostra uma indicação explícita com link para a nota.\nA agenda distingue emissores pendentes de corrigidos. Divergência dos originais, da nota ou\nda trilha impede a integridade e a publicação remota. Falha parcial ao anexar pode deixar\nartefato/evento órfão; isso é detectado e exige diagnóstico, sem limpeza ou reparo tácito.",
+      "sha256": "5ed0e098a7b62a3a284e0691dc469cc42860b23f22146d3b0e6e00116cb7f6f5"
+    }
+  ]
+}

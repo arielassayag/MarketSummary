@@ -1,0 +1,37 @@
+{
+  "id": "aud-avaliacao-desfecho-autenticado",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "Desfecho exige maturidade e dados autenticados",
+  "resumo": "O Runtime sela sinais e base residual por decisão antes da otimização. O desfecho só é resolvido após a última sessão prevista com mercado e registro diário autenticados. Se faltar preço, câmbio, exposição, fator obrigatório ou autoria, preserve a indisponibilidade com motivo.",
+  "escopos": [
+    "calibracao",
+    "desenvolvimento",
+    "diario"
+  ],
+  "tags": [
+    "desfecho",
+    "coorte",
+    "previsão",
+    "câmbio",
+    "registro diário",
+    "horizonte"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/METODOLOGIA.md",
+      "trecho": "O runtime registra sinais por canal (`quant`, `pesquisa_ai`, `mente_final`) antes da otimização\ne os ancora à decisão por hash. A base residual, as linhas, os calendários e a exigência dos\nfatores macro ficam congelados nessa coorte. O fechamento só resolve o horizonte após a\núltima sessão prevista, com mercado e registro diário autenticados. Ausência de preço, FX,\nexposição/fator obrigatório ou autoria mantém o resultado indisponível, com motivo.",
+      "sha256": "f704f01768bd473962d7863f30866da8816a261ecae388ae70f4bee5afb95512"
+    },
+    {
+      "caminho": "docs/cdp/METODOLOGIA.md",
+      "trecho": "Os anexos `book/<semana>/avaliacao/{sinais,vinculo,outcome}.json` e o marco\n`book/avaliacao_manifest.json` são escritos somente pelo código. Retomadas reconciliam\nanexos faltantes sem repetir decisão/MOC; conteúdo divergente é recusado. Livros anteriores\nao marco não recebem previsões retroativas. O início verdadeiro do acompanhamento fica\nexplícito; a implementação não produz 26 semanas de evidência antes da inauguração.",
+      "sha256": "79ae7fe22d12ab4fec797486800dd3df79db58ec605af73c8e8bdfabb8c3b4f0"
+    }
+  ]
+}

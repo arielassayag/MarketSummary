@@ -1,0 +1,27 @@
+{
+  "id": "diario-limite-de-pendencias",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Excesso de pendências na agenda exige intervenção",
+  "resumo": "Se a agenda indicar fechamentos_pendentes_excedem_limite, pare a rotina e peça intervenção no resumo. Na sequência regular, relatório semanal, retrato da cobertura e revisão mensal vêm depois dos fechamentos.",
+  "escopos": [
+    "diario"
+  ],
+  "tags": [
+    "limite de pendências",
+    "intervenção",
+    "volume acumulado"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "- `fechamentos_pendentes_excedem_limite: true` → pare e peça intervenção no resumo.\n- `relatorio_semanal` e `cobertura` (retrato da noite e revisão mensal): tratados no passo 6,\n  depois dos fechamentos.",
+      "sha256": "c2cb5c6df53b854ad5e81507e5921ed9763e287ff42223e1dc7eb9fbafbe7bc0"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "id": "aud-retificacao-recibo-derivado",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Recompor o recibo de uma retificação com origens explícitas",
+  "resumo": "Abra a retificação com a mente da execução, o evento semanal, o corpo autenticável e os hashes do comentário e do FactBook originais. Use a saída da publicação e a seção Integridade do relatório selado para recompor apenas campos observados, com origem registrada. Se faltar uma origem ou o hash do corpo divergir do evento, a retificação é bloqueada.",
+  "escopos": [
+    "operador",
+    "diario"
+  ],
+  "tags": [
+    "retificação",
+    "recibo",
+    "FactBook",
+    "registro diário",
+    "payload",
+    "hash",
+    "autenticação",
+    "origem do recibo"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+      "trecho": "O comando `weekly rectify-report --date AAAA-MM-DD --mind <mente>` mostra o schema\n`RetificacaoSemanal`. Escreva um JSON novo em `.cdp/retificacoes/<data>.json`. Use a mente da\nexecução, o hash do evento original `WEEKLY_CLOSE_REPORT`, um corpo completo que confira com\no hash do payload daquele evento e os hashes atuais dos arquivos originais `comentario.json`\ne `factbook.json`.",
+      "sha256": "d8ed0400c489f2315e9a682fcee652ce2026defc212329a54b3335c9444d4a71"
+    },
+    {
+      "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+      "trecho": "O payload original contém `md`, `html`, `md_sha256`, `html_sha256`, `registro`, `factbook`,\n`comentario_da_mente`, `apontamentos` e `tipo`. Este fluxo admite somente comentário da mente\nsem apontamentos no recibo original. O evento guarda o hash do payload, não seu corpo. A saída\nde `weekly close-report --publish` contém `relatorio`, `comentario_da_mente`,\n`apontamentos_comentario` e `tipo`, mas omite `registro` e `factbook`; a saída de preparação\ntambém não fornece esses dois hashes. Não prometa recuperar o corpo completo de uma única\nsaída nem afirme que esse corpo foi persistido originalmente.",
+      "sha256": "8d70a47cc8c9679987eb19db4732ee996da1af0781733a8177d1519053cf6b2c"
+    },
+    {
+      "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+      "trecho": "Se o corpo original completo não foi observado, admitem-se somente cópias determinísticas\nde campos observados, com a recomposição declarada como derivada:\n\n- `md`, `html`, `md_sha256` e `html_sha256`: os quatro campos de `relatorio` na saída original\n  da publicação local; os arquivos físicos preservados devem conferir com eles.\n- `registro`: o valor literal de “Registro diário do fechamento” na seção Integridade do\n  relatório selado, conferido com `record_hash` do registro diário original quando disponível.\n- `factbook`: o valor literal de “Base de fatos da semana” na mesma seção. A validação o\n  confronta com `FactBook.factbook_hash()` do corpo preservado de `factbook.json`; esse hash de\n  objeto é distinto do SHA-256 do arquivo, que vai em `factbook_original_sha256`.\n- `comentario_da_mente` e `tipo`: os campos homônimos da saída original da publicação local;\n  `apontamentos`: cópia literal de `apontamentos_comentario` daquela saída.",
+      "sha256": "037eb5c310d943d197bc4715c5ded4ed59a6049203f939a3e51fadf70f103f5a"
+    },
+    {
+      "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+      "trecho": "Registre quais evidências forneceram cada campo e que o corpo é recomposto, sem atribuir\nautoria, data de coleta ou persistência histórica ao recibo novo. Falta de qualquer fonte\nnecessária, corpo incompleto ou divergência do hash ao evento bloqueia a retificação. Não\ninferir valores só do hash, nem chamar preparação, `calcular_semana`, modelos, fechamento ou\npublicação do relatório para reconstruir o recibo. O código cruza o corpo completo com o\nevento encadeado, os hashes dos relatórios e o FactBook\npreservado. Os hashes atuais dos insumos não comprovam quando foram coletados ou quem os\nescreveu; o trecho corrigido deve constar nos dois relatórios originalmente autenticados.",
+      "sha256": "50788716cc1afc3b99ebdfd72cf68e6829442820ce8dce5dfaee6149b377878f"
+    }
+  ]
+}

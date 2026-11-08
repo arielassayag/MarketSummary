@@ -1,0 +1,35 @@
+{
+  "id": "operador-instalacao-do-codex",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Operação agendada no Codex desktop e conferência da instalação",
+  "resumo": "As tarefas locais exigem computador acordado e app aberto. Use clone e conta do sistema dedicados com acesso total para rede e escrita em .git. Confira nomes e horários instalados com o quadro interno e a agenda canônica em configs/cdp/rotinas.yaml. Separe a evidência de configuração, execução e publicação.",
+  "escopos": [
+    "operador"
+  ],
+  "tags": [
+    "Codex desktop",
+    "automação local",
+    "máquina acordada",
+    "clone dedicado",
+    "acesso total",
+    "agenda canônica"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "As tarefas agendadas do app desktop do Codex rodam **no seu computador** (app aberto e máquina\nacordada), na pasta do projeto ou num worktree, e **herdam o sandbox padrão** da instalação.\nPara o roteiro poder sincronizar, fazer commit e push (gate com trava, `cdp sincronizar`,\n`cdp publicar`), o Codex precisa de rede e de escrita em `.git` — e o modo `workspace-write`\ndeixa `.git` sempre só de leitura e a rede desligada por padrão. Por isso o arranjo é: **acesso\ntotal, numa conta de usuário do sistema dedicada às rotinas, com um clone dedicado**. As",
+      "sha256": "61c8e7c6256c14c06eaf710537253a3d825a6524d6c5507556316adb7b69adc4"
+    },
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "As definições das automações são administradas pelo Codex em sua pasta global.\nExecução, quadros, estudos e evidências ficam na área interna `.cdp/`. O quadro\n`.cdp/AGENDAS.md` reúne nomes e horários observados, e `.cdp/TAREFAS.md`\nregistra entregas e pendências. Confira a instalação do app contra a agenda\natual em `configs/cdp/rotinas.yaml`. A configuração ativa, a execução e a\npublicação são evidências distintas. Computador ligado, app aberto e gates\nnativos continuam necessários.",
+      "sha256": "3a24046fee7b5f40ec0d0876ce07aba30207bd06f7a464540321ccb62d417da8"
+    }
+  ]
+}

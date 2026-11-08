@@ -3,16 +3,19 @@
   "tipo": "licao",
   "estado": "curada",
   "titulo": "Fechamento indisponível interrompe a sequência",
-  "resumo": "Se o fechamento retornar dados não prontos, preserve o motivo e interrompa a sequência de datas. O próximo cdp-diario retoma os pregões pendentes pela agenda, e o que já fechou segue o roteiro de publicação. Uma recuperação editorial posterior usa o contexto do próprio pregão.",
+  "resumo": "Se a coleta retornar dados não prontos por falta de insumos, interrompa a sequência de pregões pendentes e publique os registros que já fecharam. Uma falha do código em relatório semanal é relatada e a rotina passa à próxima data. Em cada comentário recuperado use o contexto do próprio pregão.",
   "escopos": [
     "diario"
   ],
   "tags": [
+    "fechamento",
     "dados não prontos",
-    "câmbio",
-    "sequência",
-    "recuperação",
-    "pregão"
+    "fila",
+    "pregão pendente",
+    "relatório semanal",
+    "falha do código",
+    "insumos de fechamento",
+    "próxima data"
   ],
   "registrada_em": "2026-11-07",
   "revisada_em": "2026-11-07",
@@ -22,13 +25,18 @@
   "evidencias": [
     {
       "caminho": "docs/cdp/playbooks/DIARIO.md",
-      "trecho": "- `dados não prontos` → **pare o laço** (não processe datas posteriores) e relate o `motivo`: a\n  próxima execução de `cdp-diario` retoma os pregões pendentes pela agenda. Não\n  espere nem repita em laço. Publique o que já fechou.\n- `sem carteira efetivada` → pare e relate (nenhuma decisão executável ainda).\n- Erro → pare e relate a mensagem (não tente contornar).",
-      "sha256": "64fbd2cd585b5adc2657736c035bdea9c21c02ceeea4fdfde9c51ec6d67fa13b"
+      "trecho": "registro diário encadeado por hash. Leia `status` na saída:\n\n- `registrado` → passo 3 com D (anote `alertas`).\n- `sem pregão` → próxima data.\n- `dados não prontos` → **pare o laço** (não processe datas posteriores) e relate o `motivo`: a\n  próxima execução de `cdp-diario` retoma os pregões pendentes pela agenda. Não\n  espere nem repita em laço. Publique o que já fechou.\n- `sem carteira efetivada` → pare e relate (nenhuma decisão executável ainda).\n- Erro → pare e relate a mensagem (não tente contornar).",
+      "sha256": "deb76b9b9f1573a94e5e7853f92ccce399e1488fa442dfa3d498cb87933933e1"
     },
     {
       "caminho": "docs/cdp/playbooks/DIARIO.md",
-      "trecho": "2. Pesquise o contexto de mercado **do dia D** (países, setores, commodities, câmbio, notícias\n   dos emissores relevantes) só em fontes públicas. Em dias recuperados, pesquise aquela data.",
-      "sha256": "79b34231c51e56eae37703ac7a3d02a34877ebd4e858d1734946c42bc574674a"
+      "trecho": "1. Leia `reports/daily/D/facts.md` (números e `fact_id`s do dia) e `comentario.schema.json`.\n2. Pesquise o contexto de mercado **do dia D** (países, setores, commodities, câmbio, notícias\n   dos emissores relevantes) só em fontes públicas. Em dias recuperados, pesquise aquela data.",
+      "sha256": "ef675d09ca98fd0a46e605b3a33ea16d99e012cc4d2f623aa1591b9041c60010"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "   aumentos e reduções; num dia sem decisão, a carteira mantida), o resultado e a atribuição de\n   performance da semana e desde o início, o risco da carteira e a execução — números **apenas**\n   como `{{fact:<id>}}`, tom de `docs/cdp/ESTILO.md`. Valide até passar (no máximo 3\n   tentativas) e publique (imutável; inválido, o código publica o texto automático e você relata).\n   Falha do código numa data: relate e passe à seguinte; a próxima rotina retoma pelo\n   `cdp agenda`.",
+      "sha256": "53914ff32ff392375fc4335f303be0666b3469f08089974536a549f6983112f3"
     }
   ]
 }

@@ -1,0 +1,35 @@
+{
+  "id": "cobertura-briefing-e-nota-anterior",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Leituras para preparar a nota de um emissor",
+  "resumo": "Leia integralmente fatos.md e o schema da nota. Quando contexto.json trouxer nota_anterior, consulte a nota.md do emissor na data indicada antes da pesquisa. Use essa leitura para identificar o que mudou em atualizações e notas pós-resultado.",
+  "escopos": [
+    "cobertura"
+  ],
+  "tags": [
+    "briefing",
+    "nota anterior",
+    "contexto.json",
+    "fatos.md",
+    "atualização",
+    "emissor"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/COBERTURA.md",
+      "trecho": "3. Leia **por inteiro** `fatos.md` (regras, limites, contexto, ficha do modelo, fontes sugeridas,\n   fatos citáveis do emissor e dos pares, exemplo), em partes até a última linha, e\n   `nota.schema.json`. Com nota anterior (`nota_anterior` em `contexto.json`), leia também\n   `book/cobertura/notas/<IID>/<nota_anterior.data>/nota.md`.",
+      "sha256": "77c9b193e66c02b899ada1b2a1f58d5d68e86bd5def6ef54d644e8ff0a421834"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/COBERTURA.md",
+      "trecho": "   notícias. Escreva `book/cobertura/notas/<IID>/<data>/nota.json` conforme o schema: título,\n   resumo, negócio, pilares da tese, vetores de valor, catalisadores datados, riscos, cenários,\n   leitura do valuation, último resultado, governança, o que mudou (fora da iniciação), gatilhos de\n   revisão, lacunas, `stance`, `conviccao` e `fontes`. Datas só como 2026-10-25, 25/10/2026 ou",
+      "sha256": "a783bf15cf5cd38780345788a4d23027858ab1c650444e75d8cdfb992e114fc9"
+    }
+  ]
+}

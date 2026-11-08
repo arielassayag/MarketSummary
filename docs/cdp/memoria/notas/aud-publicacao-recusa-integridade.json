@@ -1,0 +1,36 @@
+{
+  "id": "aud-publicacao-recusa-integridade",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Diagnóstico de push recusado",
+  "resumo": "Quando cdp publicar para por integridade, rode verify e investigue antes de publicar. Em corrida de push, o publicador sincroniza e tenta uma vez. Se a outra execução gravou o livro, relate a recusa e preserve as cadeias em vez de forçar a publicação.",
+  "escopos": [
+    "operador",
+    "status"
+  ],
+  "tags": [
+    "recusa",
+    "push",
+    "verify",
+    "integridade",
+    "corrida",
+    "sincronização"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "- **Executor pausado** (`nenhum`) ou trocado no meio da execução: `cdp publicar` relê\n  `origin/main` antes do push e não publica.\n- **Push recusado** por corrida: `cdp publicar` sincroniza e tenta uma vez; se o remoto gravou o\n  livro, para e relata (nunca mescla à força, reescreve nem força).",
+      "sha256": "35aa935b6771182b5b7c3f8de1ec582ceb53bec0d6b58b20ca727241edf8df4c"
+    },
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "| `publicar` → \"escritor exclusivo sem a trava\" | `--trava` faltando ou trava perdida | nada foi publicado; a execução seguinte refaz a partir do livro |\n| `sincronizar` → `parar` | o remoto gravou o livro, ou clone com código alterado | investigar numa sessão de operador no clone do executor; depois de conferir, `git merge origin/main` à mão; nunca forçar |\n| `publicar` sem push, \"verify falhou\" | integridade | `uv run python -m cdp verify` e investigar antes de qualquer publicação |",
+      "sha256": "befac81155f4d2d62f26e203998891c3b75c3d74850dfb72ad0058e8de7fde5c"
+    }
+  ]
+}

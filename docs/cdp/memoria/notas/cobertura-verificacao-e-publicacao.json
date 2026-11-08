@@ -1,0 +1,40 @@
+{
+  "id": "cobertura-verificacao-e-publicacao",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Encerramento da cobertura e conferência dos eventos da nota",
+  "resumo": "Rode verify após a última gravação para conferir as notas contra COVERAGE_NOTE. O publicador repete a conferência antes do push. A execução usa o publicador uma vez e libera a trava mesmo em falha. Sem nota nova, o publicador informa que não há trabalho; sem push, relate que o commit ficou local.",
+  "escopos": [
+    "cobertura"
+  ],
+  "tags": [
+    "integridade da cobertura",
+    "COVERAGE_NOTE",
+    "verify",
+    "publicação da nota",
+    "liberar trava",
+    "push"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/COBERTURA.md",
+      "trecho": "```sh\nuv run python -m cdp verify\n```\n\nRode sempre, qualquer que tenha sido o resultado do passo 2: esse `verify` confere a trilha\ndepois da última gravação desta execução — inclusive cada nota publicada contra o seu evento\n`COVERAGE_NOTE` —, e `cdp publicar` o repete antes do push. As notas aparecem no portal público,\nmontado pelo GitHub Actions a partir do que for publicado (esta rotina não regenera o painel).",
+      "sha256": "7cc83b4bcf9b466fa4b34da956d64701a31200ede52ed1cf765cbfd424f417e6"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/COBERTURA.md",
+      "trecho": "Se você entrou por uma skill ou pelo prompt de uma rotina, este é o passo de publicação deles:\nrode-o uma vez só, aqui ou lá.\n\n```sh\nuv run python -m cdp publicar --tarefa cdp-cobertura --mensagem \"CDP: notas de cobertura AAAA-MM-DD\" --execucao <execucao> --trava <trava.id> --mente <mente>\nuv run python -m cdp trava liberar --id <trava.id>",
+      "sha256": "72efeedebdeba18661810302e296375e4ba159c143195625ce288e60964ba6ea"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/COBERTURA.md",
+      "trecho": "Sem nota publicada nesta execução, o código responde \"nada a publicar\". Sem push, o commit fica\nno clone e você relata; nunca tente outro caminho. Libere a trava **sempre**, mesmo em falha.",
+      "sha256": "52b3286093361791f596c7a9d7e226945d9372ba1bce4f304b5dc11998fe2108"
+    }
+  ]
+}

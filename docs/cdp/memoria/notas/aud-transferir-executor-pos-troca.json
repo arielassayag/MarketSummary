@@ -1,0 +1,38 @@
+{
+  "id": "aud-transferir-executor-pos-troca",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Transferência do executor e prova da primeira execução",
+  "resumo": "Pause o executor antigo antes da transferência. Valide a identidade do novo em uma tarefa sem pendência, desative os disparos do ensaio e acompanhe a primeira execução real por transcrição, trailers e portal. O executor anterior fica como reserva quente por duas semanas.",
+  "escopos": [
+    "operador",
+    "status"
+  ],
+  "tags": [
+    "transferência",
+    "agendador",
+    "ensaio",
+    "executor anterior",
+    "primeira execução",
+    "reserva",
+    "trailers",
+    "portal"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "1. Janela segura: `uv run python -m cdp executor janela` (nenhum escritor nos próximos 90 min,\n   trava livre, nada pendente; evite dias de montagem das 10:30 às 17:30 e as noites das 19:00\n   às 23:30).\n2. Pause o antigo: desligue as tarefas do app (desktop do Claude Code, Codex ou Antigravity) ou\n   as rotinas da nuvem; no clone antigo, `git status -sb` em dia (publique antes qualquer commit\n   retido).",
+      "sha256": "842d3f71f9283291bfcdec0c95c9ba4ecd30ff52bd1f224f0261658fbb01ed25"
+    },
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "4. Ligue o novo: rotinas ligadas; execute agora uma tarefa sem pendência; confira\n   `uv run python -m cdp estado --rede --formato md`. **Desligue as rotinas do ensaio**\n   (\"CDP · <tarefa> (…) · ensaio\", no ambiente CDP-ensaio; no Codex ou no agendador do sistema,\n   as tarefas com `CDP_ENSAIO=1`): ligadas, continuam rodando cerca de 46 vezes por semana e\n   montam uma carteira paralela toda sexta.\n5. Acompanhe a primeira execução real (transcrição, trailers do commit, portal). O executor\n   antigo fica instalado como reserva quente por duas semanas.",
+      "sha256": "e5e37d9dbc103c85253f54af12eca735e03e2fd69d01d4bfc3814aaaea9af27d"
+    }
+  ]
+}

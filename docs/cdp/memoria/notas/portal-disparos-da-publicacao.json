@@ -1,0 +1,31 @@
+{
+  "id": "portal-disparos-da-publicacao",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Disparos de atualização do portal pelo cdp-site",
+  "resumo": "O workflow publica após push em main com alterações no livro, relatórios, dados, configuração, código do CDP ou site/. Há disparos de reserva na agenda e disparo manual no Actions. Confira a versão servida com estado --rede quando precisar comprovar a atualização.",
+  "escopos": [
+    "status",
+    "operador"
+  ],
+  "tags": [
+    "portal",
+    "disparo",
+    "publicação",
+    "GitHub Actions",
+    "push em main",
+    "rede de segurança"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/SITE.md",
+      "trecho": "- A cada push em `main` que toque o livro, os relatórios, os dados, a configuração, o código do\n  CDP ou `site/`.\n- Rede de segurança agendada às 20:41 de Brasília nos dias úteis e às 23:41 de sexta.\n- Manualmente: Actions → cdp-site → Run workflow.\n- `uv run python -m cdp estado --rede` aponta `PORTAL_DEFASADO` quando o portal não corresponde a\n  `origin/main`.",
+      "sha256": "630abdac7a9d6ec08478ca61965ec66cf41c69cd445f0f359f13b607de3bb7a8"
+    }
+  ]
+}

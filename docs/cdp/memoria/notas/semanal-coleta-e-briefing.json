@@ -1,0 +1,35 @@
+{
+  "id": "semanal-coleta-e-briefing",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Coleta e retomada do briefing semanal",
+  "resumo": "Use semanal.semana no preparo. O briefing contém fatos, candidatos, limites e schemas. Anote falhas_coleta e barra_provisoria. Se prepare falhar, consulte a agenda novamente. A etapa pesquisa confirma que o briefing foi gravado. Nas demais etapas, pare e relate para permitir a retomada pela reserva.",
+  "escopos": [
+    "semanal"
+  ],
+  "tags": [
+    "prepare",
+    "coleta semanal",
+    "briefing",
+    "barra provisória",
+    "falhas de coleta",
+    "etapa pesquisa"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/SEMANAL.md",
+      "trecho": "Use `semanal.semana`. Coleta todo dado disponível até agora: fechamento oficial do pregão\nanterior (se faltar), dados lentos (fundamentos, short interest FINRA, aluguel B3, notícias) e a\n**barra intradiária provisória** de hoje. Grava em `book/<semana>/briefing/`: `briefing.md`,\n`context.json` (fatos com `fact_id`, candidatos, emissores válidos, limites),\n`research_pack.schema.json`, `pm_decision.schema.json` e `INSTRUCTIONS.md`. Anote",
+      "sha256": "25ef9473e2409b373d0a2dd2f7d79042b01b98e3a2be89ee73825604468fb709"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/SEMANAL.md",
+      "trecho": "`falhas_coleta` e `barra_provisoria`. Se falhar, rode `agenda` de novo: etapa `pesquisa` ⇒ o\nbriefing foi gravado. Senão, pare e relate. A reserva pode retomar se ainda não tiver disparado.",
+      "sha256": "c3e1ba97592953595dba1e1d4c0f2350ebe1f449b4c6ccea1ad4c11917687f0a"
+    }
+  ]
+}

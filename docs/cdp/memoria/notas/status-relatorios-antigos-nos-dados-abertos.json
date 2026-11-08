@@ -1,0 +1,34 @@
+{
+  "id": "status-relatorios-antigos-nos-dados-abertos",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Limite do JSON do portal preserva os relatórios completos em dados abertos",
+  "resumo": "O JSON inicial contém o texto recente para controlar o carregamento. Relatórios diários antigos continuam no índice e com texto integral em dados/relatorios. A trilha completa também tem arquivo próprio.",
+  "escopos": [
+    "status",
+    "operador",
+    "diario"
+  ],
+  "tags": [
+    "portal",
+    "data.json",
+    "JSON do painel",
+    "relatório diário",
+    "comentário histórico",
+    "dados abertos",
+    "texto integral",
+    "índice"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/SITE.md",
+      "trecho": "- **Tamanho do `data.json`** (lido inteiro antes da primeira pintura, também no celular): o que\n  cresce com o tempo fica limitado — as 8 semanas mais recentes em detalhe (as anteriores numa\n  linha, com o link para o registro completo nos dados abertos), dois anos de pregões em linhas\n  diárias (os meses anteriores consolidados no fim do mês), os 60 relatórios diários mais\n  recentes com o comentário (todos os relatórios no índice, com o texto completo em\n  `dados/relatorios/`), os 500 eventos mais recentes da trilha (a trilha inteira em\n  `dados/livro/audit_log.jsonl`) e as notas por emissor completas só na semana da carteira\n  vigente. Orçamento de referência: 3 MB com dois anos de operação (teste).",
+      "sha256": "d8daaf36c3745a9c401c050348f33b2de15aeef573d7baefd88e090f5522c192"
+    }
+  ]
+}

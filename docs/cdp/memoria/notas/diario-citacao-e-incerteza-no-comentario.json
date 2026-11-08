@@ -1,0 +1,33 @@
+{
+  "id": "diario-citacao-e-incerteza-no-comentario",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Comentário distingue fonte pública, fato e julgamento",
+  "resumo": "Identifique fontes primárias pela instituição e data, mantendo URLs nos campos de evidência. Use os fatos calculados ou fonte pública citada e declare a incerteza ordinal de uma interpretação. Evite previsões pontuais sem cálculo.",
+  "escopos": [
+    "diario",
+    "cobertura"
+  ],
+  "tags": [
+    "cotista",
+    "comentário",
+    "URL",
+    "link",
+    "referência",
+    "fato e julgamento",
+    "projeção",
+    "fonte"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/ESTILO.md",
+      "trecho": "6. Separe fato de julgamento: fato só com {{fact:<id>}} ou fonte pública citada; julgamento com\n   convicção explícita e incerteza em termos ordinais (alta, média, baixa), sem previsões\n   pontuais que o código não calculou.\n7. Cite fontes primárias públicas (CVM, SEC, B3, relações com investidores, bancos centrais,\n   institutos de estatística) pela instituição e pela data; as URLs vão só nos campos de fonte ou\n   evidência, nunca no texto.",
+      "sha256": "39707f15d2eebf6a7a71eedb54ccebd14ddfb748d6eeb20efce0db84715e4e05"
+    }
+  ]
+}

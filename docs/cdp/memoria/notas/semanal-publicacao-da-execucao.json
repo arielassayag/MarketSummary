@@ -1,0 +1,35 @@
+{
+  "id": "semanal-publicacao-da-execucao",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Publicação da montagem pela tarefa que disparou a execução",
+  "resumo": "Use o publicador uma vez com a tarefa que disparou a execução e os identificadores da execução e da trava. Se a retomada só produziu a tese, identifique isso na mensagem. Se o push não for confirmado, relate que o commit ficou local. Libere a trava mesmo em falha.",
+  "escopos": [
+    "semanal"
+  ],
+  "tags": [
+    "publicação semanal",
+    "montagem",
+    "tarefa que disparou",
+    "retomada da tese",
+    "trava",
+    "commit local"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/SEMANAL.md",
+      "trecho": "Se você entrou por uma skill ou pelo prompt de uma rotina, este é o passo de publicação deles:\nrode-o uma vez só, aqui ou lá.\n\n```sh\nuv run python -m cdp publicar --tarefa cdp-semanal --mensagem \"CDP: decisão da semana AAAA-MM-DD\" --execucao <execucao> --trava <trava.id> --mente <mente>\nuv run python -m cdp trava liberar --id <trava.id>",
+      "sha256": "ab1eb8e4901ab451e4463f601890e74598f830d7ada830cbdd28a7bbd59ae6fb"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/SEMANAL.md",
+      "trecho": "`--tarefa` = a tarefa que disparou a execução. Mensagens: retomada só da tese,\n\"CDP: tese da semana AAAA-MM-DD\"; abertura do livro nesta execução, a do pré-início\n(`docs/cdp/playbooks/DIARIO.md`). Decisão, tese e painel saem no mesmo commit. Sem push (verify\ncom falha, remoto mudou o livro, sem rede, trava perdida), o commit fica no clone e você relata;\nnunca tente outro caminho. Libere a trava **sempre**, mesmo em falha.",
+      "sha256": "b4a11095d1246067bdc662ffb430823612e729e854df49c09996f7abdf01d6a1"
+    }
+  ]
+}

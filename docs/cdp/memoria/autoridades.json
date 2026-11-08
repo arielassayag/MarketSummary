@@ -1,0 +1,569 @@
+{
+  "versao": 1,
+  "destinos": {
+    "ci-github": {
+      "prova": "Andamento, conclusão, etapas e artefatos da integração contínua daquele commit.",
+      "distingue": {
+        "portal-publicado": "O workflow de publicação do Pages é separado da integração contínua.",
+        "passagem-desenvolvimento": "A passagem resume trabalho. O registro da execução comprova os jobs."
+      },
+      "termos": [
+        "andamento dos checks",
+        "etapa da integração contínua"
+      ],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/AUTOMACAO.md",
+          "trecho": "## 8. GitHub Actions: só integração contínua e portal\n\n- `.github/workflows/cdp-ci.yml`: lint, testes, integridade do livro, agenda das rotinas, skills\n  em dia e o portal da demonstração (DADOS SIMULADOS) como artefato de revisão. Sem segredos,\n  só leitura.\n- `.github/workflows/cdp-site.yml`: a cada push em `main` (e numa rede de segurança agendada),\n  monta o portal a partir do repositório com `cdp site construir`, confere e publica no GitHub\n  Pages. Não usa IA e não grava no repositório (`docs/cdp/SITE.md`).",
+          "sha256": "5779e1254882bec9afc2ccfc626e70fac4f155bbc7d6e4bc7400b8820b9a1902"
+        }
+      ]
+    },
+    "passagem-desenvolvimento": {
+      "prova": "Frente de desenvolvimento registrada, alterações, trabalho restante e riscos da passagem de sessão.",
+      "distingue": {
+        "estado-pendencias": "Pendências operacionais do livro vêm do estado do executor.",
+        "ci-github": "O relato de desenvolvimento não substitui o comprovante de uma execução de CI."
+      },
+      "termos": [
+        "passagem de bastão",
+        "frente de trabalho registrada"
+      ],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/EM_ANDAMENTO.md",
+          "trecho": "# Em andamento — passagem de bastão entre sessões (qualquer app de IA)\n\nDocumento vivo. Quem encerra uma sessão de desenvolvimento atualiza este arquivo: o que mudou, o\nque falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outro app — lê aqui\nantes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e\nmotivo: `docs/cdp/DECISOES.md`.",
+          "sha256": "15b2978a138ff749299b97ba49f751a94fba812860414f0339290ff372b1524e"
+        },
+        {
+          "caminho": "docs/cdp/playbooks/RETOMAR.md",
+          "trecho": "## 3. Desenvolvimento: continuidade entre harnesses\n\n1. Abra a passagem corrente no início de `docs/cdp/EM_ANDAMENTO.md` e localize a frente em que\n   vai trabalhar. As entradas anteriores ficam disponíveis para consulta.\n2. Em `docs/cdp/DECISOES.md`, consulte as decisões ligadas à frente escolhida.\n3. Antes de encerrar, atualize `docs/cdp/EM_ANDAMENTO.md` (o que mudou, o que falta, riscos).\n   Registre evidência e pendências no repositório. Uma lição durável pode virar proposta de\n   consolidação, conforme [Memória do CDP](../MEMORIA.md), para revisão em desenvolvimento.",
+          "sha256": "d255e07406f018687911b6e73738a619910c137fbded3cde8b9c551af25fc63c"
+        }
+      ]
+    },
+    "portal-publicado": {
+      "prova": "Revisão que gerou os bytes servidos e arquivos públicos dessa publicação. Para o andamento do deploy, confira também a execução de cdp-site.",
+      "distingue": {
+        "ci-github": "A aprovação dos testes diz respeito à CI. A conferência no ar pertence ao workflow do Pages.",
+        "procedencia-commit": "O commit gravado pode ainda não corresponder à versão servida."
+      },
+      "termos": [
+        "versão visível no Pages",
+        "revisão que está no ar"
+      ],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/SITE.md",
+          "trecho": "## Garantias\n\n- O workflow só **lê** o repositório (`contents: read`); a escrita no Pages usa o ambiente\n  `github-pages`.\n- O site não é montado com o livro aguardando a abertura na data de início do mandato (o workflow\n  pula a publicação) e não é publicado com `cdp verify` falhando (o workflow falha).\n- Montagem determinística por versão do repositório: dois builds da mesma versão geram os mesmos\n  arquivos.\n- Depois de publicar, o workflow confere no ar que `manifest.json` traz a versão que acabou de ser\n  publicada.\n- A demonstração (`--demo`) é marcada \"DADOS SIMULADOS\" em todas as páginas, leva `noindex` nas\n  páginas HTML e **nunca vai ao endereço público**: no workflow, a opção de demonstração só\n  monta o site como artefato `github-pages` da execução (baixe e abra localmente).\n\n## Conferir uma publicação\n\nQualquer pessoa confere o portal publicado contra o repositório público:\n\n```sh\ngit clone https://github.com/arielassayag/MarketSummary.git\ncd MarketSummary\ngit checkout <source_commit do manifest.json>\nuv sync\nuv run python -m cdp verify",
+          "sha256": "eb56ac9b7f3de2c3ff7b0f1b85aa5369f5e0f37708b76e0d813f8367912a02f5"
+        }
+      ]
+    },
+    "trilha-entrega": {
+      "prova": "Até qual etapa a entrega chegou e que comprovante existe para o canal. A documentação canônica cobre commit, push e portal. Para envio externo, a confirmação depende do recibo do próprio canal.",
+      "distingue": {
+        "portal-publicado": "Página disponível comprova disponibilização pública. Um destinatário ou canal distinto exige evidência própria.",
+        "relatorio-diario": "Relatório gravado comprova conteúdo, antes de qualquer verificação de entrega."
+      },
+      "termos": [
+        "comprovante de entrega",
+        "confirmação de disponibilização ao destinatário"
+      ],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/playbooks/DIARIO.md",
+          "trecho": "## 8. Publicação (uma vez por execução)\n\nSe você entrou por uma skill ou pelo prompt de uma rotina, este é o passo de publicação deles:\nrode-o uma vez só, aqui ou lá.\n\n```sh\nuv run python -m cdp publicar --tarefa cdp-diario --mensagem \"CDP: fechamento AAAA-MM-DD\" --execucao <execucao> --trava <trava.id> --mente <mente>\nuv run python -m cdp trava liberar --id <trava.id>\n```\n\n- `--tarefa`: a tarefa que disparou a execução. Mensagem: a última data **registrada** (ou\n  \"CDP: fechamentos AAAA-MM-DD a AAAA-MM-DD\"); sem registro nesta execução (`dados não prontos`,\n  `sem pregão`, kill switch), descreva o que foi gravado — \"CDP: base de mercado AAAA-MM-DD\" ou\n  \"CDP: cobertura AAAA-MM-DD\" — e, sem nada gravado, `cdp publicar` responde \"nada a publicar\";\n  em `fase: \"pre_inicio\"`,\n  \"CDP: pré-início AAAA-MM-DD\" (data de hoje), ou a mensagem do pré-início (seção acima) se ele\n  rodou nesta execução. A tese recuperada, os relatórios semanais, o retrato da cobertura e a\n  revisão mensal vão no mesmo commit.\n- `cdp publicar` confere a integridade, o executor designado e a trava, faz commit do que esta\n  execução gravou e do que uma execução anterior interrompida deixou no clone (`anteriores`), com\n  os trailers de procedência, e push em `main` — nunca força. Leia `push` e\n  `motivo` na saída: sem push (verify com falha, remoto mudou o livro, sem rede, trava perdida),\n  o commit fica no clone e a próxima rotina reconcilia; relate. Nunca tente outro caminho.\n- Libere a trava **sempre**, mesmo em falha.",
+          "sha256": "bda3387e137dbf680cf9f09d411ef7571619566ad2f71dd1749c40aef78d7622"
+        },
+        {
+          "caminho": "docs/cdp/AUTOMACAO.md",
+          "trecho": "## 9. Monitoramento\n\n- `uv run python -m cdp estado --formato md` (com `--rede`, consulta remoto, trava e portal;\n  `--sla` sai com 1 quando há incidente de severidade alta).\n- A lista de execuções e as transcrições do app (claude.ai/code, aba de tarefas agendadas do\n  Codex ou do Antigravity); trailers dos commits; o manifesto do portal (`manifest.json` →\n  `source_commit`).",
+          "sha256": "6f4d6d246cfbd97f5ff6522ac505f2da95cc667ee4c8cda4f341acf89733f488"
+        }
+      ]
+    },
+    "procedencia-commit": {
+      "prova": "Aplicativo, executor, tarefa e identificador da execução que originou o commit. A sessão só está disponível quando registrada no trailer correspondente.",
+      "distingue": {
+        "executor-remoto": "O executor designado agora pode ser diferente de quem gravou o commit histórico.",
+        "portal-publicado": "A revisão que o portal serve é uma observação separada."
+      },
+      "termos": [
+        "autoria operacional do commit",
+        "harness que gravou o livro"
+      ],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/AUTOMACAO.md",
+          "trecho": "  gate, trava e publicação não são dela.\n- **Quando**: `uv run python -m cdp rotinas listar` (tabela em `AGENTS.md`, seção 4). Horários\n  de Brasília (sem horário de verão). Em UTC, some 3 h e confira a virada de dia, como na\n  cobertura de segunda a quinta.\n- **O que mudou**: cada commit de rotina leva os trailers `CDP-Tarefa`, `CDP-Executor`,\n  `CDP-Harness` e `CDP-Execucao`, e `CDP-Sessao` quando o app expõe a sessão (URL da rotina na\n  nuvem ou do GitHub Actions; nos apps locais, o identificador da conversa quando o app o exporta\n  — `CODEX_THREAD_ID`, por exemplo — ou `CDP_SESSAO` definido pelo script de rotina; sem isso, o\n  trailer é omitido); `uv run python -m cdp estado` lê esse histórico.",
+          "sha256": "6d25769ade3635c339e52933d5912b81905a3d0f8328352664cbe1f15c8b5fe5"
+        },
+        {
+          "caminho": "docs/cdp/playbooks/STATUS.md",
+          "trecho": "\n`estado` já reúne fase, executor designado × este ambiente, trava das rotinas, integridade,\núltimos registros, últimas execuções (com a procedência de cada commit), pendências, incidentes\ne o próximo passo. Com acesso à rede, `uv run python -m cdp estado --rede --formato md` consulta\ntambém o remoto, a trava e o portal publicado.",
+          "sha256": "1352e7a9efd4b1ee95b1a09777e664cb5ca8ee14060dff541499213baaea0fa7"
+        }
+      ]
+    },
+    "executor-remoto": {
+      "prova": "Designação oficial do escritor e metadados da transferência registrados na versão oficial.",
+      "distingue": {
+        "estado-executor": "A designação remota, sozinha, não identifica o clone que está sendo usado.",
+        "procedencia-commit": "A configuração atual não identifica o executor de uma publicação passada."
+      },
+      "termos": [
+        "escritor oficial em main",
+        "designação no remoto"
+      ],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/AUTOMACAO.md",
+          "trecho": "**Troca** (≤ 10 min; volta pelo mesmo caminho):\n\n1. Janela segura: `uv run python -m cdp executor janela` (nenhum escritor nos próximos 90 min,\n   trava livre, nada pendente; evite dias de montagem das 10:30 às 17:30 e as noites das 19:00\n   às 23:30).\n2. Pause o antigo: desligue as tarefas do app (desktop do Claude Code, Codex ou Antigravity) ou\n   as rotinas da nuvem; no clone antigo, `git status -sb` em dia (publique antes qualquer commit\n   retido).\n3. Troque, numa sessão de operador (nunca dentro de uma rotina):\n\n   ```sh\n   uv run python -m cdp executor transferir --para claude-cloud --por \"Nome\" --motivo \"rotinas na nuvem após o ensaio\"\n   ```\n\n   e faça o commit e o push indicados (`CDP: executor → claude-cloud`). Para um computador com",
+          "sha256": "ddd0b3a0d9fdbe865e40d8c952d1fe6b93024e6703ee04923da27f9c29d8f179"
+        }
+      ]
+    },
+    "estado-executor": {
+      "prova": "Identidade deste ambiente, executor designado, desde quando vale a designação e se este clone é o executor.",
+      "distingue": {
+        "executor-remoto": "Use a designação em main quando a pergunta não envolver o ambiente local.",
+        "trava-distribuida": "Ser executor designado não comprova posse atual da trava."
+      },
+      "termos": [
+        "este clone pode gravar o livro",
+        "identidade do ambiente contra a designação"
+      ],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/playbooks/STATUS.md",
+          "trecho": "\n`estado` já reúne fase, executor designado × este ambiente, trava das rotinas, integridade,\núltimos registros, últimas execuções (com a procedência de cada commit), pendências, incidentes\ne o próximo passo. Com acesso à rede, `uv run python -m cdp estado --rede --formato md` consulta\ntambém o remoto, a trava e o portal publicado.\n\nCom a execução admitida, consulte, se útil, `uv run python -m cdp memoria contexto --escopo status`.\nUse o contexto como referência e confirme a informação na fonte indicada. Se a consulta\nestiver indisponível, prossiga pelo roteiro e pelos documentos canônicos.\n\n## 2. O que relatar (resumo final, até 12 linhas)\n\n- **Integridade** e **kill switch**.\n- **Fase**: antes da data de início, a data da carteira inaugural; com a abertura do livro\n  pendente, destaque que a primeira rotina elegível de montagem ou de fechamento abre o livro.\n- **Executor**: quem grava o livro e desde quando; se este ambiente não é o executor, diga\n  \"somente leitura\".",
+          "sha256": "5496c7056aa849e27ad64769041a75ec16f87af2caedabef3b34650beb6ea3f2"
+        },
+        {
+          "caminho": "docs/cdp/playbooks/RETOMAR.md",
+          "trecho": "Leia, nesta ordem: **incidentes** (severidade alta primeiro), **fase** do fundo, **executor**\n(`sou_o_executor`: este ambiente grava o livro?), **pendências**, **próximas rotinas** e o\n**próximo passo** (`playbook_sugerido`). Com rede, acrescente `--rede` (remoto, trava e portal).\n\n## 2. Papel\n\n| Situação | O que fazer |\n|---|---|\n| O prompt cita uma tarefa `cdp-…` (rotina agendada) | A skill da tarefa (`.agents/skills/cdp-…`): `uv run python -m cdp rotinas gate --tarefa cdp-diario --adquirir` (com a tarefa certa), sem perguntar nada |\n| Uma pessoa pede algo da operação (sessão de operador) | Leitura por padrão. Grave o livro só se `sou_o_executor` for verdadeiro e a pessoa pedir, rodando o roteiro da tarefa com `--manual` no gate |",
+          "sha256": "17d5e6142c1d60de8217fc2d334e37cb127a3ec378fbb865607985d3fdbea1e2"
+        }
+      ]
+    },
+    "manifesto-ensaio": {
+      "prova": "Código, configuração, cronologia, modo, inventário e hashes da execução concreta do ensaio.",
+      "distingue": {
+        "manifesto-snapshot": "O manifesto de um insumo capturado descreve a captura. O do ensaio vincula os insumos à execução.",
+        "estado-integridade": "A verificação do livro oficial tem outro escopo que a conferência do ensaio isolado."
+      },
+      "termos": [
+        "inventário da execução isolada",
+        "hash da origem do replay"
+      ],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/REPLAY_OPERACIONAL.md",
+          "trecho": "## Modos e cronologia\n\n| Modo | Dados | Alcance da afirmação |\n|---|---|---|\n| `simulado` | Captura sintética | Regressão determinística, com DADOS SIMULADOS |\n| `sombra_real` | Captura real reconstruída hoje | Ensaio técnico; dependências sem vintage são declaradas |\n| `pit_auditado` | Capturas historicamente disponíveis e autenticadas | Falha fechada quando falta prova temporal essencial |\n\nData contábil, publicação, captura real e relógio lógico são distintos. Cortar uma série de\npreços não transforma fundamentos, universo ou empréstimo atuais em dados históricos conhecidos.\nO manifesto guarda bytes e metadados integrais da origem, código, configuração, horários,\ncalendário, prefixos e limitações. A política temporal autentica capturas completas; vintages\npor documento/campo e uma amostra econômica adequada permanecem trabalho posterior.\n\nA única mudança contrafactual do mandato é a data inaugural na configuração interna do ensaio.\nEla usa a primeira montagem canônica elegível; uma terça-feira no fim de uma janela não cria\noutra decisão. O arquivo oficial do mandato permanece intacto. `replay_origin.json` e o evento\ninicial `REPLAY_ORIGIN` autenticam o modo e o instante real de início. Mesmo com dados reais,\no ensaio retrospectivo fica fora do IC prospectivo e não promove a fase das mentes.",
+          "sha256": "dd13a6f357488fbf4be684a80cc02f9776cfd0310747431ed72f2cff186ff5c1"
+        },
+        {
+          "caminho": "docs/cdp/REPLAY_OPERACIONAL.md",
+          "trecho": "## Execução e conferência\n\nExecute no checkout de desenvolvimento, com uma captura local preservada e uma saída nova:\n\n```sh\nuv run python -m cdp backtest-operacional \\\n  --snapshot /caminho/absoluto/da/captura \\\n  --start 2026-09-04 --end 2026-10-06 \\\n  --modo sombra_real --out .cdp/ensaios/nome-novo\n```\n\nEste exemplo define a chamada; não certifica que essa janela já foi executada. A retomada\nusa os mesmos argumentos e `--resume`. Fonte, configuração, código, janela e horários precisam\nser idênticos. `verify_replay(pasta)` é a API de conferência somente leitura.\n\nCada etapa tem arquivo imutável, âncora `REPLAY_STEP` no livro e registro encadeado em\n`steps.jsonl`. Um arquivo já ancorado pode concluir o registro na cadeia. Um arquivo de etapa\nsem âncora fica incompleto: sua existência e a integridade do livro não autenticam os bytes;\na retomada recusa aceitá-lo ou reexecutá-lo. Não apagar arquivos para forçar a conclusão.\nBriefings, relatórios e teses existentes exigem seus recibos canônicos correspondentes.\n\nA conclusão guarda inventário integral, `result.json` e uma única âncora `REPLAY_COMPLETE`.\nUma interrupção nessa conclusão só é recuperada após comparar inventário, etapas e recálculo\noperacional exato. Remoção, adulteração, caminho redirecionado e resultado sem seus selos são\nrecusados. Uma falha durante a preparação inicial, antes do manifesto, exige uma nova pasta;",
+          "sha256": "1563bc6d092a27275ee2488be267b80ccdbe50dd322d19df0dd36ee283f89288"
+        }
+      ]
+    },
+    "manifesto-snapshot": {
+      "prova": "Identidade, inventário e somas de verificação dos bytes do snapshot solicitado.",
+      "distingue": {
+        "manifesto-ensaio": "A captura é insumo. O manifesto da execução registra como aquele insumo foi usado.",
+        "retrato-cobertura": "Para um preço-alvo, rating ou modelo, abra os dados do retrato. Para a soma de um arquivo, abra seu manifesto."
+      },
+      "termos": [
+        "soma da captura de mercado",
+        "inventário do snapshot arquivado"
+      ],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/REPRODUZIR.md",
+          "trecho": "| Elemento | Onde está | Como verificar |\n|---|---|---|\n| Trilha de auditoria (eventos encadeados: gênese, decisões, execuções, registros, teses, relatórios, notas) | `book/audit_log.jsonl` | `cdp verify` (hash de cada evento e do anterior) |\n| Decisões semanais (proposta, decisão, configuração do mandato vigente) | `book/<semana>/` | `cdp verify` (hashes contra a trilha); recálculo na seção 4.2 |\n| Registros diários e track record | `book/track_record/` | `cdp verify` (cadeia de registros) |\n| Base de mercado (preços, volumes, câmbio, fundamentos; base e incrementos diários) | `data/market/` | `cdp verify` (manifesto e sha256 de cada arquivo) |\n| Insumos públicos dos modelos (demonstrações da CVM e da SEC, consenso público, composição de ETFs, juros) | `book/cobertura/<data>/insumos/` (extratos usados) e `data/publico/` (índice com URL e SHA-256 de cada coleta; os pacotes anuais da CVM e o `companyfacts` da SEC ficam fora do git — baixe-os da URL do índice) | `cdp cobertura verify` |\n| Modelos de cobertura e preços-alvo de 12 meses | `book/cobertura/<data>/` e o livro `book/cobertura/livro.jsonl` | `cdp cobertura verify` (recalcula cada preço-alvo) |\n| Tese de investimento, notas de pesquisa, comentários diário e semanal | `book/<semana>/tese/`, `book/cobertura/notas/`, `reports/` | sha256 na trilha; validadores da seção 5 |\n| Configuração do mandato e da valuation | `configs/cdp/` e `configs/cdp/historico/<hash>.json` | hash da configuração em cada decisão |",
+          "sha256": "5c7166c0df0726899cf103c1be1a0cf2396c7360ed0384cca347dedf5fe8a7fa"
+        },
+        {
+          "caminho": "docs/cdp/REPRODUZIR.md",
+          "trecho": "\nTudo o que foi gravado é verificado byte a byte:\n\n- cada evento da trilha guarda o sha256 do evento anterior; qualquer edição, remoção ou\n  reordenação quebra a cadeia;\n- cada decisão referencia os hashes da proposta, da pesquisa, da configuração e dos insumos da\n  semana; cada registro diário, o do registro anterior;\n- cada snapshot da cobertura tem manifesto com o sha256 de cada arquivo (insumos, configuração\n  usada, modelos), selado na trilha do fundo; o livro da cobertura é encadeado;",
+          "sha256": "f9f278c1516b00a61616cf9366c4b00f6c757f91d7c29a54cfbb8f17cfcd3ace"
+        }
+      ]
+    },
+    "trava-distribuida": {
+      "prova": "Estado da trava compartilhada, execução titular e validade registrada da exclusividade.",
+      "distingue": {
+        "estado-executor": "Identidade ou designação do escritor não comprova posse de trava.",
+        "estado-pendencias": "Uma trava órfã no disco local é um incidente distinto da trava compartilhada."
+      },
+      "termos": [
+        "detentor da exclusividade",
+        "validade da trava do ramo"
+      ],
+      "evidencias": [
+        {
+          "caminho": "AGENTS.md",
+          "trecho": "| `configs/cdp/` | mandato, parâmetros, `rotinas.yaml`, `executor.yaml`, `site.yaml` | humanos, por commit revisável |\n| `docs/cdp/teses/`, `docs/cdp/notas/` | rascunhos de tese e de notas entregues fora do clone das rotinas (`docs/cdp/teses/<semana>.json`), adotados pelas rotinas | sessões de desenvolvimento |\n| `.cdp/`, `logs/` | identidade do clone e registros locais (ignorados pelo git) | o próprio clone |\n| ramo `cdp-trava` | trava distribuída das rotinas (`trava.json`) | `cdp trava` |",
+          "sha256": "1bc5409275addbfc137aba40f3e39c25ccd50ac0ea4f5abc7adb610e16251ea7"
+        },
+        {
+          "caminho": "docs/cdp/LOCAL.md",
+          "trecho": "- Cada execução: gate (há o que fazer? sou o executor? trava distribuída) →\n  `cdp sincronizar` → roteiro → `cdp publicar` (commit do que a execução gravou — e do que uma\n  execução anterior interrompida deixou no clone — e push em `main`) → `cdp trava liberar`.\n  Nenhuma skill roda `git` que grave: quem faz commit e push é o código.\n- A trava distribuída é o ramo `cdp-trava` no GitHub e **falha fechada**: sem conseguir fazer\n  push nesse ramo, um escritor exclusivo (montagem, fechamento, notas) não roda. O PC precisa\n  poder fazer push em `main` **e** em `cdp-trava`.",
+          "sha256": "ecab4b23778eef02c2a580a86e74b20f406a0fc135fac19cb733c0ad1c76df5d"
+        }
+      ]
+    },
+    "estado-kill-switch": {
+      "prova": "Estado ativo ou inativo da chave de emergência e evidência da mudança registrada.",
+      "distingue": {
+        "relatorio-risco": "Um alerta ou pedido no monitor pode preceder a aplicação da chave no livro.",
+        "agenda-montagem": "A agenda pode listar pedidos a aplicar. O estado do livro comprova a aplicação."
+      },
+      "termos": [
+        "chave de emergência efetivamente ligada",
+        "estado do bloqueio de risco"
+      ],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/playbooks/RISCO.md",
+          "trecho": "## 4. Kill switch (só por recomendação do código)\n\nSe algum item de `acoes_recomendadas` começar com `kill-switch: ` e `kill_switch.ativo` for\n`false`, copie **exatamente** `motivo_kill_switch` e rode:\n\n```sh\nuv run python -m cdp kill-switch on --reason \"<motivo_kill_switch>\" --by \"CDP — rotina de risco\"\nuv run python -m cdp status\n```\n\nConfirme `kill_switch: true`. Em qualquer outro caso, não mexa no kill switch.",
+          "sha256": "cb298fcf089b3f0e6ed2e9aacb51b8eb88e5addd2f7d5aad6e1ba5cfc91b061f"
+        },
+        {
+          "caminho": "docs/cdp/EXECUCAO.md",
+          "trecho": "\n- **Ligar** (rotina de risco, por recomendação do código, ou operador):\n  `uv run python -m cdp kill-switch on --reason \"<motivo>\" --by \"<quem>\"`. O comando grava\n  `book/KILL_SWITCH`, o evento na trilha e um **pedido mesclável** em\n  `reports/risk/<data>/kill_switch_<HHMM>.yaml`. Se a rotina não tiver a trava exclusiva do livro\n  (clones separados na nuvem, outra rotina gravando), `cdp publicar` publica o pedido e retém o\n  livro; a próxima execução exclusiva (`weekly prepare`, `weekly decide` ou `daily close`)\n  aplica o pedido antes de qualquer decisão. `cdp agenda` lista os pedidos ainda não aplicados\n  (`kill_switch_pedidos`); `uv run python -m cdp kill-switch aplicar-pedidos` aplica-os à mão\n  numa execução exclusiva. Um pedido anterior a um desligamento humano fica só registrado.",
+          "sha256": "00180f894a0353851b98471655d188165a3b79576f56ae20e8a8c3fc5adad0f5"
+        }
+      ]
+    },
+    "estado-integridade": {
+      "prova": "Integridade observada das cadeias, hashes, arquivos e vínculos verificáveis nesse corte.",
+      "distingue": {
+        "ci-github": "CI verde pertence a uma revisão testada. Para outro clone ou corte, consulte sua verificação.",
+        "portal-publicado": "Portal atualizado comprova versão servida. Integridade exige verificação dos bytes e vínculos."
+      },
+      "termos": [
+        "veredito de integridade",
+        "conferência da cadeia de eventos"
+      ],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/playbooks/STATUS.md",
+          "trecho": "## 1. Passos\n\n```sh\nuv run python -m cdp estado --formato md\nuv run python -m cdp status\nuv run python -m cdp verify\nuv run python -m cdp nota agenda\nuv run python -m cdp agenda\nuv run python -m cdp rotinas proximas --n 12\n```\n\n`estado` já reúne fase, executor designado × este ambiente, trava das rotinas, integridade,\núltimos registros, últimas execuções (com a procedência de cada commit), pendências, incidentes\ne o próximo passo. Com acesso à rede, `uv run python -m cdp estado --rede --formato md` consulta\ntambém o remoto, a trava e o portal publicado.",
+          "sha256": "fd6d16ca1bbb422e732d309a22487ee0cf8a10bc2be72c2aaa378e362b7d9eb7"
+        },
+        {
+          "caminho": "docs/cdp/REPRODUZIR.md",
+          "trecho": "| Elemento | Onde está | Como verificar |\n|---|---|---|\n| Trilha de auditoria (eventos encadeados: gênese, decisões, execuções, registros, teses, relatórios, notas) | `book/audit_log.jsonl` | `cdp verify` (hash de cada evento e do anterior) |\n| Decisões semanais (proposta, decisão, configuração do mandato vigente) | `book/<semana>/` | `cdp verify` (hashes contra a trilha); recálculo na seção 4.2 |\n| Registros diários e track record | `book/track_record/` | `cdp verify` (cadeia de registros) |\n| Base de mercado (preços, volumes, câmbio, fundamentos; base e incrementos diários) | `data/market/` | `cdp verify` (manifesto e sha256 de cada arquivo) |\n| Insumos públicos dos modelos (demonstrações da CVM e da SEC, consenso público, composição de ETFs, juros) | `book/cobertura/<data>/insumos/` (extratos usados) e `data/publico/` (índice com URL e SHA-256 de cada coleta; os pacotes anuais da CVM e o `companyfacts` da SEC ficam fora do git — baixe-os da URL do índice) | `cdp cobertura verify` |\n| Modelos de cobertura e preços-alvo de 12 meses | `book/cobertura/<data>/` e o livro `book/cobertura/livro.jsonl` | `cdp cobertura verify` (recalcula cada preço-alvo) |\n| Tese de investimento, notas de pesquisa, comentários diário e semanal | `book/<semana>/tese/`, `book/cobertura/notas/`, `reports/` | sha256 na trilha; validadores da seção 5 |\n| Configuração do mandato e da valuation | `configs/cdp/` e `configs/cdp/historico/<hash>.json` | hash da configuração em cada decisão |",
+          "sha256": "5c7166c0df0726899cf103c1be1a0cf2396c7360ed0384cca347dedf5fe8a7fa"
+        }
+      ]
+    },
+    "agenda-fechamentos": {
+      "prova": "Pregões ainda sem registro e, em lista separada, registros existentes cujo relatório aguarda publicação.",
+      "distingue": {
+        "relatorio-diario": "O relatório ou registro fornece os fatos de um dia já fechado.",
+        "estado-pendencias": "Para a fila transversal do fundo, use o estado consolidado."
+      },
+      "termos": [
+        "pregões sem registro diário",
+        "datas que a rotina diária precisa recuperar"
+      ],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/playbooks/DIARIO.md",
+          "trecho": "- `fase: \"pre_inicio\"` (antes de `data_de_inicio`, livro sem carteira): não há fechamento,\n  comentário, tese nem relatório diário. Pule os passos 2 a 5 e siga do passo 6 (base de mercado,\n  retrato da cobertura, integridade, publicação e resumo).\n- `fechamentos_pendentes`: pregões sem registro, em ordem (inclui dias em que nenhuma rotina\n  rodou; o de hoje só aparece depois de `horario_fechamento_diario`).\n- `publicacoes_pendentes`: registros sem `relatorio.md` (com `comentario_escrito`).\n- `teses_pendentes`: semanas decididas sem tese publicada. Só a semana corrente\n  (`semanal.semana`, com `semanal.decisao_gravada: true`) é tratada aqui (passo 5); semanas\n  anteriores só são relatadas no resumo.\n- `fechamentos_pendentes_excedem_limite: true` → pare e peça intervenção no resumo.\n- `relatorio_semanal` e `cobertura` (retrato da noite e revisão mensal): tratados no passo 6,\n  depois dos fechamentos.",
+          "sha256": "851ef0c55272f5d33391b7fe45cf117bfc6d9911b910759e68e55f8beb110f76"
+        }
+      ]
+    },
+    "retrato-cobertura": {
+      "prova": "Modelo, preço-alvo, rating, qualidade e data-base efetivos. Para identificar o último retrato completo ou parcial, consulte também o bloco cobertura da agenda.",
+      "distingue": {
+        "fila-cobertura": "A fila de notas indica prioridade de pesquisa. O alvo pertence ao modelo.",
+        "manifesto-snapshot": "O manifesto autentica os arquivos. A ficha do modelo contém o resultado econômico."
+      },
+      "termos": [
+        "modelo vigente por emissor",
+        "data-base do último retrato completo"
+      ],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/COBERTURA.md",
+          "trecho": "## 10. Auditoria e reprodução\n\nCada snapshot (`book/cobertura/<D>/`) guarda o modelo aberto de cada instrumento — insumos com\nfonte e hash, lacunas, cada passo com a fórmula e a mesma fórmula com os números usados,\nmétodos, combinação, rolagem, cenários, sensibilidade, rating e portões —, as tabelas públicas\nda execução, os pacotes de insumos normalizados, o contexto transversal, a cópia da\nconfiguração usada, o placar e um manifesto com o SHA-256 de cada arquivo, as versões de\nPython, numpy, pandas e scipy e a versão do código. O livro `book/cobertura/livro.jsonl` é\nencadeado por hash (um evento por instrumento por execução: iniciação, reiteração, revisão,\nmudança de rating, suspensão, retomada, encerramento) e cada snapshot é selado na trilha de\nauditoria do fundo.",
+          "sha256": "c3041157f0b3b3283ddcd58d4ce3b63a89cf2236df98c11bb4ebab5ad79e87b3"
+        },
+        {
+          "caminho": "docs/cdp/playbooks/SEMANAL.md",
+          "trecho": "## 3. Pesquisa (a mente) — etapa `pesquisa`\n\nLeia `briefing.md`, `context.json`, `INSTRUCTIONS.md` e os dois schemas. Ponto de partida por\nemissor: a nota de pesquisa publicada mais recente (`book/cobertura/notas/<IID>/<data>/nota.md`,\ncom a ficha do modelo aberto da cobertura) e o modelo atualizado do retrato de\n`cobertura.ultimo_retrato_completo` (`book/cobertura/<data>/modelos.csv` e\n`book/cobertura/<data>/modelos/<IID>.json`: preço-alvo, rating, confiança, portões e a ponte do\nalvo contra o retrato anterior); confira o que mudou depois da data da nota. O modelo é leitura:",
+          "sha256": "f55ece187628bc76bfba6456ea4d7f15b1ebb17e5f456baf3744c770ff6c5e6b"
+        }
+      ]
+    },
+    "fila-cobertura": {
+      "prova": "Ordem de emissores elegíveis, prioridades, motivos e pendências de notas.",
+      "distingue": {
+        "retrato-cobertura": "A avaliação econômica do emissor vem do modelo, mesmo que haja uma nota pendente.",
+        "agenda-rotinas": "O horário da rotina de cobertura não determina quem encabeça a fila."
+      },
+      "termos": [
+        "ordem de preparação das notas",
+        "prioridade de pesquisa por emissor"
+      ],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/playbooks/COBERTURA.md",
+          "trecho": "`nota agenda` devolve a `fila` (no máximo `limite_por_execucao` emissores), em grupos nesta ordem:\nrascunhos entregues pendentes (`docs/cdp/notas/`), pós-resultado (até 4 dias), notas vencidas\n(iniciação e SLA de 7/14/90 dias) e, por último, a nova leitura de emissores cuja última nota é a\nautomática do código; em cada grupo, posições, candidatos do modelo de cobertura (Compra/Venda) e\ndemais, do maior volume financeiro para o menor. Cada item traz `data_nota` (a data da nota,\nusada em todos os comandos do emissor), `motivo` e `tipo_sugerido` (`iniciacao`, `atualizacao`\nou `pos_resultado`); a saída traz ainda `modelo_de_cobertura` (data do retrato usado, ou `null`\ncom `aviso_cobertura`), `rascunhos_obsoletos` (só relate) e `integridade_notas`. Fila vazia ⇒",
+          "sha256": "bf7891bc2888d618fcbf16abbb1713ab884d955d2cb5eeab9ea20976a8b0b2e8"
+        },
+        {
+          "caminho": "docs/cdp/NOTAS.md",
+          "trecho": "## 2. Comandos\n\n```sh\nuv run python -m cdp nota agenda\nuv run python -m cdp nota prepare --issuer IID --date AAAA-MM-DD\nuv run python -m cdp validate-nota --issuer IID --date AAAA-MM-DD\nuv run python -m cdp nota publish --issuer IID --date AAAA-MM-DD\n```\n\n- `nota agenda [--date D]`: fila determinística, no máximo 12 ativos por execução, em\n  quatro grupos, nesta ordem: (1) rascunhos entregues em `docs/cdp/notas/` com data até D ainda\n  não publicados; (2) pós-resultado (o próximo resultado registrado na nota anterior caiu nos\n  últimos 4 dias corridos); (3) notas vencidas: sem nota (iniciação) ou nota mais velha que 7 dias\n  (posições), 14 dias (candidatos do modelo de cobertura, rating Compra ou Venda) ou 90 dias\n  (demais); (4) emissores cuja última nota é a automática do código (`autoria: \"codigo\"`): a\n  leitura qualitativa volta à fila a partir do dia seguinte, depois dos demais grupos. Dentro de\n  cada grupo: posições, candidatos e demais, do maior volume financeiro médio para o menor. Cada",
+          "sha256": "ec5a71c539c0570274291db045d21d10035fd49c484bbd518092815303814c7b"
+        }
+      ]
+    },
+    "agenda-rotinas": {
+      "prova": "Disparos programados das tarefas e previsão de atuação. A ocorrência efetiva precisa do registro da execução.",
+      "distingue": {
+        "agenda-montagem": "O horário de disparo não é o prazo de decisão ou a etapa da montagem.",
+        "procedencia-commit": "Calendário não demonstra que uma publicação ocorreu."
+      },
+      "termos": [
+        "calendário de disparos",
+        "próxima janela de uma tarefa"
+      ],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/playbooks/STATUS.md",
+          "trecho": "```sh\nuv run python -m cdp estado --formato md\nuv run python -m cdp status\nuv run python -m cdp verify\nuv run python -m cdp nota agenda\nuv run python -m cdp agenda\nuv run python -m cdp rotinas proximas --n 12",
+          "sha256": "e50a0e28e8e47144315f6fd43cf9b535a5a64380cab8e07823d6b5c22dce297d"
+        },
+        {
+          "caminho": "docs/cdp/playbooks/STATUS.md",
+          "trecho": "- **Modelos da cobertura** (`cobertura` em `cdp agenda`): último retrato completo e parcial,\n  se os modelos estão em dia para a próxima decisão (`modelos_em_dia_para_a_decisao`,\n  `data_base_decisao`), emissores com resultado à espera de reavaliação (`adhoc.emissores`;\n  `adhoc.falha`, se as datas de resultado estiverem indisponíveis), eventos macro pendentes e dos\n  próximos 7 dias (`macro`), notas de pós-resultado (`notas_pos_resultado`) e a revisão mensal\n  (`revisao_mensal`: data, etapa e a próxima).\n- **Próximas rotinas** e se vão agir.\n- **Portal**: a URL pública e, com `--rede`, se a versão publicada corresponde a `origin/main`.",
+          "sha256": "643620fa8d3fa9278980c3fe0395772f7c0b5a546b48ce5b91c34ad91fea9cce"
+        }
+      ]
+    },
+    "relatorio-calibracao": {
+      "prova": "Métricas medidas e período da calibração ou backtest específico, com a versão de referência quando documentada.",
+      "distingue": {
+        "relatorio-semanal": "Backtest usa uma janela de calibração. O relatório semanal registra o resultado da semana operada.",
+        "relatorio-risco": "Métricas de backtest não representam a observação intradiária."
+      },
+      "termos": [
+        "métricas da rodada de backtest",
+        "placar da calibração mensal"
+      ],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/playbooks/CALIBRACAO.md",
+          "trecho": "1. Data de hoje (Brasília) = `agora_brasilia` de `uv run python -m cdp agenda`. Se\n   `reports/backtest/AAAA-MM-DD/CALIBRACAO_MENSAL.md` de hoje existe, encerre (\"calibração do mês\n   já feita\"). Se `reports/backtest/AAAA-MM-DD/mensal/metrics.json` existe (o script de rotina\n   rodou o backtest antes, ou uma execução anterior parou depois dele), pule o passo 2: nos dois\n   casos, `cdp publicar` leva a pasta `mensal/` junto com o resumo.\n2. Backtest com todo o histórico (demora; rode-o uma vez, sem laços de espera e nunca dois ao\n   mesmo tempo):\n\n   ```sh\n   uv run python -m cdp backtest --start 2021-01-04 --out reports/backtest/AAAA-MM-DD/mensal\n   ```\n\n   Se o seu harness limita a duração de um comando (no Claude Code, 10 minutos no primeiro plano,\n   ou 30 com `BASH_MAX_TIMEOUT_MS`), rode-o em segundo plano pelo próprio harness e retome do\n   passo 3 quando ele terminar — sem `sleep` nem consultas repetidas. Falha: pare e relate.\n3. Execução anterior: a pasta `reports/backtest/*/mensal/` mais recente antes de hoje; sem\n   nenhuma, a variante escolhida em `reports/backtest/2026-10-05/CALIBRACAO.md`.\n4. Escreva `reports/backtest/AAAA-MM-DD/CALIBRACAO_MENSAL.md` (pt-BR): período, número de\n   rebalanceamentos e a pasta de comparação; tabela atual × anterior com retorno anualizado, vol\n   anualizada, Sharpe (excesso e bruto), drawdown máximo, custos, giro semanal, resultado\n   específico e fatorial, PSR, Sharpe deflacionado, fração do tempo com vol na banda e IC médio\n   por sinal; leitura qualitativa e **propostas** marcadas \"para revisão humana — não",
+          "sha256": "32bce96149289238341b5b6d8fd1c4a282d569e9fa137a8f19bf8bcb816b210b"
+        }
+      ]
+    },
+    "proposta-semanal": {
+      "prova": "Posições, ordens e pesos propostos para a semana e sua versão aprovada, quando houver.",
+      "distingue": {
+        "carteira-efetivada": "Uma proposta aprovada pode divergir das posições e quantidades efetivadas no leilão.",
+        "agenda-montagem": "A etapa e o prazo não demonstram que uma proposta foi gravada."
+      },
+      "termos": [
+        "composição pretendida do rebalanceamento",
+        "posições propostas para a semana"
+      ],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/ARQUITETURA.md",
+          "trecho": "```\nbook/\n  audit_log.jsonl                  eventos encadeados por hash (decisões, registros, cobertura)\n  <semana>/briefing/               briefing, contexto e schemas para a mente\n  <semana>/inputs/                 research_pack.json e pm_decision.json (mente)\n  <semana>/proposal_v<k>.json      propostas versionadas (imutáveis)\n  <semana>/decision_v<k>.json      decisão autônoma + approval_hash\n  <semana>/booked.json             carteira efetivada no leilão de fechamento\n  <semana>/memo_v<k>.md, trades_v<k>.csv, positions_v<k>.csv, shadow_quant.json\n  <semana>/tese/                   factbook.json, fatos.md, analise.json, tese.schema.json,\n                                   tese.json (mente), tese_publicada.json e tese.md (imutáveis)",
+          "sha256": "2f41cf08025b3114063385f35bf3c2ff331880fecd13e66a898e5deea0412f3a"
+        },
+        {
+          "caminho": "docs/cdp/playbooks/SEMANAL.md",
+          "trecho": "```sh\nuv run python -m cdp weekly decide --week AAAA-MM-DD --mind <mente>\nuv run python -m cdp verify\n```\n\nOtimiza, aplica os gates (com fallback automático), grava a decisão com hash, a sombra só-quant\ne o relatório da decisão (`reports/weekly/<semana>/`). A execução hipotética ocorre no leilão de\nfechamento de hoje.",
+          "sha256": "394d2da4d6afaa03e50ee46f12063954096f3d91e37f39c504c87cb8f8de418a"
+        }
+      ]
+    },
+    "agenda-montagem": {
+      "prova": "Dia e semana de montagem, etapa de retomada, prazo efetivo, minutos restantes e mercados fechados.",
+      "distingue": {
+        "agenda-rotinas": "Um horário agendado do app é distinto do prazo efetivo para decidir.",
+        "proposta-semanal": "Para o conteúdo gravado, consulte o livro da semana."
+      },
+      "termos": [
+        "prazo efetivo de rebalancear",
+        "etapa atual da montagem semanal"
+      ],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/playbooks/SEMANAL.md",
+          "trecho": "## 1. É dia de montagem? De que etapa retomar?\n\nCom a execução admitida, consulte, se útil, `uv run python -m cdp memoria contexto --escopo semanal`.\nUse o contexto como referência e confirme a informação na fonte indicada. Se a consulta\nestiver indisponível, prossiga pelo roteiro e pelos documentos canônicos.\n\n```sh\nuv run python -m cdp agenda\nuv run python -m cdp status\n```",
+          "sha256": "76ec57375fb325841ef6ebf591f0321cc555ac64625da581da7dca5109c87cdb"
+        },
+        {
+          "caminho": "docs/cdp/playbooks/SEMANAL.md",
+          "trecho": "- `semanal.acao`:\n  - `montar` → continue a partir de `semanal.etapa` (`cobertura`, `prepare`, `pesquisa` ou\n    `validar_e_decidir`); anote `semanal.semana` (AAAA-MM-DD), `semanal.prazo_efetivo`,\n    `semanal.minutos_ate_o_prazo`, `semanal.mercados_fechados` e\n    `semanal.fechamento_antecipado` (o código congela ou roteia para o ADR os emissores cujo\n    mercado não negocia no leilão; não há o que ajustar à mão). Numa reserva, retome da etapa\n    indicada, sem refazer o que já está gravado.\n  - `tese` → a decisão já está gravada e a tese não foi publicada: faça **só** os passos 8\n    (tese), 9 (integridade e painel), 10 (publicação, com a mensagem da retomada) e 11 (resumo).\n  - `nenhuma`, `aguardar` ou `prazo_vencido` → encerre com \"Sem montagem hoje: <semanal.motivo>\".",
+          "sha256": "5ed904876427221dd6532743a236e09ed1b59d805d2a921a3103e6735b5eebfd"
+        }
+      ]
+    },
+    "relatorio-risco": {
+      "prova": "Gatilhos e severidade, medidas de risco e estimativas intradiárias efetivamente registradas pelo monitor.",
+      "distingue": {
+        "estado-kill-switch": "Gatilho ou pedido observado não prova que a chave já foi aplicada no livro.",
+        "relatorio-diario": "O monitor usa seu próprio corte. O fechamento oficial tem registro distinto."
+      },
+      "termos": [
+        "medição do monitor intradiário",
+        "gatilhos da rodada de risco"
+      ],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/playbooks/RISCO.md",
+          "trecho": "## 2. Monitor\n\nCom `pregao_b3_hoje: true`:\n\n```sh\nuv run python -m cdp risk --live\n```\n\nSem pregão na B3 (feriado local com a NYSE aberta):\n\n```sh\nuv run python -m cdp risk\n```\n\nO comando grava `reports/risk/<data>/risco_<HHMM>.md` e `.json` (caminhos em `relatorio`).\n`status: \"sem registro\"` = o registro diário ainda não começou; relate só `decisao_pendente`.\n\n## 3. Interpretar\n\n- `gatilhos`: `HARD` (o mandato exige ação), `SOFT` (revisar no próximo rebalanceamento; inclui\n  condições já revisadas por humano) e `INFO`.\n- `intradiario`: resultado desde o último fechamento, NAV e drawdown estimados, `cobertura_gross`\n  e `sem_cotacao` (cotação ausente fica ausente; nunca vira zero).\n- No dia de montagem, até o leilão de fechamento, o monitor mede a carteira vigente; a carteira\n  decidida só vale a partir do registro do fechamento (`decisao_pendente`).",
+          "sha256": "308cd0ca5f25cd6b3e1d204739988a18b2e2fb9d8ffc6bfb75cc3f8c55bee3d2"
+        }
+      ]
+    },
+    "carteira-efetivada": {
+      "prova": "Posições e execução hipotética efetivamente registradas após a decisão. Para uma recusa ou caducidade, confira o registro correspondente.",
+      "distingue": {
+        "proposta-semanal": "Ordem ou peso planejado não comprova efetivação.",
+        "tese-publicada": "A narrativa publicada explica a decisão. O livro registra a efetivação."
+      },
+      "termos": [
+        "posição que entrou no livro após o leilão",
+        "ordens efetivadas no fechamento"
+      ],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/ARQUITETURA.md",
+          "trecho": "```\nbook/\n  audit_log.jsonl                  eventos encadeados por hash (decisões, registros, cobertura)\n  <semana>/briefing/               briefing, contexto e schemas para a mente\n  <semana>/inputs/                 research_pack.json e pm_decision.json (mente)\n  <semana>/proposal_v<k>.json      propostas versionadas (imutáveis)\n  <semana>/decision_v<k>.json      decisão autônoma + approval_hash\n  <semana>/booked.json             carteira efetivada no leilão de fechamento\n  <semana>/memo_v<k>.md, trades_v<k>.csv, positions_v<k>.csv, shadow_quant.json\n  <semana>/tese/                   factbook.json, fatos.md, analise.json, tese.schema.json,\n                                   tese.json (mente), tese_publicada.json e tese.md (imutáveis)\n  track_record/                    registros diários encadeados (records/<data>.json) e resumo",
+          "sha256": "94bb652b7e1579d7681db5bbc21413c2d83bf343284650639b9d5f18581b4df3"
+        },
+        {
+          "caminho": "docs/cdp/EXECUCAO.md",
+          "trecho": "- **Kill switch no leilão do dia de montagem — regra de caducidade.** A decisão vale só para o\n  leilão de fechamento do seu dia de montagem. Com o kill switch ligado nesse fechamento, a ordem\n  não é executada (só redução de risco) e a rotina diária registra o próprio dia com a recusa\n  (`daily close` → `status: \"registrado\"` com `efetivacao_recusada`; alerta \"Efetivação\n  recusada\" no registro): grava `book/<semana>/efetivacao_recusada.json` e o evento\n  `BOOKING_LAPSED` na trilha. A decisão **caduca**: nunca é efetivada depois, nem quando um\n  humano desligar o kill switch (sem efetivação retroativa, que usaria um preço já conhecido). Na\n  carteira inaugural, o histórico começa nesse dia em caixa (PL inicial, sem posições); numa",
+          "sha256": "34a0ccdf79223921089f238090d21b74cfb63a0c9e417e180058a6877453119e"
+        }
+      ]
+    },
+    "tese-publicada": {
+      "prova": "Narrativa publicada, autoria, integridade e vínculo à proposta aprovada da semana.",
+      "distingue": {
+        "proposta-semanal": "A proposta gravada é o objeto da tese. Pode existir sem a narrativa publicada.",
+        "relatorio-semanal": "Tese explica a decisão. Relatório semanal apresenta resultados da semana."
+      },
+      "termos": [
+        "texto final da tese da semana",
+        "evento de publicação da tese"
+      ],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/TESE.md",
+          "trecho": "## 8. Imutabilidade e trilha\n\n- `tese_publicada.json` e `tese.md` são gravados uma única vez (escrita exclusiva). Uma semana tem\n  no máximo uma tese publicada; depois dela, `tese prepare` não regrava nada e `tese publish`\n  recusa.\n- A tese fica vinculada à **proposta aprovada** da semana (a referenciada pela decisão que a\n  aprovou).\n- A publicação acrescenta um evento `WEEKLY_THESIS` (ator `CDP`) à trilha de auditoria encadeada\n  por hash. O payload traz o SHA-256 de `tese_publicada.json` e de `tese.md`, o `proposal_hash`, o\n  `approval_hash` e a autoria (`mente` ou `codigo`).",
+          "sha256": "aec08fa38a5822d1a042df7d41bd53f9da0b83222d0847ecc5cb3805a6232d4c"
+        }
+      ]
+    },
+    "estado-pendencias": {
+      "prova": "Pendências operacionais abertas em várias frentes, como registros, relatórios, tese, cobertura e rascunhos.",
+      "distingue": {
+        "agenda-fechamentos": "Use o campo especializado quando o pedido trata somente de datas de fechamento.",
+        "passagem-desenvolvimento": "As pendências do livro diferem do trabalho de engenharia documentado."
+      },
+      "termos": [
+        "fila operacional em aberto",
+        "frentes pendentes do fundo"
+      ],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/playbooks/STATUS.md",
+          "trecho": "\n`estado` já reúne fase, executor designado × este ambiente, trava das rotinas, integridade,\núltimos registros, últimas execuções (com a procedência de cada commit), pendências, incidentes\ne o próximo passo. Com acesso à rede, `uv run python -m cdp estado --rede --formato md` consulta\ntambém o remoto, a trava e o portal publicado.",
+          "sha256": "1352e7a9efd4b1ee95b1a09777e664cb5ca8ee14060dff541499213baaea0fa7"
+        },
+        {
+          "caminho": "docs/cdp/playbooks/STATUS.md",
+          "trecho": "## 2. O que relatar (resumo final, até 12 linhas)\n\n- **Integridade** e **kill switch**.\n- **Fase**: antes da data de início, a data da carteira inaugural; com a abertura do livro\n  pendente, destaque que a primeira rotina elegível de montagem ou de fechamento abre o livro.\n- **Executor**: quem grava o livro e desde quando; se este ambiente não é o executor, diga\n  \"somente leitura\".\n- **Incidentes** por severidade (alta primeiro), com a ação indicada.\n- **Pendências**: fechamentos, relatórios, tese da semana, relatórios semanais\n  (`relatorio_semanal.pendentes`), retrato da cobertura, a fila de notas (`pendentes` de\n  `nota agenda`) e os rascunhos entregues ainda não adotados ou obsoletos\n  (`rascunhos_pendentes`, `rascunhos_obsoletos`).\n- **Modelos da cobertura** (`cobertura` em `cdp agenda`): último retrato completo e parcial,\n  se os modelos estão em dia para a próxima decisão (`modelos_em_dia_para_a_decisao`,\n  `data_base_decisao`), emissores com resultado à espera de reavaliação (`adhoc.emissores`;\n  `adhoc.falha`, se as datas de resultado estiverem indisponíveis), eventos macro pendentes e dos\n  próximos 7 dias (`macro`), notas de pós-resultado (`notas_pos_resultado`) e a revisão mensal\n  (`revisao_mensal`: data, etapa e a próxima).",
+          "sha256": "0958e8dc1c5a677284573bc9d7583267ca6fd52611183e735a0106106166f0d3"
+        }
+      ]
+    },
+    "relatorio-semanal": {
+      "prova": "Resultado, atribuição, risco e mudanças observadas na semana coberta pelo relatório.",
+      "distingue": {
+        "proposta-semanal": "reports/weekly/ contém o relatório da decisão, distinto de reports/semanal/.",
+        "relatorio-diario": "O relatório semanal agrega um intervalo. O diário comprova a marcação de um pregão."
+      },
+      "termos": [
+        "desempenho da semana",
+        "atribuição semanal publicada"
+      ],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/playbooks/DIARIO.md",
+          "trecho": "Rode `uv run python -m cdp agenda` de novo e veja:\n\n1. **Relatórios semanais de resultado** — `relatorio_semanal.pendentes` lista, do mais antigo ao\n   mais recente, todo dia de montagem da regra semanal com o registro do fechamento e sem\n   relatório publicado — **inclusive os dias sem decisão gravada** (carteira mantida). Trate\n   cada data da lista, nessa ordem:\n\n   ```sh\n   uv run python -m cdp weekly close-report --date AAAA-MM-DD\n   uv run python -m cdp validate-weekly-report --date AAAA-MM-DD\n   uv run python -m cdp weekly close-report --date AAAA-MM-DD --publish\n   ```\n\n   Entre o primeiro comando e a validação, leia **por inteiro** `reports/semanal/<data>/fatos.md`\n   e escreva `reports/semanal/<data>/comentario.json` conforme `comentario.schema.json`, com\n   `\"mind\": \"<mente>\"` e só fatos: as mudanças da carteira feitas no fechamento (entradas, saídas,\n   aumentos e reduções; num dia sem decisão, a carteira mantida), o resultado e a atribuição de\n   performance da semana e desde o início, o risco da carteira e a execução — números **apenas**\n   como `{{fact:<id>}}`, tom de `docs/cdp/ESTILO.md`. Valide até passar (no máximo 3\n   tentativas) e publique (imutável; inválido, o código publica o texto automático e você relata).",
+          "sha256": "610f4118828125dd7b1097ce67f1faa368c6ca04b517ed0196974383e22f67a8"
+        },
+        {
+          "caminho": "docs/cdp/playbooks/DIARIO.md",
+          "trecho": "Senão, até 12 linhas para a última data publicada, com números **copiados** de\n`reports/daily/<data>/relatorio.md`: manchete, retorno do dia e acumulado desde o início, NAV, vol\nex-ante e banda, beta, principais contribuições e detratores, alertas de risco e de dados, datas\nrecuperadas e pendências; tese recuperada (autoria `mente` ou `codigo`, se veio do rascunho\nentregue); relatórios semanais publicados (datas, autoria e o caminho\n`reports/semanal/<data>/relatorio.md`); retrato da cobertura (data, tipo, emissores e motivos,\nou o motivo da falha ou do adiamento); revisão mensal (data e autoria, se publicada);\nintegridade e publicação (commit, push ou o motivo de não ter havido push).",
+          "sha256": "c9e7aca0b3515586a1385198d5acbe19265ea0a2238cf25f99ae9db8a654e757"
+        }
+      ]
+    },
+    "relatorio-diario": {
+      "prova": "NAV, retorno, atribuição, risco, alertas e marcação oficial registrados naquela data.",
+      "distingue": {
+        "relatorio-risco": "Estimativas intradiárias têm outro horário e outra finalidade.",
+        "agenda-fechamentos": "Uma data pendente indica falta do registro ou publicação. Não fornece um resultado financeiro."
+      },
+      "termos": [
+        "marcação oficial do pregão",
+        "resultado diário registrado"
+      ],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/playbooks/DIARIO.md",
+          "trecho": "## 2. Para cada data D de `fechamentos_pendentes`, em ordem\n\n```sh\nuv run python -m cdp daily close --date AAAA-MM-DD --mind <mente>\n```\n\nColeta o fechamento oficial (preços, câmbio, taxas, aluguel da B3), executa no leilão de\nfechamento a decisão da semana se D for dia de montagem, marca a carteira do CDP e a sombra\nsó-quant, calcula NAV, risco ex-ante, VaR/ES, liquidez, squeeze, atribuição e alertas e grava o\nregistro diário encadeado por hash. Leia `status` na saída:\n\n- `registrado` → passo 3 com D (anote `alertas`).\n- `sem pregão` → próxima data.\n- `dados não prontos` → **pare o laço** (não processe datas posteriores) e relate o `motivo`: a\n  próxima execução de `cdp-diario` retoma os pregões pendentes pela agenda. Não\n  espere nem repita em laço. Publique o que já fechou.\n- `sem carteira efetivada` → pare e relate (nenhuma decisão executável ainda).\n- Erro → pare e relate a mensagem (não tente contornar).\n\n## 3. Comentário do dia D (a mente)\n\n1. Leia `reports/daily/D/facts.md` (números e `fact_id`s do dia) e `comentario.schema.json`.",
+          "sha256": "4467b4442fb89e0fefa79654ca50b3155b57be5bb5bacd1677c6433f6083a9eb"
+        },
+        {
+          "caminho": "docs/cdp/playbooks/DIARIO.md",
+          "trecho": "Senão, até 12 linhas para a última data publicada, com números **copiados** de\n`reports/daily/<data>/relatorio.md`: manchete, retorno do dia e acumulado desde o início, NAV, vol\nex-ante e banda, beta, principais contribuições e detratores, alertas de risco e de dados, datas\nrecuperadas e pendências; tese recuperada (autoria `mente` ou `codigo`, se veio do rascunho\nentregue); relatórios semanais publicados (datas, autoria e o caminho\n`reports/semanal/<data>/relatorio.md`); retrato da cobertura (data, tipo, emissores e motivos,\nou o motivo da falha ou do adiamento); revisão mensal (data e autoria, se publicada);\nintegridade e publicação (commit, push ou o motivo de não ter havido push).",
+          "sha256": "c9e7aca0b3515586a1385198d5acbe19265ea0a2238cf25f99ae9db8a654e757"
+        }
+      ]
+    },
+    "estado-agenda": {
+      "prova": "Fase geral do fundo, próximos passos e contexto operacional agregado quando o pedido abrange vários componentes.",
+      "distingue": {
+        "estado-pendencias": "Uma lista especificamente de itens em aberto tem uma seção própria.",
+        "agenda-rotinas": "Para horários de tarefas, use a agenda de disparos.",
+        "agenda-montagem": "Para prazo e etapa da decisão semanal, use o bloco semanal."
+      },
+      "termos": [
+        "fase geral do fundo",
+        "próximo passo operacional"
+      ],
+      "evidencias": [
+        {
+          "caminho": "docs/cdp/playbooks/RETOMAR.md",
+          "trecho": "## 1. Estado\n\n```sh\nuv sync --extra dev --extra ai\nuv run python -m cdp estado --formato md\nuv run python -m cdp agenda\n```\n\nLeia, nesta ordem: **incidentes** (severidade alta primeiro), **fase** do fundo, **executor**\n(`sou_o_executor`: este ambiente grava o livro?), **pendências**, **próximas rotinas** e o\n**próximo passo** (`playbook_sugerido`). Com rede, acrescente `--rede` (remoto, trava e portal).",
+          "sha256": "f03b3290458aacc683da2461c6325e70325d34553b57d9ad466e6634bc2f3598"
+        },
+        {
+          "caminho": "docs/cdp/playbooks/STATUS.md",
+          "trecho": "\n`estado` já reúne fase, executor designado × este ambiente, trava das rotinas, integridade,\núltimos registros, últimas execuções (com a procedência de cada commit), pendências, incidentes\ne o próximo passo. Com acesso à rede, `uv run python -m cdp estado --rede --formato md` consulta\ntambém o remoto, a trava e o portal publicado.",
+          "sha256": "1352e7a9efd4b1ee95b1a09777e664cb5ca8ee14060dff541499213baaea0fa7"
+        }
+      ]
+    }
+  }
+}

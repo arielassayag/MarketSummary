@@ -31,7 +31,8 @@ FOLHAS = MappingProxyType({
     "cobertura": ("agenda", "nota agenda", "nota prepare", "validate-nota", "nota publish", "verify"),
     "risco": ("agenda", "risk", "kill-switch on", "status", "verify"),
     "calibracao": ("agenda", "backtest", "verify"),
-    "dreaming": ("memoria sonhar", "memoria fonte-sonho"),
+    "dreaming": ("memoria sonhar", "memoria sonhar --exigir-provas", "memoria fonte-sonho",
+                 "memoria conferir-sonho --exigir-provas"),
     "retomar": ("estado", "agenda", "executor janela", "rotinas verificar",
                 "skills sincronizar --claude --verificar"),
 })
@@ -96,10 +97,11 @@ def regras(rot: Rotinas, familia: str | None = None, *,
         raise ValueError("Forma da CLI fora do catálogo")
     leaves = {p for f in ((familia,) if familia is not None else FOLHAS)
               for p in prefixos(rot, f)}
-    # Só a fonte de um item de dreaming precisa receber parâmetros de revisão e plano.
+    # A leitura do item e a conferência estrita recebem a revisão e o plano.
     grants = {f"Bash({form}{leaf})" for form in formas for leaf in leaves}
     grants.update(f"Bash({form}{leaf} *)" for form in formas for leaf in leaves
-                  if not leaf.startswith("memoria ") or leaf == "memoria fonte-sonho")
+                  if not leaf.startswith("memoria ")
+                  or leaf in ("memoria fonte-sonho", "memoria conferir-sonho --exigir-provas"))
     return tuple(sorted(grants))
 
 

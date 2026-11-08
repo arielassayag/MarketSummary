@@ -1,0 +1,31 @@
+{
+  "id": "semanal-limites-da-pesquisa",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Pesquisa semanal exige evidência por nome e respeita o prazo",
+  "resumo": "Pesquise macro, candidatos, posições e sinais de squeeze. Sem evidência suficiente, abstenha-se. Pare a pesquisa ao entrar na janela de escrita antes da decisão e preserve a referência aos fatos do contexto semanal.",
+  "escopos": [
+    "semanal"
+  ],
+  "tags": [
+    "pesquisa semanal",
+    "squeeze",
+    "abstenção",
+    "evidência",
+    "candidatos",
+    "posições",
+    "prazo"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/SEMANAL.md",
+      "trecho": "1. **Macro por país** (BR, MX, CL, CO, PE, AR) e global: regime, eventos da semana, riscos.\n2. **Cada candidato e cada posição atual**: fatos recentes (CVM/IPE, SEC 6-K, relações com\n   investidores), catalisadores datados, tese bull × bear, riscos. Priorize fontes locais.\n3. **Shorts**: sentinela de squeeze (`ok`/`caution`/`veto`) — controlador, free float, aluguel,\n   catalisador, histórico de squeeze, eventos políticos.\n4. Sem evidência ⇒ abster-se daquele nome (ou `abstain: true` na decisão inteira).\n\nNúmeros só como `{{fact:<id>}}` existentes em `context.json`: cite fatos `val.<IID>.*` somente\nquando estiverem lá (a ficha da nota é leitura, não fato citável da semana). **Orçamento de\ntempo:** a cada bloco de pesquisa, rode `agenda` e renove a trava (seção 0); com\n`semanal.minutos_ate_o_prazo` abaixo de 60, pare de pesquisar e escreva com o que estiver\nsustentado por evidência.",
+      "sha256": "224e14bb1297a3f161f12a3cc5b066561b3c614323d2ce873abe6d87e67aba17"
+    }
+  ]
+}

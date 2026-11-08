@@ -59,9 +59,11 @@ uv run python -m cdp sincronizar --executar
 
 ## 1. Fila de notas (código)
 
-Com a execução admitida, consulte, se útil, `uv run python -m cdp memoria contexto --escopo cobertura`.
-Use o contexto como referência e confirme a informação na fonte indicada. Se a consulta
-estiver indisponível, prossiga pelo roteiro e pelos documentos canônicos.
+Com a execução admitida, identifique a hipótese de cobertura que uma lição anterior pode
+ajudar a testar. Consulte, se útil, `uv run python -m cdp memoria contexto --escopo cobertura`.
+O agente escolhe a lição aplicável, abre a fonte indicada e verifica se o período, a métrica e
+o perímetro sustentam a analogia. Se a consulta estiver indisponível, prossiga pelos documentos
+canônicos.
 
 ```sh
 uv run python -m cdp agenda

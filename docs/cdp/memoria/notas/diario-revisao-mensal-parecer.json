@@ -1,0 +1,33 @@
+{
+  "id": "diario-revisao-mensal-parecer",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Parecer mensal da cobertura propõe ajustes para revisão humana",
+  "resumo": "A revisão mensal analisa modelos e parâmetros, guarda propostas de ajuste para decisão humana e preserva a configuração em uso. A validação admite até três tentativas. Se o texto continuar inválido, publica-se a versão automática com indicação de autoria.",
+  "escopos": [
+    "diario",
+    "cobertura"
+  ],
+  "tags": [
+    "revisão de cobertura",
+    "premissas",
+    "ajustes recomendados",
+    "configuração",
+    "revisão humana",
+    "texto inválido",
+    "parecer",
+    "autoria"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "   Entre o `preparar` e o `validar`, leia **por inteiro**\n   `book/cobertura/revisoes/<data>/fatos.md` (quadros do mês com o valor e o id de cada fato: maiores\n   mudanças de preço-alvo com a ponte, mudanças de rating, portões de qualidade, distribuição de\n   confiança, insumos defasados ou ausentes, divergência ao consenso público, placar com N, notas\n   além do prazo e a lista de verificação dos parâmetros — Damodaran, painel de persistência,\n   arquétipos, participações das holdings, pesos dos métodos, composição dos ETFs) e\n   `revisao.schema.json`, e escreva `revisao.json` com `\"mind\": \"<mente>\"`: `resumo`,\n   `ajustes_recomendados` (propostas para decisão humana, nunca aplicadas aqui),\n   `modelos_reavaliados` (obrigatórias as maiores mudanças do mês, listadas em `fatos.md`),\n   `parametros_revisados` (um por item da lista de verificação) e `riscos_do_processo`; números\n   **só** como `{{fact:<id>}}`, fontes públicas declaradas em `fontes`. Valide até `ok: true` (no\n   máximo 3 tentativas) e publique (imutável; evento `COVERAGE_MONTHLY_REVIEW`); inválida depois\n   disso, o código publica o texto automático (`autoria: \"codigo\"`) e você relata os `problemas`.",
+      "sha256": "dc9cbe942b441a244b3291c94589f04eeac303cd191c9e6a930a393f2c836918"
+    }
+  ]
+}

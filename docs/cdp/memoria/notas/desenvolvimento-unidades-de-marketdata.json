@@ -1,0 +1,33 @@
+{
+  "id": "desenvolvimento-unidades-de-marketdata",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "MarketData guarda cotações locais e câmbio em USD por unidade",
+  "resumo": "Os preços do MarketData são em moeda local. O campo fx usa USD por unidade da moeda e as taxas são decimais anuais. O AssetPanel converte a linha primária para retornos totais em USD e conserva informações por linha.",
+  "escopos": [
+    "desenvolvimento",
+    "calibracao"
+  ],
+  "tags": [
+    "MarketData",
+    "AssetPanel",
+    "USD por unidade",
+    "câmbio",
+    "moeda local",
+    "taxa anual",
+    "cotação",
+    "entrada"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/ARQUITETURA.md",
+      "trecho": "## 4. Contratos de dados em memória\n\n- `MarketData` (`market.py`): `close`, `adj_close`, `volume` (data × ticker, moeda local),\n  `fx` (data × moeda, **USD por 1 unidade**; `USD`=1), `fundamentals`/`short_interest`/`lending`\n  (índice ticker; retratos atuais), `benchmarks`, `rates` (decimal anual), `news`.\n- `AssetPanel` (`analytics/panel.py`): nível emissor, retornos diários totais em USD da linha\n  primária, `price_usd`, `traded_value_usd` (todas as linhas), `assets` (país, setor, mcap USD,\n  ADTV USD, elegibilidade e motivo), `lines` (ADTV por linha, preço local/USD).",
+      "sha256": "cc66dac18a3fcf11e3c7c44f9666b85d0074dc55913273f23c55744f9d2639a7"
+    }
+  ]
+}

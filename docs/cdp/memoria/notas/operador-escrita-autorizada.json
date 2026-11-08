@@ -2,8 +2,8 @@
   "id": "operador-escrita-autorizada",
   "tipo": "licao",
   "estado": "curada",
-  "titulo": "A sessão de operador começa em leitura",
-  "resumo": "Para gravar o livro, confirme executor.sou_o_executor em estado, confira o pedido explícito da pessoa e use o gate do roteiro com --manual. No Claude Code, sessões interativas usam o ambiente Default. O ambiente CDP com CDP_EXECUTOR é reservado às rotinas.",
+  "titulo": "Escrita de operador e execução manual fora do horário",
+  "resumo": "A sessão interativa começa em leitura. Para gravar o livro, confira o pedido explícito do operador e executor.sou_o_executor. Em execução fora da janela agendada, siga o roteiro com --manual e --adquirir no gate. Sessões interativas do Claude Code usam Default. O ambiente CDP é reservado às rotinas.",
   "escopos": [
     "operador",
     "status"
@@ -14,7 +14,8 @@
     "executor designado",
     "permissão de escrita",
     "gate manual",
-    "ambiente default"
+    "ambiente default",
+    "fora do horário"
   ],
   "registrada_em": "2026-11-07",
   "revisada_em": "2026-11-07",
@@ -31,6 +32,11 @@
       "caminho": "AGENTS.md",
       "trecho": "6. **Escritor único e trava.** Só o executor de `configs/cdp/executor.yaml` grava `book/`,\n   `data/`, `reports/`, `artifacts/`; a publicação passa por `cdp publicar` (ramo `main`,\n   nunca force), que só publica o que a execução gravou e, nos escritores exclusivos, só com a\n   trava do gate (sem a trava, não há execução).",
       "sha256": "56e5753cc14820ace5b43502f9f034f106c397d1ab210b56f2e952edb9665fcb"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/RETOMAR.md",
+      "trecho": "- Rodar uma rotina fora do horário (só no executor): o roteiro da tarefa, com\n  `uv run python -m cdp rotinas gate --tarefa cdp-diario --manual --adquirir`.",
+      "sha256": "dac036af1280d518d011c07a00be349ca0101fc2b1a15c89cf05cf4795fab43b"
     }
   ]
 }

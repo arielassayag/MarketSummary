@@ -1,0 +1,30 @@
+{
+  "id": "desenvolvimento-retomada-pelo-estado",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Triagem inicial de uma retomada pelo estado e pela agenda",
+  "resumo": "Após estado e agenda, trate incidentes por severidade e confira fase e identidade do executor. Em seguida, leia pendências e próximas rotinas. playbook_sugerido aponta o roteiro aplicável. A opção --rede inclui remoto, trava e portal no diagnóstico.",
+  "escopos": [
+    "desenvolvimento"
+  ],
+  "tags": [
+    "retomada",
+    "estado",
+    "incidentes",
+    "severidade",
+    "pendências",
+    "playbook sugerido"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/RETOMAR.md",
+      "trecho": "Leia, nesta ordem: **incidentes** (severidade alta primeiro), **fase** do fundo, **executor**\n(`sou_o_executor`: este ambiente grava o livro?), **pendências**, **próximas rotinas** e o\n**próximo passo** (`playbook_sugerido`). Com rede, acrescente `--rede` (remoto, trava e portal).",
+      "sha256": "a3e5c8b0cd0fd42d9a1f9112ad7a0edd6b841d18d9d354bfd2b7c2814fab123a"
+    }
+  ]
+}

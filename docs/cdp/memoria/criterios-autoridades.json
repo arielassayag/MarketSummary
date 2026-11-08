@@ -1,0 +1,500 @@
+{
+  "versao": 1,
+  "revisao_fontes": "ac5f8481be256ce695a1c886927ef9a1c6fe2954",
+  "criterios": {
+    "ci-github": {
+      "objeto": [
+        "ci",
+        "integracao continua",
+        "workflow de testes",
+        "checks",
+        "verificacoes da revisao",
+        "testes em linux"
+      ],
+      "atributo": [
+        "job",
+        "etapa",
+        "em execucao",
+        "status",
+        "passou",
+        "falhou",
+        "terminou",
+        "checks",
+        "verificacao",
+        "teste"
+      ]
+    },
+    "passagem-desenvolvimento": {
+      "objeto": [
+        "passagem de bastao",
+        "em andamento",
+        "frente de desenvolvimento",
+        "handoff"
+      ],
+      "atributo": [
+        "trabalho",
+        "entrega",
+        "concluida",
+        "mudou",
+        "pendencia",
+        "risco",
+        "frente"
+      ]
+    },
+    "portal-publicado": {
+      "objeto": [
+        "portal",
+        "pages",
+        "pagina publica",
+        "manifesto servido",
+        "ficha publica"
+      ],
+      "atributo": [
+        "commit",
+        "versao",
+        "source_commit",
+        "implantacao",
+        "deploy",
+        "no ar",
+        "servida",
+        "publicacao"
+      ]
+    },
+    "trilha-entrega": {
+      "objeto": [
+        "entrega",
+        "recibo de envio",
+        "envio do relatorio",
+        "email",
+        "mensagem enviada"
+      ],
+      "atributo": [
+        "destinatario",
+        "recebimento",
+        "recibo",
+        "comprovante",
+        "entrega",
+        "enviado",
+        "anexo"
+      ]
+    },
+    "procedencia-commit": {
+      "objeto": [
+        "commit",
+        "trailers",
+        "historico git",
+        "revisao gravada"
+      ],
+      "atributo": [
+        "harness",
+        "app",
+        "aplicativo",
+        "executor",
+        "autor",
+        "identificador",
+        "disparo",
+        "procedencia",
+        "sessao",
+        "publicou"
+      ]
+    },
+    "executor-remoto": {
+      "objeto": [
+        "origin/main",
+        "ramo principal do servidor",
+        "configuracao remota",
+        "executor.yaml",
+        "ramo principal"
+      ],
+      "atributo": [
+        "escrita",
+        "escritor",
+        "executor",
+        "designado",
+        "ambiente",
+        "app",
+        "aplicativo",
+        "autorizacao"
+      ]
+    },
+    "estado-executor": {
+      "objeto": [
+        "executor",
+        "clone",
+        "ambiente",
+        "maquina"
+      ],
+      "atributo": [
+        "escrita",
+        "gravar o livro",
+        "somente leitura",
+        "identidade",
+        "designado",
+        "responsavel",
+        "autorizacao"
+      ]
+    },
+    "manifesto-ensaio": {
+      "objeto": [
+        "replay",
+        "ensaio",
+        "run_manifest",
+        "execucao isolada"
+      ],
+      "atributo": [
+        "inventario",
+        "manifesto",
+        "modo",
+        "selado",
+        "origem",
+        "hash",
+        "sha256",
+        "arquivos",
+        "insumos",
+        "configuracao"
+      ]
+    },
+    "manifesto-snapshot": {
+      "objeto": [
+        "snapshot",
+        "captura",
+        "base arquivada",
+        "manifesto da captura"
+      ],
+      "atributo": [
+        "manifesto",
+        "hash",
+        "sha256",
+        "digest",
+        "impressao digital",
+        "insumo",
+        "arquivo",
+        "barra",
+        "aluguel"
+      ]
+    },
+    "trava-distribuida": {
+      "objeto": [
+        "trava",
+        "cdp-trava",
+        "bloqueio distribuido",
+        "exclusividade"
+      ],
+      "atributo": [
+        "ocupa",
+        "ocupada",
+        "segura",
+        "titular",
+        "posse",
+        "validade",
+        "vence",
+        "expira",
+        "execucao",
+        "libera"
+      ]
+    },
+    "estado-kill-switch": {
+      "objeto": [
+        "kill switch",
+        "chave de emergencia",
+        "chave de risco",
+        "bloqueio de risco"
+      ],
+      "atributo": [
+        "ligado",
+        "ligada",
+        "ativo",
+        "ativa",
+        "desligado",
+        "desligada",
+        "aplicado",
+        "registrado",
+        "estado"
+      ]
+    },
+    "estado-integridade": {
+      "objeto": [
+        "integridade",
+        "cdp verify",
+        "verificador do livro",
+        "conferencia do livro",
+        "cadeia de registros"
+      ],
+      "atributo": [
+        "diagnostico",
+        "selos",
+        "resultado",
+        "veredito",
+        "aceitou",
+        "integro",
+        "falha",
+        "confere",
+        "hash"
+      ]
+    },
+    "agenda-fechamentos": {
+      "objeto": [
+        "pregao",
+        "fechamento",
+        "registro diario"
+      ],
+      "atributo": [
+        "pendente",
+        "recuperar",
+        "em atraso",
+        "sem registro",
+        "faltam",
+        "ainda faltam",
+        "atrasado",
+        "agenda"
+      ]
+    },
+    "retrato-cobertura": {
+      "objeto": [
+        "retrato",
+        "modelo de cobertura",
+        "ficha de cobertura",
+        "cobertura"
+      ],
+      "atributo": [
+        "preco alvo",
+        "rating",
+        "alvo",
+        "data base",
+        "portao",
+        "em revisao",
+        "confianca",
+        "ultimo retrato"
+      ]
+    },
+    "fila-cobertura": {
+      "objeto": [
+        "nota agenda",
+        "fila de notas",
+        "notas",
+        "fila",
+        "iniciacao de cobertura"
+      ],
+      "atributo": [
+        "emissor",
+        "prioridade",
+        "iniciacao",
+        "pos resultado",
+        "pendente",
+        "vez",
+        "espera",
+        "ordem"
+      ]
+    },
+    "agenda-rotinas": {
+      "objeto": [
+        "rotina",
+        "tarefa",
+        "disparo",
+        "agendador",
+        "calendario de tarefas"
+      ],
+      "atributo": [
+        "horario",
+        "proximo",
+        "programada",
+        "programado",
+        "agendada",
+        "agendado",
+        "quando",
+        "hora"
+      ]
+    },
+    "relatorio-calibracao": {
+      "objeto": [
+        "calibracao",
+        "backtest",
+        "rodada mensal",
+        "metrics.json"
+      ],
+      "atributo": [
+        "sharpe",
+        "drawdown",
+        "maximo",
+        "retorno",
+        "volatilidade",
+        "atribuicao",
+        "especifico",
+        "fatorial",
+        "resultado"
+      ]
+    },
+    "proposta-semanal": {
+      "objeto": [
+        "proposta",
+        "previa",
+        "plano de rebalanceamento",
+        "decisao ainda nao efetivada"
+      ],
+      "atributo": [
+        "peso",
+        "posicao",
+        "papel",
+        "emissor",
+        "ordem",
+        "giro",
+        "congelado",
+        "estimado",
+        "composicao",
+        "tamanho"
+      ]
+    },
+    "agenda-montagem": {
+      "objeto": [
+        "montagem",
+        "rebalanceamento",
+        "agenda semanal"
+      ],
+      "atributo": [
+        "prazo",
+        "horario",
+        "etapa",
+        "retomar",
+        "minuto",
+        "data",
+        "mercado fechado",
+        "sessao",
+        "tempo restante"
+      ]
+    },
+    "relatorio-risco": {
+      "objeto": [
+        "monitor",
+        "risco intradiario",
+        "leitura intradiaria",
+        "relatorio de risco",
+        "disparo de risco"
+      ],
+      "atributo": [
+        "beta",
+        "var",
+        "valor em risco",
+        "volatilidade",
+        "drawdown",
+        "gatilho",
+        "alerta",
+        "nav",
+        "cobertura",
+        "exposicao"
+      ]
+    },
+    "carteira-efetivada": {
+      "objeto": [
+        "carteira efetiva",
+        "carteira vigente",
+        "livro da carteira",
+        "efetivada",
+        "booked.json",
+        "apos o leilao"
+      ],
+      "atributo": [
+        "posicao",
+        "peso",
+        "emissor",
+        "lado",
+        "comprada",
+        "vendida",
+        "zerada",
+        "long",
+        "short",
+        "ordem",
+        "linha"
+      ]
+    },
+    "tese-publicada": {
+      "objeto": [
+        "tese",
+        "tese_publicada",
+        "weekly_thesis"
+      ],
+      "atributo": [
+        "publicada",
+        "texto",
+        "autor",
+        "autoria",
+        "evento",
+        "data",
+        "arquivo",
+        "narrativa",
+        "justificativa"
+      ]
+    },
+    "estado-pendencias": {
+      "objeto": [
+        "pendencia",
+        "pendencias",
+        "fila operacional",
+        "itens em aberto"
+      ],
+      "atributo": [
+        "operacao",
+        "clone",
+        "fundo",
+        "livro",
+        "tese",
+        "rascunho",
+        "relatorio",
+        "cobertura"
+      ]
+    },
+    "relatorio-semanal": {
+      "objeto": [
+        "relatorio semanal",
+        "resultado da semana",
+        "desempenho semanal",
+        "relatorio de resultado da semana"
+      ],
+      "atributo": [
+        "atribuicao",
+        "contribuicao",
+        "lado",
+        "retorno",
+        "resultado",
+        "semana",
+        "giro",
+        "risco",
+        "custo"
+      ]
+    },
+    "relatorio-diario": {
+      "objeto": [
+        "relatorio diario",
+        "relatorio de fechamento",
+        "registro diario",
+        "fechamento",
+        "marcacao oficial"
+      ],
+      "atributo": [
+        "retorno",
+        "resultado",
+        "volatilidade",
+        "beta",
+        "nav",
+        "marcou",
+        "fechou",
+        "patrimonio",
+        "atribuicao",
+        "pregao"
+      ]
+    },
+    "estado-agenda": {
+      "objeto": [
+        "estado do fundo",
+        "operacao do fundo",
+        "situacao geral",
+        "cdp estado"
+      ],
+      "atributo": [
+        "fase",
+        "proximo passo",
+        "visao geral",
+        "situacao"
+      ]
+    }
+  }
+}

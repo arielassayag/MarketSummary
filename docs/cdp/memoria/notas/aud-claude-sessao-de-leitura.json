@@ -1,0 +1,32 @@
+{
+  "id": "aud-claude-sessao-de-leitura",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Ambiente interativo de leitura no Claude Code na nuvem",
+  "resumo": "As rotinas usam os ambientes CDP ou CDP-ensaio. Sessões interativas do Claude Code usam Default sem a variável CDP_EXECUTOR, para que o clone não seja identificado como executor.",
+  "escopos": [
+    "operador",
+    "status"
+  ],
+  "tags": [
+    "claude code",
+    "nuvem",
+    "sessão interativa",
+    "conversa",
+    "ambiente",
+    "default",
+    "leitura"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "**Passo 2 — ambientes** (claude.ai/code → Environments → New environment): **CDP** e\n**CDP-ensaio**, só para as rotinas. Sessões interativas usam o ambiente **Default** (sem\n`CDP_EXECUTOR`): uma sessão aberta no \"CDP\" passaria por executora (`cdp estado` avisa).",
+      "sha256": "c6cead5952367e33aa10a0575d712283a30f667c3ce009837a8fe8104c2f81f0"
+    }
+  ]
+}

@@ -15,10 +15,12 @@ import stat
 import subprocess
 import sys
 import unicodedata
+from collections.abc import Iterable
 from dataclasses import dataclass
 from datetime import date, datetime
+from functools import cached_property
 from pathlib import Path
-from typing import Annotated, Literal
+from typing import Annotated, BinaryIO, Literal
 from zoneinfo import ZoneInfo
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_validator, model_validator
@@ -29,13 +31,21 @@ from .memoria_busca import (
     LINHAS_PASSAGEM,
     IndicePassagens,
     Local,
-    ampliar,
-    intercalar,
+    ampliar_selecao,
+    combinar_evidencias,
+    completar_bloco,
+    limitar_contexto,
+    reaproveitar_vagas,
+    reunir_ancoras,
+    termos_contextuais,
 )
 from .memoria_busca import (
     normalizar as _normalizar,
 )
+from .memoria_reforcos import IndiceReforcos
+from .memoria_secoes import IndiceSecoes
 
+LIMITE_CONSULTA = 480
 Escopo = Literal["desenvolvimento", "operador", "status", "semanal", "diario", "risco",
                  "cobertura", "calibracao"]
 ESCOPO: dict[Escopo, tuple[str, ...]] = {
@@ -171,7 +181,7 @@ class Nota(_Modelo):
 class _Caso(_Modelo):
     id: Slug
     escopo: Escopo
-    consulta: str = Field(min_length=1, max_length=240)
+    consulta: str = Field(min_length=1, max_length=LIMITE_CONSULTA)
     notas_esperadas: list[Slug] = Field(max_length=10)
     fontes_esperadas: list[str] = Field(max_length=10)
 
@@ -315,67 +325,555 @@ def _tokens(s: str) -> set[str]:
 
 _MERCADO = re.compile(
     r"\b(?:p&l|pnl|retornos?|resultados?|pl|precos?|patrimonio|rentabilidade|"
-    r"cotac(?:ao|oes)|perdas?|ganhos?|drawdown|volatilidade|moedas?|pesos?|liquidez)\b"
+    r"cotac(?:ao|oes)|perdas?|ganhos?|drawdown|volatilidade|moedas?|pesos?|liquidez|"
+    r"sharpe|shorts?|longs?|papeis)\b"
 )
 _DOMINIO = re.compile(
     r"\b(?:kill[- ]switch|executor|rotinas?|agenda|carteira|posic(?:ao|oes)|exposicao|"
     r"montagem|pendencias?|fechamento|trava|cobertura|risco|relatorios?|calibracao|"
-    r"publicacao|portal|pages|revisao|disparo|rodada|livro|emails?|entrega|snapshot)\b"
+    r"publicacao|portal|pages|implantacao|deploy|revisao|disparo|rodada|livro|e-?mails?|"
+    r"snapshot|ensaio|captura|manifesto|sha[- ]?256|commits?|fila|emissor(?:es)?|"
+    r"incidentes?|monitor|alertas?)\b"
 )
-_AGORA = re.compile(r"\b(?:agora|hoje|ontem|neste momento|no momento|atualmente)\b")
+_TEMA_CDP = re.compile(
+    r"\b(?:cdp|cabras? da peste|leilao|mandato|gate|benchmark|factbook|fundos?|"
+    r"custodia|auditoria|origem|reproducao|linhagem|evidencias?|playbooks?|skills?|"
+    r"replay|point-in-time|pit|validador(?:es)?|fontes? primarias?|recepcao|"
+    r"substituic(?:ao|oes)|candidatas?|curadoria|proveniencia|hash|cortes?|"
+    r"rebalanceamento|retificacao|selagem|agendamento|execucao|publicar|taxas?|"
+    r"indices?|dados simulados|atestado|certificac(?:ao|oes)|backtest|bolsa|"
+    r"corretagem|lotes? fracionarios?|xbrl|balancos?|brier|valuation|etfs?|cotistas?|"
+    r"preg(?:ao|oes)|cambio|desfechos?)\b"
+)
+_VOCABULARIO_TRABALHO = re.compile(
+    r"\b(?:arquivos?|coletas?|clones?|consultas?|fontes?|modelos?|notas?|dados?|"
+    r"teses?|pesquisas?|rascunhos?|propostas?|previs(?:ao|oes)|decis(?:ao|oes)|"
+    r"documentos?|comunicados?|divulgac(?:ao|oes)|publicad[oa]s?|fatos?|atrasos?|"
+    r"etapas?|datas?|prazos?|vers(?:ao|oes)|gestor(?:es)?|saude|autoria|"
+    r"testes?|validac(?:ao|oes)|resumos?|remot[oa]s?|autor(?:es)?)\b"
+)
 _TEMPO = re.compile(
-    r"\b(?:atual|ultim[oa]s?|mais recente)\b"
-    r"|\b(?:\d{4}-\d{2}-\d{2}|\d{1,2}/\d{1,2}(?:/\d{2,4})?)\b"
+    r"\b(?:agora|hoje|ontem|(?:pregao|dia) anterior|atual(?:mente|is)?|ultim[oa]s?|mais recente|proxim[oa]s?|"
+    r"neste (?:momento|instante|minuto)|no momento(?! (?:d[aeo]s?|em que)\b)|"
+    r"(?:dest[ea]|nest[ea]) (?:manha|tarde|noite|semana|mes)|"
+    r"em vigor|vigentes?|esta valendo)\b"
+    r"|\b(?:\d{4}-\d{2}-\d{2}|\d{1,2}/\d{1,2}(?:/\d{2,4})?|"
+    r"\d{1,2} de (?:janeiro|fevereiro|marco|abril|maio|junho|julho|agosto|"
+    r"setembro|outubro|novembro|dezembro))\b"
 )
 _OCORRENCIA = re.compile(
-    r"\b(?:ja|ainda) (?:rodou|executou|fechou|entregou|publicou|consta|"
-    r"subiu|saiu|chegou|encerrou|concluiu|foi publicado|foi enviado)\b"
+    r"\b(?:ja|ainda) (?:rodou|executou|fechou|entregou|publicou|consta|subiu|saiu|"
+    r"chegou|encerrou|concluiu|terminou|foi publicado|foi enviado)\b"
+    r"|\b(?:acab(?:ei|amos|ou|aram) de|consta(?:m)?|gravou|publicou|"
+    r"selad[oa]s?|anotad[oa]s?|observad[oa]s?|registrad[oa]s?|designad[oa]s?|"
+    r"abert[oa]s?|ficou|ficaram|marcou|primeir[oa]s?)\b"
+    r"|\b(?:esta|estao|permanece(?:m)?|continua(?:m)?|"
+    r"alertas?|sinais?|bloqueios?|gatilhos?|notas?|travas?|tarefas?|rotinas?|ordens?|posicoes)"
+    r" ativ[oa]s?\b"
+    r"|\bmedid[oa]s? (?:em|n[oa]s?|pel[oa]s?|durante)\b"
+    r"|\b(?:ja|ainda) (?:esta|estao) \w+(?:ando|endo|indo)\b"
+    r"|\b(?:foi|foram|esta|estao) (?:\w+ ){0,3}\w+(?:ad|id)[oa]s?\b"
+    r"|\bja (?:teve|tiveram) (?:\w+ ){0,7}\w+(?:ad|id)[oa]s?\b"
+    r"|\bpassou (?:na|pela) (?:conferencia|validacao|verificacao)\b"
+    r"|\b(?:ainda (?:marca|aponta|lista) (?:como )?(?:pendentes?|abert[oa]s?)|esta no ar)\b"
+    r"|\bja (?:voltou|voltaram)\b"
 )
-_INTERROGATIVA = re.compile(r"^(?:quem|qual|quais|quanto|quant[ao]s|onde|quando|como esta)\b")
+_QUANTIFICA_TEMPO = re.compile(r"\b(?:quanto(?: tempo)?|quant[oa]s (?:segundos?|minutos?|horas?|dias?))\b")
+_TEMPO_PENDENTE = re.compile(r"\b(?:faltam?|restam?)\b")
+_OBRIGACAO_PENDENTE = re.compile(r"\bainda (?:precis(?:a|am)|deve(?:m)?|tem (?:de|que))\b")
+_ESPERA_FECHAMENTO = re.compile(
+    r"\b(?:ainda espera(?:m)?(?: por| que)?|faltam? (?:registrar|gravar)|"
+    r"aguarda(?:m)? (?:registro|fechamento))\b"
+)
+_LISTA_DE_FECHAMENTOS = re.compile(
+    r"\b(?:lista|fila) de (?:datas|preg(?:ao|oes))\b[^?!]*\bfechamentos?\b[^?!]*\b(?:gravar|registrar)\b"
+)
+_EXPERIMENTO_DOCUMENTADO = re.compile(
+    r"\b(?:replay|ensaio|experimento) (?:ja )?(?:documentado|publicado|que (?:simulou|testou|reproduziu))\b"
+    r"|\b(?:primeir[oa]|segund[oa]) (?:replay|ensaio|experimento)\b"
+)
+_ALCANCE_DA_PROVA = re.compile(
+    r"\b(?:limites? d[aoe] (?:prova|ensaio|replay|evidencia)|estende a prova|"
+    r"outros? cenarios?|comprovadamente (?:igual|equivalente)|classificad[oa] como diagnostico|"
+    r"o que (?:isso|ele|o teste|o ensaio) (?:prova|demonstra|sustenta))\b"
+)
+_SUBORDINADA = re.compile(r"\s+(?:se|caso|quando|depois que|antes que|assim que|logo que)\s+")
+_QUADRO_TEMPORAL = re.compile(r"^(?:para|em|n[oa]s?)\b")
+_PEDIDO_OBSERVACAO = re.compile(
+    r"^(?:me )?(?:quem|qual|quais|quanto|quant[ao]s|onde|quando|em que|o que|que|como esta|"
+    r"liste|informe|diga|identifique|mostre|traga|de (?:o|a|os|as))\b"
+    r"|\bquero (?:saber|o nome|a data|o valor)\b"
+)
+_DISTINCAO_DE_TIPOS = re.compile(r"^o que (?:distingue|diferencia|separa|caracteriza)\b")
+_RELATIVA_DE_TIPO = re.compile(r"\s+(?:d[oa]s? )?que\s+")
+_FUNCAO_DA_SAIDA = re.compile(
+    r"^qu(?:al|ais|e) (?:[ao]s? )?(?:saidas?|campos?|artefatos?|arquivos?|secoes?|colunas?) "
+    r"(?:mostra(?:m)?|indica(?:m)?|informa(?:m)?|reune(?:m)?|contem|traz(?:em)?)\b"
+)
 _PROCEDIMENTO = re.compile(
     r"^(?:como (?!esta\b|estao\b|ficou\b|anda\b|se encontra\b)|"
     r"em (?:que situacao|que caso|qual situacao|qual caso)|"
     r"se\b|quando (?:um|uma|a fonte|os dados|a regra)\b|no dia (?:de|da|do)\b|"
-    r"o que (?:fazer|faco|acontece quando)|qual (?:e )?[ao]s? "
-    r"(?:procedimento|roteiro|comando|regra|diferenca|criterio|ordem|fluxo)\b)"
-)
-_VALOR = re.compile(
-    r"^(?:quanto|quant[oa]s)\b|^qual(?: e| foi)? [oa] (?:ultim[oa] )?"
-    r"(?:valor|pnl|p&l|pl|retorno|preco|cotacao|patrimonio|rentabilidade|drawdown|peso)\b"
+    r"o que (?:fazer|faco|acontece quando)|qu(?:al|ais|e)(?: e| sao)? (?:[ao]s? )?"
+    r"(?:(?:procedimentos?|roteiros?|comandos?|regras?|diferencas?|criterios?|ordem|fluxos?|"
+    r"passos?|condic(?:ao|oes)|campos?)\b|"
+    r"(?:verificac(?:ao|oes)|checagens?|evidencias?|provas?|testes?|recibos?|comprovantes?) "
+    r"(?:comprova|confirma|demonstra|distingue)m?\b))"
+    r"|^de onde (?:vem|saem?)\b[^.?!]*\b(?:a|em) cada\b"
+    r"|^quando (?:ha|houver|exist(?:e|em|ir|irem))\b[^,?!]*,\s*(?:qual|quais|como|o que|que|onde)\b"
+    r"|^quando (?:ela|ele|isso)\b[^,?!]*,\s*(?:qual|quais|como|o que|que|onde)\b"
 )
 _PEDIDO_DE_PROCEDIMENTO = re.compile(
-    r"\b(?:como (?:eu )?(?:confiro|confirmo|verifico|faco|validar|usar|confirmar|proceder)|"
-    r"posso|devo|permite|autoriza|atesta|serve para|replay|point-in-time|pit)\b"
+    r"(?:^|[,;:]\s*|\b(?:e|ou|diga|explique|mostre|descreva|ensine|saber) )"
+    r"como (?!esta\b|estao\b|ficou\b|anda\b|se encontra\b)|"
+    r"\b(?:posso\b|podemos\b|pode(?:m)?\b(?! (?:me )?(?:dizer|informar|mostrar)\b)|"
+    r"devo\b|deve(?:m)?\b|precis(?:o|a|amos|am)\b|permite\b|autoriza\b|atesta\b|serve para\b|"
+    r"o que (?:faco|fazer|vale conferir)|de onde tiro|onde (?:consulto|confiro|preparo)|"
+    r"(?:usa|mede|calcula|considera|aplica|define)-se\b|"
+    r"(?:metodo|regra|criterio|passos?|roteiro) (?:para|de|da|do)\b)"
 )
+_CONTROLES = re.compile(
+    r"\b(?:travas?|gates?|mandato|limites?|autenticacao|permiss(?:ao|oes)|"
+    r"designacao (?:remota|d[oa] executor)|confirmacao d[oa] operador)\b"
+)
+_OBJETO_OPERACIONAL = (
+    r"\b(?:livro|carteira|ordens?|relatorios?|dados?|provas?|evidencias?|recibos?|hash(?:es)?|"
+    r"trilhas?|notas?|gates?|travas?|commits?|trailers?|manifestos?|cotac(?:ao|oes)|"
+    r"chave de emergencia|kill[- ]switch)\b"
+)
+_MUTACAO_OPERACIONAL = re.compile(
+    r"(?:^|[.!?;]\s+|^(?:se|caso)\b[^,.!?]{0,120},\s+)"
+    r"(?:por favor[,:]?\s+)?(?:(?:quero|preciso|peco) que(?: voce)?\s+|"
+    r"(?:pode|poderia|favor)\s+)?"
+    r"(?:publique|publicar|republique|republicar|apague|apagar|exclua|excluir|"
+    r"reescreva|reescrever|edite|editar|substitua|substituir|adultere|adulterar|"
+    r"forje|forjar|falsifique|falsificar|assine|assinar|grave|gravar|"
+    r"troque|trocar|altere|alterar|remova|remover|retifique|retificar|"
+    r"desative|desativar|desligue|desligar|mude|mudar)\b"
+    rf"[^.!?\n]{{0,140}}{_OBJETO_OPERACIONAL}"
+)
+_MUTACAO_REFERIDA = re.compile(
+    r"(?:^|[.!?;]\s+)(?:faca|aplique|execute) isso e (?:publique|grave|republique)\b"
+)
+_RETIRAR_MARCA_SIMULADA = re.compile(
+    r"^(?:(?:coloque|publique|suba|divulgue)\b[^.!?]{0,140}\be\s+)?"
+    r"(?:tire|retire|remova|apague|oculte) (?:a )?(?:marca|indicacao|rotulo) de dados simulados\b"
+)
+_FRONTEIRA_FRASE = re.compile(r"[.!?;](?=\s|$)")
+_TRECHO_CITADO = re.compile(r'«[^»]*»|“[^”]*”|"[^"]*"')
+_INICIO_PEDIDO = (
+    r"(?:^|[.!?;]\s+|,\s+)"
+    r"(?:por favor[,:]?\s+)?(?:(?:quero|preciso|peco|gostaria) que(?: voce)?\s+|"
+    r"(?:(?:voce )?(?:pode|poderia|consegue)|da (?:para|pra) voce|favor)\s+)?"
+)
+_PEDIDO_COM_ACAO = re.compile(
+    _INICIO_PEDIDO + r"(?:afroux[ae]|efetiv[ae]|tap[ae]|encarreg[ae]|republic[ae]|pul[ae]|"
+    r"substitu[ai]|sobrescrev[ae]|forc[ae]|apag[ae]|refaz|refaca|rod[ae]|toc[ae]|"
+    r"acert[ae]|faz|faca|manda|mande|apagar|republicar|sobrescrever|alterar|retirar|"
+    r"editar|abrir|seguir|aplicar|remover|substituir|mudar|trocar|salvar|"
+    r"desligar|desativar|publicar|gravar)\b"
+)
+_ALVO_DE_ACAO_PROTEGIDO = re.compile(
+    r"\b(?:book(?:/\S+)?|livro|fund\.yaml|cdp_executor|kill[-_ ]switch|chave de emergencia|"
+    r"falha hard|limite hard|publicacao exclusiva|arquivo bruto|artifact|audit_log|"
+    r"trilha encadeada|main|mandato|publicacao selada|relatorio [^.?!]{0,35}selado)\b"
+    r"|--(?:manual|sem-trava|force)\b"
+)
+_EFEITO_DE_MUTACAO = re.compile(
+    r"\b(?:afroux(?:a|e|ar)|efetiv(?:a|e|ar)|tap(?:a|e|ar)|republic(?:a|e|ar)|"
+    r"pul(?:a|e|ar)|substitu(?:a|i|ir)|sobrescrev(?:a|e|er)|forc(?:a|e|ar)|"
+    r"apag(?:a|e|ar)|refaz|refaca|acert(?:a|e|ar)|passar pelo executor|"
+    r"usar esse arquivo|gravar|grave|trocar|salvar|editar|edite|remover|"
+    r"desligar|desativar|publicar|publicacao exclusiva)\b"
+    r"|\b(?:rod[ae]|rode|rodar|toc[ae])\b[^.?!;]{0,70}--(?:manual|sem-trava)\b"
+)
+_CONTEXTO_DE_RELATO = re.compile(
+    r"\b(?:segundo|conforme) (?:a|o) (?:ata|registro|recibo|relato|documento|passagem|historico)\b"
+    r"|\b(?:ata|registro|recibo|relato|documento|passagem|historico|diario|retrospectiva|auditoria)"
+    r"\b[^.!?;]{0,40}\b(?:diz|dizia|relata|afirma|menciona|descreve|registra|apareceu|constava)\b"
+)
+_BURLA = re.compile(
+    r"(?:^|[.!?]\s+|^(?:se|caso)\b[^,.!?]{0,120},\s+)(?:ignore|burle|contorne|drible)\b|"
+    r"\b(?:como|mandou|instruiu a|disse para) (?:ignorar|burlar|contornar|driblar)\b"
+)
+_SEGREDO = r"(?:senhas?|credenciais|tokens?|chaves? (?:privadas?|de api|de acesso))"
+_EXTRACAO_SEGREDO = re.compile(
+    rf"\b(?:recupere|mostre|revele|divulgue|exiba|exponha|imprima|envie|copie|extraia)\b"
+    rf"(?:[\w\s]{{0,40}})\b{_SEGREDO}\b|\bqual(?: e)? [oa] {_SEGREDO}\b"
+)
+_NEGOCIACAO_REAL = re.compile(
+    r"\b(?:corretoras?|ord(?:em|ens) rea(?:l|is)|capital real|dinheiro de verdade|"
+    r"conta real|dinheiro real)\b"
+)
+_PEDIDO_NEGOCIACAO = re.compile(
+    r"(?:^|[.!?]\s+|\be\s+)(?:conecte|execute|mande|envie|emita|transmita|"
+    r"negocie|compre|venda|opere)\b"
+)
+_RECURSO_PRIVADO = re.compile(
+    r"\b(?:repositorios?|projetos?|sistemas?|contas?|ambientes?) "
+    r"(?:privad[oa]s?|intern[oa]s?|restrit[oa]s?|confidencia(?:l|is))\b"
+)
+_ORGANIZACAO_EXTERNA = re.compile(r"\boutra (?:organizacao|empresa|instituicao)\b")
+_NOME_CDP = r"cdp|marketsummary|cabras? da peste"
+_REFERENCIAS_CDP = rf"{_NOME_CDP}|factbook|cdp-trava|backtest[- ]operacional"
+_REFERENCIA_EXPLICITA_CDP = re.compile(rf"\b(?:{_REFERENCIAS_CDP})\b")
+_SEM_VINCULO_CDP = re.compile(
+    r"\b(?:fora d[oa]|alhei[oa]s? a[oa]|sem (?:vinculo|relacao) com(?: o| a)?|"
+    r"nao (?:faz(?:em)? parte d[oa]|pertence(?:m)? a[oa]|integra(?:m)? [oa])) "
+    rf"(?:{_NOME_CDP})\b(?!-[a-z0-9])"
+)
+_ACESSO_A_RECURSO = re.compile(r"\b(?:acessos?|permiss(?:ao|oes)|colaboradores?|membros?)\b")
+_CONTEXTO_ALHEIO = re.compile(
+    r"\b(?:(?:contas?|carteiras?|agendas?|calendarios?) pesso(?:al|ais)|"
+    r"(?:relatorios?|trabalhos?|tarefas?|atividades?) (?:escolar(?:es)?|de escola|de aula)|"
+    r"google (?:calendar|agenda|calendario)|(?:agenda|calendario) do (?:google|outlook|icloud)|"
+    r"(?:outlook|icloud|apple) calendar)\b"
+)
+_HOMONIMO_CDP = re.compile(
+    r"\b(?:cdp (?:de|para) dados de clientes|customer data platform|"
+    r"(?:edital|curso) (?:chama|abrevia|denomina)(?: como| de)? cdp)\b"
+)
+_OUTRO_DOMINIO = re.compile(
+    r"\b(?:aplicativ[oa]s? de receitas|marmitas?|cardapios?|interruptor d[eo] guidao|"
+    r"ignicao (?:da moto|do motor)|album digital|cobertura residencial|feira rural|"
+    r"carteiras? (?:(?:digital|digitais) )?de vacinacao|firmware d[ae] cameras?|"
+    r"cobertura de ferias|portao d[ae] garagem)\b"
+)
+_VINCULO_CDP = re.compile(
+    rf"\b(?:{_REFERENCIAS_CDP}|kill[- ]switch|carteira simulada|agenda das rotinas)\b"
+)
+_MEDICAO_DE_ATIVO = re.compile(
+    r"\b(?:retornos?|rentabilidade|volatilidade|cotac(?:ao|oes)) d[aeo]s? "
+    r"(?:indices?|benchmarks?|etfs?|carteiras?|ac(?:ao|oes))\b"
+)
+_TERMOS_INCIDENTAIS = frozenset(
+    "cada meu minha meus minhas seu sua seus suas ele ela eles elas eu estao estava estavam entre "
+    "mas num numa agora atual atualmente hoje ontem ultimo ultima ultimos ultimas ja "
+    "dois duas tres quatro cinco seis sete oito nove dez foi foram era eram ser ter teve tiveram "
+    "diga escolha faca identifique informe liste mostre revise traga".split()
+)
+_REVISAO_EDITORIAL = frozenset({"@texto-editorial", "@rejeicao-validacao", "@correcao"})
+_ARTEFATO_COBERTURA = re.compile(r"\b(?:modelos?|retratos?)\b")
+_SAIDA_COBERTURA = re.compile(r"\b(?:balancos?|resultados?|ratings?|precos?[- ]alvo)\b")
+_CONFIANCA_DO_RETRATO = re.compile(r"\b(?:nivel|grau|classificacao) de confianca\b")
+_ESCRITA_DO_CLONE = re.compile(r"\b(?:somente leitura|escrita habilitada|pode gravar o livro)\b")
+_RESPONSAVEL_PELO_LIVRO = re.compile(r"\bresponsavel (?:por gravar o livro|pela escrita)\b")
+_ENTREGA_DOCUMENTAL = re.compile(
+    r"\b(?:e-?mails?|entregas? d[oa]s? (?:relatorios?|pdfs?|comentarios?|notas?|resumos?))\b"
+)
+_TESE_DO_CDP = re.compile(
+    r"\b(?:tese_publicada|teses? (?:semana(?:l|is)|d[oa] (?:semana|carteira|montagem|cdp)|"
+    r"(?:ja )?publicadas?))\b|\bjustificativa\b[^.?!]{0,100}\bcarteira\b"
+)
+_PUBLICADO = re.compile(r"\b(?:publicad[oa]s?|publicou|publicaram|publicac(?:ao|oes))\b")
+_PEDIDO_METADADO = re.compile(
+    r"^(?:(?:me )?quem\b|(?:(?:me )?(?:qual|quais|que)(?: e| sao| foi| foram)?|"
+    r"(?:me )?(?:informe|diga|mostre|traga|liste|identifique)|em que)\s+"
+    r"(?:[ao]s?\s+)?(?:autoria|autor(?:a|es|as)?|assinatura|mind|vers(?:ao|oes)|"
+    r"identidad(?:e|es)|datas?|carimbo|horario|sha[- ]?256|hash)\b)"
+)
+
+
+def _pedido_com_efeito_protegido(q: str) -> bool:
+    # A decisão usa a ação pedida na frase, sem tratar uma citação como ordem.
+    texto = _TRECHO_CITADO.sub(" ", q)
+    for acao in _PEDIDO_COM_ACAO.finditer(texto):
+        anterior = _FRONTEIRA_FRASE.split(texto[:acao.start()])[-1]
+        if _CONTEXTO_DE_RELATO.search(anterior):
+            continue
+        inicio = acao.start()
+        if texto[inicio] in ".,!?;":
+            inicio += 1
+        frase = _FRONTEIRA_FRASE.split(texto[inicio:], maxsplit=1)[0]
+        if _ALVO_DE_ACAO_PROTEGIDO.search(frase) and _EFEITO_DE_MUTACAO.search(frase):
+            return True
+    return False
+
+
+def _pedido_fora_do_escopo(q: str) -> bool:
+    """Filtra pedidos de execução ou acesso que a memória consultiva não atende."""
+    nega_vinculo = _SEM_VINCULO_CDP.search(q)
+    if nega_vinculo and not _REFERENCIA_EXPLICITA_CDP.search(_SEM_VINCULO_CDP.sub(" ", q)):
+        return True
+    if (_HOMONIMO_CDP.search(q) or _OUTRO_DOMINIO.search(q)) and not _REFERENCIA_EXPLICITA_CDP.search(
+        _HOMONIMO_CDP.sub(" ", q)
+    ):
+        return True
+    return bool(_MUTACAO_OPERACIONAL.search(q)
+                or _RETIRAR_MARCA_SIMULADA.search(q)
+                or (_MUTACAO_REFERIDA.search(q) and re.search(_OBJETO_OPERACIONAL, q))
+                or _pedido_com_efeito_protegido(q)
+                or (_BURLA.search(q) and _CONTROLES.search(q)) or _EXTRACAO_SEGREDO.search(q)
+                or (_NEGOCIACAO_REAL.search(q) and _PEDIDO_NEGOCIACAO.search(q))
+                or (_RECURSO_PRIVADO.search(q) and (nega_vinculo or _ORGANIZACAO_EXTERNA.search(q))
+                    and _ACESSO_A_RECURSO.search(q))
+                or (_CONTEXTO_ALHEIO.search(q) and not _VINCULO_CDP.search(q)))
+
+
+def _tema_do_cdp(q: str) -> bool:
+    return bool(_DOMINIO.search(q) or _MERCADO.search(q) or _TEMA_CDP.search(q)
+                or len(set(_VOCABULARIO_TRABALHO.findall(q))) >= 2)
+
+
+def _sobre_retrato_de_cobertura(q: str) -> bool:
+    return bool((_ARTEFATO_COBERTURA.search(q) and _SAIDA_COBERTURA.search(q))
+                or (re.search(r"\bretratos?\b", q) and _CONFIANCA_DO_RETRATO.search(q)))
+
+
+def _termos_de_observacao(q: str) -> set[str]:
+    temas = _DOMINIO.findall(q) + _MERCADO.findall(q)
+    if _sobre_retrato_de_cobertura(q):
+        temas.extend(_ARTEFATO_COBERTURA.findall(q) + _SAIDA_COBERTURA.findall(q))
+    if _PUBLICADO.search(q):
+        temas.extend(_TESE_DO_CDP.findall(q))
+    return set(termos_contextuais(" ".join(temas)))
+
+
+def _pede_prova_de_experimento(q: str) -> bool:
+    return bool(_EXPERIMENTO_DOCUMENTADO.search(q) and _ALCANCE_DA_PROVA.search(q))
+
+
+def _pede_estado(q: str) -> bool:
+    if _pede_prova_de_experimento(q):
+        return False
+    # Uma situação narrada antes da pergunta dá contexto, mas não muda a intenção.
+    for frase in re.split(r"(?<=[.!?])\s+", q):
+        quadro = ""
+        if not _PEDIDO_OBSERVACAO.match(frase):
+            fronteira = next((m for m in re.finditer(r",\s+", frase)
+                              if _PEDIDO_OBSERVACAO.match(frase[m.end():])), None)
+            if fronteira:
+                inicio = frase[:fronteira.start()]
+                if _QUADRO_TEMPORAL.match(inicio):
+                    quadro = inicio
+                frase = frase[fronteira.end():]
+        assunto = f"{quadro} {frase}"
+        metadado_da_tese = (_TESE_DO_CDP.search(assunto) and _PUBLICADO.search(assunto)
+                            and _TEMPO.search(assunto) and _PEDIDO_METADADO.match(frase))
+        if not (_MERCADO.search(assunto) or _DOMINIO.search(assunto) or _VINCULO_CDP.search(assunto)
+                or _sobre_retrato_de_cobertura(assunto) or metadado_da_tese):
+            continue
+        pedido = _PEDIDO_OBSERVACAO.search(frase) or frase.endswith("?")
+        enunciado = _SUBORDINADA.split(frase, maxsplit=1)[0]
+        if (pedido and _ESCRITA_DO_CLONE.search(enunciado)
+                and re.search(r"\b(?:neste|nesta|este|esta) (?:clone|copia|sessao|ambiente)\b", assunto)):
+            return True
+        if pedido and _RESPONSAVEL_PELO_LIVRO.search(assunto) and _OCORRENCIA.search(assunto):
+            return True
+        if pedido and _LISTA_DE_FECHAMENTOS.search(enunciado) and _TEMPO.search(enunciado):
+            return True
+        if re.search(r"\bpor padrao\b", enunciado) and not _TEMPO.search(enunciado):
+            continue
+        if _FUNCAO_DA_SAIDA.match(enunciado) and not _TEMPO.search(quadro):
+            continue
+        distincao = _DISTINCAO_DE_TIPOS.match(enunciado)
+        if distincao:
+            # A relativa descreve a categoria comparada, não data a observação.
+            foco = _RELATIVA_DE_TIPO.split(enunciado[distincao.end():], maxsplit=1)[0]
+            if not (_TEMPO.search(foco) or _OCORRENCIA.search(foco)):
+                continue
+        if _PROCEDIMENTO.search(frase) or _PEDIDO_DE_PROCEDIMENTO.search(
+            _OBRIGACAO_PENDENTE.sub(" ", enunciado)
+        ):
+            continue
+        tempo_restante = _QUANTIFICA_TEMPO.search(enunciado) and _TEMPO_PENDENTE.search(enunciado)
+        if pedido and (_TEMPO.search(enunciado) or _TEMPO.search(quadro) or _OCORRENCIA.search(enunciado)
+                       or _OBRIGACAO_PENDENTE.search(enunciado) or _ESPERA_FECHAMENTO.search(enunciado)
+                       or tempo_restante):
+            return True
+    return False
+
+
+_DESTINOS_ATUAIS = {
+    "ci-github": (
+        "Consulte as execuções de `.github/workflows/cdp-ci.yml` no GitHub Actions. Filtre pela revisão "
+        "pedida e abra os jobs e etapas da execução correspondente."
+    ),
+    "passagem-desenvolvimento": (
+        "Consulte a passagem corrente em docs/cdp/EM_ANDAMENTO.md na revisão atual."
+    ),
+    "portal-publicado": (
+        "Confira o portal servido e o `source_commit` do `manifest.json`, conforme a procedência em "
+        "docs/cdp/SITE.md."
+    ),
+    "trilha-entrega": "Confira a trilha de entrega descrita em docs/cdp/playbooks/DIARIO.md.",
+    "procedencia-commit": (
+        "Consulte a procedência do commit gravado. O trailer CDP-Harness identifica o aplicativo e "
+        "CDP-Executor identifica o executor."
+    ),
+    "executor-remoto": (
+        "Consulte configs/cdp/executor.yaml na revisão remota e a identidade local em cdp estado."
+    ),
+    "estado-executor": "Consulte `executor.designado` em `cdp estado` e a identidade deste ambiente.",
+    "manifesto-ensaio": (
+        "Consulte o manifesto e a verificação da execução solicitada do ensaio isolado, conforme "
+        "docs/cdp/REPLAY_OPERACIONAL.md."
+    ),
+    "manifesto-snapshot": "Consulte o manifesto e a verificação do snapshot ou da captura solicitada.",
+    "trava-distribuida": (
+        "Consulte cdp trava ver para conferir a ocupação e a expiração da trava distribuída."
+    ),
+    "estado-kill-switch": (
+        "Consulte o campo `kill_switch` em `cdp estado` para conferir o estado efetivo e os eventos de "
+        "ativação em `book/audit_log.jsonl` para consultar o registro."
+    ),
+    "estado-integridade": (
+        "Consulte o campo `integridade` em `cdp estado` ou o resultado de `cdp verify` no clone de "
+        "operação."
+    ),
+    "agenda-fechamentos": "Consulte fechamentos_pendentes em cdp agenda no clone de operação.",
+    "retrato-cobertura": (
+        "Consulte o retrato da cobertura em `book/cobertura/<data>/`. A tabela `modelos.csv` registra os "
+        "preços-alvo por emissor. Use os campos de cobertura em cdp agenda para identificar a data "
+        "vigente."
+    ),
+    "fila-cobertura": (
+        "Consulte a fila da nota na saída corrente de cdp nota agenda no clone de operação."
+    ),
+    "agenda-rotinas": (
+        "Consulte `cdp rotinas proximas` ou o campo `proximas_tarefas` em `cdp estado` para conferir os "
+        "próximos disparos."
+    ),
+    "relatorio-calibracao": (
+        "Consulte `reports/backtest/<data>/mensal/metrics.json` ou o relatório da calibração "
+        "correspondente à rodada."
+    ),
+    "proposta-semanal": (
+        "Consulte a proposta da montagem em `book/<semana>/proposal_v<versao>.json`. Se não houver "
+        "proposta para essa etapa, registre a ausência."
+    ),
+    "agenda-montagem": (
+        "Consulte semanal.proximo_rebalanceamento, semanal.prazo_efetivo e semanal.mercados_fechados na "
+        "saída de cdp agenda."
+    ),
+    "relatorio-risco": (
+        "Consulte o relatório do monitor em `reports/risk/<data>/risco_<HHMM>.json`. Confira `gerado_em` "
+        "para identificar o disparo, inclusive em arquivos com sufixo. O VaR registrado está em "
+        "`risco.var_1d_99` e os alertas em `gatilhos`."
+    ),
+    "carteira-efetivada": "Consulte a carteira efetivada no livro em `book/<semana>/booked.json`.",
+    "tese-publicada": (
+        "Consulte a tese publicada no livro, em book/<semana>/tese/tese_publicada.json, e o evento "
+        "WEEKLY_THESIS correspondente na trilha de auditoria."
+    ),
+    "estado-pendencias": "Consulte o campo `pendencias` em `cdp estado` no clone das rotinas.",
+    "relatorio-semanal": "Consulte o relatório semanal em `reports/semanal/<data>/relatorio.md`.",
+    "relatorio-diario": (
+        "Consulte `reports/daily/<data>/relatorio.md` ou os fatos correspondentes no FactBook em "
+        "`reports/daily/<data>/facts.md`."
+    ),
+    "estado-agenda": "Consulte o estado e a agenda no clone de operação.",
+}
+
+
+def _destino_atual(consulta: str, *, forcar: bool = False) -> tuple[str, str] | None:
+    """Identifica o destino de leitura para uma consulta de estado."""
+    codigo = _codigo_destino_atual(consulta, forcar=forcar)
+    return (codigo, _DESTINOS_ATUAIS[codigo]) if codigo else None
+
+
+def _codigo_destino_atual(consulta: str, *, forcar: bool) -> str | None:
+    q = _normalizar(consulta).strip()
+    if not forcar and not _pede_estado(q):
+        return None
+    if re.search(r"\b(?:ci|cdp[-_]ci|integracao continua)\b", q) or (
+        re.search(r"\b(?:github|actions|pipeline)\b", q)
+        and re.search(r"\b(?:checagens?|lint|testes?|jobs?|checks?|runners?|bateria(?: automatica)?)\b", q)
+        and not re.search(r"\b(?:portal|pages|rotinas?|cdp[-_]site)\b", q)
+    ):
+        return "ci-github"
+    if re.search(r"\b(?:frentes? de desenvolvimento|passagem (?:de bastao|(?:mais recente )?do desenvolvimento)|"
+                 r"em_andamento)\b", q):
+        return "passagem-desenvolvimento"
+    if re.search(r"\b(?:portal|pages|implantacao|deploy|pagina publica)\b", q):
+        return "portal-publicado"
+    if _ENTREGA_DOCUMENTAL.search(q) or (_VINCULO_CDP.search(q) and re.search(r"\bentregas?\b", q)):
+        return "trilha-entrega"
+    if re.search(r"\bcommits?\b", q):
+        return "procedencia-commit"
+    executor = re.search(r"\bexecutor\b", q)
+    permissao = re.search(r"\b(?:escrita|escritor|gravar o livro|executor\.yaml)\b", q)
+    if re.search(r"\b(?:remoto|origin/main|ramo principal d[eo] github)\b", q) and (
+        permissao or (executor and re.search(r"\b(?:designad[oa]s?|identidade)\b", q))
+    ):
+        return "executor-remoto"
+    destino_executor = "estado-executor"
+    if (_ESCRITA_DO_CLONE.search(q) or _RESPONSAVEL_PELO_LIVRO.search(q)
+            or (executor and re.search(r"\b(?:designad[oa]s?|identidade|nome|quem)\b", q))):
+        return destino_executor
+    if re.search(r"\b(?:manifesto|hash|sha[- ]?256)\b", q):
+        if re.search(r"\b(?:ensaio|replay)\b", q):
+            return "manifesto-ensaio"
+        if re.search(r"\b(?:snapshot|captura)\b", q):
+            return "manifesto-snapshot"
+    if re.search(r"\breplay operacional\b", q) and re.search(r"\b(?:modo|concluid[oa])\b", q):
+        return "manifesto-ensaio"
+    if re.search(r"\b(?:trava|bloqueio (?:compartilhado|distribuido))\b", q) and (
+        (_QUANTIFICA_TEMPO.search(q) and _TEMPO_PENDENTE.search(q))
+        or re.search(r"\b(?:ocupad[oa]s?|ocupacao|expira(?:cao|da|r)?|validade|titular|em nome de|"
+                     r"adquirid[oa]s?|liberad[oa]s?)\b", q)
+    ):
+        return "trava-distribuida"
+    if re.search(r"\b(?:kill[- ]switch|chave de emergencia|modo de so reduzir risco)\b", q) and not re.search(
+        r"\b(?:relatorios?|gatilhos?|recomendac(?:ao|oes))\b", q
+    ):
+        return "estado-kill-switch"
+    if re.search(r"\b(?:integridade|cdp verify|verificador d[eo] livro|hash divergente)\b", q):
+        return "estado-integridade"
+    if _LISTA_DE_FECHAMENTOS.search(q) or (
+        (_OBRIGACAO_PENDENTE.search(q) or _ESPERA_FECHAMENTO.search(q))
+        and re.search(r"\b(?:preg(?:ao|oes)|fechamentos?)\b", q)
+    ):
+        return "agenda-fechamentos"
+    if _sobre_retrato_de_cobertura(q) or (
+        re.search(r"\bcobertura\b", q) and re.search(r"\b(?:retratos?|snapshots?|precos?[- ]alvo)\b", q)
+    ):
+        return "retrato-cobertura"
+    if ((re.search(r"\b(?:cobertura|emissor(?:es)?)\b", q) and re.search(
+        r"\b(?:fila|notas?|emissor(?:es)?)\b", q)) or re.search(
+            r"\b(?:(?:lista|fila) de (?:proximas? )?notas?|proximas? notas? (?:d[oa]|na) fila)\b", q)
+    ):
+        return "fila-cobertura"
+    if re.search(r"\b(?:proxim[oa]s?|agendad[oa]s?|programad[oa]s?)\b", q) and re.search(
+        r"\b(?:rotinas?|tarefas?|execuc(?:ao|oes)|disparos?|calibracao|monitoramentos?)\b", q
+    ) and not re.search(r"\b(?:montagem|rebalanceamento|propostas?|previa)\b", q):
+        return "agenda-rotinas"
+    if re.search(r"\b(?:calibracao|sharpe|rodada mensal)\b", q):
+        return "relatorio-calibracao"
+    if re.search(r"\b(?:propost[ao]s?|previa)\b", q):
+        return "proposta-semanal"
+    if re.search(r"\b(?:montagem|rebalanceamento|troca de carteira)\b", q) and re.search(
+        r"\b(?:agenda|prazos?|mercados?|datas?|dias?|horas?|quando|janelas?|sessao|previst[oa]s?)\b", q
+    ):
+        return "agenda-montagem"
+    if re.search(r"\b(?:monitor|cdp-risco|(?:risco|leitura) intradiari[oa]|disparos? (?:de|do) risco)\b", q) or (
+        re.search(r"\b(?:alertas?|hard|soft|var|valor em risco|quantil de perda|relatorios? de risco)\b", q)
+        and not re.search(r"\b(?:kill[- ]switch|fechamento|relatorios? semana(?:l|is)|relatorios? diarios?)\b", q)
+    ):
+        return "relatorio-risco"
+    if _TESE_DO_CDP.search(q) and _PUBLICADO.search(q):
+        return "tese-publicada"
+    if re.search(r"\b(?:carteira|livro)\b", q) and re.search(
+        r"\b(?:longs?|shorts?|posic(?:ao|oes)|efetivad[oa]s?|entrou em vigor)\b", q
+    ):
+        return "carteira-efetivada"
+    if re.search(r"\b(?:pendencias?|pendentes?)\b", q):
+        return "estado-pendencias"
+    if re.search(r"\brelatorios? semana(?:l|is)\b", q):
+        return "relatorio-semanal"
+    if _MERCADO.search(q) or re.search(
+        r"\b(?:fechamento|relatorios? diarios?|quanto (?:marcou|rendeu|valeu|fechou))\b", q
+    ):
+        return "relatorio-diario"
+    if executor:
+        return destino_executor
+    return "estado-agenda"
 
 
 def _fonte_atual(consulta: str, *, forcar: bool = False) -> str | None:
-    """Reconhece pedidos de observação e distingue instruções de procedimento."""
-    q = _normalizar(consulta).strip()
-    mercado, dominio = bool(_MERCADO.search(q)), bool(_DOMINIO.search(q))
-    if not forcar:
-        if (not (mercado or dominio) or _PROCEDIMENTO.search(q)
-                or _PEDIDO_DE_PROCEDIMENTO.search(q)):
-            return None
-        pergunta = bool(_INTERROGATIVA.match(q) or q.endswith("?"))
-        medida_com_data = mercado and _VALOR.match(q) and _TEMPO.search(q)
-        pessoa_ou_versao_atual = _INTERROGATIVA.match(q) and re.search(
-            r"\b(?:executor|portal|pages)\b.*\batual\b", q)
-        ocorrencia = _OCORRENCIA.search(q)
-        if not (pergunta and (_AGORA.search(q) or medida_com_data
-                              or pessoa_ou_versao_atual or ocorrencia)):
-            return None
-    if re.search(r"\b(?:portal|pages)\b", q):
-        return "Confira o portal servido e a procedência em docs/cdp/SITE.md."
-    if re.search(r"\b(?:e-?mails?|entrega)\b", q):
-        return "Confira a trilha de entrega descrita em docs/cdp/playbooks/DIARIO.md."
-    if mercado:
-        return "Consulte o relatório oficial da data e os fatos calculados pelo código."
-    if re.search(r"\b(?:cobertura|emissor(?:es)?)\b", q) and re.search(
-        r"\b(?:fila|notas?|emissor(?:es)?)\b", q
-    ):
-        return "Consulte a agenda de cobertura e a fila da nota no clone de operação."
-    return "Consulte o estado e a agenda no clone de operação."
+    """Devolve a orientação de leitura no formato textual anterior."""
+    destino = _destino_atual(consulta, forcar=forcar)
+    return destino[1] if destino else None
 
 
 class Catalogo:
@@ -459,14 +957,26 @@ class Catalogo:
     def _problema(self, id_: str, codigo: str, detalhe: str) -> None:
         self.problemas.append({"id": id_, "codigo": codigo, "detalhe": detalhe})
 
-    def contexto(self, escopo: Escopo) -> dict:
-        destacados = sorted((r for r in self.ativos if escopo in r.nota.escopos and r.nota.destaque),
-                             key=lambda r: (len(r.nota.escopos), r.nota.id))
+    def contexto(self, escopo: Escopo, *, consulta: str | None = None) -> dict:
         out = {"revisao": self.fontes.revisao, "data": self.data.isoformat(), "escopo": escopo,
                "aviso": _AVISO, "catalogo_com_ressalvas": bool(self.problemas),
                "fontes": list(_primarias(escopo)[:3]), "notas": []}
-        for reg in destacados[:LIMITE_CONTEXTO]:
-            out["notas"].append(reg.json())
+        if consulta is None:
+            destacados = sorted(
+                (r for r in self.ativos if escopo in r.nota.escopos and r.nota.destaque),
+                key=lambda r: (len(r.nota.escopos), r.nota.id),
+            )
+            notas = [r.json() for r in destacados[:LIMITE_CONTEXTO]]
+        else:
+            busca = self.buscar(escopo, consulta, LIMITE_CONTEXTO)
+            notas = busca["notas"]
+            caminhos = (p["caminho"] for p in (*busca["passagens"], *busca["fontes"]))
+            ancoras = (ev["caminho"] for nota in notas for ev in nota["evidencias"])
+            out.update(modo="por-consulta", destino_atual=busca["destino_atual"],
+                       orientacao_atual=busca["orientacao_atual"],
+                       fontes=list(dict.fromkeys((*caminhos, *ancoras)))[:3])
+        for nota in notas:
+            out["notas"].append(nota)
             if max(len((json.dumps(out, ensure_ascii=False, indent=2) + "\n").encode()),
                    len(render_contexto(out).encode())) > LIMITE_CONTEXTO_BYTES:
                 out["notas"].pop()
@@ -475,6 +985,8 @@ class Catalogo:
 
     def _buscar_notas(self, escopo: Escopo, consulta: str, limite: int, *,
                       expandir: bool = False) -> list[Registro]:
+        if expandir:
+            return self._buscar_notas_contextuais(escopo, consulta, limite)
         termos = _tokens(consulta)
         notas = []
         if termos:
@@ -484,43 +996,179 @@ class Catalogo:
                     continue
                 chave = _tokens(n.titulo + " " + " ".join(n.tags))
                 resumo = _tokens(n.resumo)
-                ancora = set()
-                if expandir:
-                    ancora = _tokens(" ".join(ev.trecho for ev in n.evidencias))
-                comuns = termos & (chave | resumo | ancora)
+                comuns = termos & (chave | resumo)
                 # Sobreposição mínima evita forçar uma lembrança com coincidência incidental.
                 if (len(comuns) >= min(2, len(termos)) and termos & chave
                         and len(comuns) * 3 >= len(termos)):
-                    pontos = 6 * len(termos & chave) + 2 * len(termos & resumo) + len(termos & ancora)
+                    pontos = 6 * len(termos & chave) + 2 * len(termos & resumo)
                     notas.append((-pontos, -len(comuns), n.id, reg))
         notas.sort(key=lambda v: v[:3])
         return [r for *_, r in notas[:limite]]
 
-    def buscar(self, escopo: Escopo, consulta: str, limite: int, *,
-               estado_atual: bool = False) -> dict:
-        atual = _fonte_atual(consulta, forcar=estado_atual)
-        notas = [] if atual else self._buscar_notas(escopo, consulta, limite, expandir=True)
-        diretas = [] if estado_atual else self.indice.buscar(escopo, consulta, limite)
-        if atual and not estado_atual:
-            atual = "Se a pergunta for sobre o estado efetivo, consulte a fonte oficial. " + atual
-        termos = _tokens(consulta)
+    def _buscar_notas_contextuais(self, escopo: Escopo, consulta: str, limite: int) -> list[Registro]:
+        termos = termos_contextuais(consulta).keys()
+        referencias = _tokens(" ".join(re.findall(r"\b[A-Z][A-Z0-9]{1,}\b", consulta))) - {"cdp", "ia"}
+        candidatas = []
+        for registro in self.ativos:
+            n = registro.nota
+            if escopo not in n.escopos:
+                continue
+            chaves = termos_contextuais(n.titulo + " " + " ".join(n.tags)).keys()
+            resumo = termos_contextuais(n.resumo).keys()
+            fonte = termos_contextuais(" ".join(ev.trecho for ev in n.evidencias)).keys()
+            candidatas.append((registro, chaves, resumo, fonte))
+        pesos = {t: 1 / (1 + sum(t in ch or t in r for _, ch, r, _ in candidatas)) ** 0.5
+                 for t in termos}
+        ranking = []
+        for registro, chaves, resumo, fonte in candidatas:
+            comuns = termos & (chaves | resumo | fonte)
+            if len(comuns) < 2 or not termos & (chaves | resumo):
+                continue
+            # Siglas explícitas ganham peso somente se a fonte literal as sustenta.
+            pontos = sum(pesos[t] * (3 * (t in chaves) + 2 * (t in resumo) + (t in fonte)
+                                     + 3 * (t in fonte and t in referencias)) for t in sorted(comuns))
+            ranking.append((-pontos, -len(comuns), registro.nota.id, registro))
+        ranking.sort(key=lambda valor: valor[:3])
+        return [registro for *_, registro in ranking[:limite]]
+
+    def _recuperar_passagens(self, escopo: Escopo, consulta: str, limite: int,
+                             diretas: list[Local], notas: list[Registro]) -> list[Local]:
+        termos = termos_contextuais(consulta).keys()
         ancoras = []
+        priorizar_nota = False
         for registro in notas:
-            elegiveis = [(local, evidencia) for local, evidencia in
-                         zip(registro.locais, registro.nota.evidencias, strict=True)
-                         if local.fim - local.inicio + 1 <= LINHAS_PASSAGEM
-                         and len(evidencia.trecho.encode()) <= BYTES_PASSAGEM]
-            ordenadas = sorted(elegiveis, key=lambda par: -len(termos & _tokens(par[1].trecho)))
-            ancoras.append([ampliar(local, self.fontes.linhas(local.caminho))
-                            for local, _ in ordenadas])
-        passagens = intercalar(diretas, ancoras, limite)
+            fontes: dict[str, list[Local]] = {}
+            termos_ancoras: dict[Local, bool] = {}
+            for local, evidencia in zip(registro.locais, registro.nota.evidencias, strict=True):
+                if (local.fim - local.inicio + 1 <= LINHAS_PASSAGEM
+                        and len(evidencia.trecho.encode()) <= BYTES_PASSAGEM):
+                    fontes.setdefault(local.caminho, []).append(local)
+                    comuns = termos & termos_contextuais(evidencia.trecho).keys()
+                    # Um conceito sintético e sua palavra de origem contam como um único sinal.
+                    literais = sum(not t.startswith("@") for t in comuns)
+                    termos_ancoras[local] = literais >= 2 or (literais == 1 and len(comuns) >= 3)
+            reunidas = [p for caminho, locais in fontes.items()
+                        for p in reunir_ancoras(locais, self.fontes.linhas(caminho))]
+            if reunidas:
+                apoio = {p: termos & termos_contextuais("\n".join(
+                    self.fontes.linhas(p.caminho)[p.inicio - 1:p.fim]
+                )).keys() for p in reunidas}
+                primeira = max(reunidas, key=lambda p: len(apoio[p]))
+                complementares = sorted((p for p in reunidas if p != primeira), key=lambda p: (
+                    -len(apoio[p] - apoio[primeira]), p.caminho != primeira.caminho, -len(apoio[p]),
+                ))
+                if not ancoras:
+                    priorizar_nota = any(tem_apoio and p.caminho == primeira.caminho
+                                         and primeira.inicio <= p.inicio <= p.fim <= primeira.fim
+                                         for p, tem_apoio in termos_ancoras.items())
+                ancoras.append([primeira, *complementares])
+        largura = max(limite, 5)
+        indice_contextual = self.indice.para_escopo(escopo, contextual=True)
+        contextuais = indice_contextual.buscar(consulta, max(largura, 10))
+        escolhidas = combinar_evidencias(diretas, contextuais[:largura], ancoras, limite,
+                                         priorizar_nota=priorizar_nota)
+        janelas_bastao = [i for i, p in enumerate(escolhidas)
+                          if p.caminho == "docs/cdp/EM_ANDAMENTO.md"]
+        if (ancoras and len(escolhidas) == limite and len(janelas_bastao) > 1
+                and not re.search(r"\b(?:passagem(?: de bastao)?|frentes? em andamento|em[-_ ]andamento)\b",
+                                  _normalizar(consulta))):
+            # Uma segunda janela de histórico cede lugar a uma fonte da lição líder ainda ausente.
+            fontes_escolhidas = {p.caminho for p in escolhidas}
+            apoio = next((p for p in ancoras[0] if p.caminho not in fontes_escolhidas), None)
+            if apoio is not None:
+                escolhidas[janelas_bastao[-1]] = apoio
+        blocos = [completar_bloco(p, self.fontes.linhas(p.caminho)) for p in escolhidas]
+        if not any(p.fim - p.inicio + 1 < LINHAS_PASSAGEM for p in blocos):
+            candidatas = (*diretas, *contextuais)
+        else:
+            diretas_amplas = self.indice.buscar(escopo, consulta, max(limite, 10))
+            candidatas = (*diretas_amplas, *contextuais)
+            blocos = ampliar_selecao(blocos, candidatas, self.fontes.linhas)
+        recuperadas = reaproveitar_vagas(blocos, candidatas, self.fontes.linhas)
+        selecionadas = indice_contextual.complementar_com_diretas(
+            consulta, recuperadas, diretas, self.fontes.linhas,
+        )
+        if not selecionadas or all(p.fim - p.inicio + 1 == LINHAS_PASSAGEM for p in selecionadas):
+            return selecionadas
+        for completas in (False, True):
+            estruturais = self.indice.estruturais(escopo, consulta, completas=completas)
+            ampliadas = ampliar_selecao(selecionadas, estruturais, self.fontes.linhas)
+            selecionadas = reaproveitar_vagas(ampliadas, estruturais, self.fontes.linhas)
+        return selecionadas
+
+    def _tem_apoio_no_acervo(self, escopo: Escopo, q: str, diretas: list[Local], notas: list[Registro], *,
+                            observacao: bool) -> bool:
+        consulta = termos_contextuais(q)
+        termos = {t for t in consulta if not t.startswith("@") and not t.isdigit()}
+        termos -= _TERMOS_INCIDENTAIS
+        tema = _tema_do_cdp(q)
+        base = min(3, len(termos)) if tema else 4
+        minimo = 2 if observacao else max(2, len(termos) // 5, base)
+        topicos = _termos_de_observacao(q) if observacao else set()
+        revisao_editorial = not observacao and (tema or escopo in termos) and _REVISAO_EDITORIAL <= consulta.keys()
+
+        def termos_em(texto: str) -> set[str]:
+            return termos & termos_contextuais(texto).keys()
+
+        def apoia(p: Local) -> bool:
+            literais = termos_contextuais("\n".join(self.fontes.linhas(p.caminho)[p.inicio - 1:p.fim])).keys()
+            comuns = termos & literais
+            return (len(comuns) >= minimo and (not observacao or bool(comuns & topicos))
+                    or revisao_editorial and bool(comuns) and _REVISAO_EDITORIAL <= literais)
+
+        # Uma fonte deve sustentar os termos em conjunto. Etiquetas, aliases e títulos
+        # do índice, sozinhos, não autorizam admitir um assunto novo no acervo.
+        if any(apoia(p) for p in diretas) or any(
+            apoia(p) for p in self.indice.buscar(escopo, q, 5, contextual=True)
+        ):
+            return True
+        for registro in notas:
+            nota = registro.nota
+            descricao = " ".join((nota.titulo, nota.resumo, *nota.tags))
+            if len(termos_em(descricao)) >= minimo and any(len(termos_em(ev.trecho)) >= 2 for ev in nota.evidencias):
+                return True
+        return False
+
+    @cached_property
+    def _refinador_autoridades(self):
+        from .memoria_roteamento import RefinadorAutoridades
+
+        return RefinadorAutoridades(self.fontes)
+
+    def buscar(self, escopo: Escopo, consulta: str, limite: int, *,
+               estado_atual: bool = False, evidencia_conferida: bool = False,
+               orcamento_estrito: bool = False) -> dict:
+        q = _normalizar(consulta).strip()
+        fora = _pedido_fora_do_escopo(q)
+        rota = None if fora or evidencia_conferida else _destino_atual(consulta, forcar=estado_atual)
+        diretas = [] if fora or estado_atual else self.indice.buscar(escopo, consulta, limite)
+        notas = [] if fora or rota else self._buscar_notas(escopo, consulta, limite, expandir=True)
+        vinculo = _VINCULO_CDP.search(q) or (rota and _MEDICAO_DE_ATIVO.search(q))
+        if not (fora or estado_atual or evidencia_conferida or vinculo):
+            fora = not self._tem_apoio_no_acervo(escopo, q, diretas, notas, observacao=bool(rota))
+            if fora:
+                diretas = []
+                notas = []
+                rota = None
+        refinamento = self._refinador_autoridades.refinar(consulta, rota[0]) if rota else None
+        if refinamento:
+            codigo = refinamento["codigo"]
+            rota = codigo, _DESTINOS_ATUAIS[codigo]
+        passagens = [] if fora or rota else self._recuperar_passagens(
+            escopo, consulta, limite, diretas, notas
+        )
+        if orcamento_estrito:
+            passagens = limitar_contexto(passagens, self.fontes.linhas)
         caminhos = {}
-        for local in diretas:
+        for local in (() if rota else diretas):
             caminhos.setdefault(local.caminho, local.json())
         return {"revisao": self.fontes.revisao, "data": self.data.isoformat(), "escopo": escopo,
                 "aviso": _AVISO, "catalogo_com_ressalvas": bool(self.problemas),
                 "notas": [r.json() for r in notas], "fontes": list(caminhos.values()),
-                "passagens": [local.json() for local in passagens], "orientacao_atual": atual}
+                "passagens": [local.json() for local in passagens],
+                "destino_atual": rota[0] if rota else None,
+                "orientacao_atual": rota[1] if rota else None,
+                **({"refinamento_destino": refinamento} if refinamento else {})}
 
     def _buscar_fontes_v1(self, escopo: Escopo, consulta: str, limite: int) -> list[dict]:
         """Busca por caminho conservada apenas para reproduzir o corpus inicial."""
@@ -555,18 +1203,43 @@ class BuscaCanonica:
     def __init__(self, fontes: Fontes, caminhos: dict[Escopo, tuple[str, ...]]):
         self.fontes = fontes
         self.caminhos = caminhos
-        self.indices: dict[Escopo, IndicePassagens] = {}
+        self.indices: dict[tuple[Escopo, bool], IndicePassagens] = {}
+        self._indices_secoes: dict[Escopo, IndiceSecoes] = {}
+        self._indices_reforcos: dict[Escopo, IndiceReforcos] = {}
 
-    def buscar(self, escopo: Escopo, consulta: str, limite: int) -> list[Local]:
-        if escopo not in self.indices:
-            fontes = []
-            for caminho in self.caminhos[escopo]:
-                try:
-                    fontes.append((caminho, self.fontes.linhas(caminho)))
-                except MemoriaErro:
-                    continue
-            self.indices[escopo] = IndicePassagens(fontes)
-        return self.indices[escopo].buscar(consulta, limite)
+    def buscar(self, escopo: Escopo, consulta: str, limite: int, *,
+               contextual: bool = False) -> list[Local]:
+        return self.para_escopo(escopo, contextual=contextual).buscar(consulta, limite)
+
+    def para_escopo(self, escopo: Escopo, *, contextual: bool) -> IndicePassagens:
+        chave = (escopo, contextual)
+        if chave not in self.indices:
+            self.indices[chave] = IndicePassagens(self._documentos(escopo), contextual=contextual)
+        return self.indices[chave]
+
+    def estruturais(self, escopo: Escopo, consulta: str, *, completas: bool = False) -> list[Local]:
+        indice = self._indice_estrutural(escopo)
+        return indice.compactas(consulta) if completas else indice.buscar(consulta)
+
+    def simbolos(self, escopo: Escopo, consulta: str) -> list[Local]:
+        return self._indice_estrutural(escopo).simbolos(consulta)
+
+    def reforcos(self, escopo: Escopo, consulta: str, candidatas: list[Local]) -> list[Local]:
+        if escopo not in self._indices_reforcos:
+            self._indices_reforcos[escopo] = IndiceReforcos(self.fontes.linhas, self.caminhos[escopo])
+        return self._indices_reforcos[escopo].buscar(consulta, candidatas)
+
+    def _indice_estrutural(self, escopo: Escopo) -> IndiceSecoes:
+        if escopo not in self._indices_secoes:
+            self._indices_secoes[escopo] = IndiceSecoes(self._documentos(escopo))
+        return self._indices_secoes[escopo]
+
+    def _documentos(self, escopo: Escopo) -> Iterable[tuple[str, tuple[str, ...]]]:
+        for caminho in self.caminhos[escopo]:
+            try:
+                yield caminho, self.fontes.linhas(caminho)
+            except MemoriaErro:
+                continue
 
 
 def _hoje() -> date:
@@ -627,14 +1300,19 @@ def render_contexto(contexto: dict, *, nivel: int = 1) -> str:
               f"Revisão Git: {contexto['revisao']} · referência: {contexto['data']}.", ""]
     if contexto["catalogo_com_ressalvas"]:
         linhas += ["O catálogo tem ressalvas; notas inválidas foram excluídas.", ""]
+    if contexto.get("orientacao_atual"):
+        return "\n".join([*linhas, contexto["orientacao_atual"], ""])
     if not contexto["notas"]:
-        linhas += ["Sem notas destacadas e válidas para este escopo nesta data.", ""]
+        mensagem = ("Sem notas elegíveis para a consulta." if contexto.get("modo") == "por-consulta"
+                    else "Sem notas destacadas e válidas para este escopo nesta data.")
+        linhas += [mensagem, ""]
     for nota in contexto["notas"]:
         fontes = "; ".join(f"{e['caminho']}:{e['inicio']}–{e['fim']} (SHA-256 {e['sha256']})"
                            for e in nota["evidencias"])
         linhas += [f"- **{nota['titulo']}** ({nota['id']}): {nota['resumo']}",
                    f"  Evidência: {fontes}."]
-    linhas += ["", "Fontes para consulta: " + ", ".join(contexto["fontes"]) + ".", ""]
+    if contexto["fontes"]:
+        linhas += ["", "Fontes para consulta: " + ", ".join(contexto["fontes"]) + ".", ""]
     return "\n".join(linhas)
 
 
@@ -681,13 +1359,25 @@ def _json(obj: object) -> None:
     print(json.dumps(obj, ensure_ascii=False, indent=2))
 
 
+def _devolutivas_sonho(entrada: BinaryIO, limite_bytes: int) -> Iterable[bytes]:
+    for linha in iter(lambda: entrada.readline(limite_bytes + 2), b""):
+        bruto = linha.removesuffix(b"\n").removesuffix(b"\r")
+        if not bruto or len(bruto) > limite_bytes:
+            raise MemoriaErro("informe uma devolutiva JSON por linha dentro do limite de bytes")
+        yield bruto
+
+
 def _comando(args: argparse.Namespace) -> int:
     try:
         acao = args.acao_memoria
-        trabalho = acao == "auditar" and not args.revisao_git
+        revisao = getattr(args, "revisao", None)
+        trabalho = acao == "auditar" and not (args.revisao_git or args.pontes or revisao)
         if trabalho and os.name != "posix":
             raise MemoriaErro("auditoria da árvore de trabalho requer POSIX; use --revisao-git")
-        revisao = getattr(args, "revisao", None)
+        if acao == "avaliar" and args.revalidacao is not None and (
+            revisao is None or not (args.reservada or args.replica)
+        ):
+            raise MemoriaErro("a revalidação exige corpus reservado ou réplica e revisão explícita")
         if revisao is not None and acao != "avaliar" and args.data is None:
             raise MemoriaErro("a consulta por revisão exige a data explícita de referência")
         if acao == "avaliar" and revisao is None and not args.sonho:
@@ -708,9 +1398,16 @@ def _comando(args: argparse.Namespace) -> int:
                 _json(avaliar_sonho(fontes))
                 return 0
             if args.reservada or args.replica:
-                from .memoria_avaliacao import avaliar_reservada
+                from .memoria_avaliacao import MAX_BYTES_REVALIDACAO, avaliar_reservada
 
-                _json(avaliar_reservada(fontes, replica=args.replica))
+                revalidacao = None
+                if args.revalidacao is not None:
+                    fd = os.open(args.revalidacao, os.O_RDONLY | getattr(os, "O_NONBLOCK", 0))
+                    with os.fdopen(fd, "rb") as arquivo:
+                        if not stat.S_ISREG(os.fstat(arquivo.fileno()).st_mode):
+                            raise MemoriaErro("manifesto de revalidação não é arquivo regular")
+                        revalidacao = arquivo.read(MAX_BYTES_REVALIDACAO + 1)
+                _json(avaliar_reservada(fontes, replica=args.replica, revalidacao=revalidacao))
                 return 0
             bruto = fontes.ler(AVALIACAO, 65536)
             json.loads(bruto, object_pairs_hook=_chaves_unicas)
@@ -726,11 +1423,100 @@ def _comando(args: argparse.Namespace) -> int:
             rel = avaliar(c, corpus.casos)
             _json(rel)
             return int(bool(c.problemas))
+        if acao == "rotear":
+            from .memoria_roteamento import (
+                MAX_BYTES_AMBIGUIDADE,
+                MAX_BYTES_ENVELOPE,
+                MAX_BYTES_ESCOPO,
+                MAX_BYTES_ROTA,
+                conferir_ambiguidade,
+                conferir_selecao_roteada,
+                preparar_ambiguidade,
+                preparar_escopo,
+                preparar_rota,
+                preparar_selecao_roteada,
+                renderizar_ambiguidade,
+                renderizar_escopo,
+                renderizar_rota,
+                resolver_escopo,
+                resolver_rota,
+            )
+
+            data = args.data or _hoje()
+            if args.ancorar_ambiguidade and not (args.pacote_ambiguidade or args.conferir_ambiguidade):
+                raise MemoriaErro("a ancoragem exige preparar ou conferir a segunda leitura")
+            if args.com_autoridades and (args.pacote_escopo or args.conferir_escopo):
+                raise MemoriaErro("a leitura de escopo não recebe cartões de autoridade")
+            if args.com_pontes and not (args.candidatas or args.conferir_selecao):
+                raise MemoriaErro("as pontes exigem preparar ou conferir a seleção documental")
+            pacote = preparar_rota(fontes, data, args.escopo, args.consulta, args.limite,
+                                   com_autoridades=args.com_autoridades)
+            if not any((args.conferir, args.candidatas, args.conferir_selecao,
+                        args.pacote_ambiguidade, args.conferir_ambiguidade,
+                        args.pacote_escopo, args.conferir_escopo)):
+                if args.formato == "prompt":
+                    print(renderizar_rota(pacote), end="")
+                else:
+                    _json(pacote)
+                return 0
+            if args.formato != "json" and not (args.pacote_ambiguidade or args.pacote_escopo):
+                raise MemoriaErro("o formato prompt é exclusivo da preparação da leitura")
+            if revisao is None:
+                raise MemoriaErro("a conferência exige a revisão e a data do pacote")
+            if args.pacote_escopo:
+                escopo = preparar_escopo(pacote)
+                if args.formato == "prompt":
+                    print(renderizar_escopo(escopo), end="")
+                else:
+                    _json(escopo)
+            elif args.conferir_escopo:
+                bruto = b"" if pacote["bloqueio_escopo"] else sys.stdin.buffer.read(MAX_BYTES_ESCOPO + 1)
+                _json(resolver_escopo(fontes, pacote, bruto))
+            elif args.pacote_ambiguidade:
+                segunda = preparar_ambiguidade(
+                    pacote, sys.stdin.buffer.read(MAX_BYTES_ROTA + 1), ancorada=args.ancorar_ambiguidade)
+                if args.formato == "prompt":
+                    print(renderizar_ambiguidade(segunda), end="")
+                else:
+                    _json(segunda)
+            elif args.conferir_ambiguidade:
+                decisao = conferir_ambiguidade(
+                    pacote, sys.stdin.buffer.read(MAX_BYTES_AMBIGUIDADE + 1), ancorada=args.ancorar_ambiguidade)
+                _json(decisao.model_dump())
+            elif args.conferir_selecao:
+                _json(conferir_selecao_roteada(fontes, pacote, sys.stdin.buffer.read(MAX_BYTES_ENVELOPE + 1),
+                                              com_pontes=args.com_pontes))
+            else:
+                bruto = sys.stdin.buffer.read(MAX_BYTES_ROTA + 1)
+                _json(preparar_selecao_roteada(fontes, pacote, bruto, com_pontes=args.com_pontes) if args.candidatas
+                      else resolver_rota(fontes, pacote, bruto))
+            return 0
         c = Catalogo(fontes, args.data or _hoje())
-        if acao in ("sonhar", "conferir-sonho", "fonte-sonho"):
+        continuidade = None
+        if getattr(args, "continuar", None) is not None:
+            from .memoria_sonho import MAX_BYTES_CONTINUIDADE
+
+            if revisao is None or not args.exigir_provas:
+                raise MemoriaErro("a continuidade exige revisão, data e provas explícitas")
+            linha = sys.stdin.buffer.readline(MAX_BYTES_CONTINUIDADE + 2).rstrip(b"\r\n")
+            if not linha or len(linha) > MAX_BYTES_CONTINUIDADE:
+                raise MemoriaErro("informe a continuidade em uma linha JSON dentro do limite")
+            continuidade = linha
+        if acao == "retomar-sonho":
+            from .memoria_sonho import MAX_BYTES_RESPOSTA, retomar_sonho
+
+            _json(retomar_sonho(
+                c, limite=args.limite, desde=args.desde, exigir_provas=args.exigir_provas,
+                devolutivas=_devolutivas_sonho(sys.stdin.buffer, MAX_BYTES_RESPOSTA),
+                continuidade=continuidade, lacre_continuidade=args.continuar,
+                lacres_devolutivas=args.lacre_pagina,
+            ))
+        elif acao in ("sonhar", "conferir-sonho", "fonte-sonho"):
             from .memoria_sonho import MAX_BYTES_RESPOSTA, conferir_sonho, ler_fonte_sonho, sonhar
 
-            plano = sonhar(c, limite=args.limite, desde=args.desde, pagina=args.pagina)
+            plano = sonhar(c, limite=args.limite, desde=args.desde, pagina=args.pagina,
+                           exigir_provas=args.exigir_provas, continuidade=continuidade,
+                           lacre_continuidade=args.continuar)
             if acao == "sonhar":
                 _json(plano)
             elif acao == "fonte-sonho":
@@ -743,14 +1529,35 @@ def _comando(args: argparse.Namespace) -> int:
 
             _json(wiki(c, args.escopo))
         elif acao == "contexto":
-            out = c.contexto(args.escopo)
+            out = c.contexto(args.escopo, consulta=args.consulta)
             if args.formato == "md":
                 print(render_contexto(out), end="")
             else:
                 _json(out)
         elif acao == "buscar":
-            _json(c.buscar(args.escopo, args.consulta, args.limite,
-                           estado_atual=args.estado_atual))
+            if args.candidatas or args.conferir_selecao:
+                from .memoria_selecao import MAX_BYTES_RESPOSTA, aplicar, preparar
+
+                if args.conferir_selecao and revisao is None:
+                    raise MemoriaErro("a conferência exige a revisão e a data do pacote")
+                pacote = preparar(c, args.escopo, args.consulta, args.limite,
+                                  explorar_fontes=args.explorar_fontes)
+                if args.candidatas:
+                    _json(pacote)
+                else:
+                    bruto = sys.stdin.buffer.read(MAX_BYTES_RESPOSTA + 1)
+                    _json(aplicar(pacote, bruto, ler=c.fontes.linhas))
+            else:
+                if args.explorar_fontes:
+                    raise MemoriaErro("explorar fontes exige gerar ou conferir uma seleção guiada")
+                _json(c.buscar(args.escopo, args.consulta, args.limite,
+                               estado_atual=args.estado_atual, orcamento_estrito=args.orcamento_estrito))
+        elif acao == "auditar" and args.pontes:
+            from .memoria_pontes import auditar_pontes
+
+            relatorio = auditar_pontes(c)
+            _json(relatorio)
+            return int(not relatorio["ok"])
         else:
             _json(_relatorio(c))
             return int(bool(c.problemas))
@@ -769,19 +1576,22 @@ def registrar(sub: argparse._SubParsersAction) -> None:
     for acao, ajuda in (
         ("contexto", "mostra um índice breve e as notas destacadas de um escopo"),
         ("buscar", "busca notas curadas e fontes primárias do escopo"),
+        ("rotear", "prepara ou confere uma triagem separada da busca histórica"),
         ("propor", "imprime um rascunho de nota com evidência da revisão Git"),
         ("auditar", "verifica a árvore de trabalho e gera uma fila de consolidação"),
         ("avaliar", "executa a comparação offline do corpus da revisão Git"),
         ("sonhar", "gera um plano de revisão de memória na revisão Git"),
+        ("retomar-sonho", "confere páginas anteriores e devolve o próximo plano"),
         ("conferir-sonho", "valida na entrada padrão uma devolutiva vinculada ao plano"),
         ("fonte-sonho", "lê uma nota ou trecho Git permitido pelo item do plano"),
         ("wiki", "mostra tópicos e evidências do catálogo curado por escopo"),
     ):
         s = acoes.add_parser(acao, help=ajuda)
         s.set_defaults(func=_comando)
-        if acao in ("contexto", "buscar", "avaliar", "wiki", "sonhar", "conferir-sonho",
-                    "fonte-sonho"):
-            s.add_argument("--revisao", required=acao == "fonte-sonho",
+        revisao_obrigatoria = acao in ("fonte-sonho", "retomar-sonho")
+        if acao in ("contexto", "buscar", "rotear", "avaliar", "auditar", "wiki", "sonhar", "conferir-sonho",
+                    "fonte-sonho", "retomar-sonho"):
+            s.add_argument("--revisao", required=revisao_obrigatoria,
                            help="hash completo do commit local a consultar")
         if acao == "avaliar":
             conjunto = s.add_mutually_exclusive_group()
@@ -791,17 +1601,27 @@ def registrar(sub: argparse._SubParsersAction) -> None:
                                    help="mede recuperação de passagens no corpus de verificação")
             conjunto.add_argument("--sonho", action="store_true",
                                    help="executa o ensaio de revisão em Git temporário")
+            s.add_argument("--revalidacao", type=Path, metavar="JSON",
+                           help="mede separadamente provas revalidadas para a revisão explícita")
         else:
-            s.add_argument("--data", type=_data, required=acao == "fonte-sonho",
+            s.add_argument("--data", type=_data, required=revisao_obrigatoria,
                            help="data de referência (padrão: Brasília)")
-        if acao in ("contexto", "buscar", "propor", "wiki"):
+        if acao in ("contexto", "buscar", "rotear", "propor", "wiki"):
             s.add_argument("--escopo", choices=tuple(ESCOPO), required=True)
-        if acao in ("sonhar", "conferir-sonho", "fonte-sonho"):
+        if acao in ("sonhar", "conferir-sonho", "fonte-sonho", "retomar-sonho"):
+            s.add_argument("--exigir-provas", action="store_true",
+                           help="vincula a revisão de cada item a evidência ou diagnóstico conferido")
             s.add_argument("--desde", help="hash completo da última revisão examinada")
+            s.add_argument("--continuar", metavar="SHA256",
+                           help="lacre da continuidade de investigações enviada na primeira linha")
             s.add_argument("--limite", type=int, choices=range(1, 13), default=12,
                            help="quantidade máxima de itens do plano")
+        if acao in ("sonhar", "conferir-sonho", "fonte-sonho"):
             s.add_argument("--pagina", type=int, default=1,
                            help="página da fila na revisão fixada")
+        if acao == "retomar-sonho":
+            s.add_argument("--lacre-pagina", action="append", metavar="SHA256",
+                           help="hash esperado dos bytes de uma devolutiva, na ordem das páginas")
         if acao == "fonte-sonho":
             s.add_argument("--uid", required=True, help="identificador do item do plano")
             origem = s.add_mutually_exclusive_group(required=True)
@@ -811,13 +1631,50 @@ def registrar(sub: argparse._SubParsersAction) -> None:
         if acao == "auditar":
             s.add_argument("--revisao-git", action="store_true",
                            help="audita o HEAD em vez da árvore de trabalho")
+            s.add_argument("--pontes", action="store_true",
+                           help="audita validade e prova literal do mapa na revisão Git")
         if acao == "contexto":
             s.add_argument("--formato", choices=("md", "json"), default="md")
-        if acao == "buscar":
+            s.add_argument("--consulta", type=_consulta, help="seleciona contexto para a tarefa em mãos")
+        if acao in ("buscar", "rotear"):
             s.add_argument("--consulta", required=True, type=_consulta)
             s.add_argument("--limite", type=int, choices=range(1, 11), default=5)
-            s.add_argument("--estado-atual", action="store_true",
-                           help="encaminha à fonte do estado sem recuperar memória")
+        if acao == "rotear":
+            modo = s.add_mutually_exclusive_group()
+            modo.add_argument("--conferir", action="store_true",
+                              help="confere a devolutiva lacrada recebida na entrada padrão")
+            modo.add_argument("--candidatas", action="store_true",
+                              help="prepara candidatas após conferir a triagem de evidência")
+            modo.add_argument("--conferir-selecao", action="store_true",
+                              help="confere o envelope com triagem e seleção lacradas")
+            modo.add_argument("--pacote-ambiguidade", action="store_true",
+                              help="prepara a segunda leitura a partir da triagem na entrada padrão")
+            modo.add_argument("--conferir-ambiguidade", action="store_true",
+                              help="confere a segunda leitura e devolve a triagem resultante")
+            modo.add_argument("--pacote-escopo", action="store_true",
+                              help="prepara a revisão assistida de pedidos de mutação ou burla")
+            modo.add_argument("--conferir-escopo", action="store_true",
+                              help="confere os recortes literais antes da triagem")
+            s.add_argument("--com-autoridades", action="store_true",
+                           help="inclui os cartões de autoridade com âncoras Git validadas")
+            s.add_argument("--com-pontes", action="store_true",
+                           help="inclui trechos curados entre papéis na seleção documental")
+            s.add_argument("--ancorar-ambiguidade", action="store_true",
+                           help="vincula as duas leituras ao mesmo trecho literal da consulta")
+            s.add_argument("--formato", choices=("json", "prompt"), default="json",
+                           help="na preparação, emite dados ou instruções prontas para um leitor")
+        if acao == "buscar":
+            modo = s.add_mutually_exclusive_group()
+            modo.add_argument("--estado-atual", action="store_true",
+                              help="encaminha à fonte do estado sem recuperar memória")
+            modo.add_argument("--orcamento-estrito", action="store_true",
+                              help="limita os trechos integrais a 4.500 bytes em UTF-8")
+            modo.add_argument("--candidatas", action="store_true",
+                              help="gera um pacote lacrado para seleção de evidências pelo agente")
+            modo.add_argument("--conferir-selecao", action="store_true",
+                              help="confere os IDs recebidos na entrada padrão contra o pacote lacrado")
+            s.add_argument("--explorar-fontes", action="store_true",
+                           help="permite revisar a intenção e selecionar recortes de fontes do escopo")
         if acao == "propor":
             s.add_argument("--id", required=True)
             s.add_argument("--evidencia", required=True, help="caminho relativo da fonte")
@@ -828,6 +1685,7 @@ def registrar(sub: argparse._SubParsersAction) -> None:
 
 
 def _consulta(valor: str) -> str:
-    if 1 <= len(valor) <= 240 and not any(unicodedata.category(c).startswith("C") for c in valor):
+    if (isinstance(valor, str) and 1 <= len(valor) <= LIMITE_CONSULTA
+            and not any(unicodedata.category(c).startswith("C") for c in valor)):
         return valor
-    raise argparse.ArgumentTypeError("use texto em uma linha de até 240 caracteres")
+    raise argparse.ArgumentTypeError(f"use texto em uma linha de até {LIMITE_CONSULTA} caracteres")

@@ -1,0 +1,43 @@
+{
+  "id": "ref-ci-portal-e-artefato",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Demonstração local do portal é rotulada e fica fora do endereço público",
+  "resumo": "Use site construir com --demo e pasta de teste. A demonstração marca dados simulados e usa noindex. O workflow produz um artefato para leitura local, sem publicar a demonstração no endereço público.",
+  "escopos": [
+    "operador",
+    "status"
+  ],
+  "tags": [
+    "demonstração",
+    "portal",
+    "site construir",
+    "_site_demo",
+    "dados simulados",
+    "noindex",
+    "artefato",
+    "buscadores"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/SITE.md",
+      "trecho": "- A demonstração (`--demo`) é marcada \"DADOS SIMULADOS\" em todas as páginas, leva `noindex` nas\n  páginas HTML e **nunca vai ao endereço público**: no workflow, a opção de demonstração só\n  monta o site como artefato `github-pages` da execução (baixe e abra localmente).",
+      "sha256": "2bf081cffb5abfe99e6e3b804318afa2e3eb3fee7d88d781b4de76e18b1af8a2"
+    },
+    {
+      "caminho": "docs/cdp/SITE.md",
+      "trecho": "## Montar e conferir localmente\n\n```sh\nuv run python -m cdp site construir --saida _site\nuv run python -m cdp site conferir --saida _site\nuv run python -m cdp site construir --demo --saida _site_demo\n```\n\n`_site/` e `_site_demo/` não são versionados. Para ver no navegador:\n`python3 -m http.server -d _site 8000`. Ícones e imagem de compartilhamento ficam em `site/`",
+      "sha256": "9eea4416c7c951ab58fbdeb2000086e63eb385df9c162539a017d9feeebaa386"
+    },
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "## 8. GitHub Actions: só integração contínua e portal\n\n- `.github/workflows/cdp-ci.yml`: lint, testes, integridade do livro, agenda das rotinas, skills\n  em dia e o portal da demonstração (DADOS SIMULADOS) como artefato de revisão. Sem segredos,\n  só leitura.\n- `.github/workflows/cdp-site.yml`: a cada push em `main` (e numa rede de segurança agendada),\n  monta o portal a partir do repositório com `cdp site construir`, confere e publica no GitHub\n  Pages. Não usa IA e não grava no repositório (`docs/cdp/SITE.md`).\n\nNenhum workflow roda a mente nas rotinas. O workflow com IA gerado por",
+      "sha256": "f531129d5f83e2c690b5161fbf94dffce521ca6e1ebeb1379bead5fdb2ff51a5"
+    }
+  ]
+}

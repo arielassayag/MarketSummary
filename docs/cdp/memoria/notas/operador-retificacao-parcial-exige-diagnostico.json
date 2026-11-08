@@ -1,0 +1,33 @@
+{
+  "id": "operador-retificacao-parcial-exige-diagnostico",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Retificação parcial preserva originais e exige diagnóstico de órfãos",
+  "resumo": "Uma falha parcial ao anexar a errata pode deixar artefato ou evento órfão. Divergências impedem a publicação remota. Preserve o material e diagnostique a trilha; o portal conserva o relatório original.",
+  "escopos": [
+    "operador",
+    "diario"
+  ],
+  "tags": [
+    "errata",
+    "retificação",
+    "artefato órfão",
+    "falha parcial",
+    "anexação",
+    "preservação",
+    "arquivo avulso",
+    "diagnóstico"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/RETIFICACAO_EDITORIAL.md",
+      "trecho": "O portal mantém o relatório original e mostra uma indicação explícita com link para a nota.\nA agenda distingue emissores pendentes de corrigidos. Divergência dos originais, da nota ou\nda trilha impede a integridade e a publicação remota. Falha parcial ao anexar pode deixar\nartefato/evento órfão; isso é detectado e exige diagnóstico, sem limpeza ou reparo tácito.",
+      "sha256": "5ed0e098a7b62a3a284e0691dc469cc42860b23f22146d3b0e6e00116cb7f6f5"
+    }
+  ]
+}

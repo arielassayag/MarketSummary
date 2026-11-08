@@ -1,0 +1,37 @@
+{
+  "id": "semanal-decisao-ordinal-do-pm",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Juízos da mente e dimensionamento na decisão semanal",
+  "resumo": "Registre no pm_decision.json as visões ordinais por emissor com convicção, horizonte e evidência, além da postura de risco. Use no_long e no_short para vetos de direção. O motor determina pesos e aplica limites. Na prévia, revise visões, convicções, exclusões ou postura se a pesquisa contradisser a proposta.",
+  "escopos": [
+    "semanal"
+  ],
+  "tags": [
+    "decisão do PM",
+    "visão ordinal",
+    "exclusão",
+    "convicção",
+    "peso",
+    "no_long",
+    "no_short",
+    "prévia"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/SEMANAL.md",
+      "trecho": "Escreva `book/<semana>/inputs/pm_decision.json` conforme o schema: regime, postura de risco,\nvisões (stance −2…+2, convicção 1…5, horizonte, racional, evidências), exclusões\n(`no_long`/`no_short`), o que mudou na visão, avaliação da semana anterior e diário (tese,\ninvalidação, premortem). Toda afirmação com evidência; a mente nunca define pesos nem limites.",
+      "sha256": "fe77141d9c242d6baccef1446a90b9345bf6e1e960677d4cf2dd29740c4f126d"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/SEMANAL.md",
+      "trecho": "Roda o pipeline do `decide` **sem gravar nada no livro**. Se uma posição relevante contradiz a\npesquisa ou depende de um fato não confirmado, ajuste **somente juízos ordinais** (visões,\nconvicções, exclusões, postura) em `pm_decision.json`, valide de novo e repita no máximo duas\nvezes. A coerência de sinal é aplicada pelo código.",
+      "sha256": "1605737198497d55d0b0766ce65d83dcb33ea596aed1b89db3cf5184d44502cd"
+    }
+  ]
+}

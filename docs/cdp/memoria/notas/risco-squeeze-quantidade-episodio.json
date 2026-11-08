@@ -1,0 +1,36 @@
+{
+  "id": "risco-squeeze-quantidade-episodio",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Corte pendente de short usa o tamanho no stop",
+  "resumo": "O limite por episódio usa as ações do short no fechamento que acionou o stop. Ausência de negociação ou execução parcial mantém o corte pendente, com a mesma base no rebalanceamento seguinte. Acompanhe também o veto à compra.",
+  "escopos": [
+    "risco"
+  ],
+  "tags": [
+    "squeeze",
+    "short",
+    "stop",
+    "corte",
+    "ações no fechamento",
+    "execução parcial",
+    "veto"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/METODOLOGIA.md",
+      "trecho": "- **Stop de squeeze por nome**: short com perda de 25% desde a entrada ou de 1% do NAV num\n  fechamento (registro diário) abre um episódio de stop, identificado pelo short e pelo preço\n  médio de entrada. No rebalanceamento seguinte, o código limita o short à metade das ações que\n  ele tinha no fechamento do stop, uma vez por episódio: o mesmo short ainda em stop depois do\n  corte (o preço médio não muda ao reduzir) não é cortado de novo, e um stop atingido no meio da\n  semana vale mesmo que o preço recue até a véspera da montagem. Sem fechamento negociável no dia\n  ou com execução parcial, o corte fica pendente para o rebalanceamento seguinte, sempre contra\n  as ações do stop. Desde o stop, o emissor não pode ficar comprado até revisão humana registrada",
+      "sha256": "3dea2df4670b89ecf529eb1f02523d3f8f37e1d8740cdca2198060b227a6b658"
+    },
+    {
+      "caminho": "docs/cdp/METODOLOGIA.md",
+      "trecho": "  na trilha de auditoria (`cdp kill-switch revisar-squeeze`, só humano, em terminal interativo —\n  `docs/cdp/EXECUCAO.md` §12), mesmo depois de o short ser zerado; um stop posterior à revisão\n  reabre o veto. O monitor intradiário antecipa o aviso; o corte e o veto valem a partir de um\n  fechamento em stop. Dois shorts distintos em stop dentro de 5 pregões acionam o kill switch do\n  livro.",
+      "sha256": "f49304ece82863ced5d7086fbb493cbf272bd9865eeefdba50f5f0ea863b56af"
+    }
+  ]
+}

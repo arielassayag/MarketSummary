@@ -1,0 +1,30 @@
+{
+  "id": "aud-replay-selo-final",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "Conclusão do replay tem inventário e selo próprios",
+  "resumo": "A presença de result.json é uma evidência parcial. Confira inventário, etapas e o evento REPLAY_COMPLETE. Se o ensaio parou ao concluir, a recuperação depende também do recálculo operacional exato. Saída adulterada, redirecionada ou sem seus selos é recusada.",
+  "escopos": [
+    "desenvolvimento"
+  ],
+  "tags": [
+    "replay",
+    "conclusão",
+    "inventário",
+    "selo",
+    "recálculo",
+    "resultado"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/REPLAY_OPERACIONAL.md",
+      "trecho": "A conclusão guarda inventário integral, `result.json` e uma única âncora `REPLAY_COMPLETE`.\nUma interrupção nessa conclusão só é recuperada após comparar inventário, etapas e recálculo\noperacional exato. Remoção, adulteração, caminho redirecionado e resultado sem seus selos são\nrecusados. Uma falha durante a preparação inicial, antes do manifesto, exige uma nova pasta;\na pasta parcial é preservada como evidência.",
+      "sha256": "9f5057f597021253c85ae9acc444b8bb9174646fc5694a5cef3527d3bce1165e"
+    }
+  ]
+}

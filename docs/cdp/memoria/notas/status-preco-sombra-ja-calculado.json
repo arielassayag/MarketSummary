@@ -1,0 +1,38 @@
+{
+  "id": "status-preco-sombra-ja-calculado",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Custo da restrição exibido no portal vem do Python",
+  "resumo": "O portal apresenta o preço-sombra da restrição em pontos-base anuais do PL para um ponto percentual de folga no limite. O modelo é montado em Python no JSON da publicação. A página apresenta o cálculo feito pelo código.",
+  "escopos": [
+    "status",
+    "operador",
+    "semanal"
+  ],
+  "tags": [
+    "preço-sombra",
+    "custo da restrição",
+    "otimizador",
+    "comitê",
+    "limite",
+    "navegador",
+    "Python"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/SITE.md",
+      "trecho": "- **Modelo aberto da carteira**, montado em Python (`modelo` em `data.json`; a página só exibe):\n  - *Mandato e metodologia*: cronograma (dia de montagem, prazo da decisão, leilão de fechamento,",
+      "sha256": "a2a58fafc17987a09b1586e437baab06306d75324532c3277bdad9937658aee1"
+    },
+    {
+      "caminho": "docs/cdp/SITE.md",
+      "trecho": "  - *Comitê*: a formulação resolvida do otimizador — objetivo com cada termo, parâmetros da\n    resolução (com a conta da meta de volatilidade da semana: mandato → postura → viés a priori)\n    e cada restrição com limite, valor atingido, folga, se vincula e o **custo da restrição**\n    (preço-sombra em pontos-base por ano do PL por 1% de folga no limite); os grupos abrem com as\n    restrições que vinculam e um botão para o grupo inteiro (no celular, todos fechados);",
+      "sha256": "0f873fafeb224fd46f3b367ee737e213ec3fe33044b7dd1895f70ef026c229fc"
+    }
+  ]
+}

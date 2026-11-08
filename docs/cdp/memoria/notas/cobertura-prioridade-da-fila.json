@@ -1,0 +1,38 @@
+{
+  "id": "cobertura-prioridade-da-fila",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Fila de notas tem grupos de prioridade e deduplicação de emissores",
+  "resumo": "Trate primeiro modelos já atualizados por resultado, sem repetir o emissor na fila. A agenda de notas prioriza rascunhos entregues, pós-resultado, notas vencidas e releitura de notas automáticas. A fila informa o dia de referência e o motivo.",
+  "escopos": [
+    "cobertura",
+    "status"
+  ],
+  "tags": [
+    "fila",
+    "ordem",
+    "prioridade",
+    "rascunho",
+    "pós-resultado",
+    "vencidas",
+    "SLA",
+    "emissor"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/COBERTURA.md",
+      "trecho": "**Primeiro, os modelos reavaliados por resultado.** `cobertura.notas_pos_resultado` em\n`cdp agenda` lista, em ordem, os emissores cujo resultado divulgado nos últimos 4 dias já entrou\nno modelo da cobertura (retrato parcial da rotina diária ou atualização do dia de montagem) e que\nainda não têm nota posterior ao resultado (`resultado`, `modelo` e `ultima_nota` de cada item).\nTrate-os antes da fila, com a data de hoje (`agora_brasilia`) como data da nota e tipo\n`pos_resultado` (ou `iniciacao`, se o emissor não tiver nota anterior), no mesmo limite de\n`limite_por_execucao` emissores por execução; um emissor que também esteja na `fila` é tratado\numa vez só. Os retratos parciais são da rotina diária: esta rotina nunca roda `cdp cobertura run`.",
+      "sha256": "3cfd0bcb70b2947dd793c6450a268db4f2bebd1ee09cf705d5eed23ff48459c1"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/COBERTURA.md",
+      "trecho": "`nota agenda` devolve a `fila` (no máximo `limite_por_execucao` emissores), em grupos nesta ordem:\nrascunhos entregues pendentes (`docs/cdp/notas/`), pós-resultado (até 4 dias), notas vencidas\n(iniciação e SLA de 7/14/90 dias) e, por último, a nova leitura de emissores cuja última nota é a\nautomática do código; em cada grupo, posições, candidatos do modelo de cobertura (Compra/Venda) e\ndemais, do maior volume financeiro para o menor. Cada item traz `data_nota` (a data da nota,\nusada em todos os comandos do emissor), `motivo` e `tipo_sugerido` (`iniciacao`, `atualizacao`\nou `pos_resultado`); a saída traz ainda `modelo_de_cobertura` (data do retrato usado, ou `null`\ncom `aviso_cobertura`), `rascunhos_obsoletos` (só relate) e `integridade_notas`. Fila vazia ⇒\npasso 3.",
+      "sha256": "fb379259fc9955497e57a693e366c93a9e048c37f0eb112fe46436bdf9305889"
+    }
+  ]
+}

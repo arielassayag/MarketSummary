@@ -1,0 +1,48 @@
+{
+  "id": "ref-estado-sla-codigo-saida",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "A saída de estado e a condição de erro do SLA são separadas",
+  "resumo": "Estado imprime o retrato em JSON ou Markdown. Combine --rede para consultar remoto, trava e portal com --sla para obter saída 1 e mensagem em stderr em incidente alto. Se a versão do portal divergir de origin/main, PORTAL_DEFASADO é incidente médio. O modo rápido pula a verificação de integridade.",
+  "escopos": [
+    "operador",
+    "status"
+  ],
+  "tags": [
+    "estado",
+    "sla",
+    "código de saída",
+    "severidade alta",
+    "rápido",
+    "stderr",
+    "manifesto",
+    "atraso do portal"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "src/cdp/estado.py",
+      "trecho": "def cmd_estado(args: argparse.Namespace) -> int:\n    from .workflow.runtime import Runtime\n\n    rt = Runtime.from_args(args)\n    e = estado(rt, Path(args.raiz), agora=args.agora, rapido=args.rapido, rede=args.rede)\n    if args.formato == \"md\":\n        print(para_markdown(e), end=\"\")\n    else:\n        print(json.dumps(e, ensure_ascii=False, indent=2, default=str))\n    if args.sla and any(i[\"severidade\"] == \"alta\" for i in e[\"incidentes\"]):\n        print(\"SLA: incidente de severidade alta\", file=sys.stderr)\n        return 1\n    return 0",
+      "sha256": "a8231128fdb297a0af96b24cdac40df6d90fd925c8bf265a0b7e3b031628169b"
+    },
+    {
+      "caminho": "src/cdp/estado.py",
+      "trecho": "    s.add_argument(\"--raiz\", default=\".\")\n    s.add_argument(\"--formato\", choices=[\"json\", \"md\"], default=\"json\")\n    s.add_argument(\"--rapido\", action=\"store_true\", help=\"sem a verificação de integridade\")\n    s.add_argument(\"--rede\", action=\"store_true\",\n                   help=\"consulta o remoto, a trava e o manifesto do portal\")\n    s.add_argument(\"--sla\", action=\"store_true\", help=\"sai com 1 se houver incidente alto\")\n    s.add_argument(\"--agora\", type=_aware, default=None,\n                   help=\"instante ISO (sem fuso = Brasília); padrão: agora\")",
+      "sha256": "d1e51b77fcf1ffbcfeb0ad34afefa5cc0a0775439dc45bef86e199f1efe7b7a0"
+    },
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "- `uv run python -m cdp estado --formato md` (com `--rede`, consulta remoto, trava e portal;\n  `--sla` sai com 1 quando há incidente de severidade alta).",
+      "sha256": "ae84e9778f73a41a5aa6bb3080bcc9dc21f6946150f4869c01fba861db3a3c83"
+    },
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "| `EXECUTOR_PAUSADO` | média | executor `nenhum` há mais de 24 h |\n| `CLONE_DIVERGENTE` | média | gravações do livro neste clone fora de `origin/main` |\n| `PORTAL_DEFASADO` | média | portal publicado ≠ `origin/main` (com `--rede`) |",
+      "sha256": "9457f9eedb939b0273d7c5a53b41970cc38680bbf1b8e0f2917854ded353ce73"
+    }
+  ]
+}

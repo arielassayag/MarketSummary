@@ -1,0 +1,30 @@
+{
+  "id": "semanal-retrato-antes-da-decisao",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Retrato de cobertura depende da janela da decisão",
+  "resumo": "A agenda decide se cabe atualizar os modelos antes da carteira. O retrato usa o pregão anterior e a base completa disponível. Um retrato já completo ou um prazo curto não dispara nova atualização.",
+  "escopos": [
+    "semanal"
+  ],
+  "tags": [
+    "modelos",
+    "retrato",
+    "cobertura",
+    "prazo efetivo",
+    "pregão anterior",
+    "montagem"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/SEMANAL.md",
+      "trecho": "### 2.1 Modelos da cobertura atualizados antes da decisão — etapa `cobertura`\n\nSó com `cobertura.atualizar_antes_da_decisao: true` em `cdp agenda` (o código já conferiu que\nhoje é dia de montagem, que a decisão não foi gravada, que faltam ao menos 120 minutos para o\nprazo efetivo, que a base de mercado chega à data-base e que ainda não há retrato completo dela).\nUse a data de `cobertura.data_base_decisao` (o pregão anterior; `cobertura.passo_antes_da_decisao`\ntraz o comando pronto):",
+      "sha256": "a69d3c1d0eb0e843febf9857e388712f58954b98ff29d37a7a867dcaa8da035b"
+    }
+  ]
+}

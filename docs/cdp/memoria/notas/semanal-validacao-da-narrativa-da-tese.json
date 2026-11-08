@@ -1,0 +1,38 @@
+{
+  "id": "semanal-validacao-da-narrativa-da-tese",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Datas, fatos e posições no texto da tese",
+  "resumo": "O validador aceita datas completas em formatos previstos e referências do FactBook. Dia e mês sem ano contam como número livre. Uma posição sem explicação da mente recebe o texto automático do código com a autoria indicada.",
+  "escopos": [
+    "semanal",
+    "diario"
+  ],
+  "tags": [
+    "tese",
+    "data abreviada",
+    "validador",
+    "formato de data",
+    "número livre",
+    "posição",
+    "narrativa",
+    "texto automático"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/TESE.md",
+      "trecho": "- o schema e os limites acima, e `week` igual à semana;\n- cada `issuer_id` e cada emissor de tema é uma posição da semana, sem repetição em `posicoes`;\n- em todo texto:\n  - nenhum número fora de `{{fact:id}}`. São permitidos só: datas ISO (2026-10-25), no formato\n    dd/mm/aaaa (25/10/2026) ou por extenso (\"25 de outubro\"); trimestres (3T26); ordinais (1º,\n    2ª); tickers com dígitos. Data abreviada sem o ano (\"25/10\") **não** passa: o validador conta\n    o dia como número livre (`número fora de placeholder`);\n  - só fatos que existem em `factbook.json`;\n  - sem links, URLs ou HTML;\n  - sem tentativa de injeção de instruções.",
+      "sha256": "52b3b165c7f861f8025e67dc7a33b4f869262b1dc92eb8a457505c41d22f3716"
+    },
+    {
+      "caminho": "docs/cdp/TESE.md",
+      "trecho": "A cobertura das posições é informada, não exigida: a posição sem texto da mente recebe o texto do\ncódigo, marcado como automático. O template do código é a rede de segurança, a mesma filosofia do\ncomentário diário: com `tese.json` ausente ou inválido no publish, a semana recebe a tese\nautomática e a rotina relata os problemas no resumo.",
+      "sha256": "eb0ef97ff9695c7a9178b092e50525b7afce7fda8dec9a443e04ebe4a4a091b0"
+    }
+  ]
+}

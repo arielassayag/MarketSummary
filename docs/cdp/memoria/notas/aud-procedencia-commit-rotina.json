@@ -1,0 +1,36 @@
+{
+  "id": "aud-procedencia-commit-rotina",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Trailers ligam o commit à execução da rotina",
+  "resumo": "Identifique tarefa, executor, harness e execução pelos trailers do commit. CDP-Sessao só aparece quando o ambiente expõe URL ou identificador da conversa. Use o estado para ler o histórico. Na falta desse trailer, preserve a procedência do commit e marque o vínculo à conversa como ausente.",
+  "escopos": [
+    "operador",
+    "status"
+  ],
+  "tags": [
+    "trailers",
+    "commit",
+    "sessão",
+    "procedência",
+    "harness",
+    "executor"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "- **O que mudou**: cada commit de rotina leva os trailers `CDP-Tarefa`, `CDP-Executor`,\n  `CDP-Harness` e `CDP-Execucao`, e `CDP-Sessao` quando o app expõe a sessão (URL da rotina na\n  nuvem ou do GitHub Actions; nos apps locais, o identificador da conversa quando o app o exporta\n  — `CODEX_THREAD_ID`, por exemplo — ou `CDP_SESSAO` definido pelo script de rotina; sem isso, o\n  trailer é omitido); `uv run python -m cdp estado` lê esse histórico.",
+      "sha256": "f31c8414ab5992b2a40f6f893b920ff381a0156a56579a41645f220d0e67a2cd"
+    },
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "- `uv run python -m cdp estado --formato md` (com `--rede`, consulta remoto, trava e portal;\n  `--sla` sai com 1 quando há incidente de severidade alta).\n- A lista de execuções e as transcrições do app (claude.ai/code, aba de tarefas agendadas do\n  Codex ou do Antigravity); trailers dos commits; o manifesto do portal (`manifest.json` →\n  `source_commit`).",
+      "sha256": "21499fa7210d27a26489dc155b5438a731352919bd9cf642ed2e0e8769464b5e"
+    }
+  ]
+}

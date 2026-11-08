@@ -3,7 +3,7 @@
   "tipo": "licao",
   "estado": "curada",
   "titulo": "A passagem corrente orienta a retomada de desenvolvimento",
-  "resumo": "Abra o início de EM_ANDAMENTO.md, localize a frente em curso e confira as entradas pertinentes de DECISOES.md. Ao encerrar, registre na passagem o que mudou, o que falta, os riscos e a evidência que a próxima sessão precisará consultar.",
+  "resumo": "Abra EM_ANDAMENTO.md e confira as decisões da frente. Ao encerrar, registre mudanças, pendências, riscos e evidência na passagem. Ao mudar de app, consulte AGENTS.md, os roteiros e configs/cdp/rotinas.yaml. A memória aponta fontes; a execução segue o mandato, os roteiros e os dados e validações do código.",
   "escopos": [
     "desenvolvimento"
   ],
@@ -13,7 +13,9 @@
     "continuidade",
     "registro de decisões",
     "pendências",
-    "encerramento de sessão"
+    "encerramento de sessão",
+    "migração de app",
+    "manual canônico"
   ],
   "registrada_em": "2026-11-07",
   "revisada_em": "2026-11-07",
@@ -25,6 +27,11 @@
       "caminho": "docs/cdp/playbooks/RETOMAR.md",
       "trecho": "1. Abra a passagem corrente no início de `docs/cdp/EM_ANDAMENTO.md` e localize a frente em que\n   vai trabalhar. As entradas anteriores ficam disponíveis para consulta.\n2. Em `docs/cdp/DECISOES.md`, consulte as decisões ligadas à frente escolhida.\n3. Antes de encerrar, atualize `docs/cdp/EM_ANDAMENTO.md` (o que mudou, o que falta, riscos).\n   Registre evidência e pendências no repositório. Uma lição durável pode virar proposta de",
       "sha256": "12b8c067caded5b2e3c492a45be04a90847c57bfc3ab1022ec905929521d5695"
+    },
+    {
+      "caminho": "docs/cdp/ARQUITETURA.md",
+      "trecho": "- **Conhecimento** agnóstico ao app: `AGENTS.md` (manual canônico), roteiros em\n  `docs/cdp/playbooks/`, agenda em `configs/cdp/rotinas.yaml`, skills abertas geradas em\n  `.agents/skills/` (espelho em `.claude/skills/`); `docs/cdp/EM_ANDAMENTO.md` e\n  `docs/cdp/DECISOES.md` para a continuidade entre sessões. A memória fornece referências\n  curtas por papel e escopo, com consulta opcional no roteiro após o gate e a sincronização\n  aplicável. Na execução prevalecem o mandato, os roteiros e os dados e validações do código.",
+      "sha256": "b5c764611bc2f5a1d04d2053b6a5a478440f69842b8109451e77e21b6099a672"
     }
   ]
 }

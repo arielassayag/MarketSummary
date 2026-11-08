@@ -1,0 +1,35 @@
+{
+  "id": "calibracao-pesquisa-e-carteira-sombra",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Atribuição do valor incremental da pesquisa à carteira-sombra",
+  "resumo": "A mente pesquisa, compara evidências e formula juízos qualitativos. Cálculos, otimização, risco, limites e registro são do código. A carteira-sombra só-quant fornece a referência diária de contribuição da mente. A influência das visões aumenta com evidência de IC realizado, respeitando os vetos.",
+  "escopos": [
+    "calibracao"
+  ],
+  "tags": [
+    "pesquisa qualitativa",
+    "carteira-sombra",
+    "só-quant",
+    "contribuição incremental",
+    "IC realizado",
+    "divisão de trabalho"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/METODOLOGIA.md",
+      "trecho": "2. **Centauro.** A mente (Claude Code, Codex, Gemini ou outro app de IA) faz o que modelos de\n   linguagem fazem bem: ler,\n   pesquisar, comparar evidências, julgar qualitativamente e explicar. O código faz o que só\n   código deve fazer: calcular, otimizar, medir risco, checar limites e registrar.",
+      "sha256": "779720a54599d598bf80edaa75dd1cf5a34eeb6906a2b830ee28e82d67e8f651"
+    },
+    {
+      "caminho": "docs/cdp/METODOLOGIA.md",
+      "trecho": "4. **Humildade estatística.** Sinais de texto/LLM têm evidência frágil e alpha que decai. As visões\n   da mente entram com IC pequeno e crescem só com IC realizado (fases S0–S3); vetos de risco\n   valem sempre. A carteira-sombra só-quant mede, todo dia, o valor adicionado pela mente.",
+      "sha256": "dfebc5962f920b88a6ec0b1f341086f872195750b0f74a53de638a3ce67c3d3d"
+    }
+  ]
+}

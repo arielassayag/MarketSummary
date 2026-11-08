@@ -1,0 +1,31 @@
+{
+  "id": "aud-avaliacao-prova-da-mente",
+  "tipo": "licao",
+  "estado": "curada",
+  "titulo": "Autoria de previsão exige prova no sinal original",
+  "resumo": "A identificação do executor ou do app no commit não basta para contar a previsão no IC de uma mente. Exija mind no payload e autor ou provedor compatível. Arquive entrada sem prova para diagnóstico fora da série confirmada. Abstenção e veto puro não equivalem a previsão neutra.",
+  "escopos": [
+    "calibracao",
+    "desenvolvimento"
+  ],
+  "tags": [
+    "IC",
+    "autoria",
+    "mente",
+    "previsão",
+    "executor",
+    "abstenção"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/METODOLOGIA.md",
+      "trecho": "O nome do executor não comprova autoria das entradas: o IC por mente exige `mind` explícito\nno payload original e autor/provedor compatível. Entradas sem essa prova ficam arquivadas\npara diagnóstico, fora da série confirmada. Visões PM autônomas e humanas conservam a\ndistinção. Neutralidade explícita vale zero; abstenção e veto puro não criam previsão neutra.\nConvicção/confiança ordinal não são probabilidade. Brier permanece ausente, N=0, até existir\nforecast explícito com evento e horizonte definidos. O canal quant não tem IC incremental\ncontra si mesmo; arredondamento de uma cópia linear não constitui sinal incremental.",
+      "sha256": "d03fb3248623701a48136f2767b214c501fce651b9b417261dd23465f48444cc"
+    }
+  ]
+}

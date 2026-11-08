@@ -28,3 +28,5 @@ def test_ensaio_sonho_separa_devolutiva_da_adocao(monkeypatch, tmp_path):
     )
     estado = [caso for caso in resultado["casos"] if caso["tipo"] == "estado_atual"]
     assert estado and all(caso["modos"]["apos_revisao"]["encaminhou_explicito"] for caso in estado)
+    depois = resultado["resumo"]["apos_revisao"]
+    assert depois["completo_5"] == depois["perguntas_com_evidencia"]

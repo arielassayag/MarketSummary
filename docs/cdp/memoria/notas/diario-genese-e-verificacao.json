@@ -1,0 +1,40 @@
+{
+  "id": "diario-genese-e-verificacao",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Abertura da trilha do mandato no pré-início",
+  "resumo": "Com reinicio.pendente, o código abre o livro na data do mandato e registra a gênese. Diante de recusa ou falha de integridade, pare, relate e libere a trava. Registre a data inaugural e o digest do manifesto na publicação normal, sem commit separado. Consulte a agenda outra vez após a abertura verificada.",
+  "escopos": [
+    "diario"
+  ],
+  "tags": [
+    "pré-início",
+    "gênese",
+    "reinicio",
+    "integridade",
+    "manifesto",
+    "carteira inaugural"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "O livro ainda tem registros anteriores à data de início do mandato (`data_de_inicio`): o código\nabre o livro na data de início e grava a gênese de uma trilha nova. Uma vez só.",
+      "sha256": "3beb8f8e0f246be560ff743de4bc00992c7e5f812d96b253fc63dee7ffea2c45"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "   Anote `executado`, `estado`, `motivo`, `carteira_inaugural`, `n_arquivos` e `lista_sha256`. Se\n   `executado` for `false` e `estado` não for `iniciado` (recusa: chave do livro na data de início\n   ou depois, área temporária de uma execução interrompida, kill switch ligado ou integridade com\n   falha), **pare** e relate o `motivo` — não rode nenhum outro passo que grave; libere a trava.\n2. `uv run python -m cdp verify` precisa dizer `ÍNTEGRO`; senão, pare, libere a trava e relate.",
+      "sha256": "2c2d2fd0259e3e56f5132a4b7b302b330e52192ba2d4a5f4643e42e5fc57d09f"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "3. Não há commit separado: a abertura do livro sai na publicação do passo 8, com a mensagem\n   `\"CDP: pré-início — carteira inaugural em DD/MM/AAAA (manifesto sha256: <lista_sha256>)\"`\n   (data de `carteira_inaugural`).\n4. Rode `uv run python -m cdp agenda` de novo e siga pelo passo 1 (agora `fase: \"pre_inicio\"`).",
+      "sha256": "150e9e08ebbe7198a4fad676fb41f06a11177c8f2cae5048bf365a8472a8b6ed"
+    }
+  ]
+}

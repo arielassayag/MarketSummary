@@ -1,0 +1,33 @@
+{
+  "id": "semanal-linha-detida-e-adr",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Congelamento de posição detida e roteamento por ADR",
+  "resumo": "Se a linha detida estiver sem pregão elegível, o emissor fica congelado. Para emissor sem posição, uma ADR ou listagem elegível nos EUA pode servir como linha comprada; sem ela, o emissor também fica congelado.",
+  "escopos": [
+    "semanal",
+    "risco"
+  ],
+  "tags": [
+    "linha detida",
+    "feriado",
+    "bolsa local",
+    "ADR",
+    "listagem EUA",
+    "roteamento",
+    "congelamento",
+    "mercado fechado"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/EXECUCAO.md",
+      "trecho": "## 6. Mercados fechados, congelamento e roteamento por ADR\n\n- Linha cujo mercado não tem pregão elegível (fechado, horário não conferido ou fechamento antes\n  do prazo mais a margem) não negocia. Emissor com **linha detida** nessa situação fica\n  **congelado**: mantém as ações e nenhuma linha dele é negociada no dia (o otimizador fixa\n  `w = w⁰`).\n- Política `adr_if_eligible_else_freeze`: um emissor sem posição, com o mercado local fechado,\n  pode ser negociado pela ADR/listagem nos EUA se houver linha elegível com dados; sem ela, fica\n  congelado. O roteamento (`rotear_linhas`) troca a linha comprada do emissor pela linha elegível\n  de maior ADTV antes da construção, de modo que capacidade, custo, ordem e execução usem a\n  ADR; a linha vendida (aluguel) não muda. A ADR negociada com a bolsa local fechada tem",
+      "sha256": "e32fe104f7d26aa78e9f8f79169d7aed4aa2e16803f8819e06363cca960ca0fc"
+    }
+  ]
+}

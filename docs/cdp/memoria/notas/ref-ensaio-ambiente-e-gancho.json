@@ -1,0 +1,31 @@
+{
+  "id": "ref-ensaio-ambiente-e-gancho",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Ensaio isola commits e bloqueia gravação remota",
+  "resumo": "CDP_ENSAIO=1 aciona a proteção de pre-push, impede gravação remota da trava e limita o publicador a commit local marcado. Um clone com commits de ensaio não pode publicar fora do ensaio. A opção ensaio da exportação, sozinha, muda o prompt.",
+  "escopos": [
+    "operador",
+    "desenvolvimento"
+  ],
+  "tags": [
+    "ensaio",
+    "CDP_ENSAIO",
+    "pre-push",
+    "clone isolado",
+    "commit local",
+    "trava remota"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/AUTOMACAO.md",
+      "trecho": "**Ensaio**: rotinas criadas com `CDP_ENSAIO=1` no ambiente (CDP-ensaio na nuvem do Claude Code;\n`set` do Codex; variável da conta no agendador do sistema) e prompts com `--ensaio` rodam o\nfluxo completo sem trava e sem publicar, em paralelo ao executor atual — e consomem a mesma\ncapacidade do plano (na sexta, uma montagem completa a mais): no dia de uma montagem real,\nconfira o uso antes das 11:07 e, se a janela estiver apertada, desligue o ensaio\n`cdp-semanal*`. Além do prompt, o código garante: com `CDP_ENSAIO=1`, o gate instala um gancho\n`pre-push` que recusa todo push enquanto essa variável estiver no ambiente, `cdp trava` não\ngrava nada no remoto e `cdp publicar` faz só o **commit local** (com o trailer\n`CDP-Ensaio: sim`, sem trava e sem push) — a rotina seguinte do ensaio encontra o livro em dia,\ncomo numa semana real. Um clone com commits de ensaio nunca publica fora do ensaio\n(`cdp publicar` recusa o push): o ensaio usa sempre um clone próprio. A opção `--ensaio` sozinha\nsó muda o prompt. Compare: terminou no prazo, validadores ok, transcrição limpa.",
+      "sha256": "308ecca5c60165317bec132b3708b5e17715741af7024c7def7b922b134b72e3"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": "cobertura-orcamento-de-tempo",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Janela noturna limita o início de novos emissores",
+  "resumo": "Confira o relógio agora_brasilia da agenda a cada emissor. Depois do corte noturno, não comece outro nome. O limite de tempo e a quantidade de emissores são critérios independentes.",
+  "escopos": [
+    "cobertura"
+  ],
+  "tags": [
+    "horário",
+    "00:30",
+    "Brasília",
+    "corte",
+    "orçamento de tempo",
+    "emissores",
+    "fila",
+    "madrugada"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/COBERTURA.md",
+      "trecho": "`nota agenda` devolve a `fila` (no máximo `limite_por_execucao` emissores), em grupos nesta ordem:\nrascunhos entregues pendentes (`docs/cdp/notas/`), pós-resultado (até 4 dias), notas vencidas\n(iniciação e SLA de 7/14/90 dias) e, por último, a nova leitura de emissores cuja última nota é a\nautomática do código; em cada grupo, posições, candidatos do modelo de cobertura (Compra/Venda) e\ndemais, do maior volume financeiro para o menor. Cada item traz `data_nota` (a data da nota,\nusada em todos os comandos do emissor), `motivo` e `tipo_sugerido` (`iniciacao`, `atualizacao`\nou `pos_resultado`); a saída traz ainda `modelo_de_cobertura` (data do retrato usado, ou `null`\ncom `aviso_cobertura`), `rascunhos_obsoletos` (só relate) e `integridade_notas`. Fila vazia ⇒\npasso 3.\n\n**Orçamento de tempo:** a cada emissor, confira `agora_brasilia` em `cdp agenda`; depois de 00:30\nde Brasília não comece emissor novo.",
+      "sha256": "ced155132f6582f88fdae8b01fe7de3a3b8bdd5b3e1e77ab29acfa5d2573fefc"
+    }
+  ]
+}

@@ -65,9 +65,11 @@ uv run python -m cdp sincronizar --executar
 
 ## 1. É dia de montagem? De que etapa retomar?
 
-Com a execução admitida, consulte, se útil, `uv run python -m cdp memoria contexto --escopo semanal`.
-Use o contexto como referência e confirme a informação na fonte indicada. Se a consulta
-estiver indisponível, prossiga pelo roteiro e pelos documentos canônicos.
+Com a execução admitida, formule a pergunta de tese, risco ou execução que pode se beneficiar
+de um caso anterior. Consulte, se útil, `uv run python -m cdp memoria contexto --escopo semanal`.
+O agente escolhe a lição aplicável, abre a fonte indicada e verifica a exceção ou a contraprova
+para o caso atual. O contexto orienta a análise. O mandato, o FactBook e os gates sustentam
+a decisão. Se a consulta estiver indisponível, prossiga pelos documentos canônicos.
 
 ```sh
 uv run python -m cdp agenda

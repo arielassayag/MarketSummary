@@ -1,0 +1,39 @@
+{
+  "id": "diario-verify-e-painel-local",
+  "tipo": "procedimento",
+  "estado": "curada",
+  "titulo": "Integridade final e painel local têm funções distintas",
+  "resumo": "Confira o livro depois da última gravação, inclusive em retomada, tese recusada ou pré-início. O painel local pode falhar separadamente e a rotina registra e segue. O portal público é construído pelo GitHub Actions a partir da versão publicada.",
+  "escopos": [
+    "diario",
+    "status",
+    "operador",
+    "semanal"
+  ],
+  "tags": [
+    "verify",
+    "integridade",
+    "painel local",
+    "portal público",
+    "falha do painel",
+    "última gravação",
+    "GitHub Actions"
+  ],
+  "registrada_em": "2026-11-07",
+  "revisada_em": "2026-11-07",
+  "rever_em": "2027-05-07",
+  "destaque": false,
+  "substitui": [],
+  "evidencias": [
+    {
+      "caminho": "docs/cdp/playbooks/DIARIO.md",
+      "trecho": "```sh\nuv run python -m cdp verify\nuv run python -m cdp painel --sem-local\n```\n\nRode os dois sempre, qualquer que tenha sido o resultado dos passos anteriores (inclusive com a\ntese recusada ou com falha): esse `verify` confere a trilha depois da última gravação desta\nexecução, e `cdp publicar` o repete antes do push. `painel --sem-local` regenera\n`artifacts/painel/` a partir do livro (só código; a pasta fica fora do git — é a cópia local do\npainel, nunca publicada). Anote o resultado do `verify` e siga mesmo se o painel falhar. O portal\npúblico é montado pelo GitHub Actions a partir do que for publicado.",
+      "sha256": "8c94ed08f12b6410a18fce8ec4ee2f2b2008ab5540f583147f0967cdb9ffaa25"
+    },
+    {
+      "caminho": "docs/cdp/playbooks/SEMANAL.md",
+      "trecho": "```sh\nuv run python -m cdp verify\nuv run python -m cdp painel --sem-local\n```\n\nRode os dois em **todo** caminho que chega aqui (montagem completa, retomada só da tese, tese já\npublicada ou com falha, pré-início): esse `verify` confere a trilha depois da última gravação, e\n`cdp publicar` o repete antes do push. Siga mesmo se o painel falhar.",
+      "sha256": "5f278ef36ff2b3f17e3d1c8b2405ede7989e400011a801d894ae1a69eca81acf"
+    }
+  ]
+}

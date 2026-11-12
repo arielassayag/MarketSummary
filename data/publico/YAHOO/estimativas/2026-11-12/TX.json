@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 51.54,
+  "high": 78.0,
+  "low": 52.0,
+  "mean": 63.80769,
+  "median": 66.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 2.035,
+   "currency": "USD",
+   "growth": 2.0829,
+   "high": 2.72,
+   "low": 1.35,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.6601
+  },
+  "+1y": {
+   "avg": 7.99197,
+   "currency": "USD",
+   "growth": 0.18280001,
+   "high": 10.09,
+   "low": 5.33,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 6.75668
+  },
+  "0q": {
+   "avg": 2.125,
+   "currency": "USD",
+   "growth": 1.5343,
+   "high": 2.15,
+   "low": 2.1,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.8385
+  },
+  "0y": {
+   "avg": 6.75668,
+   "currency": "USD",
+   "growth": 0.9214,
+   "high": 8.18,
+   "low": 6.3,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 3.5165
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 4560137180,
+   "currency": "USD",
+   "growth": 0.1592,
+   "high": 4849199000,
+   "low": 4362000000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 3934000000
+  },
+  "+1y": {
+   "avg": 18589407420,
+   "currency": "USD",
+   "growth": 0.0633,
+   "high": 19595635000,
+   "low": 17664382710,
+   "numberOfAnalysts": 13,
+   "yearAgoRevenue": 17482488140
+  },
+  "0q": {
+   "avg": 4544891610,
+   "currency": "USD",
+   "growth": 0.204,
+   "high": 4589000000,
+   "low": 4468159140,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 3774785000
+  },
+  "0y": {
+   "avg": 17482488140,
+   "currency": "USD",
+   "growth": 0.12,
+   "high": 17687000000,
+   "low": 17260000000,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 15609094000
+  }
+ },
+ "ticker": "TX",
+ "url": "https://finance.yahoo.com/quote/TX"
+}

@@ -1,0 +1,378 @@
+# Parâmetros de valuation da cobertura de ações e ETFs (CDP — Cabra da Peste).
+#
+# Separado de fund.yaml: mudar este arquivo não move aprovações de carteira. O sha256 do arquivo
+# (e de cada arquivo em configs/cdp/cobertura/) entra no manifesto de cada snapshot de cobertura.
+# Todos os valores abaixo são insumos públicos datados (com a fonte citada) ou regras de política
+# do modelo; nenhum é calculado aqui. Revisão semestral por commit (Damodaran publica em janeiro e
+# julho); a taxa livre de risco em dólar é lida diariamente da série pública (FRED DGS10).
+versao: "2026-10.8"
+horizonte_meses: 12
+
+fontes:
+  damodaran_ctryprem:
+    url: "https://pages.stern.nyu.edu/~adamodar/pc/datasets/ctrypremJuly26.xlsx"
+    documento: "Damodaran, Country Default Spreads and Risk Premiums (julho de 2026; spreads corrigidos em 2026-07-09)"
+    data_publicacao: "2026-07-01"
+  damodaran_erp_mensal:
+    url: "https://pages.stern.nyu.edu/~adamodar/pc/implprem/ERPbymonth.xlsx"
+    documento: "Damodaran, Implied ERP by month (linha de 2026-10-01)"
+    data_publicacao: "2026-10-01"
+  damodaran_inflacao:
+    url: "https://pages.stern.nyu.edu/~adamodar/pc/blog/DiffInflationRiskfree26.xlsx"
+    documento: "Damodaran, Inflation differential risk-free rates 2026 (inflação esperada 2026-31)"
+    data_publicacao: "2026-01-07"
+  damodaran_betas:
+    url: "https://pages.stern.nyu.edu/~adamodar/pc/datasets/betaGlobal.xls"
+    documento: "Damodaran, Betas by sector (Global), janeiro de 2026 — beta desalavancado corrigido por caixa"
+    data_publicacao: "2026-01-07"
+  damodaran_impostos:
+    url: "https://pages.stern.nyu.edu/~adamodar/pc/datasets/countrytaxrates.xls"
+    documento: "Damodaran, Corporate marginal tax rates by country (2025/26)"
+    data_publicacao: "2026-01-07"
+  fred_dgs10:
+    url: "https://fred.stlouisfed.org/series/DGS10"
+    documento: "FRED, Market Yield on U.S. Treasury Securities at 10-Year Constant Maturity (DGS10)"
+    data_publicacao: null
+  damodaran_ratings:
+    url: "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/ratings.html"
+    documento: "Damodaran, Ratings, Interest Coverage Ratios and Default Spread (empresas não financeiras de grande porte), janeiro de 2026"
+    data_publicacao: "2026-01-07"
+  cvm_fre:
+    url: "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/FRE/DADOS/"
+    documento: "CVM, Formulário de Referência (dados abertos): capital social e participações em sociedades"
+    data_publicacao: null
+  painel_publico_roe:
+    url: null
+    documento: "Painel de ROE dos emissores cobertos (histórico anual público arquivado em cada snapshot: CVM DFP, SEC companyfacts, Yahoo Finance), com a persistência do desvio ao setor estimada em código a cada execução (cdp.cobertura.contexto.persistencia_painel; contexto.json, persistencia_roe_painel)"
+    data_publicacao: null
+
+custo_capital:
+  # ke_USD = (rf_UST10 − spread de default dos EUA) + β_aj × ERP + λ × CRP
+  # ERP oficial = par contemporâneo de Damodaran (prêmio implícito e UST da MESMA data). O ERP
+  # estático de julho (4,20%, implícito quando o UST era menor) somado ao UST de outubro (5,28%)
+  # dobraria o efeito da alta de juros: ele fica como sensibilidade exibida ("ke estático").
+  modo_erp: contemporaneo         # contemporaneo (oficial) | estatico (sensibilidade)
+  erp_contemporaneo: 0.0370       # ERPbymonth 2026-10-01: 3,92% (T12m, rf ajustado) − 0,22% (spread EUA); fonte damodaran_erp_mensal
+  erp_contemporaneo_data: "2026-10-01"
+  erp_maduro: 0.0420              # sensibilidade "ke estático": prêmio maduro de ctrypremJuly26 (fonte damodaran_ctryprem, 2026-07-01)
+  rf_par_erp: 0.0529              # UST 10a usado por Damodaran no mesmo par (ERPbymonth, 2026-10-01)
+  rf_par_tolerancia: 0.0025       # política: |UST do dia − UST do par| > 25 bp ⇒ aviso no passo do ERP (par a revisar)
+  rf_usd_serie: USD_10Y           # série pública (FRED DGS10) lida das taxas públicas
+  rf_usd_reserva: 0.0529          # UST 10a em 2026-10-01 (ERPbymonth), usado só se a série faltar
+  rf_usd_reserva_data: "2026-10-01"
+  # Prêmio total implícito pelo mercado por país (Damodaran, "implied ERP" agregado), calculado em
+  # código a cada execução sobre os emissores cobertos (LPA de consenso dos anos 1–2, payout em caixa
+  # convergindo ao sustentável, g = rf local). Exibido como sensibilidade; entra no ke oficial com
+  # peso κ. κ = 0 na inauguração (o consenso de mercados emergentes é otimista, o que torna o prêmio
+  # implícito um limite superior); a política prevê κ = 0,5 depois de 13 observações semanais com o
+  # mesmo sinal (decisão registrada em commit). Fonte do método: Damodaran, "Equity Risk Premiums
+  # (ERP): Determinants, Estimation and Implications" (edição 2026), seção de prêmio implícito.
+  premio_implicito_pais:
+    kappa: 0.0                    # peso no ke oficial (política)
+    limite: 0.01                  # |δ| ≤ 1 p.p. (política)
+    n_min: 8                      # mínimo de emissores do país no agregado (política)
+    anos: 5                       # anos explícitos do modelo de dois estágios (Damodaran)
+  # Calibração de nível por país (prêmio implícito pelo próprio modelo): o deslocamento δ_país no ke
+  # em dólar que faz o emissor mediano do país valer o preço (mediana de V0 ÷ P0 = 1) com as
+  # premissas da casa — o mesmo conceito do prêmio implícito de Damodaran (taxa que iguala o valor
+  # presente dos fluxos esperados ao preço), aplicado aos fluxos do modelo e à mediana dos emissores
+  # cobertos. A carteira é neutra a país e o rating é relativo a país × setor: o nível do país não é
+  # uma aposta da casa. Limitado a ±1,5 p.p. (política); o ke sem a calibração e o ke com
+  # o ERP estático ficam como sensibilidades exibidas.
+  # É um ajuste do NÍVEL DOS FLUXOS DO MODELO (viés da casa), não um prêmio de risco: a mediana de
+  # V0 ÷ P0 sem o ajuste é o indicador de viés monitorado (rating.monitoramento.vies_v_p_faixa). A
+  # norma de longo prazo do ROE não depende de δ (spread estimado contra o ke sem o ajuste).
+  calibracao_pais:
+    ativo: true
+    limite: 0.015                 # |δ| ≤ 1,5 p.p.
+    n_min: 8                      # mínimo de emissores elegíveis no país; os demais países formam um grupo regional único
+    grade: [-0.03, 0.03, 0.0025]  # grade de δ (dólar) para a mediana de V0 ÷ P0
+    tolerancia: 0.001             # ponto fixo: |mediana(V0 ÷ P0) − 1| ≤ 0,1% com o δ aplicado
+    passadas: 8                   # máximo de passadas (cada uma recalcula a mediana com o δ já no ke)
+  spread_default_eua: 0.0022      # Aa1 (ctrypremJuly26)
+  # CRP por país pelo rating (Moody's moeda local) × volatilidade relativa 1,5545 (ctrypremJuly26).
+  # LATAM: CRP regional ponderado pelo PIB (América Central e do Sul), mesma planilha.
+  crp: {BR: 0.0310, MX: 0.0272, CL: 0.0105, CO: 0.0272, PE: 0.0198, AR: 0.0928, PA: 0.0272, UY: 0.0198, LATAM: 0.0384, US: 0.0}
+  # Spread de default soberano pelo rating (ctrypremJuly26): custo da dívida e diagnóstico.
+  spread_default_pais: {BR: 0.0199, MX: 0.0175, CL: 0.0067, CO: 0.0175, PE: 0.0127, AR: 0.0597, PA: 0.0175, UY: 0.0127, LATAM: 0.0247, US: 0.0022}
+  # Inflação esperada 2026-31 por moeda (DiffInflationRiskfree26); USD = EUA.
+  inflacao_lp: {USD: 0.0235, BRL: 0.0323, MXN: 0.0322, CLP: 0.0303, COP: 0.0392, PEN: 0.0205, ARS: 0.1303, UYU: 0.0442}
+  # Alíquota marginal de IR por país (Damodaran 2025/26).
+  imposto_marginal: {BR: 0.34, MX: 0.30, CL: 0.27, CO: 0.35, PE: 0.295, AR: 0.35, PA: 0.25, UY: 0.25, LATAM: 0.25, US: 0.21}
+  spread_credito_corporativo: 0.015   # reserva (cobertura de juros indisponível): kd = rf + spread país + 1,5%
+  # Spread corporativo pelo rating sintético (Damodaran): cobertura de juros = EBIT de 12 meses ÷
+  # despesa de juros estimada = dívida bruta com arrendamentos × (rf + spread soberano + spread de
+  # reserva), em base dólar — nunca o resultado financeiro líquido (variação cambial, derivativos,
+  # correção monetária e receita de aplicações) nem juros nominais de moeda de inflação alta. Caixa
+  # líquido, EBIT não positivo ou sem dívida ⇒ spread de reserva. kd ≤ ke. Tabela das empresas não
+  # financeiras de grande porte, janeiro de 2026 (fonte damodaran_ratings): [cobertura mínima,
+  # rating, spread].
+  spread_sintetico:
+    - [8.5, "AAA", 0.0040]
+    - [6.5, "AA", 0.0055]
+    - [5.5, "A+", 0.0070]
+    - [4.25, "A", 0.0078]
+    - [3.0, "A−", 0.0089]
+    - [2.5, "BBB", 0.0111]
+    - [2.25, "BB+", 0.0138]
+    - [2.0, "BB", 0.0184]
+    - [1.75, "B+", 0.0275]
+    - [1.5, "B", 0.0321]
+    - [1.25, "B−", 0.0509]
+    - [0.8, "CCC", 0.0885]
+    - [0.65, "CC", 0.1261]
+    - [0.2, "C", 0.1600]
+    - [-1.0e9, "D", 0.1900]
+  beta:
+    fonte: damodaran_global_2026_01
+    blume: [0.67, 0.33]           # β_aj = 0,67 × β + 0,33
+    limites: [0.5, 1.8]
+    financeiras: regressao_pares  # bancos/seguradoras: mediana dos betas de regressão dos pares (sem realavancar)
+    regressao_semanas: 104
+    regressao_min_semanas: 52
+    referencia: ILF               # ETF LatAm em USD (mesmo proxy de mercado do modelo de risco)
+  lambda_padrao: 1.0              # exceções (receita externa relevante) em configs/cdp/cobertura/arquetipos.csv
+
+perpetuidade:
+  g_real: 0.020                   # crescimento real de longo prazo (HOLT ~2,5%; política conservadora)
+  g_real_max: 0.025
+  spread_min_ke_g: 0.03           # ke − g ≥ 3 p.p.
+  g_menor_que_rf: true            # g ≤ rf local (Damodaran)
+
+# Persistência (fade) setorial do crescimento entre os anos 3 e 10 (φ por setor GICS).
+fade_phi: {Consumer Staples: 0.940, Consumer Discretionary: 0.905, Health Care: 0.894, Industrials: 0.887,
+           Utilities: 0.869, Communication Services: 0.861, Information Technology: 0.841,
+           Financials: 0.810, Materials: 0.800, Energy: 0.769, Real Estate: 0.869}
+
+pesos_metodos:
+  banco:              {rim: 0.5, pb_justificado: 0.3, regressao_pb_roe: 0.2}
+  seguradora:         {ddm: 0.4, rim: 0.4, regressao_pl: 0.2}
+  utilidade_regulada: {rim_real: 0.4, ddm_real: 0.2, fcff_real: 0.2, regressao_pb_roe: 0.2}
+  concessao:          {fcff_vida_finita: 0.7, rim: 0.3}
+  commodity:          {fcff_normalizado: 0.6, rim: 0.2, regressao_ev_receita: 0.2}
+  corporativo:        {fcff: 0.5, rim: 0.25, multiplo_justificado: 0.25}
+  imobiliario:        {rim: 0.6, regressao_pb_roe: 0.4}
+  holding:            {soma_partes: 1.0}   # participações não conferidas ⇒ confiança C (sem Compra/Venda)
+
+consenso:
+  # A moeda declarada no arquivo de estimativas e a paridade da linha determinam uma
+  # única conversão. LPA distante do realizado é sinal analítico, nunca prova de outra
+  # unidade. Sem moeda declarada, LPA ausente; parâmetros históricos preservam a regra anterior.
+  unidade_metodo: declaracao_fonte
+
+projecao:
+  normalizacao_resultado_metodo: eventos_evidenciados
+  resultado_corte_metodo: base_preco_conhecimento_explicitos
+  anos_explicitos: 10             # FCFF: anos 1-2 por direcionadores, 3-10 com fade geométrico
+  anos_rim: 12                    # RIM (GLS): 12 anos com fade linear do ROE
+  anos_ddm: 5                     # DDM: estágio 1
+  crescimento_limites: [-0.20, 0.30]
+  encolhimento_crescimento: 0.5   # crescimento próprio encolhido 50% para a mediana do setor
+  payout_limites: [0.0, 1.0]
+  roic_limites: [0.0, 0.60]
+  reinvestimento_limites: [-0.50, 0.95]
+  reinvestimento_metodo: capitalizacao_arrendamentos
+  reinvestimento_regime: recente
+  # RR = (capex + adições de direitos de uso − D&A da DFC + Δgiro operacional) ÷ NOPAT.
+  # Componentes alinhados e publicados; 12 meses recentes, ou último exercício completo.
+  # Principal de dívida/arrendamentos não é subtraído novamente. Ausência nunca vira zero.
+  reinvestimento_anos_observados: 3       # média histórica apenas diagnóstica no regime recente
+  concessao_fracao_final: 0.333           # concessões: último terço do prazo com crescimento real e reinvestimento
+                                          # líquido convergindo a zero (política: sem renovação nem indenização)
+  min_anos_ciclo: 3               # margem "ao longo do ciclo" (commodities) exige ≥ 3 exercícios
+  # Calendarização do consenso (12 meses à frente): o "ano 1" do consenso é o exercício corrente,
+  # já decorrido em fração f na data do snapshot. LPA_12m = (1 − f) × LPA_FY1 + f × LPA_FY2;
+  # LPA do ano 2 = (1 − f) × LPA_FY2 + f × LPA_FY3, com LPA_FY3 = LPA_FY2 × (1 + (g_FY2 + g) ÷ 2).
+  # Mesma regra para a receita de consenso. Prática padrão de calendarização (Damodaran,
+  # "Investment Valuation", cap. 7; consenso "NTM" de provedores de mercado). Política.
+  calendarizacao: true             # vale para o modelo, o contexto transversal e o prêmio implícito
+  prazo_exercicio_dias: 120        # calendário do consenso: demonstrações anuais ausentes 120 dias depois do encerramento ⇒ consenso já rolou (sinalizado)
+  g1_consenso_concessao_max_abs: 0.15   # utilidades/concessões: |crescimento de consenso da receita| acima disso sem reconciliação pela receita de construção (DVA) ⇒ não usado
+  roe_hist_anos: 5                # ROE próprio = mediana dos 5 últimos exercícios publicados (point-in-time)
+  roe_proprio_faixa: [-0.05, 0.15]   # R̄ limitado a [norma − 5 p.p.; norma + 15 p.p.] (cauda de patrimônio mínimo)
+
+# Persistência do ROE (lucro residual): norma de longo prazo como spread sobre o ke do próprio
+# emissor, na classe de referência setor × arquétipo (≥ 8 emissores lucrativos; senão setor,
+# encolhido 50% para país × setor com ≥ 5), mais um ajuste de porte (inclinação de Theil–Sen do
+# ROE de 5 anos contra o log do valor de mercado dentro do setor, estimada a cada execução).
+# Alvo do emissor = norma + θ × (R̄ − norma), R̄ = média do ROE de 5 anos e do ROE do ano 2; o
+# caminho do ROE decai exponencialmente de ROE_2 ao alvo com fator ω por classe de estabilidade.
+# Evidência (fonte painel_publico_roe): decaimento ρ_k = θ + (1 − θ)ω^k com θ ≈ 0,25
+# e ω ≈ 0,6–0,7 no conjunto; emissores do quintil superior e estáveis retêm 0,93 do desvio em 2
+# anos. Literatura: Fama & French (2000, J. Business 73(2)), reversão ≈ 38% ao ano; Dechow, Hutton
+# & Sloan (1999, JAE 26), ω ≈ 0,62; Nissim & Penman (2001, RAST 6), spreads convergem sem zerar.
+persistencia_roe:
+  n_min_arquetipo: 8              # classe setor × arquétipo exige ≥ 8 emissores lucrativos
+  n_min_pais_setor: 5
+  encolhimento_pais_setor: 0.5
+  excluir_paises: [AR]            # ROE nominal em ARS (IAS 29) fora da norma
+  # Ajuste de porte: Theil–Sen do ROE de 5 anos contra o log do PATRIMÔNIO CONTÁBIL em US$ (nunca o
+  # valor de mercado, que traria o próprio preço de volta à norma), estimado a cada execução e só
+  # aplicado quando o IC de 95% exclui zero (política).
+  tamanho_variavel: ln_pl_usd
+  tamanho_limite: 0.05            # ajuste de porte limitado a ±5 p.p.
+  tamanho_inclinacao_limites: [0.0, 0.04]
+  tamanho_n_min: 30
+  classes:                        # σ = desvio-padrão do ROE dos 5 últimos exercícios; prejuízo em qualquer ano ⇒ instável
+    estavel:  {sigma_max: 0.04, theta: 0.60, omega: 0.85}   # meia-vida do desvio 4,3 anos
+    normal:   {theta: 0.35, omega: 0.70}                     # 1,9 ano
+    instavel: {sigma_min: 0.12, theta: 0.15, omega: 0.55}   # 1,2 ano; também sem 3 exercícios de histórico
+  min_anos_historico: 3
+
+# P/L justificado com crescimento extraordinário de curto prazo (modelo H de Fuller & Hsia, 1984,
+# Financial Analysts Journal 40(5)): P/L* × [1 + H × (g_c − g) ÷ (1 + g)], g_c = LPA_2 ÷ LPA_1 − 1
+# limitado a [g; 25%], H = metade da duração equivalente do crescimento com persistência φ do setor
+# (0,5 ÷ (1 − φ)), no máximo 8 anos. Política conservadora (meia duração).
+multiplo_h:
+  h_fator: 0.5
+  h_max: 8.0
+  g_curto_max: 0.25
+
+multiplos:
+  min_observacoes: 12             # regressões transversais (Huber) exigem ≥ 12 emissores
+  huber_c: 1.345
+  pb_limites: [0.1, 15.0]
+  pl_limites: [2.0, 80.0]
+  ev_receita_limites: [0.1, 25.0]
+  r2_min: 0.25                    # regressão com R² abaixo do mínimo fica indisponível
+  faixa_percentis: [5, 95]        # múltiplo previsto limitado ao P5–P95 da amostra (política)
+
+# Participação de não controladores nos métodos pelo valor da firma: proporcional ao valor do
+# patrimônio, (EV − DL) × minoritários contábeis ÷ (PL dos controladores + minoritários contábeis)
+# (Damodaran, "Investment Valuation", cap. 16: valor de mercado estimado pelo P/VPA). Política.
+minoritarios: proporcional        # proporcional | contabil
+
+soma_partes:
+  desconto_anos: 5                # desconto da holding = mediana semanal de 5 anos (1 − valor de mercado/NAV)
+  desconto_min_semanas: 52
+  desconto_reserva: 0.20          # usado só sem histórico suficiente (sinalizado)
+  mudanca_acoes_min: 0.05         # variação > 5% nas ações da holding (fora de desdobramento) reinicia a janela (política)
+  participacao_tolerancia: 0.01   # conferência cruzada em código: fração da holding × posição acionária no documento da investida (fracao_investida em sotp.yaml) ≤ 1 p.p.
+  # Visão da casa: participação a valor intrínseco da casa (V0 ÷ P0 da investida) quando o modelo da
+  # investida é citável com confiança A/B e sem estes avisos; senão a valor de mercado (política).
+  visao_excluir_avisos: [G11, G16, G19]
+
+cenarios:
+  monte_carlo:
+    n: 2000                       # sorteios por instrumento (semente = sha256(emissor|data))
+    sigma_ke: 0.005
+    sigma_g: 0.0025
+    sigma_roe: 0.03                 # transitório: anos 1–2, convergindo ao ROE de longo prazo
+    rho_crescimento_margem: 0.3
+    sigma_commodity: 0.20
+    sigma_crescimento_min: 0.03     # σ do crescimento = IQR setorial ÷ 1,349, limitado a [3%; 5%]
+    sigma_crescimento_max: 0.05     # (choque persistente: fade setorial φ até o ano 10)
+    sigma_margem_min: 0.01          # σ da margem = desvio histórico do emissor, limitado a [1%; 5%]
+    sigma_margem_max: 0.05
+    sigma_desconto_holding: 0.05
+    commodity_limite: 0.6           # choque de preço limitado a ±60% (simétrico)
+    commodity_anos_plenos: 3        # choque de commodity transitório: pleno nos anos 1–3,
+    commodity_zero_em: 5            # revertendo linearmente até zero no ano 5 (sem efeito na perpetuidade)
+  # Probabilidade implícita pelo mercado (exibição): lognormal com drift ke e σ realizada de 12 meses.
+  vol_janela_pregoes: 252
+  swanson: [0.3, 0.4, 0.3]        # reserva sem Monte Carlo: 0,3·P10 + 0,4·P50 + 0,3·P90
+
+sensibilidade: {ke_passos: [-0.01, -0.005, 0.0, 0.005, 0.01], g_passos: [-0.005, -0.0025, 0.0, 0.0025, 0.005],
+                roe_passos: [-0.03, -0.015, 0.0, 0.015, 0.03], commodity_passos: [-0.20, -0.10, 0.0, 0.10, 0.20]}
+
+rating:
+  escala: [Compra, Neutro, Venda]
+  pares_min: 5                    # país × setor; senão setor (LatAm); senão país; senão universo
+  limiar_alpha_rel: {Baixa: 0.08, Média: 0.10, Alta: 0.15, Muito alta: 0.20}
+  guarda_compra_alpha_min: 0.0    # Compra exige α ≥ 0 (retorno esperado ≥ ke)
+  guarda_venda_alpha_max: -0.05   # Venda exige α ≤ −5 p.p.
+  guarda_compra_etr_menos_ke_min: 0.0     # Compra exige, no caso-base, ETR ≥ ke
+  guarda_compra_upside_min: 0.0           # e upside positivo
+  guarda_venda_etr_menos_ke_max: -0.05    # Venda exige, no caso-base, ETR ≤ ke − 5 p.p.
+  histerese: 0.02
+  confianca_minima: B
+  distribuicao_monitorada: {Compra: [0.15, 0.35], Venda: [0.15, 0.35]}   # aceite monitorado, nunca forçado
+  # Exposição de estilo explícita: a cada execução, b̂ = inclinação de Theil–Sen de α_rel contra
+  # Δln(P/VPA) (desvio da mediana do grupo de pares); α_rel_estilo = α_rel − b̂ × Δln(P/VPA).
+  # Compra/Venda exigem α_rel além de ±τ E α_rel_estilo além de ±τ × fracao_limiar (nenhum rating
+  # publicado é só uma aposta em P/VPA). Política.
+  estilo: {dupla_condicao: true, fracao_limiar: 0.5, n_min: 30}
+  pares_excluir_avisos: [G11, G16, G19]   # extremo corroborado, patrimônio residual frágil e demonstrações defasadas fora da mediana dos pares (política)
+  avisos_limitam_b: [G15, G18]    # data-base dos fluxos e método discrepante limitado ou mantido: até B (C se a dispersão entre todos os métodos passar de 50%)
+  # alertas, nunca forçados: a mediana de α por país é centrada por construção pelo ajuste de nível;
+  # o viés do modelo é a mediana de V0 ÷ P0 SEM o ajuste (fora da faixa ⇒ alerta) e o ajuste no limite
+  monitoramento: {alpha_pais_max_abs: 0.05, em_revisao_max: 0.12, confianca_c_max: 0.35, vies_v_p_faixa: [0.85, 1.15]}
+
+# Portões de qualidade (política do modelo; ver docs/cdp/COBERTURA.md §7).
+qualidade:
+  # A pertinência de capex/D&A depende dos métodos calculados e dos insumos transitivos.
+  # Alertas sem dependência comprovada ficam informativos; linhagem desconhecida conserva
+  # a severidade anterior. Sem a chave, parâmetros históricos preservam G17 de .4/.5.
+  alertas_fonte_metodo: dependencias_efetivas
+  # Uma margem corrente exige numerador e denominador de mesma janela, moeda e base.
+  # A ausência da chave conserva os modelos arquivados anteriores.
+  margem_fluxos_metodo: periodo_moeda_base
+  tv_aviso: 0.85
+  tv_bloqueio: 0.95
+  cv_metodos_c: 0.50
+  cv_metodos_a: 0.25
+  upside_limites: [-0.7, 2.0]     # G9: única faixa de magnitude bloqueante
+  defasagem_max_dias: 5
+  # G11 "retorno extremo": no caso-base (ETR), simétrico em log. Fora de [−50%; +100%] (|ln(1 + ETR)|
+  # > ln 2) o alvo só é citável (confiança C, fora da mediana dos pares) se corroborado — por ≥ 3
+  # métodos calculados (inclusive o discrepante limitado e os não positivos, como dissidência) todos
+  # do mesmo lado do preço com CV ≤ 50%, ou pelo consenso público plausível do mesmo lado com
+  # |upside| ≥ 25% e magnitude compatível (||ln(1 + ETR)| − |ln(1 + upside)|| ≤ 0,4); sem corroboração
+  # ⇒ bloqueio. A faixa [−60%; +150%] só gradua o texto; G9 é o limite absoluto.
+  extremo_aviso: [-0.50, 1.00]
+  extremo_bloqueio: [-0.60, 1.50]
+  corroboracao_cv_max: 0.50
+  corroboracao_metodos_min: 3
+  corroboracao_consenso_min: 0.25
+  corroboracao_consenso_dlog_max: 0.4
+  largura_cenario: [0.5, 2.0]     # G10 (informativo)
+  identidade_tolerancia: 0.02
+  ponte_residuo_max: 0.005
+  unidades_tolerancia: 0.25       # duas fontes de contagem (sem a oficial): tolerância
+  contagem_tolerancia: 0.10       # G13c: duas de três contagens (demonstrações, valor de mercado, FRE da CVM) a ±10%
+  pb_plausivel: [0.1, 15.0]
+  roe1_max_abs: 1.0
+  roe2_max_abs: 1.0               # G13b: ROE do ano 2 em módulo
+  ep_consenso_max: 0.50           # G13b: LPA de consenso ÷ preço ≤ 50% (P/L ≥ 2) nos anos 1 e 2
+  margem_ebit_max: 1.0            # G13b: margem EBIT ≤ 100% (fora holding e imobiliário)
+  peso_patrimonial_lpa: 0.5
+  excecoes_insumos: [MX_KIMBER]   # patrimônio contábil reduzido por recompras (P/VPA alto legítimo)
+  rr_observado_min: -1.0          # G14: CFO − capex > 2 × NOPAT ⇒ CFO com operações financeiras (aviso)
+  defasagem_fluxos_max_dias: 100
+  envelope_ke_tolerancia: 0.01
+  p_patrimonio_zero_max: 0.10     # G16: P(valor do patrimônio ≤ 0) nos sorteios ≥ 10% ⇒ aviso
+  metodo_discrepante_fator: 3.0   # G18: com ≥ 3 métodos, valor fora de [1/3; 3] × a mediana dos demais é LIMITADO à borda (combinação monótona; aviso)
+  metodo_discrepante_min: 3
+  metodo_discrepante_cv_demais: 0.10   # G18: só limita com os demais concordando (CV ≤ 10%) e o discrepante fora do lado do preço
+  analistas_min_a: 3              # confiança A exige consenso de LPA de ≥ 3 analistas (política)
+  analistas_min_roe: 2            # abaixo de 2 analistas o ROE dos anos 1–2 parte do lucro de 12 meses
+  idade_aviso_dias: 300           # G19: balanço ou fluxos de 12 meses com mais de ~10 meses na data ⇒ aviso (confiança C)
+  idade_bloqueio_dias: 550        # G19: mais de ~18 meses ⇒ bloqueio
+  qa_janela_dias: 400             # G17: alerta da fonte sobre período usado (até ~13 meses antes do último balanço)
+  g20_consenso_folga: 0.25        # G20: divergência do consenso ⇒ revisão; C só sem corroboração
+  g20_consenso_n_min: 3           # G20: só com consenso de ≥ 3 analistas de preço-alvo
+  g20_g11_margem: 0.95            # G20: margem estreita do G11 ⇒ revisão; C só sem corroboração
+  g20_corroboracao_metodos_min: 2 # métodos brutos distintos do mesmo lado; dissidentes entram no CV
+  g20_corroboracao_cv_max: 0.50   # dispersão recalculada, inclusive valores limitados e dissidentes
+  g20_cenarios_base_tolerancia: 1.0e-6 # cenário de choque zero deve reproduzir o caso-base
+  moeda_trocada_min_anos: 3       # G17: menos de 3 exercícios na moeda nova ⇒ insumos históricos ausentes
+  etf_retorno_limites: [-0.5, 1.0]
+  etf_pl_razao_limites: [0.6, 1.6]
+
+# Bottom-up dos ETFs só com alvos citáveis da casa, confiança A/B e sem os avisos de bu_excluir_avisos
+# (as demais posições recebem o top-down); E5: nenhuma posição contribui mais que concentracao_max ao
+# R_BU além do top-down (aviso). Política.
+etf: {kappa_consenso: 0.5, omega_bu: 0.5, cobertura_plena: 0.90, meia_vida_pl_anos: 3, kappa_crescimento: 0.7,
+      ir_limiar: 0.3, banda_z: 1.645, referencia: ILF, bu_excluir_avisos: [G11, G16, G19], concentracao_max: 0.05,
+      retencao_dividendos: {BR: 0.10, MX: 0.10, CL: 0.35, CO: 0.20, PE: 0.05, AR: 0.07}}
+
+# Tradução valuation → alpha (sombra, peso 0 até promoção por IC): α = IC·m_inc·m_conf·m_fresco·σ_esp·z
+alpha:
+  ic: 0.02
+  m_incerteza: {Baixa: 1.2, Média: 1.0, Alta: 0.7, Muito alta: 0.5}
+  m_confianca: {A: 1.0, B: 0.8, C: 0.5, Insuficiente: 0.0}
+  frescor: {pleno_dias: 30, meia_vida_dias: 60, zero_apos_dias: 105}
+  winsor_z: 3.0
+  promocao: {janela_semanas: 26, ic_min: 0.01, t_nw_min: 1.5}   # IC residual de 1 semana, sem sobreposição
+
+acompanhamento: {checkpoints_semanas: [1, 4, 8, 13, 26, 52], obsoleto_dias: 105, encerrado_dias: 210, n_min_exibir: 20, n_min_ranking: 30}

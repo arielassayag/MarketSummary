@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 9.54,
+  "high": 16.0,
+  "low": 9.0,
+  "mean": 12.44286,
+  "median": 12.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.18576,
+   "currency": "BRL",
+   "growth": -0.2201,
+   "high": 0.23,
+   "low": 0.14153,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.23818
+  },
+  "+1y": {
+   "avg": 0.97521,
+   "currency": "BRL",
+   "growth": 0.056199998,
+   "high": 0.99564,
+   "low": 0.95,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.92333
+  },
+  "0q": {
+   "avg": 0.63635,
+   "currency": "BRL",
+   "growth": 0.6184,
+   "high": 0.63635,
+   "low": 0.63635,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.3932
+  },
+  "0y": {
+   "avg": 0.92333,
+   "currency": "BRL",
+   "growth": 0.22540002,
+   "high": 1.24,
+   "low": 0.7,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.7535
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 19831700880,
+   "currency": "BRL",
+   "growth": 0.064,
+   "high": 19908017750,
+   "low": 19755384000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 18638000000
+  },
+  "+1y": {
+   "avg": 83242112190,
+   "currency": "BRL",
+   "growth": 0.0559,
+   "high": 89200000000,
+   "low": 81292000000,
+   "numberOfAnalysts": 14,
+   "yearAgoRevenue": 78838482930
+  },
+  "0q": {
+   "avg": 21448372030,
+   "currency": "BRL",
+   "growth": 0.0313,
+   "high": 21650700150,
+   "low": 21302564950,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 20797000000
+  },
+  "0y": {
+   "avg": 78838482930,
+   "currency": "BRL",
+   "growth": 0.0198,
+   "high": 79635000000,
+   "low": 78324000000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 77307000000
+  }
+ },
+ "ticker": "ASAI3.SA",
+ "url": "https://finance.yahoo.com/quote/ASAI3.SA"
+}

@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 55.2,
+  "high": 91.0,
+  "low": 32.3,
+  "mean": 73.55667,
+  "median": 76.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.76346,
+   "currency": "BRL",
+   "growth": -0.21290001,
+   "high": 0.88,
+   "low": 0.64693,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.97
+  },
+  "+1y": {
+   "avg": 4.34357,
+   "currency": "BRL",
+   "growth": 0.307,
+   "high": 5.41,
+   "low": 3.46429,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 3.32337
+  },
+  "0q": {
+   "avg": 0.6903,
+   "currency": "BRL",
+   "growth": -0.2156,
+   "high": 0.6903,
+   "low": 0.6903,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.88
+  },
+  "0y": {
+   "avg": 3.32337,
+   "currency": "BRL",
+   "growth": -0.109,
+   "high": 3.91,
+   "low": 2.85011,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 3.73
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 9024161690,
+   "currency": "BRL",
+   "growth": 0.1242,
+   "high": 9449856700,
+   "low": 8600275120,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 8027226980.0
+  },
+  "0q": {
+   "avg": 0,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "0y": {
+   "avg": 8027226980,
+   "currency": "BRL",
+   "growth": -0.0171,
+   "high": 8128000000,
+   "low": 7926453950,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 8167067000.0
+  }
+ },
+ "ticker": "CSMG3.SA",
+ "url": "https://finance.yahoo.com/quote/CSMG3.SA"
+}

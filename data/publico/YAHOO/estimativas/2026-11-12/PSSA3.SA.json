@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 45.98,
+  "high": 63.0,
+  "low": 46.0,
+  "mean": 57.27273,
+  "median": 59.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.47,
+   "currency": "BRL",
+   "growth": -0.15890001,
+   "high": 1.55,
+   "low": 1.39,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 1.7477
+  },
+  "+1y": {
+   "avg": 6.1402,
+   "currency": "BRL",
+   "growth": 0.1184,
+   "high": 6.37,
+   "low": 5.7327,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 5.49002
+  },
+  "0q": {
+   "avg": 1.27,
+   "currency": "BRL",
+   "growth": -0.0219,
+   "high": 1.27,
+   "low": 1.27,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 1.2985
+  },
+  "0y": {
+   "avg": 5.49002,
+   "currency": "BRL",
+   "growth": 0.053400002,
+   "high": 5.74,
+   "low": 5.2,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 5.2118
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 39545369230,
+   "currency": "BRL",
+   "growth": 0.089899994,
+   "high": 48159523610,
+   "low": 35160000000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 36283041010.0
+  },
+  "0q": {
+   "avg": 8346000000,
+   "currency": "BRL",
+   "growth": 0.0722,
+   "high": 8346000000,
+   "low": 8346000000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 7783700000.0
+  },
+  "0y": {
+   "avg": 36283041010,
+   "currency": "BRL",
+   "growth": 0.2076,
+   "high": 44336146590,
+   "low": 32241976440,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 30044700000.0
+  }
+ },
+ "ticker": "PSSA3.SA",
+ "url": "https://finance.yahoo.com/quote/PSSA3.SA"
+}

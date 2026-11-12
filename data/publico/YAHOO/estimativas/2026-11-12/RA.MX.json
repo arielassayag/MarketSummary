@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 163.46,
+  "high": 198.0,
+  "low": 137.0,
+  "mean": 174.76154,
+  "median": 177.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 5.1031,
+   "currency": "MXN",
+   "growth": 0.020599999,
+   "high": 5.33,
+   "low": 4.87621,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 5.0
+  },
+  "+1y": {
+   "avg": 21.55666,
+   "currency": "MXN",
+   "growth": 0.1114,
+   "high": 22.5,
+   "low": 20.74,
+   "numberOfAnalysts": 11,
+   "yearAgoEps": 19.39616
+  },
+  "0q": {
+   "avg": 5.05248,
+   "currency": "MXN",
+   "growth": -0.026500002,
+   "high": 5.14477,
+   "low": 4.86,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 5.19
+  },
+  "0y": {
+   "avg": 19.39616,
+   "currency": "MXN",
+   "growth": -0.039300002,
+   "high": 19.52887,
+   "low": 19.25,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 20.19
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 5048186000,
+   "currency": "MXN",
+   "growth": 0.1013,
+   "high": 5048186000,
+   "low": 5048186000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 4584000000
+  },
+  "+1y": {
+   "avg": 21015853310,
+   "currency": "MXN",
+   "growth": 0.0928,
+   "high": 21728000000,
+   "low": 20112000000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 19231310000
+  },
+  "0q": {
+   "avg": 4932882000,
+   "currency": "MXN",
+   "growth": -0.028399998,
+   "high": 4932882000,
+   "low": 4932882000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 5077000000
+  },
+  "0y": {
+   "avg": 19231310000,
+   "currency": "MXN",
+   "growth": 0.040900003,
+   "high": 19374000000,
+   "low": 19063751980,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 18476000000
+  }
+ },
+ "ticker": "RA.MX",
+ "url": "https://finance.yahoo.com/quote/RA.MX"
+}

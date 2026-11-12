@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 11.8,
+  "high": 20.9,
+  "low": 11.5,
+  "mean": 14.80154,
+  "median": 14.45
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": -0.29,
+   "currency": "BRL",
+   "growth": -4.8233,
+   "high": -0.29,
+   "low": -0.29,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -0.0498
+  },
+  "+1y": {
+   "avg": -0.28,
+   "currency": "BRL",
+   "growth": 0.7565,
+   "high": 0.09,
+   "low": -0.65,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": -1.15
+  },
+  "0q": {
+   "avg": -0.3,
+   "currency": "BRL",
+   "growth": -4.7594,
+   "high": -0.3,
+   "low": -0.3,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.0798
+  },
+  "0y": {
+   "avg": -1.15,
+   "currency": "BRL",
+   "growth": -0.92730004,
+   "high": -1.09,
+   "low": -1.21,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": -0.5967
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 2305979220,
+   "currency": "BRL",
+   "growth": -0.25,
+   "high": 3637126000,
+   "low": 1596651590,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 3074500000
+  },
+  "+1y": {
+   "avg": 12708185100,
+   "currency": "BRL",
+   "growth": 0.1383,
+   "high": 18884000000,
+   "low": 6883100210,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 11163703440
+  },
+  "0q": {
+   "avg": 2316096810,
+   "currency": "BRL",
+   "growth": -0.39080003,
+   "high": 3217000000,
+   "low": 1752071140,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 3801700000
+  },
+  "0y": {
+   "avg": 11163703440,
+   "currency": "BRL",
+   "growth": -0.1528,
+   "high": 12712000000,
+   "low": 9729000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 13177000000
+  }
+ },
+ "ticker": "AURE3.SA",
+ "url": "https://finance.yahoo.com/quote/AURE3.SA"
+}

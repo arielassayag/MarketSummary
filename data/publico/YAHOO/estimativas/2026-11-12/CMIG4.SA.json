@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 10.72,
+  "high": 16.0,
+  "low": 9.9,
+  "mean": 12.75,
+  "median": 12.865
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.35,
+   "currency": "BRL",
+   "growth": -0.46150002,
+   "high": 0.35,
+   "low": 0.35,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.65
+  },
+  "+1y": {
+   "avg": 1.08662,
+   "currency": "BRL",
+   "growth": 0.0016,
+   "high": 1.4103,
+   "low": 0.77,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 1.08488
+  },
+  "0q": {
+   "avg": 0.29,
+   "currency": "BRL",
+   "growth": 0.0357,
+   "high": 0.29,
+   "low": 0.29,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.28
+  },
+  "0y": {
+   "avg": 1.08488,
+   "currency": "BRL",
+   "growth": -0.25120002,
+   "high": 1.22,
+   "low": 0.87,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 1.4489
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 8901417840,
+   "currency": "BRL",
+   "growth": -0.22600001,
+   "high": 9537835680,
+   "low": 8265000000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 11501016000
+  },
+  "+1y": {
+   "avg": 35180482290,
+   "currency": "BRL",
+   "growth": -0.052399997,
+   "high": 43288414330,
+   "low": 27441000000,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 37126816120
+  },
+  "0q": {
+   "avg": 8927281590,
+   "currency": "BRL",
+   "growth": -0.1594,
+   "high": 10175472470,
+   "low": 8088000000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 10619741000
+  },
+  "0y": {
+   "avg": 37126816120,
+   "currency": "BRL",
+   "growth": -0.13159999,
+   "high": 43826018640,
+   "low": 33656000000,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 42751283000
+  }
+ },
+ "ticker": "CMIG4.SA",
+ "url": "https://finance.yahoo.com/quote/CMIG4.SA"
+}

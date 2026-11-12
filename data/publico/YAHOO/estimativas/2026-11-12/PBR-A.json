@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 15.7,
+  "high": 27.0,
+  "low": 21.0,
+  "mean": 23.44444,
+  "median": 23.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.019,
+   "currency": "USD",
+   "growth": 0.0615,
+   "high": 1.019,
+   "low": 1.019,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.96
+  },
+  "+1y": {
+   "avg": 4.34,
+   "currency": "USD",
+   "growth": -0.1702,
+   "high": 4.66,
+   "low": 4.02,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 5.23
+  },
+  "0q": {
+   "avg": 1.72,
+   "currency": "USD",
+   "growth": null,
+   "high": 1.72,
+   "low": 1.72,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 5.23,
+   "currency": "USD",
+   "growth": 0.86050004,
+   "high": 5.23,
+   "low": 5.23,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 2.811
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 144865633000,
+   "currency": "BRL",
+   "growth": 0.1712,
+   "high": 144865633000,
+   "low": 144865633000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 123686000000
+  },
+  "+1y": {
+   "avg": 603266149690,
+   "currency": "BRL",
+   "growth": -0.1039,
+   "high": 747754168000,
+   "low": 496131332000,
+   "numberOfAnalysts": 16,
+   "yearAgoRevenue": 673247964250
+  },
+  "0q": {
+   "avg": 192197573560,
+   "currency": "BRL",
+   "growth": 0.5419,
+   "high": 212529906000,
+   "low": 172426786000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 124650240000
+  },
+  "0y": {
+   "avg": 673247964250,
+   "currency": "BRL",
+   "growth": 0.4296,
+   "high": 719752882000,
+   "low": 630040125000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 470949600000
+  }
+ },
+ "ticker": "PBR-A",
+ "url": "https://finance.yahoo.com/quote/PBR-A"
+}

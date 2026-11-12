@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 4.63,
+  "high": 19.0,
+  "low": 5.3,
+  "mean": 10.64615,
+  "median": 10.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.38,
+   "currency": "BRL",
+   "growth": -0.2515,
+   "high": 0.38,
+   "low": 0.38,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.5077
+  },
+  "+1y": {
+   "avg": 1.2318,
+   "currency": "BRL",
+   "growth": 0.4664,
+   "high": 1.68,
+   "low": 0.8,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 0.84
+  },
+  "0q": {
+   "avg": 0.24,
+   "currency": "BRL",
+   "growth": -0.7583,
+   "high": 0.24,
+   "low": 0.24,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.993
+  },
+  "0y": {
+   "avg": 0.84,
+   "currency": "BRL",
+   "growth": -0.65849996,
+   "high": 0.86,
+   "low": 0.82,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 2.4597
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 8152246000,
+   "currency": "BRL",
+   "growth": 0.032899998,
+   "high": 8152246000,
+   "low": 8152246000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 7892500000
+  },
+  "+1y": {
+   "avg": 33852231509,
+   "currency": "BRL",
+   "growth": 0.0545,
+   "high": 38925000000,
+   "low": 32546195000,
+   "numberOfAnalysts": 13,
+   "yearAgoRevenue": 32103809250
+  },
+  "0q": {
+   "avg": 8267814130,
+   "currency": "BRL",
+   "growth": 0.0446,
+   "high": 8521112750,
+   "low": 8128083090,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 7914900000
+  },
+  "0y": {
+   "avg": 32103809250,
+   "currency": "BRL",
+   "growth": 0.0402,
+   "high": 32488680990,
+   "low": 31933000000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 30863300000
+  }
+ },
+ "ticker": "HAPV3.SA",
+ "url": "https://finance.yahoo.com/quote/HAPV3.SA"
+}

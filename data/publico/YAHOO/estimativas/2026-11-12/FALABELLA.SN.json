@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 6580.0,
+  "high": 7700.0,
+  "low": 6000.0,
+  "mean": 6900.0,
+  "median": 6950.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 82.64221,
+   "currency": "CLP",
+   "growth": null,
+   "high": 82.64221,
+   "low": 82.64221,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 412.643,
+   "currency": "CLP",
+   "growth": 0.1266,
+   "high": 517.72,
+   "low": 337.06714,
+   "numberOfAnalysts": 9,
+   "yearAgoEps": 366.27625
+  },
+  "0q": {
+   "avg": 104.15493,
+   "currency": "CLP",
+   "growth": -0.585,
+   "high": 104.15493,
+   "low": 104.15493,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 251.0
+  },
+  "0y": {
+   "avg": 366.27625,
+   "currency": "CLP",
+   "growth": -0.3179,
+   "high": 416.07,
+   "low": 307.84607,
+   "numberOfAnalysts": 9,
+   "yearAgoEps": 537.0
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 3611650489180,
+   "currency": "CLP",
+   "growth": null,
+   "high": 3677733622000,
+   "low": 3545567356360,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 15452832708560,
+   "currency": "CLP",
+   "growth": 0.0715,
+   "high": 15824800000000,
+   "low": 14738665144240,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 14421663638410.0
+  },
+  "0q": {
+   "avg": 4242236766560,
+   "currency": "CLP",
+   "growth": 0.091800004,
+   "high": 4373414858000,
+   "low": 4111058675110,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 3885703000000.0
+  },
+  "0y": {
+   "avg": 14421663638410,
+   "currency": "CLP",
+   "growth": 0.083100006,
+   "high": 14720000000000,
+   "low": 14040800571150,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 13315715000000.0
+  }
+ },
+ "ticker": "FALABELLA.SN",
+ "url": "https://finance.yahoo.com/quote/FALABELLA.SN"
+}

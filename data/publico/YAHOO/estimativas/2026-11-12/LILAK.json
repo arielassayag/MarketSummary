@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 10.3,
+  "high": 9.0,
+  "low": 5.4,
+  "mean": 7.2,
+  "median": 7.2
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": null,
+   "currency": "USD",
+   "growth": null,
+   "high": null,
+   "low": null,
+   "numberOfAnalysts": null,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 0.66144,
+   "currency": "USD",
+   "growth": 63.530697,
+   "high": 0.66144,
+   "low": 0.66144,
+   "numberOfAnalysts": 1.0,
+   "yearAgoEps": 0.01025
+  },
+  "0q": {
+   "avg": 0.18146,
+   "currency": "USD",
+   "growth": 1.6721001,
+   "high": 0.18146,
+   "low": 0.18146,
+   "numberOfAnalysts": 1.0,
+   "yearAgoEps": -0.27
+  },
+  "0y": {
+   "avg": 0.01025,
+   "currency": "USD",
+   "growth": 1.0033001,
+   "high": 0.01025,
+   "low": 0.01025,
+   "numberOfAnalysts": 1.0,
+   "yearAgoEps": -3.06
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "USD",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 4619878400,
+   "currency": "USD",
+   "growth": 0.031400003,
+   "high": 4682300000,
+   "low": 4589000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 4479385800.0
+  },
+  "0q": {
+   "avg": 1184763930,
+   "currency": "USD",
+   "growth": 0.0218,
+   "high": 1184763930,
+   "low": 1184763930,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 1159500000.0
+  },
+  "0y": {
+   "avg": 4479385800,
+   "currency": "USD",
+   "growth": 0.0084,
+   "high": 4502700000,
+   "low": 4463000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 4442200000.0
+  }
+ },
+ "ticker": "LILAK",
+ "url": "https://finance.yahoo.com/quote/LILAK"
+}

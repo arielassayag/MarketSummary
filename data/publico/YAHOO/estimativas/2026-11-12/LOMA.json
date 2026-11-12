@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 8.84,
+  "high": 15.0,
+  "low": 11.5,
+  "mean": 14.0,
+  "median": 14.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": null,
+   "currency": "USD",
+   "growth": null,
+   "high": null,
+   "low": null,
+   "numberOfAnalysts": null,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 0.76531,
+   "currency": "USD",
+   "growth": 0.62590003,
+   "high": 1.18,
+   "low": 0.488,
+   "numberOfAnalysts": 4.0,
+   "yearAgoEps": 0.47069
+  },
+  "0q": {
+   "avg": 0.1136,
+   "currency": "USD",
+   "growth": 3.476,
+   "high": 0.1136,
+   "low": 0.1136,
+   "numberOfAnalysts": 1.0,
+   "yearAgoEps": 0.02538
+  },
+  "0y": {
+   "avg": 0.47069,
+   "currency": "USD",
+   "growth": 2.7616,
+   "high": 0.48138,
+   "low": 0.46,
+   "numberOfAnalysts": 2.0,
+   "yearAgoEps": 0.12513
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "ARS",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 1177660305000,
+   "currency": "ARS",
+   "growth": 0.0581,
+   "high": 1461499729520,
+   "low": 1014948000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 1112953272000.0
+  },
+  "0q": {
+   "avg": 299432193000,
+   "currency": "ARS",
+   "growth": 0.32939997,
+   "high": 299432193000,
+   "low": 299432193000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 225233000000.0
+  },
+  "0y": {
+   "avg": 1112953272000,
+   "currency": "ARS",
+   "growth": 0.3123,
+   "high": 1140726600000,
+   "low": 1085179943999,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 848087000000.0
+  }
+ },
+ "ticker": "LOMA",
+ "url": "https://finance.yahoo.com/quote/LOMA"
+}

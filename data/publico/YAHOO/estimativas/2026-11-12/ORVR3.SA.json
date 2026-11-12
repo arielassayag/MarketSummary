@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 19.32,
+  "high": 26.05,
+  "low": 21.99,
+  "mean": 23.54333,
+  "median": 23.75
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.31702,
+   "currency": "BRL",
+   "growth": 4.2837,
+   "high": 0.31702,
+   "low": 0.31702,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.06
+  },
+  "+1y": {
+   "avg": 1.12902,
+   "currency": "BRL",
+   "growth": 1.3269,
+   "high": 1.58939,
+   "low": 0.6825,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.48521
+  },
+  "0q": {
+   "avg": 0.20088,
+   "currency": "BRL",
+   "growth": 1.8697,
+   "high": 0.20088,
+   "low": 0.20088,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.07
+  },
+  "0y": {
+   "avg": 0.48521,
+   "currency": "BRL",
+   "growth": 1.5206,
+   "high": 0.48521,
+   "low": 0.48521,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.1925
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 961766150,
+   "currency": "BRL",
+   "growth": 2.6388001,
+   "high": 982742590,
+   "low": 940789710,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 264309000
+  },
+  "+1y": {
+   "avg": 4308623650,
+   "currency": "BRL",
+   "growth": 0.43400002,
+   "high": 4412500000,
+   "low": 4232000000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 3004543570
+  },
+  "0q": {
+   "avg": 941166290,
+   "currency": "BRL",
+   "growth": 2.3488,
+   "high": 965000000,
+   "low": 905975750,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 281050000
+  },
+  "0y": {
+   "avg": 3004543570,
+   "currency": "BRL",
+   "growth": 1.8605,
+   "high": 3728000000,
+   "low": 2544484820,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 1050340000
+  }
+ },
+ "ticker": "ORVR3.SA",
+ "url": "https://finance.yahoo.com/quote/ORVR3.SA"
+}

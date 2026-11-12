@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 3.01,
+  "high": 8.0,
+  "low": 3.4,
+  "mean": 5.22308,
+  "median": 4.9
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.20325,
+   "currency": "BRL",
+   "growth": 1.5566001,
+   "high": 0.20325,
+   "low": 0.20325,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.0795
+  },
+  "+1y": {
+   "avg": 0.56968,
+   "currency": "BRL",
+   "growth": 0.4031,
+   "high": 1.03,
+   "low": 0.36317,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 0.40602
+  },
+  "0q": {
+   "avg": 0.06484,
+   "currency": "BRL",
+   "growth": -0.35619998,
+   "high": 0.16349,
+   "low": -0.0338,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.10072
+  },
+  "0y": {
+   "avg": 0.40602,
+   "currency": "BRL",
+   "growth": -0.4125,
+   "high": 0.57,
+   "low": 0.1,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.69115
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 14713055210,
+   "currency": "BRL",
+   "growth": 0.0359,
+   "high": 15801993630,
+   "low": 13899172000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 14203765000
+  },
+  "+1y": {
+   "avg": 59105082060,
+   "currency": "BRL",
+   "growth": 0.0465,
+   "high": 62645907660,
+   "low": 54208764740,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 56478700790
+  },
+  "0q": {
+   "avg": 14040395660,
+   "currency": "BRL",
+   "growth": -0.0949,
+   "high": 14854521240,
+   "low": 13506000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 15512241000
+  },
+  "0y": {
+   "avg": 56478700790,
+   "currency": "BRL",
+   "growth": 0.0301,
+   "high": 57363000000,
+   "low": 54512022000,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 54830072000
+  }
+ },
+ "ticker": "BEEF3.SA",
+ "url": "https://finance.yahoo.com/quote/BEEF3.SA"
+}

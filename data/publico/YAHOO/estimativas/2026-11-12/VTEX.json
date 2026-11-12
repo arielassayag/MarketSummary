@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 3.9,
+  "high": 12.0,
+  "low": 4.0,
+  "mean": 5.52,
+  "median": 4.75
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.03736,
+   "currency": "USD",
+   "growth": -0.1861,
+   "high": 0.05,
+   "low": 0.02472,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.0459
+  },
+  "+1y": {
+   "avg": 0.27573,
+   "currency": "USD",
+   "growth": 0.1733,
+   "high": 0.32,
+   "low": 0.22644,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.235
+  },
+  "0q": {
+   "avg": 0.06938,
+   "currency": "USD",
+   "growth": -0.093100004,
+   "high": 0.07275,
+   "low": 0.06602,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.0765
+  },
+  "0y": {
+   "avg": 0.235,
+   "currency": "USD",
+   "growth": 0.1582,
+   "high": 0.26,
+   "low": 0.21,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.2029
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 62719940,
+   "currency": "USD",
+   "growth": 0.033299997,
+   "high": 65916770,
+   "low": 59523110,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 60696000
+  },
+  "+1y": {
+   "avg": 279198360,
+   "currency": "USD",
+   "growth": 0.0612,
+   "high": 335000000,
+   "low": 249100000,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 263094720
+  },
+  "0q": {
+   "avg": 67683710,
+   "currency": "USD",
+   "growth": -0.004,
+   "high": 67683710,
+   "low": 67683710,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 67954000
+  },
+  "0y": {
+   "avg": 263094720,
+   "currency": "USD",
+   "growth": 0.0939,
+   "high": 285000000,
+   "low": 254500000,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 240517000
+  }
+ },
+ "ticker": "VTEX",
+ "url": "https://finance.yahoo.com/quote/VTEX"
+}

@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 7.66,
+  "high": 16.0,
+  "low": 4.0,
+  "mean": 9.42857,
+  "median": 10.3
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.12942,
+   "currency": "BRL",
+   "growth": 2.8228,
+   "high": 0.19885,
+   "low": 0.06,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": -0.071
+  },
+  "+1y": {
+   "avg": 0.83136,
+   "currency": "BRL",
+   "growth": 0.8475,
+   "high": 1.16,
+   "low": 0.51408,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.45
+  },
+  "0q": {
+   "avg": 0.21513,
+   "currency": "BRL",
+   "growth": 0.3038,
+   "high": 0.26675,
+   "low": 0.17,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.165
+  },
+  "0y": {
+   "avg": 0.45,
+   "currency": "BRL",
+   "growth": 1.1948,
+   "high": 0.45,
+   "low": 0.45,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.20503
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 10226050700,
+   "currency": "BRL",
+   "growth": 0.1108,
+   "high": 10226050700,
+   "low": 10226050700,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 9205700000
+  },
+  "+1y": {
+   "avg": 42987994520,
+   "currency": "BRL",
+   "growth": 0.0844,
+   "high": 46035000000,
+   "low": 39896417200,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 39640983510
+  },
+  "0q": {
+   "avg": 12040663250,
+   "currency": "BRL",
+   "growth": 0.0796,
+   "high": 12506760100,
+   "low": 11472858000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 11153085000
+  },
+  "0y": {
+   "avg": 39640983510,
+   "currency": "BRL",
+   "growth": 0.0242,
+   "high": 39657000000,
+   "low": 39616075060,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 38703387000
+  }
+ },
+ "ticker": "MGLU3.SA",
+ "url": "https://finance.yahoo.com/quote/MGLU3.SA"
+}

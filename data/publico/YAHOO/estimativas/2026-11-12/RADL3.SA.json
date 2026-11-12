@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 14.63,
+  "high": 28.0,
+  "low": 15.0,
+  "mean": 24.0,
+  "median": 25.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.23,
+   "currency": "BRL",
+   "growth": 0.2987,
+   "high": 0.24,
+   "low": 0.22,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.1771
+  },
+  "+1y": {
+   "avg": 1.11426,
+   "currency": "BRL",
+   "growth": 0.2785,
+   "high": 1.26,
+   "low": 1.0,
+   "numberOfAnalysts": 8,
+   "yearAgoEps": 0.87155
+  },
+  "0q": {
+   "avg": 0.24974,
+   "currency": "BRL",
+   "growth": 0.35279998,
+   "high": 0.27,
+   "low": 0.22949,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.18461
+  },
+  "0y": {
+   "avg": 0.87155,
+   "currency": "BRL",
+   "growth": 0.1146,
+   "high": 0.95,
+   "low": 0.8,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 0.78195
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 11702220000,
+   "currency": "BRL",
+   "growth": 0.1073,
+   "high": 11702220000,
+   "low": 11702220000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 10568589000
+  },
+  "+1y": {
+   "avg": 51053981320,
+   "currency": "BRL",
+   "growth": 0.1347,
+   "high": 52243881200,
+   "low": 50490000000,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 44993485190
+  },
+  "0q": {
+   "avg": 11866988170,
+   "currency": "BRL",
+   "growth": -0.0195,
+   "high": 11917696000,
+   "low": 11835750010,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 12103481000
+  },
+  "0y": {
+   "avg": 44993485190,
+   "currency": "BRL",
+   "growth": 0.0168,
+   "high": 45313000000,
+   "low": 44873000000,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 44250449000
+  }
+ },
+ "ticker": "RADL3.SA",
+ "url": "https://finance.yahoo.com/quote/RADL3.SA"
+}

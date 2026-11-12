@@ -1,0 +1,52 @@
+{
+ "analyst_price_targets": {
+  "current": 53500.0,
+  "high": 87400.0,
+  "low": 78000.0,
+  "mean": 82600.0,
+  "median": 82400.0
+ },
+ "earnings_estimate": null,
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 2262171430,
+   "currency": "USD",
+   "growth": 0.7087,
+   "high": 2569599710,
+   "low": 1990766460,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 1323900000
+  },
+  "+1y": {
+   "avg": 7804043730,
+   "currency": "USD",
+   "growth": -0.052800003,
+   "high": 9893000000,
+   "low": 5622000000,
+   "numberOfAnalysts": 17,
+   "yearAgoRevenue": 8239406250
+  },
+  "0q": {
+   "avg": 2189868400,
+   "currency": "USD",
+   "growth": 0.8668,
+   "high": 2289000000,
+   "low": 2096000000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 1173047000
+  },
+  "0y": {
+   "avg": 8239406250,
+   "currency": "USD",
+   "growth": 0.80050004,
+   "high": 9103380780,
+   "low": 5465000000,
+   "numberOfAnalysts": 17,
+   "yearAgoRevenue": 4576200000
+  }
+ },
+ "ticker": "SQM-B.SN",
+ "url": "https://finance.yahoo.com/quote/SQM-B.SN"
+}

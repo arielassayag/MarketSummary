@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 32.64,
+  "high": 53.0,
+  "low": 37.0,
+  "mean": 43.58385,
+  "median": 43.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.56837,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0.65674,
+   "low": 0.48,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 2.53845,
+   "currency": "BRL",
+   "growth": 0.1486,
+   "high": 2.95871,
+   "low": 1.74,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 2.21
+  },
+  "0q": {
+   "avg": 0.52,
+   "currency": "BRL",
+   "growth": 0.8212,
+   "high": 0.52,
+   "low": 0.52,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.28553
+  },
+  "0y": {
+   "avg": 2.21,
+   "currency": "BRL",
+   "growth": 0.77779996,
+   "high": 2.31,
+   "low": 2.11,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 1.24311
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 984533160,
+   "currency": "BRL",
+   "growth": -0.2159,
+   "high": 1043308030,
+   "low": 925758280,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 1255635000
+  },
+  "+1y": {
+   "avg": 4172081730,
+   "currency": "BRL",
+   "growth": 0.0785,
+   "high": 4507000000,
+   "low": 3772372810,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 3868555980
+  },
+  "0q": {
+   "avg": 928040940,
+   "currency": "BRL",
+   "growth": -0.2025,
+   "high": 928040940,
+   "low": 928040940,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 1163659000
+  },
+  "0y": {
+   "avg": 3868555980,
+   "currency": "BRL",
+   "growth": -0.1204,
+   "high": 3890000000,
+   "low": 3851223940,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 4397883000
+  }
+ },
+ "ticker": "ALUP11.SA",
+ "url": "https://finance.yahoo.com/quote/ALUP11.SA"
+}

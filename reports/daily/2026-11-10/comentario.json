@@ -1,0 +1,16 @@
+{
+  "mind": "codex",
+  "headline": "CDP registra {{fact:day.ret}}; parcela fatorial compensa parte da perda específica",
+  "paragraphs": [
+    "A carteira simulada encerrou 10/11/2026 com retorno de {{fact:day.ret}}, resultado de {{fact:day.pnl_usd}} e patrimônio de {{fact:nav}}. O acumulado desde o início ficou em {{fact:itd.ret}}, e o resultado do mês em {{fact:mtd.ret}}.",
+    "O lado comprado contribuiu {{fact:attr.long}}, parcialmente compensado pelo vendido, com {{fact:attr.short}}. A parcela específica respondeu por {{fact:attr.specific}}, ante {{fact:attr.factor}} da fatorial. Aura Minerals, Lithium Argentina e Sigma Lithium contribuíram {{fact:top.contrib.1.contrib}}, {{fact:top.contrib.2.contrib}} e {{fact:top.contrib.3.contrib}}. Liberty Latin America, Fortuna Mining e Embraer foram os principais detratores, com {{fact:top.detract.1.contrib}}, {{fact:top.detract.2.contrib}} e {{fact:top.detract.3.contrib}}.",
+    "O calendário oficial da BYMA, publicado em 05/10/2026, indicava ausência de negociação e liquidação na Argentina em 10/11/2026. A agenda macroeconômica incluiu a divulgação pelo Bureau of Labor Statistics, em 10/11/2026, do índice de preços ao consumidor dos Estados Unidos referente a outubro. O fechamento local não se confunde com os preços observados no exterior: ARGT registrou {{fact:mkt.ARGT.ret_1d}} em dólar, e ILF, {{fact:mkt.ILF.ret_1d}}. A leitura limita-se aos preços observados, sem atribuir causalidade desses movimentos ao feriado argentino.",
+    "No Brasil, o Ibovespa variou {{fact:mkt.BVSP.ret_1d}} em reais. Na atribuição por país da carteira, o Brasil contribuiu {{fact:attr.country.BR}}.",
+    "A carteira apresenta {{fact:risk.n_long}} posições compradas e {{fact:risk.n_short}} vendidas, exposição bruta de {{fact:risk.gross}} e líquida de {{fact:risk.net}}. A vol ex-ante é de {{fact:risk.ex_ante_vol}}, frente à banda de {{fact:mandate.vol_band_min}} a {{fact:mandate.vol_band_max}}, com beta de {{fact:risk.beta}}, VaR diário de {{fact:risk.var_1d}} e drawdown de {{fact:dd.current}}."
+  ],
+  "risk_flags": [
+    "Barras sintéticas em mercado argentino oficialmente fechado foram descartadas; o Merval não tem observação de preço no pregão.",
+    "Paridades entre ADRs e ações locais e câmbio não oficial limitam comparações entre mercados.",
+    "Revisões históricas e barras tardias não foram aplicadas; fundamentos atuais não constituem informação histórica point-in-time."
+  ]
+}

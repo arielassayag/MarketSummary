@@ -1,0 +1,123 @@
+{
+  "kind": "daily_increment",
+  "session_date": "2026-11-10",
+  "created_at": "2026-11-12T07:38:07.136750Z",
+  "base_as_of": "2026-10-02",
+  "base_content_hash": "ec1e53241d99de22f2f6deb06749e9d80b3d43864de3a1d931eb3e94c8d40455",
+  "base_manifest_sha256": "6bf7cc5b57e0a1eb5bd73080fb213eab399c7b04359ae68b2f75dc93a185d263",
+  "prev_manifest_hash": "c8e4e4b499b4e63fb14c45f6203485fa4242ed0c2a73efaaf8d4ff703cabc914",
+  "universe_sha256": "a8f28ee5d20395a6e245c50ebb635eb56ada88922c01876351278cb99f5a29db",
+  "files": [
+    {
+      "path": "benchmarks.parquet",
+      "sha256": "b36fb0cd44707d8dbe5abf0ce4c04be4cb9ddda8976d3ad72e1e9cf8f9d788c4",
+      "rows": 19,
+      "description": "Benchmarks do pregão"
+    },
+    {
+      "path": "fx.parquet",
+      "sha256": "932f938ab5153002822d0035a03d009a803fcc13e6dc63d8e88c6a171a1592a2",
+      "rows": 8,
+      "description": "Câmbio do pregão (USD por unidade)"
+    },
+    {
+      "path": "lending.parquet",
+      "sha256": "51ad00ee2463410d45800ddbcc80d08e2222082c7605e298aef979699a87afaa",
+      "rows": 125,
+      "description": "Aluguel B3/BTC (longo) dos pregões ainda não gravados"
+    },
+    {
+      "path": "prices.parquet",
+      "sha256": "69e7745ec4d8d99fd81111fb2c4efccb61fa741bcf2512d639614c5300e2764c",
+      "rows": 277,
+      "description": "Preços do pregão (+ barra anterior da mesma coleta para encadear retorno total)"
+    },
+    {
+      "path": "qa.json",
+      "sha256": "898177b5b2179d4aa9cabce108170c280c2285c2c5f025761b339b1f095505c8",
+      "rows": null,
+      "description": "QA do incremento: revisões, paridade ADR, mercados fechados"
+    },
+    {
+      "path": "rates.parquet",
+      "sha256": "bf2944430e7d674adc6bc9e82589eb879c669cebbfd3f1a7f8081034afd909b0",
+      "rows": 2,
+      "description": "Taxas do pregão (decimal anual)"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "yahoo_prices",
+      "name": "Yahoo Finance — barras diárias (janela)",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-11-12T07:37:51.796476Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "yahoo_fx",
+      "name": "Yahoo Finance — câmbio",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-11-12T07:37:52.765885Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "yahoo_benchmarks",
+      "name": "Yahoo Finance — benchmarks",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-11-12T07:38:01.088229Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "rates",
+      "name": "BCB SGS 432 + Yahoo ^IRX",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-11-12T07:38:01.875951Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "b3_bdi_lending",
+      "name": "B3 BDI — aluguel (BTC)",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-11-12T07:38:07.077079Z",
+      "point_in_time": false,
+      "notes": ""
+    }
+  ],
+  "limitations": [
+    "Barras sintéticas do Yahoo (volume 0) em mercados fechados pelo calendário oficial descartadas: AR (4).",
+    "Revisões de fechamento do Yahoo em datas anteriores NÃO aplicadas (164): SCCO@2026-11-02 (0.9901), SID@2026-11-02 (0.9974), AC.MX@2026-11-03 (1.0004), ALPEKA.MX@2026-11-03 (1.0039), ALSEA.MX@2026-11-03 (1.0019), AMXB.MX@2026-11-03 (0.9970), ASURB.MX@2026-11-03 (1.0011), BBAJIOO.MX@2026-11-03 (1.0004), BIMBOA.MX@2026-11-03 (1.0001), BOLSAA.MX@2026-11-03 (0.9970), CEMEXCPO.MX@2026-11-03 (1.0020), CHDRAUIB.MX@2026-11-03 (1.0022), CMPC.SN@2026-11-03 (1.0043), FEMSAUBD.MX@2026-11-03 (1.0013), FIBRAPL14.MX@2026-11-03 (0.9990), FMTY14.MX@2026-11-03 (1.0006), FUNO11.MX@2026-11-03 (1.0011), GAPB.MX@2026-11-03 (0.9953), GCARSOA1.MX@2026-11-03 (1.0042), GCC.MX@2026-11-03 (0.9.",
+    "Revisões de volume em datas anteriores NÃO aplicadas: 737.",
+    "Barras tardias (datas anteriores não gravadas) NÃO aplicadas: 1.",
+    "Benchmarks sem barra no pregão: ^MERV."
+  ],
+  "notes": [
+    "barras_de_feriado_descartadas: AR(4)",
+    "mercados_fechados: AR"
+  ],
+  "markets_traded": [
+    "BR",
+    "CL",
+    "CO",
+    "MX",
+    "US"
+  ],
+  "markets_closed": [
+    "AR"
+  ],
+  "slow_refreshed": [],
+  "lending_dates": [
+    "2026-11-10"
+  ],
+  "is_synthetic": false,
+  "data_notice": "Dados reais de fontes públicas gratuitas (Yahoo, FINRA, B3/BDI, BCB, Google News); uso de pesquisa — não é feed licenciado.",
+  "manifest_hash": "b9f79a2bff0b4dcf0f9ae04bd0b218e2449fd87f8a0e95b2497ffd32e2598623"
+}

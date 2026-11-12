@@ -1,0 +1,16 @@
+{
+  "mind": "codex",
+  "headline": "CDP registra {{fact:day.ret}} no pregão; acumulado em {{fact:itd.ret}}",
+  "paragraphs": [
+    "A carteira simulada encerrou 09/11/2026 com retorno de {{fact:day.ret}}, resultado de {{fact:day.pnl_usd}} e patrimônio de {{fact:nav}}. O acumulado desde o início ficou em {{fact:itd.ret}}, enquanto o mês registra {{fact:mtd.ret}}.",
+    "O lado comprado contribuiu {{fact:attr.long}}, ante {{fact:attr.short}} do vendido. A parcela específica respondeu por {{fact:attr.specific}} e a fatorial por {{fact:attr.factor}}. Aeroméxico, PagSeguro e Fortuna Mining contribuíram {{fact:top.contrib.1.contrib}}, {{fact:top.contrib.2.contrib}} e {{fact:top.contrib.3.contrib}}. Aura Minerals, Liberty Latin America e Fleury foram os principais detratores, com {{fact:top.detract.1.contrib}}, {{fact:top.detract.2.contrib}} e {{fact:top.detract.3.contrib}}.",
+    "O calendário oficial da BYMA, publicado em 05/10/2026, indicava ausência de negociação e liquidação na Argentina em 09/11/2026. A observação de mercado distingue esse fechamento local dos ativos negociados no exterior: ARGT registrou {{fact:mkt.ARGT.ret_1d}} em dólar, e ILF, {{fact:mkt.ILF.ret_1d}}. Esses movimentos não são atribuídos causalmente ao feriado argentino.",
+    "No Brasil, o Ibovespa variou {{fact:mkt.BVSP.ret_1d}} em reais. Na atribuição por país da carteira, o Brasil contribuiu {{fact:attr.country.BR}}.",
+    "A carteira apresenta {{fact:risk.n_long}} posições compradas e {{fact:risk.n_short}} vendidas, com exposição bruta de {{fact:risk.gross}} e líquida de {{fact:risk.net}}. A vol ex-ante é de {{fact:risk.ex_ante_vol}}, frente à banda de {{fact:mandate.vol_band_min}} a {{fact:mandate.vol_band_max}}, com beta de {{fact:risk.beta}}, VaR diário de {{fact:risk.var_1d}} e drawdown de {{fact:dd.current}}."
+  ],
+  "risk_flags": [
+    "O Merval não tem observação de preço no pregão; ausência não representa retorno nulo.",
+    "Paridades entre ADRs e ações locais e câmbio não oficial limitam comparações entre mercados.",
+    "Revisões históricas e barras tardias não foram aplicadas; fundamentos atuais não constituem informação histórica point-in-time."
+  ]
+}

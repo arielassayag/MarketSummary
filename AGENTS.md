@@ -216,6 +216,7 @@ código (passo a passo em `docs/cdp/AUTOMACAO.md`):
 | `docs/cdp/playbooks/` | roteiros neutros das rotinas: `SEMANAL.md`, `DIARIO.md`, `RISCO.md`, `COBERTURA.md`, `STATUS.md`, `CALIBRACAO.md`, `DREAMING.md`; de sessão: `RETOMAR.md` (retomar) e `ESPELHO.md` (espelho privado opcional do painel, só operador) |
 | `docs/cdp/METODOLOGIA.md` | mandato, modelo de risco, alpha, construção e gestão de risco |
 | `docs/cdp/EXECUCAO.md` | dia de montagem, prazo efetivo, leilão de fechamento, capacidade e custos |
+| `docs/cdp/FERIADOS_EXTRAORDINARIOS.md` | fontes e exceções de fechamento integral ainda ausentes da biblioteca de calendários |
 | `docs/cdp/COBERTURA.md`, `docs/cdp/NOTAS.md` | modelos abertos de valuation e notas de pesquisa por emissor |
 | `docs/cdp/TESE.md`, `docs/cdp/ESTILO.md` | tese semanal; tom e redação para investidores |
 | `docs/cdp/DASHBOARDS.md` | cases, comparáveis, risco e fatores: cortes, fontes e bases de leitura |

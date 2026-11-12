@@ -68,6 +68,7 @@ try:  # lock de arquivo (POSIX); sem fcntl o lock vira no-op documentado
 except ImportError:  # pragma: no cover - Windows
     fcntl = None  # type: ignore[assignment]
 
+from ..calendar_exceptions import is_extraordinary_closure
 from ..config import FundConfig
 from ..contracts import NewsItem, SnapshotFile, SnapshotManifest, SourceRecord
 from ..hashing import sha256_file, sha256_obj
@@ -1139,6 +1140,8 @@ def market_is_open(session_date: date, market: str) -> bool | None:
     code = MARKET_CALENDARS.get(market)
     if code is None:
         return None
+    if is_extraordinary_closure(session_date, code):
+        return False
     try:
         cal = _exchange_calendar(code)
         ts = pd.Timestamp(session_date)

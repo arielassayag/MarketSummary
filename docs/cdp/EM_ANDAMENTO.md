@@ -5,6 +5,23 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## Recuperação CDP: calendário extraordinário BYMA — 12/11/2026
+
+A retomada oficial do executor após a interrupção recusou 09/11 por ausência de
+preços AR; não gravou fechamento, permaneceu íntegra e liberou a trava. O calendário
+BYMA publicado em 05/10/2026 confirma 09 e 10/11 sem negociação nem liquidação,
+exceções ainda ausentes de `exchange_calendars 4.13.2`. Correção em ramo próprio
+compartilha as exceções entre `cdp.calendar` e `cdp.data.store`, sem afrouxar gates.
+Fontes e SHA-256 do PDF: [Feriados extraordinários](FERIADOS_EXTRAORDINARIOS.md).
+
+A regressão falhou antes da correção e passou depois; 79 testes focados passaram e
+lint global passou. Suíte integral (`pytest -n 4 -q`) concluída sem falhas;
+revisão independente aprovada, inclusive o fallback sem biblioteca de calendários. Nenhuma mudança
+no livro ou nos relatórios, nenhuma integração/publicação operacional desta correção.
+11/11 permanece pregão aberto; sua ausência no Yahoo é pendência separada, não
+resolvida por classificar o dia como feriado. A retomada operacional depende de
+integrar a correção validada e seguir novamente o gate/roteiro oficiais.
+
 ## Curadoria e análise no harness Codex — 07/11/2026
 
 A tarefa nativa de dreaming permanece aos sábados, às 10h07

@@ -31,6 +31,8 @@ from zoneinfo import ZoneInfo
 import exchange_calendars as xc
 import pandas as pd
 
+from .calendar_exceptions import is_extraordinary_closure
+
 if TYPE_CHECKING:  # pragma: no cover
     from .config import FundConfig
 
@@ -71,6 +73,8 @@ def _in_range(cal, d: date) -> bool:
 
 
 def is_session(d: date, exchange: str = PRIMARY_EXCHANGE) -> bool:
+    if is_extraordinary_closure(d, exchange):
+        return False
     cal = _cal(exchange)
     if not _in_range(cal, d):
         return d.weekday() < 5  # fora do calendário conhecido: dias úteis
@@ -80,7 +84,8 @@ def is_session(d: date, exchange: str = PRIMARY_EXCHANGE) -> bool:
 def is_early_close(d: date, exchange: str) -> bool:
     """Pregão com fechamento antecipado no calendário (ex.: NYSE em 27/11 e 24/12)."""
     cal = _cal(exchange)
-    if not _in_range(cal, d) or not cal.is_session(pd.Timestamp(d)):
+    if (is_extraordinary_closure(d, exchange)
+            or not _in_range(cal, d) or not cal.is_session(pd.Timestamp(d))):
         return False
     return pd.Timestamp(d) in cal.early_closes
 
@@ -88,7 +93,8 @@ def is_early_close(d: date, exchange: str) -> bool:
 def session_close_utc(d: date, exchange: str) -> datetime | None:
     """Fechamento do pregão segundo a biblioteca (UTC). Use só para fechamentos antecipados."""
     cal = _cal(exchange)
-    if not _in_range(cal, d) or not cal.is_session(pd.Timestamp(d)):
+    if (is_extraordinary_closure(d, exchange)
+            or not _in_range(cal, d) or not cal.is_session(pd.Timestamp(d))):
         return None
     return cal.session_close(pd.Timestamp(d)).to_pydatetime()
 

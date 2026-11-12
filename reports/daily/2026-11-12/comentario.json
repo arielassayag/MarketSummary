@@ -1,0 +1,17 @@
+{
+  "mind": "codex",
+  "headline": "CDP registra {{fact:day.ret}}; lado vendido amortece perdas da carteira comprada",
+  "paragraphs": [
+    "A carteira simulada encerrou 12/11/2026 com retorno de {{fact:day.ret}}, resultado de {{fact:day.pnl_usd}} e patrimônio de {{fact:nav}}. O acumulado desde o início ficou em {{fact:itd.ret}} e o desempenho do mês em {{fact:mtd.ret}}.",
+    "O lado comprado contribuiu {{fact:attr.long}}, enquanto o vendido respondeu por {{fact:attr.short}}. A parcela específica contribuiu {{fact:attr.specific}}, ante {{fact:attr.factor}} da parcela fatorial estimada. Liberty Latin America, Smart Fit e Pátria lideraram as contribuições, com {{fact:top.contrib.1.contrib}}, {{fact:top.contrib.2.contrib}} e {{fact:top.contrib.3.contrib}}. Tenda, Millicom e Aeroméxico foram os maiores detratores, com {{fact:top.detract.1.contrib}}, {{fact:top.detract.2.contrib}} e {{fact:top.detract.3.contrib}}.",
+    "Os ativos de referência registraram perdas: SPY {{fact:mkt.SPY.ret_1d}}, ILF {{fact:mkt.ILF.ret_1d}} e EWZ {{fact:mkt.EWZ.ret_1d}}, em dólar. O futuro de Brent variou {{fact:mkt.BZ_F.ret_1d}}, e o de ouro, {{fact:mkt.GC_F.ret_1d}}. O calendário do BLS, atualizado em 03/11/2026, previa a divulgação dos preços ao produtor americanos em 13/11/2026. Essa referência de agenda não estabelece causalidade para os retornos da sessão.",
+    "Na atribuição por país, Argentina contribuiu {{fact:attr.country.AR}}, Brasil {{fact:attr.country.BR}} e México {{fact:attr.country.MX}}. Materiais respondeu por {{fact:attr.sector.Materials}}, enquanto industriais contribuiu {{fact:attr.sector.Industrials}}.",
+    "A carteira mantém {{fact:risk.n_long}} posições compradas e {{fact:risk.n_short}} vendidas, exposição bruta de {{fact:risk.gross}} e líquida de {{fact:risk.net}}. A vol ex-ante ficou em {{fact:risk.ex_ante_vol}}, dentro da banda de {{fact:mandate.vol_band_min}} a {{fact:mandate.vol_band_max}}, com beta de {{fact:risk.beta}}, VaR diário de {{fact:risk.var_1d}} e drawdown de {{fact:dd.current}}."
+  ],
+  "risk_flags": [
+    "Aluguel da B3 indisponível na coleta do dia; indicadores dependentes dessa fonte exigem cautela, sem interpretar ausência como risco zero.",
+    "Merval sem observação de preço no pregão; volumes nulos com preço válido permanecem ausentes, sem interpretação de liquidez zero.",
+    "Paridades entre ADRs e ações locais e câmbio não oficial limitam comparações; revisões históricas e barras tardias não foram aplicadas.",
+    "Fundamentos atuais não constituem informação histórica point-in-time; notícias indisponíveis para parte dos emissores."
+  ]
+}

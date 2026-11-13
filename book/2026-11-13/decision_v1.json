@@ -1,0 +1,59 @@
+{
+  "acknowledged_soft_checks": [],
+  "approval_hash": "db34990745886ae57ecac73cd016353911590b6d89a6bee32005f8825fc133c1",
+  "approver": "CDP — Cabra da Peste (PM autônomo)",
+  "audit_head_hash": "07299938bdf44124bed57adcaff923816425c199e71b347054cad73d1465b445",
+  "co_sign_reasons": [],
+  "co_signed_at": null,
+  "co_signer": null,
+  "config_hash": "2ddf7d89ac769dea9781ac51fb825fa55931bf19250fa64e2f7447aa91f34ff0",
+  "conviction": null,
+  "decided_at": "2026-11-13T14:15:45.134088Z",
+  "decision": "APPROVE",
+  "journal": {
+    "ai_vs_quant_vs_pm": "Abstenção do agente PM: carteira só-quant com as restrições vigentes.",
+    "alternatives_considered": "O que mudou na visão: A coleta incorpora preços correntes provisórios e notícias de resultados. Vetamos shorts em Galicia e Volaris por squeeze e em Sigma Lithium pela combinação de catalisador corrente não reconciliado e risco de reversão. O último retrato disponível da cobertura permanece referência; não afirmamos reavaliação integral posterior aos resultados. A revisão de Sabesp, PagSeguro, Smart Fit e Aura utilizou notas publicadas como leitura indireta, sem nova diligência documental integral.",
+    "bias_checklist": {},
+    "catalysts": [],
+    "horizon_weeks": 8,
+    "key_variables": [
+      "Regime: neutro",
+      "Postura: defensiva → defensiva",
+      "Escada de drawdown: normal"
+    ],
+    "mental_state": "Mente: codex",
+    "positions": [
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Piora persistente da contribuição depois de perdas e custo de captação.",
+        "issuer_id": "BR_PAGS",
+        "premortem": "Crescimento de crédito e pagamentos consome capital sem retorno atribuível ao acionista.",
+        "probability_correct": null,
+        "thesis": "PagSeguro permanece sujeito à seleção quantitativa; contribuição por cliente precisa remunerar captação, perdas e capital. Sem inclinação fundamental adicional.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Financiamento e execução das obras absorvem os ganhos operacionais.",
+        "issuer_id": "BR_SABESP",
+        "premortem": "Melhora operacional não se converte em caixa após investimento e serviço da dívida.",
+        "probability_correct": null,
+        "thesis": "Sabesp exige acompanhar caixa após juros e investimento. A nota publicada não comprova reavaliação integral do resultado nesta semana.",
+        "variant_perception": ""
+      }
+    ],
+    "premortem": "BR_PAGS: Crescimento de crédito e pagamentos consome capital sem retorno atribuível ao acionista. | BR_SABESP: Melhora operacional não se converte em caixa após investimento e serviço da dívida.",
+    "situation": "Leitura neutra, de baixa convicção, e postura defensiva. Drawdown em -0,29% e volatilidade realizada em 2,03%. A revisão fundamental atualizada de todos os candidatos e posições não foi concluída. A abstenção discricionária preserva a seleção quantitativa sob os portões do mandato e as restrições prudenciais. Não inferimos disponibilidade executável de aluguel ou direção de resultados a partir de manchetes.",
+    "sizing_rationale": "Postura solicitada defensiva; efetiva defensiva (escada de drawdown: normal); vol-alvo 4,00% e gross máximo 2,00x (calculados por código). "
+  },
+  "mind": "codex",
+  "mode": "AUTONOMOUS",
+  "pm_decision_hash": "3226160c33bb1c883b9981f77d91aed84986d45b5533a7c242001054006e3a4a",
+  "proposal_hash": "1a97fab8c408f8eeadb5a1fb2e33d7217575fbb55ca8b7d424c3f6200ec0aa10",
+  "proposal_id": "CDP-2026-11-13-cdp-restricoes",
+  "rationale": "Postura defensiva; regime neutro. Leitura neutra, de baixa convicção, e postura defensiva. Drawdown em -0,29% e volatilidade realizada em 2,03%. A revisão fundamental atualizada de todos os candidatos e posições não foi concluída. A abstenção discricionária preserva a seleção quantitativa sob os portões do mandato e as restrições prudenciais. Não inferimos disponibilidade executável de aluguel ou direção de resultados a partir de manchetes. Caminho: cdp-restricoes.",
+  "research_hash": "123aa51eecabc6092c7af94a2ed7189cea50fed993a7b39fb0608c434f95060b",
+  "risk_gate_hash": "a44b192d2b569e2fed2443912144d3d283add11f4e6e79d12e9e76edbcad8973",
+  "snapshot_hash": "375e1c799ba63c8316e190984356203be568c5c049e535a3a577b5e4ee592ff0",
+  "week": "2026-11-13"
+}

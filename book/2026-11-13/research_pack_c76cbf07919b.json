@@ -1,0 +1,355 @@
+{
+  "is_synthetic": false,
+  "macro": [
+    {
+      "created_at": "2026-11-13T14:12:58Z",
+      "evidence": [
+        {
+          "kind": "source",
+          "note": "",
+          "ref_id": "https://www.bcra.gob.ar/publicaciones/informe-de-politica-monetaria-ipom-tercer-trimestre-de-2026/"
+        }
+      ],
+      "is_synthetic": false,
+      "key_events": [],
+      "model": null,
+      "note_id": "2026-11-13-ar",
+      "portfolio_implications": [],
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "regime": "neutro",
+      "risks": [
+        "Liquidez, câmbio e estabilização monetária."
+      ],
+      "scope": "AR",
+      "stance": 0,
+      "summary": "O BCRA publicou relatório de política monetária de 3T26. Abstenção direcional: a revisão integral do documento e das condições cambiais não foi concluída.",
+      "week": "2026-11-13"
+    },
+    {
+      "created_at": "2026-11-13T14:12:58Z",
+      "evidence": [
+        {
+          "kind": "source",
+          "note": "",
+          "ref_id": "https://www.bcb.gov.br/detalhenoticia/20739/nota/"
+        }
+      ],
+      "is_synthetic": false,
+      "key_events": [],
+      "model": null,
+      "note_id": "2026-11-13-br",
+      "portfolio_implications": [],
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "regime": "neutro",
+      "risks": [
+        "Juros, inflação e financiamento corporativo."
+      ],
+      "scope": "BR",
+      "stance": 0,
+      "summary": "Abstenção macro. O calendário do Banco Central identifica a reunião de novembro; a revisão integral da comunicação e sua transmissão setorial não foi concluída.",
+      "week": "2026-11-13"
+    },
+    {
+      "created_at": "2026-11-13T14:12:58Z",
+      "evidence": [
+        {
+          "kind": "source",
+          "note": "",
+          "ref_id": "https://www.bcentral.cl/noticias-y-publicaciones/prensa/calendario-de-politica-monetaria-y-financiera"
+        }
+      ],
+      "is_synthetic": false,
+      "key_events": [],
+      "model": null,
+      "note_id": "2026-11-13-cl",
+      "portfolio_implications": [],
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "regime": "neutro",
+      "risks": [
+        "Juros locais, cobre e câmbio."
+      ],
+      "scope": "CL",
+      "stance": 0,
+      "summary": "Abstenção macro. O calendário oficial de política monetária foi localizado, sem inferência de decisão futura ou de direção para os ativos.",
+      "week": "2026-11-13"
+    },
+    {
+      "created_at": "2026-11-13T14:12:58Z",
+      "evidence": [
+        {
+          "kind": "source",
+          "note": "",
+          "ref_id": "https://www.banrep.gov.co/es/minutas"
+        }
+      ],
+      "is_synthetic": false,
+      "key_events": [],
+      "model": null,
+      "note_id": "2026-11-13-co",
+      "portfolio_implications": [],
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "regime": "neutro",
+      "risks": [
+        "Inflação, risco fiscal e exposição a petróleo."
+      ],
+      "scope": "CO",
+      "stance": 0,
+      "summary": "Abstenção macro. A comunicação pública do Banco de la República mantém a inflação como tema de acompanhamento. Não inferimos prêmio direcional sem análise conjunta de juros e risco fiscal.",
+      "week": "2026-11-13"
+    },
+    {
+      "created_at": "2026-11-13T14:12:58Z",
+      "evidence": [
+        {
+          "kind": "source",
+          "note": "",
+          "ref_id": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm"
+        }
+      ],
+      "is_synthetic": false,
+      "key_events": [],
+      "model": null,
+      "note_id": "2026-11-13-global",
+      "portfolio_implications": [],
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "regime": "neutro",
+      "risks": [
+        "Juros em dólar e correlações podem alterar o risco fatorial."
+      ],
+      "scope": "GLOBAL",
+      "stance": 0,
+      "summary": "Sem inclinação macro. O comunicado do Federal Reserve de 2026-10-28 é referência pública; sua transmissão à carteira permanece incerta e não justifica aposta direcional nesta análise.",
+      "week": "2026-11-13"
+    },
+    {
+      "created_at": "2026-11-13T14:12:58Z",
+      "evidence": [
+        {
+          "kind": "source",
+          "note": "",
+          "ref_id": "https://www.banxico.org.mx/publicaciones-y-prensa/anuncios-de-las-decisiones-de-politica-monetaria/anuncios-politica-monetaria-t.html"
+        }
+      ],
+      "is_synthetic": false,
+      "key_events": [],
+      "model": null,
+      "note_id": "2026-11-13-mx",
+      "portfolio_implications": [],
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "regime": "neutro",
+      "risks": [
+        "Inflação, câmbio e demanda externa."
+      ],
+      "scope": "MX",
+      "stance": 0,
+      "summary": "Abstenção macro. A listagem pública de decisões do Banxico foi localizada; sem conciliação integral da comunicação vigente, não assumimos afrouxamento monetário ou valorização cambial.",
+      "week": "2026-11-13"
+    },
+    {
+      "created_at": "2026-11-13T14:12:58Z",
+      "evidence": [],
+      "is_synthetic": false,
+      "key_events": [],
+      "model": null,
+      "note_id": "2026-11-13-pe",
+      "portfolio_implications": [],
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "regime": "neutro",
+      "risks": [
+        "Lacuna de confirmação primária da política monetária e exposição a metais."
+      ],
+      "scope": "PE",
+      "stance": 0,
+      "summary": "Abstenção macro. A busca não confirmou nesta análise o documento primário corrente do programa monetário; não atribuímos decisão ou trajetória de juros ao BCRP.",
+      "week": "2026-11-13"
+    }
+  ],
+  "mind": "codex",
+  "news": [
+    {
+      "is_synthetic": false,
+      "issuer_ids": [
+        "BR_SIGMALITH"
+      ],
+      "language": "en",
+      "news_id": "rss_9859a5097c89",
+      "published_at": "2026-11-13T12:25:02Z",
+      "source": "Yahoo! Finance Canada",
+      "title": "Sigma Lithium Corporation (SGML) Reports Q3 Loss, Misses Revenue Estimates",
+      "untrusted": true,
+      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNQTVveVBZTV94QmUzOXBicFVNTVI3cjc0VXRRdWdQSmhoQjlTd0RRbWZwSHVrdlBPczlPTy02RWtWUEMtVlFscGlQcFVucWRTY3p1a1ZoSkJYWjF3cVZLTXVnODVPZjRfdDlrWld6bTQwMEZqaFY1cVhFckQ1aGl2RzRxV0pOSGFHdlF1OTZIb18?oc=5"
+    },
+    {
+      "is_synthetic": false,
+      "issuer_ids": [
+        "BR_SIGMALITH"
+      ],
+      "language": "en",
+      "news_id": "rss_b7611c88ed4f",
+      "published_at": "2026-11-13T12:27:00Z",
+      "source": "Yahoo! Finance Canada",
+      "title": "Sigma Lithium Reports 3Q 26 Results: Resilient Profitability and Cash Flow: 32% Net Revenue Margin, Strengthened Balance Sheet",
+      "untrusted": true,
+      "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxNNUU1Tm9IdU9mZzRLWkpnc1lvNTNZMENZTldUUnA0MERUSy1sU3RQc3R4TzFBTlVBV19iZWFiUGYtVVZVS2VaWXJVSjFVbjRUMXY5cDNRa25ndVFGR0hTNVp2c284YmZDOTRGZEhIWHJIWlhXaXZPakQya0NXd0NVOG5B?oc=5"
+    }
+  ],
+  "notes": [
+    {
+      "bear_points": [],
+      "bull_points": [],
+      "catalysts": [],
+      "confidence": 0.3,
+      "created_at": "2026-11-13T14:12:58Z",
+      "evidence": [
+        {
+          "kind": "fact",
+          "note": "",
+          "ref_id": "AR_GALICIA.squeeze_score"
+        }
+      ],
+      "horizon_weeks": 8,
+      "input_hash": "c5f2dec20f19446d9dec5daf03948744f66b6b2f04b81b67724a78220705eef7",
+      "is_synthetic": false,
+      "issuer_id": "AR_GALICIA",
+      "key_risks": [],
+      "model": null,
+      "note_id": "2026-11-13-galicia-risco",
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "role": "short_risk",
+      "squeeze": {
+        "rationale": "Risco de cobertura forçada; não presumir execução do aluguel a partir de consenso público.",
+        "verdict": "veto"
+      },
+      "stance": 0,
+      "thesis": "Abstenção direcional. O squeeze em {{fact:AR_GALICIA.squeeze_score}} recomenda veto prudencial ao short; controle e aluguel corrente não foram reconciliados nesta análise.",
+      "week": "2026-11-13"
+    },
+    {
+      "bear_points": [],
+      "bull_points": [],
+      "catalysts": [],
+      "confidence": 0.2,
+      "created_at": "2026-11-13T14:12:58Z",
+      "evidence": [
+        {
+          "kind": "fact",
+          "note": "",
+          "ref_id": "BR_SIGMALITH.squeeze_score"
+        },
+        {
+          "kind": "news",
+          "note": "",
+          "ref_id": "rss_9859a5097c89"
+        },
+        {
+          "kind": "news",
+          "note": "",
+          "ref_id": "rss_b7611c88ed4f"
+        }
+      ],
+      "horizon_weeks": 8,
+      "input_hash": "82f86d50d90242eeadb6c95cd985953a72c6dddb6832dc690f1c67a761691b2a",
+      "is_synthetic": false,
+      "issuer_id": "BR_SIGMALITH",
+      "key_risks": [],
+      "model": null,
+      "note_id": "2026-11-13-sigma-risco",
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "role": "short_risk",
+      "squeeze": {
+        "rationale": "Resultado corrente com informação não reconciliada e risco de reversão.",
+        "verdict": "veto"
+      },
+      "stance": 0,
+      "thesis": "Notícias recebidas sobre Sigma Lithium apresentam leituras distintas do resultado. Sem conciliação integral do release, não atribuímos direção ao balanço. Veto prudencial ao short diante de catalisador corrente e squeeze em {{fact:BR_SIGMALITH.squeeze_score}}.",
+      "week": "2026-11-13"
+    },
+    {
+      "bear_points": [],
+      "bull_points": [],
+      "catalysts": [],
+      "confidence": 0.3,
+      "created_at": "2026-11-13T14:12:58Z",
+      "evidence": [
+        {
+          "kind": "fact",
+          "note": "",
+          "ref_id": "MX_VOLARIS.squeeze_score"
+        }
+      ],
+      "horizon_weeks": 8,
+      "input_hash": "31e1d707af294273ad7f46eef71697ab48e0a5ce59b9b5440040c59533d984f5",
+      "is_synthetic": false,
+      "issuer_id": "MX_VOLARIS",
+      "key_risks": [],
+      "model": null,
+      "note_id": "2026-11-13-volaris-risco",
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "role": "short_risk",
+      "squeeze": {
+        "rationale": "O sinal quantitativo não substitui confirmação de capacidade de execução.",
+        "verdict": "veto"
+      },
+      "stance": 0,
+      "thesis": "Abstenção direcional. Squeeze em {{fact:MX_VOLARIS.squeeze_score}}; veto prudencial ao short sem confirmação adicional de catalisadores e aluguel.",
+      "week": "2026-11-13"
+    }
+  ],
+  "provider": "imported",
+  "snapshot_id": "store-2026-10-02+29-2026-11-12",
+  "views": [
+    {
+      "author": "imported:codex",
+      "confidence": 1.0,
+      "issuer_id": "AR_GALICIA",
+      "max_abs_weight": null,
+      "no_long": false,
+      "no_short": true,
+      "note_ids": [
+        "2026-11-13-galicia-risco"
+      ],
+      "rationale": "Risco de cobertura forçada; não presumir execução do aluguel a partir de consenso público.",
+      "score": 0,
+      "source": "ai"
+    },
+    {
+      "author": "imported:codex",
+      "confidence": 1.0,
+      "issuer_id": "BR_SIGMALITH",
+      "max_abs_weight": null,
+      "no_long": false,
+      "no_short": true,
+      "note_ids": [
+        "2026-11-13-sigma-risco"
+      ],
+      "rationale": "Resultado corrente com informação não reconciliada e risco de reversão.",
+      "score": 0,
+      "source": "ai"
+    },
+    {
+      "author": "imported:codex",
+      "confidence": 1.0,
+      "issuer_id": "MX_VOLARIS",
+      "max_abs_weight": null,
+      "no_long": false,
+      "no_short": true,
+      "note_ids": [
+        "2026-11-13-volaris-risco"
+      ],
+      "rationale": "O sinal quantitativo não substitui confirmação de capacidade de execução.",
+      "score": 0,
+      "source": "ai"
+    }
+  ],
+  "week": "2026-11-13"
+}

@@ -1,0 +1,16 @@
+{
+ "mind":"codex",
+ "market_view":"Leitura neutra, de baixa convicção, e postura defensiva. Drawdown em {{fact:cdp.drawdown}} e volatilidade realizada em {{fact:cdp.realized_vol_21d}}. A revisão fundamental atualizada de todos os candidatos e posições não foi concluída. A abstenção discricionária preserva a seleção quantitativa sob os portões do mandato e as restrições prudenciais. Não inferimos disponibilidade executável de aluguel ou direção de resultados a partir de manchetes.",
+ "what_changed":"A coleta incorpora preços correntes provisórios e notícias de resultados. Vetamos shorts em Galicia e Volaris por squeeze e em Sigma Lithium pela combinação de catalisador corrente não reconciliado e risco de reversão. O último retrato disponível da cobertura permanece referência; não afirmamos reavaliação integral posterior aos resultados. A revisão de Sabesp, PagSeguro, Smart Fit e Aura utilizou notas publicadas como leitura indireta, sem nova diligência documental integral.",
+ "evaluation_last_week":"A decisão anterior manteve abstenção e postura defensiva. A avaliação disponível classifica as restrições anteriores como sem inclinação; não atribuímos acerto direcional aos retornos residuais desses emissores nem antecipamos avaliação ainda imatura.",
+ "regime":"neutral","risk_posture":"defensiva","abstain":true,"views":[],
+ "exclusions":[
+ {"issuer_id":"AR_GALICIA","no_short":true,"reason":"Veto prudencial ao short em Galicia diante de squeeze de {{fact:AR_GALICIA.squeeze_score}}."},
+ {"issuer_id":"MX_VOLARIS","no_short":true,"reason":"Veto prudencial ao short em Volaris diante de squeeze de {{fact:MX_VOLARIS.squeeze_score}}."},
+ {"issuer_id":"BR_SIGMALITH","no_short":true,"reason":"Sigma Lithium: catalisador corrente não reconciliado, manchetes divergentes e squeeze em {{fact:BR_SIGMALITH.squeeze_score}} justificam veto prudencial ao short."}
+ ],
+ "position_journal":[
+ {"issuer_id":"BR_PAGS","thesis":"PagSeguro permanece sujeito à seleção quantitativa; contribuição por cliente precisa remunerar captação, perdas e capital. Sem inclinação fundamental adicional.","invalidation_criteria":"Piora persistente da contribuição depois de perdas e custo de captação.","premortem":"Crescimento de crédito e pagamentos consome capital sem retorno atribuível ao acionista."},
+ {"issuer_id":"BR_SABESP","thesis":"Sabesp exige acompanhar caixa após juros e investimento. A nota publicada não comprova reavaliação integral do resultado nesta semana.","invalidation_criteria":"Financiamento e execução das obras absorvem os ganhos operacionais.","premortem":"Melhora operacional não se converte em caixa após investimento e serviço da dívida."}
+ ]
+}

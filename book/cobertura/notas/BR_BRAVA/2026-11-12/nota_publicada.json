@@ -1,0 +1,316 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-12",
+    "manifest_sha256": "9343d014e299fee39ae5daf0ca67de605fec8f2a81ec3ef22969c072805ea036",
+    "modelo_as_of": "2026-11-12"
+  },
+  "conviccao": 1,
+  "data": "2026-11-12",
+  "hashes": {
+    "contexto": "ff6af8dccdce1d438e77c45ea130c6b5eca3d49b0c7c2d92a6bd729e121cc2be",
+    "factbook": "7da1ae6f900949f92a445ce0d1895bb0d8644da2663206e833ab37369e983f1c",
+    "nota_json": "0e1d9d94de67ed718bc81ce6e56e1fd410e5124038331df16267775c74dca5c8"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_BRAVA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-09",
+  "published_at": "2026-11-13T01:39:37.735319+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese de retorno exige conciliar investimento, proteção e dívida sem tratar recursos vinculados como liquidez livre.",
+        "titulo": "Compromissos e liquidez"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Entrada prevista de novos poços em Atlanta no primeiro semestre de 2027; cronograma sujeito à execução.",
+        "direcao": "positivo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "outro"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo R$ 18,32, condicionado à geração de caixa e adequação das premissas.",
+      "otimista": "Hipótese: estabilidade operacional e investimento produtivo. Cenário do modelo em R$ 39,16.",
+      "pessimista": "Hipótese: falhas e obrigações comprimem o valor do capital próprio. Cenário quantitativo R$ 0,00; não constitui previsão de insolvência."
+    },
+    "comentario_valuation": "Rating Neutro, confiança B e dispersão entre métodos 26,75%. Consenso público R$ 22,44, diferença -18,36%; essa comparação não identifica expectativas embutidas. EV/EBITDA 4,5x, frente a 16,3x da PRIO e 3,4x da PetroRecôncavo, sem equiparar portfólios ou bases de lucro. Com custo do capital próprio 16,92%, a adequação dos fluxos permanece decisiva.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BRAVA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "16,92%"
+          }
+        ],
+        "texto": "A visão perde sustentação se a geração recorrente após compromissos não remunerar o custo do capital 16,92%.",
+        "titulo": "Critério de invalidação"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-12",
+    "dados_simulados": false,
+    "data": "2026-11-12",
+    "ficha": [
+      {
+        "fato": "val.BR_BRAVA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 14,06"
+      },
+      {
+        "fato": "val.BR_BRAVA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 18,32"
+      },
+      {
+        "fato": "val.BR_BRAVA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+30,28%"
+      },
+      {
+        "fato": "val.BR_BRAVA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_BRAVA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_BRAVA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 39,16"
+      },
+      {
+        "fato": "val.BR_BRAVA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "0,20%"
+      },
+      {
+        "fato": "val.BR_BRAVA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 0,00"
+      },
+      {
+        "fato": "val.BR_BRAVA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BRAVA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "16,92%"
+      },
+      {
+        "fato": "val.BR_BRAVA.wacc",
+        "rotulo": "WACC",
+        "valor": "9,42%"
+      },
+      {
+        "fato": "val.BR_BRAVA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_BRAVA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+54,72%"
+      },
+      {
+        "fato": "val.BR_BRAVA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+12,68%"
+      },
+      {
+        "fato": "val.BR_BRAVA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "4,1x"
+      },
+      {
+        "fato": "val.BR_BRAVA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,5x"
+      },
+      {
+        "fato": "val.BR_BRAVA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 22,44"
+      },
+      {
+        "fato": "val.BR_BRAVA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-18,36%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-12",
+        "id": "F1",
+        "instituicao": "CVM — Brava Energia",
+        "publicado_em": "2026-11-09",
+        "tipo": "Regulador",
+        "titulo": "Release trimestral e comentários da administração",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1586653&numSequencia=1111359&numVersao=1"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Disponibilidade não sustenta produção rentável.",
+      "Caixa após compromissos não remunera o capital."
+    ],
+    "governanca": "O release registra integração ao controlador Ecopetrol. Contratos intragrupo, disciplina de capital e transmissão de valor ao minoritário exigem acompanhamento.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Conferir produção atribuível, custo completo, caixa após proteção, reinvestimento e obrigações por aquisição nos próximos demonstrativos.",
+        "titulo": "Disciplina financeira"
+      }
+    ],
+    "issuer_id": "BR_BRAVA",
+    "lacunas_de_dados": [
+      "Probabilidade implícita pessimista indisponível.",
+      "Retomada efetiva de Atlanta após a previsão de troca não confirmada.",
+      "Guidance consolidado formal não identificado; não equivale a retirada.",
+      "Contratos de proteção, recursos vinculados e obrigações não foram integralmente reconciliados.",
+      "Sem evidência suficiente para atribuir percepção ao mercado ou vantagem competitiva durável."
+    ],
+    "modelo_de_cobertura": "2026-11-12",
+    "negocio": "Produtora integrada de petróleo e gás, com ativos terrestres, marítimos e refino. O release da Brava arquivado na CVM em 09/11/2026 apresenta recuperação do Potiguar e integração com a Ecopetrol.",
+    "nome": "Brava Energia",
+    "o_que_mudou": "Desde 11/10/2026, foi incorporado o resultado de 3T26. A leitura passou a considerar a recuperação terrestre e a interrupção posterior de Atlanta, preservando cautela sobre caixa e retorno ao minoritário.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_COSAN",
+        "nome": "Cosan"
+      },
+      {
+        "issuer_id": "BR_PRIO",
+        "nome": "PRIO"
+      },
+      {
+        "issuer_id": "BR_RECV",
+        "nome": "PetroRecôncavo"
+      },
+      {
+        "issuer_id": "BR_ULTRAPAR",
+        "nome": "Ultrapar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A recuperação terrestre favorece a operação, mas a falha de bomba em Atlanta interrompeu poços em outubro. A hipótese de melhora sustentável exige disponibilidade e produtividade após investimento.",
+        "titulo": "Conversão operacional"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BRAVA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "R$ 18,32"
+          },
+          {
+            "fato": "val.BR_BRAVA.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "R$ 14,06"
+          },
+          {
+            "fato": "val.BR_BRAVA.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "+12,68%"
+          }
+        ],
+        "texto": "Alvo R$ 18,32, contra referência R$ 14,06; alpha relativo +12,68%. A atratividade quantitativa não encerra a diligência operacional.",
+        "titulo": "Margem de avaliação condicionada"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A integração operacional pode favorecer monetização; vantagem relativa durável permanece hipótese, sem comparação independente recebida.",
+        "titulo": "Infraestrutura e execução"
+      }
+    ],
+    "publicada_em": "2026-11-13T01:39:37.735319+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O custo de extração divulgado exclui afretamento e recebeu reversões de provisões em ativos não operados. A análise de recorrência deve preservar essas diferenças.",
+        "titulo": "Caixa e recorrência"
+      }
+    ],
+    "resumo": "Visão neutra, com baixa convicção. O alvo de R$ 18,32 e o potencial de +30,28% exigem execução e disciplina financeira. A hipótese depende de produção rentável após investimento, proteção financeira e serviço da dívida.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Paradas e desembolsos financeiros podem absorver o ganho operacional."
+      }
+    ],
+    "setor": "Energia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Brava Energia — recuperação operacional exige caixa após proteção e investimento",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O release de 3T26 registra EBITDA ajustado maior na comparação anual e menor sequencialmente. Marcação de hedge sem caixa difere de liquidação efetiva. Caixa operacional antes da proteção não equivale ao disponível após esse desembolso. Não foi identificado guidance agregado formal no documento; previsões de projetos não demonstram revisão consolidada.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar produção atribuível, disponibilidade e custo completo por campo; a hipótese enfraquece se o reinvestimento não sustentar caixa.",
+        "vetor": "Retorno sobre investimento"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

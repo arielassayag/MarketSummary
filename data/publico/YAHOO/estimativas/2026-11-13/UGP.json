@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 5.82,
+  "high": 9.0,
+  "low": 5.9,
+  "mean": 7.40286,
+  "median": 7.22
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.119,
+   "currency": "USD",
+   "growth": -0.28440002,
+   "high": 0.119,
+   "low": 0.119,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.1663
+  },
+  "+1y": {
+   "avg": 0.58658,
+   "currency": "USD",
+   "growth": -0.2585,
+   "high": 0.63616,
+   "low": 0.537,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.7911
+  },
+  "0q": {
+   "avg": 0.159,
+   "currency": "USD",
+   "growth": 1.1342,
+   "high": 0.159,
+   "low": 0.159,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.0745
+  },
+  "0y": {
+   "avg": 0.7911,
+   "currency": "USD",
+   "growth": 2.1022,
+   "high": 0.81819,
+   "low": 0.764,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.25501
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 37414368000,
+   "currency": "BRL",
+   "growth": 0.018,
+   "high": 37414368000,
+   "low": 37414368000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 36752000000
+  },
+  "+1y": {
+   "avg": 163415826540,
+   "currency": "BRL",
+   "growth": -0.0273,
+   "high": 180835043400,
+   "low": 143700000000,
+   "numberOfAnalysts": 15,
+   "yearAgoRevenue": 167996423960
+  },
+  "0q": {
+   "avg": 43689830640,
+   "currency": "BRL",
+   "growth": 0.1505,
+   "high": 47085373510,
+   "low": 38906000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 37973000000
+  },
+  "0y": {
+   "avg": 167996423960,
+   "currency": "BRL",
+   "growth": 0.17909999,
+   "high": 168105213000,
+   "low": 167887634930,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 142478000000
+  }
+ },
+ "ticker": "UGP",
+ "url": "https://finance.yahoo.com/quote/UGP"
+}

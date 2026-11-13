@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 27.22,
+  "high": 38.0,
+  "low": 31.8,
+  "mean": 34.58875,
+  "median": 35.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.55,
+   "currency": "BRL",
+   "growth": 0.25,
+   "high": 0.55,
+   "low": 0.55,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.44
+  },
+  "+1y": {
+   "avg": 2.39165,
+   "currency": "BRL",
+   "growth": 0.4343,
+   "high": 2.92,
+   "low": 1.86,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 1.66747
+  },
+  "0q": {
+   "avg": 0.4,
+   "currency": "BRL",
+   "growth": -0.2794,
+   "high": 0.4,
+   "low": 0.4,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.55511
+  },
+  "0y": {
+   "avg": 1.66747,
+   "currency": "BRL",
+   "growth": -0.0962,
+   "high": 1.96,
+   "low": 1.33,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 1.84503
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 8876465300,
+   "currency": "BRL",
+   "growth": 0.3944,
+   "high": 12599628000,
+   "low": 7118080790,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 6366000000
+  },
+  "+1y": {
+   "avg": 31427857380,
+   "currency": "BRL",
+   "growth": 0.1701,
+   "high": 50398513000,
+   "low": 27665100000,
+   "numberOfAnalysts": 13,
+   "yearAgoRevenue": 26859597980
+  },
+  "0q": {
+   "avg": 6494000000,
+   "currency": "BRL",
+   "growth": 0.1429,
+   "high": 6494000000,
+   "low": 6494000000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 5682000000
+  },
+  "0y": {
+   "avg": 26859597980,
+   "currency": "BRL",
+   "growth": 0.2092,
+   "high": 41206145000,
+   "low": 24016000000,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 22213000000
+  }
+ },
+ "ticker": "SBSP3.SA",
+ "url": "https://finance.yahoo.com/quote/SBSP3.SA"
+}

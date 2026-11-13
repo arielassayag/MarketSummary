@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 29.75,
+  "high": 85.0,
+  "low": 43.0,
+  "mean": 60.0,
+  "median": 60.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.4295,
+   "currency": "USD",
+   "growth": 4.8541,
+   "high": 2.30646,
+   "low": 0.89,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": -0.3709
+  },
+  "+1y": {
+   "avg": 6.93963,
+   "currency": "USD",
+   "growth": 0.6117,
+   "high": 8.847,
+   "low": 5.6,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 4.30566
+  },
+  "0q": {
+   "avg": 1.16864,
+   "currency": "USD",
+   "growth": 4.0487,
+   "high": 2.08869,
+   "low": 0.834,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": -0.38332
+  },
+  "0y": {
+   "avg": 4.30566,
+   "currency": "USD",
+   "growth": 3.9673002,
+   "high": 5.84199,
+   "low": 3.34,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 0.8668
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1907901000,
+   "currency": "USD",
+   "growth": 0.33200002,
+   "high": 1907901000,
+   "low": 1907901000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 1432328580
+  },
+  "+1y": {
+   "avg": 9003667920,
+   "currency": "USD",
+   "growth": 0.2474,
+   "high": 10056376000,
+   "low": 7787600540,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 7217847510
+  },
+  "0q": {
+   "avg": 1710815500,
+   "currency": "USD",
+   "growth": 0.4745,
+   "high": 1746268000,
+   "low": 1675363000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 1160292080
+  },
+  "0y": {
+   "avg": 7217847510,
+   "currency": "USD",
+   "growth": 0.39049998,
+   "high": 7538453000,
+   "low": 6956581000,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 5190935050
+  }
+ },
+ "ticker": "GGAL",
+ "url": "https://finance.yahoo.com/quote/GGAL"
+}

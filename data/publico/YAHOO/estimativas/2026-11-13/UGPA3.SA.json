@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 32.77,
+  "high": 48.0,
+  "low": 29.5,
+  "mean": 38.775,
+  "median": 40.25
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.875,
+   "currency": "BRL",
+   "growth": 0.0671,
+   "high": 1.08,
+   "low": 0.67,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.82
+  },
+  "+1y": {
+   "avg": 3.31368,
+   "currency": "BRL",
+   "growth": -0.3412,
+   "high": 3.67,
+   "low": 2.94105,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 5.03
+  },
+  "0q": {
+   "avg": 0.8691,
+   "currency": "BRL",
+   "growth": 1.2358999,
+   "high": 0.8691,
+   "low": 0.8691,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.3887
+  },
+  "0y": {
+   "avg": 5.03,
+   "currency": "BRL",
+   "growth": 2.7802,
+   "high": 5.03,
+   "low": 5.03,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 1.3306
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 37414368000,
+   "currency": "BRL",
+   "growth": 0.018,
+   "high": 37414368000,
+   "low": 37414368000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 36752000000
+  },
+  "+1y": {
+   "avg": 163415826540,
+   "currency": "BRL",
+   "growth": -0.0273,
+   "high": 180835043400,
+   "low": 143700000000,
+   "numberOfAnalysts": 15,
+   "yearAgoRevenue": 167996423960
+  },
+  "0q": {
+   "avg": 43689830640,
+   "currency": "BRL",
+   "growth": 0.1505,
+   "high": 47085373510,
+   "low": 38906000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 37973000000
+  },
+  "0y": {
+   "avg": 167996423960,
+   "currency": "BRL",
+   "growth": 0.17909999,
+   "high": 168105213000,
+   "low": 167887634930,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 142478000000
+  }
+ },
+ "ticker": "UGPA3.SA",
+ "url": "https://finance.yahoo.com/quote/UGPA3.SA"
+}

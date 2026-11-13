@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 2209.9,
+  "high": 3000.0,
+  "low": 2580.0,
+  "mean": 2827.25,
+  "median": 2800.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 31.8,
+   "currency": "CLP",
+   "growth": null,
+   "high": 31.8,
+   "low": 31.8,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 165.3825,
+   "currency": "CLP",
+   "growth": 0.0825,
+   "high": 171.57,
+   "low": 158.1161,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 152.7765
+  },
+  "0q": {
+   "avg": 35.56,
+   "currency": "CLP",
+   "growth": -0.2402,
+   "high": 35.56,
+   "low": 35.56,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 46.8
+  },
+  "0y": {
+   "avg": 152.7765,
+   "currency": "CLP",
+   "growth": -0.1427,
+   "high": 164.75,
+   "low": 145.34,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 178.2
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 99922440590,
+   "currency": "CLP",
+   "growth": null,
+   "high": 99922440590,
+   "low": 99922440590,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 445910221160,
+   "currency": "CLP",
+   "growth": 0.1114,
+   "high": 462597000000,
+   "low": 422189000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 401209000000.0
+  },
+  "0q": {
+   "avg": 117312023610,
+   "currency": "CLP",
+   "growth": 0.1242,
+   "high": 117312023610,
+   "low": 117312023610,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 104353000000.0
+  },
+  "0y": {
+   "avg": 401209000000,
+   "currency": "CLP",
+   "growth": 0.0616,
+   "high": 401209000000,
+   "low": 401209000000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 377941000000.0
+  }
+ },
+ "ticker": "CENCOMALLS.SN",
+ "url": "https://finance.yahoo.com/quote/CENCOMALLS.SN"
+}

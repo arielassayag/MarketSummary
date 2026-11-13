@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 2560.0,
+  "high": 3300.0,
+  "low": 2200.0,
+  "mean": 2604.0,
+  "median": 2650.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 54.1,
+   "currency": "COP",
+   "growth": -0.2293,
+   "high": 54.1,
+   "low": 54.1,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 70.2
+  },
+  "+1y": {
+   "avg": 249.095,
+   "currency": "COP",
+   "growth": -0.4093,
+   "high": 273.35,
+   "low": 224.84,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 421.66
+  },
+  "0q": {
+   "avg": 131.77,
+   "currency": "COP",
+   "growth": 2.5904,
+   "high": 131.77,
+   "low": 131.77,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 36.7004
+  },
+  "0y": {
+   "avg": 421.66,
+   "currency": "COP",
+   "growth": 0.9234,
+   "high": 438.77,
+   "low": 404.55,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 219.2297
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 24164436440000,
+   "currency": "COP",
+   "growth": -0.1558,
+   "high": 24164436440000,
+   "low": 24164436440000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 28625000000000
+  },
+  "+1y": {
+   "avg": 119597296253260,
+   "currency": "COP",
+   "growth": -0.105299994,
+   "high": 145635985021000,
+   "low": 89059664400000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 133670239200000
+  },
+  "0q": {
+   "avg": 36724065154160,
+   "currency": "COP",
+   "growth": 0.2743,
+   "high": 41355229281470,
+   "low": 33073966181000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 28819000000000
+  },
+  "0y": {
+   "avg": 133670239200000,
+   "currency": "COP",
+   "growth": 0.1168,
+   "high": 133670239200000,
+   "low": 133670239200000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 119694000000000
+  }
+ },
+ "ticker": "ECOPETROL.CL",
+ "url": "https://finance.yahoo.com/quote/ECOPETROL.CL"
+}

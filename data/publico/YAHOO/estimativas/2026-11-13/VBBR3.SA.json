@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 30.57,
+  "high": 48.0,
+  "low": 30.3,
+  "mean": 41.425,
+  "median": 42.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.04,
+   "currency": "BRL",
+   "growth": -0.2242,
+   "high": 1.17,
+   "low": 0.91,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 1.3406
+  },
+  "+1y": {
+   "avg": 3.5175,
+   "currency": "BRL",
+   "growth": -0.4018,
+   "high": 3.69,
+   "low": 3.31,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 5.88
+  },
+  "0q": {
+   "avg": 1.42,
+   "currency": "BRL",
+   "growth": 1.6617,
+   "high": 1.42,
+   "low": 1.42,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.5335
+  },
+  "0y": {
+   "avg": 5.88,
+   "currency": "BRL",
+   "growth": 1.4916999,
+   "high": 5.88,
+   "low": 5.88,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 2.3598
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 50882792000,
+   "currency": "BRL",
+   "growth": 0.0579,
+   "high": 50882792000,
+   "low": 50882792000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 48100000000
+  },
+  "+1y": {
+   "avg": 216034018050,
+   "currency": "BRL",
+   "growth": -0.0291,
+   "high": 244783000000,
+   "low": 191251238490,
+   "numberOfAnalysts": 14,
+   "yearAgoRevenue": 222512144250
+  },
+  "0q": {
+   "avg": 58584861960,
+   "currency": "BRL",
+   "growth": 0.16430001,
+   "high": 60172089000,
+   "low": 56997634920,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 50318000000
+  },
+  "0y": {
+   "avg": 222512144250,
+   "currency": "BRL",
+   "growth": 0.1757,
+   "high": 229485000000,
+   "low": 219064634920,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 189256000000
+  }
+ },
+ "ticker": "VBBR3.SA",
+ "url": "https://finance.yahoo.com/quote/VBBR3.SA"
+}

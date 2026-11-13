@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 9580.0,
+  "high": 22286.57,
+  "low": 13813.0,
+  "mean": 17284.643,
+  "median": 16519.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 363.09,
+   "currency": "ARS",
+   "growth": 0.5693,
+   "high": 363.09,
+   "low": 363.09,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 231.378
+  },
+  "+1y": {
+   "avg": 1527.8853,
+   "currency": "ARS",
+   "growth": 0.32259998,
+   "high": 1623.88,
+   "low": 1404.2219,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 1155.2369
+  },
+  "0q": {
+   "avg": 324.50235,
+   "currency": "ARS",
+   "growth": 7.2694,
+   "high": 324.50235,
+   "low": 324.50235,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -51.76
+  },
+  "0y": {
+   "avg": 1155.2369,
+   "currency": "ARS",
+   "growth": 1.1222,
+   "high": 1201.47,
+   "low": 1088.4629,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 544.3524
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1463421136040,
+   "currency": "ARS",
+   "growth": 0.42220002,
+   "high": 1552479301000,
+   "low": 1354096107110,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 1028992000000
+  },
+  "+1y": {
+   "avg": 6495871259740,
+   "currency": "ARS",
+   "growth": 0.0864,
+   "high": 7693000000000,
+   "low": 3340741444640,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 5979064030050
+  },
+  "0q": {
+   "avg": 1429735430130,
+   "currency": "ARS",
+   "growth": 0.65559995,
+   "high": 1485851000000,
+   "low": 1323828767510,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 863553000000
+  },
+  "0y": {
+   "avg": 5979064030050,
+   "currency": "ARS",
+   "growth": 0.5561,
+   "high": 6994000000000,
+   "low": 5073652168750,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 3842344000000
+  }
+ },
+ "ticker": "BMA.BA",
+ "url": "https://finance.yahoo.com/quote/BMA.BA"
+}

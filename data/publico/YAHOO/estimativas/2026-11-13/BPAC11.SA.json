@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 54.0,
+  "high": 89.0,
+  "low": 60.0,
+  "mean": 72.61538,
+  "median": 71.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.39,
+   "currency": "BRL",
+   "growth": 0.12100001,
+   "high": 1.4,
+   "low": 1.38,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 1.24
+  },
+  "+1y": {
+   "avg": 6.08599,
+   "currency": "BRL",
+   "growth": 0.1291,
+   "high": 6.44,
+   "low": 5.78,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 5.39
+  },
+  "0q": {
+   "avg": 1.40789,
+   "currency": "BRL",
+   "growth": 0.1831,
+   "high": 1.45728,
+   "low": 1.36,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 1.19
+  },
+  "0y": {
+   "avg": 5.39,
+   "currency": "BRL",
+   "growth": 0.2477,
+   "high": 5.48,
+   "low": 5.3,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 4.32
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 11532264000,
+   "currency": "BRL",
+   "growth": 0.15689999,
+   "high": 11532264000,
+   "low": 11532264000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 9968000000
+  },
+  "+1y": {
+   "avg": 48951174840,
+   "currency": "BRL",
+   "growth": 0.1292,
+   "high": 52037000000,
+   "low": 45987000000,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 43349173500
+  },
+  "0q": {
+   "avg": 11181513480,
+   "currency": "BRL",
+   "growth": 0.2301,
+   "high": 11362000000,
+   "low": 11066313690,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 9090000000
+  },
+  "0y": {
+   "avg": 43349173500,
+   "currency": "BRL",
+   "growth": 0.3121,
+   "high": 44375000000,
+   "low": 42323347000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 33039000000
+  }
+ },
+ "ticker": "BPAC11.SA",
+ "url": "https://finance.yahoo.com/quote/BPAC11.SA"
+}

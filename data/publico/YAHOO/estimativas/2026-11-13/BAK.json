@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 1.13,
+  "high": 2.0,
+  "low": 0.9,
+  "mean": 1.48,
+  "median": 1.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": null,
+   "currency": "USD",
+   "growth": null,
+   "high": null,
+   "low": null,
+   "numberOfAnalysts": null,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": -1.08271,
+   "currency": "USD",
+   "growth": -3.0556,
+   "high": -0.78542,
+   "low": -1.38,
+   "numberOfAnalysts": 2.0,
+   "yearAgoEps": 0.52672
+  },
+  "0q": {
+   "avg": -0.45807,
+   "currency": "USD",
+   "growth": 0.91410005,
+   "high": -0.45807,
+   "low": -0.45807,
+   "numberOfAnalysts": 1.0,
+   "yearAgoEps": -5.33294
+  },
+  "0y": {
+   "avg": 0.52672,
+   "currency": "USD",
+   "growth": 1.1148,
+   "high": 1.99345,
+   "low": -0.94,
+   "numberOfAnalysts": 2.0,
+   "yearAgoEps": -4.58957
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 79753407590,
+   "currency": "BRL",
+   "growth": 0.0712,
+   "high": 94263089380,
+   "low": 70388422520,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 74449000000.0
+  },
+  "0q": {
+   "avg": 18482912680,
+   "currency": "BRL",
+   "growth": 0.1479,
+   "high": 18543167320,
+   "low": 18422658030,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 16101000000.0
+  },
+  "0y": {
+   "avg": 74449000000,
+   "currency": "BRL",
+   "growth": 0.052800003,
+   "high": 74449000000,
+   "low": 74449000000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 70717000000.0
+  }
+ },
+ "ticker": "BAK",
+ "url": "https://finance.yahoo.com/quote/BAK"
+}

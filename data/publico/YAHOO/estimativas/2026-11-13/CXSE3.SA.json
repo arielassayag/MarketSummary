@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 21.35,
+  "high": 25.0,
+  "low": 16.0,
+  "mean": 21.39286,
+  "median": 21.75
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.41333,
+   "currency": "BRL",
+   "growth": 0.1171,
+   "high": 0.47,
+   "low": 0.41,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 0.37
+  },
+  "+1y": {
+   "avg": 1.7041,
+   "currency": "BRL",
+   "growth": 0.0757,
+   "high": 1.75,
+   "low": 1.67064,
+   "numberOfAnalysts": 9,
+   "yearAgoEps": 1.58421
+  },
+  "0q": {
+   "avg": 0.41342,
+   "currency": "BRL",
+   "growth": 0.1174,
+   "high": 0.4,
+   "low": 0.38029,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 0.37
+  },
+  "0y": {
+   "avg": 1.58421,
+   "currency": "BRL",
+   "growth": 0.1074,
+   "high": 1.62,
+   "low": 1.55,
+   "numberOfAnalysts": 9,
+   "yearAgoEps": 1.43052
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1651496000,
+   "currency": "BRL",
+   "growth": 0.0787,
+   "high": 1651496000,
+   "low": 1651496000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 1531041000
+  },
+  "+1y": {
+   "avg": 6817526580,
+   "currency": "BRL",
+   "growth": 0.096099995,
+   "high": 6946867060,
+   "low": 6700000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 6220083000
+  },
+  "0q": {
+   "avg": 1560758000,
+   "currency": "BRL",
+   "growth": 0.0876,
+   "high": 1560758000,
+   "low": 1560758000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 1435100000
+  },
+  "0y": {
+   "avg": 6220083000,
+   "currency": "BRL",
+   "growth": 0.0841,
+   "high": 6365800000,
+   "low": 6116615000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 5737300000
+  }
+ },
+ "ticker": "CXSE3.SA",
+ "url": "https://finance.yahoo.com/quote/CXSE3.SA"
+}

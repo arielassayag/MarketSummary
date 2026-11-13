@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 9.84,
+  "high": 14.0,
+  "low": 7.0,
+  "mean": 10.55,
+  "median": 10.6
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": null,
+   "currency": "USD",
+   "growth": null,
+   "high": null,
+   "low": null,
+   "numberOfAnalysts": null,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 0.1505,
+   "currency": "USD",
+   "growth": 1.1859,
+   "high": 0.65,
+   "low": -0.349,
+   "numberOfAnalysts": 2.0,
+   "yearAgoEps": -0.80962
+  },
+  "0q": {
+   "avg": -0.11883,
+   "currency": "USD",
+   "growth": null,
+   "high": -0.11883,
+   "low": -0.11883,
+   "numberOfAnalysts": 1.0,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": -0.80962,
+   "currency": "USD",
+   "growth": -25.4598,
+   "high": -0.80962,
+   "low": -0.80962,
+   "numberOfAnalysts": 1.0,
+   "yearAgoEps": 0.0331
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "USD",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 4613181170,
+   "currency": "USD",
+   "growth": 0.0323,
+   "high": 4682300000,
+   "low": 4575574970,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 4468705920.0
+  },
+  "0q": {
+   "avg": 1170783460,
+   "currency": "USD",
+   "growth": 0.0097,
+   "high": 1184763930,
+   "low": 1149186440,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 1159500000.0
+  },
+  "0y": {
+   "avg": 4468705920,
+   "currency": "USD",
+   "growth": 0.006,
+   "high": 4487563930,
+   "low": 4451986440,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 4442200000.0
+  }
+ },
+ "ticker": "LILA",
+ "url": "https://finance.yahoo.com/quote/LILA"
+}

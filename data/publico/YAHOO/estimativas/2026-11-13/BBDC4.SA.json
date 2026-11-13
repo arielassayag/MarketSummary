@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 14.52,
+  "high": 23.0,
+  "low": 16.0,
+  "mean": 20.00008,
+  "median": 20.5005
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.635,
+   "currency": "BRL",
+   "growth": -0.014199999,
+   "high": 0.66,
+   "low": 0.61,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.64417
+  },
+  "+1y": {
+   "avg": 2.7008,
+   "currency": "BRL",
+   "growth": 0.0482,
+   "high": 2.94441,
+   "low": 2.43,
+   "numberOfAnalysts": 10,
+   "yearAgoEps": 2.57652
+  },
+  "0q": {
+   "avg": 0.63106,
+   "currency": "BRL",
+   "growth": 0.1441,
+   "high": 0.69489,
+   "low": 0.56039,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 0.5516
+  },
+  "0y": {
+   "avg": 2.57652,
+   "currency": "BRL",
+   "growth": 0.107,
+   "high": 2.65635,
+   "low": 2.5,
+   "numberOfAnalysts": 8,
+   "yearAgoEps": 2.3274
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 39721376000,
+   "currency": "BRL",
+   "growth": 0.0792,
+   "high": 39721376000,
+   "low": 39721376000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 36808000000
+  },
+  "+1y": {
+   "avg": 159750056510,
+   "currency": "BRL",
+   "growth": 0.0621,
+   "high": 166243000000,
+   "low": 143459851470,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 150416634570
+  },
+  "0q": {
+   "avg": 38334877160,
+   "currency": "BRL",
+   "growth": 0.0655,
+   "high": 39661000000,
+   "low": 35233000000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 35978000000
+  },
+  "0y": {
+   "avg": 150416634570,
+   "currency": "BRL",
+   "growth": 0.0956,
+   "high": 160748405180,
+   "low": 137731137340,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 137292000000
+  }
+ },
+ "ticker": "BBDC4.SA",
+ "url": "https://finance.yahoo.com/quote/BBDC4.SA"
+}

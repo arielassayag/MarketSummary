@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xbrl
+  xmlns="http://www.xbrl.org/2003/instance"
+  xmlns:dei="http://xbrl.sec.gov/dei/2025"
+  xmlns:link="http://www.xbrl.org/2003/linkbase"
+  xmlns:xbrldi="http://xbrl.org/2006/xbrldi"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+    <link:schemaRef xlink:href="bap-20241231.xsd" xlink:type="simple"/>
+    <context id="c20240101to20241231">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001001290</identifier>
+        </entity>
+        <period>
+            <startDate>2024-01-01</startDate>
+            <endDate>2024-12-31</endDate>
+        </period>
+    </context>
+    <context id="c20240101to20241231_EntityAddressesAddressTypeAxis_BusinessContactMember">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001001290</identifier>
+            <segment>
+                <xbrldi:explicitMember dimension="dei:EntityAddressesAddressTypeAxis">dei:BusinessContactMember</xbrldi:explicitMember>
+            </segment>
+        </entity>
+        <period>
+            <startDate>2024-01-01</startDate>
+            <endDate>2024-12-31</endDate>
+        </period>
+    </context>
+    <context id="c20241231">
+        <entity>
+            <identifier scheme="http://www.sec.gov/CIK">0001001290</identifier>
+        </entity>
+        <period>
+            <instant>2024-12-31</instant>
+        </period>
+    </context>
+    <unit id="U001">
+        <measure>shares</measure>
+    </unit>
+    <dei:AmendmentFlag
+      contextRef="c20240101to20241231"
+      id="Fact_9e3882dbbe0c4431a46c2548f4f5caf5">false</dei:AmendmentFlag>
+    <dei:CurrentFiscalYearEndDate
+      contextRef="c20240101to20241231"
+      id="Fact_abf8f175d3a54f969b01f7ae3bef82d1">--12-31</dei:CurrentFiscalYearEndDate>
+    <dei:DocumentFiscalYearFocus
+      contextRef="c20240101to20241231"
+      id="Fact_f47d67f9c3e746e0890b59c8744ed8bd">2024</dei:DocumentFiscalYearFocus>
+    <dei:DocumentFiscalPeriodFocus
+      contextRef="c20240101to20241231"
+      id="Fact_aaa46f99a6e0419bbddd5e35fbef4181">FY</dei:DocumentFiscalPeriodFocus>
+    <dei:EntityCentralIndexKey
+      contextRef="c20240101to20241231"
+      id="Fact_5c441be69be442d49fe741f754bf7ecf">0001001290</dei:EntityCentralIndexKey>
+    <dei:EntityIncorporationStateCountryCode
+      contextRef="c20240101to20241231"
+      id="Fact_e94f287736254922aa54d2b0286e0113">D0</dei:EntityIncorporationStateCountryCode>
+    <dei:DocumentType
+      contextRef="c20240101to20241231"
+      id="Fact_de2b403b86724731b238089c378b78e1">20-F/A</dei:DocumentType>
+    <dei:DocumentRegistrationStatement
+      contextRef="c20240101to20241231"
+      id="Fact_51380d9264544e308d16fa11d2a45be2">false</dei:DocumentRegistrationStatement>
+    <dei:DocumentAnnualReport
+      contextRef="c20240101to20241231"
+      id="Fact_a5b67499a28649bab9e2763b76c99a3d">true</dei:DocumentAnnualReport>
+    <dei:DocumentPeriodEndDate
+      contextRef="c20240101to20241231"
+      id="Fact_79080d009f9d4466b628ffe8f21161e5">2024-12-31</dei:DocumentPeriodEndDate>
+    <dei:DocumentTransitionReport
+      contextRef="c20240101to20241231"
+      id="Fact_72ff3d5084fd4583b1d60f7f4aa45153">false</dei:DocumentTransitionReport>
+    <dei:DocumentShellCompanyReport
+      contextRef="c20240101to20241231"
+      id="Fact_064e9864b53147e4ab0c235a03512508">false</dei:DocumentShellCompanyReport>
+    <dei:EntityFileNumber
+      contextRef="c20240101to20241231"
+      id="Fact_a3f98560ae534ec687b7d12fe8f7dc09">1-14014</dei:EntityFileNumber>
+    <dei:EntityRegistrantName
+      contextRef="c20240101to20241231"
+      id="Fact_b6cd96404d2946a4a88cd9cf27ce44e3">CREDICORP LTD</dei:EntityRegistrantName>
+    <dei:EntityAddressAddressLine1
+      contextRef="c20240101to20241231"
+      id="Fact_ca783701a6df43a4be5dfa6484cc36dd">Banco de Credito del Peru</dei:EntityAddressAddressLine1>
+    <dei:EntityAddressAddressLine2
+      contextRef="c20240101to20241231"
+      id="Fact_ae0faede1e314abcb37da33fb2125a17">Calle Centenario 156</dei:EntityAddressAddressLine2>
+    <dei:EntityAddressAddressLine3
+      contextRef="c20240101to20241231"
+      id="Fact_95c44713208342a8a4b5492c7cc19c98">La Molina</dei:EntityAddressAddressLine3>
+    <dei:EntityAddressPostalZipCode
+      contextRef="c20240101to20241231"
+      id="Fact_9a40b89dcb8c45f09d2c112b2f843937">15026</dei:EntityAddressPostalZipCode>
+    <dei:EntityAddressCityOrTown
+      contextRef="c20240101to20241231"
+      id="Fact_a06e34cd34c84b49a35273bd0de527df">Lima</dei:EntityAddressCityOrTown>
+    <dei:EntityAddressCountry
+      contextRef="c20240101to20241231"
+      id="Fact_e49983afcfd94e48bccf4ddf6eca7f4a">PE</dei:EntityAddressCountry>
+    <dei:ContactPersonnelName
+      contextRef="c20240101to20241231_EntityAddressesAddressTypeAxis_BusinessContactMember"
+      id="Fact_0b3c85a556ee485f8e5bca5581d533d3">Alejandro P&#xe9;rez-Reyes</dei:ContactPersonnelName>
+    <dei:EntityAddressAddressLine1
+      contextRef="c20240101to20241231_EntityAddressesAddressTypeAxis_BusinessContactMember"
+      id="Fact_9e9059ae7ace42aeb078f862b6e192c7">Banco de Credito del Peru</dei:EntityAddressAddressLine1>
+    <dei:EntityAddressAddressLine2
+      contextRef="c20240101to20241231_EntityAddressesAddressTypeAxis_BusinessContactMember"
+      id="Fact_54b613e819bc4650960fcf6e2dbdc96e">Calle Centenario 156</dei:EntityAddressAddressLine2>
+    <dei:EntityAddressAddressLine3
+      contextRef="c20240101to20241231_EntityAddressesAddressTypeAxis_BusinessContactMember"
+      id="Fact_a9ff25830a11447399bd36849871e9cf">La Molina</dei:EntityAddressAddressLine3>
+    <dei:EntityAddressPostalZipCode
+      contextRef="c20240101to20241231_EntityAddressesAddressTypeAxis_BusinessContactMember"
+      id="Fact_fa9adb670fa04fb18d8049ed981cdbfb">15026</dei:EntityAddressPostalZipCode>
+    <dei:EntityAddressCityOrTown
+      contextRef="c20240101to20241231_EntityAddressesAddressTypeAxis_BusinessContactMember"
+      id="Fact_08fd6cbd7fd74821a7bcf014a62cad04">Lima</dei:EntityAddressCityOrTown>
+    <dei:EntityAddressCountry
+      contextRef="c20240101to20241231_EntityAddressesAddressTypeAxis_BusinessContactMember"
+      id="Fact_b722eb0cc1234513b7405c885202feaf">PE</dei:EntityAddressCountry>
+    <dei:CountryRegion
+      contextRef="c20240101to20241231_EntityAddressesAddressTypeAxis_BusinessContactMember"
+      id="Fact_949a53d746e240de9376c3d1bc04375f">51</dei:CountryRegion>
+    <dei:CityAreaCode
+      contextRef="c20240101to20241231_EntityAddressesAddressTypeAxis_BusinessContactMember"
+      id="Fact_e6ea1e04dd54456c9ddca7356004cc32">1</dei:CityAreaCode>
+    <dei:LocalPhoneNumber
+      contextRef="c20240101to20241231_EntityAddressesAddressTypeAxis_BusinessContactMember"
+      id="Fact_c5461c929b814aa59df166ceb8f95e7e">313 2000</dei:LocalPhoneNumber>
+    <dei:Security12bTitle
+      contextRef="c20240101to20241231"
+      id="Fact_6eb2d253988d490fae2d8938b11786f4">Common Shares, par value $5.00 per share</dei:Security12bTitle>
+    <dei:TradingSymbol
+      contextRef="c20240101to20241231"
+      id="Fact_9a546053e59042e18a9ee900f0eac49b">BAP</dei:TradingSymbol>
+    <dei:SecurityExchangeName
+      contextRef="c20240101to20241231"
+      id="Fact_a0eefe00c1344cc690f52380d4c77092">NYSE</dei:SecurityExchangeName>
+    <dei:EntityCommonStockSharesOutstanding
+      contextRef="c20241231"
+      decimals="INF"
+      id="Fact_6570ebbd2fe64017bb1a928160bccc63"
+      unitRef="U001">94382317</dei:EntityCommonStockSharesOutstanding>
+    <dei:EntityWellKnownSeasonedIssuer
+      contextRef="c20240101to20241231"
+      id="Fact_d676dac858674ff5a833ce5ea9fe4f1c">Yes</dei:EntityWellKnownSeasonedIssuer>
+    <dei:EntityVoluntaryFilers
+      contextRef="c20240101to20241231"
+      id="Fact_b14e573d4f2942c7bcac3b5c2bd08d14">No</dei:EntityVoluntaryFilers>
+    <dei:EntityCurrentReportingStatus
+      contextRef="c20240101to20241231"
+      id="Fact_b1fc96494f9f4eeda854d6f1f8e54921">Yes</dei:EntityCurrentReportingStatus>
+    <dei:EntityInteractiveDataCurrent
+      contextRef="c20240101to20241231"
+      id="Fact_329db7c95d104ff4be80c1b5a475c651">Yes</dei:EntityInteractiveDataCurrent>
+    <dei:EntityFilerCategory
+      contextRef="c20240101to20241231"
+      id="Fact_8bec0362ff5c44f99c8e035242b3d695">Large Accelerated Filer</dei:EntityFilerCategory>
+    <dei:EntityEmergingGrowthCompany
+      contextRef="c20240101to20241231"
+      id="Fact_b15db372d79d4bb7b4a6880af1d653ef">false</dei:EntityEmergingGrowthCompany>
+    <dei:IcfrAuditorAttestationFlag
+      contextRef="c20240101to20241231"
+      id="Fact_e13b399c877a41de81a71162f9832f89">true</dei:IcfrAuditorAttestationFlag>
+    <dei:DocumentFinStmtErrorCorrectionFlag
+      contextRef="c20240101to20241231"
+      id="Fact_d1d8412a127b4cbaa08a4e7587a33a43">false</dei:DocumentFinStmtErrorCorrectionFlag>
+    <dei:DocumentAccountingStandard
+      contextRef="c20240101to20241231"
+      id="Fact_b03952fefc534d088cb1a519fb458e39">International Financial Reporting Standards</dei:DocumentAccountingStandard>
+    <dei:EntityShellCompany
+      contextRef="c20240101to20241231"
+      id="Fact_09211ff31af64e73a00e5a4e23e6aaef">false</dei:EntityShellCompany>
+</xbrl>

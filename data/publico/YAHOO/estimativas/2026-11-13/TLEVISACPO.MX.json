@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 8.25,
+  "high": 22.0,
+  "low": 8.7,
+  "mean": 12.74,
+  "median": 11.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.16,
+   "currency": "MXN",
+   "growth": -0.5897,
+   "high": 0.16,
+   "low": 0.16,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.39
+  },
+  "+1y": {
+   "avg": 1.16,
+   "currency": "MXN",
+   "growth": 1.6364,
+   "high": 1.16,
+   "low": 1.16,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.44
+  },
+  "0q": {
+   "avg": 0.40125,
+   "currency": "MXN",
+   "growth": 1.1398001,
+   "high": 0.40125,
+   "low": 0.40125,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -2.87
+  },
+  "0y": {
+   "avg": 0.44,
+   "currency": "MXN",
+   "growth": 1.5122,
+   "high": 0.44,
+   "low": 0.44,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -0.859
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 14039491850,
+   "currency": "MXN",
+   "growth": -0.0326,
+   "high": 14074515000,
+   "low": 14004468700,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 14512500000
+  },
+  "+1y": {
+   "avg": 55004582540,
+   "currency": "MXN",
+   "growth": -0.0321,
+   "high": 57195000000,
+   "low": 52276763360,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 56830380750
+  },
+  "0q": {
+   "avg": 14149781140,
+   "currency": "MXN",
+   "growth": -0.0274,
+   "high": 14462000000,
+   "low": 13992673700,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 14548200000
+  },
+  "0y": {
+   "avg": 56830380750,
+   "currency": "MXN",
+   "growth": -0.0348,
+   "high": 57341000000,
+   "low": 56364000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 58878200000
+  }
+ },
+ "ticker": "TLEVISACPO.MX",
+ "url": "https://finance.yahoo.com/quote/TLEVISACPO.MX"
+}

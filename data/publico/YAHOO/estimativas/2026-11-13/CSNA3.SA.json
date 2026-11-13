@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 3.72,
+  "high": 11.0,
+  "low": 4.0,
+  "mean": 6.7,
+  "median": 6.1
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": -0.69,
+   "currency": "BRL",
+   "growth": -0.6486,
+   "high": -0.69,
+   "low": -0.69,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -0.41854
+  },
+  "+1y": {
+   "avg": -0.78847,
+   "currency": "BRL",
+   "growth": 0.523,
+   "high": 1.28,
+   "low": -2.1629,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": -1.65296
+  },
+  "0q": {
+   "avg": -0.66865,
+   "currency": "BRL",
+   "growth": 0.17909999,
+   "high": -0.47153,
+   "low": -0.97443,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": -0.8145
+  },
+  "0y": {
+   "avg": -1.65296,
+   "currency": "BRL",
+   "growth": -0.0947,
+   "high": -0.78,
+   "low": -2.58436,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": -1.50998
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 10034819000,
+   "currency": "BRL",
+   "growth": -0.0537,
+   "high": 10034819000,
+   "low": 10034819000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 10603772000
+  },
+  "+1y": {
+   "avg": 44782404750,
+   "currency": "BRL",
+   "growth": 0.033299997,
+   "high": 49259398610,
+   "low": 40702565280,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 43337558460
+  },
+  "0q": {
+   "avg": 10155909940,
+   "currency": "BRL",
+   "growth": -0.1094,
+   "high": 10741245300,
+   "low": 9518144000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 11403163000
+  },
+  "0y": {
+   "avg": 43337558460,
+   "currency": "BRL",
+   "growth": -0.0326,
+   "high": 45201000000,
+   "low": 41089897460,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 44797946000
+  }
+ },
+ "ticker": "CSNA3.SA",
+ "url": "https://finance.yahoo.com/quote/CSNA3.SA"
+}

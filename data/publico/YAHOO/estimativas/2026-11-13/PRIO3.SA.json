@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 63.3,
+  "high": 80.0,
+  "low": 60.0,
+  "mean": 71.34643,
+  "median": 71.925
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 3.568,
+   "currency": "BRL",
+   "growth": 0.1303,
+   "high": 4.41,
+   "low": 2.726,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 3.1567
+  },
+  "+1y": {
+   "avg": 10.60124,
+   "currency": "BRL",
+   "growth": -0.088,
+   "high": 13.84,
+   "low": 6.344,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 11.6248
+  },
+  "0q": {
+   "avg": 3.652,
+   "currency": "BRL",
+   "growth": 4.929,
+   "high": 3.784,
+   "low": 3.52,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": -0.9295
+  },
+  "0y": {
+   "avg": 11.6248,
+   "currency": "BRL",
+   "growth": 2.4421,
+   "high": 13.354,
+   "low": 10.168,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 3.3772
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 6993089000,
+   "currency": "BRL",
+   "growth": 0.2702,
+   "high": 6993089000,
+   "low": 6993089000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 5505400880
+  },
+  "+1y": {
+   "avg": 28638169750,
+   "currency": "BRL",
+   "growth": 0.0382,
+   "high": 34704345880,
+   "low": 24306650890,
+   "numberOfAnalysts": 13,
+   "yearAgoRevenue": 27583955590
+  },
+  "0q": {
+   "avg": 7001723740,
+   "currency": "BRL",
+   "growth": 0.6466,
+   "high": 7556960000,
+   "low": 6461211210,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 4252279000
+  },
+  "0y": {
+   "avg": 27583955590,
+   "currency": "BRL",
+   "growth": 0.77,
+   "high": 31122212530,
+   "low": 25904333000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 15583960000
+  }
+ },
+ "ticker": "PRIO3.SA",
+ "url": "https://finance.yahoo.com/quote/PRIO3.SA"
+}

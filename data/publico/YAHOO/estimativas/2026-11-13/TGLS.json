@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 46.69,
+  "high": 63.0,
+  "low": 54.0,
+  "mean": 57.25,
+  "median": 56.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.61,
+   "currency": "USD",
+   "growth": -0.21790001,
+   "high": 0.65,
+   "low": 0.54,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.78
+  },
+  "+1y": {
+   "avg": 3.274,
+   "currency": "USD",
+   "growth": 0.32439998,
+   "high": 3.33,
+   "low": 3.16,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 2.472
+  },
+  "0q": {
+   "avg": 0.572,
+   "currency": "USD",
+   "growth": -0.0921,
+   "high": 0.6,
+   "low": 0.52,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 0.63
+  },
+  "0y": {
+   "avg": 2.472,
+   "currency": "USD",
+   "growth": -0.3095,
+   "high": 2.52,
+   "low": 2.36,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 3.58
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 276714250,
+   "currency": "USD",
+   "growth": 0.1112,
+   "high": 285257000,
+   "low": 267000000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 249012000
+  },
+  "+1y": {
+   "avg": 1268800000,
+   "currency": "USD",
+   "growth": 0.122,
+   "high": 1299600000,
+   "low": 1228000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 1130820000
+  },
+  "0q": {
+   "avg": 276124400,
+   "currency": "USD",
+   "growth": 0.1257,
+   "high": 285200000,
+   "low": 265122000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 245297000
+  },
+  "0y": {
+   "avg": 1130820000,
+   "currency": "USD",
+   "growth": 0.1497,
+   "high": 1140100000,
+   "low": 1120000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 983610000
+  }
+ },
+ "ticker": "TGLS",
+ "url": "https://finance.yahoo.com/quote/TGLS"
+}

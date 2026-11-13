@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 1491.49,
+  "high": 2800.0,
+  "low": 1600.0,
+  "mean": 2210.3167,
+  "median": 2225.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 10.09166,
+   "currency": "USD",
+   "growth": 0.22620001,
+   "high": 11.22,
+   "low": 8.85,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 8.23
+  },
+  "+1y": {
+   "avg": 52.70569,
+   "currency": "USD",
+   "growth": 0.45259997,
+   "high": 69.38,
+   "low": 44.92,
+   "numberOfAnalysts": 21,
+   "yearAgoEps": 36.28352
+  },
+  "0q": {
+   "avg": 10.19082,
+   "currency": "USD",
+   "growth": -0.0761,
+   "high": 10.69,
+   "low": 9.31,
+   "numberOfAnalysts": 10,
+   "yearAgoEps": 11.03
+  },
+  "0y": {
+   "avg": 36.28352,
+   "currency": "USD",
+   "growth": -0.0791,
+   "high": 36.95,
+   "low": 34.697,
+   "numberOfAnalysts": 14,
+   "yearAgoEps": 39.4
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 11542726240,
+   "currency": "USD",
+   "growth": 0.305,
+   "high": 12077000000,
+   "low": 10864096000,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 8845000000
+  },
+  "+1y": {
+   "avg": 53916328350,
+   "currency": "USD",
+   "growth": 0.2931,
+   "high": 57413000000,
+   "low": 50072284000,
+   "numberOfAnalysts": 26,
+   "yearAgoRevenue": 41695205440
+  },
+  "0q": {
+   "avg": 11922686150,
+   "currency": "USD",
+   "growth": 0.36119998,
+   "high": 12234000000,
+   "low": 11688900000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 8759000000
+  },
+  "0y": {
+   "avg": 41695205440,
+   "currency": "USD",
+   "growth": 0.4431,
+   "high": 41998000000,
+   "low": 41452900000,
+   "numberOfAnalysts": 16,
+   "yearAgoRevenue": 28893000000
+  }
+ },
+ "ticker": "MELI",
+ "url": "https://finance.yahoo.com/quote/MELI"
+}

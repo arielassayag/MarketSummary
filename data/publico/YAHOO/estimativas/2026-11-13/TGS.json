@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 21.53,
+  "high": 48.0,
+  "low": 34.0,
+  "mean": 40.25,
+  "median": 39.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.7,
+   "currency": "USD",
+   "growth": -0.0868,
+   "high": 0.7,
+   "low": 0.7,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.76652
+  },
+  "+1y": {
+   "avg": 2.73773,
+   "currency": "USD",
+   "growth": 0.1266,
+   "high": 3.46865,
+   "low": 2.21,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 2.43
+  },
+  "0q": {
+   "avg": 0.70303,
+   "currency": "USD",
+   "growth": 0.0273,
+   "high": 0.74,
+   "low": 0.66606,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.68432
+  },
+  "0y": {
+   "avg": 2.43,
+   "currency": "USD",
+   "growth": 0.2288,
+   "high": 2.48,
+   "low": 2.36,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 1.97754
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "ARS",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 2237880649210,
+   "currency": "ARS",
+   "growth": 0.0633,
+   "high": 2360053500000,
+   "low": 2108057600000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 2104695839670.0
+  },
+  "0q": {
+   "avg": 517279554000,
+   "currency": "ARS",
+   "growth": -0.083500005,
+   "high": 517279554000,
+   "low": 517279554000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 564431981000.0
+  },
+  "0y": {
+   "avg": 2104695839670,
+   "currency": "ARS",
+   "growth": 0.2232,
+   "high": 2213182000000,
+   "low": 2019501519000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 1720626082000.0
+  }
+ },
+ "ticker": "TGS",
+ "url": "https://finance.yahoo.com/quote/TGS"
+}

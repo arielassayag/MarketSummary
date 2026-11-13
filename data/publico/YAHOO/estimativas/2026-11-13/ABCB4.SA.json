@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 23.61,
+  "high": 36.0,
+  "low": 23.0,
+  "mean": 28.25,
+  "median": 27.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.07414,
+   "currency": "BRL",
+   "growth": 0.13069999,
+   "high": 1.07414,
+   "low": 1.07414,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.95
+  },
+  "+1y": {
+   "avg": 4.44501,
+   "currency": "BRL",
+   "growth": 0.0921,
+   "high": 4.63212,
+   "low": 4.26403,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 4.07
+  },
+  "0q": {
+   "avg": 1.09537,
+   "currency": "BRL",
+   "growth": -0.039100002,
+   "high": 1.1378,
+   "low": 1.06,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 1.14
+  },
+  "0y": {
+   "avg": 4.07,
+   "currency": "BRL",
+   "growth": -0.019299999,
+   "high": 4.07,
+   "low": 4.07,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 4.15
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 3525971180,
+   "currency": "BRL",
+   "growth": 0.1308,
+   "high": 3621365800,
+   "low": 3410503640,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 3118000000.0
+  },
+  "0q": {
+   "avg": 854636080,
+   "currency": "BRL",
+   "growth": 0.0183,
+   "high": 882272150,
+   "low": 827000000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 839300000.0
+  },
+  "0y": {
+   "avg": 3118000000,
+   "currency": "BRL",
+   "growth": 0.0433,
+   "high": 3118000000,
+   "low": 3118000000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 2988600000.0
+  }
+ },
+ "ticker": "ABCB4.SA",
+ "url": "https://finance.yahoo.com/quote/ABCB4.SA"
+}

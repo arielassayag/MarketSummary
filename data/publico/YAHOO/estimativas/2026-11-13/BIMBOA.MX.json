@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 70.42,
+  "high": 87.0,
+  "low": 51.0,
+  "mean": 72.16667,
+  "median": 72.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.616,
+   "currency": "MXN",
+   "growth": 0.12,
+   "high": 0.616,
+   "low": 0.616,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.55
+  },
+  "+1y": {
+   "avg": 3.34942,
+   "currency": "MXN",
+   "growth": 0.0921,
+   "high": 3.4678,
+   "low": 3.18316,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 3.06697
+  },
+  "0q": {
+   "avg": 0.94,
+   "currency": "MXN",
+   "growth": 0.2877,
+   "high": 0.94,
+   "low": 0.94,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.73
+  },
+  "0y": {
+   "avg": 3.06697,
+   "currency": "MXN",
+   "growth": 0.1887,
+   "high": 3.12,
+   "low": 3.01,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 2.58
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "MXN",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 445447916510,
+   "currency": "MXN",
+   "growth": 0.0476,
+   "high": 475614000000,
+   "low": 432093256390,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 425194627930.0
+  },
+  "0q": {
+   "avg": 110132524400,
+   "currency": "MXN",
+   "growth": 0.013300001,
+   "high": 112757048810,
+   "low": 107508000000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 108688000000.0
+  },
+  "0y": {
+   "avg": 425194627930,
+   "currency": "MXN",
+   "growth": -0.0041,
+   "high": 450348000000,
+   "low": 419043000000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 426952000000.0
+  }
+ },
+ "ticker": "BIMBOA.MX",
+ "url": "https://finance.yahoo.com/quote/BIMBOA.MX"
+}

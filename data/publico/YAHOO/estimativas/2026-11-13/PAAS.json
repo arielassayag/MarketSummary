@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 37.5,
+  "high": 80.0,
+  "low": 45.0,
+  "mean": 59.17143,
+  "median": 57.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.16667,
+   "currency": "USD",
+   "growth": 0.070300005,
+   "high": 1.56,
+   "low": 0.75,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 1.09
+  },
+  "+1y": {
+   "avg": 4.23282,
+   "currency": "USD",
+   "growth": 0.3089,
+   "high": 6.44536,
+   "low": 2.83,
+   "numberOfAnalysts": 9,
+   "yearAgoEps": 3.23385
+  },
+  "0q": {
+   "avg": 0.72582,
+   "currency": "USD",
+   "growth": -0.3461,
+   "high": 0.8491,
+   "low": 0.61,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 1.11
+  },
+  "0y": {
+   "avg": 3.23385,
+   "currency": "USD",
+   "growth": 0.2732,
+   "high": 3.35697,
+   "low": 3.13,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 2.54
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "USD",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 4981162910,
+   "currency": "USD",
+   "growth": 0.1447,
+   "high": 6406000000,
+   "low": 3858000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 4351328700.0
+  },
+  "0q": {
+   "avg": 1125000000,
+   "currency": "USD",
+   "growth": -0.0458,
+   "high": 1125000000,
+   "low": 1125000000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 1179000000.0
+  },
+  "0y": {
+   "avg": 4351328700,
+   "currency": "USD",
+   "growth": 0.2024,
+   "high": 4409000000,
+   "low": 4241000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 3619000000.0
+  }
+ },
+ "ticker": "PAAS",
+ "url": "https://finance.yahoo.com/quote/PAAS"
+}

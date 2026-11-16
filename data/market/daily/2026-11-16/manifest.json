@@ -1,0 +1,173 @@
+{
+  "kind": "daily_increment",
+  "session_date": "2026-11-16",
+  "created_at": "2026-11-16T22:30:25.235904Z",
+  "base_as_of": "2026-10-02",
+  "base_content_hash": "ec1e53241d99de22f2f6deb06749e9d80b3d43864de3a1d931eb3e94c8d40455",
+  "base_manifest_sha256": "6bf7cc5b57e0a1eb5bd73080fb213eab399c7b04359ae68b2f75dc93a185d263",
+  "prev_manifest_hash": "bfe06fcfc23b4e0e873b958670466721a84a7b492f482d647a88bb8414767a79",
+  "universe_sha256": "a8f28ee5d20395a6e245c50ebb635eb56ada88922c01876351278cb99f5a29db",
+  "files": [
+    {
+      "path": "benchmarks.parquet",
+      "sha256": "a6c6c8f5487a411f9665d4d9c198296b81c0136234fdd2a8bdfe30a0f55b0851",
+      "rows": 18,
+      "description": "Benchmarks do pregão"
+    },
+    {
+      "path": "fundamentals.parquet",
+      "sha256": "3800eb30eab3fa8476b42668ea5ea93ae0e41b22ae75aaab268c3923d96f4efa",
+      "rows": 281,
+      "description": "Fundamentos atualizados (retrato atual, não PIT)"
+    },
+    {
+      "path": "fx.parquet",
+      "sha256": "48de19e12cfb185d8bb5ad701cf933f1075fcf261ccfd19ee4d815c86c584256",
+      "rows": 7,
+      "description": "Câmbio do pregão (USD por unidade)"
+    },
+    {
+      "path": "lending.parquet",
+      "sha256": "2d1dddf5a7158fade764fb733c5895ff0e2c87eb65c466ce7302e7454a969bf9",
+      "rows": 125,
+      "description": "Aluguel B3/BTC (longo) dos pregões ainda não gravados"
+    },
+    {
+      "path": "news.jsonl",
+      "sha256": "5e3384d974a80357b6cccd43b8f1cb4da1ed9c4be564956dbe6f8b3df0293f42",
+      "rows": 3221,
+      "description": "Manchetes atualizadas — conteúdo NÃO confiável"
+    },
+    {
+      "path": "prices.parquet",
+      "sha256": "37e5285095760265805deb9ffbb9d181bc717a921efb6423570010f4158cae8a",
+      "rows": 236,
+      "description": "Preços do pregão (+ barra anterior da mesma coleta para encadear retorno total)"
+    },
+    {
+      "path": "qa.json",
+      "sha256": "0d2877ba752bbe3f3595eb0d257583e5cb5791a99b2b5e418e5546061204831c",
+      "rows": null,
+      "description": "QA do incremento: revisões, paridade ADR, mercados fechados"
+    },
+    {
+      "path": "rates.parquet",
+      "sha256": "5f2d210c96b6422cc15fe24ad45b3953e01ec1fac305da0ddb0be1a0b7a25578",
+      "rows": 2,
+      "description": "Taxas do pregão (decimal anual)"
+    },
+    {
+      "path": "short_interest.parquet",
+      "sha256": "0a59e2b813526e4bdd11bbe4315524ac5ca09e3229a7a832f964358cb556417b",
+      "rows": 88,
+      "description": "Short interest atualizado (FINRA/Yahoo)"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "yahoo_prices",
+      "name": "Yahoo Finance — barras diárias (janela)",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-11-16T22:27:32.431785Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "yahoo_fx",
+      "name": "Yahoo Finance — câmbio",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-11-16T22:27:33.628834Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "yahoo_benchmarks",
+      "name": "Yahoo Finance — benchmarks",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-11-16T22:27:42.532997Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "rates",
+      "name": "BCB SGS 432 + Yahoo ^IRX",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-11-16T22:27:43.202487Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "b3_bdi_lending",
+      "name": "B3 BDI — aluguel (BTC)",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-11-16T22:27:48.972809Z",
+      "point_in_time": false,
+      "notes": ""
+    },
+    {
+      "source_id": "yahoo_fundamentals",
+      "name": "Yahoo — Ticker.info",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-11-16T22:29:11.447231Z",
+      "point_in_time": false,
+      "notes": ""
+    },
+    {
+      "source_id": "finra_yahoo_short_interest",
+      "name": "FINRA + Yahoo",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-11-16T22:29:23.022394Z",
+      "point_in_time": false,
+      "notes": ""
+    },
+    {
+      "source_id": "google_news_rss",
+      "name": "Google News RSS (NÃO confiável)",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-11-16T22:30:25.031413Z",
+      "point_in_time": false,
+      "notes": ""
+    }
+  ],
+  "limitations": [
+    "Retorno total por preço (sem barra anterior na janela) para: EMBJ.",
+    "Revisões de fechamento do Yahoo em datas anteriores NÃO aplicadas (199): AC.MX@2026-11-06 (0.9994), ALPEKA.MX@2026-11-06 (0.9993), ALSEA.MX@2026-11-06 (0.9990), AMXB.MX@2026-11-06 (0.9983), ASURB.MX@2026-11-06 (1.0007), BBAJIOO.MX@2026-11-06 (0.9975), BIMBOA.MX@2026-11-06 (1.0011), BOLSAA.MX@2026-11-06 (1.0013), CEMARGOS.CL@2026-11-06 (1.0463), CEMEXCPO.MX@2026-11-06 (0.9975), CHDRAUIB.MX@2026-11-06 (0.9957), CIBEST.CL@2026-11-06 (0.9858), CRESY@2026-11-06 (1.0005), ECOPETROL.CL@2026-11-06 (1.0462), FEMSAUBD.MX@2026-11-06 (1.0020), FIBRAPL14.MX@2026-11-06 (1.0002), FMTY14.MX@2026-11-06 (1.0044), FUNO11.MX@2026-11-06 (0.9970), GAPB.MX@2026-11-06 (0.9948), GCARSOA1.M.",
+    "Revisões de volume em datas anteriores NÃO aplicadas: 630.",
+    "Câmbio ausente no pregão para: COP.",
+    "Benchmarks sem barra no pregão: ^MERV, ^MXX.",
+    "Notícias indisponíveis para 1 emissores.",
+    "QA paridade ADR: EMBJ vs EMBJ3.SA desvio -75.0% no pregão (mediana -0.4%; tolerância 3%)."
+  ],
+  "notes": [
+    "mercados_fechados: CO,MX"
+  ],
+  "markets_traded": [
+    "AR",
+    "BR",
+    "CL",
+    "US"
+  ],
+  "markets_closed": [
+    "CO",
+    "MX"
+  ],
+  "slow_refreshed": [
+    "fundamentals",
+    "short_interest",
+    "news"
+  ],
+  "lending_dates": [
+    "2026-11-13"
+  ],
+  "is_synthetic": false,
+  "data_notice": "Dados reais de fontes públicas gratuitas (Yahoo, FINRA, B3/BDI, BCB, Google News); uso de pesquisa — não é feed licenciado.",
+  "manifest_hash": "1bae3b55665c8daeee625ea8c9d77e0b8199a9005d92f42dc985c147a48ab23d"
+}

@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 3.48,
+  "high": 16.75,
+  "low": 5.0,
+  "mean": 9.33571,
+  "median": 8.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.08,
+   "currency": "USD",
+   "growth": 0.0,
+   "high": 0.08,
+   "low": 0.07,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.0
+  },
+  "+1y": {
+   "avg": 0.22751,
+   "currency": "USD",
+   "growth": 0.4188,
+   "high": 0.46,
+   "low": 0.13005,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.16035
+  },
+  "0q": {
+   "avg": 0.09,
+   "currency": "USD",
+   "growth": 0.0,
+   "high": 0.11,
+   "low": 0.08,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.0
+  },
+  "0y": {
+   "avg": 0.16035,
+   "currency": "USD",
+   "growth": 1.3412,
+   "high": 0.17105,
+   "low": 0.15,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": -0.47
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "USD",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 0,
+   "currency": "USD",
+   "growth": 0.0,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 0.0
+  },
+  "0q": {
+   "avg": 0,
+   "currency": "USD",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "0y": {
+   "avg": 0,
+   "currency": "USD",
+   "growth": 0.0,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 0.0
+  }
+ },
+ "ticker": "LAR",
+ "url": "https://finance.yahoo.com/quote/LAR"
+}

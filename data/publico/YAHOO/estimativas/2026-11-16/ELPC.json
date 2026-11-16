@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 10.48,
+  "high": 22.0,
+  "low": 12.3,
+  "mean": 16.43333,
+  "median": 15.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.174,
+   "currency": "USD",
+   "growth": -0.069299996,
+   "high": 0.174,
+   "low": 0.174,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.18696
+  },
+  "+1y": {
+   "avg": 0.471,
+   "currency": "USD",
+   "growth": 0.2139,
+   "high": 0.697,
+   "low": 0.245,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.388
+  },
+  "0q": {
+   "avg": 0.105,
+   "currency": "USD",
+   "growth": null,
+   "high": 0.105,
+   "low": 0.105,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 0.388,
+   "currency": "USD",
+   "growth": -0.447,
+   "high": 0.549,
+   "low": 0.227,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.70159
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 7570684560,
+   "currency": "BRL",
+   "growth": 0.0712,
+   "high": 8871847110,
+   "low": 6269522000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 7067701000
+  },
+  "+1y": {
+   "avg": 25935320040,
+   "currency": "BRL",
+   "growth": 0.028299998,
+   "high": 35645115430,
+   "low": 19411836570,
+   "numberOfAnalysts": 14,
+   "yearAgoRevenue": 25222417780
+  },
+  "0q": {
+   "avg": 6093357730,
+   "currency": "BRL",
+   "growth": -0.1523,
+   "high": 8394393179,
+   "low": 4668000000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 7188439000
+  },
+  "0y": {
+   "avg": 25222417780,
+   "currency": "BRL",
+   "growth": -0.0342,
+   "high": 31947441460,
+   "low": 18182897910,
+   "numberOfAnalysts": 13,
+   "yearAgoRevenue": 26116856000
+  }
+ },
+ "ticker": "ELPC",
+ "url": "https://finance.yahoo.com/quote/ELPC"
+}

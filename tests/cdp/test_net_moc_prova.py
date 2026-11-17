@@ -634,3 +634,22 @@ def test_bound_replica_still_requires_exact_prefix_and_final_binding(candidate, 
     with pytest.raises(NetUnverifiable):
         proof.recover(clone_root, DAY, candidate.side)
     assert inventory(clone_root.parent) == before
+
+
+def test_historical_net_proof_survives_authenticated_tail_rectification(candidate):
+    from cdp.workflow.retificacao_financeira import seal
+
+    tr = finish(candidate)
+    next_record = candidate.record.model_copy(update={
+        "date": DAY + timedelta(days=1), "input_hashes": {},
+        "nav_start_usd": 100.0, "nav_end_usd": 101.0, "pnl_usd": 1.0, "ret": .01,
+        "pnl_components": {"financing": 1.0}, "prev_record_hash": candidate.record.record_hash})
+    next_record = next_record.model_copy(update={"record_hash": next_record.compute_hash()})
+    tr.append(next_record)
+    assert proof.load(tr, candidate.record) == candidate.base
+    corrected = next_record.model_copy(update={"nav_end_usd": 100.0, "pnl_usd": 0.0,
+        "ret": 0.0, "pnl_components": {"financing": 0.0}})
+    corrected = corrected.model_copy(update={"record_hash": corrected.compute_hash()})
+    seal(tr, next_record, corrected, None, ())
+    assert proof.load(tr, candidate.record) == candidate.base
+    assert tr.verify()[0], tr.verify()[1]

@@ -521,9 +521,12 @@ def _daily_effects(track, proof: PreparedNetProof, *, complete: bool) -> bool:
         for rec, row in zip(records, rows, strict=True):
             expected_prev = previous.record_hash if previous else GENESIS_RECORD_HASH
             expected_row = {c: _cell(record_summary(rec)[c]) for c in CSV_COLUMNS}
+            original = track._load_original(track.record_path(rec.date))
+            # A série corrente autentica a ramificação financeira no próprio _load;
+            # o evento DAILY_RECORD continua vinculado ao original imutável.
             daily = [e for e in track.audit.events() if e.event_type == track.audit_event
-                     and e.payload_hash == sha256_obj(rec.record_hash)
-                     and e.week == rec.live_book_week]
+                     and e.payload_hash == sha256_obj(original.record_hash)
+                     and e.week == original.live_book_week]
             if (rec.compute_hash() != rec.record_hash or rec.prev_record_hash != expected_prev
                     or (previous is not None and rec.date <= previous.date)
                     or record_consistency(rec, previous) or row != expected_row or len(daily) != 1):

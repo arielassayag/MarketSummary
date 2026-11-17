@@ -9,7 +9,7 @@ motivo: `docs/cdp/DECISOES.md`.
 
 Correção de EMBJ em ramo próprio: catálogo com evidência primária e vigência, ajuste de retornos/quantidades/ratio, guardas diárias e intradiárias, e retificação da cauda por anexação. Fluxo e limites em [Eventos corporativos](EVENTOS_CORPORATIVOS.md). Os originais e o CSV não são substituídos; a série corrente e o próximo elo usam a ramificação autenticada.
 
-Validação e implantação ainda em andamento nesta sessão. A operação exige executor/gate/trava e publicação oficial; entrega externa somente após verificar os novos anexos e a apresentação.
+Validação dirigida: 237 testes do núcleo, 131 de agenda/gate e 116 de NET/eventos passaram; revisão independente sem bloqueadores. A suíte integral local parou por espaço em disco e o primeiro CI revelou identidade de universo e provas NET históricas após retificação, corrigidas com regressões. A operação selou anexos de CDP e sombra para 16/11; publicação e entrega ainda dependem da verificação integral do executor. Nenhum resultado original foi sobrescrito.
 
 ## Recuperação CDP: calendário extraordinário BYMA — 12/11/2026
 

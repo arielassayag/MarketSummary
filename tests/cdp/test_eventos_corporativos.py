@@ -336,3 +336,10 @@ def test_agenda_recovery_does_not_consume_unfinished_financial_edition(tmp_path)
     # Recibo preparado ainda sem evento também deve permitir adquirir a trava.
     track.audit.path.write_text('\n'.join(track.audit.path.read_text().splitlines()[:-1])+'\n')
     assert pending(rt)['pendente']
+
+
+def test_unchanged_units_preserve_native_universe_identity():
+    from cdp.data.eventos_corporativos import effective_universe
+    from cdp.universe import Universe
+    u=Universe(pd.DataFrame({'adr_ratio':[4.0]},index=['EMBJ']),pd.DataFrame())
+    assert effective_universe(u,(),date(2026,11,13)) is u

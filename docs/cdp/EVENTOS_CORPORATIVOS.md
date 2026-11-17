@@ -18,7 +18,7 @@ exige comprovação do tratamento; não se inventa caixa em substituição.
 O mesmo fator transforma quantidade e preço comparável na marcação diária,
 intradiária e no preço médio usado em stops de short. A barra provisória conserva
 o rótulo provisório. O modelo de risco e o cálculo de retorno total usam a série
-em base comparável; dados brutos e seus manifestos não são editados.
+em base comparável; dados brutos e seus manifestos não são editados. A recepção bancária conserva a identidade do universo quando nada mudou; corte que exija outra unidade é recusado antes de transferir o contexto físico, até existir recepção própria para essa transformação.
 
 ## Retificação da cauda
 

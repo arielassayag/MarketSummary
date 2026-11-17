@@ -91,7 +91,7 @@ def effective_universe(universe, events, day):
         if e.ticker in lines.index and e.adr_ratio_after is not None:
             lines.loc[e.ticker, "adr_ratio"] = ratio_at(
                 events, e.ticker, day, lines.loc[e.ticker, "adr_ratio"])
-    return replace(universe, lines=lines)
+    return universe if lines.equals(universe.lines) else replace(universe, lines=lines)
 
 
 def unverified_observations(combined, increments):

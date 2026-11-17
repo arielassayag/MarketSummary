@@ -112,6 +112,8 @@ class MarketData:
             unverified_returns=tuple(x for x in self.unverified_returns if x[0] <= end),
         )
         if self.contexto_bancario is not None:
+            if child.universe is not self.universe:
+                raise ValueError("Recepção bancária: corte com mudança de unidade exige recepção própria")
             from .data.recepcao_bancaria import transferir
             object.__setattr__(child, "contexto_bancario", transferir(self.contexto_bancario, self, child))
         return child

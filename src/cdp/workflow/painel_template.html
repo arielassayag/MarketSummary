@@ -2251,7 +2251,7 @@ ROLLUP.forEach(function (r) { if (r && r.date) ROLLDATES[r.date] = 1; });
 function truncMark(o, what) { return o && o._truncado ? h("p", { class: "trunc" }, (what || "Texto") + " resumido nesta versão do portal.") : null; }
 function rollTip(s) { return ROLLDATES[s] ? fdate(s) + " (fim do mês)" : tipDate(s); }
 /* caminho do Markdown de um relatório do índice (a publicação não repete o caminho em cada linha) */
-function reportPath(r) { return r.path || (r.has_md ? (PUBM.reports_dir || "reports") + "/" + r.kind + "/" + r.date + "/relatorio.md" : null); }
+function reportPath(r) { return r.path || (r.has_md ? (PUBM.reports_dir || "reports") + "/" + r.kind + "/" + r.date + (r.retificacao_financeira ? "/retificacoes/financeira" : "") + "/relatorio.md" : null); }
 var WBY = {};
 WEEKS.forEach(function (w) { if (w && w.week) WBY[w.week] = w; });
 var LASTW = WEEKS.length ? WEEKS[WEEKS.length - 1] : null;

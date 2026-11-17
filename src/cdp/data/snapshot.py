@@ -697,7 +697,7 @@ def write_snapshot(md: MarketData, out_dir: Path) -> SnapshotManifest:
 
 def adr_parity_report(close: pd.DataFrame, fx: pd.DataFrame, universe: Universe,
                       tolerance: float, ars_tolerance: float = ARS_PARITY_TOLERANCE,
-                      window: int = PARITY_WINDOW) -> dict[str, Any]:
+                      window: int = PARITY_WINDOW, *, actions=()) -> dict[str, Any]:
     """Paridade ADR × local: ``ADR / (local × razão × USD por unidade local)``.
 
     Para cada ADR com linha local do mesmo emissor, usa a linha local de menor desvio mediano
@@ -705,6 +705,8 @@ def adr_parity_report(close: pd.DataFrame, fx: pd.DataFrame, universe: Universe,
     ``|último| > 2 × tol``. Para ARS, a referência é o CCL implícito (mediana cross-section dos
     desvios argentinos) e a tolerância é ``max(tol, 5%)``.
     """
+    from .eventos_corporativos import ratio_at
+
     lines = universe.lines
     fxw = fx.copy()
     if "USD" not in fxw.columns:
@@ -723,13 +725,16 @@ def adr_parity_report(close: pd.DataFrame, fx: pd.DataFrame, universe: Universe,
             ccy = lrow["currency"]
             if loc not in close.columns or ccy not in fxw.columns:
                 continue
-            parity = close[adr] / (close[loc] * float(ratio) * fxw[ccy])
+            ratios = pd.Series([ratio_at(actions, adr, d.date(), float(ratio))
+                                for d in close.index], index=close.index)
+            parity = close[adr] / (close[loc] * ratios * fxw[ccy])
             parity = parity.replace([np.inf, -np.inf], np.nan).dropna()
             if parity.empty:
                 continue
             dev = parity - 1.0
             tail = dev.tail(window)
-            cand = {"adr": adr, "local": loc, "currency": ccy, "adr_ratio": float(ratio),
+            cand = {"adr": adr, "local": loc, "currency": ccy,
+                    "adr_ratio": float(ratios.loc[dev.index[-1]]),
                     "last_date": dev.index[-1].date().isoformat(),
                     "dev_last": float(dev.iloc[-1]), "dev_median": float(tail.median()),
                     "n_common": int(len(tail))}
@@ -754,7 +759,8 @@ def adr_parity_report(close: pd.DataFrame, fx: pd.DataFrame, universe: Universe,
 
 
 def quality_report(prices: pd.DataFrame, fx: pd.DataFrame, universe: Universe, as_of: date,
-                   cfg: FundConfig, missing: Sequence[str]) -> tuple[dict[str, Any], list[str]]:
+                   cfg: FundConfig, missing: Sequence[str], *, actions=()
+                   ) -> tuple[dict[str, Any], list[str]]:
     """QA do histórico de preços; devolve (relatório, limitações em pt-BR)."""
     p = normalize_prices(prices)
     close, adj, _ = prices_to_wide(p)
@@ -778,7 +784,8 @@ def quality_report(prices: pd.DataFrame, fx: pd.DataFrame, universe: Universe, a
     if extreme:
         lim.append(f"Retornos diários > {EXTREME_MOVE:.0%} em módulo (revisar eventos "
                    f"corporativos): {', '.join(f'{k} ({v})' for k, v in extreme.items())}.")
-    parity = adr_parity_report(close, fxw, universe, cfg.squeeze.adr_parity_tolerance)
+    parity = adr_parity_report(close, fxw, universe, cfg.squeeze.adr_parity_tolerance,
+                              actions=actions)
     flagged = [x for x in parity["pairs"] if x["flagged"]]
     for x in flagged:
         lim.append(f"QA paridade ADR: {x['adr']} vs {x['local']} desvio mediano "
@@ -1065,7 +1072,9 @@ def build_snapshot(universe_path: Path, out_dir: Path, as_of: date, start: date 
     else:
         limitations.append("Notícias não coletadas neste snapshot (include_news=False).")
 
-    qa, qa_lim = quality_report(prices, fx, uni, as_of, cfg, missing)
+    from .eventos_corporativos import catalog
+
+    qa, qa_lim = quality_report(prices, fx, uni, as_of, cfg, missing, actions=catalog())
     qa["holiday_bars_dropped"] = holiday_bars
     limitations.extend(qa_lim)
     fields = {

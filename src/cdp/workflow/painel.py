@@ -1982,6 +1982,7 @@ def _daily_reports(rt: Any, cfg: FundConfig, records: Sequence[Any], issues: _Is
     reports = issues.attempt("Relatórios publicados", lambda: list_reports(root), [])
     index = [{"kind": r.kind, "date": r.key, "has_md": r.md is not None,
               "has_html": r.html is not None,
+              **({"retificacao_financeira": True} if r.folder.name == "financeira" else {}),
               "md_sha256": _sha256_file(r.md) if r.md is not None else None}
              for r in reports]
     from .retificacao_semanal import listar as listar_retificacoes
@@ -2006,6 +2007,7 @@ def _daily_reports(rt: Any, cfg: FundConfig, records: Sequence[Any], issues: _Is
         history = [r for r in records if r.date < d]
         out.append({
             "date": d, "published": md is not None, "has_html": html_path is not None,
+            **({"retificacao_financeira": True} if folder.name == "financeira" else {}),
             "report_markdown": md, "report_sha256": _sha256_file(md_path) if md_path else None,
             "commentary": _commentary(md, folder, rec, history, cfg, issues),
             "record_hash": rec.record_hash if rec is not None else None,
@@ -2517,6 +2519,15 @@ def _aux_integrity(rt: Any, events: Sequence[Any], weeks: Sequence[dict[str, Any
     for r in daily_reports:
         if not r.get("published"):
             r["verified"] = None
+            continue
+        if r.get("retificacao_financeira"):
+            from .retificacao_financeira import report_receipt
+
+            try:
+                report_receipt(rt, r["date"])
+                r["verified"] = note(True, f"{r['date']}: relatório retificado")
+            except (OSError, ValueError, KeyError) as exc:
+                r["verified"] = note(False, f"{r['date']}: {exc}")
             continue
         ok_d = _report_payload_ok(reports / "daily" / r["date"].isoformat(), daily_hashes,
                                   {"record": r.get("record_hash"), "commentary_issues": []})

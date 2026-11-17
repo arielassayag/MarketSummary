@@ -132,6 +132,10 @@ abre o livro na data de início e grava a gênese de uma trilha nova. Uma vez s�
    (data de `carteira_inaugural`).
 4. Rode `uv run python -m cdp agenda` de novo e siga pelo passo 1 (agora `fase: "pre_inicio"`).
 
+### Pendência financeira por evento corporativo
+
+Com `retificacao_financeira.pendente: true`, a rotina sem supervisão interrompe as gravações e relata a necessidade de sessão de operador; libera sua trava ao encerrar. Não repetir fechamento nem efetivação. A sessão explicitamente autorizada segue [Eventos corporativos e retificação financeira](../EVENTOS_CORPORATIVOS.md), com prévia e anexos novos, preservando os originais.
+
 ## 2. Para cada data D de `fechamentos_pendentes`, em ordem
 
 ```sh

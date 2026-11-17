@@ -221,6 +221,7 @@ def _receber_contexto_nativo(
             # Famílias físicas: nenhuma autorização livre de credencial/executor externo.
             if root == "repositorio" and not (
                 rel.startswith("configs/cdp/") or rel == ".cdp/local.yaml"
+                or rel.startswith("docs/cdp/evidencias/eventos_corporativos/")
             ):
                 raise ValueError("Membro do repositório fora das configurações/identidade")
             parsed[mid] = (root, rel, sha)

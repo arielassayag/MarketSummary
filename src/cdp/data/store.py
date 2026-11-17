@@ -237,7 +237,7 @@ def _verify_increment_files(path: Path, m: IncrementManifest) -> list[str]:
     return problems
 
 
-def _combine_prices(base: pd.DataFrame, incs: Sequence[pd.DataFrame]) -> pd.DataFrame:
+def _combine_prices(base: pd.DataFrame, incs: Sequence[pd.DataFrame], *, actions=()) -> pd.DataFrame:
     """Concatena preços da base e dos incrementos encadeando o retorno total.
 
     Para cada linha do incremento, ``bruto = adj_close / prev_adj_close_window`` (mesma coleta)
@@ -271,14 +271,22 @@ def _combine_prices(base: pd.DataFrame, incs: Sequence[pd.DataFrame]) -> pd.Data
             raw = float(r.adj_close) if pd.notna(r.adj_close) else math.nan
             prev = last_adj.get(t)
             gross = math.nan
-            prev_date = pd.Timestamp(r.prev_date) if pd.notna(r.prev_date) else None
             pa_w = float(r.prev_adj_close_window) if pd.notna(r.prev_adj_close_window) else math.nan
-            if prev is not None and prev_date is not None and prev_date == prev[0] \
-                    and pa_w > 0 and raw > 0:
+            from .eventos_corporativos import comparable_basis
+
+            if prev is not None and comparable_basis(r, prev[0]):
                 gross = raw / pa_w
             elif prev is not None and last_close.get(t, math.nan) > 0 and pd.notna(r.close) \
                     and r.close > 0:
                 gross = float(r.close) / last_close[t]
+                from .eventos_corporativos import factor
+
+                unit = factor(actions, t, prev[0].date(), pd.Timestamp(r.date).date())
+                if unit == 1 and abs(gross - 1) > .35:
+                    raise DataNotReadyError(
+                        f"{t}@{r.date}: possível evento corporativo sem base ajustada; "
+                        "marcação bloqueada até evidência verificada.")
+                gross *= unit
             if prev is None or math.isnan(gross):
                 val = raw
             else:
@@ -594,7 +602,12 @@ class MarketStore:
                 else as_of
         ts = pd.Timestamp(eff)
 
-        prices = _combine_prices(bt.prices, [t.prices for t in tabs])
+        from .eventos_corporativos import catalog
+
+        actions = tuple(e for e in (() if bt.manifest.is_synthetic else catalog())
+                        if e.effective_on <= eff
+                        and e.ticker in bt.universe.tickers)
+        prices = _combine_prices(bt.prices, [t.prices for t in tabs], actions=actions)
         fx = pd.concat([bt.fx] + [t.fx for t in tabs], ignore_index=True)
         bench = pd.concat([bt.benchmarks] + [t.benchmarks for t in tabs], ignore_index=True)
         rates = pd.concat([bt.rates] + [t.rates for t in tabs], ignore_index=True)
@@ -656,6 +669,14 @@ class MarketStore:
                                else None))
         md = assemble_market_data(manifest, bt.universe, prices, fx, bench, rates, fundamentals,
                                   short_interest, lending, items)
+        object.__setattr__(md, "corporate_actions", actions)
+        from .eventos_corporativos import effective_universe
+
+        object.__setattr__(md, "universe", effective_universe(md.universe, actions, eff))
+        from .eventos_corporativos import unverified_observations
+
+        unsafe = unverified_observations(prices, [tab.prices for tab in tabs])
+        object.__setattr__(md, "unverified_returns", unsafe)
         if recepcao_bancaria:
             from .recepcao_bancaria import _novo_mercado
             object.__setattr__(md, "contexto_bancario", _novo_mercado(md, self, base, bt, tabs))
@@ -987,6 +1008,10 @@ class MarketStore:
             us = [t for t in tickers if listing_market(t) == "US"]
             ratios = {t: float(uni.lines.loc[t, "adr_ratio"]) for t in us
                       if pd.notna(uni.lines.loc[t, "adr_ratio"])}
+            from .eventos_corporativos import catalog, ratio_at
+
+            current_actions = () if bt.manifest.is_synthetic else catalog()
+            ratios = {t: ratio_at(current_actions, t, session_date, r) for t, r in ratios.items()}
             try:
                 si_new = normalize_indexed(f.short_interest(us, session_date, ratios),
                                            SHORT_INTEREST_FIELDS)
@@ -1020,7 +1045,10 @@ class MarketStore:
             fx_all = pd.concat([bt.fx] + [t.fx for t in tabs] + [fx_day], ignore_index=True)
             fx_w = fx_to_wide(fx_all[fx_all["date"] >= ts - pd.Timedelta(days=60)]
                               .drop_duplicates(["date", "currency"], keep="last"))
-            parity = adr_parity_report(close_w, fx_w, uni, cfg.squeeze.adr_parity_tolerance)
+            from .eventos_corporativos import catalog
+
+            parity = adr_parity_report(close_w, fx_w, uni, cfg.squeeze.adr_parity_tolerance,
+                                      actions=() if bt.manifest.is_synthetic else catalog())
             today = [p for p in parity["pairs"] if p["last_date"] == session_date.isoformat()]
             qa["adr_parity"] = {"pairs": today,
                                 "ars_implied_ccl_premium": parity["ars_implied_ccl_premium"]}

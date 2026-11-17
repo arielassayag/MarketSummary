@@ -597,6 +597,8 @@ def gate_semanal(ag: Mapping[str, Any], ctx: ContextoGate) -> Decisao:
 
 def gate_diario(ag: Mapping[str, Any], ctx: ContextoGate) -> Decisao:
     itens: list[str] = []
+    if (ag.get("retificacao_financeira") or {}).get("pendente"):
+        itens.append("retificação financeira por evento corporativo pendente")
     if _reinicio(ag):
         itens.append("pré-início pendente")
     if ag.get("fase") == "pre_inicio":

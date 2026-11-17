@@ -77,6 +77,8 @@ class MarketData:
     benchmarks: pd.DataFrame
     rates: pd.DataFrame
     news: tuple[NewsItem, ...] = field(default_factory=tuple)
+    corporate_actions: tuple = field(default_factory=tuple)
+    unverified_returns: tuple = field(default_factory=tuple)
     contexto_bancario: Any = field(default=None, repr=False, compare=False)
 
     @property
@@ -94,16 +96,20 @@ class MarketData:
         em backtest deve tratá-los como não point-in-time.
         """
         ts = pd.Timestamp(end)
+        from .data.eventos_corporativos import effective_universe
 
         def cut(df: pd.DataFrame) -> pd.DataFrame:
             return df.loc[df.index <= ts]
 
         child = MarketData(
-            manifest=self.manifest, universe=self.universe,
+            manifest=self.manifest,
+            universe=effective_universe(self.universe, self.corporate_actions, end),
             close=cut(self.close), adj_close=cut(self.adj_close), volume=cut(self.volume),
             fx=cut(self.fx), fundamentals=self.fundamentals, short_interest=self.short_interest,
             lending=self.lending, benchmarks=cut(self.benchmarks), rates=cut(self.rates),
             news=tuple(n for n in self.news if n.published_at.date() <= end),
+            corporate_actions=tuple(e for e in self.corporate_actions if e.effective_on <= end),
+            unverified_returns=tuple(x for x in self.unverified_returns if x[0] <= end),
         )
         if self.contexto_bancario is not None:
             from .data.recepcao_bancaria import transferir

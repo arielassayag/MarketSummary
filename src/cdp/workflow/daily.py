@@ -630,7 +630,8 @@ def risk_alerts(cfg: FundConfig, risk: DailyRisk, has_positions: bool = True) ->
 
 def short_entry_prices(history: Iterable[DailyRecord],
                        current: Mapping[str, tuple[float, float]],
-                       max_records: int = ENTRY_LOOKBACK_RECORDS) -> dict[str, float]:
+                       max_records: int = ENTRY_LOOKBACK_RECORDS, *, actions=(),
+                       as_of: date | None = None) -> dict[str, float]:
     """Preço médio de entrada (moeda local) de cada short atual.
 
     ``history`` vem do registro mais recente para o mais antigo (sem o dia corrente);
@@ -649,7 +650,10 @@ def short_entry_prices(history: Iterable[DailyRecord],
             if p is None or p.shares is None or p.price_local is None or not p.price_local > 0:
                 open_.discard(t)
                 continue
-            spells[t].append((float(p.shares), float(p.price_local)))
+            from ..data.eventos_corporativos import factor
+
+            unit = factor(actions, t, rec.date, as_of or rec.date)
+            spells[t].append((float(p.shares) * unit, float(p.price_local) / unit))
     out: dict[str, float] = {}
     for t, seq_rev in spells.items():
         seq = list(reversed(seq_rev)) + [current[t]]
@@ -1775,6 +1779,10 @@ class DailyRunner:
 
         hashes = self._input_hashes(ctx, entry_after, proposal_after, model_prev
                                     if marked.lines else None)
+        if ctx.md.corporate_actions:
+            from ..data.eventos_corporativos import digest
+
+            hashes["corporate_actions_v1"] = digest(ctx.md.corporate_actions)
         from .risco_diario import MARKER, build, load, text
 
         md_prev = (self.store.load(as_of=prev.date).truncate(prev.date)
@@ -1896,6 +1904,21 @@ class DailyRunner:
         for p in sorted(prev.positions, key=lambda x: (x.issuer_id, x.ticker)):
             if p.market_value_usd == 0:
                 continue
+            from ..data.eventos_corporativos import factor
+
+            unit = factor(ctx.md.corporate_actions, p.ticker, prev.date, ctx.date)
+            unsafe = [d for d, t in ctx.md.unverified_returns
+                      if t == p.ticker and prev.date < d <= ctx.date
+                      and factor(ctx.md.corporate_actions, t, prev.date, d) == 1]
+            if unsafe:
+                raise ValueError(f"{p.ticker}: retorno sem barra ajustada e sem evento "
+                                 "corporativo verificado; fechamento bloqueado")
+            if unit != 1:
+                if p.shares is None or not math.isclose(p.shares * unit, round(p.shares * unit)):
+                    raise ValueError("evento corporativo com fração não liquidada; "
+                                     "fechamento bloqueado até comprovação do tratamento")
+                alerts.append(f"Evento corporativo verificado em {p.ticker}: "
+                              f"quantidade multiplicada por {unit:g}; retorno em base comparável.")
             r: float | None = None
             if p.ticker in period.columns:
                 s = period[p.ticker].dropna()
@@ -1909,13 +1932,22 @@ class DailyRunner:
                              if p.ticker in ctx.md.close.columns else (None, None))
                 fx = self._fx_rate(ctx, p.currency)
                 if px is not None:
+                    if p.price_local and p.price_usd and price_usd and r is not None:
+                        # Diferença entre retorno econômico e preço pode representar split,
+                        # distribuição extraordinária ou mudança de ratio ainda não cadastrada.
+                        raw_gross_usd = px * fx / p.price_usd if fx else None
+                        if (raw_gross_usd and 1 + r > 0
+                                and abs(raw_gross_usd * unit / (1 + r) - 1) > .05):
+                            raise ValueError(f"{p.ticker}: mudança de unidade/distribuição sem "
+                                             "evento corporativo verificado; fechamento bloqueado")
                     price_local = px
                     price_usd = px * fx if fx is not None else None
                     if pdate is not None and pdate < ts:
                         partial.append(p.ticker)
             pnl = p.market_value_usd * r if r is not None else 0.0
             lines.append(_Line(
-                issuer_id=p.issuer_id, ticker=p.ticker, currency=p.currency, shares=p.shares,
+                issuer_id=p.issuer_id, ticker=p.ticker, currency=p.currency,
+                shares=p.shares * unit if p.shares is not None else None,
                 mv_start=p.market_value_usd, pnl=pnl, ret=r, repriced=r is not None,
                 mv_end=p.market_value_usd + pnl, price_local=price_local, price_usd=price_usd))
         if stale:
@@ -2775,7 +2807,8 @@ class DailyRunner:
                                       f"HIGH{change}: reavaliar/reduzir.")
             current = {p.ticker: (float(p.shares), float(p.price_local)) for p in shorts
                        if p.shares is not None and p.price_local is not None}
-            entries = short_entry_prices(side.track.iter_records(reverse=True), current)
+            entries = short_entry_prices(side.track.iter_records(reverse=True), current,
+                                         actions=ctx.md.corporate_actions, as_of=ctx.date)
             # Regra por nome (metodologia vigente): o código limita o short à metade das ações do
             # stop no rebalanceamento seguinte, uma vez por episódio, e veda a compra do emissor
             # até revisão humana; regra do livro inteiro (legado): o mandato pede o corte de 50%.

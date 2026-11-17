@@ -109,7 +109,7 @@ def market_data(md) -> dict:
         "benchmarks",
         "rates",
     )
-    return {
+    result = {
         "manifest": md.manifest.model_dump(mode="json"),
         "manifest_sha256": sha256_text(text(md.manifest.model_dump(mode="json"))),
         "tables_sha256": {
@@ -130,6 +130,11 @@ def market_data(md) -> dict:
             s.model_dump(mode="json") for s in md.manifest.sources if not s.point_in_time
         ],
     }
+    if getattr(md, "corporate_actions", ()):
+        from ..data.eventos_corporativos import digest
+
+        result["corporate_actions_sha256"] = digest(md.corporate_actions)
+    return result
 
 
 def measures(model: RiskModel | None, w: pd.Series, required: list[str], kappa: float) -> dict:
@@ -303,6 +308,11 @@ def build(
 
 
 def path(track, session: date) -> Path:
+    from .retificacao_financeira import folder
+
+    corrected = folder(track, session) / "diagnostico.json"
+    if corrected.exists():
+        return corrected
     return track.root / FOLDER / f"{session}.json"
 
 
@@ -336,7 +346,13 @@ def load(track, record, *, require_event: bool = True) -> dict | None:
     chain_ok, reason = track.audit.verify_chain()
     if not chain_ok:
         raise ValueError("trilha do diagnóstico inválida: " + reason)
-    p = path(track, record.date)
+    from .retificacao_financeira import load as load_rectification
+
+    original = track._load_original(track.record_path(record.date))
+    corrected = load_rectification(track, original)
+    is_corrected = corrected is not None and corrected[0].record_hash == record.record_hash
+    p = (path(track, record.date) if is_corrected else
+         track.root / FOLDER / f"{record.date}.json")
     if not p.is_file() or sha256_file(p) != record.input_hashes[MARKER]:
         raise ValueError(f"{record.date}: diagnóstico diário ausente/adulterado")
     obj = json.loads(ler_texto(p))
@@ -344,9 +360,9 @@ def load(track, record, *, require_event: bool = True) -> dict | None:
         raise ValueError("contrato/data do diagnóstico diário inválido")
     if record.compute_hash() != record.record_hash:
         raise ValueError("registro diário adulterado")
-    if len(_events(track, record, prepared=True)) != 1:
+    if not is_corrected and len(_events(track, record, prepared=True)) != 1:
         raise ValueError(f"{record.date}: selo preparatório ausente/duplicado")
-    if require_event:
+    if require_event and not is_corrected:
         if len(_events(track, record)) != 1:
             raise ValueError(f"{record.date}: vínculo do diagnóstico diário ausente/duplicado")
     return obj
@@ -369,7 +385,8 @@ def _repair_track_tail(track, record) -> None:
             raise ValueError("cadeia diária inválida na recuperação")
         if prev and r.date <= prev.date or record_consistency(r, prev):
             raise ValueError("datas/identidades inválidas na recuperação")
-        if r.date != record.date and sha256_obj(r.record_hash) not in track._audited_hashes():
+        original = track._load_original(track.record_path(r.date))
+        if r.date != record.date and sha256_obj(original.record_hash) not in track._audited_hashes():
             raise ValueError("registro anterior não autenticado")
         prev = r
     rows = track._csv_rows()
@@ -409,6 +426,15 @@ def _repair_track_tail(track, record) -> None:
 
 def recover(track, record) -> None:
     if MARKER not in record.input_hashes:
+        return
+    from .retificacao_financeira import load as load_rectification
+
+    original = track._load_original(track.record_path(record.date))
+    corrected = load_rectification(track, original)
+    if corrected is not None and corrected[0].record_hash == record.record_hash:
+        load(track, record)
+        if not track.verify()[0]:
+            raise ValueError("retificação financeira com cadeia inválida")
         return
     load(track, record, require_event=False)
     _repair_track_tail(track, record)
@@ -466,6 +492,9 @@ def verify(track, *, market_loader=None, market_root=None) -> list[str]:
         if MARKER not in record.input_hashes:
             continue
         expected.add(path(track, record.date))
+        original_path = track.root / FOLDER / f"{record.date}.json"
+        if path(track, record.date) != original_path:
+            expected.add(original_path)
         try:
             obj = load(track, record)
             cfg = FundConfig.model_validate(obj["config"])
@@ -614,6 +643,9 @@ def verify(track, *, market_loader=None, market_root=None) -> list[str]:
             f"diagnóstico órfão: {p.name}" for p in folder.glob("*.json") if p not in expected
         ]
     known = {sha256_obj(binding(r, track)) for r in track.records() if MARKER in r.input_hashes}
+    if (track.root / "retificacoes").is_dir():
+        known.update(sha256_obj(binding(r, track)) for _, p in track._record_files()
+                     if MARKER in (r := track._load_original(p)).input_hashes)
     if any(
         e.event_type in (event_type(track), event_type(track, prepared=True))
         and e.payload_hash not in known

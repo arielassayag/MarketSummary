@@ -1,0 +1,11 @@
+# Mudanças de unidade; fonte primária preservada em docs, nunca preços inventados.
+events:
+  - ticker: EMBJ
+    announced_on: 2026-10-30
+    effective_on: 2026-11-16
+    quantity_factor: 4
+    adr_ratio_before: 4
+    adr_ratio_after: 1
+    source_url: https://www.embraer.com/media-center/en?detail=33634&mediatype=NEWS
+    evidence_path: docs/cdp/evidencias/eventos_corporativos/EMBJ-2026-11-16.html
+    evidence_sha256: 0757fe36bc0b61d6a6f3256d7b833cc5388902a85a558c69338905a08f0fced3

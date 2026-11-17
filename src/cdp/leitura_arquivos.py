@@ -261,3 +261,9 @@ def nomes_recebidos():
     if type(receiver.nomes) is not dict:
         receiver._recusar("PREPARADO_AUSENTE", "Nomes canônicos não recebidos")
     return receiver.nomes
+
+
+def raiz_recebida():
+    """Raiz nominal do repositório, sem fallback global dentro de leitura recebida."""
+    receiver = _ATIVO.get()
+    return receiver.raizes["repositorio"] if receiver is not None else None

@@ -268,8 +268,13 @@ class TrackRecord:
     def dates(self) -> list[date]:
         return [d for d, _ in self._record_files()]
 
-    def _load(self, path: Path) -> DailyRecord:
+    def _load_original(self, path: Path) -> DailyRecord:
         return DailyRecord.model_validate_json(ler_texto(path, encoding='utf-8'))
+
+    def _load(self, path: Path) -> DailyRecord:
+        from .retificacao_financeira import effective
+
+        return effective(self, self._load_original(path))
 
     def get(self, d: date) -> DailyRecord | None:
         path = self.record_path(d)
@@ -316,7 +321,8 @@ class TrackRecord:
                        "conteúdo.")
         if not rows or rows[-1].get("record_hash") != last.record_hash:
             out.append(f"O CSV não termina no último registro JSON ({last.date}): rode verify().")
-        if sha256_obj(last.record_hash) not in self._audited_hashes():
+        original = self._load_original(self.record_path(last.date))
+        if sha256_obj(original.record_hash) not in self._audited_hashes():
             out.append(f"Último registro ({last.date}) sem evento {self.audit_event} na trilha "
                        "de auditoria.")
         return out
@@ -382,7 +388,7 @@ class TrackRecord:
         return path
 
     # ---------------------------------------------- séries
-    def _csv_rows(self) -> list[dict[str, str]]:
+    def _csv_rows(self, *, original: bool = False) -> list[dict[str, str]]:
         if not self.csv_path.exists():
             return []
         from cdp.leitura_arquivos import abrir_leitura
@@ -391,7 +397,18 @@ class TrackRecord:
             reader = csv.DictReader(f)
             if reader.fieldnames is not None and list(reader.fieldnames) != CSV_COLUMNS:
                 raise ValueError(f"Cabeçalho inesperado em {self.csv_path}: {reader.fieldnames}")
-            return list(reader)
+            rows = list(reader)
+        if original:
+            return rows
+        for i, row in enumerate(rows):
+            rec = self.get(date.fromisoformat(row["date"]))
+            if rec is not None and rec.record_hash != row["record_hash"]:
+                raw = self._load_original(self.record_path(rec.date))
+                expected = {c: _cell(record_summary(raw)[c]) for c in CSV_COLUMNS}
+                if row != expected:
+                    raise ValueError("CSV original divergente antes da retificação")
+                rows[i] = {c: _cell(record_summary(rec)[c]) for c in CSV_COLUMNS}
+        return rows
 
     def frame(self) -> pd.DataFrame:
         """Resumo diário (índice ``date``); ausentes como ``NaN``, nunca zero."""
@@ -524,7 +541,7 @@ class TrackRecord:
         prev_rec: DailyRecord | None = None
         for d, path in self._record_files():
             try:
-                rec = self._load(path)
+                rec = self._load_original(path)
             except ValueError as exc:
                 problems.append(f"{path.name}: registro ilegível ({str(exc)[:200]}).")
                 prev_hash = None
@@ -550,12 +567,18 @@ class TrackRecord:
                 load_net_proof(self, rec)
             except (ValueError, OSError, KeyError, TypeError) as exc:
                 problems.append(f"{rec.date}: prova NET inválida ({str(exc)[:250]}).")
-            prev_hash = rec.record_hash
+            try:
+                effective = self._load(path)
+                problems += record_consistency(effective, prev_rec)
+            except (ValueError, OSError, KeyError, TypeError) as exc:
+                problems.append(f"{rec.date}: retificação financeira inválida ({exc})")
+                effective = rec
+            prev_hash = effective.record_hash
             prev_date = rec.date
-            prev_rec = rec
+            prev_rec = effective
 
         try:
-            rows = self._csv_rows()
+            rows = self._csv_rows(original=True)
         except ValueError as exc:
             problems.append(str(exc))
             rows = []

@@ -182,6 +182,12 @@ def overlay_intraday(md: MarketData, session: date, quotes: pd.DataFrame,
     last_adj = md.adj_close.ffill().iloc[-1]
     price = lines.reindex(md.close.columns).astype(float)
     ratio = price / last_close
+    from .eventos_corporativos import catalog, effective_universe, factor
+
+    actions = tuple(e for e in (() if md.is_synthetic else catalog()) if e.effective_on <= session
+                    and e.ticker in md.close.columns)
+    for ticker in ratio.index:
+        ratio.loc[ticker] *= factor(actions, ticker, md.as_of, session)
     adj = last_adj * ratio
     fx_row = md.fx.iloc[-1].copy() * np.nan
     for ccy, v in fxq.items():
@@ -213,4 +219,6 @@ def overlay_intraday(md: MarketData, session: date, quotes: pd.DataFrame,
         fx=add_row(md.fx, fx_row),
         benchmarks=add_row(md.benchmarks, bq.reindex(md.benchmarks.columns).astype(float)),
         rates=md.rates,
+        corporate_actions=actions,
+        universe=effective_universe(md.universe, actions, session),
     )

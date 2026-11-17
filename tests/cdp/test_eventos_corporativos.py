@@ -379,3 +379,20 @@ def test_financial_event_cache_rechecks_content_with_same_size_and_mtime(tmp_pat
     assert tr.audit.verify_chain()[0]  # cadeia coerente, porém não autentica o recibo
     with pytest.raises(ValueError,match='vínculo íntegro'):
         tr.last()
+
+
+def test_predecessor_guard_keeps_order_duplicates_and_missing_close_semantics():
+    from cdp.data.eventos_corporativos import unverified_observations
+    base=pd.concat([prices(80,'2026-11-12'),prices(81,'2026-11-13'),
+        prices(0,'2026-11-14')],ignore_index=True)
+    inc=prices(82,'2026-11-16').assign(prev_date=pd.Timestamp('2026-11-14'),
+        prev_adj_close_window=81)
+    # A barra zero não substitui o predecessor válido de 13/11.
+    combined=pd.concat([inc,base,base],ignore_index=True)
+    want=((date(2026,11,16),'EMBJ'),)*2
+    assert unverified_observations(combined,[inc,inc])==want
+    inc['prev_date']=pd.Timestamp('2026-11-13')
+    assert not unverified_observations(combined,[inc])
+    new=inc.assign(ticker='NOVO')
+    assert not unverified_observations(pd.concat([combined,new]),[new])
+    assert not unverified_observations(combined,[])

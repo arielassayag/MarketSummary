@@ -97,11 +97,20 @@ def effective_universe(universe, events, day):
 def unverified_observations(combined, increments):
     import pandas as pd
 
+    tabs = [tab for tab in increments if not tab.empty]
+    if not tabs:
+        return ()
     valid = combined.loc[pd.to_numeric(combined["close"], errors="coerce") > 0]
-    previous = {}
-    for ticker, group in valid.sort_values("date").groupby("ticker"):
-        dates = list(group["date"].drop_duplicates())
-        previous.update({(ticker, d): p for p, d in zip(dates, dates[1:], strict=False)})
+    ordered = valid.sort_values("date").drop_duplicates(["ticker", "date"]).copy()
+    ordered["_previous"] = ordered.groupby("ticker", sort=False)["date"].shift()
+    # A data anterior usa todo o histórico; só os pares dos incrementos precisam
+    # virar objetos Python para a comparação de base. A guarda permanece igual.
+    keys = pd.concat([tab[["ticker", "date"]] for tab in tabs]).drop_duplicates()
+    keys["date"] = pd.to_datetime(keys["date"])
+    selected = ordered[["ticker", "date", "_previous"]].merge(
+        keys, on=["ticker", "date"], how="inner", sort=False).dropna(subset=["_previous"])
+    previous = {(str(t), pd.Timestamp(d)): pd.Timestamp(p)
+                for t, d, p in selected.itertuples(index=False, name=None)}
     return tuple((pd.Timestamp(r.date).date(), str(r.ticker)) for tab in increments
                  for r in tab.itertuples()
                  if (p := previous.get((str(r.ticker), pd.Timestamp(r.date)))) is not None

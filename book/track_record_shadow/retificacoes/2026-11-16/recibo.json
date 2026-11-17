@@ -1,0 +1,15 @@
+{
+  "actions_sha256": "90ea1d66afe35549d59d7c5ab284cc8503d5604947e359463d1c336f4f94ef3e",
+  "files": {
+    "diagnostico.json": "bae582a81f748ad499aaf13a60c23f35198b5f3454b3f93c862fbf09bd35d1aa",
+    "registro.json": "d786921e25b2202beff7afcff93bef0e904baea1c2f22bf695eb87a86f9a366b"
+  },
+  "original_record_hash": "c508d1bbcaded62c1c860d925b96d8896553be0f4b2e12230b525e58acc5e53b",
+  "original_sha256": "177dfb7d1c8297ba7e8731b37327202eebfcc48aefa2fdf5cc1cbeedfde14486",
+  "policy": "cdp.daily.financial_rectification/v1",
+  "session": "2026-11-16",
+  "tickers": [
+    "EMBJ"
+  ],
+  "track_event": "DAILY_RECORD_SHADOW"
+}

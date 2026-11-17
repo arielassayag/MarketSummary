@@ -1,0 +1,14 @@
+{
+  "headline": "Fechamento retificado: retorno de {{fact:day.ret}}",
+  "mind": "codex",
+  "paragraphs": [
+    "RETIFICAÇÃO FINANCEIRA. O evento corporativo dos ADSs de Embraer foi aplicado aos retornos e às quantidades. Esta edição substitui os resultados anteriormente divulgados para a mesma data; o relatório original permanece preservado para auditoria. DADOS SIMULADOS, com preços reais e execução hipotética.",
+    "No pregão de 16/11/2026, o fundo subiu {{fact:day.ret}} ({{fact:day.pnl_usd}}), encerrando com NAV de {{fact:nav}}. No mês, {{fact:mtd.ret}}; no ano, {{fact:ytd.ret}}; desde o início do registro, {{fact:itd.ret}}.",
+    "Na atribuição, a parcela específica (alpha) respondeu por {{fact:attr.specific}} e a fatorial por {{fact:attr.factor}}; o lado comprado contribuiu {{fact:attr.long}} e o vendido {{fact:attr.short}}. Maiores contribuições: {{fact:top.contrib.1.name}}, com {{fact:top.contrib.1.pnl}}; {{fact:top.contrib.2.name}}, com {{fact:top.contrib.2.pnl}}; {{fact:top.contrib.3.name}}, com {{fact:top.contrib.3.pnl}}. Maiores detratores: {{fact:top.detract.1.name}}, com {{fact:top.detract.1.pnl}}; {{fact:top.detract.2.name}}, com {{fact:top.detract.2.pnl}}; {{fact:top.detract.3.name}}, com {{fact:top.detract.3.pnl}}. Por país, o maior efeito veio de BR ({{fact:attr.country.BR}}).",
+    "O risco ex-ante ficou em {{fact:risk.ex_ante_vol}} ao ano, dentro da banda de {{fact:mandate.vol_band_min}} a {{fact:mandate.vol_band_max}}, com beta de {{fact:risk.beta}}, gross de {{fact:risk.gross}} e net de {{fact:risk.net}}. O VaR de um dia está em {{fact:risk.var_1d}} e o drawdown a partir do pico em {{fact:dd.current}}."
+  ],
+  "risk_flags": [
+    "Shorts com risco de squeeze alto: {{fact:risk.squeeze_high_shorts}}.",
+    "Alertas do sistema no dia: {{fact:day.n_alerts}} (ver relatório)."
+  ]
+}

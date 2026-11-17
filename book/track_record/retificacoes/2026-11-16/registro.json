@@ -1,0 +1,2556 @@
+{
+  "alerts": [
+    "RETIFICAÇÃO FINANCEIRA: evento corporativo aplicado; original preservado.",
+    "Evento corporativo verificado em EMBJ: quantidade multiplicada por 4; retorno em base comparável.",
+    "Preço ausente no pregão (linha não negociou; posição não reprecificada, valor mantido): ALPEKA.MX, LABB.MX.",
+    "Retornos fatoriais do dia estimados por regressão cross-section com as exposições da sessão anterior. Macro observado descontado antes da regressão estrutural.",
+    "Short BEEF3.SA (BR_MINERVA) com risco de squeeze HIGH (era LOW na decisão): reavaliar/reduzir.",
+    "Limitação de dados: Viés de sobrevivência: o universo foi definido na data de criação (não é point-in-time); emissores deslistados antes dessa data não aparecem no histórico.",
+    "Limitação de dados: Fundamentos (Yahoo Ticker.info) são retrato atual, NÃO point-in-time; múltiplos podem misturar moedas/classes — ver coluna fundamentals_quality.",
+    "Limitação de dados: Adj Close do Yahoo é ajustado retroativamente por proventos/desdobramentos e muda a cada novo evento; o hash é por snapshot.",
+    "Limitação de dados: Câmbio do Yahoo (=X) usa barras diárias carimbadas em Europe/London, normalizadas para a data do pregão; não é fixing oficial (PTAX/FIX/TRM).",
+    "Limitação de dados: Short interest de ADRs refere-se ao float do ADS (não ao float total da companhia) e é publicado pela FINRA com defasagem (liquidação + 7 dias úteis).",
+    "Limitação de dados: Saldo de aluguel B3 (BTC) inclui arbitragem/ETF/hedge (limite superior do short); taxas sem contratos no dia são a última taxa calculada (rate_stale).",
+    "Limitação de dados: Notícias (Google News RSS) são conteúdo NÃO confiável: usadas apenas como dado citado.",
+    "Limitação de dados: Notícias indisponíveis para 10 emissores.",
+    "Limitação de dados: Volume zero com preço válido tratado como AUSENTE (NaN + volume_suspeito): 4547 observações em 108 linhas; maiores: EISA.SN (635), AMXB.MX (625), SGML (362), PCAR3.SA (252), GRUPOSURA.CL (186), GRUPOARGOS.CL (165), CIBEST.CL (159), ERO (156).",
+    "Limitação de dados: Retornos diários > 35% em módulo (revisar eventos corporativos): BBAR (2), BMA (2), BMA.BA (1), CAAP (2), CEPU (2), CIBEST.CL (2), COLBUN.SN (1), CRESY (1), DLO (1), GGAL (2), GGAL.BA (1), GRUPOARGOS.CL (1), GRUPOSURA.CL (1), GTE (3), HAPV3.SA (1), IRS (1), JBSS32.SA (1), LOMA (1), LTM.SN (15), NAT…",
+    "Limitação de dados: QA paridade ADR: SID vs CSNA3.SA desvio mediano -3.7% (último -1.8%; referência +0.0%; tolerância 3%).",
+    "Limitação de dados: Argentina: CCL implícito nas paridades ADR ≈ +5.9% vs câmbio oficial (ARS=X); preços locais em ARS embutem o CCL.",
+    "Limitação de dados: Retorno total por preço (sem barra anterior na janela) para: EMBJ.",
+    "Limitação de dados: Revisões de fechamento do Yahoo em datas anteriores NÃO aplicadas (199): AC.MX@2026-11-06 (0.9994), ALPEKA.MX@2026-11-06 (0.9993), ALSEA.MX@2026-11-06 (0.9990), AMXB.MX@2026-11-06 (0.9983), ASURB.MX@2026-11-06 (1.0007), BBAJIOO.MX@2026-11-06 (0.9975), BIMBOA.MX@2026-11-06 (1.0011), BOLSAA.MX@2026-1…",
+    "Limitação de dados: Revisões de volume em datas anteriores NÃO aplicadas: 630.",
+    "Limitação de dados: Câmbio ausente no pregão para: COP.",
+    "Limitação de dados: Benchmarks sem barra no pregão: ^MERV, ^MXX.",
+    "Limitação de dados: Notícias indisponíveis para 1 emissores.",
+    "Limitação de dados: QA paridade ADR: EMBJ vs EMBJ3.SA desvio -75.0% no pregão (mediana -0.4%; tolerância 3%)."
+  ],
+  "approval_hash": "db34990745886ae57ecac73cd016353911590b6d89a6bee32005f8825fc133c1",
+  "attribution": [
+    {
+      "contribution": 0.0019666602890685125,
+      "group": "component",
+      "name": "equity",
+      "pnl_usd": 1976.2733088281273
+    },
+    {
+      "contribution": -2.245806688975142e-05,
+      "group": "component",
+      "name": "factor",
+      "pnl_usd": -22.56784174104319
+    },
+    {
+      "contribution": 0.001989118355958264,
+      "group": "component",
+      "name": "specific",
+      "pnl_usd": 1998.8411505691704
+    },
+    {
+      "contribution": 0.000343500018119812,
+      "group": "component",
+      "name": "financing",
+      "pnl_usd": 345.1790434603693
+    },
+    {
+      "contribution": -1.1325524877896264e-05,
+      "group": "component",
+      "name": "borrow",
+      "pnl_usd": -11.38088395289482
+    },
+    {
+      "contribution": 0.0,
+      "group": "component",
+      "name": "costs",
+      "pnl_usd": 0.0
+    },
+    {
+      "contribution": 0.0005164897321354462,
+      "group": "factor_group",
+      "name": "market",
+      "pnl_usd": 519.014329814188
+    },
+    {
+      "contribution": -0.0003244314776122146,
+      "group": "factor_group",
+      "name": "country",
+      "pnl_usd": -326.01729607931975
+    },
+    {
+      "contribution": 2.4858339995122783e-05,
+      "group": "factor_group",
+      "name": "sector",
+      "pnl_usd": 24.97984736215134
+    },
+    {
+      "contribution": -5.927974328948699e-05,
+      "group": "factor_group",
+      "name": "style",
+      "pnl_usd": -59.56950220044595
+    },
+    {
+      "contribution": -0.00018009491811861884,
+      "group": "factor_group",
+      "name": "macro",
+      "pnl_usd": -180.9752206376169
+    },
+    {
+      "contribution": -0.00036221183264405026,
+      "group": "factor",
+      "name": "beta",
+      "pnl_usd": -363.98232118430684
+    },
+    {
+      "contribution": 1.359669833356083e-05,
+      "group": "factor",
+      "name": "country:AR",
+      "pnl_usd": 13.663158886241206
+    },
+    {
+      "contribution": 6.172282948678172e-07,
+      "group": "factor",
+      "name": "country:BR",
+      "pnl_usd": 0.6202453018352827
+    },
+    {
+      "contribution": -3.570491120949352e-05,
+      "group": "factor",
+      "name": "country:CL",
+      "pnl_usd": -35.879436529844966
+    },
+    {
+      "contribution": 0.0,
+      "group": "factor",
+      "name": "country:CO",
+      "pnl_usd": 0.0
+    },
+    {
+      "contribution": -3.488032605394761e-05,
+      "group": "factor",
+      "name": "country:LATAM",
+      "pnl_usd": -35.05082080865546
+    },
+    {
+      "contribution": -0.0002629220483149493,
+      "group": "factor",
+      "name": "country:MX",
+      "pnl_usd": -264.207209183727
+    },
+    {
+      "contribution": -5.138118662252795e-06,
+      "group": "factor",
+      "name": "country:PE",
+      "pnl_usd": -5.163233745168755
+    },
+    {
+      "contribution": 1.8915712202576043e-05,
+      "group": "factor",
+      "name": "fx_sens",
+      "pnl_usd": 19.008172052495866
+    },
+    {
+      "contribution": 0.00018431230024530746,
+      "group": "factor",
+      "name": "liquidity",
+      "pnl_usd": 185.21321729440157
+    },
+    {
+      "contribution": -0.00024034056148561524,
+      "group": "factor",
+      "name": "macro:BZ=F",
+      "pnl_usd": -241.5153442274239
+    },
+    {
+      "contribution": -2.701426620618126e-07,
+      "group": "factor",
+      "name": "macro:DX-Y.NYB",
+      "pnl_usd": -0.2714631172328198
+    },
+    {
+      "contribution": 0.0001316562108951461,
+      "group": "factor",
+      "name": "macro:GC=F",
+      "pnl_usd": 132.29974540074718
+    },
+    {
+      "contribution": -7.114042486608785e-05,
+      "group": "factor",
+      "name": "macro:HG=F",
+      "pnl_usd": -71.48815869370736
+    },
+    {
+      "contribution": 0.0005164897321354462,
+      "group": "factor",
+      "name": "market",
+      "pnl_usd": 519.014329814188
+    },
+    {
+      "contribution": -7.442335579812021e-07,
+      "group": "factor",
+      "name": "momentum",
+      "pnl_usd": -0.7478713656587193
+    },
+    {
+      "contribution": 3.290368823047357e-05,
+      "group": "factor",
+      "name": "resvol",
+      "pnl_usd": 33.064521195313446
+    },
+    {
+      "contribution": -5.3269394412204923e-05,
+      "group": "factor",
+      "name": "sector:Communication Services",
+      "pnl_usd": -53.529774785934734
+    },
+    {
+      "contribution": -6.088021334880498e-06,
+      "group": "factor",
+      "name": "sector:Consumer Discretionary",
+      "pnl_usd": -6.117779534461007
+    },
+    {
+      "contribution": -7.631084943997335e-06,
+      "group": "factor",
+      "name": "sector:Consumer Staples",
+      "pnl_usd": -7.6683856261546435
+    },
+    {
+      "contribution": 5.8308407683700795e-06,
+      "group": "factor",
+      "name": "sector:Energy",
+      "pnl_usd": 5.859341871398939
+    },
+    {
+      "contribution": -1.4677847597374263e-06,
+      "group": "factor",
+      "name": "sector:Financials",
+      "pnl_usd": -1.4749592799006925
+    },
+    {
+      "contribution": -1.3353002390784239e-06,
+      "group": "factor",
+      "name": "sector:Health Care",
+      "pnl_usd": -1.34182717596459
+    },
+    {
+      "contribution": 1.377971269450058e-06,
+      "group": "factor",
+      "name": "sector:Industrials",
+      "pnl_usd": 1.3847067819913108
+    },
+    {
+      "contribution": -4.800487345386722e-05,
+      "group": "factor",
+      "name": "sector:Information Technology",
+      "pnl_usd": -48.23952089126903
+    },
+    {
+      "contribution": 0.0001765459974934441,
+      "group": "factor",
+      "name": "sector:Materials",
+      "pnl_usd": 177.4089529168178
+    },
+    {
+      "contribution": -5.5971280145200925e-05,
+      "group": "factor",
+      "name": "sector:Real Estate",
+      "pnl_usd": -56.24486731477844
+    },
+    {
+      "contribution": 1.4871269752825309e-05,
+      "group": "factor",
+      "name": "sector:Utilities",
+      "pnl_usd": 14.943960400406432
+    },
+    {
+      "contribution": 1.4840077719664719e-05,
+      "group": "factor",
+      "name": "size",
+      "pnl_usd": 14.912615900837292
+    },
+    {
+      "contribution": 5.2704544514522687e-05,
+      "group": "factor",
+      "name": "value",
+      "pnl_usd": 52.962163906471446
+    },
+    {
+      "contribution": 0.0005324773521609607,
+      "group": "issuer",
+      "name": "AR_ADECOAGRO",
+      "pnl_usd": 535.0800971984858
+    },
+    {
+      "contribution": -0.0002887485003057869,
+      "group": "issuer",
+      "name": "AR_BBVA",
+      "pnl_usd": -290.1599006652833
+    },
+    {
+      "contribution": -0.0004322270451173524,
+      "group": "issuer",
+      "name": "AR_CEPU",
+      "pnl_usd": -434.3397674560543
+    },
+    {
+      "contribution": -0.00016632690136630807,
+      "group": "issuer",
+      "name": "AR_IRSA",
+      "pnl_usd": -167.13990592956546
+    },
+    {
+      "contribution": 0.0005909117695706067,
+      "group": "issuer",
+      "name": "AR_LAR",
+      "pnl_usd": 593.8001415729527
+    },
+    {
+      "contribution": 0.0005541417547386282,
+      "group": "issuer",
+      "name": "AR_MACRO",
+      "pnl_usd": 556.850395202637
+    },
+    {
+      "contribution": 0.0001614707496624414,
+      "group": "issuer",
+      "name": "AR_PAMPA",
+      "pnl_usd": 162.26001739501967
+    },
+    {
+      "contribution": -0.0004668376538947853,
+      "group": "issuer",
+      "name": "AR_TEO",
+      "pnl_usd": -469.1195526123052
+    },
+    {
+      "contribution": 0.00013906035967619718,
+      "group": "issuer",
+      "name": "AR_TGS",
+      "pnl_usd": 139.7400856018066
+    },
+    {
+      "contribution": 0.0003342399866115191,
+      "group": "issuer",
+      "name": "BR_ALPARGATAS",
+      "pnl_usd": 335.87374899214444
+    },
+    {
+      "contribution": -0.00020508259114846702,
+      "group": "issuer",
+      "name": "BR_ALUPAR",
+      "pnl_usd": -206.0850332133327
+    },
+    {
+      "contribution": -4.067017741035634e-05,
+      "group": "issuer",
+      "name": "BR_AMBEV",
+      "pnl_usd": -40.868972912175295
+    },
+    {
+      "contribution": 0.00020486645560228428,
+      "group": "issuer",
+      "name": "BR_ASSAI",
+      "pnl_usd": 205.86784119832933
+    },
+    {
+      "contribution": 0.0014820059666909152,
+      "group": "issuer",
+      "name": "BR_AURA",
+      "pnl_usd": 1489.25
+    },
+    {
+      "contribution": 0.0012185334924654624,
+      "group": "issuer",
+      "name": "BR_AUREN",
+      "pnl_usd": 1224.4896744283224
+    },
+    {
+      "contribution": -0.0007394862046121825,
+      "group": "issuer",
+      "name": "BR_AXIA",
+      "pnl_usd": -743.100807264411
+    },
+    {
+      "contribution": 0.00011407091710166246,
+      "group": "issuer",
+      "name": "BR_BANRISUL",
+      "pnl_usd": 114.628494831884
+    },
+    {
+      "contribution": 0.00044109944468089397,
+      "group": "issuer",
+      "name": "BR_BB",
+      "pnl_usd": 443.2555352376829
+    },
+    {
+      "contribution": -0.00052366088430771,
+      "group": "issuer",
+      "name": "BR_BBSEG",
+      "pnl_usd": -526.2205345209004
+    },
+    {
+      "contribution": 0.0003311260536284133,
+      "group": "issuer",
+      "name": "BR_BRADESCO",
+      "pnl_usd": 332.74459512952876
+    },
+    {
+      "contribution": 0.0008693970789891121,
+      "group": "issuer",
+      "name": "BR_BRADESPAR",
+      "pnl_usd": 873.6466849560034
+    },
+    {
+      "contribution": -0.00011618303928697752,
+      "group": "issuer",
+      "name": "BR_BRADSAUDE",
+      "pnl_usd": -116.75094105354381
+    },
+    {
+      "contribution": 0.0008387362892642791,
+      "group": "issuer",
+      "name": "BR_BRAVA",
+      "pnl_usd": 842.8360255362827
+    },
+    {
+      "contribution": 9.127602225601014e-05,
+      "group": "issuer",
+      "name": "BR_CEMIG",
+      "pnl_usd": 91.7221787225861
+    },
+    {
+      "contribution": 0.00016820699441824435,
+      "group": "issuer",
+      "name": "BR_COPASA",
+      "pnl_usd": 169.0291888612988
+    },
+    {
+      "contribution": -0.00043009551987469345,
+      "group": "issuer",
+      "name": "BR_CURY",
+      "pnl_usd": -432.1978233350615
+    },
+    {
+      "contribution": -0.000127887814798176,
+      "group": "issuer",
+      "name": "BR_CXSEG",
+      "pnl_usd": -128.51292941380242
+    },
+    {
+      "contribution": 0.0006320110007871927,
+      "group": "issuer",
+      "name": "BR_EMBRAER",
+      "pnl_usd": 635.10026550293
+    },
+    {
+      "contribution": 0.00017784558342327303,
+      "group": "issuer",
+      "name": "BR_ENERGISA",
+      "pnl_usd": 178.714891212275
+    },
+    {
+      "contribution": 0.0002686370233853902,
+      "group": "issuer",
+      "name": "BR_EQUATORIAL",
+      "pnl_usd": 269.9501190065923
+    },
+    {
+      "contribution": 0.0008834525549155234,
+      "group": "issuer",
+      "name": "BR_FLEURY",
+      "pnl_usd": 887.7708639362987
+    },
+    {
+      "contribution": -0.0002888287953471549,
+      "group": "issuer",
+      "name": "BR_GERDAU",
+      "pnl_usd": -290.2405881881712
+    },
+    {
+      "contribution": -0.0003162215880319179,
+      "group": "issuer",
+      "name": "BR_HYPERA",
+      "pnl_usd": -317.767276624434
+    },
+    {
+      "contribution": 0.00031670205871489783,
+      "group": "issuer",
+      "name": "BR_INTER",
+      "pnl_usd": 318.2500958442685
+    },
+    {
+      "contribution": -0.000268406895799701,
+      "group": "issuer",
+      "name": "BR_ISAENERGIA",
+      "pnl_usd": -269.71886655910527
+    },
+    {
+      "contribution": -0.0001062805270969026,
+      "group": "issuer",
+      "name": "BR_ITAU",
+      "pnl_usd": -106.80002546310426
+    },
+    {
+      "contribution": 4.3109241061396034e-05,
+      "group": "issuer",
+      "name": "BR_JBS",
+      "pnl_usd": 43.31995868682868
+    },
+    {
+      "contribution": -2.7911265125627172e-05,
+      "group": "issuer",
+      "name": "BR_MARCOPOLO",
+      "pnl_usd": -28.047695166270124
+    },
+    {
+      "contribution": 5.251046036416047e-05,
+      "group": "issuer",
+      "name": "BR_MINERVA",
+      "pnl_usd": 52.76713107433494
+    },
+    {
+      "contribution": -0.00026823716552504495,
+      "group": "issuer",
+      "name": "BR_MOURADUBEUX",
+      "pnl_usd": -269.5483066442245
+    },
+    {
+      "contribution": -0.0002622398944321348,
+      "group": "issuer",
+      "name": "BR_MOVIDA",
+      "pnl_usd": -263.5217209381906
+    },
+    {
+      "contribution": -0.00021902597076297998,
+      "group": "issuer",
+      "name": "BR_MULTIPLAN",
+      "pnl_usd": -220.09656795585389
+    },
+    {
+      "contribution": 0.0004556925461314335,
+      "group": "issuer",
+      "name": "BR_NU",
+      "pnl_usd": 457.91996765136736
+    },
+    {
+      "contribution": 3.868991993061031e-05,
+      "group": "issuer",
+      "name": "BR_PAGS",
+      "pnl_usd": 38.8790359497104
+    },
+    {
+      "contribution": 0.0005982968262103044,
+      "group": "issuer",
+      "name": "BR_PATRIA",
+      "pnl_usd": 601.2212963104245
+    },
+    {
+      "contribution": -0.0008714212706743691,
+      "group": "issuer",
+      "name": "BR_PETROBRAS",
+      "pnl_usd": -875.6807708740243
+    },
+    {
+      "contribution": -0.0012767192378171418,
+      "group": "issuer",
+      "name": "BR_PICPAY",
+      "pnl_usd": -1282.9598312377927
+    },
+    {
+      "contribution": -0.00045021823398934234,
+      "group": "issuer",
+      "name": "BR_PINE",
+      "pnl_usd": -452.41889711532036
+    },
+    {
+      "contribution": -0.0005321923554789726,
+      "group": "issuer",
+      "name": "BR_PORTO",
+      "pnl_usd": -534.793707454996
+    },
+    {
+      "contribution": -0.0002845860936899048,
+      "group": "issuer",
+      "name": "BR_PRIO",
+      "pnl_usd": -285.9771482391622
+    },
+    {
+      "contribution": 0.00011021296418414201,
+      "group": "issuer",
+      "name": "BR_REDEDOR",
+      "pnl_usd": 110.75168427136647
+    },
+    {
+      "contribution": 8.920650778160339e-05,
+      "group": "issuer",
+      "name": "BR_RENNER",
+      "pnl_usd": 89.64254847798463
+    },
+    {
+      "contribution": -0.0002001379583052862,
+      "group": "issuer",
+      "name": "BR_RIACHUELO",
+      "pnl_usd": -201.11623104437166
+    },
+    {
+      "contribution": 5.041204797631759e-05,
+      "group": "issuer",
+      "name": "BR_RUMO",
+      "pnl_usd": 50.65846166352765
+    },
+    {
+      "contribution": -9.895549364139834e-05,
+      "group": "issuer",
+      "name": "BR_SABESP",
+      "pnl_usd": -99.43918730267002
+    },
+    {
+      "contribution": -0.00011978550875534228,
+      "group": "issuer",
+      "name": "BR_SANEPAR",
+      "pnl_usd": -120.37101936385007
+    },
+    {
+      "contribution": -9.080977192573746e-05,
+      "group": "issuer",
+      "name": "BR_SAOMARTINHO",
+      "pnl_usd": -91.25364936442907
+    },
+    {
+      "contribution": 0.0004361762477887177,
+      "group": "issuer",
+      "name": "BR_SMARTFIT",
+      "pnl_usd": 438.30827379848347
+    },
+    {
+      "contribution": 3.743707167488904e-05,
+      "group": "issuer",
+      "name": "BR_STONE",
+      "pnl_usd": 37.620063781738
+    },
+    {
+      "contribution": -0.00010161777078963111,
+      "group": "issuer",
+      "name": "BR_SUZANO",
+      "pnl_usd": -102.11447764030505
+    },
+    {
+      "contribution": -0.0015306636971701905,
+      "group": "issuer",
+      "name": "BR_TENDA",
+      "pnl_usd": -1538.1455690765945
+    },
+    {
+      "contribution": 7.053526780425624e-05,
+      "group": "issuer",
+      "name": "BR_TIM",
+      "pnl_usd": 70.8800436289988
+    },
+    {
+      "contribution": 0.00032872336538150733,
+      "group": "issuer",
+      "name": "BR_ULTRAPAR",
+      "pnl_usd": 330.33016256169356
+    },
+    {
+      "contribution": -4.942324142630754e-05,
+      "group": "issuer",
+      "name": "BR_USIMINAS",
+      "pnl_usd": -49.664821835011644
+    },
+    {
+      "contribution": 0.0006095805595801976,
+      "group": "issuer",
+      "name": "BR_VALE",
+      "pnl_usd": 612.5601844787594
+    },
+    {
+      "contribution": -8.653148578630294e-05,
+      "group": "issuer",
+      "name": "BR_VAMOS",
+      "pnl_usd": -86.95445099657142
+    },
+    {
+      "contribution": 7.530162328981898e-05,
+      "group": "issuer",
+      "name": "BR_VIBRA",
+      "pnl_usd": 75.66969702204396
+    },
+    {
+      "contribution": -0.0001131377166042347,
+      "group": "issuer",
+      "name": "BR_VIVARA",
+      "pnl_usd": -113.69073285789045
+    },
+    {
+      "contribution": 3.3160173139782135e-05,
+      "group": "issuer",
+      "name": "BR_VIVO",
+      "pnl_usd": 33.322259800806826
+    },
+    {
+      "contribution": -0.00012697958340096837,
+      "group": "issuer",
+      "name": "BR_VTEX",
+      "pnl_usd": -127.60025858879114
+    },
+    {
+      "contribution": -9.373960524060955e-05,
+      "group": "issuer",
+      "name": "BR_WEG",
+      "pnl_usd": -94.19780368110547
+    },
+    {
+      "contribution": 0.00017291462896648618,
+      "group": "issuer",
+      "name": "CL_BCHILE",
+      "pnl_usd": 173.75983428955118
+    },
+    {
+      "contribution": -3.502874619947215e-05,
+      "group": "issuer",
+      "name": "CL_LATAM",
+      "pnl_usd": -35.199966430663956
+    },
+    {
+      "contribution": 0.00042936125514034815,
+      "group": "issuer",
+      "name": "LA_ARCOS",
+      "pnl_usd": 431.45996952056885
+    },
+    {
+      "contribution": -9.896577998494471e-05,
+      "group": "issuer",
+      "name": "LA_COPA",
+      "pnl_usd": -99.44952392578136
+    },
+    {
+      "contribution": 0.00012782498250901557,
+      "group": "issuer",
+      "name": "LA_DLOCAL",
+      "pnl_usd": 128.44979000091524
+    },
+    {
+      "contribution": -0.0006732789289844925,
+      "group": "issuer",
+      "name": "LA_FORTUNA",
+      "pnl_usd": -676.5699110031134
+    },
+    {
+      "contribution": -0.0002388628472653831,
+      "group": "issuer",
+      "name": "LA_LILA",
+      "pnl_usd": -240.03040695190504
+    },
+    {
+      "contribution": 0.00020458993187005787,
+      "group": "issuer",
+      "name": "LA_MELI",
+      "pnl_usd": 205.589965820312
+    },
+    {
+      "contribution": 0.0006388276414294143,
+      "group": "issuer",
+      "name": "LA_MILLICOM",
+      "pnl_usd": 641.9502258300774
+    },
+    {
+      "contribution": -0.0002158641805797761,
+      "group": "issuer",
+      "name": "MX_AEROMEXICO",
+      "pnl_usd": -216.91932296752896
+    },
+    {
+      "contribution": 0.0,
+      "group": "issuer",
+      "name": "MX_ALPEK",
+      "pnl_usd": 0.0
+    },
+    {
+      "contribution": -1.2896434985213647e-05,
+      "group": "issuer",
+      "name": "MX_AMX",
+      "pnl_usd": -12.959472656249433
+    },
+    {
+      "contribution": 6.140939557469322e-05,
+      "group": "issuer",
+      "name": "MX_ASUR",
+      "pnl_usd": 61.70956420898498
+    },
+    {
+      "contribution": 0.0004182368429928113,
+      "group": "issuer",
+      "name": "MX_CEMEX",
+      "pnl_usd": 420.2811813354505
+    },
+    {
+      "contribution": -0.0004197182156605593,
+      "group": "issuer",
+      "name": "MX_ENDEAVOUR",
+      "pnl_usd": -421.76979494094746
+    },
+    {
+      "contribution": 0.0002730651316472112,
+      "group": "issuer",
+      "name": "MX_FIRSTMAJ",
+      "pnl_usd": 274.39987182617205
+    },
+    {
+      "contribution": 7.002304754528095e-05,
+      "group": "issuer",
+      "name": "MX_GAP",
+      "pnl_usd": 70.36531964149542
+    },
+    {
+      "contribution": 0.0,
+      "group": "issuer",
+      "name": "MX_GENOMMA",
+      "pnl_usd": 0.0
+    },
+    {
+      "contribution": -0.00024424619005355866,
+      "group": "issuer",
+      "name": "MX_VISTA",
+      "pnl_usd": -245.44006347656224
+    },
+    {
+      "contribution": -0.0001480165779382851,
+      "group": "issuer",
+      "name": "PE_BVN",
+      "pnl_usd": -148.74008178710955
+    },
+    {
+      "contribution": 0.00014011528848922907,
+      "group": "issuer",
+      "name": "PE_CREDICORP",
+      "pnl_usd": 140.80017089843713
+    },
+    {
+      "contribution": -0.0005408662275473958,
+      "group": "issuer",
+      "name": "PE_HUDBAY",
+      "pnl_usd": -543.5099773406985
+    },
+    {
+      "contribution": 0.0003796756950710429,
+      "group": "country",
+      "name": "AR",
+      "pnl_usd": 381.5315468311311
+    },
+    {
+      "contribution": 0.001638704318848503,
+      "group": "country",
+      "name": "BR",
+      "pnl_usd": 1646.7142924493419
+    },
+    {
+      "contribution": 0.00013788588276701403,
+      "group": "country",
+      "name": "CL",
+      "pnl_usd": 138.55986785888723
+    },
+    {
+      "contribution": 0.0001560471203198868,
+      "group": "country",
+      "name": "LATAM",
+      "pnl_usd": 156.8098773956279
+    },
+    {
+      "contribution": 0.0001742555865344476,
+      "group": "country",
+      "name": "MX",
+      "pnl_usd": 175.1073464473771
+    },
+    {
+      "contribution": -9.896577998494471e-05,
+      "group": "country",
+      "name": "PA",
+      "pnl_usd": -99.44952392578136
+    },
+    {
+      "contribution": -0.0005487675169964519,
+      "group": "country",
+      "name": "PE",
+      "pnl_usd": -551.4498882293709
+    },
+    {
+      "contribution": 0.00012782498250901557,
+      "group": "country",
+      "name": "UY",
+      "pnl_usd": 128.44979000091524
+    },
+    {
+      "contribution": 2.392614622807061e-05,
+      "group": "sector",
+      "name": "Communication Services",
+      "pnl_usd": 24.0430970394234
+    },
+    {
+      "contribution": -0.0010486981282872036,
+      "group": "sector",
+      "name": "Consumer Discretionary",
+      "pnl_usd": -1053.8241563486492
+    },
+    {
+      "contribution": 0.0007014835598527076,
+      "group": "sector",
+      "name": "Consumer Staples",
+      "pnl_usd": 704.9124058813743
+    },
+    {
+      "contribution": -1.8431916806030033e-05,
+      "group": "sector",
+      "name": "Energy",
+      "pnl_usd": -18.52201186792192
+    },
+    {
+      "contribution": 2.2403938982431633e-05,
+      "group": "sector",
+      "name": "Financials",
+      "pnl_usd": 22.51344925694545
+    },
+    {
+      "contribution": 0.0005612608917807701,
+      "group": "sector",
+      "name": "Health Care",
+      "pnl_usd": 564.0043305296874
+    },
+    {
+      "contribution": -6.4254654653830276e-06,
+      "group": "sector",
+      "name": "Industrials",
+      "pnl_usd": -6.456873089173868
+    },
+    {
+      "contribution": -0.00012697958340096837,
+      "group": "sector",
+      "name": "Information Technology",
+      "pnl_usd": -127.60025858879114
+    },
+    {
+      "contribution": 0.0020214475917770276,
+      "group": "sector",
+      "name": "Materials",
+      "pnl_usd": 2031.328411433981
+    },
+    {
+      "contribution": -0.00038535287212928805,
+      "group": "sector",
+      "name": "Real Estate",
+      "pnl_usd": -387.23647388541934
+    },
+    {
+      "contribution": 0.00022202612653637795,
+      "group": "sector",
+      "name": "Utilities",
+      "pnl_usd": 223.11138846667086
+    },
+    {
+      "contribution": -0.012832309358022046,
+      "group": "side",
+      "name": "LONG",
+      "pnl_usd": -12895.033583505126
+    },
+    {
+      "contribution": 0.014798969647090562,
+      "group": "side",
+      "name": "SHORT",
+      "pnl_usd": 14871.306892333258
+    }
+  ],
+  "data_notice": "Dados reais de mercado (Yahoo Finance, B3, FINRA, BCB); carteira simulada com execução hipotética no leilão de fechamento e custos do modelo.",
+  "date": "2026-11-16",
+  "fund_name": "CDP — Cabra da Peste",
+  "input_hashes": {
+    "approval": "db34990745886ae57ecac73cd016353911590b6d89a6bee32005f8825fc133c1",
+    "base_snapshot_manifest": "6bf7cc5b57e0a1eb5bd73080fb213eab399c7b04359ae68b2f75dc93a185d263",
+    "book_entry": "0d827b843c498c7c6639f69e73d2a3c80b866eb0cc9949f503ebf5922db6fae3",
+    "config": "2ddf7d89ac769dea9781ac51fb825fa55931bf19250fa64e2f7447aa91f34ff0",
+    "corporate_actions_v1": "90ea1d66afe35549d59d7c5ab284cc8503d5604947e359463d1c336f4f94ef3e",
+    "daily_increment_manifest": "619362b113180f0c73b96b0d0310f56d24b63af4cf7d7a67b981b4d6233ecb67",
+    "market_data": "74941f34ce00ef7bf3951ee83b68274ae97911d89d4ea73fd4fdbc2f026374c4",
+    "proposal": "1a97fab8c408f8eeadb5a1fb2e33d7217575fbb55ca8b7d424c3f6200ec0aa10",
+    "risco_diario_v1": "cd6efc7aa4c53b134893453b71d41dc5de02808428e83e7ca1a669350fddb3da",
+    "risk_model": "516c04f4260d8c299d15529db0fb20c0e6ac0fe186c5ced56ecc12764bccfab3",
+    "risk_model_prev": "feb469917200e6d1afcf374385cd3ea33ab7fed530871c32248d3f2cf88f459e",
+    "shadow_record": "a39c5c459f4c683e08e04f09eaccfe60d07590b4ed2e9c825ae97664a5f0630c",
+    "universe": "a8f28ee5d20395a6e245c50ebb635eb56ada88922c01876351278cb99f5a29db"
+  },
+  "is_synthetic": false,
+  "live_book_week": "2026-11-13",
+  "nav_end_usd": 1007198.0634683,
+  "nav_start_usd": 1004887.9919999645,
+  "pnl_components": {
+    "borrow": -11.38088395289482,
+    "costs": 0.0,
+    "equity": 1976.2733088281273,
+    "factor": -22.56784174104319,
+    "financing": 345.1790434603693,
+    "specific": 1998.8411505691704
+  },
+  "pnl_usd": 2310.071468335602,
+  "positions": [
+    {
+      "currency": "USD",
+      "day_pnl_usd": 38.8790359497104,
+      "day_return_usd": 0.0012531017569896719,
+      "issuer_id": "BR_PAGS",
+      "market_value_usd": 31065.119110107426,
+      "price_local": 7.989999771118164,
+      "price_usd": 7.989999771118164,
+      "repriced": true,
+      "shares": 3888.0,
+      "side": "LONG",
+      "ticker": "PAGS",
+      "weight": 0.03084310845786803
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": -240.03040695190504,
+      "day_return_usd": 0.009127804839926368,
+      "issuer_id": "LA_LILA",
+      "market_value_usd": -26536.649491310123,
+      "price_local": 9.949999809265137,
+      "price_usd": 9.949999809265137,
+      "repriced": true,
+      "shares": -2667.0,
+      "side": "SHORT",
+      "ticker": "LILAK",
+      "weight": -0.02634700209800922
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": 1224.4896744283224,
+      "day_return_usd": -0.047802234714355074,
+      "issuer_id": "BR_AUREN",
+      "market_value_usd": -24391.251550753488,
+      "price_local": 11.720000267028809,
+      "price_usd": 2.026524721730931,
+      "repriced": true,
+      "shares": -12036.0,
+      "side": "SHORT",
+      "ticker": "AURE3.SA",
+      "weight": -0.024216936504784257
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": 601.2212963104245,
+      "day_return_usd": -0.025081842311565072,
+      "issuer_id": "BR_PATRIA",
+      "market_value_usd": -23369.158903121945,
+      "price_local": 8.9399995803833,
+      "price_usd": 8.9399995803833,
+      "repriced": true,
+      "shares": -2614.0,
+      "side": "SHORT",
+      "ticker": "PAX",
+      "weight": -0.0232021483665784
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": 438.30827379848347,
+      "day_return_usd": -0.01851892393692567,
+      "issuer_id": "BR_SMARTFIT",
+      "market_value_usd": -23229.820354589152,
+      "price_local": 17.739999771118164,
+      "price_usd": 3.067452839639397,
+      "repriced": true,
+      "shares": -7573.0,
+      "side": "SHORT",
+      "ticker": "SMFT3.SA",
+      "weight": -0.02306380561793075
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": 420.2811813354505,
+      "day_return_usd": -0.01800952896896424,
+      "issuer_id": "MX_CEMEX",
+      "market_value_usd": -22916.31924057007,
+      "price_local": 10.359999656677246,
+      "price_usd": 10.359999656677246,
+      "repriced": true,
+      "shares": -2212.0,
+      "side": "SHORT",
+      "ticker": "CX",
+      "weight": -0.02275254497775484
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -526.2205345209004,
+      "day_return_usd": -0.023590948423107605,
+      "issuer_id": "BR_BBSEG",
+      "market_value_usd": 21779.815029757698,
+      "price_local": 37.20000076293945,
+      "price_usd": 6.432313948540371,
+      "repriced": true,
+      "shares": 3386.0,
+      "side": "LONG",
+      "ticker": "BBSE3.SA",
+      "weight": 0.021624162932520553
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": 887.7708639362987,
+      "day_return_usd": -0.04051467521833352,
+      "issuer_id": "BR_FLEURY",
+      "market_value_usd": -21024.557425803236,
+      "price_local": 20.760000228881836,
+      "price_usd": 3.589646137238045,
+      "repriced": true,
+      "shares": -5857.0,
+      "side": "SHORT",
+      "ticker": "FLRY3.SA",
+      "weight": -0.0208743028688964
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": -676.5699110031134,
+      "day_return_usd": -0.03211516837527162,
+      "issuer_id": "LA_FORTUNA",
+      "market_value_usd": 20390.419466018677,
+      "price_local": 8.739999771118164,
+      "price_usd": 8.739999771118164,
+      "repriced": true,
+      "shares": 2333.0,
+      "side": "LONG",
+      "ticker": "FSM",
+      "weight": 0.020244696853173042
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -1538.1455690765945,
+      "day_return_usd": -0.07135916691250599,
+      "issuer_id": "BR_TENDA",
+      "market_value_usd": 20016.836581465133,
+      "price_local": 16.329999923706055,
+      "price_usd": 2.823647422974345,
+      "repriced": true,
+      "shares": 7089.0,
+      "side": "LONG",
+      "ticker": "TEND3.SA",
+      "weight": 0.019873783824143672
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": 1489.25,
+      "day_return_usd": -0.07664623110232349,
+      "issuer_id": "BR_AURA",
+      "market_value_usd": -17940.9291305542,
+      "price_local": 69.2699966430664,
+      "price_usd": 69.2699966430664,
+      "repriced": true,
+      "shares": -259.0,
+      "side": "SHORT",
+      "ticker": "AUGO",
+      "weight": -0.01781271209832788
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -743.100807264411,
+      "day_return_usd": -0.04123276674082199,
+      "issuer_id": "BR_AXIA",
+      "market_value_usd": 17278.993415404213,
+      "price_local": 47.36000061035156,
+      "price_usd": 8.189096405404841,
+      "repriced": true,
+      "shares": 2110.0,
+      "side": "LONG",
+      "ticker": "AXIA3.SA",
+      "weight": 0.017155506987278916
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": -216.91932296752896,
+      "day_return_usd": -0.013293010483157341,
+      "issuer_id": "MX_AEROMEXICO",
+      "market_value_usd": 16101.37992477417,
+      "price_local": 16.329999923706055,
+      "price_usd": 16.329999923706055,
+      "repriced": true,
+      "shares": 986.0,
+      "side": "LONG",
+      "ticker": "AERO",
+      "weight": 0.015986309454695386
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": 641.9502258300774,
+      "day_return_usd": 0.04374134804752705,
+      "issuer_id": "LA_MILLICOM",
+      "market_value_usd": 15318.000564575195,
+      "price_local": 82.80000305175781,
+      "price_usd": 82.80000305175781,
+      "repriced": true,
+      "shares": 185.0,
+      "side": "LONG",
+      "ticker": "TIGO",
+      "weight": 0.015208528610378236
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": -1282.9598312377927,
+      "day_return_usd": -0.07816710481703204,
+      "issuer_id": "BR_PICPAY",
+      "market_value_usd": 15130.080337524414,
+      "price_local": 6.840000152587891,
+      "price_usd": 6.840000152587891,
+      "repriced": true,
+      "shares": 2212.0,
+      "side": "LONG",
+      "ticker": "PICS",
+      "weight": 0.015021951378087225
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": -469.1195526123052,
+      "day_return_usd": -0.03027433340238528,
+      "issuer_id": "AR_TEO",
+      "market_value_usd": 15026.500000000002,
+      "price_local": 10.25,
+      "price_usd": 10.25,
+      "repriced": true,
+      "shares": 1466.0,
+      "side": "LONG",
+      "ticker": "TEO",
+      "weight": 0.014919111290043635
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": -875.6807708740243,
+      "day_return_usd": -0.05670670157440505,
+      "issuer_id": "BR_PETROBRAS",
+      "market_value_usd": 14566.599357604984,
+      "price_local": 17.299999237060547,
+      "price_usd": 17.299999237060547,
+      "repriced": true,
+      "shares": 842.0,
+      "side": "LONG",
+      "ticker": "PBR",
+      "weight": 0.014462497383528224
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": 443.2555352376829,
+      "day_return_usd": -0.029912098963816303,
+      "issuer_id": "BR_BB",
+      "market_value_usd": -14375.347992848889,
+      "price_local": 14.949999809265137,
+      "price_usd": 2.5850293099890105,
+      "repriced": true,
+      "shares": -5561.0,
+      "side": "SHORT",
+      "ticker": "BBAS3.SA",
+      "weight": -0.014272612819912685
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -102.11447764030505,
+      "day_return_usd": -0.007119233695436988,
+      "issuer_id": "BR_SUZANO",
+      "market_value_usd": 14241.35028398909,
+      "price_local": 55.5,
+      "price_usd": 9.596597226407741,
+      "repriced": true,
+      "shares": 1484.0,
+      "side": "LONG",
+      "ticker": "SUZB3.SA",
+      "weight": 0.014139572741977689
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": 61.70956420898498,
+      "day_return_usd": -0.004478795671736369,
+      "issuer_id": "MX_ASUR",
+      "market_value_usd": -13716.450622558592,
+      "price_local": 268.95001220703125,
+      "price_usd": 268.95001220703125,
+      "repriced": true,
+      "shares": -51.0,
+      "side": "SHORT",
+      "ticker": "ASR",
+      "weight": -0.01361842433982231
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": 842.8360255362827,
+      "day_return_usd": -0.058020139509426305,
+      "issuer_id": "BR_BRAVA",
+      "market_value_usd": -13683.775469414542,
+      "price_local": 13.9399995803833,
+      "price_usd": 2.4103884920582246,
+      "repriced": true,
+      "shares": -5677.0,
+      "side": "SHORT",
+      "ticker": "BRAV3.SA",
+      "weight": -0.013585982703634555
+    },
+    {
+      "currency": "MXN",
+      "day_pnl_usd": 0.0,
+      "day_return_usd": null,
+      "issuer_id": "MX_GENOMMA",
+      "market_value_usd": 13606.477616963417,
+      "price_local": 15.3100004196167,
+      "price_usd": 0.8265399679777976,
+      "repriced": false,
+      "shares": 16530.0,
+      "side": "LONG",
+      "ticker": "LABB.MX",
+      "weight": 0.01350923726968788
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -534.793707454996,
+      "day_return_usd": -0.038546405901415115,
+      "issuer_id": "BR_PORTO",
+      "market_value_usd": 13339.228914077215,
+      "price_local": 45.540000915527344,
+      "price_usd": 7.8743972338118144,
+      "repriced": true,
+      "shares": 1694.0,
+      "side": "LONG",
+      "ticker": "PSSA3.SA",
+      "weight": 0.013243898492162903
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": 635.10026550293,
+      "day_return_usd": -0.04636099797088933,
+      "issuer_id": "BR_EMBRAER",
+      "market_value_usd": -13063.920318603516,
+      "price_local": 18.770000457763672,
+      "price_usd": 18.770000457763672,
+      "repriced": true,
+      "shares": -696.0,
+      "side": "SHORT",
+      "ticker": "EMBJ",
+      "weight": -0.012970557423053149
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -452.41889711532036,
+      "day_return_usd": -0.034089313303949265,
+      "issuer_id": "BR_PINE",
+      "market_value_usd": 12819.156657412128,
+      "price_local": 11.109999656677246,
+      "price_usd": 1.921048502534411,
+      "repriced": true,
+      "shares": 6673.0,
+      "side": "LONG",
+      "ticker": "PINE4.SA",
+      "weight": 0.01272754299513761
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": 70.8800436289988,
+      "day_return_usd": -0.005629114868637264,
+      "issuer_id": "BR_TIM",
+      "market_value_usd": -12520.805378160581,
+      "price_local": 21.8700008392334,
+      "price_usd": 3.781578187303103,
+      "repriced": true,
+      "shares": -3311.0,
+      "side": "SHORT",
+      "ticker": "TIMS3.SA",
+      "weight": -0.01243132391959236
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": 431.45996952056885,
+      "day_return_usd": -0.03744798606074706,
+      "issuer_id": "LA_ARCOS",
+      "market_value_usd": -11090.120091438295,
+      "price_local": 6.940000057220459,
+      "price_usd": 6.940000057220459,
+      "repriced": true,
+      "shares": -1598.0,
+      "side": "SHORT",
+      "ticker": "ARCO",
+      "weight": -0.011010863199289043
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": 535.0800971984858,
+      "day_return_usd": -0.046103193427247,
+      "issuer_id": "AR_ADECOAGRO",
+      "market_value_usd": -11071.059465408325,
+      "price_local": 8.6899995803833,
+      "price_usd": 8.6899995803833,
+      "repriced": true,
+      "shares": -1274.0,
+      "side": "SHORT",
+      "ticker": "AGRO",
+      "weight": -0.010991938792341383
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": -12.959472656249433,
+      "day_return_usd": -0.0011778084061880856,
+      "issuer_id": "MX_AMX",
+      "market_value_usd": 10990.08023071289,
+      "price_local": 25.440000534057617,
+      "price_usd": 25.440000534057617,
+      "repriced": true,
+      "shares": 432.0,
+      "side": "LONG",
+      "ticker": "AMX",
+      "weight": 0.010911538285596382
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": 457.91996765136736,
+      "day_return_usd": -0.04084719749967092,
+      "issuer_id": "BR_NU",
+      "market_value_usd": -10752.640258789053,
+      "price_local": 12.680000305175781,
+      "price_usd": 12.680000305175781,
+      "repriced": true,
+      "shares": -848.0,
+      "side": "SHORT",
+      "ticker": "NU",
+      "weight": -0.010675795207312247
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": 873.6466849560034,
+      "day_return_usd": -0.07781526496398061,
+      "issuer_id": "BR_BRADESPAR",
+      "market_value_usd": -10353.542290888257,
+      "price_local": 17.1200008392334,
+      "price_usd": 2.96024779405199,
+      "repriced": true,
+      "shares": -3346.0,
+      "side": "SHORT",
+      "ticker": "BRAP4.SA",
+      "weight": -0.010279549441582221
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": 593.8001415729527,
+      "day_return_usd": -0.05434783805858867,
+      "issuer_id": "AR_LAR",
+      "market_value_usd": -10332.120056629183,
+      "price_local": 3.4800000190734863,
+      "price_usd": 3.4800000190734863,
+      "repriced": true,
+      "shares": -2969.0,
+      "side": "SHORT",
+      "ticker": "LAR",
+      "weight": -0.010258280303925912
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": 205.589965820312,
+      "day_return_usd": -0.01969171453344598,
+      "issuer_id": "LA_MELI",
+      "market_value_usd": -10234.839965820305,
+      "price_local": 1462.1199951171875,
+      "price_usd": 1462.1199951171875,
+      "repriced": true,
+      "shares": -7.0,
+      "side": "SHORT",
+      "ticker": "MELI",
+      "weight": -0.010161695437118392
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -269.71886655910527,
+      "day_return_usd": -0.025695735992838475,
+      "issuer_id": "BR_ISAENERGIA",
+      "market_value_usd": 10226.920211390528,
+      "price_local": 26.489999771118164,
+      "price_usd": 4.580429879838816,
+      "repriced": true,
+      "shares": 2217.0,
+      "side": "LONG",
+      "ticker": "ISAE4.SA",
+      "weight": 0.010153832282176945
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": 556.850395202637,
+      "day_return_usd": -0.052937075341544904,
+      "issuer_id": "AR_MACRO",
+      "market_value_usd": -9962.249717712402,
+      "price_local": 53.849998474121094,
+      "price_usd": 53.849998474121094,
+      "repriced": true,
+      "shares": -185.0,
+      "side": "SHORT",
+      "ticker": "BMA",
+      "weight": -0.009891053288374346
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -317.767276624434,
+      "day_return_usd": -0.03195222864921177,
+      "issuer_id": "BR_HYPERA",
+      "market_value_usd": 9627.306668390447,
+      "price_local": 22.200000762939453,
+      "price_usd": 3.8386390224842253,
+      "repriced": true,
+      "shares": 2508.0,
+      "side": "LONG",
+      "ticker": "HYPE3.SA",
+      "weight": 0.009558503950294233
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -432.1978233350615,
+      "day_return_usd": -0.04456914506267473,
+      "issuer_id": "BR_CURY",
+      "market_value_usd": 9265.045027684168,
+      "price_local": 27.450000762939453,
+      "price_usd": 4.746425246603876,
+      "repriced": true,
+      "shares": 1908.0,
+      "side": "LONG",
+      "ticker": "CURY3.SA",
+      "weight": 0.009198831256465943
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -128.51292941380242,
+      "day_return_usd": -0.013753708960164812,
+      "issuer_id": "BR_CXSEG",
+      "market_value_usd": 9215.361496460515,
+      "price_local": 21.489999771118164,
+      "price_usd": 3.715871571153434,
+      "repriced": true,
+      "shares": 2480.0,
+      "side": "LONG",
+      "ticker": "CXSE3.SA",
+      "weight": 0.009149502794641298
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": 330.33016256169356,
+      "day_return_usd": -0.034829762277491905,
+      "issuer_id": "BR_ULTRAPAR",
+      "market_value_usd": -9153.80469687039,
+      "price_local": 32.279998779296875,
+      "price_usd": 5.581588229799021,
+      "repriced": true,
+      "shares": -1640.0,
+      "side": "SHORT",
+      "ticker": "UGPA3.SA",
+      "weight": -0.009088385918206734
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -285.9771482391622,
+      "day_return_usd": -0.03054964601572152,
+      "issuer_id": "BR_PRIO",
+      "market_value_usd": 9075.085434678887,
+      "price_local": 62.630001068115234,
+      "price_usd": 10.829457559282677,
+      "repriced": true,
+      "shares": 838.0,
+      "side": "LONG",
+      "ticker": "PRIO3.SA",
+      "weight": 0.00901022923279728
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -206.0850332133327,
+      "day_return_usd": -0.022247109507055995,
+      "issuer_id": "BR_ALUPAR",
+      "market_value_usd": 9057.367063697047,
+      "price_local": 33.09000015258789,
+      "price_usd": 5.721646913264085,
+      "repriced": true,
+      "shares": 1583.0,
+      "side": "LONG",
+      "ticker": "ALUP11.SA",
+      "weight": 0.008992637488308787
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -201.11623104437166,
+      "day_return_usd": -0.021779713753617758,
+      "issuer_id": "BR_RIACHUELO",
+      "market_value_usd": 9032.991862362727,
+      "price_local": 6.110000133514404,
+      "price_usd": 1.0564902762997344,
+      "repriced": true,
+      "shares": 8550.0,
+      "side": "LONG",
+      "ticker": "RIAA3.SA",
+      "weight": 0.008968436487315611
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -120.37101936385007,
+      "day_return_usd": 0.013714521346228414,
+      "issuer_id": "BR_SANEPAR",
+      "market_value_usd": -8897.273714327603,
+      "price_local": 32.900001525878906,
+      "price_usd": 5.688793934992072,
+      "repriced": true,
+      "shares": -1564.0,
+      "side": "SHORT",
+      "ticker": "SAPR11.SA",
+      "weight": -0.008833688265533117
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": 335.87374899214444,
+      "day_return_usd": -0.036971538199984,
+      "issuer_id": "BR_ALPARGATAS",
+      "market_value_usd": -8748.783404717782,
+      "price_local": 13.1899995803833,
+      "price_usd": 2.280704745755417,
+      "repriced": true,
+      "shares": -3836.0,
+      "side": "SHORT",
+      "ticker": "ALPA4.SA",
+      "weight": -0.008686259159982128
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -49.664821835011644,
+      "day_return_usd": -0.005829954545171101,
+      "issuer_id": "BR_USIMINAS",
+      "market_value_usd": 8469.23896209733,
+      "price_local": 4.849999904632568,
+      "price_usd": 0.8386215429346796,
+      "repriced": true,
+      "shares": 10099.0,
+      "side": "LONG",
+      "ticker": "USIM5.SA",
+      "weight": 0.00840871251572247
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": 612.5601844787594,
+      "day_return_usd": -0.06773620417061654,
+      "issuer_id": "BR_VALE",
+      "market_value_usd": -8430.76003074646,
+      "price_local": 10.460000038146973,
+      "price_usd": 10.460000038146973,
+      "repriced": true,
+      "shares": -806.0,
+      "side": "SHORT",
+      "ticker": "VALE",
+      "weight": -0.008370508578734778
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": 178.714891212275,
+      "day_return_usd": -0.021394599413651183,
+      "issuer_id": "BR_ENERGISA",
+      "market_value_usd": -8174.5563132134075,
+      "price_local": 48.290000915527344,
+      "price_usd": 8.349904303588774,
+      "repriced": true,
+      "shares": -979.0,
+      "side": "SHORT",
+      "ticker": "ENGI11.SA",
+      "weight": -0.008116135852231698
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": 332.74459512952876,
+      "day_return_usd": -0.03974823236472791,
+      "issuer_id": "BR_BRADESCO",
+      "market_value_usd": -8038.560877684458,
+      "price_local": 14.229999542236328,
+      "price_usd": 2.46053286736592,
+      "repriced": true,
+      "shares": -3267.0,
+      "side": "SHORT",
+      "ticker": "BBDC4.SA",
+      "weight": -0.007981112324624182
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": -434.3397674560543,
+      "day_return_usd": -0.052486161403675125,
+      "issuer_id": "AR_CEPU",
+      "market_value_usd": 7840.979970932005,
+      "price_local": 10.289999961853027,
+      "price_usd": 10.289999961853027,
+      "repriced": true,
+      "shares": 762.0,
+      "side": "LONG",
+      "ticker": "CEPU",
+      "weight": 0.007784943453854037
+    },
+    {
+      "currency": "MXN",
+      "day_pnl_usd": 0.0,
+      "day_return_usd": null,
+      "issuer_id": "MX_ALPEK",
+      "market_value_usd": 7740.428042450555,
+      "price_local": 13.0,
+      "price_usd": 0.7018301299289175,
+      "repriced": false,
+      "shares": 11004.0,
+      "side": "LONG",
+      "ticker": "ALPEKA.MX",
+      "weight": 0.007685110131959832
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": -290.2405881881712,
+      "day_return_usd": -0.03636370926848953,
+      "issuer_id": "BR_GERDAU",
+      "market_value_usd": 7691.35958480835,
+      "price_local": 4.239999771118164,
+      "price_usd": 4.239999771118164,
+      "repriced": true,
+      "shares": 1814.0,
+      "side": "LONG",
+      "ticker": "GGB",
+      "weight": 0.007636392348018472
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": 140.80017089843713,
+      "day_return_usd": -0.019087924746807983,
+      "issuer_id": "PE_CREDICORP",
+      "market_value_usd": -7235.5999755859375,
+      "price_local": 361.7799987792969,
+      "price_usd": 361.7799987792969,
+      "repriced": true,
+      "shares": -20.0,
+      "side": "SHORT",
+      "ticker": "BAP",
+      "weight": -0.007183889880278415
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": 269.9501190065923,
+      "day_return_usd": -0.03615722546641087,
+      "issuer_id": "BR_EQUATORIAL",
+      "market_value_usd": -7196.057450002512,
+      "price_local": 33.779998779296875,
+      "price_usd": 5.840955722404636,
+      "repriced": true,
+      "shares": -1232.0,
+      "side": "SHORT",
+      "ticker": "EQTL3.SA",
+      "weight": -0.007144629950163716
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -116.75094105354381,
+      "day_return_usd": -0.016004228974239365,
+      "issuer_id": "BR_BRADSAUDE",
+      "market_value_usd": 7178.254725352991,
+      "price_local": 16.5,
+      "price_usd": 2.853042418661761,
+      "repriced": true,
+      "shares": 2516.0,
+      "side": "LONG",
+      "ticker": "SAUD3.SA",
+      "weight": 0.007126954454851288
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": 173.75983428955118,
+      "day_return_usd": -0.024496022406553353,
+      "issuer_id": "CL_BCHILE",
+      "market_value_usd": -6919.629917144775,
+      "price_local": 38.22999954223633,
+      "price_usd": 38.22999954223633,
+      "repriced": true,
+      "shares": -181.0,
+      "side": "SHORT",
+      "ticker": "BCH",
+      "weight": -0.0068701779402920386
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": 70.36531964149542,
+      "day_return_usd": -0.010137249826755679,
+      "issuer_id": "MX_GAP",
+      "market_value_usd": -6870.89792670538,
+      "price_local": 234.35000610351562,
+      "price_usd": 234.35000610351562,
+      "repriced": true,
+      "shares": -28.0,
+      "side": "SHORT",
+      "ticker": "PAC",
+      "weight": -0.006821794218949698
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": 318.2500958442685,
+      "day_return_usd": -0.045783145266081404,
+      "issuer_id": "BR_INTER",
+      "market_value_usd": -6633.000063896179,
+      "price_local": 3.9600000381469727,
+      "price_usd": 3.9600000381469727,
+      "repriced": true,
+      "shares": -1675.0,
+      "side": "SHORT",
+      "ticker": "INTR",
+      "weight": -0.0065855965221531055
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": 110.75168427136647,
+      "day_return_usd": -0.016550774506636445,
+      "issuer_id": "BR_REDEDOR",
+      "market_value_usd": -6580.879829828341,
+      "price_local": 35.2400016784668,
+      "price_usd": 6.093407249841056,
+      "repriced": true,
+      "shares": -1080.0,
+      "side": "SHORT",
+      "ticker": "RDOR3.SA",
+      "weight": -0.006533848771677532
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -220.09656795585389,
+      "day_return_usd": -0.03308057626488814,
+      "issuer_id": "BR_MULTIPLAN",
+      "market_value_usd": 6433.250888674316,
+      "price_local": 26.979999542236328,
+      "price_usd": 4.665156554513644,
+      "repriced": true,
+      "shares": 1379.0,
+      "side": "LONG",
+      "ticker": "MULT3.SA",
+      "weight": 0.006387274878707898
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -28.047695166270124,
+      "day_return_usd": -0.004501613051683395,
+      "issuer_id": "BR_MARCOPOLO",
+      "market_value_usd": 6202.540061767121,
+      "price_local": 3.809999942779541,
+      "price_usd": 0.6587934213241765,
+      "repriced": true,
+      "shares": 9415.0,
+      "side": "LONG",
+      "ticker": "POMO4.SA",
+      "weight": 0.006158212854787063
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": -127.60025858879114,
+      "day_return_usd": -0.02025320535667996,
+      "issuer_id": "BR_VTEX",
+      "market_value_usd": 6172.649817466737,
+      "price_local": 3.869999885559082,
+      "price_usd": 3.869999885559082,
+      "repriced": true,
+      "shares": 1595.0,
+      "side": "LONG",
+      "ticker": "VTEX",
+      "weight": 0.006128536224753188
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": -421.76979494094746,
+      "day_return_usd": -0.06657960342087699,
+      "issuer_id": "MX_ENDEAVOUR",
+      "market_value_usd": 5913.050078868867,
+      "price_local": 7.150000095367432,
+      "price_usd": 7.150000095367432,
+      "repriced": true,
+      "shares": 827.0,
+      "side": "LONG",
+      "ticker": "EXK",
+      "weight": 0.005870791747262897
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": -543.5099773406985,
+      "day_return_usd": -0.08559401288771795,
+      "issuer_id": "PE_HUDBAY",
+      "market_value_usd": 5806.349773406982,
+      "price_local": 19.549999237060547,
+      "price_usd": 19.549999237060547,
+      "repriced": true,
+      "shares": 297.0,
+      "side": "LONG",
+      "ticker": "HBM",
+      "weight": 0.005764853988512189
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": 169.0291888612988,
+      "day_return_usd": -0.028706707133226095,
+      "issuer_id": "BR_COPASA",
+      "market_value_usd": -5719.113539485931,
+      "price_local": 54.66999816894531,
+      "price_usd": 9.453080230555258,
+      "repriced": true,
+      "shares": -605.0,
+      "side": "SHORT",
+      "ticker": "CSMG3.SA",
+      "weight": -0.005678241198947591
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": -245.44006347656224,
+      "day_return_usd": -0.04226362113006166,
+      "issuer_id": "MX_VISTA",
+      "market_value_usd": 5561.919952392579,
+      "price_local": 53.47999954223633,
+      "price_usd": 53.47999954223633,
+      "repriced": true,
+      "shares": 104.0,
+      "side": "LONG",
+      "ticker": "VIST",
+      "weight": 0.005522171014944204
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": 33.322259800806826,
+      "day_return_usd": -0.0060744400448878855,
+      "issuer_id": "BR_VIVO",
+      "market_value_usd": -5452.329019093633,
+      "price_local": 34.529998779296875,
+      "price_usd": 5.970639468707443,
+      "repriced": true,
+      "shares": -909.0,
+      "side": "SHORT",
+      "ticker": "VIVT3.SA",
+      "weight": -0.005413363286579866
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": -99.44952392578136,
+      "day_return_usd": -0.018101709954965628,
+      "issuer_id": "LA_COPA",
+      "market_value_usd": 5394.480285644532,
+      "price_local": 138.32000732421875,
+      "price_usd": 138.32000732421875,
+      "repriced": true,
+      "shares": 39.0,
+      "side": "LONG",
+      "ticker": "CPA",
+      "weight": 0.005355927976140628
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": -35.199966430663956,
+      "day_return_usd": -0.006762461895349903,
+      "issuer_id": "CL_LATAM",
+      "market_value_usd": 5170.0,
+      "price_local": 47.0,
+      "price_usd": 47.0,
+      "repriced": true,
+      "shares": 110.0,
+      "side": "LONG",
+      "ticker": "LTM",
+      "weight": 0.005133051966161487
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -269.5483066442245,
+      "day_return_usd": -0.05142097250222,
+      "issuer_id": "BR_MOURADUBEUX",
+      "market_value_usd": 4972.4433074308945,
+      "price_local": 17.610000610351562,
+      "price_usd": 3.0449744687268185,
+      "repriced": true,
+      "shares": 1633.0,
+      "side": "LONG",
+      "ticker": "MDNE3.SA",
+      "weight": 0.004936907136525084
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": 128.44979000091524,
+      "day_return_usd": -0.025566065633554236,
+      "issuer_id": "LA_DLOCAL",
+      "market_value_usd": -4895.780055999756,
+      "price_local": 13.34000015258789,
+      "price_usd": 13.34000015258789,
+      "repriced": true,
+      "shares": -367.0,
+      "side": "SHORT",
+      "ticker": "DLO",
+      "weight": -0.004860791768345018
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": 75.66969702204396,
+      "day_return_usd": -0.016011979640618845,
+      "issuer_id": "BR_VIBRA",
+      "market_value_usd": -4650.148016990452,
+      "price_local": 30.700000762939453,
+      "price_usd": 5.308388147249374,
+      "repriced": true,
+      "shares": -876.0,
+      "side": "SHORT",
+      "ticker": "VBBR3.SA",
+      "weight": -0.004616915168579261
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": 43.31995868682868,
+      "day_return_usd": 0.009868411765204144,
+      "issuer_id": "BR_JBS",
+      "market_value_usd": 4433.079903602598,
+      "price_local": 12.279999732971191,
+      "price_usd": 12.279999732971191,
+      "repriced": true,
+      "shares": 361.0,
+      "side": "LONG",
+      "ticker": "JBS",
+      "weight": 0.0044013983588662075
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -263.5217209381906,
+      "day_return_usd": -0.057062355957225974,
+      "issuer_id": "BR_MOVIDA",
+      "market_value_usd": 4354.61429040573,
+      "price_local": 5.880000114440918,
+      "price_usd": 1.0167205908021786,
+      "repriced": true,
+      "shares": 4283.0,
+      "side": "LONG",
+      "ticker": "MOVI3.SA",
+      "weight": 0.004323493509717996
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -99.43918730267002,
+      "day_return_usd": -0.02449826465884697,
+      "issuer_id": "BR_SABESP",
+      "market_value_usd": 3959.590653684859,
+      "price_local": 27.100000381469727,
+      "price_usd": 4.685906099035336,
+      "repriced": true,
+      "shares": 845.0,
+      "side": "LONG",
+      "ticker": "SBSP3.SA",
+      "weight": 0.003931292957464548
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": 205.86784119832933,
+      "day_return_usd": -0.049532882870938266,
+      "issuer_id": "BR_ASSAI",
+      "market_value_usd": -3950.3174899630694,
+      "price_local": 9.390000343322754,
+      "price_usd": 1.6236405630756554,
+      "repriced": true,
+      "shares": -2433.0,
+      "side": "SHORT",
+      "ticker": "ASAI3.SA",
+      "weight": -0.003922086065535212
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": -290.1599006652833,
+      "day_return_usd": -0.07351552857782706,
+      "issuer_id": "AR_BBVA",
+      "market_value_usd": 3656.759971618654,
+      "price_local": 9.829999923706055,
+      "price_usd": 9.829999923706055,
+      "repriced": true,
+      "shares": 372.0,
+      "side": "LONG",
+      "ticker": "BBAR",
+      "weight": 0.0036306264917016938
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": 274.39987182617205,
+      "day_return_usd": -0.07179484026548622,
+      "issuer_id": "MX_FIRSTMAJ",
+      "market_value_usd": -3547.6000213623047,
+      "price_local": 12.670000076293945,
+      "price_usd": 12.670000076293945,
+      "repriced": true,
+      "shares": -280.0,
+      "side": "SHORT",
+      "ticker": "AG",
+      "weight": -0.003522246666307217
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": 114.628494831884,
+      "day_return_usd": -0.031697057040432575,
+      "issuer_id": "BR_BANRISUL",
+      "market_value_usd": -3501.7480881948804,
+      "price_local": 12.609999656677246,
+      "price_usd": 2.180415995140026,
+      "repriced": true,
+      "shares": -1606.0,
+      "side": "SHORT",
+      "ticker": "BRSR6.SA",
+      "weight": -0.0034767224195572455
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": 37.620063781738,
+      "day_return_usd": 0.01136365552031715,
+      "issuer_id": "BR_STONE",
+      "market_value_usd": 3348.180095672607,
+      "price_local": 8.010000228881836,
+      "price_usd": 8.010000228881836,
+      "repriced": true,
+      "shares": 418.0,
+      "side": "LONG",
+      "ticker": "STNE",
+      "weight": 0.0033242519193723468
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": 91.7221787225861,
+      "day_return_usd": -0.027285322882944163,
+      "issuer_id": "BR_CEMIG",
+      "market_value_usd": -3269.8718590712965,
+      "price_local": 10.949999809265137,
+      "price_usd": 1.8933826630407047,
+      "repriced": true,
+      "shares": -1727.0,
+      "side": "SHORT",
+      "ticker": "CMIG4.SA",
+      "weight": -0.003246503322108711
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": -167.13990592956546,
+      "day_return_usd": -0.04864431088778942,
+      "issuer_id": "AR_IRSA",
+      "market_value_usd": 3268.820083618164,
+      "price_local": 11.930000305175781,
+      "price_usd": 11.930000305175781,
+      "repriced": true,
+      "shares": 274.0,
+      "side": "LONG",
+      "ticker": "IRS",
+      "weight": 0.003245459063296784
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": -148.74008178710955,
+      "day_return_usd": -0.04470401183093875,
+      "issuer_id": "PE_BVN",
+      "market_value_usd": 3178.479907989502,
+      "price_local": 23.719999313354492,
+      "price_usd": 23.719999313354492,
+      "repriced": true,
+      "shares": 134.0,
+      "side": "LONG",
+      "ticker": "BVN",
+      "weight": 0.0031557645147215273
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": 52.76713107433494,
+      "day_return_usd": -0.01730536496672297,
+      "issuer_id": "BR_MINERVA",
+      "market_value_usd": -2996.410460718876,
+      "price_local": 3.4200000762939453,
+      "price_usd": 0.5913578963329142,
+      "repriced": true,
+      "shares": -5067.0,
+      "side": "SHORT",
+      "ticker": "BEEF3.SA",
+      "weight": -0.00297499624890133
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": 50.65846166352765,
+      "day_return_usd": -0.018370908630902072,
+      "issuer_id": "BR_RUMO",
+      "market_value_usd": -2706.8786140102384,
+      "price_local": 16.290000915527344,
+      "price_usd": 2.8167311280023295,
+      "repriced": true,
+      "shares": -961.0,
+      "side": "SHORT",
+      "ticker": "RAIL3.SA",
+      "weight": -0.002687533576751593
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -86.95445099657142,
+      "day_return_usd": -0.031271131634670546,
+      "issuer_id": "BR_VAMOS",
+      "market_value_usd": 2693.7076629438257,
+      "price_local": 2.619999885559082,
+      "price_usd": 0.45302853396297094,
+      "repriced": true,
+      "shares": 5946.0,
+      "side": "LONG",
+      "ticker": "VAMO3.SA",
+      "weight": 0.002674456753488988
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -40.868972912175295,
+      "day_return_usd": -0.01521448075988463,
+      "issuer_id": "BR_AMBEV",
+      "market_value_usd": 2645.3201621079807,
+      "price_local": 15.869999885559082,
+      "price_usd": 2.7441080519792336,
+      "repriced": true,
+      "shares": 964.0,
+      "side": "LONG",
+      "ticker": "ABEV3.SA",
+      "weight": 0.0026264150598133452
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": 89.64254847798463,
+      "day_return_usd": -0.034291424426673545,
+      "issuer_id": "BR_RENNER",
+      "market_value_usd": -2524.4964083235964,
+      "price_local": 9.579999923706055,
+      "price_usd": 1.6564937062490792,
+      "repriced": true,
+      "shares": -1524.0,
+      "side": "SHORT",
+      "ticker": "LREN3.SA",
+      "weight": -0.002506454787681441
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -113.69073285789045,
+      "day_return_usd": -0.0445871006710874,
+      "issuer_id": "BR_VIVARA",
+      "market_value_usd": 2436.1663142860934,
+      "price_local": 16.440000534057617,
+      "price_usd": 2.8426678113023263,
+      "repriced": true,
+      "shares": 857.0,
+      "side": "LONG",
+      "ticker": "VIVA3.SA",
+      "weight": 0.0024187559554047612
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -94.19780368110547,
+      "day_return_usd": -0.03755619248394926,
+      "issuer_id": "BR_WEG",
+      "market_value_usd": 2413.9852002632815,
+      "price_local": 50.400001525878906,
+      "price_usd": 8.714748015390908,
+      "repriced": true,
+      "shares": 277.0,
+      "side": "LONG",
+      "ticker": "WEGE3.SA",
+      "weight": 0.002396733361411251
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": 162.26001739501967,
+      "day_return_usd": -0.06548076242467571,
+      "issuer_id": "AR_PAMPA",
+      "market_value_usd": -2315.719947814942,
+      "price_local": 60.939998626708984,
+      "price_usd": 60.939998626708984,
+      "repriced": true,
+      "shares": -38.0,
+      "side": "SHORT",
+      "ticker": "PAM",
+      "weight": -0.002299170373541753
+    },
+    {
+      "currency": "BRL",
+      "day_pnl_usd": -91.25364936442907,
+      "day_return_usd": -0.03933877387619733,
+      "issuer_id": "BR_SAOMARTINHO",
+      "market_value_usd": 2228.433528777232,
+      "price_local": 18.049999237060547,
+      "price_usd": 3.1210553624331006,
+      "repriced": true,
+      "shares": 714.0,
+      "side": "LONG",
+      "ticker": "SMTO3.SA",
+      "weight": 0.002212507757514536
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": 139.7400856018066,
+      "day_return_usd": -0.06363217814865996,
+      "issuer_id": "AR_TGS",
+      "market_value_usd": -2056.319984436035,
+      "price_local": 20.15999984741211,
+      "price_usd": 20.15999984741211,
+      "repriced": true,
+      "shares": -102.0,
+      "side": "SHORT",
+      "ticker": "TGS",
+      "weight": -0.002041624243552524
+    },
+    {
+      "currency": "USD",
+      "day_pnl_usd": -106.80002546310426,
+      "day_return_usd": -0.05312086111849024,
+      "issuer_id": "BR_ITAU",
+      "market_value_usd": 1903.710030555725,
+      "price_local": 7.130000114440918,
+      "price_usd": 7.130000114440918,
+      "repriced": true,
+      "shares": 267.0,
+      "side": "LONG",
+      "ticker": "ITUB",
+      "weight": 0.0018901049352699052
+    }
+  ],
+  "prev_record_hash": "9cafb0b50935d17615bb578707bb1e9d8d22eda9cc8b34e00d595a39071e2585",
+  "record_hash": "0aa6cea537b587c707f692e22a6ed020a98e3e30d94aabfc23932e08e15b8d11",
+  "ret": 0.0022988347823104283,
+  "risk": {
+    "beta": 0.0034146115688660286,
+    "drawdown": -0.0024144884065721017,
+    "es_1d_99": 0.0071868344355216955,
+    "ex_ante_vol": 0.03590270607760031,
+    "exposures": [
+      {
+        "gross": 0.07058437831557626,
+        "group": "country",
+        "limit": 0.02,
+        "long": 0.035102311313840354,
+        "name": "AR",
+        "net": -0.0003797556878955624,
+        "short": -0.035482067001735916
+      },
+      {
+        "gross": 0.6005168034930668,
+        "group": "country",
+        "limit": 0.02,
+        "long": 0.30110639966639424,
+        "name": "BR",
+        "net": 0.0016959958397217562,
+        "short": -0.2994104038266725
+      },
+      {
+        "gross": 0.012003229906453526,
+        "group": "country",
+        "limit": 0.02,
+        "long": 0.005133051966161487,
+        "name": "CL",
+        "net": -0.0017371259741305514,
+        "short": -0.0068701779402920386
+      },
+      {
+        "gross": 0.07281109076084955,
+        "group": "country",
+        "limit": 0.02,
+        "long": 0.03545322546355128,
+        "name": "LATAM",
+        "net": -0.0019046398337469843,
+        "short": -0.03735786529729826
+      },
+      {
+        "gross": 0.10067799709203644,
+        "group": "country",
+        "limit": 0.02,
+        "long": 0.05396298688920238,
+        "name": "MX",
+        "net": 0.007247976686368313,
+        "short": -0.04671501020283406
+      },
+      {
+        "gross": 0.005355927976140628,
+        "group": "country",
+        "limit": 0.02,
+        "long": 0.005355927976140628,
+        "name": "PA",
+        "net": 0.005355927976140628,
+        "short": 0.0
+      },
+      {
+        "gross": 0.016104508383512132,
+        "group": "country",
+        "limit": 0.02,
+        "long": 0.008920618503233717,
+        "name": "PE",
+        "net": 0.0017367286229553018,
+        "short": -0.007183889880278415
+      },
+      {
+        "gross": 0.004860791768345018,
+        "group": "country",
+        "limit": 0.02,
+        "long": 0.0,
+        "name": "UY",
+        "net": -0.004860791768345018,
+        "short": -0.004860791768345018
+      },
+      {
+        "gross": 0.0852308674901997,
+        "group": "sector",
+        "limit": 0.025,
+        "long": 0.04103917818601825,
+        "name": "Communication Services",
+        "net": -0.0031525111181631912,
+        "short": -0.04419168930418145
+      },
+      {
+        "gross": 0.10082579286185683,
+        "group": "sector",
+        "limit": 0.025,
+        "long": 0.04539671465985508,
+        "name": "Consumer Discretionary",
+        "net": -0.010032363542146684,
+        "short": -0.055429078202001755
+      },
+      {
+        "gross": 0.0406385795526599,
+        "group": "sector",
+        "limit": 0.025,
+        "long": 0.02274955844588197,
+        "name": "Consumer Staples",
+        "net": 0.004860537339104045,
+        "short": -0.017889021106777925
+      },
+      {
+        "gross": 0.05832780566524279,
+        "group": "sector",
+        "limit": 0.025,
+        "long": 0.02899489763126971,
+        "name": "Energy",
+        "net": -0.00033801040270336775,
+        "short": -0.029332908033973076
+      },
+      {
+        "gross": 0.20645505093418925,
+        "group": "sector",
+        "limit": 0.025,
+        "long": 0.11145515039676156,
+        "name": "Financials",
+        "net": 0.01645524985933388,
+        "short": -0.09499990053742768
+      },
+      {
+        "gross": 0.044093610045719454,
+        "group": "sector",
+        "limit": 0.025,
+        "long": 0.01668545840514552,
+        "name": "Health Care",
+        "net": -0.010722693235428411,
+        "short": -0.027408151640573933
+      },
+      {
+        "gross": 0.07812649543497956,
+        "group": "sector",
+        "limit": 0.025,
+        "long": 0.04202818587640281,
+        "name": "Industrials",
+        "net": 0.005929876317826054,
+        "short": -0.03609830955857675
+      },
+      {
+        "gross": 0.006128536224753188,
+        "group": "sector",
+        "limit": 0.025,
+        "long": 0.006128536224753188,
+        "name": "Information Technology",
+        "net": 0.006128536224753188,
+        "short": 0.0
+      },
+      {
+        "gross": 0.14590173690798097,
+        "group": "sector",
+        "limit": 0.025,
+        "long": 0.07290589484134812,
+        "name": "Materials",
+        "net": -8.994722528471964e-05,
+        "short": -0.07299584206663283
+      },
+      {
+        "gross": 0.009632733942004682,
+        "group": "sector",
+        "limit": 0.025,
+        "long": 0.009632733942004682,
+        "name": "Real Estate",
+        "net": 0.009632733942004682,
+        "short": 0.0
+      },
+      {
+        "gross": 0.10755351863639408,
+        "group": "sector",
+        "limit": 0.025,
+        "long": 0.04801821316908323,
+        "name": "Utilities",
+        "net": -0.011517092298227612,
+        "short": -0.059535305467310846
+      },
+      {
+        "gross": 0.0038424261147346865,
+        "group": "style",
+        "limit": 0.1,
+        "long": 0.0,
+        "name": "beta",
+        "net": 0.0038424261147346865,
+        "short": 0.0
+      },
+      {
+        "gross": 0.05144004778497118,
+        "group": "style",
+        "limit": 0.1,
+        "long": 0.0,
+        "name": "size",
+        "net": -0.05144004778497118,
+        "short": 0.0
+      },
+      {
+        "gross": 0.02373385131944262,
+        "group": "style",
+        "limit": 0.1,
+        "long": 0.0,
+        "name": "momentum",
+        "net": -0.02373385131944262,
+        "short": 0.0
+      },
+      {
+        "gross": 0.046517012223653786,
+        "group": "style",
+        "limit": 0.1,
+        "long": 0.0,
+        "name": "resvol",
+        "net": 0.046517012223653786,
+        "short": 0.0
+      },
+      {
+        "gross": 0.05979853877681484,
+        "group": "style",
+        "limit": 0.1,
+        "long": 0.0,
+        "name": "value",
+        "net": -0.05979853877681484,
+        "short": 0.0
+      },
+      {
+        "gross": 0.04770223143116943,
+        "group": "style",
+        "limit": 0.1,
+        "long": 0.0,
+        "name": "liquidity",
+        "net": -0.04770223143116943,
+        "short": 0.0
+      },
+      {
+        "gross": 0.011424759450655353,
+        "group": "style",
+        "limit": 0.1,
+        "long": 0.0,
+        "name": "fx_sens",
+        "net": 0.011424759450655353,
+        "short": 0.0
+      }
+    ],
+    "factor_vol": 0.006907368203909829,
+    "gross": 0.8829147276959805,
+    "long_exposure": 0.4450345217785241,
+    "max_days_to_liquidate": 0.16003781378133622,
+    "n_long": 49,
+    "n_short": 44,
+    "net": 0.007154315861067876,
+    "pct_gross_liquid_1d": 0.9999999999999999,
+    "realized_vol_21d": 0.022523070876108928,
+    "realized_vol_63d": null,
+    "short_exposure": -0.43788020591745624,
+    "specific_vol": 0.035231982177989556,
+    "squeeze_high_shorts": 1,
+    "var_1d_99": 0.005261403040581015
+  },
+  "track_record_type": "paper trading com preços reais (execução hipotética no fechamento)"
+}

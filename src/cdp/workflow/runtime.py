@@ -1044,6 +1044,16 @@ class Runtime:
                 summary=f"Incremento de mercado de {inc.session_date} gravado.")
 
     def daily_dir(self, session: date) -> Path:
+        from .retificacao_financeira import load as financial_load
+        from .retificacao_financeira import report_receipt
+
+        corrected = self.reports_root / "daily" / str(session) / "retificacoes" / "financeira"
+        tr = self.track()
+        path = tr.record_path(session)
+        financial = financial_load(tr, tr._load_original(path)) if path.exists() else None
+        if corrected.exists() or financial is not None:
+            report_receipt(self, session)
+            return corrected
         return self.reports_root / "daily" / session.isoformat()
 
     def daily_close(self, session: date, *, live: bool = True, mind: str | None = None) -> dict:
@@ -1053,6 +1063,11 @@ class Runtime:
         (``reports/daily/<data>/facts.md``); a publicação vem depois (``daily publish``).
         """
         recusar_escrita(self.somente_leitura)
+        from .retificacao_financeira import pending
+
+        if pending(self)["pendente"]:
+            raise ValueError("Retificação financeira pendente: não encadear novo fechamento "
+                             "a partir de resultado sem evento corporativo aplicado")
         from ..research.commentary import factbook_json, write_daily_commentary_inputs
         from .avaliacao import resolve
         from .daily import NoBookError, NoSessionError
@@ -1237,6 +1252,19 @@ class Runtime:
             ok &= t_ok
             label = "sombra" if shadow else "track record"
             msgs += [f"{label}: {m}" for m in (t_msgs or ["íntegro"])]
+        from .retificacao_financeira import load as financial_load
+        from .retificacao_financeira import report_receipt
+
+        for r in self.track().records():
+            corrected = self.reports_root / "daily" / str(r.date) / "retificacoes" / "financeira"
+            tr = self.track()
+            original = tr._load_original(tr.record_path(r.date))
+            if corrected.exists() or financial_load(tr, original) is not None:
+                try:
+                    report_receipt(self, r.date)
+                except (OSError, ValueError, KeyError, TypeError) as exc:
+                    ok = False
+                    msgs.append(f"relatório financeiro retificado inválido: {exc}")
         from .risco_diario import verify as verify_daily_risk
 
         for shadow in (False, True):

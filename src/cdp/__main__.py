@@ -226,6 +226,12 @@ def cmd_weekly_preview(args: argparse.Namespace) -> int:
 
 
 def cmd_daily(args: argparse.Namespace) -> int:
+    if args.action == "rectify":
+        from .workflow.retificacao_financeira import cmd
+
+        if args.date is None:
+            raise ValueError("daily rectify exige --date")
+        return cmd(args)
     from .workflow.runtime import Runtime
 
     rt = Runtime.from_args(args)
@@ -732,10 +738,14 @@ def build_parser() -> argparse.ArgumentParser:
     s.set_defaults(func=cmd_validate)
 
     s = sub.add_parser("daily", help="fechamento diário (close) ou publicação do relatório")
-    s.add_argument("action", nargs="?", default="close", choices=["close", "publish"])
+    s.add_argument("action", nargs="?", default="close", choices=["close", "publish", "rectify"])
     s.add_argument("--date", type=_d)
     s.add_argument("--offline", action="store_true")
     s.add_argument("--mind", choices=HARNESS_MINDS)
+    s.add_argument("--publish", action="store_true", help="sela retificação financeira da cauda")
+    s.add_argument("--execucao")
+    s.add_argument("--trava")
+    s.add_argument("--raiz", default=".")
     s.set_defaults(func=cmd_daily)
 
     s = sub.add_parser("validate-daily",

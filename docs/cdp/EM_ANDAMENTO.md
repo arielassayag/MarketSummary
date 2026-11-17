@@ -5,6 +5,12 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## Eventos corporativos e retificação financeira — 16/11/2026
+
+Correção de EMBJ em ramo próprio: catálogo com evidência primária e vigência, ajuste de retornos/quantidades/ratio, guardas diárias e intradiárias, e retificação da cauda por anexação. Fluxo e limites em [Eventos corporativos](EVENTOS_CORPORATIVOS.md). Os originais e o CSV não são substituídos; a série corrente e o próximo elo usam a ramificação autenticada.
+
+Validação e implantação ainda em andamento nesta sessão. A operação exige executor/gate/trava e publicação oficial; entrega externa somente após verificar os novos anexos e a apresentação.
+
 ## Recuperação CDP: calendário extraordinário BYMA — 12/11/2026
 
 A retomada oficial do executor após a interrupção recusou 09/11 por ausência de

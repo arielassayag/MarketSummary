@@ -837,7 +837,8 @@ class ReportInfo:
     @property
     def label(self) -> str:
         kind = "Diário" if self.kind == "daily" else "Semanal"
-        return f"{kind} — {fmt.date_br(self.key)}"
+        suffix = " — retificado" if self.folder.name == "financeira" else ""
+        return f"{kind} — {fmt.date_br(self.key)}{suffix}"
 
 
 def list_reports(reports_root: Path, kind: str | None = None) -> list[ReportInfo]:
@@ -869,6 +870,10 @@ def list_reports(reports_root: Path, kind: str | None = None) -> list[ReportInfo
                 key = date.fromisoformat(folder.name)
             except ValueError:
                 continue
+            if k == "daily":
+                from ..workflow.retificacao_financeira import report_folder
+
+                folder = report_folder(root, key)
             md = folder / f"{REPORT_STEM}.md"
             html = folder / f"{REPORT_STEM}.html"
             md_ok, html_ok = inside(md), inside(html)
@@ -946,7 +951,9 @@ def _commentary_meta(md: str) -> tuple[bool, str | None]:
 def commentary_for(reports_root: Path, record: DailyRecord, history: Sequence[DailyRecord],
                    cfg: FundConfig) -> Commentary | None:
     """Comentário do dia: seção do relatório publicado; senão ``comentario.json`` validado."""
-    folder = Path(reports_root) / "daily" / record.date.isoformat()
+    from ..workflow.retificacao_financeira import report_folder
+
+    folder = report_folder(reports_root, record.date)
     report = read_text(folder / f"{REPORT_STEM}.md")
     if report:
         section = extract_section(report, COMMENTARY_SECTION)

@@ -95,6 +95,12 @@ def build_asset_panel(md: MarketData, cfg: FundConfig, as_of: date | None = None
         line_tv_usd[tkr] = traded.where(np.isfinite(traded) & (traded > 0) & usd.notna())
 
     line_returns = pd.DataFrame(line_ret).reindex(calendar)
+    for d, ticker in md.unverified_returns:
+        if ticker in line_returns.columns and pd.Timestamp(d) in line_returns.index:
+            verified = any(e.ticker == ticker and e.effective_on == d
+                           for e in md.corporate_actions)
+            if not verified:
+                line_returns.loc[pd.Timestamp(d), ticker] = np.nan
     px_usd = pd.DataFrame(line_px_usd).reindex(calendar)
     tv_usd = pd.DataFrame(line_tv_usd).reindex(calendar)
 

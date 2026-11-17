@@ -221,6 +221,7 @@ código (passo a passo em `docs/cdp/AUTOMACAO.md`):
 | `docs/cdp/TESE.md`, `docs/cdp/ESTILO.md` | tese semanal; tom e redação para investidores |
 | `docs/cdp/DASHBOARDS.md` | cases, comparáveis, risco e fatores: cortes, fontes e bases de leitura |
 | `docs/cdp/TESES_ATIVOS.md` | páginas de tese por empresa e ETF, estados da pesquisa e referências profissionais |
+| `docs/cdp/EVENTOS_CORPORATIVOS.md` | mudanças de unidade, bloqueios de qualidade e retificação financeira por anexação |
 | `docs/cdp/RETIFICACAO_EDITORIAL.md` | correção editorial autenticada, preservando relatórios e resultados originais |
 | `docs/cdp/AUTOMACAO.md` | rotinas no app de IA: Claude Code, Codex, Gemini; troca de executor |
 | `docs/cdp/LOCAL.md`, `docs/cdp/ROTINAS.md` | PC local (app desktop) e tabela de rotinas |

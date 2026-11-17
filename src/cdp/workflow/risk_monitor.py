@@ -181,7 +181,7 @@ def _side(p: DailyPosition) -> str:
 
 
 def squeeze_stop_checks(cfg: FundConfig, shorts: list[dict], history: Iterable[DailyRecord],
-                        nav_usd: float) -> list[dict]:
+                        nav_usd: float, *, as_of: date | None = None) -> list[dict]:
     """Stops de squeeze do mandato para cada short (perda desde a entrada e % do NAV).
 
     ``shorts``: dicionários com ``ticker``, ``emissor``, ``acoes`` (assinadas), ``preco_local``
@@ -194,7 +194,12 @@ def squeeze_stop_checks(cfg: FundConfig, shorts: list[dict], history: Iterable[D
                and float(s["acoes"]) < 0 and float(s["preco_local"]) > 0}
     if not current:
         return []
-    entries = short_entry_prices(history, current)
+    from ..data.eventos_corporativos import catalog
+
+    history = list(history)
+    real = any(not r.is_synthetic for r in history)
+    entries = short_entry_prices(history, current, actions=catalog() if as_of and real else (),
+                                 as_of=as_of)
     out: list[dict] = []
     sq = cfg.squeeze
     for s in shorts:
@@ -319,7 +324,7 @@ def squeeze_stop_hits(cfg: FundConfig, history_asc: list[DailyRecord]
     for k in range(max(0, len(history_asc) - n), len(history_asc)):
         rec = history_asc[k]
         before = list(reversed(history_asc[:k]))
-        for s in squeeze_stop_checks(cfg, _short_rows(rec), before, rec.nav_end_usd):
+        for s in squeeze_stop_checks(cfg, _short_rows(rec), before, rec.nav_end_usd, as_of=rec.date):
             if s["stop_posicao"] or s["stop_nav"]:
                 out.setdefault(str(s["emissor"]), []).append(
                     (rec.date, float(s["preco_medio_entrada"])))
@@ -487,7 +492,7 @@ def _human_review(rt: Runtime, cfg: FundConfig, history: list[DailyRecord]) -> d
                "preco_local": p.price_local, "fx": _fx_from_position(p)}
               for p in base.positions if p.market_value_usd < 0]
     before = [r for r in reversed(history) if r.date < base.date]
-    checks = squeeze_stop_checks(cfg, shorts, before, base.nav_end_usd)
+    checks = squeeze_stop_checks(cfg, shorts, before, base.nav_end_usd, as_of=base.date)
     codes = {k: {v} for k, v in _squeeze_codes(checks).items()}
     rep_rank, rep_codes, rep_escalated = _reported_before(rt.reports_root / RISK_DIRNAME,
                                                           base.date, off.ts)
@@ -738,7 +743,10 @@ def _squeeze_high(rec: DailyRecord, proposal: Proposal | None) -> tuple[list[dic
 
 def _live_block(rec: DailyRecord, quotes: pd.DataFrame, session: date, cfg: FundConfig,
                 peak_nav: float) -> dict:
+    from ..data.eventos_corporativos import catalog, factor
     from ..data.intraday import fresh_quotes
+
+    actions = () if getattr(rec, "is_synthetic", False) else catalog()
 
     fresh, stale = fresh_quotes(quotes, session, tz=cfg.fund.timezone)
     lines = fresh[fresh["kind"] == "line"].dropna(subset=["price"])
@@ -760,6 +768,9 @@ def _live_block(rec: DailyRecord, quotes: pd.DataFrame, session: date, cfg: Fund
             continue
         gross_all += abs(mv0)
         px0 = _num(p.price_local)
+        unit = factor(actions, p.ticker, rec.date, session)
+        if px0 is not None:
+            px0 /= unit
         px1 = line_px.get(p.ticker)
         fx0 = _fx_from_position(p)
         fx1 = fx_now.get(p.currency)
@@ -787,7 +798,7 @@ def _live_block(rec: DailyRecord, quotes: pd.DataFrame, session: date, cfg: Fund
                      "moeda": p.currency, "preco_fechamento": px0, "preco_agora": px1,
                      "horario_cotacao": line_time.get(p.ticker), "ret_local": ret_local,
                      "ret_usd": ret_usd, "pnl_usd": pnl, "contribuicao": pnl / rec.nav_end_usd,
-                     "acoes": _num(p.shares), "fx_agora": fx1})
+                     "acoes": p.shares * unit if p.shares is not None else None, "fx_agora": fx1})
     coverage = covered / gross_all if gross_all > 0 else None
     nav_live = rec.nav_end_usd + pnl_total
     peak = max(peak_nav, nav_live)
@@ -1083,7 +1094,7 @@ def run_risk_monitor(rt: Runtime, *, as_of: date | None = None, live: bool = Fal
                      "preco_local": p.price_local, "fx": _fx_from_position(p)}
                     for p in rec.positions if p.market_value_usd < 0]
     stops = squeeze_stop_checks(cfg, shorts_close, _iter_history(track, rec.date, False),
-                                rec.nav_end_usd)
+                                rec.nav_end_usd, as_of=rec.date)
     live_stops: list[dict] = []
     if live:
         from ..data.intraday import fetch_intraday_quotes
@@ -1126,14 +1137,13 @@ def run_risk_monitor(rt: Runtime, *, as_of: date | None = None, live: bool = Fal
                     lv["drawdown_estimado"], cfg, origem="intradiário (estimado)",
                     sufixo="intradiario", hard_allowed=ok_cov,
                     nota="" if ok_cov else "cobertura insuficiente")
-            px_now = {r["ticker"]: (r["preco_agora"], r["fx_agora"]) for r in lv["posicoes"]}
-            shorts_live = [{"ticker": p.ticker, "emissor": p.issuer_id, "acoes": p.shares,
-                            "preco_local": px_now[p.ticker][0], "fx": px_now[p.ticker][1]}
-                           for p in rec.positions
-                           if p.market_value_usd < 0 and p.ticker in px_now]
+            shorts_live = [{"ticker": p["ticker"], "emissor": p["emissor"], "acoes": p["acoes"],
+                            "preco_local": p["preco_agora"], "fx": p["fx_agora"]}
+                           for p in lv["posicoes"] if p["lado"] == "SHORT"]
             nav_now = lv["nav_estimado_usd"] or rec.nav_end_usd
             live_stops = squeeze_stop_checks(cfg, shorts_live,
-                                             _iter_history(track, rec.date, True), nav_now)
+                                             _iter_history(track, rec.date, True), nav_now,
+                                             as_of=as_of)
         elif quotes is not None:
             limitations.append("A fonte não devolveu cotações intradiárias.")
     out["squeeze"] = {"shorts_high": high, "n_high_no_fechamento": rec.risk.squeeze_high_shorts,

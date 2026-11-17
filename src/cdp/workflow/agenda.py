@@ -102,7 +102,7 @@ def pending_closes(rt: Runtime, local: datetime) -> list[date]:
     return out
 
 
-def pending_publications(rt: Runtime) -> list[dict[str, Any]]:
+def pending_publications(rt: Runtime, *, financial_dates=()) -> list[dict[str, Any]]:
     """Registros diários sem ``relatorio.md`` publicado (com o estado do comentário da mente)."""
     try:
         dates = rt.track().dates()
@@ -110,6 +110,8 @@ def pending_publications(rt: Runtime) -> list[dict[str, Any]]:
         return []
     out = []
     for d in dates[-MAX_PENDING:]:
+        if str(d) in financial_dates:
+            continue  # A pendência financeira tem recuperação própria, sem reativar o original.
         folder = rt.daily_dir(d)
         if (folder / "relatorio.md").exists():
             continue
@@ -884,6 +886,7 @@ def agenda(rt: Runtime, now: datetime | None = None) -> dict[str, Any]:
     pc_off = pc.utcoffset() or timedelta(0)
     brt_off = pc.astimezone(tz).utcoffset() or timedelta(0)
     from .reinicio import situacao
+    from .retificacao_financeira import pending as financial_pending
 
     weekly = _weekly(rt, local)
     cobertura = coverage_status(rt, local)
@@ -899,7 +902,8 @@ def agenda(rt: Runtime, now: datetime | None = None) -> dict[str, Any]:
     closes = pending_closes(rt, local)
     from .retificacao_semanal import status as status_editorial
 
-    pubs = pending_publications(rt)
+    financial = financial_pending(rt)
+    pubs = pending_publications(rt, financial_dates=financial.get("datas_pendentes", ()))
     try:
         last = rt.track().dates()
     except OSError:
@@ -925,6 +929,7 @@ def agenda(rt: Runtime, now: datetime | None = None) -> dict[str, Any]:
         "publicacoes_pendentes": pubs,
         "relatorio_semanal": weekly_report_status(rt, local),
         "retificacao_editorial": status_editorial(rt),
+        "retificacao_financeira": financial,
         "cobertura": cobertura,
         "teses_pendentes": pending_theses(rt),
         "proximos_eventos": _next_events(rt, local, weekly),

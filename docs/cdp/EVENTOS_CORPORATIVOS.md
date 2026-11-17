@@ -63,7 +63,7 @@ evidência e evento novo na trilha. A leitura corrente usa a versão retificada;
 o CSV original permanece intacto e sua projeção corrente incorpora a retificação.
 O próximo registro encadeia o hash retificado. A verificação confere as contas,
 os originais, a ramificação autenticada e os novos elos. Anexo removido ou
-adulterado bloqueia a leitura corrente; repetição literal não duplica evento.
+adulterado bloqueia a leitura corrente; repetição literal não duplica evento. A prova matemática da cadeia pode ser reutilizada apenas para o mesmo texto completo lido; cada chamada relê fisicamente a trilha antes do cache. A seleção financeira também é vinculada ao conteúdo da própria leitura, sem confiar em tamanho ou mtime.
 
 O relatório completo novo fica na subpasta `retificacoes/financeira` da data,
 com identificação explícita de retificação e recibo próprio. O recibo também

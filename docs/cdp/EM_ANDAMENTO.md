@@ -9,7 +9,7 @@ motivo: `docs/cdp/DECISOES.md`.
 
 Correção de EMBJ em ramo próprio: catálogo com evidência primária e vigência, ajuste de retornos/quantidades/ratio, guardas diárias e intradiárias, e retificação da cauda por anexação. Fluxo e limites em [Eventos corporativos](EVENTOS_CORPORATIVOS.md). Os originais e o CSV não são substituídos; a série corrente e o próximo elo usam a ramificação autenticada.
 
-Validação dirigida: 237 testes do núcleo, 131 de agenda/gate e 116 de NET/eventos passaram; revisão independente sem bloqueadores. A suíte integral local parou por espaço em disco e o primeiro CI revelou identidade de universo e provas NET históricas após retificação, corrigidas com regressões. A operação selou anexos de CDP e sombra para 16/11; publicação e entrega ainda dependem da verificação integral do executor. Nenhum resultado original foi sobrescrito.
+Validação dirigida: 237 testes do núcleo, 131 de agenda/gate e 116 de NET/eventos passaram; revisão independente sem bloqueadores. A suíte integral local parou por espaço em disco e o primeiro CI revelou identidade de universo e provas NET históricas após retificação, corrigidas com regressões. A operação foi verificada ÍNTEGRO e publicada no commit 935c11b3; PDF validado e revisado enviado ao próprio usuário, Gmail 1a1e785bec9a64c3, relatório de 16/11. Nenhum original foi sobrescrito. O portal atingiu o limite de 25 minutos; a leitura repetida da auditoria recebeu cache de prova por texto completo, mantendo leitura física em toda chamada e invalidando alterações mesmo com tamanho/mtime preservados. Nova publicação do portal seguirá o fluxo normal, sem ampliar limites nem reaplicar a retificação financeira.
 
 ## Recuperação CDP: calendário extraordinário BYMA — 12/11/2026
 

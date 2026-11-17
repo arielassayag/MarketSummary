@@ -10,6 +10,7 @@ import json
 import os
 from contextlib import contextmanager
 from datetime import UTC, date, datetime
+from functools import lru_cache
 from pathlib import Path
 from typing import Any, TextIO
 
@@ -88,15 +89,25 @@ class AuditLog:
         return event
 
     def verify_chain(self) -> tuple[bool, str]:
-        prev = GENESIS_HASH
-        for i, ev in enumerate(self.events()):
-            if ev.seq != i:
-                return False, f"Sequência quebrada no evento {i} (seq={ev.seq})."
-            if ev.prev_hash != prev:
-                return False, f"Encadeamento quebrado no evento {i}."
-            expected = _event_hash(ev.seq, ev.ts, ev.event_type, ev.actor, ev.week,
-                                   ev.payload_hash, ev.summary, ev.prev_hash)
-            if expected != ev.event_hash:
-                return False, f"Conteúdo adulterado no evento {i}."
-            prev = ev.event_hash
-        return True, "Cadeia íntegra."
+        # A leitura física/nominal ocorre em toda chamada. Só a prova matemática
+        # do mesmo texto lido é reutilizada; path, tamanho e mtime não são a chave.
+        raw = ler_texto(self.path, encoding="utf-8") if self.path.exists() else ""
+        return _verify_text(raw)
+
+
+@lru_cache(maxsize=8)
+def _verify_text(raw: str) -> tuple[bool, str]:
+    prev = GENESIS_HASH
+    events = [AuditEvent.model_validate_json(line)
+              for line in raw.splitlines() if line.strip()]
+    for i, ev in enumerate(events):
+        if ev.seq != i:
+            return False, f"Sequência quebrada no evento {i} (seq={ev.seq})."
+        if ev.prev_hash != prev:
+            return False, f"Encadeamento quebrado no evento {i}."
+        expected = _event_hash(ev.seq, ev.ts, ev.event_type, ev.actor, ev.week,
+                               ev.payload_hash, ev.summary, ev.prev_hash)
+        if expected != ev.event_hash:
+            return False, f"Conteúdo adulterado no evento {i}."
+        prev = ev.event_hash
+    return True, "Cadeia íntegra."

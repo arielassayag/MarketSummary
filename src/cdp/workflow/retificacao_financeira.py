@@ -26,12 +26,15 @@ def receipt(track, day):
 
 
 def _events(track, day):
-    stat = track.audit.path.stat() if track.audit.path.exists() else None
-    key = (stat.st_mtime_ns, stat.st_size) if stat else None
+    raw = ler_texto(track.audit.path) if track.audit.path.exists() else ""
+    key = (sha256_text(raw), track.audit_event)
     cached = getattr(track, "_financial_events_cache", None)
     if cached is None or cached[0] != key:
-        cached = (key, [e for e in track.audit.events()
-                        if e.event_type == event_type(track)])
+        from ..contracts import AuditEvent
+
+        events = [AuditEvent.model_validate_json(line) for line in raw.splitlines()
+                  if line.strip()]
+        cached = (key, [e for e in events if e.event_type == event_type(track)])
         track._financial_events_cache = cached
     return [e for e in cached[1]
             if e.event_type == event_type(track) and e.week == day]

@@ -343,3 +343,39 @@ def test_unchanged_units_preserve_native_universe_identity():
     from cdp.universe import Universe
     u=Universe(pd.DataFrame({'adr_ratio':[4.0]},index=['EMBJ']),pd.DataFrame())
     assert effective_universe(u,(),date(2026,11,13)) is u
+
+
+def test_financial_event_cache_rechecks_content_with_same_size_and_mtime(tmp_path):
+    import json
+    import os
+
+    from test_daily_track_record import _chain
+
+    from cdp.audit import _event_hash
+    from cdp.contracts import AuditEvent
+    from cdp.workflow.retificacao_financeira import seal
+    from cdp.workflow.track_record import TrackRecord
+    tr=TrackRecord(tmp_path/'book/track_record')
+    _chain(tr,[(date(2026,10,5),.01,0.0)])
+    rec=tr.last()
+    seal(tr,rec,rec,None,())
+    assert tr.last()==rec  # seleção de eventos aquecida
+    old=tr.audit.path.stat()
+    rows=[]
+    prev='0'*64
+    for line in tr.audit.path.read_text().splitlines():
+        row=json.loads(line)
+        if row['event_type']=='DAILY_FINANCIAL_RECTIFICATION':
+            row['payload_hash']='f'*64
+        row['prev_hash']=prev
+        ev=AuditEvent.model_validate(row)
+        row['event_hash']=_event_hash(ev.seq,ev.ts,ev.event_type,ev.actor,ev.week,
+                                    ev.payload_hash,ev.summary,ev.prev_hash)
+        prev=row['event_hash']
+        rows.append(json.dumps(row,ensure_ascii=False))
+    tr.audit.path.write_text('\n'.join(rows)+'\n')
+    assert tr.audit.path.stat().st_size==old.st_size
+    os.utime(tr.audit.path,ns=(old.st_atime_ns,old.st_mtime_ns))
+    assert tr.audit.verify_chain()[0]  # cadeia coerente, porém não autentica o recibo
+    with pytest.raises(ValueError,match='vínculo íntegro'):
+        tr.last()

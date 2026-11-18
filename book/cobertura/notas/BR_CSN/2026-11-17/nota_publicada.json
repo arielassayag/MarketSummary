@@ -1,0 +1,355 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-16",
+    "manifest_sha256": "143af8cdbe51187f0093118811fb1186fd4d0af5ad0b6f8aaa7fbd22bad98756",
+    "modelo_as_of": "2026-11-16"
+  },
+  "conviccao": 1,
+  "data": "2026-11-17",
+  "hashes": {
+    "contexto": "b1bf7621abb9a7c00bd3adb0ee81532300490b734787695aa7c8e41bd611edf2",
+    "factbook": "1363e0421f916b5a4e6386e761c4289eaed196d31d90b201fe9076b68fac78e1",
+    "nota_json": "a325a697046e993a3c35cbb5962fd75385c41e4d6684c08788f4ca56a5d798d5"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_CSN",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-11-18T01:47:20.182236+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O comunicado de 29/09/2026 vincula a redução em Pires ao frete e à rentabilidade do minério de baixo teor. Reversibilidade operacional não garante recuperação econômica.",
+        "titulo": "Volume subordinado à margem"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Referência R$ 3,74. Sem antecipar venda de ativos ou financiamento como geração recorrente.",
+      "otimista": "Recuperação operacional e capital disciplinado sustentam caixa. Referência R$ 4,34; probabilidade implícita 37,10%.",
+      "pessimista": "Compromissos absorvem margem e dificultam retorno do acionista. Referência R$ 3,23, probabilidade implícita 45,21%."
+    },
+    "comentario_valuation": "O rating é Neutro, com alpha relativo +1,26%. EV/EBITDA de 6,6x frente a 5,2x da Gerdau não resolve diferenças de perímetro e dívida. O consenso público aponta R$ 6,55; não inferimos sua tese ou o que estaria precificado. Pesos detalhados dos métodos e dispersão não reconciliados limitam a leitura.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_CSN.consenso_alvo",
+            "nome": "Preço-alvo médio do consenso público",
+            "valor": "R$ 6,55"
+          }
+        ],
+        "texto": "Normalização do ciclo pode reduzir pressão financeira; a hipótese deve ser testada em caixa, sem presumir que o consenso de R$ 6,55 represente valor realizável.",
+        "titulo": "Recuperação ainda pode ocorrer"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-17",
+    "dados_simulados": false,
+    "data": "2026-11-17",
+    "ficha": [
+      {
+        "fato": "val.BR_CSN.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 3,68"
+      },
+      {
+        "fato": "val.BR_CSN.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 3,74"
+      },
+      {
+        "fato": "val.BR_CSN.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+1,61%"
+      },
+      {
+        "fato": "val.BR_CSN.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_CSN.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_CSN.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 4,34"
+      },
+      {
+        "fato": "val.BR_CSN.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "37,10%"
+      },
+      {
+        "fato": "val.BR_CSN.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 3,23"
+      },
+      {
+        "fato": "val.BR_CSN.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "45,21%"
+      },
+      {
+        "fato": "val.BR_CSN.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "16,67%"
+      },
+      {
+        "fato": "val.BR_CSN.wacc",
+        "rotulo": "WACC",
+        "valor": "11,48%"
+      },
+      {
+        "fato": "val.BR_CSN.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_CSN.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+1,61%"
+      },
+      {
+        "fato": "val.BR_CSN.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+1,26%"
+      },
+      {
+        "fato": "val.BR_CSN.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_CSN.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,5x"
+      },
+      {
+        "fato": "val.BR_CSN.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 6,55"
+      },
+      {
+        "fato": "val.BR_CSN.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-42,94%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-17",
+        "id": "F1",
+        "instituicao": "CSN",
+        "publicado_em": "2026-11-12",
+        "tipo": "Relações com investidores",
+        "titulo": "Release de resultados trimestrais",
+        "url": "https://filemanager-cdn.mziq.com/published/29633c00-23f7-4765-9594-926012179477/9e99abb2-4d21-4963-97dc-763f40224e34"
+      },
+      {
+        "consultado_em": "2026-11-17",
+        "id": "F2",
+        "instituicao": "CSN",
+        "publicado_em": "2026-09-29",
+        "tipo": "Relações com investidores",
+        "titulo": "Redução temporária de produção e revisão de projeções minerais",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/29633c00-23f7-4765-9594-926012179477/0d206362-9998-0e13-5ee9-93a219df1d9a?origin=2"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Geração interna passa a financiar investimentos e obrigações de forma persistente.",
+      "Novas projeções ou alienações concluídas alteram o perímetro econômico."
+    ],
+    "governanca": "A avaliação exige conferir destinação de recursos, perímetro das participações e condições de alienações. Esta leitura não confirma conclusão de vendas de ativos nem substitui a diligência de partes relacionadas.",
+    "guidance": "reduzido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_CSN.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+1,61%"
+          },
+          {
+            "fato": "val.BR_CSN.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "16,67%"
+          }
+        ],
+        "texto": "Reavaliar retorno esperado +1,61% e ke 16,67% quando novas evidências alterarem as premissas.",
+        "titulo": "Teste do retorno"
+      }
+    ],
+    "issuer_id": "BR_CSN",
+    "lacunas_de_dados": [
+      "P/L à frente e dispersão entre métodos indisponíveis.",
+      "Status integral de todas as projeções não reconciliado; classificação restrita à revisão mineral citada.",
+      "Condições atuais e conclusão de alienações não confirmadas nesta leitura.",
+      "Vantagem relativa e percepção variante de mercado sem suporte suficiente.",
+      "Sem catalisador futuro com data exata confirmado."
+    ],
+    "modelo_de_cobertura": "2026-11-16",
+    "negocio": "A CSN atua em siderurgia, mineração, cimento, logística e energia. A integração exige avaliar retorno por negócio e recursos disponíveis ao acionista após compromissos financeiros.",
+    "nome": "CSN Siderúrgica Nacional",
+    "o_que_mudou": "Desde a iniciação de 2026-10-11, a leitura de 3T26 documenta pressão de caixa e maior alavancagem. O alvo vigente é R$ 3,74. A revisão mineral citada já era anterior; não é apresentada como novo evento. Mantemos convicção baixa.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CBA",
+        "nome": "Companhia Brasileira de Alumínio"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      },
+      {
+        "issuer_id": "BR_KLABIN",
+        "nome": "Klabin"
+      },
+      {
+        "issuer_id": "BR_UNIPAR",
+        "nome": "Unipar"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "No release de 3T26, margens comprimidas na mineração contribuíram para a deterioração operacional. A liberação de giro não impediu consumo de caixa. Julgamos necessária recuperação persistente da geração interna antes de elevar convicção.",
+        "titulo": "Caixa antes de recuperação de preço"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_CSN.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+1,61%"
+          },
+          {
+            "fato": "val.BR_CSN.confianca_codigo",
+            "nome": "Confiança do modelo",
+            "valor": "C"
+          },
+          {
+            "fato": "val.BR_CSN.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "16,67%"
+          }
+        ],
+        "texto": "Retorno esperado +1,61%, com confiança C. A hipótese precisa remunerar custo do capital 16,67%; a proximidade entre preço e alvo limita a assimetria do caso-base.",
+        "titulo": "Modelo sem margem ampla"
+      }
+    ],
+    "publicada_em": "2026-11-18T01:47:20.182236+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O EBITDA ajustado incorpora participação proporcional na MRS. Reconciliar essa medida com o caixa atribuível evita tratar resultado de investida como liquidez integralmente disponível.",
+        "titulo": "Perímetro gerencial e caixa"
+      }
+    ],
+    "resumo": "A recuperação exige caixa recorrente após investimento. O alvo vigente é R$ 3,74, contra R$ 3,68, com potencial +1,61%. Mantemos visão neutra, de baixa convicção, diante da incerteza sobre desalavancagem.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "alta",
+        "texto": "Queda de margem e compromissos financeiros podem prolongar dependência de captações."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_CSN.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-42,94%"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Consenso público diverge do modelo em -42,94%; isso não comprova retorno realizável."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "CSN: pressão operacional e financiamento limitam a recuperação",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "O release de 12/11/2026 registra prejuízo e maior alavancagem. O caixa operacional foi negativo e a ponte gerencial inclui captações; ela não deve ser interpretada como caixa livre recorrente. Guidance classificado como reduzido refere-se à revisão mineral de 29/09/2026: produção e compras menores e custo caixa maior. Não se atribui novo corte ao trimestre nem direção uniforme às demais projeções.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Separar recursos de novas captações da geração recorrente. A ponte gerencial de caixa inclui amortizações, pré-pagamentos e financiamento.",
+        "vetor": "Disciplina de financiamento"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_CSN.sens.ke_menos_100bp",
+            "nome": "Upside com ke −1 p.p.",
+            "valor": "+14,31%"
+          },
+          {
+            "fato": "val.BR_CSN.sens.ke_mais_100bp",
+            "nome": "Upside com ke +1 p.p.",
+            "valor": "-9,23%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Sensibilidades de potencial +14,31% com menor ke e -9,23% com maior ke.",
+        "vetor": "Taxa de desconto"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

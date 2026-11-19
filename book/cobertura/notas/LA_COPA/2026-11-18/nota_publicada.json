@@ -1,0 +1,374 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-16",
+    "manifest_sha256": "143af8cdbe51187f0093118811fb1186fd4d0af5ad0b6f8aaa7fbd22bad98756",
+    "modelo_as_of": "2026-11-12"
+  },
+  "conviccao": 1,
+  "data": "2026-11-18",
+  "hashes": {
+    "contexto": "56ef17a82e33dd0c5a5fb1f1058aa71a528bda569ff242c4c7900f8c92be81eb",
+    "factbook": "aaa4c3aff3c4e3f6610e22e3e39b771ca9e842af6bfaea26398c40662dae4ea1",
+    "nota_json": "1ad5bfd0ee8d62b6bb124765ae3dba260d36ff593a3458e38f1a7edd6a0958e3"
+  },
+  "is_synthetic": false,
+  "issuer_id": "LA_COPA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-18",
+  "published_at": "2026-11-19T01:44:55.564129+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar entregas e pagamentos antecipados junto com empréstimos e distribuições. Liquidez agregada inclui investimentos de prazos distintos.",
+        "titulo": "Expansão e financiamento"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-19",
+        "descricao": "Teleconferência de resultados: acompanhar premissas de margem e capacidade.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "resultado"
+      },
+      {
+        "data": "2026-12-15",
+        "descricao": "Dividendo anunciado, sujeito à confirmação do pagamento.",
+        "direcao": "positivo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "dividendos"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo de US$ 221,45 e retorno esperado de +53,51%. A avaliação disponível precede o resultado atual.",
+      "otimista": "Alvo de US$ 281,71; a hipótese favorável é expansão remunerada com custos controlados. Probabilidade implícita indisponível.",
+      "pessimista": "Alvo de US$ 166,12. A hipótese adversa é compressão persistente de margem e maior necessidade de capital; perdas adicionais não estão excluídas."
+    },
+    "comentario_valuation": "Preço US$ 148,97, alvo US$ 221,45, P/L à frente 8,1x e ke 12,34%. O consenso público aponta US$ 178,87; diferença +23,81% não prova expectativa embutida na cotação. A comparação industrial agrega negócios com reinvestimento e riscos distintos. A conciliação entre margens, entregas de aeronaves e retorno do capital permanece necessária; a nota não recalibra os preços dos cenários.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A visão perde suporte se a receita adicional não compensar custo total e capital comprometido na frota.",
+        "titulo": "Crescimento sem retorno"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-17",
+    "dados_simulados": false,
+    "data": "2026-11-18",
+    "ficha": [
+      {
+        "fato": "val.LA_COPA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 148,97"
+      },
+      {
+        "fato": "val.LA_COPA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 221,45"
+      },
+      {
+        "fato": "val.LA_COPA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+48,66%"
+      },
+      {
+        "fato": "val.LA_COPA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.LA_COPA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.LA_COPA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 281,71"
+      },
+      {
+        "fato": "val.LA_COPA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.LA_COPA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 166,12"
+      },
+      {
+        "fato": "val.LA_COPA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.LA_COPA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,34%"
+      },
+      {
+        "fato": "val.LA_COPA.wacc",
+        "rotulo": "WACC",
+        "valor": "10,32%"
+      },
+      {
+        "fato": "val.LA_COPA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.LA_COPA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+53,51%"
+      },
+      {
+        "fato": "val.LA_COPA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+25,14%"
+      },
+      {
+        "fato": "val.LA_COPA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,1x"
+      },
+      {
+        "fato": "val.LA_COPA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,1x"
+      },
+      {
+        "fato": "val.LA_COPA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 178,87"
+      },
+      {
+        "fato": "val.LA_COPA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+23,81%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-18",
+        "id": "F1",
+        "instituicao": "Copa Holdings",
+        "publicado_em": "2026-11-18",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado trimestral, demonstrações e perspectiva operacional",
+        "url": "https://ir.copaair.com/static-files/513ba4fa-7dae-45f1-905b-192bd437fa4f"
+      },
+      {
+        "consultado_em": "2026-11-18",
+        "id": "F2",
+        "instituicao": "Copa Holdings",
+        "publicado_em": "2026-08-05",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado anterior e projeção comparável de margem",
+        "url": "https://ir.copaair.com/static-files/2e6392d2-38f3-4a59-818f-407c171369a3"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Nova revisão de margem ou custo do combustível.",
+      "Expansão de frota sem remuneração adequada.",
+      "Atualização do valuation com as novas informações operacionais."
+    ],
+    "governanca": "O dividendo ratificado tem pagamento futuro, não observado. A alocação deve conciliar distribuições, recompras, dívida e compromissos de aeronaves. A análise completa de direitos das classes acionárias permanece pendente.",
+    "guidance": "reduzido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Monitorar ocupação, receita e custo unitários, regularidade operacional e caixa após investimento e arrendamentos.",
+        "titulo": "Rede e caixa residual"
+      }
+    ],
+    "issuer_id": "LA_COPA",
+    "lacunas_de_dados": [
+      "Modelo disponível anterior ao resultado divulgado hoje.",
+      "Probabilidades implícitas dos cenários indisponíveis.",
+      "Sem evidência para atribuir percepção específica ao mercado.",
+      "Direitos das classes e base plenamente diluída exigem conciliação.",
+      "Teleconferência e pagamento do dividendo ainda futuros."
+    ],
+    "modelo_de_cobertura": "2026-11-16",
+    "negocio": "Transporte de passageiros e cargas por Copa Airlines e Wingo. O centro de conexões no Panamá sustenta o alcance regional; sua expansão precisa remunerar aeronaves, manutenção e combustível (Copa, 2026-11-18).",
+    "nome": "Copa Holdings",
+    "o_que_mudou": "Desde a nota de 2026-10-11, o confronto dos releases permite classificar a projeção de margem como reduzida. Há datas confirmadas de teleconferência e dividendo. Mantemos postura neutra até reconciliar as novas premissas com o modelo anterior à divulgação.",
+    "pais": "Panamá",
+    "pares": [
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MARCOPOLO",
+        "nome": "Marcopolo"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_RUMO",
+        "nome": "Rumo"
+      },
+      {
+        "issuer_id": "BR_SIMPAR",
+        "nome": "Simpar"
+      },
+      {
+        "issuer_id": "BR_TUPY",
+        "nome": "Tupy"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese exige que crescimento de demanda preserve remuneração do capital após custos completos e investimento na frota. Volume isolado não encerra essa avaliação.",
+        "titulo": "Conectividade deve produzir retorno"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.LA_COPA.rating_codigo",
+            "nome": "Rating da cobertura (12 meses)",
+            "valor": "Compra"
+          },
+          {
+            "fato": "val.LA_COPA.confianca_codigo",
+            "nome": "Confiança do modelo",
+            "valor": "B"
+          },
+          {
+            "fato": "val.LA_COPA.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "+25,14%"
+          }
+        ],
+        "texto": "Rating Compra e confiança B não comprovam incorporação da nova projeção operacional. O alpha relativo de +25,14% é uma estimativa quantitativa sujeita a revisão.",
+        "titulo": "Modelo anterior ao resultado"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A localização do Panamá e a regularidade operacional sustentam a proposta comercial. Sua vantagem deve ser testada pela rentabilidade da rede após expansão.",
+        "titulo": "Conexões como hipótese econômica"
+      }
+    ],
+    "publicada_em": "2026-11-19T01:44:55.564129+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O benefício de mensuração nas obrigações de devolução não deve ser tratado como economia operacional recorrente. Confrontar lucro com caixa após adiantamentos e aquisições de aeronaves.",
+        "titulo": "Custos e caixa"
+      }
+    ],
+    "resumo": "A Copa preserva demanda e conectividade, mas combustível limita a rentabilidade. Visão neutra e baixa convicção até a incorporação do resultado ao modelo. O alvo de US$ 221,45 e potencial de +48,66% usam avaliação anterior à divulgação de hoje.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Combustível elevado e interrupções no centro de conexões podem pressionar rentabilidade e caixa."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.LA_COPA.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "23,59%"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Dispersão de 23,59% limita a precisão da avaliação; o cenário pessimista não constitui piso de cotação."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Copa: demanda forte sustenta expansão, com redução da projeção de margem",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O release da Copa de 2026-11-18 mostra crescimento de receita, tráfego e ocupação no 3T26, com compressão anual das margens por combustível. Custos sem combustível incluem benefício de mudança da taxa de desconto de obrigações de devolução de aeronaves. A projeção anual de margem operacional foi reduzida frente ao release de 2026-08-05; capacidade permanece dentro do intervalo anterior, agora apresentada pontualmente. O impacto estimado do terremoto de outubro no Panamá já integra a perspectiva. Para 2027, as indicações de capacidade e custo são preliminares.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A recomposição tarifária precisa acompanhar o custo total; monitorar RASM e CASM com combustível em bases comparáveis.",
+        "vetor": "Receita unitária e combustível"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Testar se a ampliação das conexões remunera investimentos sem deterioração do preço recebido.",
+        "vetor": "Utilização da frota"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

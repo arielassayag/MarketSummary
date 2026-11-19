@@ -1,0 +1,342 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-16",
+    "manifest_sha256": "143af8cdbe51187f0093118811fb1186fd4d0af5ad0b6f8aaa7fbd22bad98756",
+    "modelo_as_of": "2026-11-16"
+  },
+  "conviccao": 1,
+  "data": "2026-11-18",
+  "hashes": {
+    "contexto": "84ab86570552fdf35404f1d5db7a252b180feafaf5946b69b24ba78ace17af6b",
+    "factbook": "e8db2140c3647790ea66681b7f2d2c84fa1b58d2c91919e8ee3d9e4776d85db2",
+    "nota_json": "0ce5cb9c34df705984abf620f1891913934fb3966c325b46efc8f0a19ea3cac5"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_COSAN",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-16",
+  "published_at": "2026-11-19T01:43:18.854592+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar se a simplificação reduz a necessidade de financiar custos recorrentes com venda de ativos.",
+        "titulo": "Disciplina financeira"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Confrontar a realização do ICSD com a projeção mantida para dezembro de 2026.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "guidance"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo de R$ 4,28, com retorno esperado de +38,46%. A narrativa não altera as premissas quantitativas.",
+      "otimista": "Alvo de R$ 4,56; a hipótese favorável requer cobertura recorrente e disciplina financeira. Não há probabilidade implícita disponível.",
+      "pessimista": "Alvo de R$ 4,01. A faixa calculada não constitui limite de perda; a hipótese adversa é persistência da insuficiência de caixa residual."
+    },
+    "comentario_valuation": "Preço de referência R$ 3,09, alvo R$ 4,28, potencial +38,46% e P/L à frente 6,0x. O alvo médio do consenso público é R$ 5,36, com diferença de -20,23%. Isso não demonstra o que o mercado precifica. A dispersão entre métodos não está disponível. A adequação da avaliação exige ponte entre participações econômicas, obrigações e caixa residual; múltiplos dos pares operacionais não eliminam o desconto estrutural da holding.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A visão neutra perde suporte se a transmissão de caixa não sustentar as obrigações, mesmo com melhora do resultado reportado.",
+        "titulo": "Teste de invalidação"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-17",
+    "dados_simulados": false,
+    "data": "2026-11-18",
+    "ficha": [
+      {
+        "fato": "val.BR_COSAN.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 3,09"
+      },
+      {
+        "fato": "val.BR_COSAN.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 4,28"
+      },
+      {
+        "fato": "val.BR_COSAN.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+38,46%"
+      },
+      {
+        "fato": "val.BR_COSAN.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_COSAN.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_COSAN.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 4,56"
+      },
+      {
+        "fato": "val.BR_COSAN.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_COSAN.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 4,01"
+      },
+      {
+        "fato": "val.BR_COSAN.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_COSAN.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "16,67%"
+      },
+      {
+        "fato": "val.BR_COSAN.wacc",
+        "rotulo": "WACC",
+        "valor": "11,93%"
+      },
+      {
+        "fato": "val.BR_COSAN.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_COSAN.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+38,46%"
+      },
+      {
+        "fato": "val.BR_COSAN.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-13,62%"
+      },
+      {
+        "fato": "val.BR_COSAN.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "6,0x"
+      },
+      {
+        "fato": "val.BR_COSAN.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,4x"
+      },
+      {
+        "fato": "val.BR_COSAN.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 5,36"
+      },
+      {
+        "fato": "val.BR_COSAN.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-20,23%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-18",
+        "id": "F1",
+        "instituicao": "Cosan",
+        "publicado_em": "2026-11-13",
+        "tipo": "Relações com investidores",
+        "titulo": "Release de resultados e estrutura de capital",
+        "url": "https://filemanager-cdn.mziq.com/published/6aa68515-2422-4cc4-bafa-8870ccdfedb0/05ad783c-0ca9-4263-ac70-42576f7bcc04"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Descumprimento da projeção de cobertura financeira.",
+      "Mudança material nos direitos preferenciais ou no financiamento da holding.",
+      "Revisão das premissas do modelo após nova evidência pública."
+    ],
+    "governanca": "Direitos preferenciais e obrigações com opção de venda exigem leitura distinta do retorno ao acionista ordinário. A definição do ICSD incorpora pagamentos da Cosan Dez no denominador; sua comparação deve preservar esse perímetro (Cosan, 2026-11-13).",
+    "guidance": "mantido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Monitorar ICSD em definição comparável, dividendos líquidos, juros e saldo de obrigações preferenciais.",
+        "titulo": "Cobertura e direitos prioritários"
+      }
+    ],
+    "issuer_id": "BR_COSAN",
+    "lacunas_de_dados": [
+      "Probabilidades implícitas dos cenários indisponíveis.",
+      "Sem evidência para atribuir uma percepção de mercado específica ao preço.",
+      "Diligência integral sobre exposições econômicas à Raízen permanece necessária.",
+      "Vantagem competitiva agregada da holding não demonstrada."
+    ],
+    "modelo_de_cobertura": "2026-11-16",
+    "negocio": "Holding de logística, gás, lubrificantes e terras. A análise deve separar desempenho integral das investidas, equivalência patrimonial e recursos disponíveis aos acionistas da holding (Cosan, release de 2026-11-13).",
+    "nome": "Cosan",
+    "o_que_mudou": "Desde a nota de 2026-10-12, a divulgação do 3T26 permite classificar o guidance de ICSD como mantido. A recuperação do lucro não encerra a diligência sobre a transmissão de caixa. Preservamos visão neutra e baixa convicção.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRAVA",
+        "nome": "Brava Energia"
+      },
+      {
+        "issuer_id": "BR_PRIO",
+        "nome": "PRIO"
+      },
+      {
+        "issuer_id": "BR_RECV",
+        "nome": "PetroRecôncavo"
+      },
+      {
+        "issuer_id": "BR_ULTRAPAR",
+        "nome": "Ultrapar"
+      },
+      {
+        "issuer_id": "BR_VIBRA",
+        "nome": "Vibra Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese de recuperação exige que dividendos líquidos sustentem juros e despesas recorrentes. Lucro contábil não basta para demonstrar essa condição.",
+        "titulo": "Caixa disponível é a condição decisiva"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_COSAN.rating_codigo",
+            "nome": "Rating da cobertura (12 meses)",
+            "valor": "Neutro"
+          },
+          {
+            "fato": "val.BR_COSAN.confianca_codigo",
+            "nome": "Confiança do modelo",
+            "valor": "C"
+          },
+          {
+            "fato": "val.BR_COSAN.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "-13,62%"
+          }
+        ],
+        "texto": "O modelo indica rating Neutro, confiança C e alpha relativo de -13,62%. O potencial absoluto não comprova superioridade aos pares.",
+        "titulo": "Valuation com convicção limitada"
+      }
+    ],
+    "publicada_em": "2026-11-19T01:43:18.854592+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A melhora contábil precisa ser confrontada com dividendos efetivamente recebidos. Não reconhecer perdas de uma investida não equivale a receber caixa.",
+        "titulo": "Resultado e disponibilidade financeira"
+      }
+    ],
+    "resumo": "Mantemos visão neutra e baixa convicção. O alvo de R$ 4,28 e potencial de +38,46% não dispensam a comprovação de caixa residual depois das obrigações prioritárias. O resultado melhora; a cobertura financeira continua sendo o teste da tese.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Repasses e juros podem absorver os recursos recebidos, mantendo dependência de alienações."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_COSAN.confianca_codigo",
+            "nome": "Confiança do modelo",
+            "valor": "C"
+          },
+          {
+            "fato": "val.BR_COSAN.prob_otimista",
+            "nome": "Probabilidade implícita pelo mercado de atingir o otimista",
+            "valor": "n/d"
+          },
+          {
+            "fato": "val.BR_COSAN.prob_pessimista",
+            "nome": "Probabilidade implícita pelo mercado de cair ao pessimista",
+            "valor": "n/d"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "alta",
+        "texto": "Confiança C e probabilidades de cenários indisponíveis limitam a interpretação da faixa de avaliação."
+      }
+    ],
+    "setor": "Energia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Cosan: lucro recupera, mas cobertura financeira ainda depende do caixa recebido",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "O release da Cosan de 2026-11-13 registra retorno ao lucro no 3T26, melhor contribuição de Compass e Moove, menor despesa financeira e redução administrativa. Parte da comparação de equivalência decorre do não reconhecimento de Raízen, cujo investimento foi reduzido a zero; isso não comprova recuperação econômica da investida. A dívida líquida expandida subiu frente ao trimestre anterior. O ICSD melhorou sequencialmente, mas permanece abaixo da cobertura integral; o guidance de dezembro de 2026 foi expressamente mantido. A apresentação separa o TRS de Rumo e informa ausência de obrigação de recompra.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar recebimentos líquidos e custo financeiro com definições comparáveis entre períodos.",
+        "vetor": "Conversão em caixa"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_COSAN.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "16,67%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo do capital próprio de 16,67% exige disciplina na avaliação do retorno residual.",
+        "vetor": "Custo do capital"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

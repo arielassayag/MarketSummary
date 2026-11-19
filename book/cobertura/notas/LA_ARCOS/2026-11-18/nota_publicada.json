@@ -1,0 +1,361 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-16",
+    "manifest_sha256": "143af8cdbe51187f0093118811fb1186fd4d0af5ad0b6f8aaa7fbd22bad98756",
+    "modelo_as_of": "2026-11-13"
+  },
+  "conviccao": 1,
+  "data": "2026-11-18",
+  "hashes": {
+    "contexto": "1e81362744ade3ed7826112155893f1818af2c414b9b7accba984bf89b13bfb5",
+    "factbook": "899ba92234ce7bb95132327effe549faa4bf47aa876fad4c07fcbdb0be86b3d0",
+    "nota_json": "6585c7e04e7fc77055ae34f334da9fe7c192e4d3b13fae066aeae1e632a743c5"
+  },
+  "is_synthetic": false,
+  "issuer_id": "LA_ARCOS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-11-19T01:46:57.595921+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Os objetivos de expansão são reiterados, não realizados. Acompanhar investimento, financiamento e retorno das novas unidades antes de atribuir valor à escala adicional.",
+        "titulo": "Objetivos plurianuais"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Execução do programa de recompra autorizado; autorização não comprova compra ou cancelamento realizado.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "capital"
+      }
+    ],
+    "cenarios": {
+      "base": "Alvo US$ 6,69, retorno esperado -4,34%. O teste central é caixa depois de investimento e compromissos contratuais.",
+      "otimista": "Alvo US$ 12,57; frequência e produtividade remuneram a expansão. A probabilidade implícita calculada é 9,65%, não uma convicção adicional da nota.",
+      "pessimista": "Alvo US$ 0,65. Pressão de consumo e custos reduz retorno. A probabilidade implícita de 0,00% não significa impossibilidade de perda."
+    },
+    "comentario_valuation": "Preço US$ 7,21, alvo US$ 6,69, ke 16,12% e dispersão entre métodos 13,46%. O consenso público aponta US$ 10,78. A divergência não estabelece percepção variante comprovada. Os pares quantitativos agregam atividades com contratos e necessidades de capital diferentes; o P/L à frente de 8,3x não substitui a avaliação de retorno dos restaurantes e direitos da franquia.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese de recuperação perde suporte se produtividade e frequência não financiarem obrigações e reinvestimento sem deteriorar o balanço.",
+        "titulo": "Condição de invalidação"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-17",
+    "dados_simulados": false,
+    "data": "2026-11-18",
+    "ficha": [
+      {
+        "fato": "val.LA_ARCOS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 7,21"
+      },
+      {
+        "fato": "val.LA_ARCOS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 6,69"
+      },
+      {
+        "fato": "val.LA_ARCOS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-7,20%"
+      },
+      {
+        "fato": "val.LA_ARCOS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.LA_ARCOS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.LA_ARCOS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 12,57"
+      },
+      {
+        "fato": "val.LA_ARCOS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "9,65%"
+      },
+      {
+        "fato": "val.LA_ARCOS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 0,65"
+      },
+      {
+        "fato": "val.LA_ARCOS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "0,00%"
+      },
+      {
+        "fato": "val.LA_ARCOS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "16,12%"
+      },
+      {
+        "fato": "val.LA_ARCOS.wacc",
+        "rotulo": "WACC",
+        "valor": "10,56%"
+      },
+      {
+        "fato": "val.LA_ARCOS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.LA_ARCOS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-4,34%"
+      },
+      {
+        "fato": "val.LA_ARCOS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-23,66%"
+      },
+      {
+        "fato": "val.LA_ARCOS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,3x"
+      },
+      {
+        "fato": "val.LA_ARCOS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,8x"
+      },
+      {
+        "fato": "val.LA_ARCOS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 10,78"
+      },
+      {
+        "fato": "val.LA_ARCOS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-37,95%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-18",
+        "id": "F1",
+        "instituicao": "SEC e Arcos Dorados",
+        "publicado_em": "2026-11-12",
+        "tipo": "Regulador",
+        "titulo": "Resultado trimestral e reconciliações financeiras",
+        "url": "https://www.sec.gov/Archives/edgar/data/1508478/000095010326017316/dp256682_6k.htm"
+      },
+      {
+        "consultado_em": "2026-11-18",
+        "id": "F2",
+        "instituicao": "SEC e Arcos Dorados",
+        "publicado_em": "2026-10-01",
+        "tipo": "Regulador",
+        "titulo": "Objetivos de crescimento e estrutura financeira do dia do investidor",
+        "url": "https://www.sec.gov/Archives/edgar/data/1508478/000095010326014896/dp254267_6k.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Deterioração da frequência ou margem em bases comparáveis.",
+      "Expansão e recompra pressionam financiamento sem retorno demonstrado.",
+      "Revisão dos objetivos plurianuais ou dos contratos da franquia."
+    ],
+    "governanca": "A recompra autorizada de ações da classe pública não comprova execução. Confrontar distribuição de capital com financiamento da expansão e obrigações contratuais. Direitos completos das classes e transações com partes relacionadas permanecem em diligência.",
+    "guidance": "mantido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Monitorar visitas, vendas comparáveis, margem sem crédito tributário, investimento por mercado e dívida financeira com perímetro constante.",
+        "titulo": "Produtividade e caixa"
+      }
+    ],
+    "issuer_id": "LA_ARCOS",
+    "lacunas_de_dados": [
+      "Data de divulgação na fila diverge do release primário de 2026-11-12; usada a data documental.",
+      "Orientação anual de 2026 não conciliada; classificação de guidance restrita aos objetivos plurianuais.",
+      "Retorno por coorte de restaurantes e mercado não demonstrado.",
+      "Contratos completos e direitos de classes exigem diligência.",
+      "Não há evidência para atribuir uma percepção específica ao mercado."
+    ],
+    "modelo_de_cobertura": "2026-11-16",
+    "negocio": "Opera restaurantes McDonald's e concede subfranquias na América Latina e no Caribe. Direitos exclusivos da marca sustentam alcance comercial; a geração de valor depende da produtividade e do reinvestimento local (SEC, 2026-11-12).",
+    "nome": "Arcos Dorados",
+    "o_que_mudou": "Desde a nota de 2026-10-11, a divulgação do 3T26 permite distinguir crescimento operacional da queda contábil influenciada pelo crédito tributário comparativo. A companhia autorizou recompra e repetiu objetivos plurianuais. Preservamos postura neutra e baixa convicção.",
+    "pais": "Regional (América Latina)",
+    "pares": [
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_AZZAS",
+        "nome": "Azzas 2154"
+      },
+      {
+        "issuer_id": "BR_CEA",
+        "nome": "C&A Modas"
+      },
+      {
+        "issuer_id": "BR_COGNA",
+        "nome": "Cogna"
+      },
+      {
+        "issuer_id": "BR_CURY",
+        "nome": "Cury"
+      },
+      {
+        "issuer_id": "BR_DIRECIONAL",
+        "nome": "Direcional"
+      },
+      {
+        "issuer_id": "BR_EZTEC",
+        "nome": "EZTec"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese exige que frequência e produtividade gerem caixa depois das necessidades dos restaurantes. Aberturas e vendas nominais não demonstram retorno econômico suficiente.",
+        "titulo": "Expansão remunerada"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.LA_ARCOS.rating_codigo",
+            "nome": "Rating da cobertura (12 meses)",
+            "valor": "Venda"
+          },
+          {
+            "fato": "val.LA_ARCOS.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "-23,66%"
+          }
+        ],
+        "texto": "O modelo classifica a cobertura como Venda, com alpha relativo de -23,66%. A leitura qualitativa neutra não altera esse sinal quantitativo.",
+        "titulo": "Retorno relativo exige cautela"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Direitos exclusivos da marca oferecem alcance; a vantagem econômica precisa aparecer em produtividade e retorno por mercado.",
+        "titulo": "Marca e execução local"
+      }
+    ],
+    "publicada_em": "2026-11-19T01:46:57.595921+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar crédito tributário do comparativo, inflação local e conversão cambial. Caixa ajustado não é equivalente ao fluxo contábil disponível após todas as obrigações.",
+        "titulo": "Base comparável"
+      }
+    ],
+    "resumo": "A leitura permanece neutra e de baixa convicção: expansão precisa produzir caixa após investimento e obrigações da franquia. O alvo de US$ 6,69 implica potencial de -7,20%. A melhora operacional deve ser avaliada em base comparável, separando crédito tributário e medidas ajustadas.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Expansão pode consumir caixa sem remunerar capital, enquanto royalties e arrendamentos permanecem."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.LA_ARCOS.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-37,95%"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "A diferença de -37,95% frente ao consenso não constitui evidência sobre expectativas precificadas."
+      }
+    ],
+    "setor": "Consumo discricionário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Arcos Dorados: crescimento operacional exige comparação sem crédito tributário",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O release arquivado na SEC em 2026-11-12 apresenta o 3T26, com crescimento de receita e vendas comparáveis, acompanhado de tráfego positivo. O EBITDA ajustado cai na comparação reportada, mas cresce quando excluído o crédito tributário federal brasileiro do período anterior; nessa base, a margem operacional ajustada recua. A melhora do fluxo de caixa livre ajustado deve ser lida com sua definição, que reposiciona juros e inclui transações de restaurantes. O release repete os objetivos de crescimento, aberturas e investimento de 2027 a 2030 anunciados em 2026-10-01: guidance mantido refere-se a esse horizonte, sem classificar orientação anual não conciliada.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar frequência e ticket em moeda constante, distinguindo expansão da rede madura.",
+        "vetor": "Tráfego e acessibilidade"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Testar se ganhos de compras compensam salários, ocupação e royalties.",
+        "vetor": "Alimentos e despesas operacionais"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

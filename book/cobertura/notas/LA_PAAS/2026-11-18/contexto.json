@@ -1,0 +1,96 @@
+{
+  "avisos_tecnicos": [],
+  "dados_ate": "2026-11-17",
+  "data": "2026-11-18",
+  "fontes_sugeridas": [
+    {
+      "instituicao": "SEC EDGAR — busca de documentos (20-F, 6-K, 10-K, 8-K)",
+      "tipo": "regulatorio",
+      "url": "https://www.sec.gov/edgar/search/"
+    },
+    {
+      "instituicao": "SEC EDGAR — dados XBRL por empresa (companyfacts)",
+      "tipo": "regulatorio",
+      "url": "https://www.sec.gov/search-filings/edgar-application-programming-interfaces"
+    },
+    {
+      "instituicao": "Damodaran Online (NYU Stern) — prêmios de risco, betas e múltiplos setoriais",
+      "tipo": "dados_publicos",
+      "url": "https://pages.stern.nyu.edu/~adamodar/"
+    },
+    {
+      "instituicao": "FRED (Federal Reserve Bank of St. Louis) — juros e indicadores dos EUA",
+      "tipo": "dados_publicos",
+      "url": "https://fred.stlouisfed.org/"
+    }
+  ],
+  "is_synthetic": false,
+  "issuer_id": "LA_PAAS",
+  "lacunas": [
+    "Probabilidade implícita do otimista: sem dado na data.",
+    "Probabilidade implícita do pessimista: sem dado na data."
+  ],
+  "nome": "Pan American Silver",
+  "nomes": {
+    "AR_LAR": "Lithium Argentina",
+    "BR_BRADESPAR": "Bradespar",
+    "BR_CBA": "Companhia Brasileira de Alumínio",
+    "BR_CMIN": "CSN Mineração",
+    "BR_ERO": "Ero Copper",
+    "BR_GERDAU": "Gerdau",
+    "BR_GOAU": "Metalúrgica Gerdau",
+    "BR_KLABIN": "Klabin",
+    "LA_PAAS": "Pan American Silver"
+  },
+  "nota_anterior": {
+    "autoria": "mente",
+    "conviccao": 1,
+    "data": "2026-10-11",
+    "proximo_resultado": "2026-11-16",
+    "stance": 0,
+    "tipo": "atualizacao",
+    "titulo": "Pan American Silver — caixa atribuível, custos e reinvestimento mineral"
+  },
+  "pais": "LATAM",
+  "pais_pt": "Regional (América Latina)",
+  "pares": [
+    "AR_LAR",
+    "BR_BRADESPAR",
+    "BR_CBA",
+    "BR_CMIN",
+    "BR_ERO",
+    "BR_GERDAU",
+    "BR_GOAU",
+    "BR_KLABIN"
+  ],
+  "proximo_resultado": null,
+  "schema": "cdp.nota.contexto/v1",
+  "setor": "Materials",
+  "setor_pt": "Materiais",
+  "snapshot": {
+    "as_of": "2026-11-16",
+    "manifest_sha256": "143af8cdbe51187f0093118811fb1186fd4d0af5ad0b6f8aaa7fbd22bad98756",
+    "modelo_as_of": "2026-11-12"
+  },
+  "tem_linha_eua": true,
+  "termos": [
+    "BRAP4",
+    "BRAP4.SA",
+    "CBAV3",
+    "CBAV3.SA",
+    "CMIN3",
+    "CMIN3.SA",
+    "GGBR4",
+    "GGBR4.SA",
+    "GOAU4",
+    "GOAU4.SA",
+    "KLBN11",
+    "KLBN11.SA",
+    "KLBN4",
+    "KLBN4.SA"
+  ],
+  "tickers": [
+    "PAAS"
+  ],
+  "tipo_esperado": "atualizacao"
+}

@@ -607,7 +607,16 @@ class MarketStore:
         actions = tuple(e for e in (() if bt.manifest.is_synthetic else catalog())
                         if e.effective_on <= eff
                         and e.ticker in bt.universe.tickers)
-        prices = _combine_prices(bt.prices, [t.prices for t in tabs], actions=actions)
+        increment_prices = [t.prices for t in tabs]
+        proofs = {}
+        if not bt.manifest.is_synthetic:
+            from .reconciliacao_precos import reconcile_prices
+            from .reconciliacao_precos import sources as reconciliation_sources
+
+            increment_prices, proofs = reconcile_prices(bt.prices, increment_prices, actions, eff)
+            if proofs and recepcao_bancaria:
+                raise ValueError("Recepção bancária não autentica janela reconciliada retrospectiva")
+        prices = _combine_prices(bt.prices, increment_prices, actions=actions)
         fx = pd.concat([bt.fx] + [t.fx for t in tabs], ignore_index=True)
         bench = pd.concat([bt.benchmarks] + [t.benchmarks for t in tabs], ignore_index=True)
         rates = pd.concat([bt.rates] + [t.rates for t in tabs], ignore_index=True)
@@ -653,7 +662,12 @@ class MarketStore:
         limitations.append(f"Composição: base {base.name} (content_hash "
                            f"{bt.manifest.content_hash()[:12]}…) + {len(tabs)} incremento(s) "
                            f"até {eff.isoformat()}.")
+        if proofs:
+            sources.extend(reconciliation_sources())
+            limitations.append("EMBJ em 17/11/2026: predecessor selado reconciliado com "
+                               "Nasdaq e eventos Yahoo consultados retrospectivamente.")
         manifest = SnapshotManifest(
+            price_reconciliations=proofs,
             snapshot_id=f"store-{base.name}+{len(tabs)}-{eff.isoformat()}", as_of=eff,
             created_at=created, universe_sha256=bt.manifest.universe_sha256, files=files,
             sources=sources, limitations=limitations,
@@ -675,7 +689,7 @@ class MarketStore:
         object.__setattr__(md, "universe", effective_universe(md.universe, actions, eff))
         from .eventos_corporativos import unverified_observations
 
-        unsafe = unverified_observations(prices, [tab.prices for tab in tabs])
+        unsafe = unverified_observations(prices, increment_prices)
         object.__setattr__(md, "unverified_returns", unsafe)
         if recepcao_bancaria:
             from .recepcao_bancaria import _novo_mercado

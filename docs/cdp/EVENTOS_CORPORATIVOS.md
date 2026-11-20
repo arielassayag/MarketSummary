@@ -79,3 +79,18 @@ O ADS passou de quatro ações locais para uma, com quatro ADSs novos por ADS an
 A evidência HTML integral e seu SHA-256 estão vinculados no catálogo. Não houve
 emissão de ações ordinárias por esse evento. Os valores corrigidos são produzidos
 pelo motor; o diagnóstico preliminar não substitui o registro retificado selado.
+
+### Lacuna da janela de preço em 17/11/2026
+
+O incremento de 17/11 preserva `prev_date=2026-11-16` sem preço anterior na
+janela do Yahoo. O incremento de 16/11 tem o fechamento original, já na nova
+unidade. A [Nasdaq confirma os dois fechamentos](https://api.nasdaq.com/api/quote/EMBJ/historical?assetclass=stocks&fromdate=2026-11-16&todate=2026-11-17);
+a consulta Yahoo arquivada confirma a vigência do split, registra a lacuna em
+16/11 e não registra distribuição nem mudança de unidade em 17/11.
+
+O leitor confere as duas respostas arquivadas por SHA-256 e confronta as barras
+seladas antes de recompor somente o predecessor dessa janela. O manifesto
+composto inclui os hashes e identifica a consulta como retrospectiva. A
+quantidade segue na unidade posterior ao split. Arquivos brutos e o relatório
+retificado de 16/11 são preservados. A prova não autoriza outras lacunas e não
+se apresenta como recepção bancária contemporânea.

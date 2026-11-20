@@ -396,3 +396,25 @@ def test_predecessor_guard_keeps_order_duplicates_and_missing_close_semantics():
     new=inc.assign(ticker='NOVO')
     assert not unverified_observations(pd.concat([combined,new]),[new])
     assert not unverified_observations(combined,[])
+
+
+def test_janela_reconciliada_confere_duas_barras_sem_reaplicar_split():
+    from cdp.data.eventos_corporativos import catalog, unverified_observations
+    from cdp.data.reconciliacao_precos import reconcile_prices
+
+    prev = prices(18.770000457763672, "2026-11-16")
+    day = prices(18.899999618530273, "2026-11-17").assign(
+        prev_date=pd.Timestamp("2026-11-16"), prev_adj_close_window=np.nan,
+        prev_close_window=np.nan)
+    unchanged, proofs = reconcile_prices(
+        prev, [], catalog(), date(2026, 11, 16))
+    assert unchanged == []
+    assert proofs == {}
+    fixed, proofs = reconcile_prices(prev, [day], catalog(), date(2026, 11, 17))
+    assert proofs
+    assert pd.isna(day.iloc[0].prev_adj_close_window)
+    assert unverified_observations(pd.concat([prev, *fixed]), fixed) == ()
+    returns = _combine_prices(prev, fixed, actions=catalog()).adj_close.pct_change()
+    assert returns.iloc[-1] == pytest.approx(18.90 / 18.77 - 1, abs=1e-7)
+    with pytest.raises(ValueError, match="diverg"):
+        reconcile_prices(prev, [day.assign(close=75.60)], catalog(), date(2026, 11, 17))

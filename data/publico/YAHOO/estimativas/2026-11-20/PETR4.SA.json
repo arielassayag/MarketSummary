@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 42.67,
+  "high": 72.0,
+  "low": 48.0,
+  "mean": 59.44167,
+  "median": 57.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": null,
+   "currency": "BRL",
+   "growth": null,
+   "high": null,
+   "low": null,
+   "numberOfAnalysts": null,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 14.467,
+   "currency": "BRL",
+   "growth": -0.0298,
+   "high": 14.467,
+   "low": 14.467,
+   "numberOfAnalysts": 1.0,
+   "yearAgoEps": 14.912
+  },
+  "0q": {
+   "avg": 4.3315,
+   "currency": "BRL",
+   "growth": 2.7289002,
+   "high": 4.423,
+   "low": 4.24,
+   "numberOfAnalysts": 3.0,
+   "yearAgoEps": 1.1616
+  },
+  "0y": {
+   "avg": 14.912,
+   "currency": "BRL",
+   "growth": null,
+   "high": 14.912,
+   "low": 14.912,
+   "numberOfAnalysts": 1.0,
+   "yearAgoEps": null
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 152379979000,
+   "currency": "BRL",
+   "growth": 0.23200001,
+   "high": 152379979000,
+   "low": 152379979000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 123686000000
+  },
+  "+1y": {
+   "avg": 626363737570,
+   "currency": "BRL",
+   "growth": -0.0305,
+   "high": 742085928000,
+   "low": 512640130000,
+   "numberOfAnalysts": 16,
+   "yearAgoRevenue": 646072012360
+  },
+  "0q": {
+   "avg": 197234089420,
+   "currency": "BRL",
+   "growth": 0.5823,
+   "high": 211677048000,
+   "low": 180568606680,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 124650240000
+  },
+  "0y": {
+   "avg": 646072012360,
+   "currency": "BRL",
+   "growth": 0.3718,
+   "high": 742526784000,
+   "low": 559472235000,
+   "numberOfAnalysts": 14,
+   "yearAgoRevenue": 470949600000
+  }
+ },
+ "ticker": "PETR4.SA",
+ "url": "https://finance.yahoo.com/quote/PETR4.SA"
+}

@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 14.28,
+  "high": 27.0,
+  "low": 14.0,
+  "mean": 19.17857,
+  "median": 18.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.32,
+   "currency": "BRL",
+   "growth": 0.066700004,
+   "high": 0.33,
+   "low": 0.31,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.3
+  },
+  "+1y": {
+   "avg": 1.31456,
+   "currency": "BRL",
+   "growth": 0.0464,
+   "high": 1.5,
+   "low": 1.14906,
+   "numberOfAnalysts": 8,
+   "yearAgoEps": 1.2563
+  },
+  "0q": {
+   "avg": 0.33016,
+   "currency": "BRL",
+   "growth": 0.1993,
+   "high": 0.36032,
+   "low": 0.3,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.2753
+  },
+  "0y": {
+   "avg": 1.2563,
+   "currency": "BRL",
+   "growth": 0.2747,
+   "high": 1.34149,
+   "low": 1.18,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 0.9856
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 3075384500,
+   "currency": "BRL",
+   "growth": 0.070300005,
+   "high": 3167592000,
+   "low": 2983177000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 2873400000
+  },
+  "+1y": {
+   "avg": 12319626390,
+   "currency": "BRL",
+   "growth": 0.0939,
+   "high": 13155767000,
+   "low": 11590000000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 11262610420
+  },
+  "0q": {
+   "avg": 2970275000,
+   "currency": "BRL",
+   "growth": 0.12,
+   "high": 3082000000,
+   "low": 2858550000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 2652028000
+  },
+  "0y": {
+   "avg": 11262610420,
+   "currency": "BRL",
+   "growth": 0.118599996,
+   "high": 11486000000,
+   "low": 11073380700,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 10068227000
+  }
+ },
+ "ticker": "B3SA3.SA",
+ "url": "https://finance.yahoo.com/quote/B3SA3.SA"
+}

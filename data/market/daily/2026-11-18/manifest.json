@@ -1,0 +1,122 @@
+{
+  "kind": "daily_increment",
+  "session_date": "2026-11-18",
+  "created_at": "2026-11-20T14:08:40.682408Z",
+  "base_as_of": "2026-10-02",
+  "base_content_hash": "ec1e53241d99de22f2f6deb06749e9d80b3d43864de3a1d931eb3e94c8d40455",
+  "base_manifest_sha256": "6bf7cc5b57e0a1eb5bd73080fb213eab399c7b04359ae68b2f75dc93a185d263",
+  "prev_manifest_hash": "2ffefab3bbd61a7215bbec465ca7ad699b5b893dffbc9243d8f64f62e77b2421",
+  "universe_sha256": "a8f28ee5d20395a6e245c50ebb635eb56ada88922c01876351278cb99f5a29db",
+  "files": [
+    {
+      "path": "benchmarks.parquet",
+      "sha256": "83b1e31b1c200ed07c5e5f41f0156830e527e7893c4e1a9e5c60c2250fa4307b",
+      "rows": 19,
+      "description": "Benchmarks do pregão"
+    },
+    {
+      "path": "fx.parquet",
+      "sha256": "f0ab8cb48e01a75fb1438c4885632cfcd85836af1ee977081b0451ab242873dd",
+      "rows": 8,
+      "description": "Câmbio do pregão (USD por unidade)"
+    },
+    {
+      "path": "lending.parquet",
+      "sha256": "e9b35a09abc63fba52fddc4b7bac02af93563ecccbd81204631c1a30bad51380",
+      "rows": 375,
+      "description": "Aluguel B3/BTC (longo) dos pregões ainda não gravados"
+    },
+    {
+      "path": "prices.parquet",
+      "sha256": "24f93151c9dcef5d360875a14f1e513ab7c608d7c7da16c57e1f8ee4128095c8",
+      "rows": 281,
+      "description": "Preços do pregão (+ barra anterior da mesma coleta para encadear retorno total)"
+    },
+    {
+      "path": "qa.json",
+      "sha256": "4ecf5c77e1183e726693fb501a1fae5433ab55f9ca3ac7e80fa0f029d09488aa",
+      "rows": null,
+      "description": "QA do incremento: revisões, paridade ADR, mercados fechados"
+    },
+    {
+      "path": "rates.parquet",
+      "sha256": "d6ee5d5f9d442ed9e535f201fcf66d68c4b4f3de3edb1d389c067f3ab944e604",
+      "rows": 2,
+      "description": "Taxas do pregão (decimal anual)"
+    }
+  ],
+  "sources": [
+    {
+      "source_id": "yahoo_prices",
+      "name": "Yahoo Finance — barras diárias (janela)",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-11-20T14:08:20.502144Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "yahoo_fx",
+      "name": "Yahoo Finance — câmbio",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-11-20T14:08:21.732115Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "yahoo_benchmarks",
+      "name": "Yahoo Finance — benchmarks",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-11-20T14:08:29.768258Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "rates",
+      "name": "BCB SGS 432 + Yahoo ^IRX",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-11-20T14:08:30.439436Z",
+      "point_in_time": true,
+      "notes": ""
+    },
+    {
+      "source_id": "b3_bdi_lending",
+      "name": "B3 BDI — aluguel (BTC)",
+      "url": "",
+      "fields": [],
+      "retrieved_at": "2026-11-20T14:08:40.602467Z",
+      "point_in_time": false,
+      "notes": ""
+    }
+  ],
+  "limitations": [
+    "Revisões de fechamento do Yahoo em datas anteriores NÃO aplicadas (155): ANDINA-B.SN@2026-11-10 (1.0033), BCI.SN@2026-11-10 (0.9902), BSANTANDER.SN@2026-11-10 (1.0019), CENCOMALLS.SN@2026-11-10 (0.9989), CENCOSUD.SN@2026-11-10 (1.0265), CHILE.SN@2026-11-10 (1.0114), CMPC.SN@2026-11-10 (1.0068), COPEC.SN@2026-11-10 (0.9914), ECL.SN@2026-11-10 (0.9962), EISA.SN@2026-11-10 (0.9720), ENELAM.SN@2026-11-10 (1.0048), ENELCHILE.SN@2026-11-10 (0.9872), FALABELLA.SN@2026-11-10 (0.9986), ITAUCL.SN@2026-11-10 (0.9891), LTM.SN@2026-11-10 (1.0170), MALLPLAZA.SN@2026-11-10 (1.0153), PARAUCO.SN@2026-11-10 (0.9831), SQM-B.SN@2026-11-10 (0.9764), ANDINA-B.SN@2026-11-11 (0.9853), BCI.",
+    "Revisões de volume em datas anteriores NÃO aplicadas: 637.",
+    "Barras tardias (datas anteriores não gravadas) NÃO aplicadas: 1.",
+    "Benchmarks sem barra no pregão: ^MERV.",
+    "QA paridade ADR: SID vs CSNA3.SA desvio -6.6% no pregão (mediana -0.8%; tolerância 3%).",
+    "QA paridade ADR: SQM vs SQM-B.SN desvio -6.1% no pregão (mediana -0.5%; tolerância 3%)."
+  ],
+  "notes": [],
+  "markets_traded": [
+    "AR",
+    "BR",
+    "CL",
+    "CO",
+    "MX",
+    "US"
+  ],
+  "markets_closed": [],
+  "slow_refreshed": [],
+  "lending_dates": [
+    "2026-11-16",
+    "2026-11-17",
+    "2026-11-18"
+  ],
+  "is_synthetic": false,
+  "data_notice": "Dados reais de fontes públicas gratuitas (Yahoo, FINRA, B3/BDI, BCB, Google News); uso de pesquisa — não é feed licenciado.",
+  "manifest_hash": "0c2fe0e6b3cb438adeda374c197db114a7686c0d463f99c3b0f7426697dbc1d5"
+}

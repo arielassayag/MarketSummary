@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 21.23,
+  "high": 50.0,
+  "low": 27.4,
+  "mean": 36.83333,
+  "median": 34.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.93,
+   "currency": "USD",
+   "growth": -0.2983,
+   "high": 0.93,
+   "low": 0.93,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 1.3254
+  },
+  "+1y": {
+   "avg": 3.47682,
+   "currency": "USD",
+   "growth": -0.1735,
+   "high": 4.77,
+   "low": 0.99,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 4.20667
+  },
+  "0q": {
+   "avg": 0.94,
+   "currency": "USD",
+   "growth": -0.3858,
+   "high": 0.94,
+   "low": 0.94,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 1.5305
+  },
+  "0y": {
+   "avg": 4.20667,
+   "currency": "USD",
+   "growth": 0.3493,
+   "high": 4.26,
+   "low": 4.18,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 3.1176
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "USD",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 2230515130,
+   "currency": "USD",
+   "growth": -0.010299999,
+   "high": 2403605770,
+   "low": 2027000000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 2253821630.0
+  },
+  "0q": {
+   "avg": 0,
+   "currency": "USD",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "0y": {
+   "avg": 2253821630,
+   "currency": "USD",
+   "growth": 0.3016,
+   "high": 2266000000,
+   "low": 2241464900,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 1731639000.0
+  }
+ },
+ "ticker": "BVN",
+ "url": "https://finance.yahoo.com/quote/BVN"
+}

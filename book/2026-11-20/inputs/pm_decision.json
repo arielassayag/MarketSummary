@@ -1,0 +1,20 @@
+{
+  "mind": "codex",
+  "market_view": "Leitura neutra de baixa convicção e postura defensiva. Drawdown em {{fact:cdp.drawdown}} e volatilidade realizada em {{fact:cdp.realized_vol_21d}}. A revisão fundamental atualizada de todos os candidatos e posições não foi concluída; a abstenção preserva a seleção quantitativa sob os portões do mandato. A coleta intradiária incompleta exige usar o fechamento anterior, sem inferir preços executáveis atuais ou disponibilidade nova de aluguel.",
+  "what_changed": "A análise incorpora o fechamento de 2026-11-19, com mercado brasileiro fechado na data da decisão e sem barra intradiária provisória utilizável. Mantemos veto ao short em Galicia e Volaris e acrescentamos Itaú Unibanco e Minerva por risco elevado de squeeze. Notas publicadas de PagSeguro, Liberty Latin America, Galicia e Volaris servem como referência indireta, sem atestar nova reconciliação integral dos resultados. Lacunas de fontes e de acompanhamento diário permanecem explícitas.",
+  "evaluation_last_week": "A decisão anterior manteve abstenção e postura defensiva. A avaliação disponível classifica Galicia, Sigma Lithium e Volaris como sem inclinação; os retornos residuais não representam acerto direcional de uma tese. Os fechamentos pendentes impedem atribuir resultado semanal definitivo nesta etapa.",
+  "regime": "neutral",
+  "risk_posture": "defensiva",
+  "abstain": true,
+  "views": [],
+  "exclusions": [
+    {"issuer_id":"AR_GALICIA","no_short":true,"reason":"Veto prudencial ao short em Galicia diante de squeeze em {{fact:AR_GALICIA.squeeze_score}}; integração, crédito e capital ainda exigem reconciliação por entidade."},
+    {"issuer_id":"MX_VOLARIS","no_short":true,"reason":"Veto prudencial ao short em Volaris diante de squeeze em {{fact:MX_VOLARIS.squeeze_score}} e sensibilidade a condições societárias e obrigações de frota."},
+    {"issuer_id":"BR_ITAU","no_short":true,"reason":"Veto prudencial ao short em Itaú Unibanco diante de squeeze em {{fact:BR_ITAU.squeeze_score}} e prazo de cobertura em {{fact:BR_ITAU.days_to_cover}}."},
+    {"issuer_id":"BR_MINERVA","no_short":true,"reason":"Veto prudencial ao short em Minerva diante de squeeze em {{fact:BR_MINERVA.squeeze_score}} e custo de aluguel em {{fact:BR_MINERVA.borrow_fee}}."}
+  ],
+  "position_journal": [
+    {"issuer_id":"BR_PAGS","thesis":"PagSeguro exige contribuição por cliente depois de captação, perdas e capital; não acrescentamos inclinação fundamental à seleção quantitativa.","invalidation_criteria":"Crescimento comercial não remunera perdas, captação e capital do acionista.","premortem":"Expansão do crédito melhora o resultado inicial e consome capital posteriormente."},
+    {"issuer_id":"LA_LILA","thesis":"Liberty Latin America exige caixa atribuível após investimento e financiamento; a leitura da nota publicada é indireta e não valida os resultados correntes.","invalidation_criteria":"Melhora operacional não chega ao acionista após investimento, juros e obrigações por grupo.","premortem":"Refinanciamento e manutenção da rede absorvem o caixa enquanto uma recuperação comercial provoca reversão da posição vendida."}
+  ]
+}

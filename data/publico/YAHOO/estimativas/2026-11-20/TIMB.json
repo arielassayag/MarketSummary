@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 18.47,
+  "high": 28.5,
+  "low": 20.8,
+  "mean": 22.97571,
+  "median": 22.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.51183,
+   "currency": "USD",
+   "growth": -0.0365,
+   "high": 0.0,
+   "low": 0.51183,
+   "numberOfAnalysts": 0,
+   "yearAgoEps": 0.53124
+  },
+  "+1y": {
+   "avg": 1.81186,
+   "currency": "USD",
+   "growth": 0.1232,
+   "high": 1.85646,
+   "low": 1.773,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 1.61314
+  },
+  "0q": {
+   "avg": 0.52894,
+   "currency": "USD",
+   "growth": -0.0177,
+   "high": 0.601,
+   "low": 0.474,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.53845
+  },
+  "0y": {
+   "avg": 1.61314,
+   "currency": "USD",
+   "growth": -0.0627,
+   "high": 1.716,
+   "low": 1.549,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 1.72112
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 7128480500,
+   "currency": "BRL",
+   "growth": 0.047399998,
+   "high": 7151905000,
+   "low": 7105056000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 6806000000
+  },
+  "+1y": {
+   "avg": 29228642840,
+   "currency": "BRL",
+   "growth": 0.041300002,
+   "high": 29627000000,
+   "low": 27928594260,
+   "numberOfAnalysts": 15,
+   "yearAgoRevenue": 28070709310
+  },
+  "0q": {
+   "avg": 7287804470,
+   "currency": "BRL",
+   "growth": 0.053200003,
+   "high": 7367427410,
+   "low": 7214687000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 6920000000
+  },
+  "0y": {
+   "avg": 28070709310,
+   "currency": "BRL",
+   "growth": 0.0543,
+   "high": 28208407490,
+   "low": 27827000000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 26625000000
+  }
+ },
+ "ticker": "TIMB",
+ "url": "https://finance.yahoo.com/quote/TIMB"
+}

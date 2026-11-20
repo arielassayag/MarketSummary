@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 4.07,
+  "high": 10.7,
+  "low": 7.0,
+  "mean": 8.23333,
+  "median": 7.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.08,
+   "currency": "USD",
+   "growth": -0.2,
+   "high": 0.08,
+   "low": 0.08,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.1
+  },
+  "+1y": {
+   "avg": 0.85756,
+   "currency": "USD",
+   "growth": 10.6171,
+   "high": 1.5,
+   "low": 0.35268,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": -0.08917
+  },
+  "0q": {
+   "avg": 0.03273,
+   "currency": "USD",
+   "growth": 1.1488,
+   "high": 0.03273,
+   "low": 0.03273,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -0.22
+  },
+  "0y": {
+   "avg": -0.08917,
+   "currency": "USD",
+   "growth": 0.8018,
+   "high": -0.08834,
+   "low": -0.09,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": -0.45
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 113016000,
+   "currency": "CAD",
+   "growth": 0.9395,
+   "high": 113016000,
+   "low": 113016000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 58269370
+  },
+  "+1y": {
+   "avg": 469112750,
+   "currency": "CAD",
+   "growth": 1.2785,
+   "high": 562515000,
+   "low": 359143000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 205890250
+  },
+  "0q": {
+   "avg": 45890500,
+   "currency": "CAD",
+   "growth": 0.9571,
+   "high": 47031000,
+   "low": 44750000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 23448350
+  },
+  "0y": {
+   "avg": 205890250,
+   "currency": "CAD",
+   "growth": 0.3491,
+   "high": 212065000,
+   "low": 202374000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 152611950
+  }
+ },
+ "ticker": "SGML",
+ "url": "https://finance.yahoo.com/quote/SGML"
+}

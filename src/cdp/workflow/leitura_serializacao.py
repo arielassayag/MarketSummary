@@ -2571,7 +2571,7 @@ CATALOGO_FONTES: dict[str, str] = {
     "cdp.workflow.relatorio_semanal": "907f6f5c0ab6ca76d03e65ad5396a3a11d34bc7574cf6d3c4bbe715a367d354d",
     "cdp.workflow.reports": "561e35066dfaf9c25f62521bbac6c9e73df90fa276c92e03408a60d0b2e72a87",
     "cdp.workflow.retificacao_semanal": "b549df168a2a5a56658013e45c0cea58b3afc7fd4183ffd583dd2758b5ec8adc",
-    "cdp.workflow.risco_diario": "66f6ba9aafef0cbf2bd0aaaa26881ef56445da5778b24f68b6a73974774d0b62",
+    "cdp.workflow.risco_diario": "9dc90f5fd3952bbe8d3f974e50e883d7605dd67d01b89c7cda1eecb060ec25e9",
     "cdp.workflow.risk_monitor": "524b3468e71d020191449f885abe96bff04cf1eb127e68e2ead88665c035bdb9",
     "cdp.workflow.rotulos": "075e0b2d37751d54fdd9d4d5e6e9e82006ae281df607c019314f11d762ad1cc0",
     "cdp.workflow.runtime": "e15034f88f9beb82b746efd9188311bf57fc106e471a4317e4d76ac95c9cefc5",

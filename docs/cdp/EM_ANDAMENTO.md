@@ -5,6 +5,15 @@ que falta, riscos. Quem chega — no Claude Code, no Codex, no Gemini ou em outr
 antes de mexer em qualquer coisa (`AGENTS.md`, seção 1). Decisões já tomadas, com data e
 motivo: `docs/cdp/DECISOES.md`.
 
+## Fechamentos de 17 a 20/11 — janela de EMBJ
+
+O fechamento de 17/11 ficou bloqueado porque a janela do Yahoo omitiu a barra
+anterior de EMBJ, embora o incremento selado de 16/11 tivesse o fechamento. A
+correção em ramo próprio reconcilia esse par com evidências arquivadas da Nasdaq
+e do Yahoo, preserva a vigência do split em 16/11 e mantém a trava para outras
+lacunas. Veja [Eventos corporativos](EVENTOS_CORPORATIVOS.md). A retomada dos
+fechamentos exige a versão integrada no clone executor e o gate oficial.
+
 ## Eventos corporativos e retificação financeira — 16/11/2026
 
 Correção de EMBJ em ramo próprio: catálogo com evidência primária e vigência, ajuste de retornos/quantidades/ratio, guardas diárias e intradiárias, e retificação da cauda por anexação. Fluxo e limites em [Eventos corporativos](EVENTOS_CORPORATIVOS.md). Os originais e o CSV não são substituídos; a série corrente e o próximo elo usam a ramificação autenticada.

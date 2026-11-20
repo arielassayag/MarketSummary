@@ -91,6 +91,7 @@ class SnapshotManifest(_Model):
         default_factory=list,
         description="Datas cuja barra é intradiária provisória (preço disponível no momento da análise)")
     provisional_as_of: datetime | None = Field(default=None, description="Horário da barra provisória")
+    price_reconciliations: dict[str, str] = Field(default_factory=dict)
 
     _tz = field_validator("created_at")(classmethod(lambda cls, v: _require_tz(v)))
 
@@ -101,8 +102,11 @@ class SnapshotManifest(_Model):
         return self
 
     def content_hash(self) -> str:
-        return sha256_obj({"as_of": self.as_of, "universe": self.universe_sha256,
-                           "files": [(f.path, f.sha256) for f in self.files]})
+        body = {"as_of": self.as_of, "universe": self.universe_sha256,
+                "files": [(f.path, f.sha256) for f in self.files]}
+        if self.price_reconciliations:
+            body["price_reconciliations"] = self.price_reconciliations
+        return sha256_obj(body)
 
 
 # ==========================================================

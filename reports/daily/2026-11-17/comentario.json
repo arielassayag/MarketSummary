@@ -1,0 +1,11 @@
+{
+  "mind":"codex",
+  "headline":"CDP registra {{fact:day.ret}} com pressão no lado comprado",
+  "paragraphs":[
+    "A carteira simulada encerrou 17/11/2026 com retorno de {{fact:day.ret}}, P&L de {{fact:day.pnl_usd}} e NAV de {{fact:nav}}. O retorno desde o início ficou em {{fact:itd.ret}}. DADOS SIMULADOS, com preços reais e execução hipotética.",
+    "O lado comprado contribuiu {{fact:attr.long}} e o vendido, {{fact:attr.short}}. A parcela específica respondeu por {{fact:attr.specific}} e a fatorial, estimada, por {{fact:attr.factor}}. Brasil contribuiu {{fact:attr.country.BR}} e México, {{fact:attr.country.MX}}. Os maiores efeitos individuais foram {{fact:top.detract.1.name}}, com {{fact:top.detract.1.contrib}}, e {{fact:top.contrib.1.name}}, com {{fact:top.contrib.1.contrib}}, entre os detratores e contribuidores, respectivamente.",
+    "Em dólar, o ILF variou {{fact:mkt.ILF.ret_1d}}. O Census Bureau divulgou a prévia de vendas do varejo dos Estados Unidos no pregão. Para a marcação de Embraer, os fechamentos foram reconciliados em base comparável após a mudança de razão do ADS anunciada pela companhia.",
+    "A vol ex-ante ficou em {{fact:risk.ex_ante_vol}}, com beta {{fact:risk.beta}} e exposição líquida de {{fact:risk.net}}. O risco de squeeze no short de Minerva foi classificado como alto."
+  ],
+  "risk_flags":["Risco de squeeze alto no short de Minerva.","Retorno da linha americana de Embraer com predecessor reconciliado retrospectivamente.","Merval sem barra no pregão e atribuição fatorial estimada."]
+}

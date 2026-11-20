@@ -1,0 +1,11 @@
+{
+  "mind":"codex",
+  "headline":"Lado vendido sustenta alta do CDP em dia sem pregão na B3",
+  "paragraphs":[
+    "A carteira simulada encerrou 20/11/2026 com retorno de {{fact:day.ret}}, P&L de {{fact:day.pnl_usd}} e NAV de {{fact:nav}}. O retorno desde o início ficou em {{fact:itd.ret}}. DADOS SIMULADOS, com preços reais e execução hipotética.",
+    "O lado vendido contribuiu {{fact:attr.short}} e o comprado, {{fact:attr.long}}. A parcela específica respondeu por {{fact:attr.specific}} e a fatorial, estimada, por {{fact:attr.factor}}. Aura Minerals teve a maior contribuição individual, de {{fact:top.contrib.1.contrib}}, e Fortuna Mining foi o maior detrator, com {{fact:top.detract.1.contrib}}.",
+    "A B3 suspendeu a negociação de renda variável no feriado da Consciência Negra, conforme comunicado de 17/11/2026. As linhas locais sem negociação mantiveram a última marcação. Em dólar, o ILF variou {{fact:mkt.ILF.ret_1d}}.",
+    "A vol ex-ante ficou em {{fact:risk.ex_ante_vol}}, com beta {{fact:risk.beta}} e exposição líquida de {{fact:risk.net}}. Sem decisão de montagem no prazo, a carteira anterior foi mantida. O risco de squeeze no short de Minerva permaneceu alto."
+  ],
+  "risk_flags":["Risco de squeeze alto no short de Minerva.","Linhas sem negociação no feriado brasileiro mantiveram a última marcação.","Ibovespa e Merval sem barra no pregão. Atribuição fatorial estimada."]
+}

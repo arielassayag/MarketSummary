@@ -1,0 +1,11 @@
+{
+  "mind":"codex",
+  "headline":"Ganhos no lado vendido limitam a queda do CDP",
+  "paragraphs":[
+    "A carteira simulada encerrou 19/11/2026 com retorno de {{fact:day.ret}}, P&L de {{fact:day.pnl_usd}} e NAV de {{fact:nav}}. O retorno desde o início ficou em {{fact:itd.ret}}. DADOS SIMULADOS, com preços reais e execução hipotética.",
+    "O lado comprado contribuiu {{fact:attr.long}} e o vendido, {{fact:attr.short}}. A atribuição específica foi {{fact:attr.specific}} e a fatorial, estimada, {{fact:attr.factor}}. Liberty Latin America teve a maior contribuição individual, de {{fact:top.contrib.1.contrib}}, enquanto Millicom foi o maior detrator, com {{fact:top.detract.1.contrib}}.",
+    "Em dólar, o ILF variou {{fact:mkt.ILF.ret_1d}}. A pesquisa industrial publicada pelo Fed da Filadélfia no pregão indicou expansão menos disseminada na região, em meio à pressão de preços relatada pelas empresas.",
+    "A vol ex-ante ficou em {{fact:risk.ex_ante_vol}}, com beta {{fact:risk.beta}} e exposição líquida de {{fact:risk.net}}. O risco de squeeze no short de Minerva permaneceu alto."
+  ],
+  "risk_flags":["Risco de squeeze alto no short de Minerva.","Merval sem barra no pregão e atribuição fatorial estimada.","Divergência na paridade das linhas de SQM."]
+}

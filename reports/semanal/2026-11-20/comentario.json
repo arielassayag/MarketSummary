@@ -1,0 +1,25 @@
+{
+  "mind":"codex",
+  "resumo":"A carteira simulada registrou {{fact:semana.ret}} na semana e {{fact:itd.ret}} desde o início, com NAV de {{fact:nav}}. DADOS SIMULADOS. A carteira anterior foi mantida no fechamento semanal.",
+  "desempenho_semana":[
+    "O P&L semanal foi {{fact:semana.pnl_usd}}. Na agenda internacional, o Federal Reserve publicou a ata de outubro em 18/11/2026. A B3 fechou no feriado da Consciência Negra em 20/11/2026, conforme seu comunicado de 17/11/2026."
+  ],
+  "desempenho_desde_inicio":[
+    "Desde o início, o retorno acumulado é {{fact:itd.ret}}, com P&L de {{fact:itd.pnl_usd}}. A contribuição específica soma {{fact:itd.attr.specific}} e a fatorial, estimada, {{fact:itd.attr.factor}}."
+  ],
+  "atribuicao":[
+    "Na semana, o lado comprado contribuiu {{fact:semana.attr.lado.long}} e o vendido, {{fact:semana.attr.lado.short}}. A parcela específica respondeu por {{fact:semana.attr.specific}} e a fatorial, estimada, por {{fact:semana.attr.factor}}.",
+    "O Brasil contribuiu {{fact:semana.attr.pais.BR}}. No recorte setorial, financeiras contribuíram {{fact:semana.attr.setor.Financials}} e materiais, {{fact:semana.attr.setor.Materials}}.",
+    "Aura Minerals e Cemex contribuíram {{fact:semana.top.contrib.1.contrib}} e {{fact:semana.top.contrib.2.contrib}}. PicPay e Fortuna Mining foram os principais detratores, com {{fact:semana.top.detrator.1.contrib}} e {{fact:semana.top.detrator.2.contrib}}."
+  ],
+  "mudancas_carteira":[],
+  "risco_nova_carteira":[
+    "A carteira mantida encerrou com vol ex-ante de {{fact:risco.efetiva.vol}}, beta {{fact:risco.efetiva.beta}}, exposição bruta de {{fact:risco.efetiva.gross}} e líquida de {{fact:risco.efetiva.net}}. A fatia idiossincrática na base do limite do mandato foi {{fact:risco.efetiva.idio_kf}}."
+  ],
+  "execucao":[
+    "O prazo de montagem encerrou sem decisão gravada. A carteira anterior foi mantida, com giro de {{fact:exec.giro}} e custos de execução de {{fact:exec.custos_usd}}."
+  ],
+  "perspectivas":[
+    "O short de Minerva encerrou o período com risco de squeeze alto. O acompanhamento permanece centrado na liquidez, no risco específico e na disponibilidade de dados públicos."
+  ]
+}

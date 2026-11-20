@@ -1,0 +1,11 @@
+{
+  "mind":"codex",
+  "headline":"Lado vendido amortece a queda do CDP no pregão",
+  "paragraphs":[
+    "A carteira simulada registrou {{fact:day.ret}} em 18/11/2026, com P&L de {{fact:day.pnl_usd}} e NAV de {{fact:nav}}. O retorno desde o início ficou em {{fact:itd.ret}}. DADOS SIMULADOS, com preços reais e execução hipotética.",
+    "As posições compradas contribuíram {{fact:attr.long}} e as vendidas, {{fact:attr.short}}. A parcela específica respondeu por {{fact:attr.specific}} e a fatorial, estimada, por {{fact:attr.factor}}. O Brasil contribuiu {{fact:attr.country.BR}}. Adecoagro foi a maior contribuição individual, com {{fact:top.contrib.1.contrib}}, e PagSeguro, o maior detrator, com {{fact:top.detract.1.contrib}}.",
+    "Em dólar, o ILF variou {{fact:mkt.ILF.ret_1d}}. Nos Estados Unidos, o Federal Reserve divulgou a ata da reunião de outubro, com o debate sobre a trajetória de juros diante da inflação persistente.",
+    "A vol ex-ante ficou em {{fact:risk.ex_ante_vol}}, com beta {{fact:risk.beta}} e exposição líquida de {{fact:risk.net}}. O risco de squeeze no short de Minerva permaneceu alto."
+  ],
+  "risk_flags":["Risco de squeeze alto no short de Minerva.","Merval sem barra no pregão e atribuição fatorial estimada.","Divergências de paridade em siderurgia brasileira e lítio chileno."]
+}

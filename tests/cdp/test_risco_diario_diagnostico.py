@@ -277,3 +277,25 @@ def test_comparacao_metadados_chaves_e_outros_campos_exatos(change):
         }[change]
         current["vol"] = saved["vol"] = invalid
     assert not rd._measures_equal(current, saved)
+
+
+def test_manifesto_do_risco_preserva_formas_seladas_da_reconciliacao():
+    empty = pd.DataFrame()
+    manifest = SnapshotManifest(
+        snapshot_id="diagnostico-simulado", as_of=date(2026, 11, 16),
+        created_at=datetime(2026, 11, 16, tzinfo=UTC), universe_sha256="0" * 64,
+        files=[], is_synthetic=True, data_notice="DADOS SIMULADOS",
+    )
+    md = SimpleNamespace(
+        manifest=manifest, universe=SimpleNamespace(issuers=empty, lines=empty),
+        **dict.fromkeys(("close", "adj_close", "volume", "fx", "fundamentals",
+                         "short_interest", "lending", "benchmarks", "rates"), empty),
+    )
+    legacy = rd.market_data(md)
+    assert "price_reconciliations" not in legacy["manifest"]
+    assert legacy["manifest_sha256"] == rd.sha256_text(rd.text(legacy["manifest"]))
+    md.manifest = manifest.model_copy(update={"price_reconciliations": {"fonte": "1" * 64}})
+    reconciled = rd.market_data(md)
+    assert reconciled["manifest"]["price_reconciliations"] == {"fonte": "1" * 64}
+    assert reconciled["manifest_sha256"] != legacy["manifest_sha256"]
+    assert reconciled["tables_sha256"] == legacy["tables_sha256"]

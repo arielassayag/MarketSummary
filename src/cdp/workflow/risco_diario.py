@@ -109,9 +109,12 @@ def market_data(md) -> dict:
         "benchmarks",
         "rates",
     )
+    manifest = md.manifest.model_dump(mode="json")
+    if manifest.get("price_reconciliations") == {}:
+        del manifest["price_reconciliations"]
     result = {
-        "manifest": md.manifest.model_dump(mode="json"),
-        "manifest_sha256": sha256_text(text(md.manifest.model_dump(mode="json"))),
+        "manifest": manifest,
+        "manifest_sha256": sha256_text(text(manifest)),
         "tables_sha256": {
             n: sha256_text(
                 getattr(md, n).to_json(orient="split", date_format="iso", double_precision=15)

@@ -1,0 +1,17 @@
+{
+  "mind": "codex",
+  "headline": "Financiamento sustenta leve alta do CDP na reabertura da B3",
+  "paragraphs": [
+    "A carteira simulada encerrou 23/11/2026 com retorno de {{fact:day.ret}}, P&L de {{fact:day.pnl_usd}} e NAV de {{fact:nav}}. O retorno desde o início ficou em {{fact:itd.ret}} e, no mês, em {{fact:mtd.ret}}. DADOS SIMULADOS, com preços reais e execução hipotética.",
+    "O lado comprado contribuiu {{fact:attr.long}}, compensado pelo vendido em {{fact:attr.short}}. A contribuição das ações foi {{fact:attr.equity}}, enquanto o financiamento acrescentou {{fact:attr.financing}} e o aluguel consumiu {{fact:attr.borrow}}. PagBank foi o maior contribuidor individual, com {{fact:top.contrib.1.contrib}}, seguido por Fortuna Mining, com {{fact:top.contrib.2.contrib}}. Aura Minerals foi o maior detrator, com {{fact:top.detract.1.contrib}}.",
+    "A B3 retomou as negociações após o feriado, conforme comunicado da bolsa de 17/11/2026. O Ibovespa variou {{fact:mkt.BVSP.ret_1d}} em reais.",
+    "O ILF avançou {{fact:mkt.ILF.ret_1d}} em dólar. O Brent variou {{fact:mkt.BZ_F.ret_1d}} e o ouro, {{fact:mkt.GC_F.ret_1d}}, ambos em contratos futuros cotados em dólar. Na carteira, a contribuição atribuída ao Brasil foi {{fact:attr.country.BR}}. A parcela fatorial estimada respondeu por {{fact:attr.factor}} e a específica por {{fact:attr.specific}}, sem que essa decomposição estabeleça causalidade entre as notícias e as posições.",
+    "A vol ex-ante ficou em {{fact:risk.ex_ante_vol}}, dentro da banda de {{fact:mandate.vol_band_min}} a {{fact:mandate.vol_band_max}}, com beta {{fact:risk.beta}}, exposição bruta {{fact:risk.gross}} e líquida {{fact:risk.net}}. O VaR de um dia foi {{fact:risk.var_1d}} e o drawdown corrente, {{fact:dd.current}}. O short de Minerva permanece sob alerta de squeeze alto; a ausência de cotação do Merval e a defasagem do aluguel brasileiro limitam a leitura dos dados."
+  ],
+  "risk_flags": [
+    "Risco de squeeze alto no short de Minerva: reavaliar a exposição conforme os controles do mandato.",
+    "Merval sem barra no pregão; aluguel B3 sem publicação nova no intervalo observado.",
+    "Atribuição fatorial estimada; alerta de paridade entre ADR e ação local da CSN.",
+    "Revisões históricas de preços e volumes não foram aplicadas aos registros selados."
+  ]
+}

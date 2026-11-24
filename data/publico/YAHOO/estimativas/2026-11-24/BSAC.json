@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 30.64,
+  "high": 40.0,
+  "low": 18.9,
+  "mean": 34.59036,
+  "median": 39.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.78,
+   "currency": "USD",
+   "growth": 0.2548,
+   "high": 0.78,
+   "low": 0.78,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.6216
+  },
+  "+1y": {
+   "avg": 3.09966,
+   "currency": "USD",
+   "growth": 0.1573,
+   "high": 3.17,
+   "low": 2.99899,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 2.67828
+  },
+  "0q": {
+   "avg": 0.76547,
+   "currency": "USD",
+   "growth": 0.2758,
+   "high": 0.81,
+   "low": 0.68,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.6
+  },
+  "0y": {
+   "avg": 2.67828,
+   "currency": "USD",
+   "growth": 0.08,
+   "high": 2.68,
+   "low": 2.67657,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 2.48
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 762838568020,
+   "currency": "CLP",
+   "growth": 0.0454,
+   "high": 809516542930,
+   "low": 732024291140,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 729717000000
+  },
+  "+1y": {
+   "avg": 3284909400610,
+   "currency": "CLP",
+   "growth": 0.0738,
+   "high": 3390727315630,
+   "low": 3143395860810,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 3059155574950
+  },
+  "0q": {
+   "avg": 783000000000,
+   "currency": "CLP",
+   "growth": 0.103,
+   "high": 783000000000,
+   "low": 783000000000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 709875000000
+  },
+  "0y": {
+   "avg": 3059155574950,
+   "currency": "CLP",
+   "growth": 0.0626,
+   "high": 3059155574950,
+   "low": 3059155574950,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 2878872000000
+  }
+ },
+ "ticker": "BSAC",
+ "url": "https://finance.yahoo.com/quote/BSAC"
+}

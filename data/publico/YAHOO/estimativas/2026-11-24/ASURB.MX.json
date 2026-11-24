@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 542.42,
+  "high": 753.0,
+  "low": 468.0,
+  "mean": 603.1429,
+  "median": 615.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 11.7625,
+   "currency": "MXN",
+   "growth": 0.2544,
+   "high": 11.92,
+   "low": 11.605,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 9.3773
+  },
+  "+1y": {
+   "avg": 42.12214,
+   "currency": "MXN",
+   "growth": 0.2094,
+   "high": 51.56,
+   "low": 33.72,
+   "numberOfAnalysts": 12,
+   "yearAgoEps": 34.82816
+  },
+  "0q": {
+   "avg": 9.58744,
+   "currency": "MXN",
+   "growth": 0.059899997,
+   "high": 13.039,
+   "low": 7.65645,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 9.0457
+  },
+  "0y": {
+   "avg": 34.82816,
+   "currency": "MXN",
+   "growth": -0.0039,
+   "high": 38.98,
+   "low": 31.88451,
+   "numberOfAnalysts": 12,
+   "yearAgoEps": 34.963
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "MXN",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 49361339540,
+   "currency": "MXN",
+   "growth": 0.2323,
+   "high": 55247000000,
+   "low": 38261000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 40055126840.0
+  },
+  "0q": {
+   "avg": 13248685080,
+   "currency": "MXN",
+   "growth": 0.2078,
+   "high": 14719000000,
+   "low": 11778370170,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 10969074000.0
+  },
+  "0y": {
+   "avg": 40055126840,
+   "currency": "MXN",
+   "growth": 0.0757,
+   "high": 43576838860,
+   "low": 35079000000,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 37237431000.0
+  }
+ },
+ "ticker": "ASURB.MX",
+ "url": "https://finance.yahoo.com/quote/ASURB.MX"
+}

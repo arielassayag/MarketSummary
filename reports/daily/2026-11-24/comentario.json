@@ -1,0 +1,18 @@
+{
+  "mind": "codex",
+  "headline": "CDP recua {{fact:day.ret}}; perdas específicas predominam",
+  "paragraphs": [
+    "A carteira simulada encerrou 24/11/2026 com retorno de {{fact:day.ret}} e P&L de {{fact:day.pnl_usd}}, levando o patrimônio a {{fact:nav}}. O resultado acumulado desde o início ficou em {{fact:itd.ret}} e, no mês, em {{fact:mtd.ret}}. Ações contribuíram {{fact:attr.equity}}, enquanto o financiamento respondeu por {{fact:attr.financing}}.",
+    "A atribuição específica respondeu por {{fact:attr.specific}} e a fatorial por {{fact:attr.factor}}. Os lados comprado e vendido contribuíram, respectivamente, {{fact:attr.long}} e {{fact:attr.short}}. Liberty Latin America, com {{fact:top.detract.1.contrib}}, Fleury, com {{fact:top.detract.2.contrib}}, e PicPay, com {{fact:top.detract.3.contrib}}, foram os principais detratores. Aura, com {{fact:top.contrib.1.contrib}}, Tenda, com {{fact:top.contrib.2.contrib}}, e Alpek, com {{fact:top.contrib.3.contrib}}, compensaram parte das perdas. Por setor, serviços financeiros contribuíram {{fact:attr.sector.Financials}} e serviços de comunicação, {{fact:attr.sector.Communication_Services}}.",
+    "No mercado brasileiro, o Ibovespa recuou {{fact:mkt.BVSP.ret_1d}} em reais. O noticiário destacou a agenda fiscal e a pressão sobre Vale e Petrobras, em sessão de perda dos ganhos iniciais da bolsa (UOL, 24/11/2026). No México, o índice acionário local variou {{fact:mkt.MXX.ret_1d}} em pesos mexicanos.",
+    "Nas referências cotadas em dólares, o ETF latino-americano ILF variou {{fact:mkt.ILF.ret_1d}}, o EWZ, {{fact:mkt.EWZ.ret_1d}}, e o EWW, {{fact:mkt.EWW.ret_1d}}. O futuro de Brent avançou {{fact:mkt.BZ_F.ret_1d}}, enquanto o de ouro recuou {{fact:mkt.GC_F.ret_1d}}. O real variou {{fact:fx.BRL.ret_1d}} em dólares por unidade. Os retornos dos ETFs e das moedas preservam suas bases próprias de observação.",
+    "A vol ex-ante ficou em {{fact:risk.ex_ante_vol}}, dentro da banda de {{fact:mandate.vol_band_min}} a {{fact:mandate.vol_band_max}}, com beta de {{fact:risk.beta}}, exposição bruta de {{fact:risk.gross}} e líquida de {{fact:risk.net}}. O VaR de um dia foi de {{fact:risk.var_1d}} e o drawdown, de {{fact:dd.current}}. A carteira manteve {{fact:risk.n_long}} posições compradas e {{fact:risk.n_short}} vendidas. A posição vendida em Minerva segue sob atenção pelo risco elevado de squeeze. A decomposição fatorial é estimada e não equivale à comprovação de causas econômicas."
+  ],
+  "risk_flags": [
+    "Minerva: risco alto de squeeze na posição vendida; reavaliar a exposição na gestão de risco.",
+    "Aluguel da B3 indisponível no incremento; observar defasagem das informações de saldo e taxa.",
+    "Merval sem cotação no pregão; ausência preservada no acompanhamento de mercado.",
+    "Divergências de paridade entre ADRs e ações locais de Braskem e CSN exigem cautela na comparabilidade.",
+    "Atribuição fatorial estimada; fundamentos e universo histórico sujeitos às limitações de informação não contemporânea."
+  ]
+}

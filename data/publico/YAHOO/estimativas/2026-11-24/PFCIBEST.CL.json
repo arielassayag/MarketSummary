@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 73500.0,
+  "high": 85000.0,
+  "low": 60000.0,
+  "mean": 72500.0,
+  "median": 72500.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": null,
+   "currency": "COP",
+   "growth": null,
+   "high": null,
+   "low": null,
+   "numberOfAnalysts": null,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 8571.325,
+   "currency": "COP",
+   "growth": 0.1769,
+   "high": 9825.661,
+   "low": 7316.99,
+   "numberOfAnalysts": 2.0,
+   "yearAgoEps": 7282.8604
+  },
+  "0q": {
+   "avg": 1952.224,
+   "currency": "COP",
+   "growth": -0.13350001,
+   "high": 1952.224,
+   "low": 1952.224,
+   "numberOfAnalysts": 1.0,
+   "yearAgoEps": 2253.0
+  },
+  "0y": {
+   "avg": 7282.8604,
+   "currency": "COP",
+   "growth": 0.80050004,
+   "high": 8587.07,
+   "low": 5978.65,
+   "numberOfAnalysts": 2.0,
+   "yearAgoEps": 4045.0
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 7956541152210,
+   "currency": "COP",
+   "growth": 0.0917,
+   "high": 7956541152210,
+   "low": 7956541152210,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 7288229000000
+  },
+  "+1y": {
+   "avg": 34215431418160,
+   "currency": "COP",
+   "growth": 0.1021,
+   "high": 36139295000000,
+   "low": 31855000000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 31045531348870
+  },
+  "0q": {
+   "avg": 7992223952430,
+   "currency": "COP",
+   "growth": 0.0758,
+   "high": 8176000000000,
+   "low": 7689769714560,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 7428981000000
+  },
+  "0y": {
+   "avg": 31045531348870,
+   "currency": "COP",
+   "growth": 0.0473,
+   "high": 32716248000000,
+   "low": 29044000000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 29642280000000
+  }
+ },
+ "ticker": "PFCIBEST.CL",
+ "url": "https://finance.yahoo.com/quote/PFCIBEST.CL"
+}

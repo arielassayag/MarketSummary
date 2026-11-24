@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 9.2,
+  "high": 22.0,
+  "low": 10.5,
+  "mean": 14.9,
+  "median": 15.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.23678,
+   "currency": "BRL",
+   "growth": -0.096599996,
+   "high": 0.23678,
+   "low": 0.23678,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.2621
+  },
+  "+1y": {
+   "avg": 1.55577,
+   "currency": "BRL",
+   "growth": 0.0383,
+   "high": 1.7,
+   "low": 1.43,
+   "numberOfAnalysts": 8,
+   "yearAgoEps": 1.49838
+  },
+  "0q": {
+   "avg": 0.61853,
+   "currency": "BRL",
+   "growth": 0.1004,
+   "high": 0.61925,
+   "low": 0.61781,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.5621
+  },
+  "0y": {
+   "avg": 1.49838,
+   "currency": "BRL",
+   "growth": 0.039,
+   "high": 1.55185,
+   "low": 1.38,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 1.4422
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 3467785100,
+   "currency": "BRL",
+   "growth": 0.030299999,
+   "high": 3565389200,
+   "low": 3370181000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 3365700000
+  },
+  "+1y": {
+   "avg": 17316684280,
+   "currency": "BRL",
+   "growth": 0.0688,
+   "high": 17838000000,
+   "low": 16486405999,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 16202382980
+  },
+  "0q": {
+   "avg": 4948184890,
+   "currency": "BRL",
+   "growth": 0.0222,
+   "high": 5117205060,
+   "low": 4786154000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 4840800000
+  },
+  "0y": {
+   "avg": 16202382980,
+   "currency": "BRL",
+   "growth": 0.023599999,
+   "high": 16423378750,
+   "low": 15876285000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 15829500000
+  }
+ },
+ "ticker": "LREN3.SA",
+ "url": "https://finance.yahoo.com/quote/LREN3.SA"
+}

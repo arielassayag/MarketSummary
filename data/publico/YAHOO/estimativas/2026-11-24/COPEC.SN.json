@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 6400.0,
+  "high": 9648.512,
+  "low": 5808.524,
+  "mean": 7836.519,
+  "median": 7746.075
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.15,
+   "currency": "USD",
+   "growth": -0.2829,
+   "high": 0.16,
+   "low": 0.14,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.20919
+  },
+  "+1y": {
+   "avg": 0.62093,
+   "currency": "USD",
+   "growth": -0.35990003,
+   "high": 0.859,
+   "low": 0.39,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.97
+  },
+  "0q": {
+   "avg": 0.18,
+   "currency": "USD",
+   "growth": -0.0324,
+   "high": 0.18,
+   "low": 0.18,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.18602
+  },
+  "0y": {
+   "avg": 0.97,
+   "currency": "USD",
+   "growth": 0.4379,
+   "high": 1.03,
+   "low": 0.91,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.67458
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 9253544500,
+   "currency": "USD",
+   "growth": 0.17860001,
+   "high": 9386456000,
+   "low": 9120632990,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 7851455000
+  },
+  "+1y": {
+   "avg": 32985716410,
+   "currency": "USD",
+   "growth": -0.0651,
+   "high": 37659713000,
+   "low": 28635000000,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 35283924360
+  },
+  "0q": {
+   "avg": 9328032500,
+   "currency": "USD",
+   "growth": 0.21129999,
+   "high": 10187879240,
+   "low": 7895201260,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 7701000000
+  },
+  "0y": {
+   "avg": 35283924360,
+   "currency": "USD",
+   "growth": 0.19049999,
+   "high": 36196017000,
+   "low": 34235000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 29637952000
+  }
+ },
+ "ticker": "COPEC.SN",
+ "url": "https://finance.yahoo.com/quote/COPEC.SN"
+}

@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 944.0,
+  "high": 1769.2037,
+  "low": 950.18524,
+  "mean": 1229.6842,
+  "median": 1182.5675
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.00612,
+   "currency": "USD",
+   "growth": null,
+   "high": 0.00612,
+   "low": 0.00612,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 0.04456,
+   "currency": "USD",
+   "growth": 0.48529997,
+   "high": 0.09614,
+   "low": 0.02,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 0.03
+  },
+  "0q": {
+   "avg": 0.00523,
+   "currency": "USD",
+   "growth": -0.649,
+   "high": 0.00523,
+   "low": 0.00523,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.0149
+  },
+  "0y": {
+   "avg": 0.03,
+   "currency": "USD",
+   "growth": -0.6283,
+   "high": 0.03,
+   "low": 0.03,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.0807
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1882799780,
+   "currency": "USD",
+   "growth": 0.036199998,
+   "high": 1933859560,
+   "low": 1831740000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 1816957000
+  },
+  "+1y": {
+   "avg": 7926492960,
+   "currency": "USD",
+   "growth": 0.042,
+   "high": 8276900159,
+   "low": 7274000000,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 7607192570
+  },
+  "0q": {
+   "avg": 2007723110,
+   "currency": "USD",
+   "growth": 0.062,
+   "high": 2058306000,
+   "low": 1957140220,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 1890584000
+  },
+  "0y": {
+   "avg": 7607192570,
+   "currency": "USD",
+   "growth": 0.0177,
+   "high": 7644000000,
+   "low": 7579000000,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 7475096000
+  }
+ },
+ "ticker": "CMPC.SN",
+ "url": "https://finance.yahoo.com/quote/CMPC.SN"
+}

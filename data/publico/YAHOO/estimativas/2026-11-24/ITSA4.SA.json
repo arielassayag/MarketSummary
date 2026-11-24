@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 12.93,
+  "high": 18.5,
+  "low": 16.0,
+  "mean": 17.1,
+  "median": 16.9
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.42,
+   "currency": "BRL",
+   "growth": 0.048499998,
+   "high": 0.42,
+   "low": 0.42,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.40058
+  },
+  "+1y": {
+   "avg": 1.855,
+   "currency": "BRL",
+   "growth": 0.0692,
+   "high": 1.91,
+   "low": 1.8,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 1.735
+  },
+  "0q": {
+   "avg": 0.44,
+   "currency": "BRL",
+   "growth": 0.109,
+   "high": 0.44,
+   "low": 0.44,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.39674
+  },
+  "0y": {
+   "avg": 1.735,
+   "currency": "BRL",
+   "growth": 0.17559999,
+   "high": 1.77,
+   "low": 1.7,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 1.47588
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 21882000000,
+   "currency": "BRL",
+   "growth": 0.0857,
+   "high": 21882000000,
+   "low": 21882000000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 20155000000.0
+  },
+  "0q": {
+   "avg": 0,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "0y": {
+   "avg": 20155000000,
+   "currency": "BRL",
+   "growth": 0.1456,
+   "high": 20155000000,
+   "low": 20155000000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 17594000000.0
+  }
+ },
+ "ticker": "ITSA4.SA",
+ "url": "https://finance.yahoo.com/quote/ITSA4.SA"
+}

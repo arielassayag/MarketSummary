@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 21.88,
+  "high": 30.0,
+  "low": 21.5,
+  "mean": 24.35714,
+  "median": 23.75
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.59,
+   "currency": "BRL",
+   "growth": 0.0679,
+   "high": 0.0,
+   "low": 0.59,
+   "numberOfAnalysts": 0,
+   "yearAgoEps": 0.5525
+  },
+  "+1y": {
+   "avg": 2.12109,
+   "currency": "BRL",
+   "growth": 0.1396,
+   "high": 2.44,
+   "low": 1.91498,
+   "numberOfAnalysts": 11,
+   "yearAgoEps": 1.86126
+  },
+  "0q": {
+   "avg": 0.56468,
+   "currency": "BRL",
+   "growth": 0.0084,
+   "high": 0.59,
+   "low": 0.53704,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 0.56
+  },
+  "0y": {
+   "avg": 1.86126,
+   "currency": "BRL",
+   "growth": 0.0398,
+   "high": 2.09,
+   "low": 1.78691,
+   "numberOfAnalysts": 10,
+   "yearAgoEps": 1.79
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 7127580200,
+   "currency": "BRL",
+   "growth": 0.047199998,
+   "high": 7150104390,
+   "low": 7105056000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 6806000000
+  },
+  "+1y": {
+   "avg": 29304405710,
+   "currency": "BRL",
+   "growth": 0.0305,
+   "high": 29627000000,
+   "low": 28794000000,
+   "numberOfAnalysts": 15,
+   "yearAgoRevenue": 28437534720
+  },
+  "0q": {
+   "avg": 7273012900,
+   "currency": "BRL",
+   "growth": 0.051,
+   "high": 7367427410,
+   "low": 7214687000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 6920000000
+  },
+  "0y": {
+   "avg": 28437534720,
+   "currency": "BRL",
+   "growth": 0.0681,
+   "high": 31740054440,
+   "low": 27827000000,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 26625000000
+  }
+ },
+ "ticker": "TIMS3.SA",
+ "url": "https://finance.yahoo.com/quote/TIMS3.SA"
+}

@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 3.81,
+  "high": 12.4,
+  "low": 5.0,
+  "mean": 7.77267,
+  "median": 7.6
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.19433,
+   "currency": "USD",
+   "growth": 0.0808,
+   "high": 0.2,
+   "low": 0.187,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.1798
+  },
+  "+1y": {
+   "avg": 0.85311,
+   "currency": "USD",
+   "growth": 0.22950001,
+   "high": 0.993,
+   "low": 0.72,
+   "numberOfAnalysts": 9,
+   "yearAgoEps": 0.69389
+  },
+  "0q": {
+   "avg": 0.18067,
+   "currency": "USD",
+   "growth": 0.105299994,
+   "high": 0.187,
+   "low": 0.173,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.16346
+  },
+  "0y": {
+   "avg": 0.69389,
+   "currency": "USD",
+   "growth": 0.219,
+   "high": 0.775,
+   "low": 0.651,
+   "numberOfAnalysts": 9,
+   "yearAgoEps": 0.56922
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 2957946000,
+   "currency": "BRL",
+   "growth": 0.21180001,
+   "high": 2957946000,
+   "low": 2957946000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 2440986000
+  },
+  "+1y": {
+   "avg": 12732622700,
+   "currency": "BRL",
+   "growth": 0.19,
+   "high": 13802900000,
+   "low": 11648000000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 10700009330
+  },
+  "0q": {
+   "avg": 2902555500,
+   "currency": "BRL",
+   "growth": 0.21049999,
+   "high": 2913000000,
+   "low": 2892111000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 2397891000
+  },
+  "0y": {
+   "avg": 10700009330,
+   "currency": "BRL",
+   "growth": 0.2737,
+   "high": 11118000000,
+   "low": 10213000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 8400938000
+  }
+ },
+ "ticker": "INTR",
+ "url": "https://finance.yahoo.com/quote/INTR"
+}

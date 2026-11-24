@@ -1,0 +1,231 @@
+{
+ "as_of": "2026-11-24",
+ "distribuicao_ratings": {
+  "Compra": 33,
+  "Em revisão": 33,
+  "Neutro": 126,
+  "Sem preço-alvo": 4,
+  "Venda": 37
+ },
+ "em_maturacao": true,
+ "erro_abs_mediano": null,
+ "exibir_ranking": false,
+ "exibir_taxas": false,
+ "ic_resumo": {
+  "dp": 0.051108,
+  "icir_anual": -0.400164,
+  "media": -0.00283612,
+  "p_ic_positivo": 0.43389,
+  "semanas": 9,
+  "t_newey_west": -0.176577
+ },
+ "ic_semanal": [
+  {
+   "ate": "2026-10-09",
+   "data": "2026-10-07",
+   "ic": 0.0772133,
+   "n": 199
+  },
+  {
+   "ate": "2026-10-14",
+   "data": "2026-10-09",
+   "ic": -0.00900226,
+   "n": 193
+  },
+  {
+   "ate": "2026-10-16",
+   "data": "2026-10-14",
+   "ic": 0.0465253,
+   "n": 192
+  },
+  {
+   "ate": "2026-10-23",
+   "data": "2026-10-16",
+   "ic": 0.0566556,
+   "n": 190
+  },
+  {
+   "ate": "2026-10-28",
+   "data": "2026-10-23",
+   "ic": -0.0298332,
+   "n": 194
+  },
+  {
+   "ate": "2026-11-02",
+   "data": "2026-10-28",
+   "ic": -0.0723563,
+   "n": 190
+  },
+  {
+   "ate": "2026-11-06",
+   "data": "2026-11-02",
+   "ic": -0.0444907,
+   "n": 192
+  },
+  {
+   "ate": "2026-11-12",
+   "data": "2026-11-06",
+   "ic": -0.0347216,
+   "n": 189
+  },
+  {
+   "ate": "2026-11-20",
+   "data": "2026-11-12",
+   "ic": -0.0155153,
+   "n": 196
+  }
+ ],
+ "metodo": "amostragem semanal dos preços de referência registrados no livro, reescalados por desdobramentos; IC entre snapshots completos consecutivos contra o retorno total em dólar menos a média do grupo país × setor",
+ "n_previsoes": 2047,
+ "n_vencidas": 0,
+ "obsoletos": 0,
+ "primeiro_vencimento": "2027-10-07",
+ "referencias_literatura": {
+  "erro_abs": [
+   0.36,
+   0.45
+  ],
+  "tpmet12": [
+   0.24,
+   0.38
+  ],
+  "tpmetany": [
+   0.45,
+   0.64
+  ]
+ },
+ "tempo_ate_alvo_km": [
+  {
+   "dias": 1.0,
+   "sobrevivencia": 0.998918
+  },
+  {
+   "dias": 2.0,
+   "sobrevivencia": 0.991888
+  },
+  {
+   "dias": 3.0,
+   "sobrevivencia": 0.991346
+  },
+  {
+   "dias": 4.0,
+   "sobrevivencia": 0.988641
+  },
+  {
+   "dias": 5.0,
+   "sobrevivencia": 0.966357
+  },
+  {
+   "dias": 6.0,
+   "sobrevivencia": 0.962552
+  },
+  {
+   "dias": 7.0,
+   "sobrevivencia": 0.952769
+  },
+  {
+   "dias": 8.0,
+   "sobrevivencia": 0.947227
+  },
+  {
+   "dias": 9.0,
+   "sobrevivencia": 0.9435
+  },
+  {
+   "dias": 10.0,
+   "sobrevivencia": 0.93791
+  },
+  {
+   "dias": 11.0,
+   "sobrevivencia": 0.937289
+  },
+  {
+   "dias": 12.0,
+   "sobrevivencia": 0.922381
+  },
+  {
+   "dias": 13.0,
+   "sobrevivencia": 0.92176
+  },
+  {
+   "dias": 14.0,
+   "sobrevivencia": 0.896898
+  },
+  {
+   "dias": 15.0,
+   "sobrevivencia": 0.896191
+  },
+  {
+   "dias": 16.0,
+   "sobrevivencia": 0.893364
+  },
+  {
+   "dias": 17.0,
+   "sobrevivencia": 0.88977
+  },
+  {
+   "dias": 18.0,
+   "sobrevivencia": 0.883978
+  },
+  {
+   "dias": 19.0,
+   "sobrevivencia": 0.861139
+  },
+  {
+   "dias": 20.0,
+   "sobrevivencia": 0.860293
+  },
+  {
+   "dias": 21.0,
+   "sobrevivencia": 0.83407
+  },
+  {
+   "dias": 23.0,
+   "sobrevivencia": 0.830686
+  },
+  {
+   "dias": 24.0,
+   "sobrevivencia": 0.826558
+  },
+  {
+   "dias": 26.0,
+   "sobrevivencia": 0.82128
+  },
+  {
+   "dias": 28.0,
+   "sobrevivencia": 0.817058
+  },
+  {
+   "dias": 30.0,
+   "sobrevivencia": 0.815738
+  },
+  {
+   "dias": 35.0,
+   "sobrevivencia": 0.811693
+  },
+  {
+   "dias": 37.0,
+   "sobrevivencia": 0.806305
+  },
+  {
+   "dias": 42.0,
+   "sobrevivencia": 0.803591
+  },
+  {
+   "dias": 44.0,
+   "sobrevivencia": 0.782161
+  }
+ ],
+ "tpmet12": {
+  "ic90": null,
+  "k": 0,
+  "n": 0,
+  "taxa": null
+ },
+ "tpmetany": {
+  "ic90": null,
+  "k": 0,
+  "n": 0,
+  "taxa": null
+ }
+}

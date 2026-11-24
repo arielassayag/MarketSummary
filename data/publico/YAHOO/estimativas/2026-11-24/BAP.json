@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 341.67,
+  "high": 500.0,
+  "low": 219.0,
+  "mean": 441.0,
+  "median": 455.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 7.37,
+   "currency": "USD",
+   "growth": 0.24299999,
+   "high": 7.37,
+   "low": 7.37,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 5.92933
+  },
+  "+1y": {
+   "avg": 34.0141,
+   "currency": "USD",
+   "growth": 0.1576,
+   "high": 37.889,
+   "low": 32.01094,
+   "numberOfAnalysts": 9,
+   "yearAgoEps": 29.38315
+  },
+  "0q": {
+   "avg": 7.3425,
+   "currency": "USD",
+   "growth": 0.2383,
+   "high": 7.914,
+   "low": 6.975,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 5.92933
+  },
+  "0y": {
+   "avg": 29.38315,
+   "currency": "USD",
+   "growth": 0.1361,
+   "high": 30.252,
+   "low": 28.477,
+   "numberOfAnalysts": 9,
+   "yearAgoEps": 25.86258
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "USD",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 8595969450,
+   "currency": "USD",
+   "growth": 0.1165,
+   "high": 8749435000,
+   "low": 8179756000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 7698774990.0
+  },
+  "0q": {
+   "avg": 2041699000,
+   "currency": "USD",
+   "growth": 0.1494,
+   "high": 2041699000,
+   "low": 2041699000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 1776297300.0
+  },
+  "0y": {
+   "avg": 7698774990,
+   "currency": "USD",
+   "growth": 0.127,
+   "high": 7786146000,
+   "low": 7593000000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 6831225200.0
+  }
+ },
+ "ticker": "BAP",
+ "url": "https://finance.yahoo.com/quote/BAP"
+}

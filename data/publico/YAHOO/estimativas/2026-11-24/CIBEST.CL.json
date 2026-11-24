@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 80900.0,
+  "high": 100000.0,
+  "low": 30604.0,
+  "mean": 74720.11,
+  "median": 75000.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 2655.81,
+   "currency": "COP",
+   "growth": 0.59319997,
+   "high": 2655.81,
+   "low": 2655.81,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 1667.0
+  },
+  "+1y": {
+   "avg": 10272.609,
+   "currency": "COP",
+   "growth": 0.1286,
+   "high": 10814.76,
+   "low": 9802.659,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 9101.898
+  },
+  "0q": {
+   "avg": 2410.7856,
+   "currency": "COP",
+   "growth": 0.44619998,
+   "high": 2571.56,
+   "low": 2303.0,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 1667.0
+  },
+  "0y": {
+   "avg": 9101.898,
+   "currency": "COP",
+   "growth": 0.2032,
+   "high": 9629.49,
+   "low": 8186.0,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 7565.0
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 7956541152210,
+   "currency": "COP",
+   "growth": 0.0917,
+   "high": 7956541152210,
+   "low": 7956541152210,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 7288229000000
+  },
+  "+1y": {
+   "avg": 34215431418160,
+   "currency": "COP",
+   "growth": 0.1021,
+   "high": 36139295000000,
+   "low": 31855000000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 31045531348870
+  },
+  "0q": {
+   "avg": 7992223952430,
+   "currency": "COP",
+   "growth": 0.0758,
+   "high": 8176000000000,
+   "low": 7689769714560,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 7428981000000
+  },
+  "0y": {
+   "avg": 31045531348870,
+   "currency": "COP",
+   "growth": 0.0473,
+   "high": 32716248000000,
+   "low": 29044000000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 29642280000000
+  }
+ },
+ "ticker": "CIBEST.CL",
+ "url": "https://finance.yahoo.com/quote/CIBEST.CL"
+}

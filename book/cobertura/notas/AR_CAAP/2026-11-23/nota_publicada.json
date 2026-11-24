@@ -1,0 +1,317 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-20",
+    "manifest_sha256": "3c77d9ef82f53954f1dd1cd9c6a9072517414aba671fa991be7def8e36331518",
+    "modelo_as_of": "2026-11-20"
+  },
+  "conviccao": 1,
+  "data": "2026-11-23",
+  "hashes": {
+    "contexto": "85b6ab4261052568e3ade211bfdd9825495b05396b4d81a07728ec5326d5849f",
+    "factbook": "ee475fba30f7065f89bd327015f0c5c69ebb70c697565cda55a5b1afc721fb21",
+    "nota_json": "03857f191415724f2d4e922ae86d5b58b2067921f0db6434cb2f81df9760d70b"
+  },
+  "is_synthetic": false,
+  "issuer_id": "AR_CAAP",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-11-24T01:41:16.591603+00:00",
+  "rendered": {
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Execução dos compromissos contratuais e atualização de resultados; sem nova data confirmada nesta leitura.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "outro"
+      }
+    ],
+    "cenarios": {
+      "base": "A tese depende de remuneração contratual e transferência de caixa. Alvo e retorno esperado permanecem em revisão.",
+      "otimista": "Receitas comerciais e produtividade remuneram investimento durante os direitos remanescentes. Cenário quantitativo indisponível.",
+      "pessimista": "Investimento e custos absorvem a monetização de tráfego, reduzindo o caixa residual. Cenário quantitativo indisponível."
+    },
+    "comentario_valuation": "Preço de referência de US$ 22,73, P/L à frente de 12,8x e confiança C. Alvo médio do consenso público de US$ 32,40 não comprova valor econômico nem o que está precificado. Alvo, retorno, cenários e alpha da casa permanecem em revisão. O WACC de 14,94% não resolve duração contratual, reinvestimento e direitos de minoritários. Os pares industriais possuem exposições distintas; não se infere vantagem relativa de múltiplos consolidados.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese enfraquece se o crescimento de tráfego não cobrir custos e capital obrigatório, ou se o caixa não puder chegar à holding.",
+        "titulo": "Condição de invalidação"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-23",
+    "dados_simulados": false,
+    "data": "2026-11-23",
+    "ficha": [
+      {
+        "fato": "val.AR_CAAP.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 22,73"
+      },
+      {
+        "fato": "val.AR_CAAP.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_CAAP.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_CAAP.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_CAAP.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.AR_CAAP.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_CAAP.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_CAAP.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_CAAP.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_CAAP.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "17,11%"
+      },
+      {
+        "fato": "val.AR_CAAP.wacc",
+        "rotulo": "WACC",
+        "valor": "14,94%"
+      },
+      {
+        "fato": "val.AR_CAAP.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.AR_CAAP.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_CAAP.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_CAAP.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "12,8x"
+      },
+      {
+        "fato": "val.AR_CAAP.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,1x"
+      },
+      {
+        "fato": "val.AR_CAAP.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 32,40"
+      },
+      {
+        "fato": "val.AR_CAAP.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-23",
+        "id": "F1",
+        "instituicao": "SEC / Corporación América Airports",
+        "publicado_em": "2026-11-17",
+        "tipo": "Regulador",
+        "titulo": "Resultado trimestral, concessões e reconciliações",
+        "url": "https://www.sec.gov/Archives/edgar/data/1717393/000110465926129103/tm2630072d1_ex99-1.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Nova avaliação contratual e incorporação dos compromissos de investimento.",
+      "Margens e caixa deixam de sustentar remuneração do capital.",
+      "Mudança nas condições de concessão ou remessa de recursos."
+    ],
+    "governanca": "O release informa dividendo pago, distinguindo-o da aprovação citada na nota anterior; isso não comprova recebimento por investidor específico. Fonte: companhia, 17/11/2026. Conciliação de caixa restrito, minoritários e remessas segue necessária.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar mix, margem, manutenção, expansão contratual e remessas para testar o retorno pertencente ao acionista.",
+        "titulo": "Caixa por concessão"
+      }
+    ],
+    "issuer_id": "AR_CAAP",
+    "lacunas_de_dados": [
+      "Alvo, retorno, cenários, probabilidades e alpha da casa permanecem em revisão.",
+      "Contratos e compromissos por concessão não reconciliados integralmente.",
+      "Caixa restrito, minoritários e remessas por subsidiária requerem conciliação.",
+      "Guidance financeiro agregado formal não identificado no release consultado.",
+      "Demonstrações e fluxo de caixa ainda não reconciliados integralmente com o modelo."
+    ],
+    "modelo_de_cobertura": "2026-11-20",
+    "negocio": "A companhia desenvolve e opera concessões aeroportuárias. A tese depende de receitas aeronáuticas e comerciais suficientes para remunerar manutenção, expansão e financiamento durante os direitos contratuais.",
+    "nome": "Corporación América Airports",
+    "o_que_mudou": "Desde a iniciação de 12/10/2026, foi recebido o resultado divulgado em 17/11/2026. A data primária difere da data de resultado sugerida pela fila. O dividendo consta como pago no comunicado. A avaliação quantitativa continua em revisão.",
+    "pais": "Argentina",
+    "pares": [
+      {
+        "issuer_id": "BR_EMBRAER",
+        "nome": "Embraer"
+      },
+      {
+        "issuer_id": "BR_GPS",
+        "nome": "GPS Participações"
+      },
+      {
+        "issuer_id": "BR_LOCALIZA",
+        "nome": "Localiza"
+      },
+      {
+        "issuer_id": "BR_MARCOPOLO",
+        "nome": "Marcopolo"
+      },
+      {
+        "issuer_id": "BR_MILLS",
+        "nome": "Mills"
+      },
+      {
+        "issuer_id": "BR_RANDON",
+        "nome": "Randoncorp"
+      },
+      {
+        "issuer_id": "BR_RUMO",
+        "nome": "Rumo"
+      },
+      {
+        "issuer_id": "CL_EISA",
+        "nome": "Echeverría Izquierdo"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O reequilíbrio argentino estende o prazo contratual, condicionado a investimentos diretos comprometidos. Fonte: companhia, 17/11/2026, na SEC. A duração adicional exige testar o retorno após o capital exigido.",
+        "titulo": "Direito econômico e obrigação"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.AR_CAAP.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "US$ 22,73"
+          },
+          {
+            "fato": "val.AR_CAAP.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "17,11%"
+          },
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O preço de referência é US$ 22,73 e o ke é 17,11%. O modelo mantém alvo e retorno em revisão. A tese requer fluxo de caixa por concessão e participação econômica, sem perpetuidade presumida.",
+        "titulo": "Avaliação condicionada"
+      }
+    ],
+    "publicada_em": "2026-11-24T01:41:16.591603+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Separar construção, efeitos inflacionários e operações aeroportuárias na avaliação da recorrência. Fonte: companhia, 17/11/2026.",
+        "titulo": "Perímetros de comparação"
+      }
+    ],
+    "resumo": "A hipótese segue condicionada à conversão de tráfego em caixa transferível ao acionista, após obrigações de concessão. A visão qualitativa permanece neutra, com baixa convicção. Alvo, cenários e retorno esperado permanecem em revisão; o consenso público não substitui uma avaliação contratual.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "A receita de combustível tem margem estruturalmente inferior à aeroportuária. Crescimento consolidado pode não indicar melhora de rentabilidade. Fonte: companhia, 17/11/2026."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Obrigações de expansão, minoritários e restrições de remessa podem reduzir caixa disponível ao acionista."
+      }
+    ],
+    "setor": "Industriais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Corporación América Airports: prazo contratual exige retorno após investimento",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O release de 17/11/2026 apresenta receita sem construção crescente e pressão de rentabilidade na Argentina. O lucro foi favorecido pelo resultado financeiro. A extensão contratual depende de investimento. Não foi identificada orientação financeira anual agregada formal no release; sem_guidance registra esse limite e não significa retirada de orientação anterior.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A receita sem construção avançou, mas o EBITDA ajustado nessa base recuou. Fonte: companhia, 17/11/2026. O teste é converter expansão comercial em caixa após reinvestimento.",
+        "vetor": "Mix e margem"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

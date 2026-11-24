@@ -1,0 +1,337 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-20",
+    "manifest_sha256": "3c77d9ef82f53954f1dd1cd9c6a9072517414aba671fa991be7def8e36331518",
+    "modelo_as_of": "2026-11-20"
+  },
+  "conviccao": 1,
+  "data": "2026-11-23",
+  "hashes": {
+    "contexto": "413d92dc872915a6ca867b2037e32c4412be66133b0bd1174c3701b1d7f588d8",
+    "factbook": "742d82e86e3d2602c9cbe83ac03a1425faee7ee9b8399eea7df4768c9392c29d",
+    "nota_json": "2d4b932e3e525ce60a52d21c6fc8b5198ee71ff22a475b344edc0027d86b031d"
+  },
+  "is_synthetic": false,
+  "issuer_id": "AR_GLOBANT",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-11-24T01:39:28.119603+00:00",
+  "rendered": {
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Próxima divulgação e comprovação da conversão comercial em caixa; data não confirmada em calendário primário nesta leitura.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Transição exige comprovação de rentabilidade e caixa. Alvo base de US$ 23,85.",
+      "otimista": "A conversão comercial sustenta retorno após reinvestimento. Alvo otimista do modelo: US$ 29,81; probabilidade implícita indisponível.",
+      "pessimista": "Pressão comercial compromete o retorno dos serviços. Alvo pessimista de US$ 18,12; probabilidade implícita indisponível."
+    },
+    "comentario_valuation": "O preço de referência é US$ 39,98, e o potencial ao alvo é -40,34%. P/L à frente de 6,5x não elimina risco de revisão de lucro. O consenso público tem alvo de US$ 52,10; sua diferença para a casa, -54,21%, não comprova percepção de mercado. O modelo registra rating Neutro, confiança C e dispersão 39,99%. Os pares possuem modelos de negócio distintos; a visão qualitativa não altera os preços calculados.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese de retorno enfraquece se a transição consumir capital sem compensação em margem e caixa. A avaliação requer comprovar a economia dos contratos, sem extrapolar indicadores anualizados.",
+        "titulo": "Condição de invalidação"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-23",
+    "dados_simulados": false,
+    "data": "2026-11-23",
+    "ficha": [
+      {
+        "fato": "val.AR_GLOBANT.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 39,98"
+      },
+      {
+        "fato": "val.AR_GLOBANT.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 23,85"
+      },
+      {
+        "fato": "val.AR_GLOBANT.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-40,34%"
+      },
+      {
+        "fato": "val.AR_GLOBANT.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.AR_GLOBANT.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.AR_GLOBANT.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 29,81"
+      },
+      {
+        "fato": "val.AR_GLOBANT.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.AR_GLOBANT.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 18,12"
+      },
+      {
+        "fato": "val.AR_GLOBANT.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.AR_GLOBANT.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "18,83%"
+      },
+      {
+        "fato": "val.AR_GLOBANT.wacc",
+        "rotulo": "WACC",
+        "valor": "16,24%"
+      },
+      {
+        "fato": "val.AR_GLOBANT.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.AR_GLOBANT.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-40,34%"
+      },
+      {
+        "fato": "val.AR_GLOBANT.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-37,99%"
+      },
+      {
+        "fato": "val.AR_GLOBANT.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "6,5x"
+      },
+      {
+        "fato": "val.AR_GLOBANT.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,8x"
+      },
+      {
+        "fato": "val.AR_GLOBANT.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 52,10"
+      },
+      {
+        "fato": "val.AR_GLOBANT.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-54,21%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-23",
+        "id": "F1",
+        "instituicao": "Globant",
+        "publicado_em": "2026-11-19",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado trimestral e orientação anual",
+        "url": "https://investors.globant.com/2026-11-19-Globant-Reports-2026-Third-Quarter-Financial-Results"
+      },
+      {
+        "consultado_em": "2026-11-23",
+        "id": "F2",
+        "instituicao": "Globant",
+        "publicado_em": "2026-08-13",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultado anterior e orientação comparável",
+        "url": "https://investors.globant.com/2026-08-13-Globant-Reports-2026-Second-Quarter-Financial-Results"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Deterioração persistente de margens e conversão em caixa.",
+      "Evidência contratual de retorno e retenção dos produtos novos.",
+      "Revisão das premissas do modelo após documentos completos."
+    ],
+    "governanca": "A recompra autorizada ampliada difere da recompra realizada. O alongamento da dívida não elimina o custo de financiamento. Fonte: Globant, 19/11/2026. A avaliação de direitos, partes relacionadas e controles exige leitura complementar dos documentos regulatórios.",
+    "guidance": "reduzido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar retenção, remuneração, custo de entrega e conversão em caixa para testar a hipótese comercial.",
+        "titulo": "Retorno econômico"
+      }
+    ],
+    "issuer_id": "AR_GLOBANT",
+    "lacunas_de_dados": [
+      "Demonstrações interinas completas e notas ainda não reconciliadas integralmente com o modelo.",
+      "Economia contratual, retenção e receita reconhecida dos produtos novos não conciliadas.",
+      "Medidas anualizadas de produtos entre releases não conciliadas por perímetro.",
+      "Probabilidades implícitas dos cenários indisponíveis.",
+      "Controle, partes relacionadas e diluição requerem diligência complementar."
+    ],
+    "modelo_de_cobertura": "2026-11-20",
+    "negocio": "A Globant presta serviços de transformação digital. A hipótese de investimento depende da capacidade de preservar remuneração, retenção e margem na transição comercial. Atribuir valor recorrente aos novos produtos exige verificar contratos e receita reconhecida.",
+    "nome": "Globant",
+    "o_que_mudou": "Desde a iniciação de 11/10/2026, foi recebido o resultado de 3T26 e confrontada a orientação com o release de 13/08/2026. O intervalo anual foi estreitado, sem revisão da faixa de margem ajustada. A tese segue condicionada ao retorno econômico da transição.",
+    "pais": "Argentina",
+    "pares": [
+      {
+        "issuer_id": "BR_BEMOBI",
+        "nome": "Bemobi"
+      },
+      {
+        "issuer_id": "BR_INTELBRAS",
+        "nome": "Intelbras"
+      },
+      {
+        "issuer_id": "BR_LOCAWEB",
+        "nome": "Locaweb (LWSA)"
+      },
+      {
+        "issuer_id": "BR_VTEX",
+        "nome": "VTEX"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A receita trimestral recuou na comparação anual e a margem ajustada melhorou sequencialmente. A retomada da rentabilidade precisa alcançar o resultado contábil. Fonte: Globant, 19/11/2026.",
+        "titulo": "Transição a comprovar"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.AR_GLOBANT.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "US$ 23,85"
+          },
+          {
+            "fato": "val.AR_GLOBANT.preco",
+            "nome": "Preço de referência da cobertura",
+            "valor": "US$ 39,98"
+          },
+          {
+            "fato": "val.AR_GLOBANT.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "-37,99%"
+          },
+          {
+            "fato": "val.AR_GLOBANT.confianca_codigo",
+            "nome": "Confiança do modelo",
+            "valor": "C"
+          }
+        ],
+        "texto": "O alvo é US$ 23,85, frente a US$ 39,98. O alpha relativo de -37,99% deve ser lido com confiança C e limitações de comparabilidade dos pares.",
+        "titulo": "Disciplina de avaliação"
+      }
+    ],
+    "publicada_em": "2026-11-24T01:39:28.119603+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O release exclui encargos das métricas ajustadas e não apresenta reconciliação quantitativa da orientação futura com IFRS. Fonte: Globant, 19/11/2026.",
+        "titulo": "Resultado contábil e ajustado"
+      }
+    ],
+    "resumo": "O resultado de 3T26 mantém a necessidade de distinguir expansão dos produtos de inteligência artificial e retorno econômico dos serviços. A visão qualitativa permanece neutra, com baixa convicção. O modelo indica alvo de US$ 23,85 e retorno esperado de -40,34%, com confiança C; a divergência para o consenso exige diligência adicional.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Margens ajustadas podem superestimar a geração econômica se encargos de reorganização e remuneração em ações persistirem."
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.AR_GLOBANT.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-54,21%"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "A diferença frente ao consenso de -54,21% pode refletir premissas inadequadas do modelo ou expectativas distintas; não demonstra o que está precificado."
+      }
+    ],
+    "setor": "Tecnologia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Globant: transição comercial ainda exige comprovação de retorno",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O release de 19/11/2026 apresenta receita e margem operacional contábil inferiores às do 3T25. A orientação anual estreitou os intervalos de receita e lucro ajustado por ação, com teto menor e piso maior, mantendo a margem ajustada. A classificação reduzido refere-se ao teto desses intervalos, não a todos os componentes. A medida anualizada dos produtos novos não equivale a receita contábil recorrente.",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A tese depende de remuneração suficiente após custos de entrega e reinvestimento. Produtividade para o cliente não assegura retorno ao acionista.",
+        "vetor": "Conversão econômica"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.AR_GLOBANT.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "18,83%"
+          },
+          {
+            "fato": "val.AR_GLOBANT.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "39,99%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O ke de 18,83% e a dispersão entre métodos de 39,99% limitam a precisão econômica do alvo.",
+        "vetor": "Custo de capital"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

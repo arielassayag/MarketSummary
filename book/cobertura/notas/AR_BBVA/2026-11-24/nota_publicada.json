@@ -1,0 +1,401 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-24",
+    "manifest_sha256": "de6e9884ef144a961c8c4fd750965208cd1d6928e35afc7853fe4daea5176f7b",
+    "modelo_as_of": "2026-11-24"
+  },
+  "conviccao": 1,
+  "data": "2026-11-24",
+  "hashes": {
+    "contexto": "f33f2b7e24a02a85397998c90e13a81c18778f7ed5e628ea60dca030e744e7d2",
+    "factbook": "09595684d219d33c250ab385a4c7d93c3907424412513fd65e46a32d0e99486a",
+    "nota_json": "41bea3f981ba9a1db3d446ea5ab79f92294701a7e1c69fc31e2e4d380a10e455"
+  },
+  "is_synthetic": false,
+  "issuer_id": "AR_BBVA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-24",
+  "published_at": "2026-11-25T01:41:20.869938+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O release registra capital acima do mínimo, com redução do índice frente ao trimestre anterior. A folga deve ser confrontada com expansão de ativos e perdas; não constitui promessa de dividendo.",
+        "titulo": "Capital local precede remuneração"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-25",
+        "descricao": "Teleconferência do resultado, prevista pelo RI para 25/11/2026; poderá esclarecer margem, crédito e perspectivas. O evento ainda não ocorreu na data desta nota.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Normalização gradual, sujeita a inflação e safras de crédito. Caso-base calculado em US$ 10,46; não atribuímos probabilidade adicional à narrativa.",
+      "otimista": "Margem após perdas recupera de forma recorrente, com capital suficiente para crescimento rentável. Cenário otimista do modelo em US$ 12,08.",
+      "pessimista": "Perdas ou funding impedem recomposição do retorno e limitam remuneração. Cenário pessimista calculado em US$ 8,78."
+    },
+    "comentario_valuation": "Preço de referência US$ 9,15, alvo US$ 10,46 e retorno total esperado +17,71%. P/L à frente de 8,9x, baseado em consenso público, e preço sobre patrimônio do modelo de 0,9x não demonstram desconto econômico sem retorno sustentável. O alvo médio público é US$ 23,00; a confiança do modelo é C. O alpha relativo de -19,76% deve ser lido com as diferenças de país, negócio e risco dos pares. A atualização quantitativa não comprova incorporação integral do release publicado após o mercado.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A visão construtiva seria invalidada se redução de perdas coexistisse persistentemente com compressão da margem após risco ou necessidade crescente de capital. A hipótese contrária é que a normalização do crédito recomponha o lucro sem sacrificar funding.",
+        "titulo": "Crédito melhora sem recuperar rentabilidade"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-24",
+    "dados_simulados": false,
+    "data": "2026-11-24",
+    "ficha": [
+      {
+        "fato": "val.AR_BBVA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 9,15"
+      },
+      {
+        "fato": "val.AR_BBVA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 10,46"
+      },
+      {
+        "fato": "val.AR_BBVA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+14,30%"
+      },
+      {
+        "fato": "val.AR_BBVA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.AR_BBVA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.AR_BBVA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 12,08"
+      },
+      {
+        "fato": "val.AR_BBVA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "30,03%"
+      },
+      {
+        "fato": "val.AR_BBVA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 8,78"
+      },
+      {
+        "fato": "val.AR_BBVA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "49,19%"
+      },
+      {
+        "fato": "val.AR_BBVA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "17,72%"
+      },
+      {
+        "fato": "val.AR_BBVA.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.AR_BBVA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.AR_BBVA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+17,71%"
+      },
+      {
+        "fato": "val.AR_BBVA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-19,76%"
+      },
+      {
+        "fato": "val.AR_BBVA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,9x"
+      },
+      {
+        "fato": "val.AR_BBVA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,9x"
+      },
+      {
+        "fato": "val.AR_BBVA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 23,00"
+      },
+      {
+        "fato": "val.AR_BBVA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-54,53%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F1",
+        "instituicao": "SEC / BBVA Argentina",
+        "publicado_em": "2026-11-24",
+        "tipo": "Regulador",
+        "titulo": "Resultado trimestral, crédito e capital",
+        "url": "https://www.sec.gov/Archives/edgar/data/913059/000129281426005393/bbarpr3q26_6k.htm"
+      },
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F2",
+        "instituicao": "SEC / BBVA Argentina",
+        "publicado_em": "2026-08-27",
+        "tipo": "Regulador",
+        "titulo": "Resultado anterior e base de comparação",
+        "url": "https://www.sec.gov/Archives/edgar/data/913059/000129281426004370/bbarpr2q26_6k.htm"
+      },
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F3",
+        "instituicao": "BBVA Argentina",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário de divulgação e teleconferência",
+        "url": "https://ir.bbva.com.ar/es/noticias-y-eventos/calendario/"
+      },
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F4",
+        "instituicao": "BBVA Argentina",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Perfil corporativo e clientes",
+        "url": "https://ir.bbva.com.ar/our-company/business-overview/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Margem após perdas e safras confirmam recuperação recorrente em base comparável.",
+      "Capital ou funding restringem expansão e distribuição.",
+      "Teleconferência altera perspectivas ou resolve divergências entre tabelas de lucro atribuível."
+    ],
+    "governanca": "O RI identifica o grupo BBVA como controlador. Não presumimos suporte irrestrito nem livre remessa de recursos. Avaliar conflitos de partes relacionadas, direitos dos recibos e autorização de distribuição continua necessário (perfil corporativo, consulta em 24/11/2026).",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar margem após provisões em moeda constante, atraso por segmento, entradas, baixas e recuperações, custo de depósitos por moeda e capital após crescimento. Invalidação: retorno recorrente não melhora apesar da normalização alegada.",
+        "titulo": "Margem, safras e capital"
+      }
+    ],
+    "issuer_id": "AR_BBVA",
+    "lacunas_de_dados": [
+      "Não conciliadas as bases de lucro atribuível entre a demonstração e a tabela por ação do release.",
+      "Teleconferência de 25/11/2026 ainda futura; sem avaliação de suas declarações.",
+      "Sem conciliação integral de safras, partes relacionadas e distribuição efetivamente liquidada.",
+      "WACC indisponível; não substituído por estimativa.",
+      "Data do retrato quantitativo não prova incorporação integral do resultado após o mercado."
+    ],
+    "modelo_de_cobertura": "2026-11-24",
+    "negocio": "Banco argentino controlado pelo grupo BBVA, com atuação em pessoas físicas, pequenas e médias empresas e grandes corporações. A integração com produtos financeiros e canais do grupo pode apoiar relacionamento e distribuição, mas o valor para o acionista depende da rentabilidade e das restrições da entidade local (RI, perfil corporativo, consulta em 24/11/2026).",
+    "nome": "BBVA Argentina",
+    "o_que_mudou": "Desde a iniciação de 11/10/2026, o resultado do 3T26 permite confrontar a hipótese de margem real: a melhora inicial do crédito convive com enfraquecimento sequencial do lucro. A nota anterior não classificava guidance; esta registra ausência de orientação quantitativa formal no release lido, sem inferir retirada. Mantemos neutralidade e baixa convicção.",
+    "pais": "Argentina",
+    "pares": [
+      {
+        "issuer_id": "AR_MACRO",
+        "nome": "Banco Macro"
+      },
+      {
+        "issuer_id": "AR_SUPERVIELLE",
+        "nome": "Grupo Supervielle"
+      },
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BANRISUL",
+        "nome": "Banrisul"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese é que a redução sustentada de perdas permita recuperar retorno econômico. É necessário observar margem financeira após provisões em moeda constante, preservando o perímetro comparável; crescimento nominal isolado não confirma a tese.",
+        "titulo": "Margem após risco decide a recuperação"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.AR_BBVA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+17,71%"
+          },
+          {
+            "fato": "val.AR_BBVA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "17,72%"
+          },
+          {
+            "fato": "val.AR_BBVA.diff_consenso",
+            "nome": "Preço-alvo da casa contra o consenso",
+            "valor": "-54,53%"
+          }
+        ],
+        "texto": "O retorno total esperado do modelo é +17,71%, com ke de 17,72%. A diferença frente ao consenso público de -54,53% não prova erro do mercado nem assegura convergência.",
+        "titulo": "Valuation sem convergência presumida"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A atuação em varejo e empresas permite diversificar relacionamento. A vantagem será confirmada por funding estável, retenção e retorno após perdas, sem deduzir poder de precificação apenas da presença do grupo.",
+        "titulo": "Relacionamento precisa produzir retorno"
+      }
+    ],
+    "publicada_em": "2026-11-25T01:41:20.869938+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A leitura exige separar lucro do período, atribuível e abrangente, além de distinguir inflação e mudanças de perímetro. A queda do atraso deve ser confrontada com baixas antes de concluir melhora estrutural de cobrança.",
+        "titulo": "Comparabilidade e baixas"
+      }
+    ],
+    "resumo": "Mantemos visão neutra e convicção baixa. A recuperação exige margem após perdas e capital distribuível, além de expansão comercial. O alvo do modelo é US$ 10,46, ante US$ 9,15, com potencial de +14,30% e classificação Neutro. A melhora inicial do crédito deve ser testada contra baixas e safras; não sustenta extrapolação imediata do lucro.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "alta",
+        "texto": "Margem e reprecificação dos depósitos podem absorver ganhos na qualidade de crédito. Inflação e moeda alteram comparabilidade e capacidade de distribuição."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Confundir redução de atraso com melhora exclusiva de cobrança pode subestimar perdas e consumo de capital."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "BBVA Argentina: melhora do crédito ainda não compensa compressão da margem",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "No release de 24/11/2026, o lucro do 3T26 cai frente ao trimestre anterior com menor margem financeira e comissões; o acumulado melhora na comparação anual. Atraso e custo de risco recuam, mas baixas aumentam. A eficiência trimestral piora. Valores comparativos são reexpressos pela inflação e a incorporação da FCA limita a comparação anual. Não identificamos orientação quantitativa formal no release; sem_guidance descreve esse escopo, sem afirmar retirada de projeções. O tom da gestão é positivo sobre recuperação futura, condicionada à normalização do crédito (SEC, 24/11/2026).",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Exigir confirmação por entradas em atraso, recuperações e baixas, além do indicador agregado. Melhor composição pode coexistir com pressão em segmentos específicos.",
+        "vetor": "Normalização do crédito"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.AR_BBVA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "17,72%"
+          },
+          {
+            "fato": "val.AR_BBVA.sens.ke_mais_100bp",
+            "nome": "Upside com ke +1 p.p.",
+            "valor": "+7,21%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O custo de capital próprio de 17,72% condiciona o valor econômico. A sensibilidade calculada com ke mais alto deixa potencial de +7,21%.",
+        "vetor": "Retorno exigido"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

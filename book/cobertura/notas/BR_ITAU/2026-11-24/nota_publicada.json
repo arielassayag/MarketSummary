@@ -1,0 +1,401 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-24",
+    "manifest_sha256": "de6e9884ef144a961c8c4fd750965208cd1d6928e35afc7853fe4daea5176f7b",
+    "modelo_as_of": "2026-11-20"
+  },
+  "conviccao": 1,
+  "data": "2026-11-24",
+  "hashes": {
+    "contexto": "8e001a57068e9b196a4f77ab3667ec1e49824ed8eb5eaefb50eebf7b75c6547c",
+    "factbook": "9f2d222404fe4d45bc96106ccb458fff7756f44a36adaaea8514012a3e0fb83e",
+    "nota_json": "3cb14837416199c6a45cfcfca387676b1edb2261c9f0351cbe33a0c439a39017"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_ITAU",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-11-25T01:56:14.810335+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Acompanhar a ponte entre resultado, distribuições, ajustes prudenciais e ativos ponderados por risco. Folga regulatória não autoriza projetar remuneração extraordinária sem decisão e capacidade financeira verificadas.",
+        "titulo": "Conciliação entre geração e distribuição"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2027-02-03",
+        "descricao": "Divulgação prevista do próximo resultado, conforme calendário de relações com investidores.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F4"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Crescimento moderado e rentabilidade preservada; alvo R$ 38,31.",
+      "otimista": "Margem e serviços crescem com disciplina de risco; alvo otimista R$ 44,04.",
+      "pessimista": "Crédito, despesas e margem pioram conjuntamente; alvo pessimista R$ 33,11."
+    },
+    "comentario_valuation": "Referência R$ 40,07 e alvo R$ 38,31 são do modelo. O consenso público aponta R$ 47,04, com diferença -18,57%; divergência não prova erro nem posição do mercado. Confiança quantitativa A não equivale à convicção analítica desta nota. Pares financeiros têm composição distinta de crédito, serviços e seguros. WACC ausente não é preenchido.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A leitura cautelosa enfraquece com margem e serviços recorrentes acima das hipóteses e crédito estável em base comparável. A tese favorável perde suporte se efeitos tributários e de perímetro ocultarem deterioração operacional.",
+        "titulo": "Execução pode superar a avaliação"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-24",
+    "dados_simulados": false,
+    "data": "2026-11-24",
+    "ficha": [
+      {
+        "fato": "val.BR_ITAU.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 40,07"
+      },
+      {
+        "fato": "val.BR_ITAU.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 38,31"
+      },
+      {
+        "fato": "val.BR_ITAU.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-4,40%"
+      },
+      {
+        "fato": "val.BR_ITAU.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_ITAU.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_ITAU.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 44,04"
+      },
+      {
+        "fato": "val.BR_ITAU.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "41,44%"
+      },
+      {
+        "fato": "val.BR_ITAU.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 33,11"
+      },
+      {
+        "fato": "val.BR_ITAU.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "24,17%"
+      },
+      {
+        "fato": "val.BR_ITAU.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "14,61%"
+      },
+      {
+        "fato": "val.BR_ITAU.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_ITAU.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_ITAU.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+2,65%"
+      },
+      {
+        "fato": "val.BR_ITAU.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-19,58%"
+      },
+      {
+        "fato": "val.BR_ITAU.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "8,1x"
+      },
+      {
+        "fato": "val.BR_ITAU.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,9x"
+      },
+      {
+        "fato": "val.BR_ITAU.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 47,04"
+      },
+      {
+        "fato": "val.BR_ITAU.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-18,57%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F1",
+        "instituicao": "CVM / Itaú Unibanco",
+        "publicado_em": "2026-11-03",
+        "tipo": "Regulador",
+        "titulo": "Revisão da projeção tributária e manutenção das demais faixas",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1583271&numSequencia=1107977&numVersao=1"
+      },
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F2",
+        "instituicao": "SEC / Itaú Unibanco",
+        "publicado_em": "2026-11-03",
+        "tipo": "Regulador",
+        "titulo": "Comunicado de resultados gerenciais",
+        "url": "https://www.sec.gov/Archives/edgar/data/1132597/000113259726000271/pressrelease_3q26.htm"
+      },
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F3",
+        "instituicao": "SEC / Itaú Unibanco",
+        "publicado_em": "2026-11-03",
+        "tipo": "Regulador",
+        "titulo": "Apresentação de resultados e conciliações",
+        "url": "https://www.sec.gov/Archives/edgar/data/1132597/000113259726000275/call_3q26xeng.htm"
+      },
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F4",
+        "instituicao": "Itaú Unibanco",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário de eventos",
+        "url": "https://www.itau.com.br/relacoes-com-investidores/servicos-ao-investidor/calendario-de-eventos/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Margem e risco mudam persistentemente em perímetro comparável.",
+      "Revisão formal das faixas operacionais ou tributárias.",
+      "Geração de capital diverge do retorno após distribuições."
+    ],
+    "governanca": "A comunicação detalha projeções e reconciliações gerenciais. A redução do guidance refere-se à alíquota tributária, economicamente favorável, sem inferir corte de lucro. Créditos tributários, capital regulatório e capacidade de distribuição exigem leituras próprias; não são equivalentes a caixa disponível. Não foi concluída revisão integral de direitos societários.",
+    "guidance": "reduzido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Monitorar spreads por segmento, margem de passivos, custo de crédito, inadimplência ajustada às vendas, despesas e capital após distribuições. Revisar quando a melhora depender repetidamente de efeitos de calendário ou perímetro.",
+        "titulo": "Margem, risco e capital comparáveis"
+      }
+    ],
+    "issuer_id": "BR_ITAU",
+    "lacunas_de_dados": [
+      "WACC indisponível no FactBook; não preenchido.",
+      "Sem evidência suficiente sobre expectativas incorporadas à cotação.",
+      "Revisão societária integral e conciliação de todos os ajustes de carteira pendentes."
+    ],
+    "modelo_de_cobertura": "2026-11-24",
+    "negocio": "Banco universal com crédito, serviços, seguros e operações na América Latina. Escala e diversificação podem amortecer o ciclo, mas a leitura do retorno exige separar efeito de mix, calendário, perímetro e custo de crédito (SEC, 03/11/2026).",
+    "nome": "Itaú Unibanco",
+    "o_que_mudou": "A nota de 04/11/2026 já incorporava o resultado e a revisão tributária. Esta releitura aprofunda os ajustes de perímetro, vendas de carteiras e ponte de capital, sem apresentar a mesma divulgação como nova revisão de guidance. O modelo foi atualizado para a data corrente.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      },
+      {
+        "issuer_id": "BR_ITAUSA",
+        "nome": "Itaúsa"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A margem com clientes avançou por volumes e calendário, enquanto mudanças de mix pressionaram spreads de ativos. O crescimento não comprova expansão generalizada da rentabilidade por unidade de crédito.",
+        "titulo": "Margem exige base comparável"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_ITAU.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+2,65%"
+          },
+          {
+            "fato": "val.BR_ITAU.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "14,61%"
+          },
+          {
+            "fato": "val.BR_ITAU.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "-19,58%"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O retorno total esperado é +2,65%, com ke 14,61% e alpha relativo -19,58%. Escala e execução precisam produzir retorno persistente após risco e distribuições.",
+        "titulo": "Capital precisa remunerar seu custo"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Crédito, serviços e seguros diversificam fontes de receita. A vantagem requer persistência de resultado após perdas e despesas; crescimento da base ou liderança de escala isolados não a demonstram.",
+        "titulo": "Diversificação sob teste de retorno"
+      }
+    ],
+    "publicada_em": "2026-11-25T01:56:14.810335+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Separar margem com clientes e de mercado, efeito do calendário, alienação colombiana e vendas de carteiras. A apresentação permite identificar efeitos que a variação consolidada não revela.",
+        "titulo": "Perímetro antes da comparação"
+      }
+    ],
+    "resumo": "Mantemos neutralidade e baixa convicção. A atualização aprofunda perímetro, vendas de carteira e capital do resultado já divulgado. O modelo indica Venda, alvo R$ 38,31 e potencial -4,40%. A revisão de guidance foi tributária; não representa elevação das faixas operacionais.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Deterioração de crédito ou competição pode absorver o crescimento da carteira e a contribuição de passivos à margem."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "Vendas de carteiras, calendário e alteração de perímetro podem superestimar melhora recorrente quando comparados sem ajuste."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Itaú Unibanco: comparabilidade da margem e do crédito condiciona leitura do retorno",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O 3T26 divulgado em 03/11/2026 trouxe expansão do resultado gerencial recorrente e da rentabilidade. Margem com clientes cresceu com volumes e calendário; receitas de serviços combinaram avanço de cartões e administração com menor contribuição de banco de investimento. Despesas refletiram o reajuste salarial. A alíquota efetiva projetada foi reduzida e as demais faixas mantidas. A apresentação distingue crescimento com e sem o varejo colombiano e identifica efeitos de vendas de carteiras sobre inadimplência. Esses ajustes limitam atribuições causais a partir do agregado (SEC e CVM, 03/11/2026).",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Confrontar produção, mix, inadimplência e margem em perímetro comparável. A apresentação discrimina a venda do varejo colombiano e vendas de carteiras; melhora agregada não deve ser atribuída integralmente à recuperação orgânica.",
+        "vetor": "Crédito e margem ajustados ao perímetro"
+      },
+      {
+        "direcao": "positivo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "média",
+        "texto": "A faixa tributária foi reduzida, com demais projeções mantidas. A tradução em lucro depende da realização dos efeitos e de despesas e custo de crédito dentro do planejamento.",
+        "vetor": "Tributação e despesas"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,360 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-24",
+    "manifest_sha256": "de6e9884ef144a961c8c4fd750965208cd1d6928e35afc7853fe4daea5176f7b",
+    "modelo_as_of": "2026-11-20"
+  },
+  "conviccao": 1,
+  "data": "2026-11-24",
+  "hashes": {
+    "contexto": "de43e8dbea99fe111a3f155bd59a519fe5c703a763435e1a7505604bfa9067e3",
+    "factbook": "9f2d222404fe4d45bc96106ccb458fff7756f44a36adaaea8514012a3e0fb83e",
+    "nota_json": "c018e43b4065bc8e048b993f4e0ec136d4ab126a87148b78ccf50816160cbe39"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_BRADESCO",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-11-25T01:58:51.679685+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Avaliar capital efetivamente homologado e retorno com e sem ajuste do aumento de capital. A métrica que exclui o aporte não substitui o retorno da base que o acionista financia.",
+        "titulo": "Retorno sobre a base ampliada"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Recuperação gradual após provisões; alvo R$ 21,21.",
+      "otimista": "Crédito estabiliza e eficiência sustenta recuperação; alvo otimista R$ 25,30.",
+      "pessimista": "Novas perdas e despesas absorvem melhora comercial; alvo pessimista R$ 17,30."
+    },
+    "comentario_valuation": "Referência R$ 13,83, alvo R$ 21,21, P/L à frente 5,1x e preço sobre patrimônio 0,7x devem ser lidos à luz da recuperação após perdas. Consenso público em R$ 20,00 não comprova o que está precificado. Os pares abrangem bancos, infraestrutura de mercado e seguros com riscos distintos. Confiança quantitativa A não substitui conciliação do capital e do retorno por ação; probabilidades ausentes não são estimadas.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A cautela enfraquece se perdas estabilizarem e serviços e eficiência ampliarem retorno recorrente na base ampliada. A leitura favorável perde suporte se inadimplência e provisões continuarem absorvendo crescimento comercial.",
+        "titulo": "Reestruturação pode entregar antes do esperado"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-24",
+    "dados_simulados": false,
+    "data": "2026-11-24",
+    "ficha": [
+      {
+        "fato": "val.BR_BRADESCO.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 13,83"
+      },
+      {
+        "fato": "val.BR_BRADESCO.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 21,21"
+      },
+      {
+        "fato": "val.BR_BRADESCO.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+53,36%"
+      },
+      {
+        "fato": "val.BR_BRADESCO.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Compra"
+      },
+      {
+        "fato": "val.BR_BRADESCO.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_BRADESCO.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 25,30"
+      },
+      {
+        "fato": "val.BR_BRADESCO.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BRADESCO.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 17,30"
+      },
+      {
+        "fato": "val.BR_BRADESCO.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BRADESCO.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "14,61%"
+      },
+      {
+        "fato": "val.BR_BRADESCO.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BRADESCO.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_BRADESCO.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+68,34%"
+      },
+      {
+        "fato": "val.BR_BRADESCO.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+45,35%"
+      },
+      {
+        "fato": "val.BR_BRADESCO.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "5,1x"
+      },
+      {
+        "fato": "val.BR_BRADESCO.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,7x"
+      },
+      {
+        "fato": "val.BR_BRADESCO.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 20,00"
+      },
+      {
+        "fato": "val.BR_BRADESCO.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+6,05%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F1",
+        "instituicao": "SEC / Banco Bradesco",
+        "publicado_em": "2026-10-23",
+        "tipo": "Regulador",
+        "titulo": "Relatório econômico e financeiro do resultado trimestral",
+        "url": "https://www.sec.gov/Archives/edgar/data/1160330/000129281426004994/bbdpr3q26_6k.htm"
+      },
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F2",
+        "instituicao": "SEC / Banco Bradesco",
+        "publicado_em": "2026-08-06",
+        "tipo": "Regulador",
+        "titulo": "Relatório anterior e projeções anuais",
+        "url": "https://www.sec.gov/Archives/edgar/data/1160330/000129281426004099/bbdpr2q26_6k.htm"
+      },
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F3",
+        "instituicao": "Bradesco",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário de eventos",
+        "url": "https://www.bradescori.com.br/informacoes-ao-mercado/calendario-de-eventos/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Margem após provisões volta a crescer com melhora de safras e recuperações.",
+      "Mudança formal de guidance ou capital disponível.",
+      "Eficiência melhora junto ao retorno por ação na base ampliada."
+    ],
+    "governanca": "O relatório confirma conclusão do aumento de capital e homologação regulatória. O capital principal incorpora a operação; parcela adicional associada a Bradsaúde continuava sob análise regulatória no período. Não se deve converter benefício projetado em capital já disponível. A base acionária ampliada deve acompanhar a leitura de retorno por ação.",
+    "guidance": "mantido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Acompanhar margem após provisões, migração de estágios, recuperações das linhas garantidas, despesas totais e retorno por ação na base ampliada. Rever a tese se recuperação contábil não aparecer após perdas e capital.",
+        "titulo": "Crédito, capital e lucro atribuível"
+      }
+    ],
+    "issuer_id": "BR_BRADESCO",
+    "lacunas_de_dados": [
+      "WACC e probabilidades implícitas indisponíveis.",
+      "Calendário consultado não confirmou próxima divulgação; não adotada data estimada como compromisso.",
+      "Transcrição integral e conciliação de todos os direitos por classe pendentes.",
+      "Sem evidência suficiente sobre expectativas incorporadas ao preço."
+    ],
+    "modelo_de_cobertura": "2026-11-24",
+    "negocio": "Banco universal com crédito, serviços e seguros. A diversificação ajudou o resultado, com contribuição de tesouraria, comissões e controle de despesas em ambiente de apetite moderado a risco (SEC, 23/10/2026).",
+    "nome": "Banco Bradesco",
+    "o_que_mudou": "A nota de 26/10/2026 não havia recebido o relatório completo. Agora conciliamos resultado, qualidade de crédito, guidance e aumento de capital no documento da SEC. O modelo corrente indica Compra, mas a avaliação qualitativa segue neutra diante da pressão de provisões.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      },
+      {
+        "issuer_id": "BR_ITAU",
+        "nome": "Itaú Unibanco"
+      },
+      {
+        "issuer_id": "BR_ITAUSA",
+        "nome": "Itaúsa"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "No 3T26, margem com clientes cresce antes das provisões, mas cai depois delas. O lucro consolidado maior não encerra a diligência sobre recuperação do crédito e rentabilidade por segmento.",
+        "titulo": "Resultado após perdas é o teste central"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_BRADESCO.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+68,34%"
+          },
+          {
+            "fato": "val.BR_BRADESCO.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "14,61%"
+          },
+          {
+            "fato": "val.BR_BRADESCO.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "+45,35%"
+          },
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O retorno total esperado é +68,34%, ante ke 14,61%, com alpha relativo +45,35%. São resultados do modelo, condicionados à recorrência após perdas e ao capital requerido.",
+        "titulo": "Desconto depende de recuperação sustentável"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Serviços, seguros e crédito diversificam o resultado. O teste competitivo é crescimento rentável com controle de perdas e despesas, sem concluir vantagem apenas pela rede ou base de clientes.",
+        "titulo": "Diversificação com custo verificável"
+      }
+    ],
+    "publicada_em": "2026-11-25T01:58:51.679685+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O aumento do lucro convive com recuo sequencial da margem após provisões. Separar contribuição da tesouraria, seguros, despesas e crédito evita atribuir toda melhora à retomada bancária.",
+        "titulo": "Margem líquida de provisões"
+      }
+    ],
+    "resumo": "Mantemos neutralidade e baixa convicção. O relatório completo resolve a lacuna da nota anterior: resultado e eficiência melhoram, mas a margem com clientes após provisões recua e a inadimplência aumenta. O modelo indica Compra, alvo R$ 21,21 e potencial +53,36%. O desconto exige recuperação econômica após perdas e na nova base de capital.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "alta",
+        "texto": "Perdas e renegociações podem absorver expansão da margem. Garantias públicas não comprovam recuperação imediata de caixa."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "médio",
+        "probabilidade": "média",
+        "texto": "Retorno ajustado para excluir aumento de capital pode ocultar a remuneração efetiva da base ampliada se usado sem conciliação."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Bradesco: lucro avança, mas margem após provisões ainda limita recuperação",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "O relatório do 3T26 arquivado na SEC em 23/10/2026 mostra aumento do lucro recorrente e melhora da eficiência. Provisões avançaram mais que a margem com clientes, reduzindo a margem após perdas. A inadimplência subiu, com destaque para pequenas empresas e Banco John Deere. A comparação com o relatório do 2T26 confirma manutenção das faixas anuais de crédito, margem após provisões, serviços, despesas e seguros. O tom da gestão é cauteloso diante do ambiente macroeconômico, apesar do avanço da transformação (SEC, 06/08/2026 e 23/10/2026).",
+    "vetores": [
+      {
+        "direcao": "negativo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A gestão aponta aumento dos atrasos em pequenas empresas, inclusive operações garantidas por fundos públicos, e sazonalidade no Banco John Deere. Garantia não elimina prazo de recuperação nem necessidade de provisionar.",
+        "vetor": "Qualidade de crédito"
+      },
+      {
+        "direcao": "positivo",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "média",
+        "texto": "Receitas de serviços e margem de mercado ajudaram a compensar pressão de provisões. Disciplina de despesas deve persistir junto aos investimentos da transformação, sem depender apenas de tesouraria.",
+        "vetor": "Eficiência e diversificação"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

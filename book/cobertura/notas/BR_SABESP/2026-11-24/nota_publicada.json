@@ -1,0 +1,378 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-24",
+    "manifest_sha256": "de6e9884ef144a961c8c4fd750965208cd1d6928e35afc7853fe4daea5176f7b",
+    "modelo_as_of": "2026-11-20"
+  },
+  "conviccao": 1,
+  "data": "2026-11-24",
+  "hashes": {
+    "contexto": "5b98c16248e9d5cd5664511d9d81f9be0a8437729ce9cd0aa60b2606ec53d847",
+    "factbook": "6fbc1a57c8906b25d4b33f7f546d0454ca50503695a9864de33e270a9cb9b679",
+    "nota_json": "941e1c56f56ea6810ffdf898237006afa7f7fb9e38f60b8d74aa7da5b1379495"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_SABESP",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-11-25T02:06:01.967826+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O investimento antecipado exige acompanhar o intervalo até remuneração e recebimento. A concentração prevista de entrada em operação ao fim de 2026 não assegura incorporação tarifária imediata.",
+        "titulo": "Unitização e tarifa têm calendários próprios"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Conclusão de obras e aceleração esperada de unitização ao fim de 2026, sujeitas a execução e reconhecimento.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "tipo": "outro"
+      }
+    ],
+    "cenarios": {
+      "base": "Investimentos e financiamento seguem equilibrados; alvo R$ 23,18.",
+      "otimista": "Execução e remuneração sustentam caixa após juros e obras; alvo R$ 26,84.",
+      "pessimista": "Atrasos, despesas e custo de capital comprimem retorno; alvo R$ 19,78."
+    },
+    "comentario_valuation": "Referência R$ 27,35, alvo R$ 23,18 e retorno esperado -13,12% são do retrato corrente. Confiança C e dispersão 40,95% recomendam cautela. O consenso público de R$ 34,46 não demonstra o que está precificado. Pares de energia, gás e saneamento têm obrigações e ritmos de reconhecimento distintos; múltiplos sem ajuste de investimento são insuficientes.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A cautela enfraquece se qualidade, conclusão física e caixa após obras e juros melhorarem conjuntamente. A tese favorável perde suporte se o ganho operacional exigir dívida crescente sem retorno realizável.",
+        "titulo": "Caixa pode confirmar a transformação"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-24",
+    "dados_simulados": false,
+    "data": "2026-11-24",
+    "ficha": [
+      {
+        "fato": "val.BR_SABESP.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 27,35"
+      },
+      {
+        "fato": "val.BR_SABESP.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 23,18"
+      },
+      {
+        "fato": "val.BR_SABESP.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-15,25%"
+      },
+      {
+        "fato": "val.BR_SABESP.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_SABESP.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_SABESP.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 26,84"
+      },
+      {
+        "fato": "val.BR_SABESP.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_SABESP.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 19,78"
+      },
+      {
+        "fato": "val.BR_SABESP.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_SABESP.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "12,45%"
+      },
+      {
+        "fato": "val.BR_SABESP.wacc",
+        "rotulo": "WACC",
+        "valor": "10,21%"
+      },
+      {
+        "fato": "val.BR_SABESP.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_SABESP.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-13,12%"
+      },
+      {
+        "fato": "val.BR_SABESP.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-24,03%"
+      },
+      {
+        "fato": "val.BR_SABESP.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "11,5x"
+      },
+      {
+        "fato": "val.BR_SABESP.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "2,1x"
+      },
+      {
+        "fato": "val.BR_SABESP.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 34,46"
+      },
+      {
+        "fato": "val.BR_SABESP.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-32,74%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F1",
+        "instituicao": "SEC / Sabesp",
+        "publicado_em": "2026-11-05",
+        "tipo": "Regulador",
+        "titulo": "Resultado trimestral e demonstrações consolidadas",
+        "url": "https://www.sec.gov/Archives/edgar/data/1170858/000129281426005156/sbspr3q26_6k.htm"
+      },
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F2",
+        "instituicao": "Sabesp",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Transcrição da teleconferência de resultados",
+        "url": "https://filemanager-cdn.mziq.com/published/9e47ee51-f833-4a23-af98-2bac9e54e0b3/e1b43bb4-dbae-4222-96af-803446268018"
+      },
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F3",
+        "instituicao": "Sabesp",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Calendário de eventos",
+        "url": "https://ri.sabesp.com.br/servicos-aos-investidores/calendario-de-eventos/"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Reconhecimento e cobrança das obras divergem persistentemente do desembolso.",
+      "Novo ato regulatório muda remuneração ou metas.",
+      "Caixa após juros e obras confirma ou contradiz a melhora operacional."
+    ],
+    "governanca": "A remuneração das obras deve ser verificada nos atos e contratos regulatórios. As explicações da administração são evidência de sua interpretação, não validação independente da compensação de qualquer atraso. Preservar distinção entre Sabesp e EMAE e a base por ação após desdobramento.",
+    "guidance": "mantido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Confrontar desembolso, conclusão física, entrada em operação, entrega regulatória, tarifa e cobrança. Monitorar financiamento e qualidade do serviço; revisar se a defasagem comprometer liquidez ou retorno.",
+        "titulo": "Da obra ao recebimento"
+      }
+    ],
+    "issuer_id": "BR_SABESP",
+    "lacunas_de_dados": [
+      "Probabilidades implícitas indisponíveis.",
+      "Contratos e atos regulatórios não conciliados integralmente; explicação da gestão não substitui validação independente.",
+      "Nenhuma data futura confirmada no calendário consultado.",
+      "Sem evidência suficiente sobre expectativas precificadas."
+    ],
+    "modelo_de_cobertura": "2026-11-24",
+    "negocio": "Prestadora de água e esgotamento sanitário em São Paulo, com obrigações de universalização. A avaliação depende da qualidade do serviço e da conversão dos investimentos em remuneração contratual e recebimento (Sabesp, 06/11/2026).",
+    "nome": "Sabesp",
+    "o_que_mudou": "A nota de 05/11/2026 se restringia ao release e não identificava revisão formal de metas. Agora a teleconferência esclarece manutenção da faixa de capex e seus condicionantes, além do calendário de unitização. O modelo corrente substitui o retrato anterior ao resultado.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ALUPAR",
+        "nome": "Alupar"
+      },
+      {
+        "issuer_id": "BR_AUREN",
+        "nome": "Auren Energia"
+      },
+      {
+        "issuer_id": "BR_AXIA",
+        "nome": "Axia Energia (ex-Eletrobras)"
+      },
+      {
+        "issuer_id": "BR_CEMIG",
+        "nome": "Cemig"
+      },
+      {
+        "issuer_id": "BR_COMPASS",
+        "nome": "Compass Gás e Energia"
+      },
+      {
+        "issuer_id": "BR_COPASA",
+        "nome": "Copasa"
+      },
+      {
+        "issuer_id": "BR_COPEL",
+        "nome": "Copel"
+      },
+      {
+        "issuer_id": "BR_CPFL",
+        "nome": "CPFL Energia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A gestão distingue obra, entrada em operação, entrega ao regulador e incorporação tarifária. A alegação de preservação econômica depende das condições contratuais e não elimina defasagem de liquidez.",
+        "titulo": "Execução física não equivale a recebimento imediato"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fato": "val.BR_SABESP.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "-13,12%"
+          }
+        ],
+        "texto": "No 3T26, receita e EBITDA ajustados avançaram, mas juros e comparação financeira pressionaram lucro. O retorno esperado -13,12% exige disciplina após obras e serviço da dívida.",
+        "titulo": "Resultado operacional precisa cobrir financiamento"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A expansão da rede pode ampliar atendimento, mas a vantagem exige segurança, qualidade e cobrança efetiva. Metas físicas agregadas não substituem avaliação por modalidade e área atendida.",
+        "titulo": "Escala com qualidade verificável"
+      }
+    ],
+    "publicada_em": "2026-11-25T02:06:01.967826+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A conciliação separa efeitos tributários, incidente operacional, construção e EMAE. A melhora ajustada deve ser confrontada com caixa após juros e execução, sem atribuir ganho não recorrente à eficiência.",
+        "titulo": "Perímetros e recorrência preservados"
+      }
+    ],
+    "resumo": "Mantemos neutralidade e baixa convicção. A teleconferência posterior à nota anterior esclarece a manutenção da faixa de investimentos e a concentração da entrada de ativos em operação no fim do ano. O modelo aponta Neutro, alvo R$ 23,18 e potencial -15,25%. Execução, reconhecimento regulatório e financiamento continuam centrais.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Despesas financeiras e expansão de dívida podem absorver a melhora operacional antes de chegar ao acionista."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Defasagem de reconhecimento e revisões tarifárias podem pressionar liquidez, mesmo quando a gestão espera preservação econômica das obras."
+      }
+    ],
+    "setor": "Utilidades públicas",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Sabesp: retorno depende da passagem das obras à remuneração tarifária e ao caixa",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O resultado de 3T26 divulgado em 05/11/2026 permanece a referência. Ajustes separam construção, ativo financeiro, EMAE, crédito tributário e incidente de Jaguaré. A leitura da teleconferência de 06/11/2026 acrescenta manutenção da faixa de capex, com maior probabilidade próxima ao piso. Mantido refere-se a esse intervalo, não a uma reafirmação geral de todas as metas. O tom é positivo sobre execução, mas a própria gestão reconhece a importância da liquidez (SEC e Sabesp, 05/11/2026 e 06/11/2026).",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A administração atribui parte da concentração de unitização ao cronograma de obras e à migração de sistemas. Confrontar expectativa de recuperação com entregas e reconhecimento efetivos.",
+        "vetor": "Conclusão e reconhecimento dos ativos"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fato": "val.BR_SABESP.wacc",
+            "nome": "Custo médio ponderado de capital",
+            "valor": "10,21%"
+          },
+          {
+            "fato": "val.BR_SABESP.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "12,45%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O WACC do modelo é 10,21% e o ke 12,45%. A remuneração regulatória descrita pela gestão não se confunde com esses parâmetros nem comprova caixa recebido.",
+        "vetor": "Remuneração e custo de capital"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

@@ -1,0 +1,391 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-24",
+    "manifest_sha256": "de6e9884ef144a961c8c4fd750965208cd1d6928e35afc7853fe4daea5176f7b",
+    "modelo_as_of": "2026-11-24"
+  },
+  "conviccao": 1,
+  "data": "2026-11-24",
+  "hashes": {
+    "contexto": "15fde5a995459c30932ab666219d506afebd421aee5dd836b117c5e07b059e58",
+    "factbook": "48b5fd0b2b6af7bf69fc54d4476cb0e7d61fe956085966d0ba1ac9e16182b167",
+    "nota_json": "79d579e92430e1bb06ecbafacd2c88ab20bf5c9a45bafe831c92cfdb7a5c8e16"
+  },
+  "is_synthetic": false,
+  "issuer_id": "AR_GALICIA",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2026-11-24",
+  "published_at": "2026-11-25T01:43:17.996625+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O capital consolidado com Naranja X difere do capital do banco. Antes de defender remuneração, conciliar exigência prudencial, crescimento e recursos transferíveis; ativos administrados pertencem aos clientes.",
+        "titulo": "Distribuição depende do perímetro"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2026-11-25",
+        "descricao": "Teleconferência prevista para 25/11/2026 poderá esclarecer margem, crédito e integração; suas declarações ainda não estão disponíveis na data da nota.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "resultado"
+      }
+    ],
+    "cenarios": {
+      "base": "Normalização parcial com pressão de margem e necessidade de diligência por entidade. Caso-base Em revisão.",
+      "otimista": "Integração melhora serviço e eficiência; crédito normaliza e receitas recorrentes remuneram capital. Cenário numérico Em revisão.",
+      "pessimista": "Risco de crédito ou perda de receita consome economias e restringe recursos atribuíveis. Cenário numérico Em revisão."
+    },
+    "comentario_valuation": "Preço US$ 25,66, patrimônio do modelo a 0,8x e P/L à frente 3,8x não permitem concluir desconto sem rentabilidade sustentável. O alvo médio público é US$ 62,11, distinto do alvo próprio Em revisão. Alpha relativo Em revisão e confiança C devem preservar o estado de revisão. Não presumimos o que o mercado precifica nem transformamos projeções públicas em estimativa própria.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A hipótese enfraquece se a melhora do crédito não gerar retorno após funding ou se economias de integração exigirem perda de clientes. A hipótese favorável precisa de persistência operacional, sem depender da direção dos títulos.",
+        "titulo": "Normalização insuficiente"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-24",
+    "dados_simulados": false,
+    "data": "2026-11-24",
+    "ficha": [
+      {
+        "fato": "val.AR_GALICIA.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 25,66"
+      },
+      {
+        "fato": "val.AR_GALICIA.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_GALICIA.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_GALICIA.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_GALICIA.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.AR_GALICIA.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_GALICIA.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_GALICIA.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_GALICIA.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_GALICIA.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "17,72%"
+      },
+      {
+        "fato": "val.AR_GALICIA.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.AR_GALICIA.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.AR_GALICIA.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_GALICIA.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.AR_GALICIA.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "3,8x"
+      },
+      {
+        "fato": "val.AR_GALICIA.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,8x"
+      },
+      {
+        "fato": "val.AR_GALICIA.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 62,11"
+      },
+      {
+        "fato": "val.AR_GALICIA.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F1",
+        "instituicao": "Grupo Financiero Galicia",
+        "publicado_em": "2026-11-24",
+        "tipo": "Relações com investidores",
+        "titulo": "Resultados trimestrais e negócios financeiros",
+        "url": "https://b.gfgsa.com/app/uploads/2026/11/PressRelease_GrupoGalicia_3Q2026-1.pdf"
+      },
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F2",
+        "instituicao": "SEC / Grupo Financiero Galicia",
+        "publicado_em": "2026-08-25",
+        "tipo": "Regulador",
+        "titulo": "Resultado anterior e critérios de consolidação",
+        "url": "https://www.sec.gov/Archives/edgar/data/1114700/000111470026000073/grupogaliciapressrelease.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Margem após perdas melhora persistentemente em banco e fintech.",
+      "Integração reduz custo sem perder clientes ou receitas.",
+      "Novos demonstrativos resolvem lacunas de retorno e capital atribuível."
+    ],
+    "governanca": "A atribuição econômica depende da participação em cada subsidiária e das eliminações de consolidação. Recursos de fundos e depósitos de clientes não são caixa livre da holding. Classes, direitos de voto, acordos de controle e transações relacionadas ainda exigem conferência específica.",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar entradas em atraso, recuperações, aplicações de provisões, margem após risco, custo de depósitos e eficiência em banco e fintech. Revisar a tese se o retorno recorrente não responder à normalização do crédito.",
+        "titulo": "Safras e margem por negócio"
+      }
+    ],
+    "issuer_id": "AR_GALICIA",
+    "lacunas_de_dados": [
+      "Alvo, rating, cenários, retorno esperado e alpha relativo permanecem Em revisão.",
+      "Sem conciliação integral de safras e das transferências possíveis à holding.",
+      "Teleconferência de 25/11/2026 ainda futura.",
+      "Classes, direitos de voto e transações relacionadas não integralmente conferidos.",
+      "WACC indisponível; não estimado.",
+      "Indicadores de Naranja X para consolidação diferem potencialmente dos individuais."
+    ],
+    "modelo_de_cobertura": "2026-11-24",
+    "negocio": "Grupo financeiro argentino com Banco Galicia, Naranja X, seguros, gestão de recursos e serviços de investimento. Banco, fintech e holding têm perímetros distintos. A complementaridade comercial deve ser avaliada por contribuição líquida e capital necessário, sem somar contas como clientes únicos (RI, 24/11/2026).",
+    "nome": "Grupo Financiero Galicia",
+    "o_que_mudou": "A iniciação de 11/10/2026 registrava melhora de provisões com deterioração de atraso. O 3T26 traz redução do atraso agregado, mas queda sequencial de lucro e margem. Mantemos a hipótese de integração sob teste e neutralidade. O estado Em revisão do valuation permanece; a nova leitura qualitativa não o substitui.",
+    "pais": "Argentina",
+    "pares": [
+      {
+        "issuer_id": "AR_MACRO",
+        "nome": "Banco Macro"
+      },
+      {
+        "issuer_id": "AR_SUPERVIELLE",
+        "nome": "Grupo Supervielle"
+      },
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BANRISUL",
+        "nome": "Banrisul"
+      },
+      {
+        "issuer_id": "BR_BB",
+        "nome": "Banco do Brasil"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A tese exige economias persistentes, retenção e margem após perdas por negócio. A recuperação será mais convincente quando a receita recorrente cobrir risco e despesas sem depender de títulos ou efeitos monetários.",
+        "titulo": "Integração precisa remunerar risco"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.AR_GALICIA.preco_alvo",
+            "nome": "Preço-alvo de 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.AR_GALICIA.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "Em revisão"
+          },
+          {
+            "fato": "val.AR_GALICIA.pl_fwd",
+            "nome": "P/L à frente (consenso público)",
+            "valor": "3,8x"
+          }
+        ],
+        "texto": "Alvo Em revisão e retorno esperado Em revisão impedem atribuir potencial próprio à nota. O P/L à frente de 3,8x é consenso público, sujeito a revisão de lucros.",
+        "titulo": "Modelo permanece em revisão"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Banco, pagamentos, seguros e gestão podem ampliar relacionamento; a hipótese exige retenção, receita líquida por cliente e capital adequado. Contas e produtos não comprovam exclusividade do relacionamento.",
+        "titulo": "Complementaridade sujeita a teste"
+      }
+    ],
+    "publicada_em": "2026-11-25T01:43:17.996625+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Separar resultado atribuível e abrangente, juros, comissões, títulos, perda monetária e custo de risco. Mudanças no lucro anual não bastam para afirmar recuperação estrutural da franquia.",
+        "titulo": "Retorno recorrente por entidade"
+      }
+    ],
+    "resumo": "A hipótese de integração rentável continua dependente de margem após perdas e capital por negócio. Mantemos neutralidade e baixa convicção: a melhora do crédito não encerra a pressão sobre retorno recorrente. O modelo mantém alvo e rating Em revisão, sem conclusão quantitativa de atratividade. A referência de preço é US$ 25,66.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "alta",
+        "texto": "Menor margem financeira pode absorver redução de perdas. Inflação e composição dos títulos tornam arriscada a extrapolação do resultado trimestral."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Melhora agregada pode ocultar safras frágeis em crédito ao consumidor; índice de atraso deve ser conciliado com aplicações de provisões e recuperações."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Galicia: crédito melhora, mas margem limita recuperação do retorno",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "O release de 24/11/2026 mostra lucro atribuível positivo no 3T26, revertendo prejuízo anual comparável, porém inferior ao trimestre anterior por menor rendimento financeiro. Atraso e custo de risco melhoram no consolidado; eficiência piora sequencialmente. Banco Galicia e Naranja X apresentam métricas próprias, não intercambiáveis. Os comparativos são reexpressos em moeda constante. Não identificamos guidance quantitativo formal no informe; sem_guidance não significa retirada. O tom é neutro diante da combinação de melhora do crédito e pressão da margem (RI, 24/11/2026).",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Testar se menor provisão se converte em retorno recorrente depois do funding. Avaliar separadamente banco e fintech.",
+        "vetor": "Margem após risco"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.AR_GALICIA.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "17,72%"
+          },
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O ke do modelo é 17,72%. A capacidade de transferir recursos à holding deve ser comprovada antes de interpretar folga regulatória como distribuição.",
+        "vetor": "Capital exigido"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

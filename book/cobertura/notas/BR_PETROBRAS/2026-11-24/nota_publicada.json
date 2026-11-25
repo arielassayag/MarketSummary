@@ -1,0 +1,399 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-24",
+    "manifest_sha256": "de6e9884ef144a961c8c4fd750965208cd1d6928e35afc7853fe4daea5176f7b",
+    "modelo_as_of": "2026-11-20"
+  },
+  "conviccao": 1,
+  "data": "2026-11-24",
+  "hashes": {
+    "contexto": "703c623767a815b6f21390a3a47ec781512efbb5e1a52c98bfd13dd5ef0bb8ae",
+    "factbook": "f1ef9b4b00212b252ba211121cae814238b4263d24d4d968333050956677efbe",
+    "nota_json": "5b985fded6dacf1fd7ece382294b322c005aeb7ad2e0d42155487cfbccd3dae0"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_PETROBRAS",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-11-25T01:45:54.247004+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O plano publica FCO, investimento caixa e arrendamentos em séries distintas e descontinua a projeção anual de gastos gerenciáveis, incorporados ao FCO. Somá-los novamente ao fluxo operacional duplicaria o efeito. A geração projetada depende de premissas de preços e execução.",
+        "titulo": "Financiabilidade condicionada"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": null,
+        "descricao": "Entrada e aceleração das unidades previstas no plano podem alterar produção e desembolsos; acompanhar os marcos efetivamente comunicados, sem presumir antecipações.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "tipo": "outro"
+      }
+    ],
+    "cenarios": {
+      "base": "Expansão gradual com necessidade de conciliar desembolsos, arrendamentos e geração recorrente. Alvo Em revisão.",
+      "otimista": "Disponibilidade industrial e projetos entregam margem e caixa após todos os compromissos. Referência otimista do modelo Em revisão.",
+      "pessimista": "Preços realizados ou execução dos projetos frustram o retorno e limitam distribuição. Referência pessimista Em revisão."
+    },
+    "comentario_valuation": "Preço R$ 42,67, P/L à frente 3,8x e patrimônio a 1,1x não bastam para concluir desconto. O alvo próprio Em revisão permanece separado do consenso público R$ 62,61. Ke 13,62% e WACC 10,34% exigem consistência com fluxos, moeda e tratamento de arrendamentos. O estado de revisão prevalece sobre alvos anteriores; nenhum dividendo extraordinário é presumido.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A tese enfraquece se maior produção exigir desembolsos e compromissos que consumam o ganho operacional, ou se projetos forem aprovados sem retorno compatível com risco. A hipótese favorável requer evidência de caixa recorrente após reinvestimento.",
+        "titulo": "Mais produção sem retorno atribuível"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-24",
+    "dados_simulados": false,
+    "data": "2026-11-24",
+    "ficha": [
+      {
+        "fato": "val.BR_PETROBRAS.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 42,67"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "13,62%"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.wacc",
+        "rotulo": "WACC",
+        "valor": "10,34%"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "3,8x"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,1x"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 62,61"
+      },
+      {
+        "fato": "val.BR_PETROBRAS.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F1",
+        "instituicao": "CVM / Petrobras",
+        "publicado_em": "2026-11-23",
+        "tipo": "Regulador",
+        "titulo": "Aprovação do plano de negócios e financiabilidade",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1592735&numSequencia=1117441&numVersao=1"
+      },
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F2",
+        "instituicao": "Petrobras / BME Latibex",
+        "publicado_em": "2026-11-11",
+        "tipo": "Relações com investidores",
+        "titulo": "Desempenho financeiro trimestral e fluxo de caixa",
+        "url": "https://www.bolsasymercados.es/dam/descargas/latibex/avisos-hr/2026/petrobras/2026-11-11-financial-performance-3q26.pdf"
+      },
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F3",
+        "instituicao": "CVM / Petrobras",
+        "publicado_em": "2026-11-10",
+        "tipo": "Regulador",
+        "titulo": "Revisão das projeções operacionais e financeiras",
+        "url": "https://www.rad.cvm.gov.br/ENETCONSULTA/frmDownloadDocumento.aspx?CodigoInstituicao=1&Tela=99&descTipo=IPE&numProtocolo=1587552&numSequencia=1112258&numVersao=1"
+      },
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F4",
+        "instituicao": "Petrobras",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Plano de negócios anterior e critérios de implantação",
+        "url": "https://api.mziq.com/mzfilemanager/v2/d/25fdf098-34f5-4608-b7fa-17d60b2de47d/26978772-40d8-152f-6382-e2129398d21f?origin=1"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Caixa após investimento e arrendamentos confirma ou frustra retorno dos projetos.",
+      "Preço realizado, custos e capital de giro alteram a financiabilidade.",
+      "Mudança de critérios de aprovação, dívida ou remuneração compromete disciplina de capital."
+    ],
+    "governanca": "O conselho aprovou o plano, que mantém dividendos segundo a política vigente, caixa mínimo e limites de dívida como premissas. Aprovação de orçamento não equivale à sanção irrestrita de projetos; observar as sistemáticas específicas de exploração, manutenção e aquisições (CVM, 23/11/2026).",
+    "guidance": "elevado",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Acompanhar produção vendida, estoque em trânsito, recebíveis de subvenção, custo total, FCO, investimento caixa, capex reconhecido e arrendamentos. Rever a visão se execução e desembolsos divergirem persistentemente das premissas de financiabilidade.",
+        "titulo": "Ponte operacional e financeira"
+      }
+    ],
+    "issuer_id": "BR_PETROBRAS",
+    "lacunas_de_dados": [
+      "Alvo, rating, cenários e retorno esperado permanecem Em revisão.",
+      "Apresentação integral do novo plano excedeu o limite de leitura; análise apoiada no comunicado CVM e relatório trimestral oficial.",
+      "Sem conciliação projeto a projeto de retorno e diferenças entre quinquênios.",
+      "Sem leitura integral da teleconferência do plano de 24/11/2026.",
+      "Guidance elevado restrito a produção e FCO de 2026; maiores gastos não tratados como melhora de rentabilidade."
+    ],
+    "modelo_de_cobertura": "2026-11-24",
+    "negocio": "Companhia integrada de petróleo e gás com exploração, produção, refino, transporte e comercialização. O plano mantém E&P como prioridade e inclui diversificação industrial e baixo carbono. Integração pode apoiar escoamento e flexibilidade comercial; o benefício exige margem realizada e retorno do capital (CVM, 23/11/2026).",
+    "nome": "Petrobras",
+    "o_que_mudou": "A nota de 26/10/2026 antecedia o resultado financeiro. Agora a pesquisa incorpora o 3T26, a elevação de projeções de 2026 e o plano aprovado em 23/11/2026. Mantemos neutralidade e baixa convicção. O valuation vigente está Em revisão e substitui, para esta leitura, o alvo citável anterior. A avaliação de SAF continua dependente de prova econômica.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_COSAN",
+        "nome": "Cosan"
+      },
+      {
+        "issuer_id": "BR_PRIO",
+        "nome": "PRIO"
+      },
+      {
+        "issuer_id": "BR_RECV",
+        "nome": "PetroRecôncavo"
+      },
+      {
+        "issuer_id": "BR_ULTRAPAR",
+        "nome": "Ultrapar"
+      },
+      {
+        "issuer_id": "CL_COPEC",
+        "nome": "Empresas Copec"
+      },
+      {
+        "issuer_id": "CO_GEOPARK",
+        "nome": "GeoPark"
+      },
+      {
+        "issuer_id": "MX_VISTA",
+        "nome": "Vista Energy"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O ganho de escala deve remunerar investimento, operação e compromissos contratuais. A hipótese favorável exige disponibilidade industrial persistente e disciplina de capital, sem extrapolar preço de petróleo ou efeito de estoque do trimestre.",
+        "titulo": "Produção precisa converter-se em caixa"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "O plano distingue implantação e avaliação. O anterior também separava implantação base e alvo condicionada à financiabilidade. Comparar totais de quinquênios diferentes não mede, isoladamente, inflação de custos ou retorno dos mesmos projetos.",
+        "titulo": "Plano é compromisso sujeito a execução"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Pré-sal e integração industrial podem sustentar escala e opções de venda. A vantagem será confirmada por disponibilidade, custo total e retorno do capital, sem equiparar capacidade instalada a produção vendida.",
+        "titulo": "Integração com prova econômica"
+      }
+    ],
+    "publicada_em": "2026-11-25T01:45:54.247004+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O fluxo livre divulgado não representa automaticamente caixa residual após todos os arrendamentos. Preservar a ponte do relatório evita comparar essa métrica a pares com convenções distintas ou tratá-la como dividendo devido.",
+        "titulo": "Caixa livre tem definição própria"
+      }
+    ],
+    "resumo": "O resultado e o plano aprovado em 23/11/2026 reforçam a hipótese de maior oferta, sujeita a reinvestimento e disciplina financeira. Mantemos visão neutra e baixa convicção: expansão de produção não determina caixa distribuível. Alvo e rating do modelo estão Em revisão, ante preço de referência R$ 42,67. A tese depende de retorno dos projetos e caixa após investimento e arrendamentos.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "alta",
+        "texto": "Brent, câmbio, fretes e preço realizado podem pressionar caixa mesmo com maior produção. Premissas do plano não são previsão independente do mercado."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Projetos de diversificação e expansão podem consumir capital sem retorno suficiente; governança de aprovação e critérios econômicos precisam ser observados na execução."
+      }
+    ],
+    "setor": "Energia",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Petrobras: produção cresce, mas caixa após compromissos decide valor do novo plano",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O relatório do 3T26 registra produção forte, mas EBITDA e lucro sem eventos exclusivos do período recuam sequencialmente com Brent menor e exportações ainda em trânsito. Capital de giro absorve caixa por recebíveis e estoques. A medida de fluxo livre da política deduz aquisições de imobilizado, intangível e participações; amortização de arrendamentos aparece entre usos de caixa. Em 10/11/2026, a companhia elevou guidance de produção e FCO de 2026, acompanhados por maior capex, investimento caixa, gastos e arrendamentos. A classificação elevado refere-se à produção e ao FCO, sem significar melhora uniforme de margens ou remuneração. O plano aprovado em 23/11/2026 tem horizonte distinto; não substitui a leitura do ano corrente (Petrobras, BME, 11/11/2026; CVM, 10/11/2026 e 23/11/2026).",
+    "vetores": [
+      {
+        "direcao": "positivo",
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A revisão de 10/11/2026 elevou projeções de produção. O benefício depende de vendas, custos e recebimentos; produção e receita reconhecida podem ter calendários distintos.",
+        "vetor": "Produção e comercialização"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Investimento caixa, capex e arrendamentos precisam permanecer separados. Aceleração industrial pode antecipar desembolsos antes da receita e reduzir flexibilidade de remuneração.",
+        "vetor": "Compromissos de caixa"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

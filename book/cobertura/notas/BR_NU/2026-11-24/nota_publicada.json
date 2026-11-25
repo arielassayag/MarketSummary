@@ -1,0 +1,369 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-24",
+    "manifest_sha256": "de6e9884ef144a961c8c4fd750965208cd1d6928e35afc7853fe4daea5176f7b",
+    "modelo_as_of": "2026-11-20"
+  },
+  "conviccao": 1,
+  "data": "2026-11-24",
+  "hashes": {
+    "contexto": "f77ed442e09cc0e819b187374f4bce12f551e636b4954f160f466e8031076a2b",
+    "factbook": "e2d3b5e47d66c490036346d6a06e75a2f2781332bd4ea5e33621fad2dcfc2ff7",
+    "nota_json": "6c5cb3f1ed57a3f5628b310767137c8c0d689979cccec9412061dc75eba82f0e"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_NU",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-11-25T01:50:23.957860+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Depósitos financiam obrigações e ativos de cada entidade; não equivalem a caixa livre do acionista. Avaliar expansão e liquidez por jurisdição antes de afirmar autofinanciamento irrestrito.",
+        "titulo": "Crescimento com restrições locais"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Crescimento com exigência de disciplina em crédito, despesas e capital. Alvo US$ 6,47.",
+      "otimista": "Receita por relacionamento e safras maduras cobrem perdas e expansão. Cenário otimista calculado US$ 7,21, sem probabilidade implícita disponível.",
+      "pessimista": "Perdas e expansão consomem retorno recorrente. Cenário pessimista US$ 5,80, sem probabilidade implícita disponível."
+    },
+    "comentario_valuation": "Retorno total esperado -41,30%, ke 13,64% e alpha relativo -63,05% são resultados do modelo. P/L à frente 11,4x e preço sobre patrimônio 4,0x exigem retorno sustentável. A diferença do alvo próprio para o consenso de -63,42% não prova percepção de mercado nem autoriza inferir posição operacional. Pares incluem negócios financeiros distintos; WACC e probabilidades ausentes permanecem indisponíveis.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A hipótese favorável enfraquece se novas safras e custos internacionais absorverem monetização. A cautela perderia força com retorno persistente após perdas e capital, inclusive nas operações mais novas.",
+        "titulo": "Escala sem retorno incremental"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-24",
+    "dados_simulados": false,
+    "data": "2026-11-24",
+    "ficha": [
+      {
+        "fato": "val.BR_NU.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 11,82"
+      },
+      {
+        "fato": "val.BR_NU.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "US$ 6,47"
+      },
+      {
+        "fato": "val.BR_NU.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-45,24%"
+      },
+      {
+        "fato": "val.BR_NU.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Venda"
+      },
+      {
+        "fato": "val.BR_NU.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "B"
+      },
+      {
+        "fato": "val.BR_NU.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "US$ 7,21"
+      },
+      {
+        "fato": "val.BR_NU.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_NU.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "US$ 5,80"
+      },
+      {
+        "fato": "val.BR_NU.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_NU.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "13,64%"
+      },
+      {
+        "fato": "val.BR_NU.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_NU.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.BR_NU.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "-41,30%"
+      },
+      {
+        "fato": "val.BR_NU.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "-63,05%"
+      },
+      {
+        "fato": "val.BR_NU.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "11,4x"
+      },
+      {
+        "fato": "val.BR_NU.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "4,0x"
+      },
+      {
+        "fato": "val.BR_NU.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 17,69"
+      },
+      {
+        "fato": "val.BR_NU.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-63,42%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F1",
+        "instituicao": "SEC / Nu Holdings",
+        "publicado_em": "2026-11-12",
+        "tipo": "Regulador",
+        "titulo": "Resultados trimestrais e perspectivas",
+        "url": "https://www.sec.gov/Archives/edgar/data/1691493/000129281426005273/nupr3q26_6k.htm"
+      },
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F2",
+        "instituicao": "SEC / Nu Holdings",
+        "publicado_em": "2026-11-12",
+        "tipo": "Regulador",
+        "titulo": "Apresentação e ponte contábil gerencial",
+        "url": "https://www.sec.gov/Archives/edgar/data/1691493/000129281426005275/nu20261112_6k.htm"
+      },
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F3",
+        "instituicao": "SEC / Nu Holdings",
+        "publicado_em": "2026-11-12",
+        "tipo": "Regulador",
+        "titulo": "Demonstrações intermediárias e notas explicativas",
+        "url": "https://www.sec.gov/Archives/edgar/data/1691493/000129281426005272/nufs3q26_6k.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Safras maduras mudam a margem após perdas.",
+      "Despesas no 4T26 alteram a leitura da eficiência anual.",
+      "Capital por país e expansão deixam de sustentar retorno incremental."
+    ],
+    "governanca": "Demonstrações intermediárias passaram por revisão limitada, distinta de auditoria anual. A análise de capital exige distinguir holding e subsidiárias reguladas; direitos de classe, transferências e sucessão permanente na liderança seguem sujeitos a diligência específica (SEC, 12/11/2026).",
+    "guidance": "reduzido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Acompanhar atraso por idade e produto, margem após perdas reportada e ajustada, custo de depósitos e eficiência após despesas postergadas. Invalidação: retorno incremental não cobre perdas e capital em base comparável.",
+        "titulo": "Safras e calendário de despesas"
+      }
+    ],
+    "issuer_id": "BR_NU",
+    "lacunas_de_dados": [
+      "WACC e probabilidades implícitas dos cenários indisponíveis.",
+      "Sem conciliação integral de retorno por país e perdas realizadas por safra.",
+      "Sucessão permanente e direitos de classe não integralmente revalidados nesta consulta.",
+      "Guidance reduzido descreve apenas o índice de eficiência, com direção econômica favorável."
+    ],
+    "modelo_de_cobertura": "2026-11-24",
+    "negocio": "Grupo financeiro digital com crédito, depósitos e serviços no Brasil, México e Colômbia, além de novas iniciativas internacionais. A hipótese de valor depende de relacionamento ativo e monetização após perdas, custo de servir e capital local (SEC, 12/11/2026).",
+    "nome": "Nu Holdings",
+    "o_que_mudou": "A nota de 26/10/2026 antecedia o resultado. O 3T26 permite testar crédito e eficiência com informações novas, preservando a distinção contábil e gerencial. Mantemos baixa convicção; o resultado não comprova resolução da sucessão tecnológica nem permite inferir incidentes operacionais.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      },
+      {
+        "issuer_id": "BR_ITAU",
+        "nome": "Itaú Unibanco"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "A expansão precisa preservar retorno após perdas em safras comparáveis. Crescimento do crédito e depósitos não prova melhora da seleção; acompanhar atraso inicial e longo com seus denominadores próprios.",
+        "titulo": "Margem depois do risco"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A ponte gerencial reorganiza receitas, custos e impostos, preservando o lucro líquido. A leitura deve manter a conciliação com IFRS antes de comparar margem e eficiência com pares.",
+        "titulo": "Resultado gerencial não altera lucro final"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Atividade e produtos adicionais podem ampliar monetização. A vantagem precisa de retenção, custo de servir e retorno após perdas, sem concluir liderança econômica apenas por clientes ou cartões.",
+        "titulo": "Relacionamento precisa remunerar capital"
+      }
+    ],
+    "publicada_em": "2026-11-25T01:50:23.957860+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Confrontar IFRS e gerencial pela ponte publicada. O demonstrativo discrimina créditos e diferenças tributárias; não extrapolar a carga efetiva de um trimestre como taxa permanente.",
+        "titulo": "Bases comparáveis e tributação"
+      }
+    ],
+    "resumo": "Mantemos neutralidade qualitativa e baixa convicção enquanto crédito e expansão exigem confirmação por safra e jurisdição. O modelo classifica Venda, com alvo US$ 6,47, ante referência US$ 11,82, e potencial -45,24%. A rentabilidade corrente não elimina o risco de perdas tardias nem comprova retorno do investimento internacional.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Atraso longo crescente pode antecipar perdas adicionais; aumento da carteira pode diluir índices sem resolver a qualidade por safra."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Despesas internacionais, risco operacional e capital local podem absorver o ganho de monetização. A transição de liderança citada na nota anterior continua exigindo acompanhamento."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Nu: lucro cresce com maior atraso longo e eficiência sujeita a calendário de despesas",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O release de 12/11/2026 registra crescimento do lucro no 3T26 e da atividade, com atraso longo maior. A margem ajustada ao risco reportada cai sequencialmente, enquanto a medida sem itens não recorrentes melhora. Parte da eficiência trimestral decorre de despesas transferidas ao trimestre seguinte. Guidance reduzido refere-se exclusivamente ao índice de eficiência esperado para 2026, cuja redução é favorável, e não a corte de lucro. O compromisso divulgado para impacto das iniciativas internacionais permanece. O tom da gestão é positivo sobre expansão e monetização (SEC, 12/11/2026).",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Maior relacionamento só cria valor quando receita líquida cobre perdas, depósitos e capital. Testar retorno por produto e país, sem somar indicadores de bases distintas.",
+        "vetor": "Monetização e funding"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "média",
+        "texto": "O deslocamento de despesas para o 4T26 limita a extrapolação da eficiência trimestral. Iniciativas internacionais devem ser acompanhadas por capital e retorno, além de clientes.",
+        "vetor": "Despesas e expansão"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

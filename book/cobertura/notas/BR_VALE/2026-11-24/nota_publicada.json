@@ -1,0 +1,364 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-24",
+    "manifest_sha256": "de6e9884ef144a961c8c4fd750965208cd1d6928e35afc7853fe4daea5176f7b",
+    "modelo_as_of": "2026-11-20"
+  },
+  "conviccao": 1,
+  "data": "2026-11-24",
+  "hashes": {
+    "contexto": "b1fabe375760f44861ec83d5b0f2e249e586619184d4cbd5df7d7f6f872d0383",
+    "factbook": "05ac50d92c00a300ba4ce26bd3d4ab454bc4ec0d6e60c7863ee1add970390948",
+    "nota_json": "bf7e67e68cefb679e43241dbad24d2ba965e933fc84d85248ac01117cbc12bbd"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_VALE",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-11-25T01:52:16.897466+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Exigir retorno dos projetos após sustentação e reparação. O acompanhamento deve conciliar avanço físico, desembolso e produção comercial efetiva, sem presumir remuneração extraordinária a partir da dívida expandida.",
+        "titulo": "Sustentação antes de expansão"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Execução gradual e disciplina financeira, com alvo R$ 57,33.",
+      "otimista": "Realização e disponibilidade melhoram com caixa após obrigações. Alvo otimista R$ 90,39.",
+      "pessimista": "Custos, preços e compromissos comprimem caixa e retorno; alvo pessimista R$ 26,14."
+    },
+    "comentario_valuation": "Preço R$ 58,48, alvo R$ 57,33 e retorno total esperado +10,46% preservam a distinção entre variação da ação e remuneração total projetada. O consenso público aponta R$ 86,85, com diferença da casa -33,99%; isso não identifica o que está precificado. A confiança quantitativa A não resolve retorno por projeto nem passivos. Pares incluem holdings, alumínio e siderurgia, com exposições distintas.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A neutralidade perderia suporte com melhora persistente de realização e caixa após obrigações. A hipótese favorável enfraquece se hedge e efeitos fiscais forem necessários para compensar deterioração recorrente de custos e preço realizado.",
+        "titulo": "Proteção financeira sem produtividade"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-24",
+    "dados_simulados": false,
+    "data": "2026-11-24",
+    "ficha": [
+      {
+        "fato": "val.BR_VALE.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 58,48"
+      },
+      {
+        "fato": "val.BR_VALE.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 57,33"
+      },
+      {
+        "fato": "val.BR_VALE.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "-1,96%"
+      },
+      {
+        "fato": "val.BR_VALE.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_VALE.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "A"
+      },
+      {
+        "fato": "val.BR_VALE.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 90,39"
+      },
+      {
+        "fato": "val.BR_VALE.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "5,79%"
+      },
+      {
+        "fato": "val.BR_VALE.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 26,14"
+      },
+      {
+        "fato": "val.BR_VALE.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "0,30%"
+      },
+      {
+        "fato": "val.BR_VALE.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "14,92%"
+      },
+      {
+        "fato": "val.BR_VALE.wacc",
+        "rotulo": "WACC",
+        "valor": "12,28%"
+      },
+      {
+        "fato": "val.BR_VALE.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_VALE.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+10,46%"
+      },
+      {
+        "fato": "val.BR_VALE.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+4,65%"
+      },
+      {
+        "fato": "val.BR_VALE.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "5,6x"
+      },
+      {
+        "fato": "val.BR_VALE.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "1,2x"
+      },
+      {
+        "fato": "val.BR_VALE.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 86,85"
+      },
+      {
+        "fato": "val.BR_VALE.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "-33,99%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F1",
+        "instituicao": "SEC / Vale",
+        "publicado_em": "2026-10-29",
+        "tipo": "Regulador",
+        "titulo": "Relatório integrado e conciliação de caixa",
+        "url": "https://www.sec.gov/Archives/edgar/data/917851/000129281426005058/vale20261029_6k.htm"
+      },
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F2",
+        "instituicao": "Vale",
+        "publicado_em": "2026-10-29",
+        "tipo": "Relações com investidores",
+        "titulo": "Destaques operacionais e andamento da reparação",
+        "url": "https://vale.com/in/check-out-the-financial-results-for-q3-26/-/categories/64940"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Margem e caixa após sustentação e reparação mudam persistentemente.",
+      "Novas projeções alteram custo, volume ou compromissos de capital.",
+      "Passivos e desembolsos mudam a capacidade de remuneração."
+    ],
+    "governanca": "A avaliação deve incluir reparação, descaracterização e compromissos com comunidades e reguladores. A companhia informa avanço dos acordos; nenhuma conclusão de extinção geral de passivos é feita. Distribuição e recompra precisam ser compatíveis com caixa após obrigações (Vale, 29/10/2026).",
+    "guidance": "mantido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Acompanhar preço líquido de frete, custo completo, produção vendida, hedge, capital de giro, sustentação e pagamentos de reparação. Revisar a tese se o caixa após compromissos se descolar persistentemente do resultado operacional.",
+        "titulo": "Margem e usos finais de caixa"
+      }
+    ],
+    "issuer_id": "BR_VALE",
+    "lacunas_de_dados": [
+      "Link de transcrição da página atual abriu documento de 2024; não utilizado como evidência de 2026.",
+      "Não conciliado integralmente retorno por projeto e contingências.",
+      "Guidance mantido restrito ao release de 29/10/2026; sem confirmação posterior nesta leitura."
+    ],
+    "modelo_de_cobertura": "2026-11-24",
+    "negocio": "Produtora de minério de ferro, cobre e níquel, integrada a infraestrutura logística. Qualidade mineral e flexibilidade podem apoiar realização e escoamento; o retorno deve cobrir frete, sustentação das operações e obrigações socioambientais (SEC, 29/10/2026).",
+    "nome": "Vale",
+    "o_que_mudou": "A nota de 29/10/2026 se baseava nos destaques e deixava a ponte financeira pendente. Agora lemos o relatório da SEC e identificamos o benefício fiscal não recorrente e os usos posteriores de reparação. Atualizamos os fatos do modelo sem apresentar a mesma divulgação como novo resultado.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_BRADESPAR",
+        "nome": "Bradespar"
+      },
+      {
+        "issuer_id": "BR_CBA",
+        "nome": "Companhia Brasileira de Alumínio"
+      },
+      {
+        "issuer_id": "BR_CMIN",
+        "nome": "CSN Mineração"
+      },
+      {
+        "issuer_id": "BR_ERO",
+        "nome": "Ero Copper"
+      },
+      {
+        "issuer_id": "BR_GERDAU",
+        "nome": "Gerdau"
+      },
+      {
+        "issuer_id": "BR_GOAU",
+        "nome": "Metalúrgica Gerdau"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A hipótese exige conversão recorrente depois de reinvestimento e reparação. A ponte financeira distingue fluxo recorrente e total e apresenta pagamentos adicionais de Brumadinho e Samarco; não tomar o total divulgado como caixa integralmente distribuível.",
+        "titulo": "Caixa após obrigações"
+      },
+      {
+        "evidencias": [
+          {
+            "fato": "val.BR_VALE.etr",
+            "nome": "Retorno total esperado em 12 meses",
+            "valor": "+10,46%"
+          },
+          {
+            "fato": "val.BR_VALE.alpha_rel",
+            "nome": "Alpha de valuation relativo aos pares",
+            "valor": "+4,65%"
+          },
+          {
+            "fato": "val.BR_VALE.ke",
+            "nome": "Custo de capital próprio",
+            "valor": "14,92%"
+          },
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O retorno esperado é +10,46%, com alpha relativo +4,65% e ke 14,92%. A interpretação exige margem econômica persistente; proteção financeira não comprova produtividade estrutural.",
+        "titulo": "Valor exige melhora operacional persistente"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Flexibilidade de produto e logística pode proteger margem em cenários diferentes. O critério é realização líquida após frete e custo completo, sem concluir vantagem por volume nominal ou composição isolada.",
+        "titulo": "Qualidade com retorno verificável"
+      }
+    ],
+    "publicada_em": "2026-11-25T01:52:16.897466+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "A ponte distingue fluxo recorrente, benefício fiscal não recorrente e usos posteriores. Extrapolar o fluxo total ocultaria a diferença entre capacidade operacional e liberação exclusiva do período.",
+        "titulo": "Separar recorrência e caixa fiscal"
+      }
+    ],
+    "resumo": "Mantemos neutralidade e baixa convicção. A leitura do relatório arquivado na SEC aprofunda a distinção entre fluxo recorrente, eventos fiscais e desembolsos de reparação. O modelo indica Neutro, alvo R$ 57,33, ante referência R$ 58,48, e potencial -1,96%. Produtividade, realização líquida e retorno após obrigações permanecem os testes decisivos.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "alta",
+        "texto": "Preços minerais, câmbio e frete podem absorver ganhos de volume e qualidade. Retorno deve ser avaliado após investimento de sustentação."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Reparação e descaracterização exigem desembolsos e execução; progresso físico ou encerramento de parcela do acordo não elimina todas as obrigações."
+      }
+    ],
+    "setor": "Materiais",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "Vale: caixa recorrente e reparação continuam centrais na leitura do retorno",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "O 3T26, divulgado em 29/10/2026, permanece a referência: realização e custos do minério pressionam EBITDA proforma e caixa recorrente. O relatório atribui parte do fluxo total a liberação de caixa não recorrente ligada a incentivos fiscais. A ponte separa pagamentos de Brumadinho e Samarco posteriores ao fluxo livre apresentado. Guidance de produção de 2026 foi reafirmado, com minério na parte inferior e cobre e níquel na metade superior das faixas; capex aponta à parte inferior da faixa vigente. Mantido descreve as faixas divulgadas no resultado, sem comprovar reafirmação posterior. O tom da gestão é positivo sobre execução (SEC, 29/10/2026).",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Confrontar preço realizado, qualidade e frete com custo completo. A hipótese favorável depende da disponibilidade das minas e entrega dos projetos, sem extrapolar efeitos temporários de venda.",
+        "vetor": "Realização e logística"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fato": "val.BR_VALE.wacc",
+            "nome": "Custo médio ponderado de capital",
+            "valor": "12,28%"
+          },
+          {
+            "fato": "val.BR_VALE.cv_metodos",
+            "nome": "Dispersão entre métodos (CV)",
+            "valor": "17,12%"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "WACC 12,28% e dispersão entre métodos 17,12% condicionam a avaliação; múltiplo baixo não encerra risco de ciclo e obrigações.",
+        "vetor": "Custo de capital"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

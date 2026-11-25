@@ -1,0 +1,403 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-24",
+    "manifest_sha256": "de6e9884ef144a961c8c4fd750965208cd1d6928e35afc7853fe4daea5176f7b",
+    "modelo_as_of": "2026-11-20"
+  },
+  "conviccao": 2,
+  "data": "2026-11-24",
+  "hashes": {
+    "contexto": "63f850ea2552783de66b80d769d4d3d02a431cd9216b81d328cdf7249284c4ca",
+    "factbook": "558ff0be1b2bc142407ffc6e248341aba26bee61af9ecac7641b71c84d440aeb",
+    "nota_json": "9cc324a2a0a3c50b501b410ca711976ad08a7ae7bd586082df19e2987d9605ff"
+  },
+  "is_synthetic": false,
+  "issuer_id": "BR_BB",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": "2027-02-10",
+  "published_at": "2026-11-25T02:09:03.886715+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "A redução de remuneração reforça a necessidade de acompanhar capital após perdas e direitos das participações. Lucro bancário não deve ser convertido em fluxo livre industrial nem em dividendo garantido.",
+        "titulo": "Distribuição sujeita à preservação do capital"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [
+      {
+        "data": "2027-02-17",
+        "descricao": "Anúncio previsto do complemento de dividendos de 2026, dependente da apuração anual; não há valor por ação confirmado nesta nota.",
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F4"
+          }
+        ],
+        "tipo": "dividendos"
+      }
+    ],
+    "cenarios": {
+      "base": "Recuperação gradual requer confirmação operacional; alvo R$ 30,52 não é alterado pela nota.",
+      "otimista": "Cobrança e normalização de perdas sustentam retorno sobre capital; alvo R$ 37,26.",
+      "pessimista": "Perdas persistem e capital limita distribuição; alvo R$ 24,47."
+    },
+    "comentario_valuation": "Referência R$ 14,30, alvo R$ 30,52, retorno esperado +124,63% e ke 14,61% são do modelo. O alvo anterior R$ 34,09 e revisão -10,47% preservam a direção calculada sem reestimativa narrativa. Consenso R$ 21,63 e diferença +41,11% não comprovam expectativas precificadas. O rating quantitativo permanece neutro; o juízo negativo da nota decorre da recuperação operacional e restrições de capital, com convicção limitada pelo desconto e pela falta de conciliação integral entre bancos.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A visão negativa enfraquece com pagamentos e cobrança efetivos, menor formação de atrasos e melhora de capital após perdas. O desconto do modelo pode prevalecer se a normalização ocorrer antes do esperado, sem exigir benefício fiscal crescente.",
+        "titulo": "Desconto pode antecipar recuperação"
+      }
+    ],
+    "conviccao": 2,
+    "dados_ate": "2026-11-24",
+    "dados_simulados": false,
+    "data": "2026-11-24",
+    "ficha": [
+      {
+        "fato": "val.BR_BB.preco",
+        "rotulo": "Preço de referência",
+        "valor": "R$ 14,30"
+      },
+      {
+        "fato": "val.BR_BB.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "R$ 30,52"
+      },
+      {
+        "fato": "val.BR_BB.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "+113,45%"
+      },
+      {
+        "fato": "val.BR_BB.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Neutro"
+      },
+      {
+        "fato": "val.BR_BB.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.BR_BB.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "R$ 37,26"
+      },
+      {
+        "fato": "val.BR_BB.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BB.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "R$ 24,47"
+      },
+      {
+        "fato": "val.BR_BB.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BB.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "14,61%"
+      },
+      {
+        "fato": "val.BR_BB.wacc",
+        "rotulo": "WACC",
+        "valor": "n/d"
+      },
+      {
+        "fato": "val.BR_BB.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "5,29%"
+      },
+      {
+        "fato": "val.BR_BB.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "+124,63%"
+      },
+      {
+        "fato": "val.BR_BB.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "+103,46%"
+      },
+      {
+        "fato": "val.BR_BB.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "4,2x"
+      },
+      {
+        "fato": "val.BR_BB.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "0,4x"
+      },
+      {
+        "fato": "val.BR_BB.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "R$ 21,63"
+      },
+      {
+        "fato": "val.BR_BB.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "+41,11%"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F1",
+        "instituicao": "Banco do Brasil",
+        "publicado_em": null,
+        "tipo": "Relações com investidores",
+        "titulo": "Análise do desempenho e demonstrações financeiras",
+        "url": "https://filemanager-cdn.mziq.com/published/5760dff3-15e1-4962-9e81-322a0b3d0bbd/b93e763e-674c-4ec2-8bbc-324ef8f0fe51"
+      },
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F2",
+        "instituicao": "Banco do Brasil",
+        "publicado_em": "2026-11-11",
+        "tipo": "Relações com investidores",
+        "titulo": "Revisão das projeções corporativas",
+        "url": "https://filemanager-cdn.mziq.com/published/5760dff3-15e1-4962-9e81-322a0b3d0bbd/85e7b594-73e5-42aa-8e9e-9d0425d68804"
+      },
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F3",
+        "instituicao": "Banco do Brasil",
+        "publicado_em": "2026-11-11",
+        "tipo": "Relações com investidores",
+        "titulo": "Informe de resultados e qualidade do crédito",
+        "url": "https://imprensa.bb.com.br/bb-registra-lucro-liquido-ajustado-de-r-86-bilhoes-nos-9-meses-acumulados-de-2026/"
+      },
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F4",
+        "instituicao": "Banco do Brasil / reprodução no Investidor Dez",
+        "publicado_em": "2026-11-11",
+        "tipo": "Dados públicos",
+        "titulo": "Fato relevante sobre remuneração dos acionistas",
+        "url": "https://investidor10.com.br/acoes/link_comunicado/BBAS3/52509/"
+      },
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F5",
+        "instituicao": "SEC / Banco Bradesco",
+        "publicado_em": "2026-10-23",
+        "tipo": "Regulador",
+        "titulo": "Resultado recorrente e qualidade de crédito",
+        "url": "https://www.sec.gov/Archives/edgar/data/1160330/000129281426004994/bbdpr3q26_6k.htm"
+      },
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F6",
+        "instituicao": "SEC / Itaú Unibanco",
+        "publicado_em": "2026-11-03",
+        "tipo": "Regulador",
+        "titulo": "Resultado gerencial e margem",
+        "url": "https://www.sec.gov/Archives/edgar/data/1132597/000113259726000271/pressrelease_3q26.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Pagamentos e recuperações estabilizam perdas e restauram resultado recorrente.",
+      "Capital e realização de ativos fiscais mudam a capacidade de distribuição.",
+      "Nova projeção formal modifica margem, crédito ou lucro."
+    ],
+    "governanca": "O fato relevante de remuneração, recebido em reprodução pública, informa ausência dos anúncios intermediários previstos para novembro e de dividendos intermediários em 2027. A distribuição anual futura depende de capital. Controle público exige observar objetivos institucionais e direitos do acionista; não se infere interferência específica sem evidência.",
+    "guidance": "reduzido",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F4"
+          }
+        ],
+        "texto": "Acompanhar safras, renegociações com recebimento, migração de estágios, baixa para perda, ativos fiscais e capital após distribuição. Rever se melhora de pagamentos sustentar resultado recorrente e capacidade de remuneração.",
+        "titulo": "Pagamento e capital após perdas"
+      }
+    ],
+    "issuer_id": "BR_BB",
+    "lacunas_de_dados": [
+      "WACC e probabilidades implícitas indisponíveis.",
+      "Renegociações, ativos fiscais e retorno por safra não conciliados integralmente.",
+      "Documento de remuneração recebido em reprodução pública; identidade da cópia não autenticada contra protocolo original.",
+      "Comparação entre bancos não normaliza integralmente critérios gerenciais e contábeis.",
+      "Próximo resultado consta como estimado; não tratado como compromisso confirmado."
+    ],
+    "modelo_de_cobertura": "2026-11-24",
+    "negocio": "Banco com crédito, serviços e participações, sob controle público e com presença no agronegócio. Relacionamento e captação precisam remunerar perdas e capital; exposição rural exige análise por segmento, safra e renegociação (Banco do Brasil, 11/11/2026).",
+    "nome": "Banco do Brasil",
+    "o_que_mudou": "A nota de 11/10/2026 usava o resultado anterior e mantinha neutralidade. Incorporamos o 3T26, o corte de projeções e as restrições de distribuição. A visão qualitativa passa a negativa, preservando integralmente alvos e rating quantitativos do retrato corrente.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_ABC",
+        "nome": "Banco ABC Brasil"
+      },
+      {
+        "issuer_id": "BR_B3",
+        "nome": "B3"
+      },
+      {
+        "issuer_id": "BR_BBSEG",
+        "nome": "BB Seguridade"
+      },
+      {
+        "issuer_id": "BR_BRADESCO",
+        "nome": "Banco Bradesco"
+      },
+      {
+        "issuer_id": "BR_BTG",
+        "nome": "BTG Pactual"
+      },
+      {
+        "issuer_id": "BR_CXSEG",
+        "nome": "Caixa Seguridade"
+      },
+      {
+        "issuer_id": "BR_INTER",
+        "nome": "Inter&Co"
+      },
+      {
+        "issuer_id": "BR_ITAU",
+        "nome": "Itaú Unibanco"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O fato relevante atribui a revisão à piora de pagamentos e renegociações abaixo do esperado no agro, além da concentração de vencimentos com reflexos futuros em provisões. Alongamento contratual não equivale a recuperação de caixa.",
+        "titulo": "Renegociação ainda não confirma recuperação"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          },
+          {
+            "fonte": "F5"
+          },
+          {
+            "fonte": "F6"
+          }
+        ],
+        "texto": "O lucro ajustado do Banco do Brasil recuou, enquanto Bradesco e Itaú reportaram avanço do resultado recorrente ou gerencial. A comparação é qualitativa e não normaliza todas as diferenças contábeis; sustenta cautela relativa, sem anular o desconto do modelo.",
+        "titulo": "Deterioração contrasta com pares bancários"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "texto": "Presença em crédito rural e serviços oferece canais comerciais, mas a inadimplência evidencia que escala e garantias não eliminam perdas. A vantagem exige recuperação e originação com preço ajustado ao risco.",
+        "titulo": "Relacionamento precisa remunerar risco"
+      }
+    ],
+    "publicada_em": "2026-11-25T02:09:03.886715+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "Distinguir resultado gerencial antes de tributos, efeitos fiscais, ajustes e lucro atribuível. Ativos fiscais dependem de realização futura; o lucro final positivo não demonstra recuperação operacional.",
+        "titulo": "Tributos e resultado operacional separados"
+      }
+    ],
+    "resumo": "A visão qualitativa passa a negativa, com convicção limitada. O corte de projeções, a pressão de crédito e a restrição de distribuição exigem evidência de recuperação. O modelo preserva Neutro, alvo R$ 30,52 e potencial +113,45%, com confiança C. O desconto quantitativo não comprova retorno recorrente nem capital distribuível.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          },
+          {
+            "fonte": "F3"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "alta",
+        "texto": "Inadimplência rural e renegociações sem pagamento podem prolongar provisões e pressionar margem e capital."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Realização de ativos fiscais depende de resultados tributáveis futuros; reconhecimento contábil não equivale a recebimento imediato."
+      }
+    ],
+    "setor": "Financeiro",
+    "stance": -1,
+    "stance_pt": "negativa",
+    "tipo": "pos_resultado",
+    "tipo_pt": "Pós-resultado",
+    "titulo": "Banco do Brasil: corte de projeções e restrição de distribuição exigem recuperação após perdas",
+    "tom_gestao": "neutro",
+    "ultimo_resultado": "O 3T26 divulgado em 11/11/2026 apresentou queda do lucro ajustado e da margem bruta, com maior custo de crédito. A pressão se concentra em parte do agronegócio e inclui reforços pontuais no atacado; não significa deterioração uniforme de toda carteira rural. O resultado gerencial antes de tributos ficou negativo, com contribuição tributária positiva na ponte até o lucro. A companhia reduziu faixas de lucro, margem e crédito e elevou custo de crédito; serviços e despesas mantiveram projeções. Reduzido refere-se à perspectiva de lucro e crescimento, sem tratar custo maior como melhora (Banco do Brasil, 11/11/2026 e relatório gerencial consultado em 24/11/2026).",
+    "vetores": [
+      {
+        "direcao": "negativo",
+        "evidencias": [
+          {
+            "fonte": "F3"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Margem bruta recuou e custo de crédito aumentou. Serviços mais fortes não compensam automaticamente perda de capacidade de geração no crédito; exigir recuperação após provisões e cobrança efetiva.",
+        "vetor": "Margem depois das perdas"
+      },
+      {
+        "direcao": "negativo",
+        "evidencias": [
+          {
+            "fonte": "F4"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "O comunicado de remuneração reduz distribuição em 2026 e condiciona a de 2027 às projeções de capital. Não extrapolar o retorno total projetado para dividendos contratados.",
+        "vetor": "Capital e remuneração"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": -1
+}

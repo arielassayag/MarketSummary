@@ -1,0 +1,351 @@
+{
+  "autoria": "mente",
+  "cobertura": {
+    "as_of": "2026-11-24",
+    "manifest_sha256": "de6e9884ef144a961c8c4fd750965208cd1d6928e35afc7853fe4daea5176f7b",
+    "modelo_as_of": "2026-11-20"
+  },
+  "conviccao": 1,
+  "data": "2026-11-24",
+  "hashes": {
+    "contexto": "1b744d5d4e472a2adb4a95ddd15c4099dc002742844c5fea9ac73c421211e5da",
+    "factbook": "cc76a4ea2ab73265a1ac6c77713041b25e6118faa1901a69fdd5821f11b8794d",
+    "nota_json": "5cfdc030e737ae4fe90edeebf22ffe3205c6ae3e0266d3615e3181261c63ee8b"
+  },
+  "is_synthetic": false,
+  "issuer_id": "LA_MELI",
+  "mind": "codex",
+  "modelo_ia": null,
+  "problems": [],
+  "proximo_resultado": null,
+  "published_at": "2026-11-25T01:48:25.958024+00:00",
+  "rendered": {
+    "alocacao_capital": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O fluxo ajustado inclui o financiamento ligado à fintech e exclui determinados saldos restritos; a variação de caixa disponível acrescenta outros efeitos corporativos. Comparações com pares exigem a mesma convenção.",
+        "titulo": "Ponte para discricionariedade"
+      }
+    ],
+    "autoria": "mente",
+    "autoria_pt": "Narrativa da gestão (IA)",
+    "aviso": "Nota de pesquisa do CDP — Cabra da Peste: leitura qualitativa da gestão sobre modelos quantitativos internos, a partir de dados públicos. Não constitui relatório de análise (Resolução CVM nº 20/2021), oferta ou recomendação de investimento. Todos os números foram calculados por código; a narrativa apenas os cita.",
+    "catalisadores": [],
+    "cenarios": {
+      "base": "Crescimento exige reinvestimento e a conversão em margem permanece gradual. Alvo Em revisão.",
+      "otimista": "Frequência persiste, logística dilui custos e safras maduras cobrem perdas e funding. Cenário numérico Em revisão.",
+      "pessimista": "Incentivos e perdas excedem monetização, elevando dependência de recursos externos. Cenário numérico Em revisão."
+    },
+    "comentario_valuation": "Alvo Em revisão, retorno esperado Em revisão e alpha relativo Em revisão preservam o estado de revisão. O P/L à frente 27,0x usa projeção pública; alvo médio de consenso US$ 2.152,76 não substitui avaliação própria. WACC 11,67% e ke 13,11% exigem coerência com recursos restritos, dívida corporativa e financiamento de crédito. Os pares setoriais do modelo não são concorrentes operacionais homogêneos, limitando inferências por múltiplos.",
+    "contratese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A visão favorável enfraquece se a frequência depender de subsídio persistente e as safras não melhorarem após maturação comparável. A hipótese contrária requer monetização sem deterioração de perdas e sem expansão desproporcional do funding.",
+        "titulo": "Engajamento sem remuneração do capital"
+      }
+    ],
+    "conviccao": 1,
+    "dados_ate": "2026-11-24",
+    "dados_simulados": false,
+    "data": "2026-11-24",
+    "ficha": [
+      {
+        "fato": "val.LA_MELI.preco",
+        "rotulo": "Preço de referência",
+        "valor": "US$ 1.355,49"
+      },
+      {
+        "fato": "val.LA_MELI.preco_alvo",
+        "rotulo": "Preço-alvo de 12 meses",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.upside",
+        "rotulo": "Potencial até o alvo",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.rating_codigo",
+        "rotulo": "Rating da cobertura",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.confianca_codigo",
+        "rotulo": "Confiança do modelo",
+        "valor": "C"
+      },
+      {
+        "fato": "val.LA_MELI.alvo_otimista",
+        "rotulo": "Cenário otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.prob_otimista",
+        "rotulo": "Probabilidade implícita do otimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.alvo_pessimista",
+        "rotulo": "Cenário pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.prob_pessimista",
+        "rotulo": "Probabilidade implícita do pessimista",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.ke",
+        "rotulo": "Custo de capital próprio (ke)",
+        "valor": "13,11%"
+      },
+      {
+        "fato": "val.LA_MELI.wacc",
+        "rotulo": "WACC",
+        "valor": "11,67%"
+      },
+      {
+        "fato": "val.LA_MELI.g",
+        "rotulo": "Crescimento na perpetuidade",
+        "valor": "4,40%"
+      },
+      {
+        "fato": "val.LA_MELI.etr",
+        "rotulo": "Retorno total esperado",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.alpha_rel",
+        "rotulo": "Alpha relativo aos pares",
+        "valor": "Em revisão"
+      },
+      {
+        "fato": "val.LA_MELI.pl_fwd",
+        "rotulo": "P/L à frente",
+        "valor": "27,0x"
+      },
+      {
+        "fato": "val.LA_MELI.pb",
+        "rotulo": "Preço sobre valor patrimonial",
+        "valor": "8,4x"
+      },
+      {
+        "fato": "val.LA_MELI.consenso_alvo",
+        "rotulo": "Alvo médio do consenso público",
+        "valor": "US$ 2.152,76"
+      },
+      {
+        "fato": "val.LA_MELI.diff_consenso",
+        "rotulo": "Alvo da casa contra o consenso",
+        "valor": "Em revisão"
+      }
+    ],
+    "fontes": [
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F1",
+        "instituicao": "SEC / MercadoLibre",
+        "publicado_em": "2026-11-04",
+        "tipo": "Regulador",
+        "titulo": "Carta aos acionistas e métricas operacionais",
+        "url": "https://www.sec.gov/Archives/edgar/data/1099590/000109959026000027/meli-20260930xex991.htm"
+      },
+      {
+        "consultado_em": "2026-11-24",
+        "id": "F2",
+        "instituicao": "SEC / MercadoLibre",
+        "publicado_em": "2026-11-05",
+        "tipo": "Regulador",
+        "titulo": "Demonstrações trimestrais e conciliação da liquidez",
+        "url": "https://www.sec.gov/Archives/edgar/data/1099590/000109959026000029/meli-20260930.htm"
+      }
+    ],
+    "gatilhos_revisao": [
+      "Safras comparáveis não convergem a retorno após perdas e funding.",
+      "Frequência desacelera após menor subsídio de frete.",
+      "Liquidez disponível perde força apesar de crescimento do caixa consolidado."
+    ],
+    "governanca": "O 10-Q distingue subsidiárias garantidoras e não garantidoras e registra caixa com restrições. Direitos de credores, exigências regulatórias e transferibilidade precisam integrar a análise do recurso atribuível; caixa consolidado e ativo administrado não são equivalentes à liquidez da companhia controladora (SEC, 05/11/2026).",
+    "guidance": "sem guidance formal",
+    "indicadores_monitoramento": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "Confrontar receita cobrada, perdas realizadas e funding por produto e idade; acompanhar frete e margem por pedido. Conciliar caixa operacional, recursos restritos, crédito e fluxo ajustado antes de concluir geração discricionária.",
+        "titulo": "Safras, logística e liquidez"
+      }
+    ],
+    "issuer_id": "LA_MELI",
+    "lacunas_de_dados": [
+      "Sem série completa de cobrança, exposição e perda realizada por safra e produto.",
+      "Alvo, cenários, retorno esperado e alpha relativo continuam Em revisão.",
+      "Sem percepção de mercado documentada que autorize afirmar tese já precificada.",
+      "Não foi localizada nesta leitura confirmação posterior que encerre a diligência de retorno incremental."
+    ],
+    "modelo_de_cobertura": "2026-11-24",
+    "negocio": "Plataforma latino-americana de comércio eletrônico, logística, publicidade e serviços financeiros. A hipótese de vantagem está no uso combinado de compras, pagamentos e crédito, sujeito à persistência do relacionamento após incentivos (carta aos acionistas, SEC, 04/11/2026).",
+    "nome": "MercadoLibre",
+    "o_que_mudou": "Desde a nota de 04/11/2026, acrescentamos o 10-Q protocolado em 05/11/2026 e a ponte de liquidez ajustada. Não se trata de novo resultado trimestral. Mantemos neutralidade e baixa convicção; o tom positivo descreve as expectativas expressas na carta, não evidência de realização. A diligência por safra continua aberta.",
+    "pais": "Brasil",
+    "pares": [
+      {
+        "issuer_id": "BR_AFYA",
+        "nome": "Afya"
+      },
+      {
+        "issuer_id": "BR_ALPARGATAS",
+        "nome": "Alpargatas"
+      },
+      {
+        "issuer_id": "BR_AZZAS",
+        "nome": "Azzas 2154"
+      },
+      {
+        "issuer_id": "BR_COGNA",
+        "nome": "Cogna"
+      },
+      {
+        "issuer_id": "BR_CURY",
+        "nome": "Cury"
+      },
+      {
+        "issuer_id": "BR_DIRECIONAL",
+        "nome": "Direcional"
+      },
+      {
+        "issuer_id": "BR_GRENDENE",
+        "nome": "Grendene"
+      },
+      {
+        "issuer_id": "BR_MRV",
+        "nome": "MRV Engenharia"
+      }
+    ],
+    "pilares_tese": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A gestão atribui a pressão inicial dos cartões à provisão antecipada e à formação gradual de receita. Para confirmar essa leitura, acompanhar safras em exposição comparável, receitas cobradas e perdas realizadas; atraso agregado estável não basta.",
+        "titulo": "Maturação é hipótese verificável"
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "O demonstrativo concilia fluxo ajustado com recursos restritos, crédito, capex e funding da fintech. A hipótese de autofinanciamento deve considerar essa ponte, sem tratar crescimento de saldos de clientes como caixa corporativo.",
+        "titulo": "Caixa disponível tem perímetro específico"
+      }
+    ],
+    "posicao_competitiva": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "texto": "O comércio pode reduzir custo de aquisição da fintech e os pagamentos aprofundar relacionamento. O teste da vantagem exige retenção e contribuição econômica líquida, sem presumir que uso conjunto prova exclusividade.",
+        "titulo": "Integração condicionada à retenção"
+      }
+    ],
+    "publicada_em": "2026-11-25T01:48:25.958024+00:00",
+    "qualidade_resultados": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "texto": "A NIMAL divulgada exclui os resultados de venda de recebíveis. A interpretação deve preservar a definição e testar safras com perdas e funding, sem equiparar margem financeira contábil à cobrança efetiva.",
+        "titulo": "Margem de crédito não é caixa"
+      }
+    ],
+    "resumo": "Mantemos visão neutra e baixa convicção. A integração comercial pode sustentar frequência e originação, mas o retorno depende de perdas, subsídios e financiamento. O modelo permanece Em revisão, com preço de referência US$ 1.355,49. A nova leitura do demonstrativo aprofunda a distinção entre caixa operacional, recursos de clientes e fluxo ajustado, sem presumir caixa livre ao acionista.",
+    "riscos": [
+      {
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "alta",
+        "texto": "Frete e marketing podem ampliar engajamento sem retorno incremental suficiente; novas safras podem consumir margem antes da receita."
+      },
+      {
+        "evidencias": [
+          {
+            "fonte": "F2"
+          }
+        ],
+        "impacto": "alto",
+        "probabilidade": "média",
+        "texto": "Dependência de funding, restrições regulatórias e transferências entre subsidiárias pode limitar a disponibilidade corporativa mesmo com caixa consolidado crescente."
+      }
+    ],
+    "setor": "Consumo discricionário",
+    "stance": 0,
+    "stance_pt": "neutra",
+    "tipo": "atualizacao",
+    "tipo_pt": "Atualização",
+    "titulo": "MercadoLibre: maturação do crédito exige prova em margem e caixa disponível",
+    "tom_gestao": "positivo",
+    "ultimo_resultado": "A carta de 04/11/2026 continua sendo a referência do 3T26: receita cresce, mas margem operacional cai sequencialmente sob frete e marketing; menor tributação ajuda o lucro. O 10-Q de 05/11/2026 explicita que fluxo ajustado é medida complementar e não cobre sozinho toda a variação de liquidez disponível. Não identificamos faixa formal consolidada na carta; sem_guidance fica restrito ao documento, sem afirmar retirada. O tom prospectivo da gestão é positivo sobre maturação e escala, sujeito a confirmação (SEC, 04/11/2026 e 05/11/2026).",
+    "vetores": [
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "A tese exige frequência persistente e monetização que cubra frete, aquisição e capacidade logística. Melhor custo unitário pode coexistir com menor margem se o incentivo por pedido aumentar.",
+        "vetor": "Custo de servir e frequência"
+      },
+      {
+        "direcao": "incerto",
+        "evidencias": [
+          {
+            "fonte": "F1"
+          },
+          {
+            "fonte": "F2"
+          }
+        ],
+        "sensibilidade": "alta",
+        "texto": "Acompanhar margem após perdas por produto e safra. Crédito novo exige financiamento antes da maturação; venda de recebíveis e custo de funding devem permanecer explícitos.",
+        "vetor": "Risco e funding de crédito"
+      }
+    ]
+  },
+  "schema": "cdp.nota.publicada/v1",
+  "stance": 0
+}

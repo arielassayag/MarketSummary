@@ -1,0 +1,16 @@
+{
+  "mind": "codex",
+  "headline": "CDP recua {{fact:day.ret}}; perdas no lado vendido superam ganhos das compras",
+  "paragraphs": [
+    "A carteira simulada encerrou 26/11/2026 com retorno de {{fact:day.ret}} e resultado de {{fact:day.pnl_usd}}, levando o patrimônio a {{fact:nav}}. O acumulado desde o início ficou em {{fact:itd.ret}} e o mês em {{fact:mtd.ret}}. O lado comprado contribuiu {{fact:attr.long}}, insuficiente para compensar {{fact:attr.short}} do lado vendido.",
+    "A alta do mercado brasileiro marcou a sessão: o Ibovespa avançou {{fact:mkt.BVSP.ret_1d}} em reais, enquanto o índice mexicano recuou {{fact:mkt.MXX.ret_1d}} em pesos mexicanos. O calendário da NYSE e da Nasdaq para 26/11/2026 previa fechamento por Thanksgiving. Nas linhas sem negociação, as posições conservaram o valor anterior; a ausência de cotação não representa retorno observado nulo.",
+    "Na atribuição em dólar, o Brasil respondeu por {{fact:attr.country.BR}} e o México por {{fact:attr.country.MX}}. Tenda contribuiu {{fact:top.contrib.1.contrib}}, Axia {{fact:top.contrib.2.contrib}} e BB Seguridade {{fact:top.contrib.3.contrib}}. Smart Fit, Auren e Fleury foram os principais detratores, com {{fact:top.detract.1.contrib}}, {{fact:top.detract.2.contrib}} e {{fact:top.detract.3.contrib}}, respectivamente. A parcela fatorial respondeu por {{fact:attr.factor}} e a específica por {{fact:attr.specific}}; a decomposição fatorial usa estimação e exige cautela na leitura causal.",
+    "A vol ex-ante encerrou em {{fact:risk.ex_ante_vol}}, dentro da banda de {{fact:mandate.vol_band_min}} a {{fact:mandate.vol_band_max}}, com beta de {{fact:risk.beta}} e exposição bruta de {{fact:risk.gross}}. A exposição líquida de {{fact:risk.net}} ficou fora do limite de neutralidade, sinalizando necessidade de acompanhamento na próxima decisão. O VaR diário foi {{fact:risk.var_1d}} e o drawdown atingiu {{fact:dd.current}}. Permanece elevado o risco de squeeze no short de Minerva."
+  ],
+  "risk_flags": [
+    "Exposição líquida de {{fact:risk.net}} fora do limite de neutralidade.",
+    "Minerva permanece com risco de squeeze alto.",
+    "Linhas sem negociação mantêm o valor anterior; benchmarks sem barra permanecem ausentes.",
+    "Atribuição fatorial estimada; fundamentos e universo sem reconstrução point-in-time."
+  ]
+}

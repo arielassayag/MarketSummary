@@ -1,0 +1,7159 @@
+{
+  "adr_parity": {
+    "ars_implied_ccl_premium": 0.08545370119954376,
+    "pairs": []
+  },
+  "holiday_bars_dropped": {},
+  "is_synthetic": false,
+  "markets_closed": [
+    "US"
+  ],
+  "markets_traded": [
+    "AR",
+    "BR",
+    "CL",
+    "CO",
+    "MX"
+  ],
+  "n_price_rows": 193,
+  "price_only_returns": [],
+  "revisions": [
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0087634713839828,
+      "ticker": "ABEV"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 0.9997740988156324,
+      "ticker": "AERO"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 0.9999432566878298,
+      "ticker": "AFYA"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0443392859015737,
+      "ticker": "AG"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0000570510321483,
+      "ticker": "AGRO"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0001149557420392,
+      "ticker": "AMX"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0001793894778106,
+      "ticker": "ARCO"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0005655370426763,
+      "ticker": "ASR"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0003402758235793,
+      "ticker": "AUGO"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "close",
+      "new": 0.972000002861023,
+      "ratio": 0.9998971128567725,
+      "stored": 0.972100019454956,
+      "ticker": "BAK"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0000072655745849,
+      "ticker": "BAK"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0353974206530687,
+      "ticker": "BAP"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 0.9999349879727749,
+      "ticker": "BBAR"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.000019074033112,
+      "ticker": "BBD"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 0.9999049971499145,
+      "ticker": "BCH"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0001585539876328,
+      "ticker": "BLX"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 0.9998979695949393,
+      "ticker": "BSAC"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0986427273319572,
+      "ticker": "BSANTANDER.SN"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0000028471182891,
+      "ticker": "BSBR"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 0.9999859231261922,
+      "ticker": "BVN"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 0.9996354651869254,
+      "ticker": "CAAP"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.1359876328033829,
+      "ticker": "CENCOMALLS.SN"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0001622172350821,
+      "ticker": "CENCOSUD.SN"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.000036969943436,
+      "ticker": "CEPU"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.1765384928399065,
+      "ticker": "CHILE.SN"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 0.9997417429481478,
+      "ticker": "CIB"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.000106509289693,
+      "ticker": "CIG"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0146595590016962,
+      "ticker": "COPEC.SN"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 0.9999350299089059,
+      "ticker": "CPA"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0000394648565452,
+      "ticker": "CRESY"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.000012996183454,
+      "ticker": "CX"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0005130657247665,
+      "ticker": "DLO"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0000909932539772,
+      "ticker": "EC"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0912133247918,
+      "ticker": "ECL.SN"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0000955748829208,
+      "ticker": "ELPC"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0012410477051308,
+      "ticker": "ENELCHILE.SN"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.000159230521498,
+      "ticker": "ENIC"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.1428240460025594,
+      "ticker": "ERO"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0116617736372675,
+      "ticker": "EXK"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0655991881149043,
+      "ticker": "FMX"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0118292709731138,
+      "ticker": "FSM"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0396594219135111,
+      "ticker": "GGAL"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.2674194433058263,
+      "ticker": "GGB"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.000022920843541,
+      "ticker": "GLOB"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0000083414234446,
+      "ticker": "GPRK"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0084752002225148,
+      "ticker": "GTE"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0810569843536675,
+      "ticker": "HBM"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 0.9998693605997941,
+      "ticker": "IFS"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0011818353701696,
+      "ticker": "INTR"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 0.9999332131169438,
+      "ticker": "IRS"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0000443995515644,
+      "ticker": "ITAUCL.SN"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0000025051387422,
+      "ticker": "ITUB"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0000055346483483,
+      "ticker": "JBS"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.000159052421807,
+      "ticker": "KOF"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0185620489962013,
+      "ticker": "LAR"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0000861424573941,
+      "ticker": "LILA"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0000103789349137,
+      "ticker": "LILAK"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.000218308834231,
+      "ticker": "LOMA"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.076903830745448,
+      "ticker": "LTM"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 0.9950957182373877,
+      "ticker": "LTM.SN"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0060664599325573,
+      "ticker": "MALLPLAZA.SN"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0035796108097046,
+      "ticker": "MELI"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 0.9999865271276285,
+      "ticker": "NEXA"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0030196426620839,
+      "ticker": "NU"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 0.999383096853794,
+      "ticker": "OMAB"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.4452843917751224,
+      "ticker": "PAAS"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 0.999444051349439,
+      "ticker": "PAC"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0003043944038699,
+      "ticker": "PAGS"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 0.9998871526231076,
+      "ticker": "PAM"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0484687252896672,
+      "ticker": "PARAUCO.SN"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0000449121966555,
+      "ticker": "PAX"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0098646539695364,
+      "ticker": "PBR"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0000928174499726,
+      "ticker": "PBR-A"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.030202541154054,
+      "ticker": "PICS"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.000005870609256,
+      "ticker": "SBS"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0000990197049213,
+      "ticker": "SCCO"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 0.999998224750178,
+      "ticker": "SGML"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "close",
+      "new": 0.6200000047683716,
+      "ratio": 0.9972655877366101,
+      "stored": 0.6216999888420105,
+      "ticker": "SID"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0000657022289021,
+      "ticker": "SID"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.137473102660436,
+      "ticker": "SQM-B.SN"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0000039871978461,
+      "ticker": "STNE"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0000811275250943,
+      "ticker": "SUPV"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 0.9999908417884613,
+      "ticker": "SUZ"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0000922903959257,
+      "ticker": "TEO"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0001400266050549,
+      "ticker": "TGLS"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 0.9998972031345137,
+      "ticker": "TGS"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 0.9999843677809545,
+      "ticker": "TIGO"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 0.999935571161652,
+      "ticker": "TIMB"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.002969189835345,
+      "ticker": "TOTS3.SA"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0000186309945225,
+      "ticker": "TV"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0980457658259561,
+      "ticker": "TX"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0806827082413701,
+      "ticker": "UGP"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0001643248033432,
+      "ticker": "VALE"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.000483621874904,
+      "ticker": "VIST"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 0.9999777505840471,
+      "ticker": "VIV"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.000404630910178,
+      "ticker": "VLRS"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 0.9999831558143322,
+      "ticker": "VTEX"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0001299863132058,
+      "ticker": "VTMX"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0022505948255982,
+      "ticker": "XP"
+    },
+    {
+      "date": "2026-11-16",
+      "kind": "volume",
+      "ratio": 1.0152280047085447,
+      "ticker": "YPF"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 240.52999877929688,
+      "ratio": 1.0022083282470704,
+      "stored": 240.0,
+      "ticker": "AC.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.1480025659649327,
+      "ticker": "AC.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 0.9999714759562686,
+      "ticker": "AERO"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 0.9996858803204021,
+      "ticker": "AFYA"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.01173804303744,
+      "ticker": "AG"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.3728728019016514,
+      "ticker": "AGRO"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 13.0600004196167,
+      "ratio": 1.003843212133376,
+      "stored": 13.010000228881836,
+      "ticker": "ALPEKA.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.1128012654558836,
+      "ticker": "ALPEKA.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 58.33000183105469,
+      "ratio": 1.0024059667924008,
+      "stored": 58.189998626708984,
+      "ticker": "ALSEA.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0655199135569355,
+      "ticker": "ALSEA.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.000019737880941,
+      "ticker": "AMX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 23.799999237060547,
+      "ratio": 0.9995799987775665,
+      "stored": 23.809999465942383,
+      "ticker": "AMXB.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0001379517223214,
+      "ticker": "AMXB.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0001317696666228,
+      "ticker": "ARCO"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0006160509268767,
+      "ticker": "ASR"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 497.4700012207031,
+      "ratio": 1.0019334785526908,
+      "stored": 496.510009765625,
+      "ticker": "ASURB.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.807486939554791,
+      "ticker": "ASURB.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000030226791619,
+      "ticker": "AUGO"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 0.8899999856948853,
+      "ratio": 0.9998876344302035,
+      "stored": 0.8901000022888184,
+      "ticker": "BAK"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 0.9999722514788152,
+      "ticker": "BAK"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0001234983242555,
+      "ticker": "BAP"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 55.93000030517578,
+      "ratio": 1.0025093993072416,
+      "stored": 55.790000915527344,
+      "ticker": "BBAJIOO.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0927366401581442,
+      "ticker": "BBAJIOO.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000707104471471,
+      "ticker": "BBAR"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0014153108012593,
+      "ticker": "BBD"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 0.9999836269565787,
+      "ticker": "BCH"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.028290867745103,
+      "ticker": "BCI.SN"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 71.48999786376953,
+      "ratio": 1.0006998239173395,
+      "stored": 71.44000244140625,
+      "ticker": "BIMBOA.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.234643552182907,
+      "ticker": "BIMBOA.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0003326272299153,
+      "ticker": "BLX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000940587502472,
+      "ticker": "BMA"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 38.900001525878906,
+      "ratio": 1.0030944494677523,
+      "stored": 38.779998779296875,
+      "ticker": "BOLSAA.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 0.9999518060676161,
+      "ticker": "BOLSAA.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 0.9998568053268418,
+      "ticker": "BSAC"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0001610245337784,
+      "ticker": "BSANTANDER.SN"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 0.9999940784954642,
+      "ticker": "BSBR"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 0.9999751315085096,
+      "ticker": "BVN"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0070507500575359,
+      "ticker": "CAAP"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000379301915896,
+      "ticker": "CEMARGOS.CL"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 18.709999084472656,
+      "ratio": 0.997334693827338,
+      "stored": 18.760000228881836,
+      "ticker": "CEMEXCPO.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.2600307281379672,
+      "ticker": "CEMEXCPO.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.014904598967697,
+      "ticker": "CEPU"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 111.88999938964844,
+      "ratio": 0.9972370983331065,
+      "stored": 112.19999694824219,
+      "ticker": "CHDRAUIB.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0419107586051664,
+      "ticker": "CHDRAUIB.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0183241483730752,
+      "ticker": "CHILE.SN"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 0.9998480474092083,
+      "ticker": "CIB"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0001541701446952,
+      "ticker": "CIG"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.3480151948592116,
+      "ticker": "COLBUN.SN"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0035237273604791,
+      "ticker": "COPEC.SN"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000602761696853,
+      "ticker": "CPA"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0200826916828383,
+      "ticker": "CRESY"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.001132190796529,
+      "ticker": "DLO"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.000029033376428,
+      "ticker": "EC"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0019594370406752,
+      "ticker": "ECL.SN"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "dado_tardio",
+      "ratio": null,
+      "ticker": "EISA.SN"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000427216541825,
+      "ticker": "ELPC"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000192463621271,
+      "ticker": "EMBJ"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 0.9999894317697441,
+      "ticker": "ENIC"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0177859310696693,
+      "ticker": "ERO"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0234021756061396,
+      "ticker": "EXK"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 242.36000061035156,
+      "ratio": 1.000165043268917,
+      "stored": 242.32000732421875,
+      "ticker": "FEMSAUBD.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0016532793815678,
+      "ticker": "FEMSAUBD.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 82.04000091552734,
+      "ratio": 1.0002438950655899,
+      "stored": 82.0199966430664,
+      "ticker": "FIBRAPL14.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 0.9991297096064434,
+      "ticker": "FIBRAPL14.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0403497599028326,
+      "ticker": "FMTY14.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.001328265048271,
+      "ticker": "FMX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0059816783243278,
+      "ticker": "FSM"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 36.65999984741211,
+      "ratio": 0.9983659757272234,
+      "stored": 36.720001220703125,
+      "ticker": "FUNO11.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.1442929973595408,
+      "ticker": "FUNO11.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 429.8500061035156,
+      "ratio": 1.0029398954161115,
+      "stored": 428.5899963378906,
+      "ticker": "GAPB.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0864205768232538,
+      "ticker": "GAPB.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 173.5399932861328,
+      "ratio": 0.9967261655147863,
+      "stored": 174.11000061035156,
+      "ticker": "GCARSOA1.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.2291794100181719,
+      "ticker": "GCARSOA1.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 170.47000122070312,
+      "ratio": 1.0026467294255625,
+      "stored": 170.02000427246094,
+      "ticker": "GCC.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 0.9993187464935481,
+      "ticker": "GCC.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 35.88999938964844,
+      "ratio": 1.004196913937808,
+      "stored": 35.7400016784668,
+      "ticker": "GENTERA.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.1625703408045056,
+      "ticker": "GENTERA.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 45.869998931884766,
+      "ratio": 1.0024038595801215,
+      "stored": 45.7599983215332,
+      "ticker": "GFINBURO.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 0.9968469784247665,
+      "ticker": "GFINBURO.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 202.50999450683594,
+      "ratio": 1.002524725281366,
+      "stored": 202.0,
+      "ticker": "GFNORTEO.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0011264870458243,
+      "ticker": "GFNORTEO.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 0.9999827153632499,
+      "ticker": "GGAL"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000017328360054,
+      "ticker": "GGB"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000476394645323,
+      "ticker": "GLOB"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 212.40512084960938,
+      "ratio": 0.9980036603026363,
+      "stored": 212.8300018310547,
+      "ticker": "GMEXICOB.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0051545859694986,
+      "ticker": "GMEXICOB.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0025585428585366,
+      "ticker": "GPRK"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 277.8500061035156,
+      "ratio": 0.998777826899217,
+      "stored": 278.19000244140625,
+      "ticker": "GRUMAB.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 0.9994163824712929,
+      "ticker": "GRUMAB.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.000310040667001,
+      "ticker": "GRUPOARGOS.CL"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0301252967515546,
+      "ticker": "GTE"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.4839488744330496,
+      "ticker": "HBM"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000852345370344,
+      "ticker": "IFS"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0004658711639836,
+      "ticker": "INTR"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000460638444884,
+      "ticker": "IRS"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.108684524272348,
+      "ticker": "ISA.CL"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000029721069197,
+      "ticker": "ITUB"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000039452131833,
+      "ticker": "JBS"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 39.4900016784668,
+      "ratio": 1.0015217188137617,
+      "stored": 39.43000030517578,
+      "ticker": "KIMBERA.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.1905696935267691,
+      "ticker": "KIMBERA.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000866250866252,
+      "ticker": "KOF"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 223.00999450683594,
+      "ratio": 1.0022921101430828,
+      "stored": 222.5,
+      "ticker": "KOFUBL.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0722988958077733,
+      "ticker": "KOFUBL.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 15.199999809265137,
+      "ratio": 1.0019775697310689,
+      "stored": 15.170000076293945,
+      "ticker": "LABB.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.040958474866063,
+      "ticker": "LABB.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0398386164427194,
+      "ticker": "LAR"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 0.9998470862989324,
+      "ticker": "LILA"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 0.9999727365361087,
+      "ticker": "LILAK"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0001411416550383,
+      "ticker": "LOMA"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0302731701976242,
+      "ticker": "LTM"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0201994695987726,
+      "ticker": "LTM.SN"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0880878824617723,
+      "ticker": "MALLPLAZA.SN"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 58.25,
+      "ratio": 1.0043103448275863,
+      "stored": 58.0,
+      "ticker": "MEGACPO.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0003432691953271,
+      "ticker": "MEGACPO.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.1724170061233874,
+      "ticker": "MELI"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.000038017974237,
+      "ticker": "NEXA"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0022293179998258,
+      "ticker": "NU"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000513599377812,
+      "ticker": "OMAB"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 248.7899932861328,
+      "ratio": 1.0024174658077463,
+      "stored": 248.19000244140625,
+      "ticker": "OMAB.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.08124961733098,
+      "ticker": "OMAB.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 21.989999771118164,
+      "ratio": 1.0036512973191785,
+      "stored": 21.90999984741211,
+      "ticker": "ORBIA.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0040161025706928,
+      "ticker": "ORBIA.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0115601324092363,
+      "ticker": "PAAS"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 0.9997287168306088,
+      "ticker": "PAC"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 0.9999965785764141,
+      "ticker": "PAGS"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0188072816664313,
+      "ticker": "PAM"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0062953694703534,
+      "ticker": "PARAUCO.SN"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000944004782957,
+      "ticker": "PAX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0001390628312645,
+      "ticker": "PBR"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0001058920869894,
+      "ticker": "PBR-A"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 749.3300170898438,
+      "ratio": 1.0059470969668256,
+      "stored": 744.9000244140625,
+      "ticker": "PE&OLES.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.1989564823066012,
+      "ticker": "PE&OLES.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000844287969741,
+      "ticker": "PETR4.SA"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.012957678306729,
+      "ticker": "PFGRUPOARG.CL"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0001227373710575,
+      "ticker": "PICS"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 310.17999267578125,
+      "ratio": 1.0018086608340064,
+      "stored": 309.6199951171875,
+      "ticker": "PINFRA.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0823428632615912,
+      "ticker": "PINFRA.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 195.64999389648438,
+      "ratio": 1.002356634301576,
+      "stored": 195.19000244140625,
+      "ticker": "Q.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0297857454530568,
+      "ticker": "Q.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 155.77000427246094,
+      "ratio": 0.9991661986586751,
+      "stored": 155.89999389648438,
+      "ticker": "RA.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.2157982287433695,
+      "ticker": "RA.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000029500285585,
+      "ticker": "SBS"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0002052519362798,
+      "ticker": "SCCO"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.00034173550334,
+      "ticker": "SGML"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 0.6299999952316284,
+      "ratio": 1.0031846722674782,
+      "stored": 0.628000020980835,
+      "ticker": "SID"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.000380266605266,
+      "ticker": "SID"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 20.6200008392334,
+      "ratio": 1.0014570513075851,
+      "stored": 20.59000015258789,
+      "ticker": "SIGMAFA.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.1354997698360842,
+      "ticker": "SIGMAFA.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.000334166396039,
+      "ticker": "SQM"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.1604331686521736,
+      "ticker": "SQM-B.SN"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0096177079183983,
+      "ticker": "STNE"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000108610259326,
+      "ticker": "SUPV"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000118258471173,
+      "ticker": "SUZ"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000209757939338,
+      "ticker": "TEO"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.000131698209679,
+      "ticker": "TGLS"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 0.9998361819472505,
+      "ticker": "TGS"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 0.9999825362671179,
+      "ticker": "TIGO"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000578209326434,
+      "ticker": "TIMB"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 8.489999771118164,
+      "ratio": 1.0011792723374604,
+      "stored": 8.479999542236328,
+      "ticker": "TLEVISACPO.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.2075061600734378,
+      "ticker": "TLEVISACPO.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000367753823054,
+      "ticker": "TV"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0012041761324841,
+      "ticker": "TX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0050030868674873,
+      "ticker": "UGP"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000751585196581,
+      "ticker": "VALE"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 67.76000213623047,
+      "ratio": 0.9976443457445793,
+      "stored": 67.91999816894531,
+      "ticker": "VESTA.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0058907989288832,
+      "ticker": "VESTA.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.000818420744064,
+      "ticker": "VIST"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 0.9999895819620196,
+      "ticker": "VIV"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 0.9999522177480659,
+      "ticker": "VLRS"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000903514672075,
+      "ticker": "VTEX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000807701062493,
+      "ticker": "VTMX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "close",
+      "new": 55.11000061035156,
+      "ratio": 1.0005446401288962,
+      "stored": 55.08000183105469,
+      "ticker": "WALMEX.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0047259571801253,
+      "ticker": "WALMEX.MX"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0032945246258487,
+      "ticker": "XP"
+    },
+    {
+      "date": "2026-11-17",
+      "kind": "volume",
+      "ratio": 1.0000389878747709,
+      "ticker": "YPF"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "close",
+      "new": 4776.0,
+      "ratio": 0.9991005156866346,
+      "stored": 4780.2998046875,
+      "ticker": "ANDINA-B.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "ANDINA-B.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "close",
+      "new": 59999.0,
+      "ratio": 0.9835901639344262,
+      "stored": 61000.0,
+      "ticker": "BCI.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "BCI.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "close",
+      "new": 77.08999633789062,
+      "ratio": 0.9882065661691276,
+      "stored": 78.01000213623047,
+      "ticker": "BSANTANDER.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "BSANTANDER.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "close",
+      "new": 2085.0,
+      "ratio": 0.9742990654205608,
+      "stored": 2140.0,
+      "ticker": "CENCOMALLS.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "CENCOMALLS.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "close",
+      "new": 1692.0,
+      "ratio": 0.9696275071633238,
+      "stored": 1745.0,
+      "ticker": "CENCOSUD.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "CENCOSUD.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "close",
+      "new": 189.5,
+      "ratio": 0.9929263502208987,
+      "stored": 190.85000610351562,
+      "ticker": "CHILE.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "CHILE.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "close",
+      "new": 910.0700073242188,
+      "ratio": 1.000076931125515,
+      "stored": 910.0,
+      "ticker": "CMPC.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "CMPC.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "close",
+      "new": 150.0,
+      "ratio": 0.9933774834437086,
+      "stored": 151.0,
+      "ticker": "COLBUN.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "COLBUN.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "close",
+      "new": 6395.0,
+      "ratio": 1.0289621882542237,
+      "stored": 6215.0,
+      "ticker": "COPEC.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "COPEC.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "close",
+      "new": 1977.800048828125,
+      "ratio": 0.9958711222699521,
+      "stored": 1986.0,
+      "ticker": "ECL.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "ECL.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "EISA.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "close",
+      "new": 79.0,
+      "ratio": 0.9949621975038813,
+      "stored": 79.4000015258789,
+      "ticker": "ENELAM.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "ENELAM.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "close",
+      "new": 80.19999694824219,
+      "ratio": 0.9804400239141404,
+      "stored": 81.80000305175781,
+      "ticker": "ENELCHILE.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "ENELCHILE.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "close",
+      "new": 6755.10009765625,
+      "ratio": 0.9919383403313142,
+      "stored": 6810.0,
+      "ticker": "FALABELLA.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "FALABELLA.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "close",
+      "new": 22550.0,
+      "ratio": 0.9933920704845814,
+      "stored": 22700.0,
+      "ticker": "ITAUCL.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "ITAUCL.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "close",
+      "new": 23.530000686645508,
+      "ratio": 1.0025565136364054,
+      "stored": 23.469999313354492,
+      "ticker": "LTM.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "LTM.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "close",
+      "new": 3180.0,
+      "ratio": 0.9821483575401622,
+      "stored": 3237.800048828125,
+      "ticker": "MALLPLAZA.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "MALLPLAZA.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "close",
+      "new": 3412.10009765625,
+      "ratio": 0.9973984500602894,
+      "stored": 3421.0,
+      "ticker": "PARAUCO.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "PARAUCO.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "close",
+      "new": 49600.0,
+      "ratio": 0.9612403100775194,
+      "stored": 51600.0,
+      "ticker": "SQM-B.SN"
+    },
+    {
+      "date": "2026-11-18",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "SQM-B.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "volume",
+      "ratio": 1.002751785733295,
+      "ticker": "AG"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "close",
+      "new": 4771.0,
+      "ratio": 0.9980545561852876,
+      "stored": 4780.2998046875,
+      "ticker": "ANDINA-B.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "ANDINA-B.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "volume",
+      "ratio": 1.0002341040885303,
+      "ticker": "BBD"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "close",
+      "new": 59800.0,
+      "ratio": 0.980327868852459,
+      "stored": 61000.0,
+      "ticker": "BCI.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "BCI.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "close",
+      "new": 77.58999633789062,
+      "ratio": 0.9946160006814718,
+      "stored": 78.01000213623047,
+      "ticker": "BSANTANDER.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "BSANTANDER.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "close",
+      "new": 2080.0,
+      "ratio": 0.9719626168224299,
+      "stored": 2140.0,
+      "ticker": "CENCOMALLS.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "CENCOMALLS.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "close",
+      "new": 1700.0,
+      "ratio": 0.9742120343839542,
+      "stored": 1745.0,
+      "ticker": "CENCOSUD.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "CENCOSUD.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "close",
+      "new": 189.1999969482422,
+      "ratio": 0.9913544191642389,
+      "stored": 190.85000610351562,
+      "ticker": "CHILE.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "CHILE.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "close",
+      "new": 937.9000244140625,
+      "ratio": 1.0306593674879807,
+      "stored": 910.0,
+      "ticker": "CMPC.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "CMPC.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "close",
+      "new": 151.60000610351562,
+      "ratio": 1.003973550354408,
+      "stored": 151.0,
+      "ticker": "COLBUN.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "COLBUN.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "close",
+      "new": 6315.0,
+      "ratio": 1.0160901045856798,
+      "stored": 6215.0,
+      "ticker": "COPEC.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "COPEC.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "close",
+      "new": 1965.0,
+      "ratio": 0.9894259818731118,
+      "stored": 1986.0,
+      "ticker": "ECL.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "ECL.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "close",
+      "new": 517.0,
+      "ratio": 1.0137254901960784,
+      "stored": 510.0,
+      "ticker": "EISA.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "EISA.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "close",
+      "new": 79.80000305175781,
+      "ratio": 1.0050378024961188,
+      "stored": 79.4000015258789,
+      "ticker": "ENELAM.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "ENELAM.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "close",
+      "new": 80.9000015258789,
+      "ratio": 0.9889975367689235,
+      "stored": 81.80000305175781,
+      "ticker": "ENELCHILE.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "ENELCHILE.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "volume",
+      "ratio": 1.0037898477445208,
+      "ticker": "EXK"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "close",
+      "new": 6770.0,
+      "ratio": 0.9941262848751835,
+      "stored": 6810.0,
+      "ticker": "FALABELLA.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "FALABELLA.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "close",
+      "new": 22950.0,
+      "ratio": 1.0110132158590308,
+      "stored": 22700.0,
+      "ticker": "ITAUCL.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "ITAUCL.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "close",
+      "new": 22.950000762939453,
+      "ratio": 0.977844117357125,
+      "stored": 23.469999313354492,
+      "ticker": "LTM.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "LTM.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "close",
+      "new": 3231.39990234375,
+      "ratio": 0.9980233039755833,
+      "stored": 3237.800048828125,
+      "ticker": "MALLPLAZA.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "MALLPLAZA.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "volume",
+      "ratio": 1.00057569902455,
+      "ticker": "NU"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "volume",
+      "ratio": 1.0018028756611785,
+      "ticker": "PAAS"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "close",
+      "new": 3461.0,
+      "ratio": 1.011692487576732,
+      "stored": 3421.0,
+      "ticker": "PARAUCO.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "PARAUCO.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "close",
+      "new": 48800.0,
+      "ratio": 0.9457364341085271,
+      "stored": 51600.0,
+      "ticker": "SQM-B.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "SQM-B.SN"
+    },
+    {
+      "date": "2026-11-19",
+      "kind": "volume",
+      "ratio": 1.001094331363537,
+      "ticker": "XP"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999974584233358,
+      "ticker": "ABEV"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 243.86000061035156,
+      "ratio": 0.9953063388340581,
+      "stored": 245.00999450683594,
+      "ticker": "AC.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.999987778070716,
+      "ticker": "AC.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999409141621802,
+      "ticker": "AERO"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.999579464950021,
+      "ticker": "AFYA"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0004956182080262,
+      "ticker": "AG"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999325346723594,
+      "ticker": "AGRO"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 12.329999923706055,
+      "ratio": 0.997572837070834,
+      "stored": 12.359999656677246,
+      "ticker": "ALPEKA.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0938090021389948,
+      "ticker": "ALPEKA.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 58.33000183105469,
+      "ratio": 1.001201570743877,
+      "stored": 58.2599983215332,
+      "ticker": "ALSEA.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.1639780202790877,
+      "ticker": "ALSEA.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0000024206100422,
+      "ticker": "AMX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.999925262109306,
+      "ticker": "AMXB.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0191871275159246,
+      "ticker": "ANDINA-B.SN"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.000004401725883,
+      "ticker": "ARCO"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.000202288103212,
+      "ticker": "ASR"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 522.8800048828125,
+      "ratio": 0.9997896989357039,
+      "stored": 522.989990234375,
+      "ticker": "ASURB.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0784228512060678,
+      "ticker": "ASURB.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0000210897534059,
+      "ticker": "AUGO"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 0.7390000224113464,
+      "ratio": 1.0006770797097717,
+      "stored": 0.7384999990463257,
+      "ticker": "BAK"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999947944050265,
+      "ticker": "BAK"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0000531673835824,
+      "ticker": "BAP"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.160821192424634,
+      "ticker": "BBAJIOO.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.000049289070019,
+      "ticker": "BBAR"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0001072408317737,
+      "ticker": "BCH"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0432107300884956,
+      "ticker": "BCI.SN"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 71.33000183105469,
+      "ratio": 1.0029527429184857,
+      "stored": 71.12000274658203,
+      "ticker": "BIMBOA.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0809637656203468,
+      "ticker": "BIMBOA.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0001231162557989,
+      "ticker": "BLX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999527931200137,
+      "ticker": "BMA"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9994887576912338,
+      "ticker": "BMA.BA"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 37.380001068115234,
+      "ratio": 0.9981308493084601,
+      "stored": 37.45000076293945,
+      "ticker": "BOLSAA.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.1023466516545821,
+      "ticker": "BOLSAA.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.000098823994466,
+      "ticker": "BSAC"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.000010734930668,
+      "ticker": "BSBR"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0000068372340338,
+      "ticker": "BVN"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999139594626154,
+      "ticker": "CAAP"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 17.920000076293945,
+      "ratio": 0.9983286526256061,
+      "stored": 17.950000762939453,
+      "ticker": "CEMEXCPO.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9906863920383369,
+      "ticker": "CEMEXCPO.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.000050160619584,
+      "ticker": "CENCOMALLS.SN"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0624552505635936,
+      "ticker": "CENCOSUD.SN"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0000507027154926,
+      "ticker": "CEPU"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 114.01000213623047,
+      "ratio": 0.9965037888901722,
+      "stored": 114.41000366210938,
+      "ticker": "CHDRAUIB.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0193396816570515,
+      "ticker": "CHDRAUIB.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.3536759282864592,
+      "ticker": "CHILE.SN"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0001487332881625,
+      "ticker": "CIB"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999904667985073,
+      "ticker": "CIG"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0007160147447753,
+      "ticker": "CMPC.SN"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.000046940066476,
+      "ticker": "CPA"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 7.789999961853027,
+      "ratio": 1.0006422754706386,
+      "stored": 7.784999847412109,
+      "ticker": "CRESY"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999678811173088,
+      "ticker": "CRESY"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0000049172084438,
+      "ticker": "CX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999958700173746,
+      "ticker": "DLO"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.999988706211004,
+      "ticker": "EC"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999086580729137,
+      "ticker": "ELPC"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999830918583739,
+      "ticker": "EMBJ"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.050080911148456,
+      "ticker": "ENELAM.SN"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0100517511180562,
+      "ticker": "ENELCHILE.SN"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0000688225982826,
+      "ticker": "ENIC"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.000048571675955,
+      "ticker": "ERO"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0032358489942248,
+      "ticker": "EXK"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0219569902278485,
+      "ticker": "FALABELLA.SN"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 241.88999938964844,
+      "ratio": 0.9997933245794278,
+      "stored": 241.94000244140625,
+      "ticker": "FEMSAUBD.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.2509484714835328,
+      "ticker": "FEMSAUBD.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 83.13999938964844,
+      "ratio": 0.9997594483936988,
+      "stored": 83.16000366210938,
+      "ticker": "FIBRAPL14.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.1523319400013177,
+      "ticker": "FIBRAPL14.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 16.75,
+      "ratio": 0.9970238548017163,
+      "stored": 16.799999237060547,
+      "ticker": "FMTY14.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.088741202712688,
+      "ticker": "FMTY14.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999254642715852,
+      "ticker": "FMX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0000052585069497,
+      "ticker": "FSM"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 36.29999923706055,
+      "ratio": 0.9975267888404117,
+      "stored": 36.38999938964844,
+      "ticker": "FUNO11.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.249720868807319,
+      "ticker": "FUNO11.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 421.8800048828125,
+      "ratio": 0.9968573838068121,
+      "stored": 423.2099914550781,
+      "ticker": "GAPB.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9997877171476677,
+      "ticker": "GAPB.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 184.00999450683594,
+      "ratio": 0.998860022188277,
+      "stored": 184.22000122070312,
+      "ticker": "GCARSOA1.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.2796425311426116,
+      "ticker": "GCARSOA1.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 163.8000030517578,
+      "ratio": 0.996229198856027,
+      "stored": 164.4199981689453,
+      "ticker": "GCC.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0848017565170545,
+      "ticker": "GCC.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 34.52000045776367,
+      "ratio": 0.996248165587579,
+      "stored": 34.650001525878906,
+      "ticker": "GENTERA.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0545421267341881,
+      "ticker": "GENTERA.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 47.56999969482422,
+      "ratio": 0.9997897827691141,
+      "stored": 47.58000183105469,
+      "ticker": "GFINBURO.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.1403647482644368,
+      "ticker": "GFINBURO.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 196.22999572753906,
+      "ratio": 0.9988801159372831,
+      "stored": 196.4499969482422,
+      "ticker": "GFNORTEO.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.3390326667181478,
+      "ticker": "GFNORTEO.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.000006479396403,
+      "ticker": "GGAL"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9989028447103819,
+      "ticker": "GGAL.BA"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0000021948591034,
+      "ticker": "GGB"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0000093750087098,
+      "ticker": "GLOB"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 192.89999389648438,
+      "ratio": 1.0033809825564857,
+      "stored": 192.25,
+      "ticker": "GMEXICOB.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9997774627390965,
+      "ticker": "GMEXICOB.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999897845562922,
+      "ticker": "GPRK"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 289.2699890136719,
+      "ratio": 1.0012460120695008,
+      "stored": 288.9100036621094,
+      "ticker": "GRUMAB.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0035670652150492,
+      "ticker": "GRUMAB.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0662477101967331,
+      "ticker": "GRUPOARGOS.CL"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999876916175813,
+      "ticker": "GTE"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.000003253489096,
+      "ticker": "HBM"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.999849392498517,
+      "ticker": "IFS"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9998284516643918,
+      "ticker": "IRS"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.065423325223513,
+      "ticker": "ITAUCL.SN"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0005819642850748,
+      "ticker": "ITUB"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0000032989255399,
+      "ticker": "JBS"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 39.11000061035156,
+      "ratio": 1.001280062347738,
+      "stored": 39.060001373291016,
+      "ticker": "KIMBERA.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0017887536507477,
+      "ticker": "KIMBERA.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999711376003801,
+      "ticker": "KOF"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 222.94000244140625,
+      "ratio": 1.0000897374512168,
+      "stored": 222.9199981689453,
+      "ticker": "KOFUBL.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0638115866961748,
+      "ticker": "KOFUBL.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 14.479999542236328,
+      "ratio": 1.001383091565463,
+      "stored": 14.460000038146973,
+      "ticker": "LABB.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0059584537033237,
+      "ticker": "LABB.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999941447059358,
+      "ticker": "LAR"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999606651354573,
+      "ticker": "LILA"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999813538630957,
+      "ticker": "LILAK"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9998957148745351,
+      "ticker": "LOMA"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999617378408796,
+      "ticker": "LTM"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.2716470456072027,
+      "ticker": "LTM.SN"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0046244604029488,
+      "ticker": "MALLPLAZA.SN"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 56.400001525878906,
+      "ratio": 1.0017762396123184,
+      "stored": 56.29999923706055,
+      "ticker": "MEGACPO.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0309955787811542,
+      "ticker": "MEGACPO.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9998739788699255,
+      "ticker": "MELI"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.000033543490594,
+      "ticker": "NEXA"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0002904169979931,
+      "ticker": "NU"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0000951647648133,
+      "ticker": "OMAB"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 243.27000427246094,
+      "ratio": 0.9993838061884288,
+      "stored": 243.4199981689453,
+      "ticker": "OMAB.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0511235513754404,
+      "ticker": "OMAB.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 20.719999313354492,
+      "ratio": 0.9985541837761202,
+      "stored": 20.75,
+      "ticker": "ORBIA.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0489426188535769,
+      "ticker": "ORBIA.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0000039530109186,
+      "ticker": "PAAS"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0002658934653514,
+      "ticker": "PAC"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9998705975552407,
+      "ticker": "PAM"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9998711638428393,
+      "ticker": "PAMP.BA"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0394555028112626,
+      "ticker": "PARAUCO.SN"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0000137829239597,
+      "ticker": "PAX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0000080644053928,
+      "ticker": "PBR"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999951740180161,
+      "ticker": "PBR-A"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 644.1199951171875,
+      "ratio": 1.0033802988844813,
+      "stored": 641.9500122070312,
+      "ticker": "PE&OLES.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999903446384742,
+      "ticker": "PE&OLES.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999935077401649,
+      "ticker": "PICS"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 310.9100036621094,
+      "ratio": 0.9981380250073871,
+      "stored": 311.489990234375,
+      "ticker": "PINFRA.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9994532570770835,
+      "ticker": "PINFRA.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 189.27999877929688,
+      "ratio": 0.9974178980759227,
+      "stored": 189.77000427246094,
+      "ticker": "Q.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0068407686322867,
+      "ticker": "Q.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 154.10000610351562,
+      "ratio": 1.0015598953088,
+      "stored": 153.86000061035156,
+      "ticker": "RA.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.11014959784118,
+      "ticker": "RA.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999956894551649,
+      "ticker": "SBS"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0000168394693387,
+      "ticker": "SCCO"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999937081482626,
+      "ticker": "SGML"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 0.5099999904632568,
+      "ratio": 1.0003922588791685,
+      "stored": 0.5098000168800354,
+      "ticker": "SID"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 20.100000381469727,
+      "ratio": 1.0014948025461727,
+      "stored": 20.06999969482422,
+      "ticker": "SIGMAFA.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.1327344828504766,
+      "ticker": "SIGMAFA.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0000785037776216,
+      "ticker": "SQM"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.3684539871643149,
+      "ticker": "SQM-B.SN"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999975153577512,
+      "ticker": "STNE"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.999997580065548,
+      "ticker": "SUPV"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999878037144146,
+      "ticker": "SUZ"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999454052795969,
+      "ticker": "TEO"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0000826994253116,
+      "ticker": "TGLS"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999749797753184,
+      "ticker": "TGS"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.999997603648206,
+      "ticker": "TIGO"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0000753588967457,
+      "ticker": "TIMB"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 8.15999984741211,
+      "ratio": 1.0024569414306919,
+      "stored": 8.140000343322754,
+      "ticker": "TLEVISACPO.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.1482259610447403,
+      "ticker": "TLEVISACPO.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.999996572125899,
+      "ticker": "TV"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999732135084277,
+      "ticker": "TX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.000015848724313,
+      "ticker": "UGP"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.000696247694262,
+      "ticker": "VALE"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 66.12999725341797,
+      "ratio": 0.9969847041743473,
+      "stored": 66.33000183105469,
+      "ticker": "VESTA.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0594029512775032,
+      "ticker": "VESTA.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999905419833016,
+      "ticker": "VIST"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999756034853237,
+      "ticker": "VIV"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999741423149523,
+      "ticker": "VLRS"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0000043620691912,
+      "ticker": "VTEX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0001476838253394,
+      "ticker": "VTMX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "close",
+      "new": 54.41999816894531,
+      "ratio": 0.9988986531975923,
+      "stored": 54.47999954223633,
+      "ticker": "WALMEX.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.002159409218028,
+      "ticker": "WALMEX.MX"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9999852598121882,
+      "ticker": "XP"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 1.0000172126048257,
+      "ticker": "YPF"
+    },
+    {
+      "date": "2026-11-20",
+      "kind": "volume",
+      "ratio": 0.9998167978542573,
+      "ticker": "YPFD.BA"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0000281323970326,
+      "ticker": "ABEV"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 246.1199951171875,
+      "ratio": 1.0026479565456146,
+      "stored": 245.47000122070312,
+      "ticker": "AC.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0002433151629193,
+      "ticker": "AC.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.000161010768779,
+      "ticker": "AERO"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0002329132268835,
+      "ticker": "AFYA"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.1460280167322598,
+      "ticker": "AG"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0000409902274476,
+      "ticker": "AGRO"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 12.930000305175781,
+      "ratio": 1.0015492221533744,
+      "stored": 12.90999984741211,
+      "ticker": "ALPEKA.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0350185625997954,
+      "ticker": "ALPEKA.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 58.90999984741211,
+      "ratio": 1.003064878368445,
+      "stored": 58.72999954223633,
+      "ticker": "ALSEA.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0146800161418255,
+      "ticker": "ALSEA.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.9999661578117641,
+      "ticker": "AMX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 23.760000228881836,
+      "ratio": 0.9979000739948749,
+      "stored": 23.809999465942383,
+      "ticker": "AMXB.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.4172705864455708,
+      "ticker": "AMXB.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0000678472080873,
+      "ticker": "ASR"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 530.510009765625,
+      "ratio": 0.9989831879488635,
+      "stored": 531.0499877929688,
+      "ticker": "ASURB.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.1809454702346516,
+      "ticker": "ASURB.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.9999800894102601,
+      "ticker": "AUGO"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 0.9279999732971191,
+      "ratio": 1.000539044480038,
+      "stored": 0.9275000095367432,
+      "ticker": "BAK"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.006494064780159,
+      "ticker": "BAK"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.006432426865994,
+      "ticker": "BAP"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 54.310001373291016,
+      "ratio": 0.9992640827607544,
+      "stored": 54.349998474121094,
+      "ticker": "BBAJIOO.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.9991489019063148,
+      "ticker": "BBAJIOO.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.999989632889712,
+      "ticker": "BBAR"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0001330881112827,
+      "ticker": "BBD"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0432868309092709,
+      "ticker": "BCI.SN"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 71.01000213623047,
+      "ratio": 0.9973315334247861,
+      "stored": 71.19999694824219,
+      "ticker": "BIMBOA.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0837933005673934,
+      "ticker": "BIMBOA.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0002291414655462,
+      "ticker": "BLX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0000720859264243,
+      "ticker": "BMA"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.2129717204939086,
+      "ticker": "BOLSAA.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.9998780636507743,
+      "ticker": "BSAC"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.1565830538809072,
+      "ticker": "BSANTANDER.SN"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0000145577662563,
+      "ticker": "BSBR"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0000113556154415,
+      "ticker": "BVN"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0000225113292593,
+      "ticker": "CAAP"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0240744232237495,
+      "ticker": "CEMARGOS.CL"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 18.459999084472656,
+      "ratio": 0.9978377883498734,
+      "stored": 18.5,
+      "ticker": "CEMEXCPO.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.9927962767392003,
+      "ticker": "CEMEXCPO.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0231854476075768,
+      "ticker": "CENCOMALLS.SN"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0307430850195605,
+      "ticker": "CENCOSUD.SN"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0001751006828927,
+      "ticker": "CEPU"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 117.19000244140625,
+      "ratio": 1.0025665416487664,
+      "stored": 116.88999938964844,
+      "ticker": "CHDRAUIB.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0241058677921995,
+      "ticker": "CHDRAUIB.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.1212601254704768,
+      "ticker": "CHILE.SN"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.9999379217145068,
+      "ticker": "CIB"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.9999965506258889,
+      "ticker": "CIG"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.9889299613016378,
+      "ticker": "COLBUN.SN"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0010618993498532,
+      "ticker": "COPEC.SN"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.028302526215905,
+      "ticker": "CPA"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0000361023863678,
+      "ticker": "CRESY"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0000056102953052,
+      "ticker": "CX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0131228852274667,
+      "ticker": "DLO"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0000965879782904,
+      "ticker": "EC"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0090424844796013,
+      "ticker": "ECL.SN"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.000007610407994,
+      "ticker": "ELPC"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.9999965147967971,
+      "ticker": "EMBJ"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.034920407128651,
+      "ticker": "ENELAM.SN"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.2190020847084349,
+      "ticker": "ENELCHILE.SN"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0000877072646353,
+      "ticker": "ENIC"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.1447659769412843,
+      "ticker": "ERO"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0136600592511404,
+      "ticker": "EXK"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0256317798010757,
+      "ticker": "FALABELLA.SN"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 241.75999450683594,
+      "ratio": 1.0005794197188878,
+      "stored": 241.6199951171875,
+      "ticker": "FEMSAUBD.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.761466963843372,
+      "ticker": "FEMSAUBD.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 83.37000274658203,
+      "ratio": 0.9992808634978511,
+      "stored": 83.43000030517578,
+      "ticker": "FIBRAPL14.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.4072788615055092,
+      "ticker": "FIBRAPL14.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 16.850000381469727,
+      "ratio": 0.9976317933911102,
+      "stored": 16.889999389648438,
+      "ticker": "FMTY14.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.175355116984648,
+      "ticker": "FMTY14.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.9999453678068346,
+      "ticker": "FMX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0803541713169083,
+      "ticker": "FSM"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 36.0,
+      "ratio": 0.9991673943848671,
+      "stored": 36.029998779296875,
+      "ticker": "FUNO11.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 423.2300109863281,
+      "ratio": 0.9962338449815021,
+      "stored": 424.8299865722656,
+      "ticker": "GAPB.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.1731082724924056,
+      "ticker": "GAPB.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 179.82000732421875,
+      "ratio": 1.0033478746759785,
+      "stored": 179.22000122070312,
+      "ticker": "GCARSOA1.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.3643023592765207,
+      "ticker": "GCARSOA1.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 164.52999877929688,
+      "ratio": 1.003048222908742,
+      "stored": 164.02999877929688,
+      "ticker": "GCC.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0084155094436158,
+      "ticker": "GCC.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0912556785001934,
+      "ticker": "GENTERA.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 47.849998474121094,
+      "ratio": 1.0027241670178662,
+      "stored": 47.720001220703125,
+      "ticker": "GFINBURO.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.1219808643760267,
+      "ticker": "GFINBURO.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 197.69000244140625,
+      "ratio": 0.9977288939657396,
+      "stored": 198.13999938964844,
+      "ticker": "GFNORTEO.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.2436991127976424,
+      "ticker": "GFNORTEO.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.9999749141827753,
+      "ticker": "GGAL"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0000811505822222,
+      "ticker": "GLOB"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 197.6300048828125,
+      "ratio": 0.9960185803173923,
+      "stored": 198.4199981689453,
+      "ticker": "GMEXICOB.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0009863259358889,
+      "ticker": "GMEXICOB.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0005944802170195,
+      "ticker": "GPRK"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 286.739990234375,
+      "ratio": 1.0023070598891497,
+      "stored": 286.0799865722656,
+      "ticker": "GRUMAB.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0334064598621095,
+      "ticker": "GRUMAB.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0008513935183412,
+      "ticker": "GRUPOARGOS.CL"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0000822136986995,
+      "ticker": "GRUPOSURA.CL"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0052321289093846,
+      "ticker": "GTE"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.1846564976590481,
+      "ticker": "HBM"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0001583685601863,
+      "ticker": "IFS"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.9999916168122581,
+      "ticker": "INTR"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.9998616792143379,
+      "ticker": "IRS"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0353123045925103,
+      "ticker": "ITAUCL.SN"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.9999970455455833,
+      "ticker": "JBS"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 39.09000015258789,
+      "ratio": 1.0015373142497468,
+      "stored": 39.029998779296875,
+      "ticker": "KIMBERA.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.004060839113741,
+      "ticker": "KIMBERA.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0001843059582742,
+      "ticker": "KOF"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 224.52999877929688,
+      "ratio": 1.0016059268113133,
+      "stored": 224.1699981689453,
+      "ticker": "KOFUBL.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.2819759800883304,
+      "ticker": "KOFUBL.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 14.539999961853027,
+      "ratio": 1.0020675211921415,
+      "stored": 14.510000228881836,
+      "ticker": "LABB.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.020084647632387,
+      "ticker": "LABB.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0149037368883356,
+      "ticker": "LAR"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.9999293613480994,
+      "ticker": "LILA"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0001194551827028,
+      "ticker": "LILAK"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0000653125204102,
+      "ticker": "LOMA"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0297453995462567,
+      "ticker": "LTM"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0343116413136426,
+      "ticker": "LTM.SN"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0344879331599885,
+      "ticker": "MALLPLAZA.SN"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 56.2599983215332,
+      "ratio": 1.0008895078789346,
+      "stored": 56.209999084472656,
+      "ticker": "MEGACPO.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.1057712049089832,
+      "ticker": "MEGACPO.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.000560836569384,
+      "ticker": "MELI"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0000918305267628,
+      "ticker": "NEXA"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.003575854765944,
+      "ticker": "NU"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.000135319661947,
+      "ticker": "OMAB"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 249.8300018310547,
+      "ratio": 1.0020053743886739,
+      "stored": 249.3300018310547,
+      "ticker": "OMAB.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0020026641064699,
+      "ticker": "OMAB.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 20.389999389648438,
+      "ratio": 0.9995097926927041,
+      "stored": 20.399999618530273,
+      "ticker": "ORBIA.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.106971780361209,
+      "ticker": "ORBIA.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.1833361561376068,
+      "ticker": "PAAS"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0001778093883358,
+      "ticker": "PAC"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0000033932928174,
+      "ticker": "PAGS"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.999845990483833,
+      "ticker": "PAM"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.6092374052836371,
+      "ticker": "PARAUCO.SN"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.000011419210642,
+      "ticker": "PAX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.01986738288423,
+      "ticker": "PBR"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0070463954957178,
+      "ticker": "PBR-A"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 671.3599853515625,
+      "ratio": 1.0018653654285485,
+      "stored": 670.1099853515625,
+      "ticker": "PE&OLES.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.9999393050427393,
+      "ticker": "PE&OLES.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0068629672890408,
+      "ticker": "PFGRUPOARG.CL"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0553187905331425,
+      "ticker": "PFGRUPSURA.CL"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0003223968998927,
+      "ticker": "PICS"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 312.989990234375,
+      "ratio": 1.0020489326664117,
+      "stored": 312.3500061035156,
+      "ticker": "PINFRA.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.1412759135578114,
+      "ticker": "PINFRA.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 191.9499969482422,
+      "ratio": 1.002454570875236,
+      "stored": 191.47999572753906,
+      "ticker": "Q.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.000584771446823,
+      "ticker": "Q.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 154.02999877929688,
+      "ratio": 0.9979267423934914,
+      "stored": 154.35000610351562,
+      "ticker": "RA.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.1942852201413252,
+      "ticker": "RA.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.9999953627636035,
+      "ticker": "SBS"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0000536221781329,
+      "ticker": "SCCO"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.000005405209874,
+      "ticker": "SGML"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 0.5400000214576721,
+      "ratio": 1.0076507272345068,
+      "stored": 0.5358999967575073,
+      "ticker": "SID"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.9999974961983945,
+      "ticker": "SID"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.2671634941133902,
+      "ticker": "SIGMAFA.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.9999478780709448,
+      "ticker": "SQM"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0469228142525053,
+      "ticker": "SQM-B.SN"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.999993872985956,
+      "ticker": "STNE"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.9999573465274741,
+      "ticker": "SUPV"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0005430336075682,
+      "ticker": "SUZ"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0000577697042834,
+      "ticker": "TEO"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0067083410799789,
+      "ticker": "TGLS"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.9999000099990001,
+      "ticker": "TGS"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.000928667060879,
+      "ticker": "TIGO"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.999912438252951,
+      "ticker": "TIMB"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.1437728772648463,
+      "ticker": "TLEVISACPO.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0599396355045396,
+      "ticker": "TV"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0000270225406593,
+      "ticker": "TX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0003818535804314,
+      "ticker": "VALE"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 66.55999755859375,
+      "ratio": 0.9986496029223614,
+      "stored": 66.6500015258789,
+      "ticker": "VESTA.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.136826970646438,
+      "ticker": "VESTA.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0004715856942197,
+      "ticker": "VIST"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.000032752995947,
+      "ticker": "VIV"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.9999487731161314,
+      "ticker": "VLRS"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0000047517450783,
+      "ticker": "VTEX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0009064085009547,
+      "ticker": "VTMX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "close",
+      "new": 54.7400016784668,
+      "ratio": 1.0014636266241863,
+      "stored": 54.65999984741211,
+      "ticker": "WALMEX.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 0.9995963403729067,
+      "ticker": "WALMEX.MX"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.000023377169856,
+      "ticker": "XP"
+    },
+    {
+      "date": "2026-11-23",
+      "kind": "volume",
+      "ratio": 1.0000458330887563,
+      "ticker": "YPF"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0000255299989091,
+      "ticker": "ABEV"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 248.3000030517578,
+      "ratio": 0.996788426205717,
+      "stored": 249.10000610351562,
+      "ticker": "AC.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9999473218048442,
+      "ticker": "AC.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9999856530035437,
+      "ticker": "AERO"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0001347890551286,
+      "ticker": "AFYA"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.1281073103978567,
+      "ticker": "AG"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9999517938548891,
+      "ticker": "AGRO"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 13.880000114440918,
+      "ratio": 1.0014430345064285,
+      "stored": 13.859999656677246,
+      "ticker": "ALPEKA.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.062338552783182,
+      "ticker": "ALPEKA.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 58.380001068115234,
+      "ratio": 1.0027481938175435,
+      "stored": 58.220001220703125,
+      "ticker": "ALSEA.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0000162657167488,
+      "ticker": "AMX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 23.959999084472656,
+      "ratio": 0.9991659525377202,
+      "stored": 23.979999542236328,
+      "ticker": "AMXB.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.2857029871847352,
+      "ticker": "AMXB.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 4720.10009765625,
+      "ratio": 1.0150752898185484,
+      "stored": 4650.0,
+      "ticker": "ANDINA-B.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "ANDINA-B.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9999886565441027,
+      "ticker": "ARCO"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0536239823674052,
+      "ticker": "ASR"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 542.7000122070312,
+      "ratio": 1.0005162591823638,
+      "stored": 542.4199829101562,
+      "ticker": "ASURB.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.2589594338458778,
+      "ticker": "ASURB.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9999763459173053,
+      "ticker": "AUGO"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 0.7820000052452087,
+      "ratio": 0.9996165279574205,
+      "stored": 0.7822999954223633,
+      "ticker": "BAK"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9999826233524766,
+      "ticker": "BAK"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9999930411061858,
+      "ticker": "BAP"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 55.5099983215332,
+      "ratio": 0.9998198462509366,
+      "stored": 55.52000045776367,
+      "ticker": "BBAJIOO.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0744010175854966,
+      "ticker": "BBAJIOO.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0000619367179588,
+      "ticker": "BBAR"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0000039812460089,
+      "ticker": "BBD"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9999759000471671,
+      "ticker": "BCH"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 60800.0,
+      "ratio": 1.011866127448533,
+      "stored": 60087.0,
+      "ticker": "BCI.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "BCI.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 71.25,
+      "ratio": 1.002956068155494,
+      "stored": 71.04000091552734,
+      "ticker": "BIMBOA.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.1692009235418461,
+      "ticker": "BIMBOA.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9998451852616369,
+      "ticker": "BLX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.00005190580826,
+      "ticker": "BMA"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 37.88999938964844,
+      "ratio": 0.9986821497398435,
+      "stored": 37.939998626708984,
+      "ticker": "BOLSAA.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.150364277475263,
+      "ticker": "BOLSAA.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0001334284736363,
+      "ticker": "BSAC"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 78.8499984741211,
+      "ratio": 0.9981012465078619,
+      "stored": 79.0,
+      "ticker": "BSANTANDER.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "BSANTANDER.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0000292003010876,
+      "ticker": "BSBR"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0003063928200253,
+      "ticker": "BVN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 18.489999771118164,
+      "ratio": 0.9989194782541134,
+      "stored": 18.510000228881836,
+      "ticker": "CEMEXCPO.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.3897243466505755,
+      "ticker": "CEMEXCPO.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 2150.0,
+      "ratio": 1.0141509433962264,
+      "stored": 2120.0,
+      "ticker": "CENCOMALLS.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "CENCOMALLS.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 1685.0,
+      "ratio": 1.0305180265177245,
+      "stored": 1635.0999755859375,
+      "ticker": "CENCOSUD.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "CENCOSUD.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 115.16000366210938,
+      "ratio": 1.001130182423647,
+      "stored": 115.02999877929688,
+      "ticker": "CHDRAUIB.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0204730747623587,
+      "ticker": "CHDRAUIB.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 188.35000610351562,
+      "ratio": 1.0056059959137729,
+      "stored": 187.3000030517578,
+      "ticker": "CHILE.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "CHILE.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0000114891025862,
+      "ticker": "CIB"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.036619965683559,
+      "ticker": "CIBEST.CL"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.000005519954768,
+      "ticker": "CIG"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 941.5,
+      "ratio": 0.9973516949152542,
+      "stored": 944.0,
+      "ticker": "CMPC.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "CMPC.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 153.39999389648438,
+      "ratio": 1.017241318250068,
+      "stored": 150.8000030517578,
+      "ticker": "COLBUN.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "COLBUN.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 6345.0,
+      "ratio": 0.99140625,
+      "stored": 6400.0,
+      "ticker": "COPEC.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "COPEC.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0264288131114179,
+      "ticker": "CPA"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0002261213453738,
+      "ticker": "CRESY"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9999870977334404,
+      "ticker": "CX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0000323035217724,
+      "ticker": "DLO"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0000161471978557,
+      "ticker": "EC"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 1987.4000244140625,
+      "ratio": 1.0191794996995192,
+      "stored": 1950.0,
+      "ticker": "ECL.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "ECL.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 519.2899780273438,
+      "ratio": 0.9797924113723467,
+      "stored": 530.0,
+      "ticker": "EISA.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "EISA.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0001077824609572,
+      "ticker": "ELPC"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9999946057798366,
+      "ticker": "EMBJ"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 78.91999816894531,
+      "ratio": 1.0117948483198116,
+      "stored": 78.0,
+      "ticker": "ENELAM.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "ENELAM.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 81.25,
+      "ratio": 1.0093167701863355,
+      "stored": 80.5,
+      "ticker": "ENELCHILE.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "ENELCHILE.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0001158046493048,
+      "ticker": "ENIC"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0864989256076059,
+      "ticker": "ERO"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0098441426602114,
+      "ticker": "EXK"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 6778.0,
+      "ratio": 1.0230943396226415,
+      "stored": 6625.0,
+      "ticker": "FALABELLA.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "FALABELLA.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 243.17999267578125,
+      "ratio": 1.0030522612890744,
+      "stored": 242.44000244140625,
+      "ticker": "FEMSAUBD.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.614326703161781,
+      "ticker": "FEMSAUBD.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 84.81999969482422,
+      "ratio": 0.9990576934085178,
+      "stored": 84.9000015258789,
+      "ticker": "FIBRAPL14.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.059906822314842,
+      "ticker": "FIBRAPL14.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.1093592290642695,
+      "ticker": "FMTY14.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0000034530505975,
+      "ticker": "FMX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0911891514492806,
+      "ticker": "FSM"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 36.11000061035156,
+      "ratio": 0.9988934740293521,
+      "stored": 36.150001525878906,
+      "ticker": "FUNO11.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.2282549435382615,
+      "ticker": "FUNO11.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 442.54998779296875,
+      "ratio": 1.001516210063259,
+      "stored": 441.8800048828125,
+      "ticker": "GAPB.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.999791106542938,
+      "ticker": "GAPB.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 184.88999938964844,
+      "ratio": 1.0023854835927686,
+      "stored": 184.4499969482422,
+      "ticker": "GCARSOA1.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9997971521612351,
+      "ticker": "GCARSOA1.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 164.5,
+      "ratio": 1.0041508524318123,
+      "stored": 163.82000732421875,
+      "ticker": "GCC.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0156249252176466,
+      "ticker": "GCC.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 35.77000045776367,
+      "ratio": 1.001680240124036,
+      "stored": 35.709999084472656,
+      "ticker": "GENTERA.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0412650968715136,
+      "ticker": "GENTERA.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 48.779998779296875,
+      "ratio": 1.0026720914561291,
+      "stored": 48.650001525878906,
+      "ticker": "GFINBURO.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0828360174886351,
+      "ticker": "GFINBURO.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 199.60000610351562,
+      "ratio": 1.0031159432570576,
+      "stored": 198.97999572753906,
+      "ticker": "GFNORTEO.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.2800098206855013,
+      "ticker": "GFNORTEO.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9999902841695347,
+      "ticker": "GGAL"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9984201419803044,
+      "ticker": "GGAL.BA"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0000021606615082,
+      "ticker": "GGB"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0000836236062407,
+      "ticker": "GLOB"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 188.22999572753906,
+      "ratio": 1.0035186243938217,
+      "stored": 187.57000732421875,
+      "ticker": "GMEXICOB.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9970580907599865,
+      "ticker": "GMEXICOB.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0000118750585507,
+      "ticker": "GPRK"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 289.6600036621094,
+      "ratio": 1.0029083730925457,
+      "stored": 288.82000732421875,
+      "ticker": "GRUMAB.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.097361957345638,
+      "ticker": "GRUMAB.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.000169136956425,
+      "ticker": "GRUPOSURA.CL"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0026174973900677,
+      "ticker": "GTE"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.2559216074491817,
+      "ticker": "HBM"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.000014837015386,
+      "ticker": "IFS"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9999956906688205,
+      "ticker": "INTR"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0002247134903,
+      "ticker": "IRS"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 22628.0,
+      "ratio": 1.0147085201793722,
+      "stored": 22300.0,
+      "ticker": "ITAUCL.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "ITAUCL.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0000297375028144,
+      "ticker": "ITUB"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.000001205058309,
+      "ticker": "JBS"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 39.4900016784668,
+      "ratio": 1.0012678259000738,
+      "stored": 39.439998626708984,
+      "ticker": "KIMBERA.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.000379184644111,
+      "ticker": "KIMBERA.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9999224293645488,
+      "ticker": "KOF"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 227.38999938964844,
+      "ratio": 0.9971933544135662,
+      "stored": 228.02999877929688,
+      "ticker": "KOFUBL.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.110725023470273,
+      "ticker": "KOFUBL.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.109839021482313,
+      "ticker": "LABB.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0151889366256113,
+      "ticker": "LAR"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9999963296152335,
+      "ticker": "LILA"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9999818769245471,
+      "ticker": "LILAK"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9999025603695828,
+      "ticker": "LOMA"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9999563597700557,
+      "ticker": "LTM"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 24.200000762939453,
+      "ratio": 1.0117057142873092,
+      "stored": 23.920000076293945,
+      "ticker": "LTM.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "LTM.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 3280.10009765625,
+      "ratio": 1.0108166710805084,
+      "stored": 3245.0,
+      "ticker": "MALLPLAZA.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "MALLPLAZA.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 56.29999923706055,
+      "ratio": 1.0010668128876803,
+      "stored": 56.2400016784668,
+      "ticker": "MEGACPO.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.1688816942517124,
+      "ticker": "MEGACPO.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.000362049377828,
+      "ticker": "MELI"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.000045108033741,
+      "ticker": "NEXA"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.000132474754845,
+      "ticker": "NU"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9998918646144973,
+      "ticker": "OMAB"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 252.19000244140625,
+      "ratio": 0.9999206840651503,
+      "stored": 252.2100067138672,
+      "ticker": "OMAB.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0661768351673186,
+      "ticker": "OMAB.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 20.829999923706055,
+      "ratio": 0.9990407454485494,
+      "stored": 20.850000381469727,
+      "ticker": "ORBIA.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0614557067855506,
+      "ticker": "ORBIA.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0856940119906437,
+      "ticker": "PAAS"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.00000350325277,
+      "ticker": "PAGS"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0001344266702514,
+      "ticker": "PAM"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.999973033729901,
+      "ticker": "PAMP.BA"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 3535.0,
+      "ratio": 1.0122268850255876,
+      "stored": 3492.300048828125,
+      "ticker": "PARAUCO.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "PARAUCO.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9999675541316992,
+      "ticker": "PAX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.00007534137645,
+      "ticker": "PBR"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.000079708862059,
+      "ticker": "PBR-A"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 647.25,
+      "ratio": 1.003519519364927,
+      "stored": 644.97998046875,
+      "ticker": "PE&OLES.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0919820976303647,
+      "ticker": "PE&OLES.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0000513386892311,
+      "ticker": "PICS"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 318.0,
+      "ratio": 0.9983047387127645,
+      "stored": 318.5400085449219,
+      "ticker": "PINFRA.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0399723788111228,
+      "ticker": "PINFRA.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 195.25,
+      "ratio": 1.000717540819079,
+      "stored": 195.11000061035156,
+      "ticker": "Q.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.032965425702099,
+      "ticker": "Q.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 155.58999633789062,
+      "ratio": 0.9964775006154235,
+      "stored": 156.13999938964844,
+      "ticker": "RA.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.5953663075850872,
+      "ticker": "RA.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9999982712451011,
+      "ticker": "SBS"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0000413345330947,
+      "ticker": "SCCO"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0125268184649456,
+      "ticker": "SGML"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 0.5099999904632568,
+      "ratio": 1.0071090075284999,
+      "stored": 0.5063999891281128,
+      "ticker": "SID"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0000707432726634,
+      "ticker": "SID"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 20.190000534057617,
+      "ratio": 1.0014881293091558,
+      "stored": 20.15999984741211,
+      "ticker": "SIGMAFA.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.2080392292044286,
+      "ticker": "SIGMAFA.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.000053423242672,
+      "ticker": "SQM"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 49780.0,
+      "ratio": 1.022407525313726,
+      "stored": 48689.0,
+      "ticker": "SQM-B.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "SQM-B.SN"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.000044150426175,
+      "ticker": "STNE"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0000487995733034,
+      "ticker": "SUPV"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9999887720558928,
+      "ticker": "SUZ"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.000007625884285,
+      "ticker": "TEO"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.000017736801075,
+      "ticker": "TGLS"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9999210718443536,
+      "ticker": "TGS"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0000229943204029,
+      "ticker": "TIGO"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0000894105229643,
+      "ticker": "TIMB"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 7.96999979019165,
+      "ratio": 0.9987468384889807,
+      "stored": 7.980000019073486,
+      "ticker": "TLEVISACPO.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.1523890258337468,
+      "ticker": "TLEVISACPO.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0000266805537301,
+      "ticker": "TV"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0000944546145578,
+      "ticker": "TX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.001028926844253,
+      "ticker": "UGP"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0000834453393175,
+      "ticker": "VALE"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 66.97000122070312,
+      "ratio": 1.0014954160313116,
+      "stored": 66.87000274658203,
+      "ticker": "VESTA.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9999788775304898,
+      "ticker": "VESTA.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.000052034908551,
+      "ticker": "VIST"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0000245579250362,
+      "ticker": "VIV"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.000047017454874,
+      "ticker": "VLRS"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0000783731912652,
+      "ticker": "VTEX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9999126332343177,
+      "ticker": "VTMX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "close",
+      "new": 53.529998779296875,
+      "ratio": 0.9985077069549736,
+      "stored": 53.61000061035156,
+      "ticker": "WALMEX.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.000550384973765,
+      "ticker": "WALMEX.MX"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 1.0000225386494495,
+      "ticker": "YPF"
+    },
+    {
+      "date": "2026-11-24",
+      "kind": "volume",
+      "ratio": 0.9993805280761218,
+      "ticker": "YPFD.BA"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 250.72999572753906,
+      "ratio": 1.0028397385926944,
+      "stored": 250.02000427246094,
+      "ticker": "AC.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.2413909939648897,
+      "ticker": "AC.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 0.999914196759089,
+      "ticker": "AERO"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 0.9999021530977863,
+      "ticker": "AFYA"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.1273707104561725,
+      "ticker": "AG"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.000140831568994,
+      "ticker": "AGRO"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 14.649999618530273,
+      "ratio": 0.9972770617429804,
+      "stored": 14.6899995803833,
+      "ticker": "ALPEKA.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.003098793120112,
+      "ticker": "ALPEKA.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 58.150001525878906,
+      "ratio": 1.0058813379088585,
+      "stored": 57.810001373291016,
+      "ticker": "ALSEA.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.2430211521294803,
+      "ticker": "ALSEA.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 0.9999915282187729,
+      "ticker": "AMX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 24.40999984741211,
+      "ratio": 0.9983639707861287,
+      "stored": 24.450000762939453,
+      "ticker": "AMXB.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0017124531224126,
+      "ticker": "AMXB.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 4720.10009765625,
+      "ratio": 1.0261087168817935,
+      "stored": 4600.0,
+      "ticker": "ANDINA-B.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "ANDINA-B.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0000382430901604,
+      "ticker": "ARCO"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0004168403501459,
+      "ticker": "ASR"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 554.8699951171875,
+      "ratio": 1.000414648173006,
+      "stored": 554.6400146484375,
+      "ticker": "ASURB.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.1480136092219986,
+      "ticker": "ASURB.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0001180895621389,
+      "ticker": "AUGO"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 0.7730000019073486,
+      "ratio": 0.9998706291662921,
+      "stored": 0.7731000185012817,
+      "ticker": "BAK"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.000005284974641,
+      "ticker": "BAK"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0038957457792632,
+      "ticker": "BAP"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 57.029998779296875,
+      "ratio": 1.0036958656388693,
+      "stored": 56.81999969482422,
+      "ticker": "BBAJIOO.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.1586391751038954,
+      "ticker": "BBAJIOO.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0000305236329228,
+      "ticker": "BBAR"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0002789404966148,
+      "ticker": "BBD"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0000391539972777,
+      "ticker": "BCH"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 60800.0,
+      "ratio": 1.0049586776859505,
+      "stored": 60500.0,
+      "ticker": "BCI.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "BCI.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 73.25,
+      "ratio": 1.0036995975698424,
+      "stored": 72.9800033569336,
+      "ticker": "BIMBOA.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.035598744376061,
+      "ticker": "BIMBOA.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 0.9998412950325345,
+      "ticker": "BLX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0008741609258085,
+      "ticker": "BMA"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 38.650001525878906,
+      "ratio": 1.0025940931464978,
+      "stored": 38.54999923706055,
+      "ticker": "BOLSAA.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.1093799746651944,
+      "ticker": "BOLSAA.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 0.9999141529140998,
+      "ticker": "BSAC"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 78.8499984741211,
+      "ratio": 0.9843945065691374,
+      "stored": 80.0999984741211,
+      "ticker": "BSANTANDER.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "BSANTANDER.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.000006360411601,
+      "ticker": "BSBR"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.004565344368882,
+      "ticker": "BVN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.3099656630212573,
+      "ticker": "CAAP"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 19.440000534057617,
+      "ratio": 0.9974346209518874,
+      "stored": 19.489999771118164,
+      "ticker": "CEMEXCPO.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.2779339900107802,
+      "ticker": "CEMEXCPO.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 2150.0,
+      "ratio": 1.0023777788654273,
+      "stored": 2144.89990234375,
+      "ticker": "CENCOMALLS.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "CENCOMALLS.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 1685.0,
+      "ratio": 1.046583850931677,
+      "stored": 1610.0,
+      "ticker": "CENCOSUD.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "CENCOSUD.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 0.9999645653945644,
+      "ticker": "CEPU"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 114.0,
+      "ratio": 1.0007900652708044,
+      "stored": 113.91000366210938,
+      "ticker": "CHDRAUIB.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0457329607433257,
+      "ticker": "CHDRAUIB.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 188.35000610351562,
+      "ratio": 0.995454782623352,
+      "stored": 189.2100067138672,
+      "ticker": "CHILE.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "CHILE.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 0.9999762701407181,
+      "ticker": "CIB"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0000066597617485,
+      "ticker": "CIG"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 941.5,
+      "ratio": 1.00533902829685,
+      "stored": 936.5,
+      "ticker": "CMPC.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "CMPC.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 153.39999389648438,
+      "ratio": 1.0092104861610813,
+      "stored": 152.0,
+      "ticker": "COLBUN.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "COLBUN.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 6345.0,
+      "ratio": 0.9883177570093458,
+      "stored": 6420.0,
+      "ticker": "COPEC.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "COPEC.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.003153130244622,
+      "ticker": "CPA"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0000778448871936,
+      "ticker": "CRESY"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 0.9999982379920628,
+      "ticker": "CX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.000371541397495,
+      "ticker": "DLO"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0005057599026712,
+      "ticker": "EC"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 1987.4000244140625,
+      "ratio": 1.012997604201374,
+      "stored": 1961.9000244140625,
+      "ticker": "ECL.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "ECL.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 519.2899780273438,
+      "ratio": 0.9835037462639086,
+      "stored": 528.0,
+      "ticker": "EISA.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "EISA.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0000551060551972,
+      "ticker": "ELPC"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0077644464695332,
+      "ticker": "EMBJ"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 78.91999816894531,
+      "ratio": 1.0031778315217845,
+      "stored": 78.66999816894531,
+      "ticker": "ENELAM.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "ENELAM.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 81.25,
+      "ratio": 1.0025913016053831,
+      "stored": 81.04000091552734,
+      "ticker": "ENELCHILE.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "ENELCHILE.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.000052912852532,
+      "ticker": "ENIC"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.1127316882536846,
+      "ticker": "ERO"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0058168408048378,
+      "ticker": "EXK"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 6778.0,
+      "ratio": 1.023867069486405,
+      "stored": 6620.0,
+      "ticker": "FALABELLA.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "FALABELLA.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 251.13999938964844,
+      "ratio": 1.0027950684452096,
+      "stored": 250.44000244140625,
+      "ticker": "FEMSAUBD.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.4143316968112338,
+      "ticker": "FEMSAUBD.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 86.01000213623047,
+      "ratio": 0.9969862696539604,
+      "stored": 86.2699966430664,
+      "ticker": "FIBRAPL14.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0019368819623293,
+      "ticker": "FIBRAPL14.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 16.8700008392334,
+      "ratio": 0.9988159531594006,
+      "stored": 16.889999389648438,
+      "ticker": "FMTY14.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0006879622542426,
+      "ticker": "FMTY14.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 0.9999928455131658,
+      "ticker": "FMX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.025219948090311,
+      "ticker": "FSM"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 36.2400016784668,
+      "ratio": 0.999172903807051,
+      "stored": 36.27000045776367,
+      "ticker": "FUNO11.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.1391527630590614,
+      "ticker": "FUNO11.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 453.5400085449219,
+      "ratio": 1.0000661479981718,
+      "stored": 453.510009765625,
+      "ticker": "GAPB.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.1391604892604783,
+      "ticker": "GAPB.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 194.0,
+      "ratio": 0.9972242556555526,
+      "stored": 194.5399932861328,
+      "ticker": "GCARSOA1.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.08125953168049,
+      "ticker": "GCARSOA1.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 166.0399932861328,
+      "ratio": 1.002717537038433,
+      "stored": 165.58999633789062,
+      "ticker": "GCC.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.010300325341652,
+      "ticker": "GCC.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 36.18000030517578,
+      "ratio": 1.003327757274398,
+      "stored": 36.060001373291016,
+      "ticker": "GENTERA.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.114871703647186,
+      "ticker": "GENTERA.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 49.20000076293945,
+      "ratio": 0.9995936518230873,
+      "stored": 49.220001220703125,
+      "ticker": "GFINBURO.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0582224003345413,
+      "ticker": "GFINBURO.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 206.1999969482422,
+      "ratio": 0.9997575609611743,
+      "stored": 206.25,
+      "ticker": "GFNORTEO.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.3200715849251525,
+      "ticker": "GFNORTEO.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 0.9999980335322087,
+      "ticker": "GGAL"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 0.9984792265417516,
+      "ticker": "GGAL.BA"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0028938811356114,
+      "ticker": "GGB"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0000123287840121,
+      "ticker": "GLOB"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 201.11000061035156,
+      "ratio": 1.000796236200743,
+      "stored": 200.9499969482422,
+      "ticker": "GMEXICOB.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0992899011150707,
+      "ticker": "GMEXICOB.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0000037608264791,
+      "ticker": "GPRK"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 291.6099853515625,
+      "ratio": 0.9993488606944663,
+      "stored": 291.79998779296875,
+      "ticker": "GRUMAB.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0053402412254822,
+      "ticker": "GRUMAB.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0855083159334726,
+      "ticker": "GRUPOSURA.CL"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.016573203245325,
+      "ticker": "GTE"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.2385696817647516,
+      "ticker": "HBM"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 0.9998882477840711,
+      "ticker": "IFS"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.000021906774603,
+      "ticker": "INTR"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.00021873570761,
+      "ticker": "IRS"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.1283739924911849,
+      "ticker": "ISA.CL"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 22628.0,
+      "ratio": 0.9959507042253521,
+      "stored": 22720.0,
+      "ticker": "ITAUCL.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "ITAUCL.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0000629274981734,
+      "ticker": "ITUB"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 39.619998931884766,
+      "ratio": 1.0030379476426523,
+      "stored": 39.5,
+      "ticker": "KIMBERA.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.035933886965894,
+      "ticker": "KIMBERA.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 0.9999603452605977,
+      "ticker": "KOF"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 233.8699951171875,
+      "ratio": 1.001112942537377,
+      "stored": 233.61000061035156,
+      "ticker": "KOFUBL.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.094393882784813,
+      "ticker": "KOFUBL.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 14.979999542236328,
+      "ratio": 1.00334891065228,
+      "stored": 14.930000305175781,
+      "ticker": "LABB.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.002335646799962,
+      "ticker": "LABB.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0112843086137921,
+      "ticker": "LAR"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0000451434015791,
+      "ticker": "LILA"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0001944212099687,
+      "ticker": "LILAK"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 0.9999914494104368,
+      "ticker": "LTM"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 24.200000762939453,
+      "ratio": 1.0041493933563013,
+      "stored": 24.100000381469727,
+      "ticker": "LTM.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "LTM.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 3280.10009765625,
+      "ratio": 1.006165674127684,
+      "stored": 3260.0,
+      "ticker": "MALLPLAZA.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "MALLPLAZA.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 56.27000045776367,
+      "ratio": 0.9984031200920293,
+      "stored": 56.36000061035156,
+      "ticker": "MEGACPO.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.007674741201424,
+      "ticker": "MEGACPO.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0001342462075447,
+      "ticker": "MELI"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.000247127146917,
+      "ticker": "NEXA"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0074610497831986,
+      "ticker": "NU"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 0.9999867375764248,
+      "ticker": "OMAB"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 258.17999267578125,
+      "ratio": 1.0024461460402745,
+      "stored": 257.54998779296875,
+      "ticker": "OMAB.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.133547539488495,
+      "ticker": "OMAB.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 21.1200008392334,
+      "ratio": 1.0033254919102137,
+      "stored": 21.049999237060547,
+      "ticker": "ORBIA.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0894549136775105,
+      "ticker": "ORBIA.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0110458402633011,
+      "ticker": "PAAS"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0003316607645316,
+      "ticker": "PAC"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0000426167135648,
+      "ticker": "PAGS"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0001259207958195,
+      "ticker": "PAM"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 0.9999861539952647,
+      "ticker": "PAMP.BA"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 3535.0,
+      "ratio": 1.0071225071225072,
+      "stored": 3510.0,
+      "ticker": "PARAUCO.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "PARAUCO.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0000251873635866,
+      "ticker": "PAX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0082742348781075,
+      "ticker": "PBR"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0000795109774996,
+      "ticker": "PBR-A"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 698.780029296875,
+      "ratio": 1.0013327416256719,
+      "stored": 697.8499755859375,
+      "ticker": "PE&OLES.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0429965820223674,
+      "ticker": "PE&OLES.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.000017288043781,
+      "ticker": "PICS"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 322.92999267578125,
+      "ratio": 1.0033244496766194,
+      "stored": 321.8599853515625,
+      "ticker": "PINFRA.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0400902496028814,
+      "ticker": "PINFRA.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 195.5,
+      "ratio": 0.9998465771007817,
+      "stored": 195.52999877929688,
+      "ticker": "Q.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.024167386270431,
+      "ticker": "Q.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 153.6699981689453,
+      "ratio": 0.9994796628874492,
+      "stored": 153.75,
+      "ticker": "RA.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.447821874702607,
+      "ticker": "RA.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0000637741871288,
+      "ticker": "SCCO"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0002678872020816,
+      "ticker": "SGML"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 0.5400000214576721,
+      "ratio": 0.9959424431549038,
+      "stored": 0.5422000288963318,
+      "ticker": "SID"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.000013118836383,
+      "ticker": "SID"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 20.440000534057617,
+      "ratio": 1.0004894874563122,
+      "stored": 20.43000030517578,
+      "ticker": "SIGMAFA.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.053759637900705,
+      "ticker": "SIGMAFA.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 49780.0,
+      "ratio": 1.0066734074823054,
+      "stored": 49450.0,
+      "ticker": "SQM-B.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": null,
+      "ticker": "SQM-B.SN"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0076228060305517,
+      "ticker": "STNE"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 0.9999674660381587,
+      "ticker": "SUPV"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0006000158857158,
+      "ticker": "SUZ"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0000535902489565,
+      "ticker": "TEO"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.000312773853233,
+      "ticker": "TGLS"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 0.9999527800076108,
+      "ticker": "TGS"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0602875358740145,
+      "ticker": "TIGO"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 0.9999786687469717,
+      "ticker": "TIMB"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 8.149999618530273,
+      "ratio": 1.001228412135845,
+      "stored": 8.140000343322754,
+      "ticker": "TLEVISACPO.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.1788822935028067,
+      "ticker": "TLEVISACPO.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0000559355337024,
+      "ticker": "TV"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0001109473317167,
+      "ticker": "TX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.5432497432017664,
+      "ticker": "UGP"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.001656150917274,
+      "ticker": "VALE"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 67.66000366210938,
+      "ratio": 1.0023704246238425,
+      "stored": 67.5,
+      "ticker": "VESTA.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0014890804969996,
+      "ticker": "VESTA.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.000176072215375,
+      "ticker": "VIST"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0000253716953367,
+      "ticker": "VIV"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0000332236951395,
+      "ticker": "VLRS"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 0.9999947744568484,
+      "ticker": "VTEX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 0.999917362201471,
+      "ticker": "VTMX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "close",
+      "new": 53.90999984741211,
+      "ratio": 1.000928318538692,
+      "stored": 53.86000061035156,
+      "ticker": "WALMEX.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.2616283424969308,
+      "ticker": "WALMEX.MX"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.000006653534416,
+      "ticker": "XP"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 1.0003881323370505,
+      "ticker": "YPF"
+    },
+    {
+      "date": "2026-11-25",
+      "kind": "volume",
+      "ratio": 0.9995091351749793,
+      "ticker": "YPFD.BA"
+    }
+  ],
+  "session_date": "2026-11-26"
+}

@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 13.33,
+  "high": 19.0,
+  "low": 10.6,
+  "mean": 15.6,
+  "median": 16.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.329,
+   "currency": "USD",
+   "growth": -0.1113,
+   "high": 0.329,
+   "low": 0.329,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.37019
+  },
+  "+1y": {
+   "avg": 1.82124,
+   "currency": "USD",
+   "growth": -0.2784,
+   "high": 2.1,
+   "low": 1.317,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 2.5238
+  },
+  "0q": {
+   "avg": 0.592,
+   "currency": "USD",
+   "growth": 2.0257,
+   "high": 0.592,
+   "low": 0.592,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.19566
+  },
+  "0y": {
+   "avg": 2.5238,
+   "currency": "USD",
+   "growth": 1.1593,
+   "high": 2.77,
+   "low": 2.37121,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 1.16879
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 24621261716000,
+   "currency": "COP",
+   "growth": -0.1399,
+   "high": 24621261716000,
+   "low": 24621261716000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 28625000000000
+  },
+  "+1y": {
+   "avg": 120718399710350,
+   "currency": "COP",
+   "growth": -0.0476,
+   "high": 145635985021000,
+   "low": 99807826451000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 126752998482220
+  },
+  "0q": {
+   "avg": 34053137835000,
+   "currency": "COP",
+   "growth": 0.1816,
+   "high": 34053137835000,
+   "low": 34053137835000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 28819000000000
+  },
+  "0y": {
+   "avg": 126752998482220,
+   "currency": "COP",
+   "growth": 0.059,
+   "high": 137940137835000,
+   "low": 107710256400000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 119694000000000
+  }
+ },
+ "ticker": "EC",
+ "url": "https://finance.yahoo.com/quote/EC"
+}

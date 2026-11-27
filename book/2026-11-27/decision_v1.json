@@ -1,0 +1,77 @@
+{
+  "acknowledged_soft_checks": [],
+  "approval_hash": "4b3be6c30b1f0358384c003614013b6b61af94259937ffeb0e0d7b3d84d90b7c",
+  "approver": "CDP — Cabra da Peste (PM autônomo)",
+  "audit_head_hash": "bc5af4f203b586e28f7e015c2c6dfcad658cfef215af240d0265715846a86bb4",
+  "co_sign_reasons": [],
+  "co_signed_at": null,
+  "co_signer": null,
+  "config_hash": "2ddf7d89ac769dea9781ac51fb825fa55931bf19250fa64e2f7447aa91f34ff0",
+  "conviction": null,
+  "decided_at": "2026-11-27T15:05:27.790742Z",
+  "decision": "APPROVE",
+  "journal": {
+    "ai_vs_quant_vs_pm": "Abstenção do agente PM: carteira só-quant com as restrições vigentes.",
+    "alternatives_considered": "O que mudou na visão: Modelos de cobertura atualizados até 2026-11-26, com retrato de 2026-11-27. A revisão dos indicadores de squeeze amplia os vetos prudenciais a shorts em nomes sob pressão técnica. Ero Copper fica vetada para novas compras enquanto a notícia de paralisação não for reconciliada com fonte primária. As notas publicadas de PagSeguro, Liberty Latin America, Auren, Patria, Smart Fit, Cemex, Taesa e Banco Macro orientam critérios de caixa e capital; sua leitura não equivale a nova revisão documental completa dos resultados.",
+    "bias_checklist": {},
+    "catalysts": [],
+    "horizon_weeks": 8,
+    "key_variables": [
+      "Regime: neutro",
+      "Postura: defensiva → defensiva",
+      "Escada de drawdown: normal"
+    ],
+    "mental_state": "Mente: codex",
+    "positions": [
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Deterioração persistente da contribuição após risco e financiamento.",
+        "issuer_id": "BR_PAGS",
+        "premortem": "Crescimento de pagamentos e crédito consome capital sem retorno atribuível.",
+        "probability_correct": null,
+        "thesis": "PagSeguro depende de contribuição após captação, perdas e capital. A posição quantitativa não recebe inclinação fundamental adicional.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Recuperação documentada e recorrente do caixa atribuível enfraquece o caso vendido.",
+        "issuer_id": "LA_LILA",
+        "premortem": "Melhora operacional e refinanciamento provocam reprecificação antes da revisão da tese.",
+        "probability_correct": null,
+        "thesis": "Liberty Latin America exige caixa residual após manutenção, equipamentos e dívida. A nota publicada conserva lacunas de classes e financiamento; sem convicção direcional adicional.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Nova revisão documentada de caixa, maturação e arrendamentos altera a leitura de risco.",
+        "issuer_id": "BR_SMARTFIT",
+        "premortem": "Reversão técnica e custo de aluguel superam o sinal quantitativo.",
+        "probability_correct": null,
+        "thesis": "Smart Fit fica vetada no lado vendido por pressão de squeeze. Não se infere deterioração econômica da falta de reconciliação atual.",
+        "variant_perception": ""
+      },
+      {
+        "ai_vs_pm_divergence": "",
+        "invalidation_criteria": "Geração recorrente depois de manutenção confirma melhora econômica sustentada.",
+        "issuer_id": "MX_CEMEX",
+        "premortem": "Reprecificação operacional antecede a conversão integral do caixa.",
+        "probability_correct": null,
+        "thesis": "Cemex exige separar economias operacionais de alienações e manutenção. A nota publicada de 2026-10-26 é referência indireta; sem nova inclinação discricionária.",
+        "variant_perception": ""
+      }
+    ],
+    "premortem": "BR_PAGS: Crescimento de pagamentos e crédito consome capital sem retorno atribuível. | LA_LILA: Melhora operacional e refinanciamento provocam reprecificação antes da revisão da tese. | BR_SMARTFIT: Reversão técnica e custo de aluguel superam o sinal quantitativo. | MX_CEMEX: Reprecificação operacional antecede a conversão integral do caixa.",
+    "situation": "Leitura neutra, convicção baixa e postura defensiva, com drawdown em -2,07% e volatilidade realizada em 3,40%. A revisão documental integral de todos os candidatos e posições não foi concluída; adotamos abstenção direcional. A seleção quantitativa permanece submetida aos portões do mandato e aos vetos prudenciais. Juros, energia, câmbio e liquidez podem provocar reversões relevantes.",
+    "sizing_rationale": "Postura solicitada defensiva; efetiva defensiva (escada de drawdown: normal); vol-alvo 4,00% e gross máximo 2,00x (calculados por código). "
+  },
+  "mind": "codex",
+  "mode": "AUTONOMOUS",
+  "pm_decision_hash": "d29433b0a57c18829abf3769a3b2ebceb31200ed41c9dc6bd93b062b5a27f465",
+  "proposal_hash": "234af88c384cee3bbf341004378adb5dd5aed02f7a7cf5711512c1c1b434170f",
+  "proposal_id": "CDP-2026-11-27-cdp-restricoes",
+  "rationale": "Postura defensiva; regime neutro. Leitura neutra, convicção baixa e postura defensiva, com drawdown em -2,07% e volatilidade realizada em 3,40%. A revisão documental integral de todos os candidatos e posições não foi concluída; adotamos abstenção direcional. A seleção quantitativa permanece submetida aos portões do mandato e aos vetos prudenciais. Juros, energia, câmbio e liquidez podem provocar reversões relevantes. Caminho: cdp-restricoes.",
+  "research_hash": "1b81530894bd1d1e98b042fae4c0ec5777e2527068e733a1a4476bfc371b6fda",
+  "risk_gate_hash": "b1d88917e696d9992777fcbd57d2e5a2f407728c5c1ed68d52e0856a0b183f0d",
+  "snapshot_hash": "a0d028d9a56b12db62eff079dfa9816356373dd8bfdb2607dc298b90aa2961a3",
+  "week": "2026-11-27"
+}

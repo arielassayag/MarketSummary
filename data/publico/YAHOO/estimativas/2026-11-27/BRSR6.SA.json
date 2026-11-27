@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 13.85,
+  "high": 18.1,
+  "low": 11.0,
+  "mean": 14.51667,
+  "median": 14.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.02867,
+   "currency": "BRL",
+   "growth": 0.90489995,
+   "high": 1.02867,
+   "low": 1.02867,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.54
+  },
+  "+1y": {
+   "avg": 3.05234,
+   "currency": "BRL",
+   "growth": 0.1286,
+   "high": 3.34779,
+   "low": 2.72,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 2.70454
+  },
+  "0q": {
+   "avg": 0.67412,
+   "currency": "BRL",
+   "growth": -0.617,
+   "high": 0.74017,
+   "low": 0.58618,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 1.76
+  },
+  "0y": {
+   "avg": 2.70454,
+   "currency": "BRL",
+   "growth": -0.3545,
+   "high": 3.00532,
+   "low": 2.45,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 4.19
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 10225384290,
+   "currency": "BRL",
+   "growth": 0.0845,
+   "high": 10843000000,
+   "low": 9800000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 9428648890.0
+  },
+  "0q": {
+   "avg": 2426469660,
+   "currency": "BRL",
+   "growth": 0.1767,
+   "high": 2508939330,
+   "low": 2344000000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 2062042000.0
+  },
+  "0y": {
+   "avg": 9428648890,
+   "currency": "BRL",
+   "growth": 0.107200004,
+   "high": 9972000000,
+   "low": 9100000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 8515755999.0
+  }
+ },
+ "ticker": "BRSR6.SA",
+ "url": "https://finance.yahoo.com/quote/BRSR6.SA"
+}

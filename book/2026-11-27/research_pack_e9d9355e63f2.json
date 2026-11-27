@@ -1,0 +1,933 @@
+{
+  "is_synthetic": false,
+  "macro": [
+    {
+      "created_at": "2026-11-27T15:01:38Z",
+      "evidence": [
+        {
+          "kind": "source",
+          "note": "",
+          "ref_id": "https://www.bcra.gob.ar/publicaciones/informe-monetario-mensual-octubre-de-2026/"
+        }
+      ],
+      "is_synthetic": false,
+      "key_events": [],
+      "model": null,
+      "note_id": "2026-11-27-AR-macro",
+      "portfolio_implications": [],
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "regime": "cautela",
+      "risks": [],
+      "scope": "AR",
+      "stance": 0,
+      "summary": "O informe monetário de outubro do BCRA descreve compras de divisas e esterilização de excedentes. Julgamento: avaliar transmissão a depósitos, crédito e lucro recorrente; não inferir estabilização definitiva ou retorno do acionista.",
+      "week": "2026-11-27"
+    },
+    {
+      "created_at": "2026-11-27T15:01:38Z",
+      "evidence": [
+        {
+          "kind": "source",
+          "note": "",
+          "ref_id": "https://www.bcb.gov.br/content/copom/atascopom/Copom282-not20261104282.pdf"
+        }
+      ],
+      "is_synthetic": false,
+      "key_events": [],
+      "model": null,
+      "note_id": "2026-11-27-BR-macro",
+      "portfolio_implications": [],
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "regime": "cautela",
+      "risks": [
+        "Persistência inflacionária, risco fiscal e sensibilidade a juros."
+      ],
+      "scope": "BR",
+      "stance": 0,
+      "summary": "Copom manteve a taxa na reunião de novembro. A ata destaca incerteza externa e necessidade de perseverança na convergência da inflação. Julgamento: convicção baixa para direção de mercado; postura defensiva.",
+      "week": "2026-11-27"
+    },
+    {
+      "created_at": "2026-11-27T15:01:38Z",
+      "evidence": [
+        {
+          "kind": "source",
+          "note": "",
+          "ref_id": "https://www.bcentral.cl/web/banco-central/contenido/-/detalle/prensa/comunicados-rpm/comunicado-reunion-de-politica-monetaria-octubre-2026"
+        }
+      ],
+      "is_synthetic": false,
+      "key_events": [],
+      "model": null,
+      "note_id": "2026-11-27-CL-macro",
+      "portfolio_implications": [],
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "regime": "cautela",
+      "risks": [],
+      "scope": "CL",
+      "stance": 0,
+      "summary": "O comunicado do Banco Central de Chile de 2026-10-27 manteve a taxa e destacou choques de energia e alimentos. Julgamento: risco de custo e atividade exige seleção relativa, sem aposta direcional adicional.",
+      "week": "2026-11-27"
+    },
+    {
+      "created_at": "2026-11-27T15:01:38Z",
+      "evidence": [
+        {
+          "kind": "source",
+          "note": "",
+          "ref_id": "https://www.banrep.gov.co/es/publicaciones-investigaciones/informe-politica-monetaria/octubre-2026"
+        }
+      ],
+      "is_synthetic": false,
+      "key_events": [],
+      "model": null,
+      "note_id": "2026-11-27-CO-macro",
+      "portfolio_implications": [],
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "regime": "cautela",
+      "risks": [],
+      "scope": "CO",
+      "stance": 0,
+      "summary": "O relatório de outubro do Banco de la República descreve inflação pressionada e moderação da atividade, com incerteza fiscal e climática. Julgamento: postura defensiva e convicção baixa para direção de mercado.",
+      "week": "2026-11-27"
+    },
+    {
+      "created_at": "2026-11-27T15:01:38Z",
+      "evidence": [
+        {
+          "kind": "source",
+          "note": "",
+          "ref_id": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm"
+        },
+        {
+          "kind": "source",
+          "note": "",
+          "ref_id": "https://www.banxico.org.mx/canales/%7B13B102AD-C237-17C0-0F39-65F9B35326DE%7D.pdf"
+        }
+      ],
+      "is_synthetic": false,
+      "key_events": [],
+      "model": null,
+      "note_id": "2026-11-27-GLOBAL-macro",
+      "portfolio_implications": [],
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "regime": "cautela",
+      "risks": [
+        "Energia, alimentos, câmbio e reversão da liquidez."
+      ],
+      "scope": "GLOBAL",
+      "stance": 0,
+      "summary": "As fontes oficiais consultadas apontam incerteza de inflação e política monetária. Julgamento: convicção baixa para direção global; preservar neutralidade e liquidez diante do fechamento antecipado indicado pela agenda.",
+      "week": "2026-11-27"
+    },
+    {
+      "created_at": "2026-11-27T15:01:38Z",
+      "evidence": [
+        {
+          "kind": "source",
+          "note": "",
+          "ref_id": "https://www.banxico.org.mx/canales/%7B13B102AD-C237-17C0-0F39-65F9B35326DE%7D.pdf"
+        }
+      ],
+      "is_synthetic": false,
+      "key_events": [],
+      "model": null,
+      "note_id": "2026-11-27-MX-macro",
+      "portfolio_implications": [],
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "regime": "cautela",
+      "risks": [
+        "Depreciação, política comercial e persistência da inflação."
+      ],
+      "scope": "MX",
+      "stance": 0,
+      "summary": "Banxico, em 2026-11-05, descreve redução pontual dos juros e manutenção prolongada como apoio à convergência da inflação. Julgamento: não extrapolar ciclo de cortes; convicção direcional baixa.",
+      "week": "2026-11-27"
+    },
+    {
+      "created_at": "2026-11-27T15:01:38Z",
+      "evidence": [],
+      "is_synthetic": false,
+      "key_events": [],
+      "model": null,
+      "note_id": "2026-11-27-PE-macro",
+      "portfolio_implications": [],
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "regime": "abstencao",
+      "risks": [
+        "Calendário monetário não reconciliado e sensibilidade a metais."
+      ],
+      "scope": "PE",
+      "stance": 0,
+      "summary": "O documento primário do programa monetário de novembro não pôde ser consultado. A agenda preserva lacuna no calendário oficial; não se afirma taxa corrente nem ausência de evento. Abstenção direcional.",
+      "week": "2026-11-27"
+    }
+  ],
+  "mind": "codex",
+  "news": [
+    {
+      "is_synthetic": false,
+      "issuer_ids": [
+        "BR_ERO"
+      ],
+      "language": "en",
+      "news_id": "rss_2e9289dc86ed",
+      "published_at": "2026-11-27T13:21:34Z",
+      "source": "GuruFocus",
+      "title": "Ero Copper (ERO) Halts Operations at Tucumã Site Amid Environmen",
+      "untrusted": true,
+      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPTnFRaFFnTmlsTjVjdzFlRFA5RUhELWxpQzdkMWhhMHF1Z3dUeEl3V1BwSlJ3MmxtVnU0d29PSTc1Znd2bTZMempjWVlsVWtnTnp1cnlHVURtRW9lbDNEb2hodlY1QkFoOFZDXzYzME1GWEdrMUg0VHVzdDBPSWRjNXdVNGFyX3lFc1VMWkhaRHZ1MzVDZ3JUbVJCX3V0SFgxTFVMS0Y2ay0xNmVkX3VSUFB3?oc=5"
+    },
+    {
+      "is_synthetic": false,
+      "issuer_ids": [
+        "BR_TAESA"
+      ],
+      "language": "pt",
+      "news_id": "rss_ee42c1b79f4d",
+      "published_at": "2026-11-27T13:46:20Z",
+      "source": "Cenário Energia",
+      "title": "Taesa Elege Marco Aurélio Vasconcelos Como Presidente Do Conselho De Administração",
+      "untrusted": true,
+      "url": "https://news.google.com/rss/articles/CBMiwgFBVV95cUxOczVxa1dGVlFuY2ZwV3B6X2hqZmZKQU43OVV0SkZ0OXZqWDZJNEtQOHU1dWRJdWZDSVpYclRZdGQ2bmFIWF8zNHo3dHdrV1BmUU5tM1NUSlAtWjVjT19tZHpQcUpqdWFnYjNvVkdKbk9XMU8wUFBjREt5S05NbW5lOHlKMWtqZWtZUDNOYm5XUnpkS0xSRzU2VGI4NUQxT1RwTTA0TklYLTliUTJaZmVPWGlwNjlSVTdwbEdWc0c2LVVvdw?oc=5"
+    },
+    {
+      "is_synthetic": false,
+      "issuer_ids": [
+        "BR_ERO"
+      ],
+      "language": "en",
+      "news_id": "rss_60ca1747a6d2",
+      "published_at": "2026-11-27T14:12:02Z",
+      "source": "Simply Wall St",
+      "title": "Learn Why The Bull Case For Ero Copper Stock Could Change Following Tucuma Production Halt",
+      "untrusted": true,
+      "url": "https://news.google.com/rss/articles/CBMizgFBVV95cUxNWWxyNnF6bFBRck56cmlteTAzMmNsekpXbVFLWU1vMHRHclpNdWhTRWRIYWJRVWVVNk43ZHQyU1ZtT2RXbmlaUXZKNkFiVy1DS1A0dVVZRmV3dG1fb0F5WDE0OUM5dHJTaExLNGtOOVVxMGtaQ3NQb0ZQa2p5Z2Z2R1QwUWNxUnFlYmlGd081bklONjB3WE85WV9kZjRpMTljeVZQTmU2dDRpYlBkdWtnS0g1OVVQLUhVcnF3NkJYdUFSeE1TbmpSODZTSVk4UdIB0wFBVV95cUxNa1d2b2U0YzI3LXZtUVFtYnVOYzlETkVJM1RsbzJKWEQ2MjBFTXBPZVpyUl9FeFlhTmktVlJoMjVhQkFFMTVHYk8tS0F3dFRySTlzNDBuLTN6b2c0ckthZ2NzVXhhMEswNWZLY1UxcmNJcTFrZHprcUppSkJMX05xREZPeEEzRlozMm13SXJrLWVFNlg4dGlfNXlJQ0ZDOV9GSXRaWTZTSHRZYmktYXpybTBtUjRpN1NLenY1d3hFbjB1bHZfUHBGUVpheU1ZMWNRQjF3?oc=5"
+    },
+    {
+      "is_synthetic": false,
+      "issuer_ids": [
+        "BR_PAGS"
+      ],
+      "language": "en",
+      "news_id": "rss_12e920979ced",
+      "published_at": "2026-11-27T14:17:50Z",
+      "source": "GuruFocus",
+      "title": "PagSeguro (PAGS) Stock Jumps 12.4% Premarket Without Company New",
+      "untrusted": true,
+      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOM0pBbFNQZnA0QTBDb0NOclZ4djY5Nk1nYzNDLUhVdVZydnhzTllwdVZ3ZFloX0R3d2I1MmN5d01paFRiRGQ5QmItUG9qSnJNUlktamVkeTk0MnNrbEJEY3QwOXVwZEdDalI5Y0VkSHNhV2poQ2l5LXlxaWo0dlJZS19PWi0tWUZ6cVBENTN3N3JZRllwMmMtUEpsb0JMdjg0dWc?oc=5"
+    }
+  ],
+  "notes": [
+    {
+      "bear_points": [],
+      "bull_points": [],
+      "catalysts": [],
+      "confidence": 0.8,
+      "created_at": "2026-11-27T15:01:38Z",
+      "evidence": [
+        {
+          "kind": "fact",
+          "note": "",
+          "ref_id": "AR_GALICIA.squeeze_score"
+        }
+      ],
+      "horizon_weeks": 8,
+      "input_hash": "4df9523955df11d4b295acec532b2f93f1166d05b449978177212150e92dc14d",
+      "is_synthetic": false,
+      "issuer_id": "AR_GALICIA",
+      "key_risks": [],
+      "model": null,
+      "note_id": "2026-11-27-galicia-risco",
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "role": "short_risk",
+      "squeeze": {
+        "rationale": "Pressão de squeeze elevada; controle e catalisadores não reconciliados integralmente nesta revisão.",
+        "verdict": "veto"
+      },
+      "stance": 0,
+      "thesis": "Galicia: abstenção fundamental; squeeze em {{fact:AR_GALICIA.squeeze_score}} sustenta veto prudencial ao short.",
+      "week": "2026-11-27"
+    },
+    {
+      "bear_points": [],
+      "bull_points": [],
+      "catalysts": [],
+      "confidence": 0.8,
+      "created_at": "2026-11-27T15:01:38Z",
+      "evidence": [
+        {
+          "kind": "fact",
+          "note": "",
+          "ref_id": "AR_GLOBANT.squeeze_score"
+        }
+      ],
+      "horizon_weeks": 8,
+      "input_hash": "1cb04d3c51f5de9c0f63a3283be092326259469dc0f842b2f620401d5b88be7e",
+      "is_synthetic": false,
+      "issuer_id": "AR_GLOBANT",
+      "key_risks": [],
+      "model": null,
+      "note_id": "2026-11-27-globant-risco",
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "role": "short_risk",
+      "squeeze": {
+        "rationale": "Risco de reversão e pressão técnica; não há comprovação integral de catalisadores e controle.",
+        "verdict": "veto"
+      },
+      "stance": 0,
+      "thesis": "Globant: squeeze em {{fact:AR_GLOBANT.squeeze_score}} exige veto prudencial ao short, sem tese direcional adicional.",
+      "week": "2026-11-27"
+    },
+    {
+      "bear_points": [
+        "Resultados de títulos e concentração provincial podem reduzir recorrência."
+      ],
+      "bull_points": [
+        "Franquia regional e depósitos podem apoiar crédito rentável."
+      ],
+      "catalysts": [],
+      "confidence": 0.2,
+      "created_at": "2026-11-27T15:01:38Z",
+      "evidence": [
+        {
+          "kind": "fact",
+          "note": "",
+          "ref_id": "AR_MACRO.squeeze_score"
+        }
+      ],
+      "horizon_weeks": 8,
+      "input_hash": "6a567ea151bb7c505e1756e1c2385e6206d6034110a21a5368b0472157250b56",
+      "is_synthetic": false,
+      "issuer_id": "AR_MACRO",
+      "key_risks": [],
+      "model": null,
+      "note_id": "2026-11-27-macro-revisao",
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "role": "fundamental",
+      "squeeze": {
+        "rationale": "Squeeze em {{fact:AR_MACRO.squeeze_score}} não certifica controle, catalisadores nem disponibilidade executável.",
+        "verdict": "caution"
+      },
+      "stance": 0,
+      "thesis": "Banco Macro: a nota publicada em 2026-10-11 exige distinguir títulos, inflação e provisões de renda recorrente, e depósitos públicos de privados. Não houve reconciliação integral dos resultados posteriores; abstenção e cautela com a posição vendida.",
+      "week": "2026-11-27"
+    },
+    {
+      "bear_points": [],
+      "bull_points": [],
+      "catalysts": [],
+      "confidence": 0.8,
+      "created_at": "2026-11-27T15:01:38Z",
+      "evidence": [
+        {
+          "kind": "fact",
+          "note": "",
+          "ref_id": "BR_ASSAI.squeeze_score"
+        }
+      ],
+      "horizon_weeks": 8,
+      "input_hash": "d2b19a04646e9d690713890890c31feb49a275ae3d2e5457207b1762f7f28bd6",
+      "is_synthetic": false,
+      "issuer_id": "BR_ASSAI",
+      "key_risks": [],
+      "model": null,
+      "note_id": "2026-11-27-assai-risco",
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "role": "short_risk",
+      "squeeze": {
+        "rationale": "Pressão técnica elevada; não inferir oportunidade de venda da alta recente.",
+        "verdict": "veto"
+      },
+      "stance": 0,
+      "thesis": "Assaí: squeeze em {{fact:BR_ASSAI.squeeze_score}} recomenda veto prudencial ao short.",
+      "week": "2026-11-27"
+    },
+    {
+      "bear_points": [],
+      "bull_points": [],
+      "catalysts": [],
+      "confidence": 0.8,
+      "created_at": "2026-11-27T15:01:38Z",
+      "evidence": [
+        {
+          "kind": "fact",
+          "note": "",
+          "ref_id": "BR_COSAN.squeeze_score"
+        }
+      ],
+      "horizon_weeks": 8,
+      "input_hash": "83d4436a1590233783517f226424a64fa523802a0df64b2209a505291fd18c4d",
+      "is_synthetic": false,
+      "issuer_id": "BR_COSAN",
+      "key_risks": [],
+      "model": null,
+      "note_id": "2026-11-27-cosan-risco",
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "role": "short_risk",
+      "squeeze": {
+        "rationale": "Pressão técnica elevada e risco de reversão; sem revisão documental completa de eventos de capital.",
+        "verdict": "veto"
+      },
+      "stance": 0,
+      "thesis": "Cosan: squeeze em {{fact:BR_COSAN.squeeze_score}} justifica veto prudencial ao short.",
+      "week": "2026-11-27"
+    },
+    {
+      "bear_points": [
+        "Uma paralisação prolongada pode comprometer geração de caixa e execução."
+      ],
+      "bull_points": [
+        "Retomada operacional documentada pode enfraquecer o risco indicado pela notícia."
+      ],
+      "catalysts": [],
+      "confidence": 0.2,
+      "created_at": "2026-11-27T15:01:38Z",
+      "evidence": [
+        {
+          "kind": "news",
+          "note": "",
+          "ref_id": "rss_2e9289dc86ed"
+        },
+        {
+          "kind": "news",
+          "note": "",
+          "ref_id": "rss_60ca1747a6d2"
+        }
+      ],
+      "horizon_weeks": 8,
+      "input_hash": "67884cf9fb34afe2db3a84ae1a7bc653aefa8c886219970ff75b1056288fd0ed",
+      "is_synthetic": false,
+      "issuer_id": "BR_ERO",
+      "key_risks": [
+        "Duração e alcance do evento não confirmados."
+      ],
+      "model": null,
+      "note_id": "2026-11-27-ero-evento",
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "role": "fundamental",
+      "squeeze": null,
+      "stance": 0,
+      "thesis": "Ero Copper: notícia de paralisação operacional ainda não reconciliada com comunicado primário. Abstenção direcional e veto prudencial a novas compras até comprovar duração, licenciamento e impacto operacional; a manchete não comprova esses efeitos.",
+      "week": "2026-11-27"
+    },
+    {
+      "bear_points": [],
+      "bull_points": [],
+      "catalysts": [],
+      "confidence": 0.8,
+      "created_at": "2026-11-27T15:01:38Z",
+      "evidence": [
+        {
+          "kind": "fact",
+          "note": "",
+          "ref_id": "BR_EZTEC.squeeze_score"
+        }
+      ],
+      "horizon_weeks": 8,
+      "input_hash": "cc90b01522d36ee9712dc114d5edb9afe191d79caa2c44785a718f0f6da8d910",
+      "is_synthetic": false,
+      "issuer_id": "BR_EZTEC",
+      "key_risks": [],
+      "model": null,
+      "note_id": "2026-11-27-eztec-risco",
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "role": "short_risk",
+      "squeeze": {
+        "rationale": "Pressão técnica elevada; estrutura de controle e disponibilidade executável não certificadas nesta revisão.",
+        "verdict": "veto"
+      },
+      "stance": 0,
+      "thesis": "EZTec: squeeze em {{fact:BR_EZTEC.squeeze_score}} sustenta veto prudencial ao short.",
+      "week": "2026-11-27"
+    },
+    {
+      "bear_points": [],
+      "bull_points": [],
+      "catalysts": [],
+      "confidence": 0.8,
+      "created_at": "2026-11-27T15:01:38Z",
+      "evidence": [
+        {
+          "kind": "fact",
+          "note": "",
+          "ref_id": "BR_ITAU.squeeze_score"
+        },
+        {
+          "kind": "fact",
+          "note": "",
+          "ref_id": "BR_ITAU.days_to_cover"
+        }
+      ],
+      "horizon_weeks": 8,
+      "input_hash": "e310a31c9d59b5e810d765cddaae25dea63ac4393f6efb7d7c712edcc4a08652",
+      "is_synthetic": false,
+      "issuer_id": "BR_ITAU",
+      "key_risks": [],
+      "model": null,
+      "note_id": "2026-11-27-itau-risco",
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "role": "short_risk",
+      "squeeze": {
+        "rationale": "Pressão de cobertura e risco de evento político; nenhuma conclusão fundamental negativa é inferida.",
+        "verdict": "veto"
+      },
+      "stance": 0,
+      "thesis": "Itaú: squeeze em {{fact:BR_ITAU.squeeze_score}} e dias para cobrir em {{fact:BR_ITAU.days_to_cover}} justificam veto prudencial ao short.",
+      "week": "2026-11-27"
+    },
+    {
+      "bear_points": [],
+      "bull_points": [],
+      "catalysts": [],
+      "confidence": 0.8,
+      "created_at": "2026-11-27T15:01:38Z",
+      "evidence": [
+        {
+          "kind": "fact",
+          "note": "",
+          "ref_id": "BR_MINERVA.squeeze_score"
+        },
+        {
+          "kind": "fact",
+          "note": "",
+          "ref_id": "BR_MINERVA.borrow_fee"
+        }
+      ],
+      "horizon_weeks": 8,
+      "input_hash": "632309c3082bedd9fbf5daa1032287857bd23c8e74d8510e439307e78e1a894c",
+      "is_synthetic": false,
+      "issuer_id": "BR_MINERVA",
+      "key_risks": [],
+      "model": null,
+      "note_id": "2026-11-27-minerva-risco",
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "role": "short_risk",
+      "squeeze": {
+        "rationale": "Pressão técnica e custo de carregamento; não presumir disponibilidade executável.",
+        "verdict": "veto"
+      },
+      "stance": 0,
+      "thesis": "Minerva: squeeze em {{fact:BR_MINERVA.squeeze_score}} e aluguel em {{fact:BR_MINERVA.borrow_fee}} recomendam veto prudencial ao short.",
+      "week": "2026-11-27"
+    },
+    {
+      "bear_points": [],
+      "bull_points": [],
+      "catalysts": [],
+      "confidence": 0.8,
+      "created_at": "2026-11-27T15:01:38Z",
+      "evidence": [
+        {
+          "kind": "fact",
+          "note": "",
+          "ref_id": "BR_MRV.squeeze_score"
+        }
+      ],
+      "horizon_weeks": 8,
+      "input_hash": "04a620ea98f868e48c1e91f8a189cfddd4b35e585156a1fdbcc187c5a24abae4",
+      "is_synthetic": false,
+      "issuer_id": "BR_MRV",
+      "key_risks": [],
+      "model": null,
+      "note_id": "2026-11-27-mrv-risco",
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "role": "short_risk",
+      "squeeze": {
+        "rationale": "Pressão técnica elevada e risco de reversão; sem comprovação integral dos eventos recentes.",
+        "verdict": "veto"
+      },
+      "stance": 0,
+      "thesis": "MRV: squeeze em {{fact:BR_MRV.squeeze_score}} recomenda veto prudencial ao short.",
+      "week": "2026-11-27"
+    },
+    {
+      "bear_points": [
+        "Crédito e custo de captação podem absorver ganhos operacionais."
+      ],
+      "bull_points": [
+        "Monetização do relacionamento pode ampliar contribuição recorrente."
+      ],
+      "catalysts": [],
+      "confidence": 0.2,
+      "created_at": "2026-11-27T15:01:38Z",
+      "evidence": [
+        {
+          "kind": "news",
+          "note": "",
+          "ref_id": "rss_12e920979ced"
+        },
+        {
+          "kind": "fact",
+          "note": "",
+          "ref_id": "BR_PAGS.alpha_z"
+        }
+      ],
+      "horizon_weeks": 8,
+      "input_hash": "57b376b3b769db08ac110b4f024bf81f37c62c48b4b591a68e7a48abdde26f87",
+      "is_synthetic": false,
+      "issuer_id": "BR_PAGS",
+      "key_risks": [],
+      "model": null,
+      "note_id": "2026-11-27-pags-revisao",
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "role": "fundamental",
+      "squeeze": null,
+      "stance": 0,
+      "thesis": "PagSeguro: a leitura da nota de 2026-10-11 mantém o teste de contribuição após captação, perdas e capital. A notícia corrente de movimento pré-mercado não confirma melhora econômica. Abstenção enquanto a ponte de resultados não for reconciliada integralmente.",
+      "week": "2026-11-27"
+    },
+    {
+      "bear_points": [],
+      "bull_points": [],
+      "catalysts": [],
+      "confidence": 0.8,
+      "created_at": "2026-11-27T15:01:38Z",
+      "evidence": [
+        {
+          "kind": "fact",
+          "note": "",
+          "ref_id": "BR_SMARTFIT.squeeze_score"
+        },
+        {
+          "kind": "fact",
+          "note": "",
+          "ref_id": "BR_SMARTFIT.borrow_fee"
+        }
+      ],
+      "horizon_weeks": 8,
+      "input_hash": "24bc81a17a508d7450e87e536be381630356f74cefba3d1ed0ac5e126dc7e244",
+      "is_synthetic": false,
+      "issuer_id": "BR_SMARTFIT",
+      "key_risks": [],
+      "model": null,
+      "note_id": "2026-11-27-smartfit-risco",
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "role": "short_risk",
+      "squeeze": {
+        "rationale": "Pressão técnica e aluguel em {{fact:BR_SMARTFIT.borrow_fee}}; maturação econômica permanece por comprovar.",
+        "verdict": "veto"
+      },
+      "stance": 0,
+      "thesis": "Smart Fit: squeeze em {{fact:BR_SMARTFIT.squeeze_score}} sustenta veto prudencial ao short. A nota publicada em 2026-10-11 exige retorno após manutenção, ocupação e financiamento; leitura indireta, sem reconciliação documental atual completa.",
+      "week": "2026-11-27"
+    },
+    {
+      "bear_points": [
+        "Penalidades, obras e financiamento podem consumir o retorno atribuível."
+      ],
+      "bull_points": [
+        "Energização e disponibilidade podem sustentar recebimentos regulatórios."
+      ],
+      "catalysts": [],
+      "confidence": 0.2,
+      "created_at": "2026-11-27T15:01:38Z",
+      "evidence": [
+        {
+          "kind": "news",
+          "note": "",
+          "ref_id": "rss_ee42c1b79f4d"
+        }
+      ],
+      "horizon_weeks": 8,
+      "input_hash": "3f6b0620ea22b5f63f03f0264396e3593125fd9aecc914451d6fcfdc9a5e8d2c",
+      "is_synthetic": false,
+      "issuer_id": "BR_TAESA",
+      "key_risks": [],
+      "model": null,
+      "note_id": "2026-11-27-taesa-revisao",
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "role": "fundamental",
+      "squeeze": null,
+      "stance": 0,
+      "thesis": "Taesa: modelo atualizado é referência quantitativa; a nota de 2026-10-11 antecede o resultado indicado pela agenda. Caixa após investimento, encargos e disponibilidade precisa ser reconciliado. Notícia sobre conselho não substitui essa análise; abstenção direcional.",
+      "week": "2026-11-27"
+    },
+    {
+      "bear_points": [],
+      "bull_points": [],
+      "catalysts": [],
+      "confidence": 0.8,
+      "created_at": "2026-11-27T15:01:38Z",
+      "evidence": [
+        {
+          "kind": "fact",
+          "note": "",
+          "ref_id": "BR_TUPY.squeeze_score"
+        }
+      ],
+      "horizon_weeks": 8,
+      "input_hash": "796237e429de8a1aaf7507d9a599713fc7b88bf59261cc456ae1f3d3d390a4a8",
+      "is_synthetic": false,
+      "issuer_id": "BR_TUPY",
+      "key_risks": [],
+      "model": null,
+      "note_id": "2026-11-27-tupy-risco",
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "role": "short_risk",
+      "squeeze": {
+        "rationale": "Pressão técnica elevada; sem conclusão direcional a partir da alta recente.",
+        "verdict": "veto"
+      },
+      "stance": 0,
+      "thesis": "Tupy: squeeze em {{fact:BR_TUPY.squeeze_score}} justifica veto prudencial ao short.",
+      "week": "2026-11-27"
+    },
+    {
+      "bear_points": [],
+      "bull_points": [],
+      "catalysts": [],
+      "confidence": 0.8,
+      "created_at": "2026-11-27T15:01:38Z",
+      "evidence": [
+        {
+          "kind": "fact",
+          "note": "",
+          "ref_id": "BR_VAMOS.squeeze_score"
+        }
+      ],
+      "horizon_weeks": 8,
+      "input_hash": "e0499b41f5b7af66cb32b9714e96ad42ca0ddb405d2d43964fcb6d08d01fa115",
+      "is_synthetic": false,
+      "issuer_id": "BR_VAMOS",
+      "key_risks": [],
+      "model": null,
+      "note_id": "2026-11-27-vamos-risco",
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "role": "short_risk",
+      "squeeze": {
+        "rationale": "Pressão técnica e risco de reversão; financiamento e eventos de capital ainda exigem revisão documental.",
+        "verdict": "veto"
+      },
+      "stance": 0,
+      "thesis": "Vamos: squeeze em {{fact:BR_VAMOS.squeeze_score}} recomenda veto prudencial ao short.",
+      "week": "2026-11-27"
+    },
+    {
+      "bear_points": [],
+      "bull_points": [],
+      "catalysts": [],
+      "confidence": 0.8,
+      "created_at": "2026-11-27T15:01:38Z",
+      "evidence": [
+        {
+          "kind": "fact",
+          "note": "",
+          "ref_id": "MX_VOLARIS.squeeze_score"
+        }
+      ],
+      "horizon_weeks": 8,
+      "input_hash": "c06ea03f18646f9c24797327b17122ac363ec5b1c0f4b4d1c585a980fed5c46d",
+      "is_synthetic": false,
+      "issuer_id": "MX_VOLARIS",
+      "key_risks": [],
+      "model": null,
+      "note_id": "2026-11-27-volaris-risco",
+      "prompt_version": "importado",
+      "provider": "imported:codex",
+      "role": "short_risk",
+      "squeeze": {
+        "rationale": "Pressão técnica elevada; combustível, câmbio e arrendamentos podem gerar reversão.",
+        "verdict": "veto"
+      },
+      "stance": 0,
+      "thesis": "Volaris: squeeze em {{fact:MX_VOLARIS.squeeze_score}} recomenda veto prudencial ao short; ausência de alvo não constitui tese de venda.",
+      "week": "2026-11-27"
+    }
+  ],
+  "provider": "imported",
+  "snapshot_id": "store-2026-10-02+39-2026-11-26",
+  "views": [
+    {
+      "author": "imported:codex",
+      "confidence": 1.0,
+      "issuer_id": "AR_GALICIA",
+      "max_abs_weight": null,
+      "no_long": false,
+      "no_short": true,
+      "note_ids": [
+        "2026-11-27-galicia-risco"
+      ],
+      "rationale": "Pressão de squeeze elevada; controle e catalisadores não reconciliados integralmente nesta revisão.",
+      "score": 0,
+      "source": "ai"
+    },
+    {
+      "author": "imported:codex",
+      "confidence": 1.0,
+      "issuer_id": "AR_GLOBANT",
+      "max_abs_weight": null,
+      "no_long": false,
+      "no_short": true,
+      "note_ids": [
+        "2026-11-27-globant-risco"
+      ],
+      "rationale": "Risco de reversão e pressão técnica; não há comprovação integral de catalisadores e controle.",
+      "score": 0,
+      "source": "ai"
+    },
+    {
+      "author": "imported:codex",
+      "confidence": 1.0,
+      "issuer_id": "BR_ASSAI",
+      "max_abs_weight": null,
+      "no_long": false,
+      "no_short": true,
+      "note_ids": [
+        "2026-11-27-assai-risco"
+      ],
+      "rationale": "Pressão técnica elevada; não inferir oportunidade de venda da alta recente.",
+      "score": 0,
+      "source": "ai"
+    },
+    {
+      "author": "imported:codex",
+      "confidence": 1.0,
+      "issuer_id": "BR_COSAN",
+      "max_abs_weight": null,
+      "no_long": false,
+      "no_short": true,
+      "note_ids": [
+        "2026-11-27-cosan-risco"
+      ],
+      "rationale": "Pressão técnica elevada e risco de reversão; sem revisão documental completa de eventos de capital.",
+      "score": 0,
+      "source": "ai"
+    },
+    {
+      "author": "imported:codex",
+      "confidence": 1.0,
+      "issuer_id": "BR_EZTEC",
+      "max_abs_weight": null,
+      "no_long": false,
+      "no_short": true,
+      "note_ids": [
+        "2026-11-27-eztec-risco"
+      ],
+      "rationale": "Pressão técnica elevada; estrutura de controle e disponibilidade executável não certificadas nesta revisão.",
+      "score": 0,
+      "source": "ai"
+    },
+    {
+      "author": "imported:codex",
+      "confidence": 1.0,
+      "issuer_id": "BR_ITAU",
+      "max_abs_weight": null,
+      "no_long": false,
+      "no_short": true,
+      "note_ids": [
+        "2026-11-27-itau-risco"
+      ],
+      "rationale": "Pressão de cobertura e risco de evento político; nenhuma conclusão fundamental negativa é inferida.",
+      "score": 0,
+      "source": "ai"
+    },
+    {
+      "author": "imported:codex",
+      "confidence": 1.0,
+      "issuer_id": "BR_MINERVA",
+      "max_abs_weight": null,
+      "no_long": false,
+      "no_short": true,
+      "note_ids": [
+        "2026-11-27-minerva-risco"
+      ],
+      "rationale": "Pressão técnica e custo de carregamento; não presumir disponibilidade executável.",
+      "score": 0,
+      "source": "ai"
+    },
+    {
+      "author": "imported:codex",
+      "confidence": 1.0,
+      "issuer_id": "BR_MRV",
+      "max_abs_weight": null,
+      "no_long": false,
+      "no_short": true,
+      "note_ids": [
+        "2026-11-27-mrv-risco"
+      ],
+      "rationale": "Pressão técnica elevada e risco de reversão; sem comprovação integral dos eventos recentes.",
+      "score": 0,
+      "source": "ai"
+    },
+    {
+      "author": "imported:codex",
+      "confidence": 1.0,
+      "issuer_id": "BR_SMARTFIT",
+      "max_abs_weight": null,
+      "no_long": false,
+      "no_short": true,
+      "note_ids": [
+        "2026-11-27-smartfit-risco"
+      ],
+      "rationale": "Pressão técnica e aluguel em {{fact:BR_SMARTFIT.borrow_fee}}; maturação econômica permanece por comprovar.",
+      "score": 0,
+      "source": "ai"
+    },
+    {
+      "author": "imported:codex",
+      "confidence": 1.0,
+      "issuer_id": "BR_TUPY",
+      "max_abs_weight": null,
+      "no_long": false,
+      "no_short": true,
+      "note_ids": [
+        "2026-11-27-tupy-risco"
+      ],
+      "rationale": "Pressão técnica elevada; sem conclusão direcional a partir da alta recente.",
+      "score": 0,
+      "source": "ai"
+    },
+    {
+      "author": "imported:codex",
+      "confidence": 1.0,
+      "issuer_id": "BR_VAMOS",
+      "max_abs_weight": null,
+      "no_long": false,
+      "no_short": true,
+      "note_ids": [
+        "2026-11-27-vamos-risco"
+      ],
+      "rationale": "Pressão técnica e risco de reversão; financiamento e eventos de capital ainda exigem revisão documental.",
+      "score": 0,
+      "source": "ai"
+    },
+    {
+      "author": "imported:codex",
+      "confidence": 1.0,
+      "issuer_id": "MX_VOLARIS",
+      "max_abs_weight": null,
+      "no_long": false,
+      "no_short": true,
+      "note_ids": [
+        "2026-11-27-volaris-risco"
+      ],
+      "rationale": "Pressão técnica elevada; combustível, câmbio e arrendamentos podem gerar reversão.",
+      "score": 0,
+      "source": "ai"
+    }
+  ],
+  "week": "2026-11-27"
+}

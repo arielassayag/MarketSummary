@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 12.36,
+  "high": 23.0,
+  "low": 12.0,
+  "mean": 17.27826,
+  "median": 17.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.23269,
+   "currency": "USD",
+   "growth": 0.3102,
+   "high": 0.28,
+   "low": 0.17472,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 0.1776
+  },
+  "+1y": {
+   "avg": 1.05886,
+   "currency": "USD",
+   "growth": 0.24430001,
+   "high": 1.23,
+   "low": 0.78,
+   "numberOfAnalysts": 18,
+   "yearAgoEps": 0.85098
+  },
+  "0q": {
+   "avg": 0.23903,
+   "currency": "USD",
+   "growth": 0.317,
+   "high": 0.27,
+   "low": 0.18,
+   "numberOfAnalysts": 9,
+   "yearAgoEps": 0.1815
+  },
+  "0y": {
+   "avg": 0.85098,
+   "currency": "USD",
+   "growth": 0.4557,
+   "high": 0.9,
+   "low": 0.8,
+   "numberOfAnalysts": 16,
+   "yearAgoEps": 0.5846
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 6424266670,
+   "currency": "USD",
+   "growth": 0.2931,
+   "high": 6478800000,
+   "low": 6389000000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 4967967000
+  },
+  "+1y": {
+   "avg": 27417301990,
+   "currency": "USD",
+   "growth": 0.2219,
+   "high": 29880000000,
+   "low": 24867000000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 22438640000
+  },
+  "0q": {
+   "avg": 6136233330,
+   "currency": "USD",
+   "growth": 0.3095,
+   "high": 6251000000,
+   "low": 6025000000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 4685866000
+  },
+  "0y": {
+   "avg": 22438640000,
+   "currency": "USD",
+   "growth": 0.42240003,
+   "high": 22597000000,
+   "low": 22283000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 15774741000
+  }
+ },
+ "ticker": "NU",
+ "url": "https://finance.yahoo.com/quote/NU"
+}

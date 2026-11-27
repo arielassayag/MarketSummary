@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 17.99,
+  "high": 40.0,
+  "low": 14.0,
+  "mean": 25.07143,
+  "median": 23.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.43,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0.43,
+   "low": 0.43,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 3.44327,
+   "currency": "BRL",
+   "growth": 0.2753,
+   "high": 5.39,
+   "low": 2.19,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 2.7
+  },
+  "0q": {
+   "avg": 0.75,
+   "currency": "BRL",
+   "growth": 0.7573,
+   "high": 0.75,
+   "low": 0.75,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.4268
+  },
+  "0y": {
+   "avg": 2.7,
+   "currency": "BRL",
+   "growth": -0.2792,
+   "high": 3.91,
+   "low": 1.93,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 3.7457
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 2604054340,
+   "currency": "BRL",
+   "growth": 0.0502,
+   "high": 2654040680,
+   "low": 2554068000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 2479500000
+  },
+  "+1y": {
+   "avg": 12311315450,
+   "currency": "BRL",
+   "growth": 0.0572,
+   "high": 14474000000,
+   "low": 11502400000,
+   "numberOfAnalysts": 13,
+   "yearAgoRevenue": 11644773760
+  },
+  "0q": {
+   "avg": 3153035000,
+   "currency": "BRL",
+   "growth": -0.033800002,
+   "high": 3153035000,
+   "low": 3153035000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 3263400000
+  },
+  "0y": {
+   "avg": 11644773760,
+   "currency": "BRL",
+   "growth": -0.015700001,
+   "high": 12948000000,
+   "low": 11140835000,
+   "numberOfAnalysts": 14,
+   "yearAgoRevenue": 11831100000
+  }
+ },
+ "ticker": "AZZA3.SA",
+ "url": "https://finance.yahoo.com/quote/AZZA3.SA"
+}

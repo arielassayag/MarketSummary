@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 105.82,
+  "high": 140.0,
+  "low": 110.0,
+  "mean": 118.98571,
+  "median": 113.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.94098,
+   "currency": "USD",
+   "growth": 0.3766,
+   "high": 2.24,
+   "low": 1.64196,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 1.41
+  },
+  "+1y": {
+   "avg": 7.60427,
+   "currency": "USD",
+   "growth": 0.2242,
+   "high": 8.187,
+   "low": 6.93707,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 6.2115
+  },
+  "0q": {
+   "avg": 1.545,
+   "currency": "USD",
+   "growth": 0.103599995,
+   "high": 1.545,
+   "low": 1.545,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 1.4
+  },
+  "0y": {
+   "avg": 6.2115,
+   "currency": "USD",
+   "growth": 0.01,
+   "high": 6.249,
+   "low": 6.174,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 6.15
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 4148713000,
+   "currency": "MXN",
+   "growth": 0.0871,
+   "high": 4148713000,
+   "low": 4148713000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 3816372000
+  },
+  "+1y": {
+   "avg": 18749884320,
+   "currency": "MXN",
+   "growth": 0.09,
+   "high": 20458833230,
+   "low": 17740983000,
+   "numberOfAnalysts": 8,
+   "yearAgoRevenue": 17201575230
+  },
+  "0q": {
+   "avg": 4814568640,
+   "currency": "MXN",
+   "growth": 0.1705,
+   "high": 4880137290,
+   "low": 4749000000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 4113416000
+  },
+  "0y": {
+   "avg": 17201575230,
+   "currency": "MXN",
+   "growth": 0.0775,
+   "high": 18025860290,
+   "low": 16204000000,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 15964414000
+  }
+ },
+ "ticker": "OMAB",
+ "url": "https://finance.yahoo.com/quote/OMAB"
+}

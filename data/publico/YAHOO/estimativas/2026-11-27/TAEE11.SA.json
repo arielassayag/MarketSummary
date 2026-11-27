@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 41.93,
+  "high": 43.7,
+  "low": 31.0,
+  "mean": 37.76769,
+  "median": 36.7
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.97119,
+   "currency": "BRL",
+   "growth": null,
+   "high": 1.06823,
+   "low": 0.90535,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 4.11299,
+   "currency": "BRL",
+   "growth": 0.35970002,
+   "high": 4.58141,
+   "low": 3.81,
+   "numberOfAnalysts": 6,
+   "yearAgoEps": 3.025
+  },
+  "0q": {
+   "avg": 0.84,
+   "currency": "BRL",
+   "growth": -0.2052,
+   "high": 0.84,
+   "low": 0.84,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 1.05684
+  },
+  "0y": {
+   "avg": 3.025,
+   "currency": "BRL",
+   "growth": -0.3404,
+   "high": 3.05,
+   "low": 3.0,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 4.586
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 840908900,
+   "currency": "BRL",
+   "growth": 0.28280002,
+   "high": 866321780,
+   "low": 826543180,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 655533000
+  },
+  "+1y": {
+   "avg": 3332544820,
+   "currency": "BRL",
+   "growth": 0.14220001,
+   "high": 3547500000,
+   "low": 3046000000,
+   "numberOfAnalysts": 11,
+   "yearAgoRevenue": 2917699930
+  },
+  "0q": {
+   "avg": 839095440,
+   "currency": "BRL",
+   "growth": 0.3036,
+   "high": 859809180,
+   "low": 827615390,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 643685000
+  },
+  "0y": {
+   "avg": 2917699930,
+   "currency": "BRL",
+   "growth": 0.1609,
+   "high": 2962964680,
+   "low": 2801000000,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 2513344000
+  }
+ },
+ "ticker": "TAEE11.SA",
+ "url": "https://finance.yahoo.com/quote/TAEE11.SA"
+}

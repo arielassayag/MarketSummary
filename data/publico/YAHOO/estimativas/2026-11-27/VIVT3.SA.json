@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 36.4,
+  "high": 52.0,
+  "low": 30.0,
+  "mean": 38.21333,
+  "median": 37.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.58311,
+   "currency": "BRL",
+   "growth": -0.0117,
+   "high": 0.72464,
+   "low": 0.58229,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.59
+  },
+  "+1y": {
+   "avg": 3.03438,
+   "currency": "BRL",
+   "growth": 0.2739,
+   "high": 3.27865,
+   "low": 2.80656,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 2.38199
+  },
+  "0q": {
+   "avg": 0.6811,
+   "currency": "BRL",
+   "growth": 0.15439999,
+   "high": 0.72,
+   "low": 0.56958,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.59
+  },
+  "0y": {
+   "avg": 2.38199,
+   "currency": "BRL",
+   "growth": 0.2471,
+   "high": 2.51,
+   "low": 2.22016,
+   "numberOfAnalysts": 8,
+   "yearAgoEps": 1.91
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 16400760890,
+   "currency": "BRL",
+   "growth": 0.061100002,
+   "high": 16484262670,
+   "low": 16332411000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 15457000000
+  },
+  "+1y": {
+   "avg": 67531468490,
+   "currency": "BRL",
+   "growth": 0.0463,
+   "high": 68841000000,
+   "low": 66608106050,
+   "numberOfAnalysts": 15,
+   "yearAgoRevenue": 64542176100
+  },
+  "0q": {
+   "avg": 16649335990,
+   "currency": "BRL",
+   "growth": 0.0665,
+   "high": 16799000000,
+   "low": 16493701550,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 15611000000
+  },
+  "0y": {
+   "avg": 64542176100,
+   "currency": "BRL",
+   "growth": 0.083000004,
+   "high": 72203002150,
+   "low": 63423000000,
+   "numberOfAnalysts": 12,
+   "yearAgoRevenue": 59595000000
+  }
+ },
+ "ticker": "VIVT3.SA",
+ "url": "https://finance.yahoo.com/quote/VIVT3.SA"
+}

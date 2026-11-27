@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 17.81,
+  "high": 27.5,
+  "low": 20.0,
+  "mean": 24.55333,
+  "median": 24.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.26989,
+   "currency": "USD",
+   "growth": 1.3730999,
+   "high": 0.09,
+   "low": 0.22,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.11373
+  },
+  "+1y": {
+   "avg": 1.02438,
+   "currency": "USD",
+   "growth": 0.4655,
+   "high": 1.12,
+   "low": 0.94,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.699
+  },
+  "0q": {
+   "avg": 0.20191,
+   "currency": "USD",
+   "growth": 1.7241,
+   "high": 0.2025,
+   "low": 0.20132,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.07412
+  },
+  "0y": {
+   "avg": 0.699,
+   "currency": "USD",
+   "growth": 1.0243,
+   "high": 0.7675,
+   "low": 0.64,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": 0.3453
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 1715279000,
+   "currency": "USD",
+   "growth": 0.1856,
+   "high": 1715279000,
+   "low": 1715279000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 1446700000
+  },
+  "+1y": {
+   "avg": 9656147910,
+   "currency": "USD",
+   "growth": 0.1224,
+   "high": 10190994240,
+   "low": 9211000000,
+   "numberOfAnalysts": 14,
+   "yearAgoRevenue": 8602906240
+  },
+  "0q": {
+   "avg": 2611805880,
+   "currency": "USD",
+   "growth": -0.0150999995,
+   "high": 2662289670,
+   "low": 2549000000,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 2651800000
+  },
+  "0y": {
+   "avg": 8602906240,
+   "currency": "USD",
+   "growth": 0.1353,
+   "high": 8730000000,
+   "low": 8481000000,
+   "numberOfAnalysts": 14,
+   "yearAgoRevenue": 7577500000
+  }
+ },
+ "ticker": "EMBJ",
+ "url": "https://finance.yahoo.com/quote/EMBJ"
+}

@@ -1,0 +1,28 @@
+{
+ "mind":"codex",
+ "market_view":"Leitura neutra, convicção baixa e postura defensiva, com drawdown em {{fact:cdp.drawdown}} e volatilidade realizada em {{fact:cdp.realized_vol_21d}}. A revisão documental integral de todos os candidatos e posições não foi concluída; adotamos abstenção direcional. A seleção quantitativa permanece submetida aos portões do mandato e aos vetos prudenciais. Juros, energia, câmbio e liquidez podem provocar reversões relevantes.",
+ "what_changed":"Modelos de cobertura atualizados até 2026-11-26, com retrato de 2026-11-27. A revisão dos indicadores de squeeze amplia os vetos prudenciais a shorts em nomes sob pressão técnica. Ero Copper fica vetada para novas compras enquanto a notícia de paralisação não for reconciliada com fonte primária. As notas publicadas de PagSeguro, Liberty Latin America, Auren, Patria, Smart Fit, Cemex, Taesa e Banco Macro orientam critérios de caixa e capital; sua leitura não equivale a nova revisão documental completa dos resultados.",
+ "evaluation_last_week":"A decisão anterior manteve abstenção e postura defensiva. O contexto não apresenta visões direcionais anteriores a avaliar. As coortes prospectivas disponíveis estão resolvidas; isso não permite atribuir acerto direcional às restrições prudenciais ou aos retornos residuais sem inclinação.",
+ "regime":"neutral","risk_posture":"defensiva","abstain":true,"views":[],
+ "exclusions":[
+  {"issuer_id":"AR_GALICIA","no_short":true,"reason":"Galicia: veto prudencial diante de squeeze em {{fact:AR_GALICIA.squeeze_score}}."},
+  {"issuer_id":"AR_GLOBANT","no_short":true,"reason":"Globant: veto prudencial diante de squeeze em {{fact:AR_GLOBANT.squeeze_score}}."},
+  {"issuer_id":"BR_ASSAI","no_short":true,"reason":"Assaí: veto prudencial diante de squeeze em {{fact:BR_ASSAI.squeeze_score}}."},
+  {"issuer_id":"BR_COSAN","no_short":true,"reason":"Cosan: veto prudencial diante de squeeze em {{fact:BR_COSAN.squeeze_score}}."},
+  {"issuer_id":"BR_EZTEC","no_short":true,"reason":"EZTec: veto prudencial diante de squeeze em {{fact:BR_EZTEC.squeeze_score}}."},
+  {"issuer_id":"BR_ITAU","no_short":true,"reason":"Itaú: veto prudencial diante de squeeze em {{fact:BR_ITAU.squeeze_score}} e cobertura em {{fact:BR_ITAU.days_to_cover}}."},
+  {"issuer_id":"BR_MINERVA","no_short":true,"reason":"Minerva: veto prudencial diante de squeeze em {{fact:BR_MINERVA.squeeze_score}} e aluguel em {{fact:BR_MINERVA.borrow_fee}}."},
+  {"issuer_id":"BR_MRV","no_short":true,"reason":"MRV: veto prudencial diante de squeeze em {{fact:BR_MRV.squeeze_score}}."},
+  {"issuer_id":"BR_SMARTFIT","no_short":true,"reason":"Smart Fit: veto prudencial diante de squeeze em {{fact:BR_SMARTFIT.squeeze_score}} e aluguel em {{fact:BR_SMARTFIT.borrow_fee}}."},
+  {"issuer_id":"BR_TUPY","no_short":true,"reason":"Tupy: veto prudencial diante de squeeze em {{fact:BR_TUPY.squeeze_score}}."},
+  {"issuer_id":"BR_VAMOS","no_short":true,"reason":"Vamos: veto prudencial diante de squeeze em {{fact:BR_VAMOS.squeeze_score}}."},
+  {"issuer_id":"MX_VOLARIS","no_short":true,"reason":"Volaris: veto prudencial diante de squeeze em {{fact:MX_VOLARIS.squeeze_score}}."},
+  {"issuer_id":"BR_ERO","no_long":true,"reason":"Ero Copper: notícia corrente de paralisação operacional sem reconciliação primária de duração e impacto; veto prudencial até esclarecimento."}
+ ],
+ "position_journal":[
+  {"issuer_id":"BR_PAGS","thesis":"PagSeguro depende de contribuição após captação, perdas e capital. A posição quantitativa não recebe inclinação fundamental adicional.","invalidation_criteria":"Deterioração persistente da contribuição após risco e financiamento.","premortem":"Crescimento de pagamentos e crédito consome capital sem retorno atribuível."},
+  {"issuer_id":"LA_LILA","thesis":"Liberty Latin America exige caixa residual após manutenção, equipamentos e dívida. A nota publicada conserva lacunas de classes e financiamento; sem convicção direcional adicional.","invalidation_criteria":"Recuperação documentada e recorrente do caixa atribuível enfraquece o caso vendido.","premortem":"Melhora operacional e refinanciamento provocam reprecificação antes da revisão da tese."},
+  {"issuer_id":"BR_SMARTFIT","thesis":"Smart Fit fica vetada no lado vendido por pressão de squeeze. Não se infere deterioração econômica da falta de reconciliação atual.","invalidation_criteria":"Nova revisão documentada de caixa, maturação e arrendamentos altera a leitura de risco.","premortem":"Reversão técnica e custo de aluguel superam o sinal quantitativo."},
+  {"issuer_id":"MX_CEMEX","thesis":"Cemex exige separar economias operacionais de alienações e manutenção. A nota publicada de 2026-10-26 é referência indireta; sem nova inclinação discricionária.","invalidation_criteria":"Geração recorrente depois de manutenção confirma melhora econômica sustentada.","premortem":"Reprecificação operacional antecede a conversão integral do caixa."}
+ ]
+}

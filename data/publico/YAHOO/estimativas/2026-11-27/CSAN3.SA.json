@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 4.01,
+  "high": 9.0,
+  "low": 3.1,
+  "mean": 5.18182,
+  "median": 4.6
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.37453,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0.37453,
+   "low": 0.37453,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": null
+  },
+  "+1y": {
+   "avg": 0.81,
+   "currency": "BRL",
+   "growth": 2.8571,
+   "high": 0.81,
+   "low": 0.81,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.21
+  },
+  "0q": {
+   "avg": -0.00724,
+   "currency": "BRL",
+   "growth": 0.9959,
+   "high": 0.04552,
+   "low": -0.06,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": -1.78
+  },
+  "0y": {
+   "avg": 0.21,
+   "currency": "BRL",
+   "growth": 1.131,
+   "high": 0.21,
+   "low": 0.21,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -1.6029
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 33700864000,
+   "currency": "BRL",
+   "growth": 2.7326002,
+   "high": 33700864000,
+   "low": 33700864000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 9028800000
+  },
+  "+1y": {
+   "avg": 164335378940,
+   "currency": "BRL",
+   "growth": 0.0202,
+   "high": 181962680820,
+   "low": 134803456000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 161083000000
+  },
+  "0q": {
+   "avg": 35159291000,
+   "currency": "BRL",
+   "growth": 2.657,
+   "high": 35159291000,
+   "low": 35159291000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 9614158000
+  },
+  "0y": {
+   "avg": 161083000000,
+   "currency": "BRL",
+   "growth": 2.9854002,
+   "high": 161083000000,
+   "low": 161083000000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 40418596000
+  }
+ },
+ "ticker": "CSAN3.SA",
+ "url": "https://finance.yahoo.com/quote/CSAN3.SA"
+}

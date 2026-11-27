@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 8.08,
+  "high": 16.0,
+  "low": 8.5,
+  "mean": 12.84375,
+  "median": 13.1
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.27752,
+   "currency": "USD",
+   "growth": -0.0089,
+   "high": 0.27752,
+   "low": 0.27752,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.28
+  },
+  "+1y": {
+   "avg": 1.09115,
+   "currency": "USD",
+   "growth": -0.1767,
+   "high": 1.41,
+   "low": 0.78,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 1.32526
+  },
+  "0q": {
+   "avg": 0.66661,
+   "currency": "USD",
+   "growth": 5.3856,
+   "high": 0.66661,
+   "low": 0.66661,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": -0.152
+  },
+  "0y": {
+   "avg": 1.32526,
+   "currency": "USD",
+   "growth": 8.3626,
+   "high": 1.8,
+   "low": 1.09,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": -0.18
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 512092070,
+   "currency": "USD",
+   "growth": 0.2845,
+   "high": 512092070,
+   "low": 512092070,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 398680000
+  },
+  "+1y": {
+   "avg": 2342960000,
+   "currency": "USD",
+   "growth": 0.0788,
+   "high": 2421000000,
+   "low": 2198175360,
+   "numberOfAnalysts": 7,
+   "yearAgoRevenue": 2171865790
+  },
+  "0q": {
+   "avg": 713590120,
+   "currency": "USD",
+   "growth": 0.71559995,
+   "high": 713590120,
+   "low": 713590120,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 415936000
+  },
+  "0y": {
+   "avg": 2171865790,
+   "currency": "USD",
+   "growth": 0.5212,
+   "high": 2242000000,
+   "low": 2058000000,
+   "numberOfAnalysts": 6,
+   "yearAgoRevenue": 1427734000
+  }
+ },
+ "ticker": "AGRO",
+ "url": "https://finance.yahoo.com/quote/AGRO"
+}

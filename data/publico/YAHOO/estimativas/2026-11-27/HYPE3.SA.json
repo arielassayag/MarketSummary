@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 25.42,
+  "high": 36.0,
+  "low": 25.0,
+  "mean": 29.4,
+  "median": 28.5
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.6,
+   "currency": "BRL",
+   "growth": 0.090900004,
+   "high": 0.63,
+   "low": 0.57,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.55
+  },
+  "+1y": {
+   "avg": 2.98503,
+   "currency": "BRL",
+   "growth": 0.120900005,
+   "high": 3.15,
+   "low": 2.59,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 2.66313
+  },
+  "0q": {
+   "avg": 0.73976,
+   "currency": "BRL",
+   "growth": 0.0419,
+   "high": 0.76,
+   "low": 0.72187,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 0.71
+  },
+  "0y": {
+   "avg": 2.66313,
+   "currency": "BRL",
+   "growth": 0.4091,
+   "high": 2.79868,
+   "low": 2.43,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 1.89
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 2262574000,
+   "currency": "BRL",
+   "growth": 0.121300004,
+   "high": 2271000000,
+   "low": 2254148000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 2017778000
+  },
+  "+1y": {
+   "avg": 10340269390,
+   "currency": "BRL",
+   "growth": 0.1177,
+   "high": 11110000000,
+   "low": 10038292900,
+   "numberOfAnalysts": 14,
+   "yearAgoRevenue": 9251194050
+  },
+  "0q": {
+   "avg": 2487274630,
+   "currency": "BRL",
+   "growth": 0.1118,
+   "high": 2511000000,
+   "low": 2434251690,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 2237067000
+  },
+  "0y": {
+   "avg": 9251194050,
+   "currency": "BRL",
+   "growth": 0.2016,
+   "high": 9301600000,
+   "low": 9192000000,
+   "numberOfAnalysts": 13,
+   "yearAgoRevenue": 7699157000
+  }
+ },
+ "ticker": "HYPE3.SA",
+ "url": "https://finance.yahoo.com/quote/HYPE3.SA"
+}

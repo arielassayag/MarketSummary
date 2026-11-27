@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 11.45,
+  "high": 21.0,
+  "low": 8.0,
+  "mean": 15.6,
+  "median": 17.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.43313,
+   "currency": "BRL",
+   "growth": 0.0073,
+   "high": 0.46,
+   "low": 0.40626,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.43
+  },
+  "+1y": {
+   "avg": 2.20331,
+   "currency": "BRL",
+   "growth": 0.2597,
+   "high": 2.64,
+   "low": 1.68,
+   "numberOfAnalysts": 8,
+   "yearAgoEps": 1.74905
+  },
+  "0q": {
+   "avg": 0.41773,
+   "currency": "BRL",
+   "growth": -0.16450001,
+   "high": 0.5032,
+   "low": 0.35,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.5
+  },
+  "0y": {
+   "avg": 1.74905,
+   "currency": "BRL",
+   "growth": -0.2743,
+   "high": 2.11,
+   "low": 1.36,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 2.41
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 440035000,
+   "currency": "BRL",
+   "growth": 0.3644,
+   "high": 445528000,
+   "low": 434542000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 322518000
+  },
+  "+1y": {
+   "avg": 2203345480,
+   "currency": "BRL",
+   "growth": 0.37080002,
+   "high": 2606000000,
+   "low": 1820949000,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 1607295310
+  },
+  "0q": {
+   "avg": 421799180,
+   "currency": "BRL",
+   "growth": 0.5682,
+   "high": 448712000,
+   "low": 406748740,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 268965000
+  },
+  "0y": {
+   "avg": 1607295310,
+   "currency": "BRL",
+   "growth": 0.072399996,
+   "high": 1779000000,
+   "low": 1452386740,
+   "numberOfAnalysts": 9,
+   "yearAgoRevenue": 1498822000
+  }
+ },
+ "ticker": "EZTC3.SA",
+ "url": "https://finance.yahoo.com/quote/EZTC3.SA"
+}

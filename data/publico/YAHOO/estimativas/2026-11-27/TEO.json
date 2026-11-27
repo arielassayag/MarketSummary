@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 10.29,
+  "high": 22.0,
+  "low": 9.2,
+  "mean": 16.86667,
+  "median": 17.0
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 1.216,
+   "currency": "USD",
+   "growth": 0.1522,
+   "high": 1.216,
+   "low": 1.216,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 1.05541
+  },
+  "+1y": {
+   "avg": 0.97249,
+   "currency": "USD",
+   "growth": -0.4407,
+   "high": 1.36097,
+   "low": 0.559,
+   "numberOfAnalysts": 4,
+   "yearAgoEps": 1.73888
+  },
+  "0q": {
+   "avg": 0.2787,
+   "currency": "USD",
+   "growth": 0.47439998,
+   "high": 0.2787,
+   "low": 0.2787,
+   "numberOfAnalysts": 1,
+   "yearAgoEps": 0.18903
+  },
+  "0y": {
+   "avg": 1.73888,
+   "currency": "USD",
+   "growth": 7.1761,
+   "high": 2.0,
+   "low": 1.54942,
+   "numberOfAnalysts": 5,
+   "yearAgoEps": -0.28155
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 0,
+   "currency": "USD",
+   "growth": null,
+   "high": 0,
+   "low": 0,
+   "numberOfAnalysts": 0,
+   "yearAgoRevenue": null
+  },
+  "+1y": {
+   "avg": 7154108760,
+   "currency": "USD",
+   "growth": 0.0504,
+   "high": 7827748000,
+   "low": 6464991780,
+   "numberOfAnalysts": 5,
+   "yearAgoRevenue": 6810861750.0
+  },
+  "0q": {
+   "avg": 1797395000,
+   "currency": "USD",
+   "growth": 0.11270001,
+   "high": 1797395000,
+   "low": 1797395000,
+   "numberOfAnalysts": 1,
+   "yearAgoRevenue": 1615299340.0
+  },
+  "0y": {
+   "avg": 6810861750,
+   "currency": "USD",
+   "growth": 0.1464,
+   "high": 6894000000,
+   "low": 6647934000,
+   "numberOfAnalysts": 4,
+   "yearAgoRevenue": 5941092950.0
+  }
+ },
+ "ticker": "TEO",
+ "url": "https://finance.yahoo.com/quote/TEO"
+}

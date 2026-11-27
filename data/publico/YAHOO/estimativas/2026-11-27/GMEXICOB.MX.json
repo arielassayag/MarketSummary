@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 194.69,
+  "high": 319.69995,
+  "low": 47.463333,
+  "mean": 241.15004,
+  "median": 250.99893
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.23984,
+   "currency": "USD",
+   "growth": 0.1014,
+   "high": 0.24092,
+   "low": 0.23877,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 0.21775
+  },
+  "+1y": {
+   "avg": 0.84284,
+   "currency": "USD",
+   "growth": -0.0561,
+   "high": 0.97697,
+   "low": 0.65662,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 0.89295
+  },
+  "0q": {
+   "avg": 0.23116,
+   "currency": "USD",
+   "growth": 0.2975,
+   "high": 0.23877,
+   "low": 0.22371,
+   "numberOfAnalysts": 3,
+   "yearAgoEps": 0.17816
+  },
+  "0y": {
+   "avg": 0.89295,
+   "currency": "USD",
+   "growth": 0.38799998,
+   "high": 0.92,
+   "low": 0.86201,
+   "numberOfAnalysts": 7,
+   "yearAgoEps": 0.64335
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 5923517640,
+   "currency": "USD",
+   "growth": 0.0644,
+   "high": 6231134290,
+   "low": 5615901000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 5565304000
+  },
+  "+1y": {
+   "avg": 23477024600,
+   "currency": "USD",
+   "growth": 0.0150999995,
+   "high": 25430545670,
+   "low": 21469845970,
+   "numberOfAnalysts": 13,
+   "yearAgoRevenue": 23128165690
+  },
+  "0q": {
+   "avg": 5932750690,
+   "currency": "USD",
+   "growth": 0.1512,
+   "high": 5994765060,
+   "low": 5857487000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 5153715000
+  },
+  "0y": {
+   "avg": 23128165690,
+   "currency": "USD",
+   "growth": 0.2723,
+   "high": 24072696120,
+   "low": 21614000000,
+   "numberOfAnalysts": 14,
+   "yearAgoRevenue": 18177895000
+  }
+ },
+ "ticker": "GMEXICOB.MX",
+ "url": "https://finance.yahoo.com/quote/GMEXICOB.MX"
+}

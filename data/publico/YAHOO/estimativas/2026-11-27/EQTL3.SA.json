@@ -1,0 +1,89 @@
+{
+ "analyst_price_targets": {
+  "current": 39.3,
+  "high": 69.0,
+  "low": 43.0,
+  "mean": 53.21857,
+  "median": 51.85
+ },
+ "earnings_estimate": {
+  "+1q": {
+   "avg": 0.5301,
+   "currency": "BRL",
+   "growth": 2.5505,
+   "high": 0.64885,
+   "low": 0.41136,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": -0.3419
+  },
+  "+1y": {
+   "avg": 1.645,
+   "currency": "BRL",
+   "growth": 0.2322,
+   "high": 1.77,
+   "low": 1.52,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 1.335
+  },
+  "0q": {
+   "avg": 0.65,
+   "currency": "BRL",
+   "growth": null,
+   "high": 0.0,
+   "low": 0.0,
+   "numberOfAnalysts": 0,
+   "yearAgoEps": null
+  },
+  "0y": {
+   "avg": 1.335,
+   "currency": "BRL",
+   "growth": -0.365,
+   "high": 1.39,
+   "low": 1.28,
+   "numberOfAnalysts": 2,
+   "yearAgoEps": 2.1022
+  }
+ },
+ "fonte": "YAHOO",
+ "parte": "estimativas",
+ "revenue_estimate": {
+  "+1q": {
+   "avg": 10285586090,
+   "currency": "BRL",
+   "growth": -0.1933,
+   "high": 10827061000,
+   "low": 9422000000,
+   "numberOfAnalysts": 3,
+   "yearAgoRevenue": 12749940000
+  },
+  "+1y": {
+   "avg": 43855588150,
+   "currency": "BRL",
+   "growth": -0.0194,
+   "high": 56760402740,
+   "low": 39063000000,
+   "numberOfAnalysts": 13,
+   "yearAgoRevenue": 44721147270
+  },
+  "0q": {
+   "avg": 10695567260,
+   "currency": "BRL",
+   "growth": -0.2582,
+   "high": 11404134520,
+   "low": 9987000000,
+   "numberOfAnalysts": 2,
+   "yearAgoRevenue": 14418000000
+  },
+  "0y": {
+   "avg": 44721147270,
+   "currency": "BRL",
+   "growth": -0.1412,
+   "high": 53665291110,
+   "low": 40642894710,
+   "numberOfAnalysts": 10,
+   "yearAgoRevenue": 52074000000
+  }
+ },
+ "ticker": "EQTL3.SA",
+ "url": "https://finance.yahoo.com/quote/EQTL3.SA"
+}
